@@ -1,0 +1,411 @@
+# Lesson 2.3 — the Frenet–Serret equations.
+# Objectives (src/course.ts):
+#   OBJ-2.3-1  derive the three Frenet–Serret equations and write them as a system with an antisymmetric matrix
+#   OBJ-2.3-2  use the equations to compute the second and third derivatives of the curve in the Frenet basis
+#   OBJ-2.3-3  identify curves with constant curvature and torsion as circular helices, and compute radius and pitch
+# Every number below was recomputed with src/math/geometry.ts (frenet, curvature, torsion, d2, curveFromCurvature).
+chapter: 2
+questions:
+  - id: Q-2.3-nprime
+    type: mc
+    objectives: [OBJ-2.3-1]
+    level: basic
+    prompt: >-
+      בפרמטר אורך הקשת, $\mathbf t'=\kappa\mathbf n$ ו-$\mathbf b'=-\tau\mathbf n$. מהו $\mathbf n'$?
+    choices:
+      - text: '$\mathbf n''=-\kappa\mathbf t+\tau\mathbf b$'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf n=\mathbf b\times\mathbf t$, ולכן
+          $\mathbf n'=\mathbf b'\times\mathbf t+\mathbf b\times\mathbf t'=-\tau\,\mathbf n\times\mathbf t+\kappa\,\mathbf b\times\mathbf n=\tau\mathbf b-\kappa\mathbf t$.
+          אפשר גם בלי מכפלות: $\mathbf n'\cdot\mathbf t=-\mathbf n\cdot\mathbf t'=-\kappa$ ו-$\mathbf n'\cdot\mathbf b=-\mathbf n\cdot\mathbf b'=\tau$.
+      - text: '$\mathbf n''=\kappa\mathbf t+\tau\mathbf b$'
+        feedback: >-
+          המקדם של $\mathbf t$ נקבע מגזירת $\mathbf t\cdot\mathbf n=0$: $\mathbf n'\cdot\mathbf t=-\mathbf t'\cdot\mathbf n=-\kappa$.
+          במעגל רואים את זה: הנורמל מצביע למרכז, ובזמן שהמשיק פונה אליו הנורמל פונה הרחק מהכיוון של $\mathbf t$.
+        misconception: MC-c2-fs-matrix-symmetric
+      - text: '$\mathbf n''=-\kappa\mathbf t-\tau\mathbf b$'
+        feedback: >-
+          המקדם של $\mathbf b$ נקבע מגזירת $\mathbf n\cdot\mathbf b=0$: $\mathbf n'\cdot\mathbf b=-\mathbf n\cdot\mathbf b'=-\mathbf n\cdot(-\tau\mathbf n)=\tau$.
+        misconception: MC-c2-torsion-sign
+      - text: '$\mathbf n''=\tau\mathbf b$'
+        feedback: >-
+          חסר הרכיב לאורך $\mathbf t$. במעגל ($\tau=0$) זה היה נותן $\mathbf n'=0$, אבל הנורמל של מעגל מסתובב.
+        misconception: MC-c2-fs-dropped-term
+
+  - id: Q-2.3-matrix
+    type: mc
+    objectives: [OBJ-2.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      כותבים את המשוואות כ-$F'(s)=A(s)F(s)$, כאשר שורות $F$ הן $\mathbf t,\mathbf n,\mathbf b$. למה $A(s)$ אנטי-סימטרית בכל
+      מסילה?
+    choices:
+      - text: 'כי $FF^{T}=I$ לכל $s$, וגזירה נותנת $A+A^{T}=0$'
+        correct: true
+        feedback: >-
+          נכון. $(FF^T)'=F'F^T+F(F')^T=AFF^T+FF^TA^T=A+A^T$, והוא אפס כי $FF^T$ קבוע. במילים: כל מכפלה פנימית בין שני
+          וקטורי השלשה קבועה, ולכן $\mathbf u'\cdot\mathbf w=-\mathbf u\cdot\mathbf w'$.
+      - text: 'היא אנטי-סימטרית רק כש-$\kappa$ ו-$\tau$ קבועים'
+        feedback: >-
+          האנטי-סימטריות לא תלויה בערכים של $\kappa$ ו-$\tau$, אלא רק באורתונורמליות של השלשה בכל $s$.
+        misconception: MC-c2-fs-matrix-symmetric
+      - text: 'היא בעצם סימטרית: $A_{12}=A_{21}=\kappa$'
+        feedback: >-
+          $A_{21}$ הוא המקדם של $\mathbf t$ ב-$\mathbf n'$, והוא $-\kappa$: כש-$\mathbf t$ פונה אל $\mathbf n$, הנורמל פונה
+          הרחק מ-$\mathbf t$.
+        misconception: MC-c2-fs-matrix-symmetric
+      - text: 'כי $\det F=1$'
+        feedback: >-
+          $\det F=1$ אומר שהשלשה ימנית, אבל דטרמיננטה קבועה נותנת רק $\operatorname{tr}A=0$. מטריצה כמו
+          $\begin{pmatrix}0&1\\ 0&0\end{pmatrix}$ היא בעלת עקבה אפס ואינה אנטי-סימטרית. מה שנחוץ הוא שכל המכפלות
+          הפנימיות נשמרות.
+        misconception: MC-c0-trace-zero-preserves-length
+
+  - id: Q-2.3-g3b
+    type: numeric
+    objectives: [OBJ-2.3-2]
+    level: basic
+    prompt: >-
+      מסילה בפרמטר אורך הקשת מקיימת בנקודה $s_0$: $\kappa=2$, $\tau=3$, $\kappa'=5$. מהו המקדם של $\mathbf b$ בפירוק של
+      $\gamma'''(s_0)$ בבסיס $\mathbf t,\mathbf n,\mathbf b$?
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\gamma''=\kappa\mathbf n$, ולכן $\gamma'''=\kappa'\mathbf n+\kappa\mathbf n'=-\kappa^2\mathbf t+\kappa'\mathbf n+\kappa\tau\mathbf b$,
+      והמקדם של $\mathbf b$ הוא $\kappa\tau=6$.
+    wrongFeedback: >-
+      גזרו את $\gamma''=\kappa\mathbf n$ בכלל המכפלה, והציבו $\mathbf n'=-\kappa\mathbf t+\tau\mathbf b$.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          זה $\tau$ לבד. $\mathbf b$ מגיע מ-$\kappa\mathbf n'$, ולכן מוכפל ב-$\kappa$.
+        misconception: MC-c2-fs-dropped-term
+      - value: -6
+        feedback: >-
+          הסימן הפוך: $\mathbf n'\cdot\mathbf b=+\tau$ (ה-$-\tau$ שייך ל-$\mathbf b'$, לא ל-$\mathbf n'$).
+        misconception: MC-c2-torsion-sign
+      - value: 5
+        feedback: >-
+          $\kappa'=5$ הוא המקדם של $\mathbf n$, לא של $\mathbf b$.
+        misconception: MC-c2-fs-dropped-term
+
+  - id: Q-2.3-helixradius
+    type: numeric
+    objectives: [OBJ-2.3-3]
+    level: basic
+    prompt: >-
+      מסילה בפרמטר אורך הקשת מקיימת $\kappa\equiv3$ ו-$\tau\equiv4$. היא סליל מעגלי $(a\cos t,a\sin t,bt)$ עד כדי תנועה
+      קשיחה. מהו הרדיוס $a$?
+    answer: 0.12
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לסליל $\kappa=\frac{a}{a^2+b^2}$ ו-$\tau=\frac{b}{a^2+b^2}$, ולכן $\kappa^2+\tau^2=\frac{1}{a^2+b^2}$ ו-
+      $a=\frac{\kappa}{\kappa^2+\tau^2}=\frac{3}{25}$.
+    wrongFeedback: >-
+      הפכו את הנוסחאות של הסליל: חשבו קודם $\kappa^2+\tau^2$ באמצעות $a$ ו-$b$.
+    commonWrong:
+      - value: 0.3333333
+        feedback: >-
+          $\frac1\kappa$ הוא רדיוס העקמומיות, הרדיוס של המעגל המנשק, והוא גדול מרדיוס הגליל כש-$\tau\ne0$.
+        misconception: MC-c2-helix-radius-1-over-kappa
+      - value: 0.16
+        feedback: >-
+          זה $b=\frac{\tau}{\kappa^2+\tau^2}$, הגובה (הקצב שבו הסליל עולה לאורך הציר), לא הרדיוס.
+      - value: 0.6
+        feedback: >-
+          זה $\frac{\kappa}{\sqrt{\kappa^2+\tau^2}}$. המכנה הוא $\kappa^2+\tau^2$ בלי שורש.
+        misconception: MC-c2-helix-radius-1-over-kappa
+
+  - id: Q-2.3-entries
+    type: multi
+    objectives: [OBJ-2.3-1]
+    level: mid
+    prompt: >-
+      במסילה בפרמטר אורך הקשת עם $\kappa>0$, אילו מהשוויונות נכונים בכל נקודה? סמנו את כולם.
+    choices:
+      - text: '$\mathbf n''\cdot\mathbf t=-\kappa$'
+        correct: true
+        feedback: נכון, מגזירת $\mathbf n\cdot\mathbf t=0$.
+      - text: '$\mathbf n''\cdot\mathbf b=\tau$'
+        correct: true
+        feedback: נכון, מגזירת $\mathbf n\cdot\mathbf b=0$ ו-$\mathbf b'=-\tau\mathbf n$.
+      - text: '$\mathbf t''\cdot\mathbf b=0$'
+        correct: true
+        feedback: 'נכון: $\mathbf t''=\kappa\mathbf n$ ניצב ל-$\mathbf b$. לכן במטריצה הפינה $A_{13}$ אפס.'
+      - text: '$\mathbf b''\cdot\mathbf t=\tau$'
+        feedback: >-
+          $\mathbf b'=-\tau\mathbf n$ ניצב ל-$\mathbf t$, ולכן המכפלה אפס. זה גם נובע מאנטי-סימטריה: $\mathbf b'\cdot\mathbf t=-\mathbf b\cdot\mathbf t'=-\kappa\,\mathbf b\cdot\mathbf n=0$.
+        misconception: MC-c2-fs-matrix-symmetric
+      - text: '$\mathbf n''\cdot\mathbf n=\kappa$'
+        feedback: >-
+          $\mathbf n$ וקטור יחידה, ולכן $\mathbf n'\cdot\mathbf n=\frac12(\mathbf n\cdot\mathbf n)'=0$. האלכסון של מטריצה
+          אנטי-סימטרית אפס.
+        misconception: MC-c2-fs-matrix-symmetric
+
+  - id: Q-2.3-g3t
+    type: numeric
+    objectives: [OBJ-2.3-2]
+    level: mid
+    prompt: >-
+      באותה נקודה ($\kappa=2$, $\tau=3$, $\kappa'=5$, פרמטר אורך הקשת): מהו המקדם של $\mathbf t$ בפירוק של $\gamma'''(s_0)$?
+    answer: -4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $-\kappa^2=-4$. בדיקה בלי פירוק: גזירת $\gamma'\cdot\gamma''=0$ נותנת
+      $\gamma'\cdot\gamma'''=-\|\gamma''\|^2=-\kappa^2$.
+    wrongFeedback: >-
+      הרכיב לאורך $\mathbf t$ בא מ-$\kappa\mathbf n'$, ו-$\mathbf n'\cdot\mathbf t=-\kappa$.
+    commonWrong:
+      - value: 4
+        feedback: >-
+          הסימן: $\mathbf n'\cdot\mathbf t=-\kappa$, לא $+\kappa$. במעגל $\gamma'''=-\kappa^2\mathbf t$ מצביע נגד כיוון
+          התנועה.
+        misconception: MC-c2-fs-matrix-symmetric
+      - value: 0
+        feedback: >-
+          $\gamma'''$ אינו ניצב ל-$\mathbf t$. רק $\gamma''$ ניצב לו (בפרמטר אורך הקשת). שכחתם את הרכיב ש-$\mathbf n'$ תורם.
+        misconception: MC-c2-fs-dropped-term
+      - value: -2
+        feedback: >-
+          זה $-\kappa$, המקדם של $\mathbf t$ ב-$\mathbf n'$. ב-$\gamma'''=\kappa\mathbf n'+\dots$ הוא מוכפל עוד ב-$\kappa$.
+        misconception: MC-c2-fs-dropped-term
+
+  - id: Q-2.3-g2general
+    type: mc
+    objectives: [OBJ-2.3-2]
+    level: mid
+    prompt: >-
+      $\gamma$ בפרמטר כללי $t$, עם מהירות $v(t)=\|\gamma'(t)\|$. מהו $\gamma''(t)$ בבסיס של פרנה?
+    choices:
+      - text: '$\gamma''''=v''\,\mathbf t+\kappa v^2\,\mathbf n$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma'=v\mathbf t$, ולכן $\gamma''=v'\mathbf t+v\frac{d\mathbf t}{dt}=v'\mathbf t+v\cdot v\kappa\mathbf n$, כי
+          $\frac{d\mathbf t}{dt}=\frac{ds}{dt}\frac{d\mathbf t}{ds}$. זו התאוצה המשיקית ועוד התאוצה הצנטריפטלית
+          $\frac{v^2}{\rho}$ מהפיזיקה.
+      - text: '$\gamma''''=\kappa\,\mathbf n$'
+        feedback: >-
+          זה נכון רק בפרמטר אורך הקשת ($v\equiv1$). במהירות $v$ הנורמל מקבל $\kappa v^2$, ויש גם רכיב משיקי $v'$.
+        misconception: MC-c2-fs-general-param
+      - text: '$\gamma''''=v''\,\mathbf t+\kappa v\,\mathbf n$'
+        feedback: >-
+          שכחתם את אחד משני הגורמים של $v$: אחד מגיע מ-$\gamma'=v\mathbf t$, והשני מכלל השרשרת
+          $\frac{d\mathbf t}{dt}=v\frac{d\mathbf t}{ds}$.
+        misconception: MC-c2-fs-general-param
+      - text: '$\gamma''''=\kappa v^2\,\mathbf n$'
+        feedback: >-
+          זה נכון רק כשהמהירות קבועה. כשהיא משתנה יש ל-$\gamma''$ רכיב משיקי $v'$, ולכן $\gamma''$ אינו מקביל ל-$\mathbf n$.
+        misconception: MC-c2-n-is-gamma2
+
+  - id: Q-2.3-tc-g2n
+    type: numeric
+    objectives: [OBJ-2.3-2]
+    level: mid
+    prompt: >-
+      במסילה המעוקבת $\gamma(t)=(t,t^2,t^3)$ בנקודה $t=1$: $\gamma''(1)=(0,2,6)$ ו-$\|\gamma'(1)\|=\sqrt{14}$. מהו הרכיב
+      של $\gamma''(1)$ לאורך $\mathbf n(1)$, כלומר $\gamma''(1)\cdot\mathbf n(1)$?
+    answer: 2.3299295
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. הרכיב הוא $\kappa v^2$. אפשר בלי לחשב את $\mathbf n$: הרכיב המשיקי הוא
+      $\gamma''\cdot\mathbf t=\frac{(0,2,6)\cdot(1,2,3)}{\sqrt{14}}=\frac{22}{\sqrt{14}}$, ולכן
+      $\gamma''\cdot\mathbf n=\sqrt{\|\gamma''\|^2-\frac{22^2}{14}}=\sqrt{40-\frac{484}{14}}=\sqrt{\frac{76}{14}}=2\sqrt{\frac{19}{14}}\approx2.330$.
+    wrongFeedback: >-
+      $\gamma''=v'\mathbf t+\kappa v^2\mathbf n$. חשבו את הרכיב המשיקי $\gamma''\cdot\mathbf t$, והשלימו בפיתגורס.
+    commonWrong:
+      - value: 6.3245553
+        feedback: >-
+          זה $\|\gamma''(1)\|=\sqrt{40}$, האורך של כל הווקטור. ל-$\gamma''$ יש גם רכיב משיקי, כי המהירות משתנה.
+        misconception: MC-c2-n-is-gamma2
+      - value: 5.8797473
+        feedback: >-
+          זה הרכיב המשיקי $v'=\frac{22}{\sqrt{14}}$, לא הנורמלי.
+      - value: 0.1664236
+        feedback: >-
+          זו העקמומיות $\kappa(1)$. הרכיב הנורמלי של $\gamma''$ הוא $\kappa v^2$, ו-$v^2=14$.
+        misconception: MC-c2-fs-general-param
+
+  - id: Q-2.3-pitch
+    type: numeric
+    objectives: [OBJ-2.3-3]
+    level: mid
+    prompt: >-
+      אותה מסילה ($\kappa\equiv3$, $\tau\equiv4$). כמה היא מתקדמת לאורך הציר בסיבוב שלם אחד סביבו?
+    answer: 1.0053096
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $b=\frac{\tau}{\kappa^2+\tau^2}=\frac{4}{25}$, ובסיבוב שלם ($t$ גדל ב-$2\pi$) הגובה עולה ב-$2\pi b=\frac{8\pi}{25}\approx1.005$.
+      שחזור נומרי של המסילה מ-$\kappa,\tau$ נותן את אותו מספר.
+    wrongFeedback: >-
+      מצאו את $b$ מ-$\kappa$ ו-$\tau$, ואחר כך את ההתקדמות כש-$t$ גדל ב-$2\pi$.
+    commonWrong:
+      - value: 0.16
+        feedback: >-
+          זה $b$, ההתקדמות ליחידת $t$ (ליחידת זווית). סיבוב שלם הוא $2\pi$ יחידות.
+      - value: 1.2566371
+        feedback: >-
+          זה $\frac{2\pi}{5}$, אורך הקשת של סיבוב אחד: $2\pi\sqrt{a^2+b^2}=\frac{2\pi}{\sqrt{\kappa^2+\tau^2}}$. השאלה היא על
+          ההתקדמות לאורך הציר, שהיא קצרה יותר.
+      - value: 0.7539822
+        feedback: >-
+          זה $2\pi a$, היקף החתך של הגליל, לא ההתקדמות לאורך הציר.
+
+  - id: Q-2.3-lefthand
+    type: mc
+    objectives: [OBJ-2.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מה המסילה בפרמטר אורך הקשת עם $\kappa\equiv1$ ו-$\tau\equiv-1$?
+    choices:
+      - text: 'סליל שמאלי ברדיוס $\frac12$, למשל $(\frac12\cos t,\ \frac12\sin t,\ -\frac12t)$'
+        correct: true
+        feedback: >-
+          נכון. $a=\frac{1}{1+1}=\frac12$ ו-$b=\frac{-1}{2}$: הסליל יורד בכיוון $z$ כשמסתובבים נגד כיוון השעון במבט מלמעלה, כלומר
+          מתפתל שמאלה. תמונת המראה שלו היא הסליל הימני עם $\tau=1$.
+      - text: 'סליל ימני ברדיוס $\frac12$'
+        feedback: >-
+          לסליל ימני ($b>0$) יש בקורס $\tau>0$. פיתול שלילי פירושו התפתלות שמאלה.
+        misconception: MC-c2-torsion-sign
+      - text: 'אין מסילה כזו, כי הפיתול אי-שלילי'
+        feedback: >-
+          הפיתול מסומן. העקמומיות היא זו שחייבת להיות חיובית; לפיתול מותר כל ערך.
+        misconception: MC-c2-torsion-nonnegative
+      - text: 'סליל ברדיוס 1, כי $\frac1\kappa=1$'
+        feedback: >-
+          $\frac1\kappa$ הוא רדיוס המעגל המנשק. הרדיוס של הגליל הוא $\frac{\kappa}{\kappa^2+\tau^2}=\frac12$.
+        misconception: MC-c2-helix-radius-1-over-kappa
+
+  - id: Q-2.3-leave
+    type: twotier
+    objectives: [OBJ-2.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma$ מסילה רגולרית בפרמטר כללי, ובנקודה $t_0$ מתקיים $\kappa>0$. $\gamma'(t_0)$ ו-$\gamma''(t_0)$ מונחים במישור המנשק (כשמזיזים
+      אותם לנקודה). האם גם $\gamma'''(t_0)$ מונח בו תמיד?
+    choices:
+      - text: 'לא: הוא מונח בו בדיוק כש-$\tau(t_0)=0$'
+        correct: true
+        feedback: >-
+          נכון. הנגזרת השלישית היא הראשונה שיכולה לצאת מהמישור המנשק, ולכן המסילה נצמדת אליו עד סדר שני ועוזבת אותו בסדר
+          שלישי, בקצב שהפיתול קובע.
+      - text: 'כן, כי כל הנגזרות של המסילה הן צירופים של $\mathbf t$ ו-$\mathbf n$'
+        feedback: >-
+          $\mathbf n'=-\kappa\mathbf t+\tau\mathbf b$ מכניס את $\mathbf b$. ב-$\gamma'''$ הרכיב לאורך $\mathbf b$ הוא $\kappa\tau v^3$,
+          ובמסילה המעוקבת ב-$t=0$ הוא $6$: $\gamma'''(0)=(0,0,6)$ ניצב למישור המנשק $z=0$.
+        misconception: MC-c2-fs-dropped-term
+    reasons:
+      - text: 'בבסיס של פרנה $\gamma''''''=(\dots)\mathbf t+(\dots)\mathbf n+\kappa\tau v^3\,\mathbf b$, ו-$\kappa v^3\ne0$'
+        correct: true
+        feedback: >-
+          בדיוק. המקדמים של $\mathbf t$ ו-$\mathbf n$ (שבהם מופיעים $v'$, $v''$ ו-$\kappa'$) לא משנים את השאלה; רק המקדם של $\mathbf b$
+          קובע, והוא אפס אם ורק אם $\tau=0$.
+      - text: '$\gamma''''''$ ניצב ל-$\gamma''$, ולכן הוא בכיוון $\mathbf b$'
+        feedback: >-
+          גם ההנחה לא נכונה בדרך כלל: בפרמטר אורך הקשת $\gamma''\cdot\gamma'''=\kappa\kappa'$. וגם המסקנה לא נובעת ממנה: כדי
+          להיות בכיוון $\mathbf b$, $\gamma'''$ צריך להיות ניצב גם ל-$\gamma'$, אבל $\gamma'\cdot\gamma'''=-\kappa^2\ne0$.
+        misconception: MC-c2-fs-matrix-symmetric
+      - text: '$\gamma''''''=\kappa\tau v^3\,\mathbf b$'
+        feedback: >-
+          ל-$\gamma'''$ יש גם רכיבים לאורך $\mathbf t$ ו-$\mathbf n$; בפרמטר אורך הקשת $-\kappa^2\mathbf t+\kappa'\mathbf n+\kappa\tau\mathbf b$.
+          המסקנה על המישור המנשק נכונה, אבל הנוסחה לא.
+        misconception: MC-c2-fs-dropped-term
+
+  - id: Q-2.3-tauformula
+    type: rank
+    objectives: [OBJ-2.3-2]
+    level: mid
+    prompt: >-
+      סדרו את הגזירה של נוסחת הפיתול $\tau=\frac{(\gamma'\times\gamma'')\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}$ ממשוואות
+      פרנה-סרה (פרמטר כללי, $v=\|\gamma'\|$).
+    help: סדרו את שלבי ההוכחה מהראשון לאחרון.
+    items:
+      - id: g1
+        label: '$\gamma''=v\mathbf t$ ו-$\gamma''''=v''\mathbf t+\kappa v^2\mathbf n$'
+      - id: cross
+        label: '$\gamma''\times\gamma''''=\kappa v^3\,\mathbf t\times\mathbf n=\kappa v^3\mathbf b$'
+      - id: g3
+        label: 'גזירת $\gamma''''$ שוב: הרכיב של $\gamma''''''$ לאורך $\mathbf b$ בא רק מ-$\kappa v^2\cdot v\,\mathbf n''$, והוא $\kappa\tau v^3$'
+      - id: num
+        label: '$(\gamma''\times\gamma'''')\cdot\gamma''''''=\kappa v^3\cdot\kappa\tau v^3=\kappa^2\tau v^6$'
+      - id: den
+        label: 'מחלקים ב-$\|\gamma''\times\gamma''''\|^2=\kappa^2v^6$, שאינו אפס כי $\kappa>0$'
+    order: [g1, [cross, g3], num, den]
+    correctFeedback: >-
+      נכון. רואים מכאן גם למה הנוסחה לא תלויה בפרמטר: כל הגורמים של $v$ מתבטלים, ומה ש-$v'$ ו-$v''$ תורמים לרכיבים לאורך
+      $\mathbf t$ ו-$\mathbf n$ נעלם במכפלה עם $\mathbf b$. המכפלה הווקטורית והרכיב של $\gamma'''$ נשענים שניהם רק על
+      השלב הראשון, ולכן כל סדר ביניהם טוב.
+    wrongFeedback: >-
+      הסדר: קודם $\gamma'$ ו-$\gamma''$ בבסיס. מהם, בכל סדר, המכפלה הווקטורית שלהם (כפולה של $\mathbf b$) והרכיב היחיד
+      של $\gamma'''$ שמשנה, זה שלאורך $\mathbf b$. המונה משתמש בשניהם, והחלוקה במכנה אחרונה.
+
+  - id: Q-2.3-darboux
+    type: mc
+    objectives: [OBJ-2.3-1]
+    level: exam
+    prompt: >-
+      מחפשים וקטור $\boldsymbol\omega(s)$ כך ש-$\mathbf t'=\boldsymbol\omega\times\mathbf t$, $\mathbf n'=\boldsymbol\omega\times\mathbf n$
+      ו-$\mathbf b'=\boldsymbol\omega\times\mathbf b$ (השלשה מסתובבת סביב $\boldsymbol\omega$, "וקטור דרבו"). מהו?
+    choices:
+      - text: '$\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$'
+        correct: true
+        feedback: >-
+          נכון. $\boldsymbol\omega\times\mathbf t=\kappa\,\mathbf b\times\mathbf t=\kappa\mathbf n$,
+          $\boldsymbol\omega\times\mathbf n=\tau\,\mathbf t\times\mathbf n+\kappa\,\mathbf b\times\mathbf n=\tau\mathbf b-\kappa\mathbf t$,
+          $\boldsymbol\omega\times\mathbf b=\tau\,\mathbf t\times\mathbf b=-\tau\mathbf n$. שלוש המשוואות של פרנה-סרה בבת אחת.
+      - text: '$\boldsymbol\omega=\kappa\mathbf t+\tau\mathbf b$'
+        feedback: >-
+          בדקו את הראשונה: $(\kappa\mathbf t+\tau\mathbf b)\times\mathbf t=\tau\mathbf n$, ולא $\kappa\mathbf n$. המשיק מסתובב
+          סביב $\mathbf b$ בקצב $\kappa$, ולכן המקדם של $\mathbf b$ ב-$\boldsymbol\omega$ הוא $\kappa$.
+        misconception: MC-c2-fs-matrix-symmetric
+      - text: '$\boldsymbol\omega=-\tau\mathbf t+\kappa\mathbf b$'
+        feedback: >-
+          בדקו את השלישית: $(-\tau\mathbf t)\times\mathbf b=\tau\mathbf n$, ולא $-\tau\mathbf n$. זה מתאים למוסכמת הסימן
+          ההפוכה.
+        misconception: MC-c2-torsion-sign
+      - text: '$\boldsymbol\omega=\kappa\mathbf n$'
+        feedback: >-
+          $\kappa\mathbf n\times\mathbf t=-\kappa\mathbf b$, כך שאפילו המשוואה הראשונה לא מתקיימת. הסיבוב של השלשה הוא
+          סביב ציר במישור של $\mathbf t$ ו-$\mathbf b$.
+        misconception: MC-c2-fs-dropped-term
+    explanation: >-
+      לסליל, $\kappa$ ו-$\tau$ קבועים ו-$\boldsymbol\omega'=\tau\kappa\mathbf n+\kappa(-\tau\mathbf n)=0$: וקטור דרבו קבוע, והוא
+      בכיוון הציר. זו הדרך הקצרה להראות שמסילה עם $\kappa,\tau$ קבועים היא סליל.
+
+  - id: Q-2.3-cylinder
+    type: twotier
+    objectives: [OBJ-2.3-3, OBJ-2.3-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\gamma$ בפרמטר אורך הקשת עם $\kappa\equiv\kappa_0>0$ ו-$\tau\equiv\tau_0\ne0$ קבועים. נסמן $a=\frac{\kappa_0}{\kappa_0^2+\tau_0^2}$
+      ו-$c(s)=\gamma(s)+a\,\mathbf n(s)$. האם $c(s)$ נע לאורך ישר, כך ש-$\gamma$ מונחת על גליל מעגלי ברדיוס $a$ סביבו?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. $c$ הוא הנקודה על ציר הסליל שמול $\gamma(s)$, והמרחק ממנה ל-$\gamma(s)$ הוא $\|a\mathbf n\|=a$.
+      - text: 'לא, $c(s)$ הוא מרכז העקמומיות, והוא נע על מעגל'
+        feedback: >-
+          מרכז העקמומיות הוא $\gamma+\frac{1}{\kappa_0}\mathbf n$, והוא רחוק יותר מ-$\gamma$: $\frac1{\kappa_0}>a$ כש-$\tau_0\ne0$.
+          הנקודה $c(s)$ קרובה יותר, על הציר.
+        misconception: MC-c2-helix-radius-1-over-kappa
+    reasons:
+      - text: '$c''=(1-a\kappa_0)\mathbf t+a\tau_0\mathbf b=\frac{\tau_0}{\kappa_0^2+\tau_0^2}(\tau_0\mathbf t+\kappa_0\mathbf b)$, ו-$\tau_0\mathbf t+\kappa_0\mathbf b$ קבוע'
+        correct: true
+        feedback: >-
+          בדיוק. $(\tau_0\mathbf t+\kappa_0\mathbf b)'=\tau_0\kappa_0\mathbf n-\kappa_0\tau_0\mathbf n=0$, ולכן $c'$ הוא
+          כפולה קבועה של וקטור קבוע: $c$ נע על ישר במהירות קבועה. וגם $\mathbf n\perp\tau_0\mathbf t+\kappa_0\mathbf b$, כך
+          ש-$a\mathbf n$ ניצב לישר: $\gamma$ במרחק $a$ ממנו.
+      - text: 'כי מסילה עם עקמומיות קבועה היא מעגל, ומעגל מונח על גליל'
+        feedback: >-
+          במרחב עקמומיות קבועה לא מספיקה: הסליל, שאינו מעגל, מקיים $\kappa$ קבועה. כאן $\tau_0\ne0$, והמסילה לא מישורית בכלל.
+        misconception: MC-c2-kappa-alone-determines
+      - text: '$c''=\mathbf t+a\mathbf n''=0$, ולכן $c$ קבוע'
+        feedback: >-
+          $\mathbf n'=-\kappa_0\mathbf t+\tau_0\mathbf b$, ולכן $c'=(1-a\kappa_0)\mathbf t+a\tau_0\mathbf b\ne0$ כש-$\tau_0\ne0$.
+          $c$ קבוע רק במעגל, שם $\tau_0=0$ ו-$a=\frac{1}{\kappa_0}$.
+        misconception: MC-c2-fs-dropped-term

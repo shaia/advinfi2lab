@@ -1,0 +1,166 @@
+---
+/**
+ * Chapter practice sheet, the self-study path of a chapter in three stages:
+ *   1. understanding questions (שאלות הבנה), per lesson and by level: one definition at a time;
+ *   2. review questions (שאלות חזרה), across the chapter's lessons, from basic to exam level;
+ *   3. exam questions (שאלות מבחן), multi-part, with proofs written out and checked against a model.
+ * Lessons not written yet still get their group (anchor #pl-<lesson>), so a student can study a chapter
+ * from its questions alone, and links to an unwritten lesson land here.
+ */
+import AnyQuestion from '~/assessment/AnyQuestion';
+import { chapterQuestions, chaptersWithQuestions } from '~/assessment/bank';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { chapters, lessonSlug } from '~/course';
+import { url } from '~/lib/url';
+import { chaptersWithSummary, lessonsWithWorkbook } from '~/lib/companions';
+import { writtenLessons } from '~/lib/links';
+import '~/styles/lesson.css';
+import '~/styles/platform.css';
+
+export async function getStaticPaths() {
+  return (await chaptersWithQuestions()).map((n) => ({ params: { chapter: `ch${n}` }, props: { n } }));
+}
+
+const { n } = Astro.props;
+const chapter = chapters.find((c) => c.n === n);
+const { byLesson, review, exam } = await chapterQuestions(n);
+const written = await writtenLessons();
+const workbooks = await lessonsWithWorkbook();
+const hasSummary = (await chaptersWithSummary()).has(n);
+const lessonTitle = (id: string) => chapter?.lessons.find((l) => l.id === id)?.title ?? '';
+
+const LEVELS = [
+  { key: 'basic', label: 'בסיס' },
+  { key: 'mid', label: 'בינוני' },
+  { key: 'exam', label: 'מבחן' },
+] as const;
+const understanding = byLesson.flatMap((g) => g.questions);
+const countOf = (key: string) => understanding.filter((q) => q.level === key).length;
+let counter = 0;
+/** an exam question's worth: the sum of its parts (7 = short, 20 = long, as on the 2002 sample 80316 final) */
+const examPoints = (q: { parts?: { points?: number }[] }) => (q.parts ?? []).reduce((n, p) => n + (p.points ?? 0), 0);
+---
+
+<BaseLayout title={`דף תרגול · פרק ${n}`} description={`שאלות הבנה, שאלות חזרה ושאלות מבחן לפרק ${n}`}>
+  <div class="platform">
+    <header class="sheet sheet-narrow">
+      <p class="kicker">פרק {n} · {chapter?.title}</p>
+      <h1>דף תרגול</h1>
+      <p class="p-lede">כל שאלות הפרק במקום אחד, בסדר שבו כדאי לעבוד עליהן:</p>
+      <ol class="p-path">
+        <li><strong>שאלות הבנה</strong> לכל שיעור, אחרי שקראתם אותו: <strong>בסיס</strong> בודק שהבנתם את ההגדרה, <strong>בינוני</strong> דורש שני צעדים או הוכחה קצרה, <strong>מבחן</strong> הוא ברמה של מבחן באינפי מתקדם 2.</li>
+        {review.length > 0 && <li><strong>שאלות חזרה</strong> על כל הפרק, כשסיימתם את כל השיעורים: הן מערבבות את הנושאים, כמו במבחן.</li>}
+        {exam.length > 0 && <li><strong>שאלות מבחן</strong> עם סעיפים: כותבים הוכחה מלאה, משווים להוכחה לדוגמה ומסמנים מה עשיתם נכון.</li>}
+        <li><strong>מבחן הפרק</strong>, בסוף: הוא מגריל שאלות שמכסות כל מטרה ומראה איפה כדאי לחזור.</li>
+      </ol>
+      <div class="level-filter" role="group" aria-label="סינון">
+        <button type="button" class="btn" data-filter="all" aria-pressed="true">הכול ({understanding.length + review.length + exam.length})</button>
+        {LEVELS.map((l) => <button type="button" class="btn" data-filter={l.key} aria-pressed="false">הבנה · {l.label} ({countOf(l.key)})</button>)}
+        {review.length > 0 && <button type="button" class="btn" data-filter="review" aria-pressed="false">שאלות חזרה ({review.length})</button>}
+        {exam.length > 0 && <button type="button" class="btn" data-filter="exam-full" aria-pressed="false">שאלות מבחן ({exam.length})</button>}
+      </div>
+      <div class="p-links">
+        <a class="btn primary" href={url(`test/ch${n}/`)}>למבחן הפרק</a>
+        {hasSummary && <a class="btn" href={url(`summary/ch${n}/`)}>סיכום הפרק</a>}
+        <a class="btn" href={url('')}>לתוכן העניינים</a>
+      </div>
+    </header>
+
+    {
+      byLesson.map((g) => (
+        <section class="sheet sheet-narrow practice-lesson" data-lesson-group={g.lesson} aria-labelledby={`pl-${lessonSlug(g.lesson || 'x')}`}>
+          <h2 id={`pl-${lessonSlug(g.lesson || 'x')}`}>
+            <span class="ltr">{g.lesson}</span> {lessonTitle(g.lesson)}
+            {written.has(g.lesson) && <a href={url(`lessons/${lessonSlug(g.lesson)}/`)}>לשיעור</a>}
+            {workbooks.has(g.lesson) && <a href={url(`workbook/${lessonSlug(g.lesson)}/`)}>תרגול כתוב</a>}
+          </h2>
+          <p class="kicker">שאלות הבנה</p>
+          {LEVELS.map((l) => {
+            const qs = g.questions.filter((q) => q.level === l.key);
+            return (
+              qs.length > 0 && (
+                <div class="level-group" data-level-group={l.key}>
+                  <h3>
+                    {l.label} <span class="chip">{qs.length}</span>
+                  </h3>
+                  {qs.map((q) => {
+                    counter += 1;
+                    return <AnyQuestion client:visible q={q} lesson={g.lesson} kind="practice" label={`שאלה ${counter}`} />;
+                  })}
+                </div>
+              )
+            );
+          })}
+        </section>
+      ))
+    }
+
+    {
+      review.length > 0 && (
+        <section class="sheet sheet-narrow practice-review" data-review-group aria-labelledby="pl-review">
+          <h2 id="pl-review">שאלות חזרה על הפרק</h2>
+          <p class="p-lede">כל שאלה כאן נוגעת בכמה שיעורים. הן מסודרות מהקלה לקשה: אם נתקעתם, הרמז מפנה לשיעור שכדאי לחזור אליו.</p>
+          {LEVELS.map((l) => {
+            const qs = review.filter((q) => q.level === l.key);
+            return (
+              qs.length > 0 && (
+                <div class="review-level">
+                  <h3>
+                    {l.label} <span class="chip">{qs.length}</span>
+                  </h3>
+                  {qs.map((q) => {
+                    counter += 1;
+                    return <AnyQuestion client:visible q={q} kind="practice" label={`שאלה ${counter}`} />;
+                  })}
+                </div>
+              )
+            );
+          })}
+        </section>
+      )
+    }
+
+    {
+      exam.length > 0 && (
+        <section class="sheet sheet-narrow practice-exam" data-exam-group aria-labelledby="pl-exam">
+          <h2 id="pl-exam">שאלות מבחן</h2>
+          <p class="p-lede">
+            שאלות בפורמט של מבחן באינפי מתקדם 2: <strong>שאלות קצרות</strong> (7 נקודות: "האם ייתכן…?", תשובה ונימוק) ו<strong>שאלות ארוכות</strong> (20 נקודות, שניים-שלושה סעיפים, כולל ניסוח משפט והוכחה). בסעיפי ההוכחה כותבים הוכחה מלאה, משווים להוכחה לדוגמה ומסמנים את מה שעשיתם נכון.
+          </p>
+          {[...exam]
+            .sort((a, b) => examPoints(a) - examPoints(b))
+            .map((q, i) => (
+              <AnyQuestion client:visible q={q} kind="practice" label={`שאלה ${i + 1} · ${examPoints(q) === 7 ? 'קצרה' : 'ארוכה'}, ${examPoints(q)} נקודות`} />
+            ))}
+        </section>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<script>
+  // filter: one level of the understanding questions, the review questions, or the exam questions
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.level-filter button');
+  const apply = (key: string) => {
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === key)));
+    document.querySelectorAll<HTMLElement>('[data-level-group]').forEach((g) => {
+      g.hidden = !(key === 'all' || g.dataset.levelGroup === key);
+    });
+    document.querySelectorAll<HTMLElement>('[data-lesson-group]').forEach((s) => {
+      s.hidden = key === 'review' || key === 'exam-full' || !s.querySelector('[data-level-group]:not([hidden])');
+    });
+    const review = document.querySelector<HTMLElement>('[data-review-group]');
+    if (review) review.hidden = !(key === 'all' || key === 'review');
+    const full = document.querySelector<HTMLElement>('[data-exam-group]');
+    if (full) full.hidden = !(key === 'all' || key === 'exam-full');
+  };
+  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter ?? 'all')));
+</script>
+
+<style>
+  .p-path {
+    margin: 0.4em 0 1em;
+    padding-inline-start: 1.4em;
+    line-height: 1.7;
+  }
+</style>

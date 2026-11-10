@@ -1,0 +1,460 @@
+# Lesson 10.5 — mean-square convergence and Parseval's identity.
+# Objectives (src/course.ts):
+#   OBJ-10.5-1  state the convergence of the partial sums to the function in the norm of H
+#   OBJ-10.5-2  deduce Parseval's identity and use it to sum numerical series, such as Σ1/n²
+#   OBJ-10.5-3  tell the three kinds of convergence apart and give an example of mean-square but not uniform convergence
+#   OBJ-10.5-4  use Parseval's identity to prove inequalities, such as Wirtinger's inequality
+# Parseval: (1/π)∫_{−π}^{π} f² = a_0²/2 + Σ(a_n² + b_n²); (1/π)‖f − S_N f‖² = Σ_{n>N}(a_n² + b_n²).
+# The Wirtinger questions and Q-10.5-even-odd came from advinfilab's former Fourier chapter (lesson 5.6, handover
+# 2026-11-06), recomputed with src/math/multivar.ts (scratchpad merge-nums.ts).
+chapter: 10
+questions:
+  - id: Q-10.5-statement
+    type: mc
+    objectives: [OBJ-10.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $S_Nf$ **מתכנס ל-$f$ בממוצע ריבועי** אם $\|f-S_Nf\|\to0$ בנורמה של $H$, כלומר
+      $\int_{-\pi}^{\pi}\big(f-S_Nf\big)^2\to0$ כש-$N\to\infty$. לאילו פונקציות מבטיח המשפט של השיעור הזה התכנסות כזו?
+    choices:
+      - text: 'לכל $f\in H[-\pi,\pi]$, גם לפונקציות עם קפיצות'
+        correct: true
+        feedback: >-
+          נכון. זה נכון לכל פונקציה אינטגרבילית רימן על $[-\pi,\pi]$. ההוכחה מקרבת את $f$ בפונקציה רציפה ומשתמשת בכך
+          ש-$S_Nf$ הוא הקירוב הטוב ביותר מ-$T_N$.
+      - text: 'רק לפונקציות רציפות על המעגל ($f(-\pi)=f(\pi)$)'
+        feedback: >-
+          המשפט חל על כל $f\in H$. רציפות על המעגל (יחד עם גזירות למקוטעין) נדרשת להתכנסות **במידה שווה**, שיעור 10.4.
+        misconception: MC-c10-parseval-needs-continuity
+      - text: 'רק לפונקציות גזירות למקוטעין, כמו במשפט ההתכנסות הנקודתית'
+        feedback: >-
+          גזירות היא ההנחה של ההתכנסות **הנקודתית** (שיעור 10.3). בממוצע ריבועי ההתכנסות נכונה לכל $f\in H$, בלי שום
+          הנחת גזירות.
+        misconception: MC-c10-parseval-needs-continuity
+      - text: 'רק לפונקציות עם $\sum(|a_n|+|b_n|)<\infty$'
+        feedback: >-
+          זה התנאי המספיק להתכנסות במידה שווה (שיעור 10.4). לגל הריבועי $\sum|b_n|=\infty$, ובכל זאת הוא מתכנס בממוצע
+          ריבועי.
+        misconception: MC-c10-abs-sum-necessary
+
+  - id: Q-10.5-hpoints
+    type: mc
+    objectives: [OBJ-10.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f,g\in H[-\pi,\pi]$ שוות בכל מקום פרט לחמש נקודות. מה נכון?
+    choices:
+      - text: 'יש להן אותם מקדמי פורייה, ו-$\|f-g\|=0$; ב-$H$ הן אותו איבר'
+        correct: true
+        feedback: >-
+          נכון. $f-g$ שונה מאפס בחמש נקודות בלבד, ולכן כל אינטגרל שלה, גם $\int(f-g)\cos nx$ וגם $\int(f-g)^2$, הוא אפס.
+      - text: 'המקדמים שונים מעט, כי הפונקציות שונות'
+        feedback: >-
+          שינוי במספר סופי של נקודות לא משנה שום אינטגרל רימן, ולכן לא משנה אף מקדם.
+        misconception: MC-c10-h-sees-points
+      - text: '$\|f-g\|>0$, ולכן $S_Nf$ יכול להתכנס ב-$H$ רק לאחת מהן'
+        feedback: >-
+          $\|f-g\|^2=\int(f-g)^2=0$. ב-$H$ מזהים פונקציות שמרחקן אפס, ו-$S_Nf$ מתכנס לשתיהן.
+        misconception: MC-c10-h-sees-points
+
+  - id: Q-10.5-dist
+    type: numeric
+    objectives: [OBJ-10.5-1]
+    level: basic
+    prompt: >-
+      $f$ הגל הריבועי $\pm1$, עם $b_n=\frac4{\pi n}$ ל-$n$ אי-זוגי ושאר המקדמים אפס. חשבו את
+      $$\frac1\pi\int_{-\pi}^{\pi}\big(f-S_1f\big)^2dx.$$
+    answer: 0.3788611
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. מפיתגורס $\frac1\pi\|f-S_1f\|^2=\frac1\pi\int f^2-b_1^2=2-\frac{16}{\pi^2}\approx0.379$. זה גם
+      $\sum_{n\ge3}b_n^2$, הזנב של טור פרסבל.
+    wrongFeedback: >-
+      $\frac1\pi\|f-S_Nf\|^2=\frac1\pi\int f^2-\left(\frac{a_0^2}2+\sum_{n\le N}(a_n^2+b_n^2)\right)$.
+    commonWrong:
+      - value: 1.1902271
+        feedback: >-
+          זה $\int(f-S_1f)^2$ עצמו, $2\pi-\frac{16}\pi$: חסר הגורם $\frac1\pi$ שבשאלה.
+        misconception: MC-c10-forget-1-over-pi
+      - value: 0.7267605
+        feedback: >-
+          זה $2-\frac4\pi$: הפחתתם את $b_1$ במקום את $b_1^2$.
+        misconception: MC-c10-squares-vs-abs
+
+  - id: Q-10.5-zeta2
+    type: numeric
+    objectives: [OBJ-10.5-2]
+    level: basic
+    prompt: >-
+      $f(x)=x$ על $[-\pi,\pi]$, עם $b_n=\frac{2(-1)^{n+1}}n$ ו-$a_n=0$. השתמשו בשוויון פרסבל וחשבו את
+      $\sum_{n=1}^\infty\frac1{n^2}$.
+    answer: 1.6449341
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac1\pi\int_{-\pi}^{\pi}x^2\,dx=\frac{2\pi^2}3=\sum b_n^2=4\sum\frac1{n^2}$, ולכן $\sum\frac1{n^2}=\frac{\pi^2}6$.
+    wrongFeedback: >-
+      פרסבל: $\frac1\pi\int f^2=\frac{a_0^2}2+\sum(a_n^2+b_n^2)$. חשבו את שני האגפים, עם $b_n^2=\frac4{n^2}$.
+    commonWrong:
+      - value: 6.5797363
+        feedback: >-
+          זה $\frac{2\pi^2}3$: לקחתם $b_n^2=\frac1{n^2}$. הגורם 2 במקדם נכנס בריבוע, 4, ויש לחלק בו.
+        misconception: MC-c10-parseval-coeff-squared
+      - value: 5.1677128
+        feedback: >-
+          זה $\frac{\pi^3}6$: השוויתם את $4\sum\frac1{n^2}$ ל-$\int x^2=\frac{2\pi^3}3$, בלי $\frac1\pi$.
+        misconception: MC-c10-forget-1-over-pi
+      - value: 0.4112335
+        feedback: >-
+          זה $\frac{\pi^2}{24}$: חילקתם ב-16 במקום ב-4. $b_n^2=\left(\frac2n\right)^2=\frac4{n^2}$.
+        misconception: MC-c10-parseval-coeff-squared
+
+  - id: Q-10.5-example
+    type: mc
+    objectives: [OBJ-10.5-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      לאיזו מהפונקציות הבאות (מומשכות למחזוריות מ-$[-\pi,\pi]$) טור פורייה מתכנס אליה בממוצע ריבועי אבל **לא** במידה שווה?
+    choices:
+      - text: 'הגל הריבועי: $1$ על $(0,\pi)$, $-1$ על $(-\pi,0)$'
+        correct: true
+        feedback: >-
+          נכון. ב-$H$ ההתכנסות מובטחת לכל פונקציה; במידה שווה היא נכשלת בגלל הקפיצות (שיעור 10.4).
+      - text: '$|x|$'
+        feedback: >-
+          ל-$|x|$ יש פינה ולא קפיצה: ההמשכה רציפה וגזירה למקוטעין, ולכן הטור מתכנס במידה שווה.
+        misconception: MC-c10-corner-blocks-uniform
+      - text: '$|\sin x|$'
+        feedback: >-
+          גם כאן פינות בלבד: $\sum|a_n|<\infty$, וההתכנסות במידה שווה.
+        misconception: MC-c10-corner-blocks-uniform
+
+  - id: Q-10.5-wirtinger
+    type: mc
+    objectives: [OBJ-10.5-4]
+    qualitative: true
+    level: basic
+    prompt: >-
+      **אי-שוויון וירטינגר** הוא $\int_{-\pi}^{\pi}f^2\le\int_{-\pi}^{\pi}(f')^2$, בהנחות מתאימות על $f$. באיזה מהניסוחים
+      הבאים ההנחות נכונות, כלומר המסקנה נכונה לכל $f$ שמקיימת אותן?
+    choices:
+      - text: '$f$ מחזורית ב-$2\pi$, גזירה ברציפות, ו-$\int_{-\pi}^{\pi}f=0$'
+        correct: true
+        feedback: >-
+          נכון. לפי פרסבל ל-$f$ ול-$f'$ (עם $a_0=0$, ועם $a_n(f')=n\,b_n$, $b_n(f')=-n\,a_n$ משיעור 10.4):
+          $\frac1\pi\int f^2=\sum(a_n^2+b_n^2)\le\sum n^2(a_n^2+b_n^2)=\frac1\pi\int(f')^2$.
+      - text: '$f$ מחזורית ב-$2\pi$ וגזירה ברציפות (בלי תנאי על $\int f$)'
+        feedback: >-
+          בלי $\int f=0$ זה נכשל: $f=1$ נותנת $2\pi\le0$. הקבוע תורם ל-$\int f^2$ ולא ל-$\int(f')^2$.
+        misconception: MC-c10-wirtinger-hypotheses
+      - text: '$f$ גזירה ברציפות על $[0,2\pi]$ (בלי מחזוריות) ו-$\int_0^{2\pi}f=0$, עם האינטגרלים על $[0,2\pi]$'
+        feedback: >-
+          בלי מחזוריות זה נכשל: $f=x-\pi$ נותנת $\int_0^{2\pi}f^2=\frac{2\pi^3}{3}\approx20.67$ ו-$\int_0^{2\pi}(f')^2=2\pi\approx6.28$.
+          המחזוריות נחוצה כדי ש-$a_n(f')=n\,b_n(f)$, בלי איבר שפה.
+        misconception: MC-c10-wirtinger-hypotheses
+      - text: '$f$ מחזורית ב-$2\pi$, גזירה ברציפות, ו-$f(0)=0$ במקום $\int f=0$'
+        feedback: >-
+          $f(0)=0$ אינו מחליף את הממוצע אפס: $f=\cos x-1$ נותנת $\int f^2=3\pi$ ו-$\int(f')^2=\int\sin^2x=\pi$.
+        misconception: MC-c10-wirtinger-hypotheses
+
+  - id: Q-10.5-rank
+    type: rank
+    objectives: [OBJ-10.5-1]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה ש-$\|f-S_Nf\|\to0$ לכל $f\in H[-\pi,\pi]$. (עובדה מהשיעור: פונקציות רציפות, מחזוריות וליניאריות
+      למקוטעין צפופות ב-$H$.)
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: approx
+        label: 'יהי $\varepsilon>0$. בוחרים $g$ רציפה, מחזורית וליניארית למקוטעין עם $\|f-g\|<\frac\varepsilon2$'
+      - id: uniform
+        label: '$g$ רציפה על המעגל וגזירה למקוטעין, ולכן $S_Ng\to g$ במידה שווה (שיעור 10.4)'
+      - id: norm
+        label: '$\|g-S_Ng\|\le\sqrt{2\pi}\,\max|g-S_Ng|<\frac\varepsilon2$ לכל $N\ge N_0$'
+      - id: best
+        label: '$S_Ng\in T_N$ ו-$S_Nf$ הקרוב ביותר ל-$f$ ב-$T_N$: $\|f-S_Nf\|\le\|f-S_Ng\|\le\|f-g\|+\|g-S_Ng\|<\varepsilon$'
+      - id: done
+        label: 'זה נכון לכל $N\ge N_0$, ולכן $\|f-S_Nf\|\to0$'
+    order: [approx, uniform, norm, best, done]
+    correctFeedback: >-
+      נכון. הרעיון: מקרבים בפונקציה נוחה, ואת המחיר משלמים פעם אחת בלבד בזכות האופטימליות של ההטלה. שימו לב
+      שהמשפט לא אומר ש-$S_Nf$ קרוב ל-$S_Ng$ בכל נקודה.
+    wrongFeedback: >-
+      התחילו מקירוב של $f$ בפונקציה נוחה. הטריק הוא בשלב האופטימליות: $S_Nf$ טוב לפחות כמו כל איבר אחר של $T_N$, ובפרט כמו $S_Ng$.
+
+  - id: Q-10.5-tail
+    type: twotier
+    objectives: [OBJ-10.5-1, OBJ-10.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם "$\|f-S_Nf\|\to0$" ושוויון פרסבל $\frac1\pi\int f^2=\frac{a_0^2}2+\sum(a_n^2+b_n^2)$ הם שתי טענות שקולות
+      (לפונקציה $f\in H$ נתונה)?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. ההפרש בין האגפים של פרסבל עד $N$ הוא בדיוק $\frac1\pi\|f-S_Nf\|^2$.'
+      - text: לא
+        feedback: >-
+          מפיתגורס $\frac1\pi\|f-S_Nf\|^2=\frac1\pi\int f^2-\left(\frac{a_0^2}2+\sum_{n\le N}(a_n^2+b_n^2)\right)$: אחד שואף
+          לאפס בדיוק כשהשני מתקיים בגבול.
+        misconception: MC-c10-parseval-needs-continuity
+    reasons:
+      - text: 'פיתגורס להטלה: $\frac1\pi\|f-S_Nf\|^2=\frac1\pi\|f\|^2-\frac1\pi\|S_Nf\|^2$'
+        correct: true
+        feedback: >-
+          בדיוק. לכן מהתכנסות בממוצע ריבועי לכל $f\in H$ נובע פרסבל לכל $f\in H$.
+      - text: 'לא: פרסבל צריך רציפות, וההתכנסות ב-$H$ לא'
+        feedback: >-
+          גם פרסבל חל לכל $f\in H$: לגל ריבועי $2=\sum b_n^2$. השתיים עומדות ונופלות יחד.
+        misconception: MC-c10-parseval-needs-continuity
+      - text: 'כן, כי בסל הוא תמיד שוויון, ולכן פרסבל נכון בלי קשר להתכנסות'
+        feedback: >-
+          בסל הוא אי-שוויון, ממש עבור כל $N$ סופי כש-$f\notin T_N$. השוויון בגבול הוא התוכן של המשפט.
+        misconception: MC-c10-bessel-reversed
+
+  - id: Q-10.5-zeta4
+    type: numeric
+    objectives: [OBJ-10.5-2]
+    level: mid
+    prompt: >-
+      $f(x)=x^2$ על $[-\pi,\pi]$: $a_0=\frac{2\pi^2}3$, $a_n=\frac{4(-1)^n}{n^2}$, $b_n=0$. השתמשו בפרסבל וחשבו את
+      $\sum_{n=1}^\infty\frac1{n^4}$.
+    answer: 1.0823232
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac1\pi\int x^4=\frac{2\pi^4}5$ ו-$\frac{a_0^2}2=\frac{2\pi^4}9$, ולכן
+      $16\sum\frac1{n^4}=\frac{2\pi^4}5-\frac{2\pi^4}9=\frac{8\pi^4}{45}$, כלומר $\sum\frac1{n^4}=\frac{\pi^4}{90}$.
+    wrongFeedback: >-
+      $\frac1\pi\int x^4=\frac{a_0^2}2+\sum a_n^2$. חשבו כל איבר בנפרד, ושימו לב ל-$\frac{a_0^2}2$.
+    commonWrong:
+      - value: -0.2705808
+        feedback: >-
+          הפחתתם $a_0^2=\frac{4\pi^4}9$ במקום $\frac{a_0^2}2$ וקיבלתם סכום חיובי שלילי, סימן ודאי לטעות.
+        misconception: MC-c10-a0-not-halved
+      - value: 4.3292929
+        feedback: >-
+          זה $\frac{2\pi^4}{45}$: לקחתם $a_n^2=\frac4{n^4}$. $\left(\frac4{n^2}\right)^2=\frac{16}{n^4}$.
+        misconception: MC-c10-parseval-coeff-squared
+
+  - id: Q-10.5-odd2
+    type: numeric
+    objectives: [OBJ-10.5-2]
+    level: mid
+    prompt: >-
+      השתמשו בפרסבל לגל הריבועי $\pm1$ ($b_n=\frac4{\pi n}$ ל-$n$ אי-זוגי, שאר המקדמים אפס) וחשבו את
+      $$1+\frac19+\frac1{25}+\frac1{49}+\cdots=\sum_{k=0}^\infty\frac1{(2k+1)^2}.$$
+    answer: 1.2337006
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac1\pi\int_{-\pi}^{\pi}1\,dx=2=\frac{16}{\pi^2}\sum\frac1{(2k+1)^2}$, ולכן הסכום $\frac{\pi^2}8$. פרסבל חל
+      כאן אף שהגל קופץ.
+    wrongFeedback: >-
+      פרסבל: $\frac1\pi\int f^2=\sum b_n^2$. כאן $f^2\equiv1$.
+    commonWrong:
+      - value: 3.8757846
+        feedback: >-
+          זה $\frac{\pi^3}8$: השוויתם ל-$\int f^2=2\pi$ ולא ל-$\frac1\pi\int f^2=2$.
+        misconception: MC-c10-forget-1-over-pi
+      - value: 0.3926991
+        feedback: >-
+          זה $\frac\pi8$: ריבעתם רק את $\frac4n$ ולא את $\pi$. $b_n^2=\frac{16}{\pi^2n^2}$.
+        misconception: MC-c10-parseval-coeff-squared
+
+  - id: Q-10.5-kinds
+    type: multi
+    objectives: [OBJ-10.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סדרת פונקציות $f_n\in H[-\pi,\pi]$ ופונקציה $f\in H[-\pi,\pi]$. אילו מהגרירות הבאות נכונות **תמיד**? סמנו את כולן.
+    choices:
+      - text: 'במידה שווה $\Rightarrow$ בממוצע ריבועי'
+        correct: true
+        feedback: 'נכון: $\|f_n-f\|\le\sqrt{2\pi}\,\sup|f_n-f|$.'
+      - text: 'במידה שווה $\Rightarrow$ נקודתית'
+        correct: true
+        feedback: 'נכון: $|f_n(x)-f(x)|\le\sup|f_n-f|$ לכל $x$.'
+      - text: 'בממוצע ריבועי $\Rightarrow$ נקודתית'
+        feedback: >-
+          לא. $S_Nf$ של הגל הריבועי עם $f(0)=1$ מתכנס אליו ב-$H$, ו-$S_Nf(0)=0$ לכל $N$.
+        misconception: MC-c9-L2-implies-uniform
+      - text: 'נקודתית $\Rightarrow$ בממוצע ריבועי'
+        feedback: >-
+          לא. $f_n=\sqrt n$ על $(0,\frac1n)$ ואפס בשאר: $f_n(x)\to0$ לכל $x$, אבל $\int f_n^2=1$ לכל $n$.
+        misconception: MC-c10-pointwise-implies-mean
+      - text: 'בממוצע ריבועי $\Rightarrow$ במידה שווה'
+        feedback: >-
+          לא: טור הגל הריבועי מתכנס ב-$H$ ולא במידה שווה.
+        misconception: MC-c9-L2-implies-uniform
+
+  - id: Q-10.5-odd4
+    type: numeric
+    objectives: [OBJ-10.5-2]
+    level: mid
+    prompt: >-
+      ל-$f(x)=|x|$: $a_0=\pi$, $a_n=-\frac4{\pi n^2}$ ל-$n$ אי-זוגי, ושאר המקדמים אפס. השתמשו בפרסבל וחשבו את
+      $$\sum_{k=0}^\infty\frac1{(2k+1)^4}=1+\frac1{81}+\frac1{625}+\cdots$$
+    answer: 1.014678
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac1\pi\int x^2=\frac{2\pi^2}3=\frac{\pi^2}2+\frac{16}{\pi^2}\sum\frac1{(2k+1)^4}$, ולכן הסכום
+      $\frac{\pi^2}6\cdot\frac{\pi^2}{16}=\frac{\pi^4}{96}$. בדיקה: $\frac{\pi^4}{96}\cdot\frac{16}{15}=\frac{\pi^4}{90}$, כי
+      הזוגיים תורמים $\frac1{16}$ מהסכום המלא.
+    wrongFeedback: >-
+      $\frac1\pi\int|x|^2=\frac{a_0^2}2+\sum a_n^2$, כש-$\frac{a_0^2}2=\frac{\pi^2}2$ ו-$a_n^2=\frac{16}{\pi^2n^4}$.
+    commonWrong:
+      - value: -2.0293561
+        feedback: >-
+          הפחתתם $a_0^2=\pi^2$ במקום $\frac{a_0^2}2=\frac{\pi^2}2$, וקיבלתם סכום שלילי.
+        misconception: MC-c10-a0-not-halved
+      - value: 0.1028084
+        feedback: >-
+          זה $\frac{\pi^2}{96}$: ריבעתם את $\frac{4}{n^2}$ בלי ה-$\pi$ שבמכנה. $a_n^2=\frac{16}{\pi^2n^4}$.
+        misconception: MC-c10-parseval-coeff-squared
+
+  - id: Q-10.5-even-odd
+    type: mc
+    objectives: [OBJ-10.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נסמן $S=\sum_{n\ge1}\frac1{n^2}$ ו-$T=\sum_{n\ \mathrm{odd}}\frac1{n^2}$. פרסבל לגל הריבועי נותן $T=\frac{\pi^2}{8}$.
+      איזה קשר בין $S$ ל-$T$ נכון, ומה הוא נותן?
+    choices:
+      - text: '$S=T+\frac{S}{4}$, ולכן $S=\frac43T=\frac{\pi^2}{6}$'
+        correct: true
+        feedback: >-
+          נכון. האיברים הזוגיים הם $\sum_m\frac{1}{(2m)^2}=\frac14S$. שתי הדרכים (פרסבל ל-$x$ ופרסבל לגל הריבועי) מסכימות.
+      - text: '$S=2T$, כי חצי מהאיברים אי-זוגיים, ולכן $S=\frac{\pi^2}{4}$'
+        feedback: >-
+          האיברים הזוגיים קטנים יותר: $\frac1{(2m)^2}=\frac14\cdot\frac1{m^2}$. לכן הם תורמים רק $\frac S4$, ולא חצי.
+        misconception: MC-c10-sum-over-wrong-indices
+      - text: '$S=T$, כי האיברים הזוגיים מתאפסים, ולכן $S=\frac{\pi^2}{8}$'
+        feedback: >-
+          בטור של הגל הריבועי המקדמים הזוגיים מתאפסים; בטור $\sum\frac{1}{n^2}$ האיברים הזוגיים חיוביים.
+        misconception: MC-c10-sum-over-wrong-indices
+
+  - id: Q-10.5-mean-zero
+    type: twotier
+    objectives: [OBJ-10.5-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=2+\sin x$ מחזורית וגזירה ברציפות. האם $\int_{-\pi}^{\pi}f^2\le\int_{-\pi}^{\pi}(f')^2$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $\int f^2=8\pi+0+\pi=9\pi$, ואילו $\int(f')^2=\int\cos^2x=\pi$.
+      - text: כן
+        feedback: >-
+          חשבו: $\int(2+\sin x)^2=8\pi+0+\pi=9\pi>\pi=\int\cos^2x$. וירטינגר דורש ממוצע אפס.
+        misconception: MC-c10-wirtinger-hypotheses
+    reasons:
+      - text: 'הממוצע של $f$ הוא 2, לא 0; האיבר הקבוע מגדיל את $\int f^2$ ב-$8\pi$ ולא תורם ל-$\int(f^{\prime})^2$'
+        correct: true
+        feedback: >-
+          בדיוק. ל-$f-2=\sin x$ (ממוצע אפס) יש שוויון, $\pi=\pi$: זה בדיוק מקרה השוויון של וירטינגר.
+      - text: 'כן, כי וירטינגר נכון לכל פונקציה מחזורית וגזירה ברציפות'
+        feedback: >-
+          ההנחה $\int f=0$ הכרחית. $f=1$ (או כאן $f=2+\sin x$) מפרה את אי-השוויון.
+        misconception: MC-c10-wirtinger-hypotheses
+      - text: 'כן, כי $\sin x$ הוא מקרה השוויון, וכל הזזה שלו בקבוע נותנת שוויון'
+        feedback: >-
+          הזזה בקבוע משנה את $\int f^2$ ולא את $\int(f')^2$, ולכן היא שוברת את השוויון, לא שומרת עליו.
+        misconception: MC-c10-wirtinger-hypotheses
+
+  - id: Q-10.5-point
+    type: twotier
+    objectives: [OBJ-10.5-3, OBJ-10.5-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f(x)=0$ לכל $x\ne0$ ו-$f(0)=1$ על $[-\pi,\pi]$. מה נכון לגבי $S_Nf$?
+    choices:
+      - text: '$S_Nf\to f$ בנורמה של $H$, אבל $S_Nf(0)\not\to f(0)$'
+        correct: true
+        feedback: >-
+          נכון. כל המקדמים אפס, ולכן $S_Nf\equiv0$; ו-$\|f-0\|^2=\int f^2=0$. אבל $S_Nf(0)=0\ne1$.
+      - text: '$S_Nf\to f$ גם בנורמה של $H$ וגם בכל נקודה'
+        feedback: >-
+          ב-0: $S_Nf(0)=0$ לכל $N$ ו-$f(0)=1$. התכנסות ב-$H$ לא רואה נקודה בודדת.
+        misconception: MC-c9-L2-implies-uniform
+      - text: 'אין התכנסות באף מובן, כי $f$ לא רציפה'
+        feedback: >-
+          $f\in H$ (היא אינטגרבילית רימן), והמשפט חל על כל $f\in H$. ההתכנסות ב-$H$ טריוויאלית כאן.
+        misconception: MC-c10-parseval-needs-continuity
+    reasons:
+      - text: 'כל מקדמי פורייה של $f$ הם אפס, ו-$\int f^2=0$: ב-$H$ הפונקציה $f$ היא האפס'
+        correct: true
+        feedback: >-
+          בדיוק. זו הדוגמה הקיצונית לכך שהתכנסות בממוצע ריבועי אינה גוררת התכנסות נקודתית.
+      - text: 'כי $\|f-S_Nf\|\to0$ גורר $S_Nf(x)\to f(x)$ בכל נקודה'
+        feedback: >-
+          הגרירה הזו לא נכונה: הדוגמה עצמה מפריכה אותה.
+        misconception: MC-c9-L2-implies-uniform
+      - text: 'כי $f(0)=1$, ולכן $\|f-S_Nf\|^2\ge1$ לכל $N$'
+        feedback: >-
+          ערך בנקודה אחת לא תורם לאינטגרל: $\int(f-0)^2=0$.
+        misconception: MC-c10-h-sees-points
+
+  - id: Q-10.5-equality
+    type: twotier
+    objectives: [OBJ-10.5-4, OBJ-10.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ מחזורית ב-$2\pi$, גזירה ברציפות, $\int_{-\pi}^{\pi}f=0$ ו-$\int_{-\pi}^{\pi}f^2=\int_{-\pi}^{\pi}(f')^2$. האם בהכרח
+      $f(x)=a\cos x+b\sin x$ לקבועים $a,b$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. מפרסבל $\sum(n^2-1)(a_n^2+b_n^2)=0$, וכל המחוברים אי-שליליים, ולכן $a_n=b_n=0$ ל-$n\ge2$.
+      - text: לא
+        feedback: >-
+          בדקו את $\sin2x$: $\int\sin^22x=\pi$ ו-$\int(2\cos2x)^2=4\pi$, אין שוויון. כל הרמוניה $n\ge2$ מגדילה את צד ימין
+          פי $n^2$.
+        misconception: MC-c10-derivative-coeffs-pairing
+    reasons:
+      - text: 'פרסבל נותן $\sum(n^2-1)(a_n^2+b_n^2)=0$, ולכן רק $n=1$ נשאר; ל-$g=f-a_1\cos x-b_1\sin x$ פרסבל נותן $\int g^2=0$, ו-$g$ רציפה'
+        correct: true
+        feedback: >-
+          בדיוק. שימו לב לשלב האחרון: כל מקדמי $g$ אפס, ולכן $\int g^2=0$, ולפונקציה **רציפה** זה גורר $g\equiv0$
+          (החיוביות של המכפלה הפנימית על $C[-\pi,\pi]$, שיעור 9.1).
+      - text: 'לא: כל $f=\sin nx$ נותנת שוויון, כי לסינוס ולקוסינוס אותה נורמה'
+        feedback: >-
+          $(\sin nx)'=n\cos nx$, ולכן $\int(f')^2=n^2\pi$. השוויון רק ב-$n=1$.
+        misconception: MC-c10-derivative-coeffs-pairing
+      - text: 'שוויון בפרסבל מתקיים רק לפולינומים טריגונומטריים, ולכן $f$ פולינום טריגונומטרי כלשהו, לאו דווקא ממעלה 1'
+        feedback: >-
+          פרסבל הוא שוויון לכל $f\in H$, לא רק לפולינומים. מה שקובע כאן הוא $n^2-1>0$ ל-$n\ge2$, ומכאן שרק $n=1$ נשאר.
+        misconception: MC-c10-parseval-incomplete
+
+  - id: Q-10.5-high-harmonics
+    type: numeric
+    objectives: [OBJ-10.5-4]
+    level: exam
+    prompt: >-
+      $f$ מחזורית ב-$2\pi$ וגזירה ברציפות, ו-$a_0=a_1=b_1=a_2=b_2=0$ (רק הרמוניות $n\ge3$). מהו הקבוע הגדול ביותר $c$
+      כך ש-$\int_{-\pi}^{\pi}(f')^2\ge c\int_{-\pi}^{\pi}f^2$ לכל $f$ כזו?
+    answer: 9
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac1\pi\int(f')^2=\sum_{n\ge3}n^2(a_n^2+b_n^2)\ge9\sum_{n\ge3}(a_n^2+b_n^2)=\frac9\pi\int f^2$, ושוויון
+      ל-$f=\cos3x$. לכן 9 הוא הקבוע הטוב ביותר.
+    wrongFeedback: >-
+      כתבו את שני האינטגרלים בעזרת פרסבל, והשוו איבר איבר: מה הכי קטן ש-$n^2$ יכול להיות?
+    commonWrong:
+      - value: 1
+        feedback: >-
+          1 הוא וירטינגר הרגיל, נכון לכל $f$ עם ממוצע אפס. כאן חסרות גם ההרמוניות 1 ו-2, ולכן אפשר יותר: $n^2\ge9$.
+        misconception: MC-c10-wirtinger-hypotheses
+      - value: 3
+        feedback: >-
+          $\int(f')^2$ מערב $n^2(a_n^2+b_n^2)$, לא $n(\dots)$: כל נגזרת מכפילה מקדם ב-$n$, והריבוע נותן $n^2$.
+        misconception: MC-c10-derivative-coeffs-pairing

@@ -1,0 +1,438 @@
+# Chapter 1 review — curves in ℝⁿ and in the plane (lessons 1.1–1.6), easy to hard.
+# Every lesson is touched; most questions combine two or more lessons, and a few reach back to chapter 0
+# (the cross product, the chain rule). Each hint names the lesson to go back to.
+chapter: 1
+questions:
+  - id: Q-1-review-01
+    type: multi
+    objectives: [OBJ-1.1-1, OBJ-1.2-1, OBJ-1.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma(t)=(\cos t,\sin t)$ ו-$\delta(t)=(\cos 2t,\sin 2t)$, שתיהן על $[0,2\pi]$. אילו מהגדלים הבאים **שווים**
+      לשתי המסילות? סמנו את כולם.
+    choices:
+      - text: התמונה
+        correct: true
+        feedback: >-
+          נכון: שתיהן מציירות את מעגל היחידה.
+      - text: העקמומיות בכל נקודה של התמונה
+        correct: true
+        feedback: >-
+          נכון: $\kappa\equiv1$ לשתיהן. עקמומיות היא גודל גאומטרי מקומי, ואינה תלויה במהירות.
+      - text: 'הישר המשיק בנקודה $(1,0)$'
+        correct: true
+        feedback: >-
+          נכון: בשתיהן זה הישר $x=1$. $\gamma'(0)=(0,1)$ ו-$\delta'(0)=(0,2)$ מקבילים.
+      - text: האורך
+        feedback: >-
+          $L(\gamma)=2\pi$ ו-$L(\delta)=\int_0^{2\pi}2\,dt=4\pi$: $\delta$ מקיפה פעמיים. אורך הוא תכונה של המסילה, לא של
+          התמונה.
+        misconception: MC-c0-curve-is-image
+      - text: 'אורך וקטור המשיק, $\|\gamma''\|$ ו-$\|\delta''\|$'
+        feedback: >-
+          $\|\gamma'\|=1$ ו-$\|\delta'\|=2$. המהירות תלויה בפרמטריזציה.
+        misconception: MC-c0-curve-is-image
+    hints:
+      - 'חזרו לשיעור 1.1 (מסילה מול תמונה) ולשיעור 1.2 (אורך, ומתי הוא לא תלוי בפרמטריזציה).'
+
+  - id: Q-1-review-02
+    type: numeric
+    objectives: [OBJ-1.2-1]
+    level: basic
+    prompt: >-
+      חשבו את האורך של הסליל $(\cos t,\ \sin t,\ t)$ על $[0,2\pi]$.
+    answer: 8.8857659
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $2\pi\sqrt2$. $\|\gamma'(t)\|=\sqrt{\sin^2t+\cos^2t+1}=\sqrt2$ לכל $t$.
+    wrongFeedback: >-
+      $L=\int_0^{2\pi}\|\gamma'(t)\|\,dt$, עם שלושת הרכיבים של $\gamma'$ בתוך השורש.
+    commonWrong:
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא אורך ההיטל, מעגל היחידה. הסליל גם עולה ב-$2\pi$, ורכיב ה-$z$ נכנס למהירות.
+        misconception: MC-c1-speed-norm
+      - value: 12.566371
+        feedback: >-
+          $4\pi$ מתקבל מ-$\|\gamma'\|=1+1$: חיברו את אורכי הרכיבים במקום שורש סכום הריבועים.
+        misconception: MC-c1-speed-norm
+    hints:
+      - 'חזרו לשיעור 1.2: הנוסחה של האורך כאינטגרל של אורך הנגזרת.'
+
+  - id: Q-1-review-03
+    type: numeric
+    objectives: [OBJ-1.3-2, OBJ-0.2-1]
+    level: basic
+    prompt: >-
+      חשבו את העקמומיות של $\gamma(t)=\big(t,\ \frac{t^2}{2},\ \frac{t^3}{3}\big)$ בנקודה $t=1$.
+    answer: 0.47140452
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\frac{\sqrt2}{3}$. $\gamma'(1)=(1,1,1)$, $\gamma''(1)=(0,1,2)$, $\gamma'\times\gamma''=(1,-2,1)$ באורך
+      $\sqrt6$, ו-$\|\gamma'(1)\|^3=3\sqrt3$: $\frac{\sqrt6}{3\sqrt3}=\frac{\sqrt2}3$.
+    wrongFeedback: >-
+      חשבו את המכפלה הווקטורית רכיב אחר רכיב ($\mathbf i(y'z''-z'y'')-\dots$), את האורך שלה, וחלקו ב-$\|\gamma'\|^3$.
+    commonWrong:
+      - value: 0.81649658
+        feedback: >-
+          $\frac{\sqrt6}{3}$: חילקו ב-$\|\gamma'\|^2=3$. החזקה היא שלישית.
+        misconception: MC-c1-curvature-power
+      - value: 2.2360680
+        feedback: >-
+          $\sqrt5=\|\gamma''(1)\|$. הפרמטר אינו אורך הקשת (המהירות $\sqrt3$), ולכן התאוצה אינה העקמומיות.
+        misconception: MC-c1-curvature-acceleration
+    hints:
+      - 'חזרו לשיעור 1.3 (הנוסחה עם המכפלה הווקטורית) ולשיעור 0.2 (חישוב מכפלה וקטורית).'
+
+  - id: Q-1-review-04
+    type: multi
+    objectives: [OBJ-1.5-1, OBJ-1.5-3, OBJ-1.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma$ מסילה מישורית רגולרית מסדר $C^2$, עם עקמומיות $\kappa$ ועקמומיות מסומנת $k$. אילו טענות נכונות? סמנו את
+      כולן.
+    choices:
+      - text: '$|k|=\kappa$ בכל נקודה'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf t'=k\mathbf n_s$ ו-$\|\mathbf n_s\|=1$, ולכן $\|\mathbf t'\|=|k|$.
+      - text: 'היפוך הכיוון הופך את הסימן של $k$ ואינו משנה את $\kappa$'
+        correct: true
+        feedback: >-
+          נכון, בנקודה המתאימה: $k_\delta(s)=-k_\gamma(-s)$ עבור $\delta(s)=\gamma(-s)$, ו-$\kappa$ אי-שלילית תמיד.
+      - text: 'שיקוף בישר אינו משנה את $k$'
+        feedback: >-
+          שיקוף הופך שמאל וימין, ולכן הופך את $k$. רק $\kappa$ נשמרת בו.
+        misconception: MC-c1-reflection-keeps-k
+      - text: '$k$ מוגדרת רק בנקודות שבהן $\kappa>0$'
+        feedback: >-
+          זה נכון לנורמל הראשי $\mathbf n$, לא ל-$k$. $\mathbf n_s$ הוא $\mathbf t$ מסובב, ומוגדר בכל נקודה רגולרית,
+          ולכן גם $k$, שמתאפסת כש-$\kappa=0$.
+        misconception: MC-c1-ns-is-n
+    hints:
+      - 'חזרו לשיעור 1.5: הנורמל המסובב, ומה קורה ל-$k$ בהיפוך כיוון ובשיקוף.'
+
+  - id: Q-1-review-05
+    type: numeric
+    objectives: [OBJ-1.4-3, OBJ-1.3-2]
+    level: mid
+    prompt: >-
+      חשבו את העקמומיות של השרשרת $y=\cosh x$ בנקודה $x=\ln2$.
+    answer: 0.64
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\frac{16}{25}$. $\kappa=\frac{\cosh x}{(1+\sinh^2x)^{3/2}}=\frac{\cosh x}{\cosh^3x}=\frac{1}{\cosh^2x}$, ו-
+      $\cosh(\ln2)=\frac{2+\frac12}{2}=\frac54$.
+    wrongFeedback: >-
+      הציבו $f'=\sinh x$, $f''=\cosh x$ בנוסחה $\frac{|f''|}{(1+f'^2)^{3/2}}$, והשתמשו ב-$1+\sinh^2=\cosh^2$.
+    commonWrong:
+      - value: 1.25
+        feedback: >-
+          $\frac54=f''(\ln2)$. העקמומיות של גרף מחלקת ב-$(1+f'^2)^{3/2}$.
+        misconception: MC-c1-graph-curvature-fpp
+      - value: 0.8
+        feedback: >-
+          $\frac{1}{\cosh x}$: חסרה החזקה $\frac32$; המכנה הוא $\cosh^3x$, לא $\cosh^2x$.
+        misconception: MC-c1-curvature-power
+    hints:
+      - 'חזרו לשיעור 1.4: העקמומיות של גרף של פונקציה.'
+
+  - id: Q-1-review-06
+    type: twotier
+    objectives: [OBJ-1.3-1, OBJ-1.6-3, OBJ-1.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma:\mathbb R\to\mathbb R^3$ בפרמטר אורך הקשת, ו-$\|\gamma''(s)\|=2$ לכל $s$. האם $\gamma$ היא בהכרח מעגל
+      ברדיוס $\frac12$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. בפרמטר אורך הקשת $\|\gamma''\|=\kappa$, ולכן $\kappa\equiv2$. המשפט "עקמומיות קבועה נותנת מעגל" הוא
+          משפט על מסילות **מישוריות**.
+      - text: כן
+        feedback: >-
+          במרחב יש עוד מסילות עם עקמומיות קבועה: סלילים. משפט שיעור 1.6 הוא על העקמומיות המסומנת של מסילה מישורית.
+        misconception: MC-c1-unsigned-determines
+    reasons:
+      - text: 'הסליל $\big(\frac14\cos t,\ \frac14\sin t,\ \frac14t\big)$ מקיים $\kappa=\frac{a}{a^2+b^2}=\frac{1/4}{1/8}=2$, ואינו מעגל'
+        correct: true
+        feedback: >-
+          בדיוק. אחרי מעבר לפרמטר אורך הקשת (המהירות $\frac{\sqrt2}{4}$) מתקבלת מסילה עם $\|\gamma''\|\equiv2$. בפרק 2
+          נראה שצריך גם את הפיתול כדי לקבוע מסילה במרחב.
+      - text: 'כן: עקמומיות קבועה נותנת מעגל, לפי שיעור 1.6'
+        feedback: >-
+          שיעור 1.6 עוסק במסילות במישור. הסליל מראה שבמרחב זה לא נכון.
+        misconception: MC-c1-unsigned-determines
+      - text: 'כן: $\|\gamma''''\|=2$ קבוע כופה $\gamma''''=-4(\gamma-c)$ לנקודה קבועה $c$'
+        feedback: >-
+          זו תכונה של מעגל, לא מסקנה מ-$\|\gamma''\|$ קבוע. בסליל $\gamma''$ מצביע אל הציר, לא אל נקודה קבועה.
+        misconception: MC-c1-unsigned-determines
+    hints:
+      - 'חזרו לשיעור 1.3 (העקמומיות בפרמטר אורך הקשת) ולשיעור 1.6 (על מה בדיוק מדבר המשפט על עקמומיות קבועה).'
+
+  - id: Q-1-review-07
+    type: numeric
+    objectives: [OBJ-1.4-1, OBJ-1.3-2]
+    level: mid
+    prompt: >-
+      מצאו את מרכז העקמומיות של האליפסה $\frac{x^2}{9}+\frac{y^2}{4}=1$ בנקודה $(3,0)$. מהו רכיב ה-$x$ שלו?
+    answer: 1.6666667
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\frac53$. בפרמטריזציה $(3\cos t,2\sin t)$, ב-$t=0$: $\gamma'=(0,2)$, $\gamma''=(-3,0)$,
+      $|x'y''-y'x''|=6$, ו-$\kappa=\frac{6}{8}=\frac34$. $\rho=\frac43$, $\mathbf n=(-1,0)$, והמרכז $(3-\frac43,0)$.
+    wrongFeedback: >-
+      בחרו פרמטריזציה של האליפסה, חשבו את $\kappa$ בקצה הציר הארוך, ולכו מרחק $\rho$ פנימה.
+    commonWrong:
+      - value: 4.3333333
+        feedback: >-
+          $3+\frac43$: זה הצד הקמור. האליפסה פונה פנימה, אל המרכז שלה, ולכן $\mathbf n=(-1,0)$.
+        misconception: MC-c1-centre-wrong-side
+      - value: 2.25
+        feedback: >-
+          $3-\frac34$: הלכו מרחק $\kappa$ במקום $\rho=\frac1\kappa$.
+        misconception: MC-c1-curvature-radius
+      - value: 0
+        feedback: >-
+          $(0,0)$ הוא מרכז האליפסה. מרכז העקמומיות ב-$(3,0)$ קרוב בהרבה לשפה: האליפסה מעוקמת שם יותר ממעגל ברדיוס $3$.
+        misconception: MC-c1-natural-circle
+    hints:
+      - 'חזרו לשיעור 1.4: מרכז העקמומיות $\gamma+\rho\,\mathbf n$, והאליפסה בקצות הצירים.'
+
+  - id: Q-1-review-08
+    type: twotier
+    objectives: [OBJ-1.1-2, OBJ-1.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם ייתכן שלמסילה **חלקה** $\gamma:\mathbb R\to\mathbb R^2$, רגולרית בכל $t\ne0$, העקמומיות $\kappa(t)$ אינה
+      חסומה בסביבת $t=0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. העקמומיות מתפוצצת ליד נקודה לא רגולרית שבה נוצר חוד.
+      - text: לא
+        feedback: >-
+          ב-$(t^2,t^3)$: $\kappa(0.01)\approx75$, וככל ש-$t\to0$ העקמומיות שואפת לאינסוף.
+        misconception: MC-c0-smooth-map-smooth-image
+    reasons:
+      - text: '$\gamma=(t^2,t^3)$: $x''y''''-y''x''''=6t^2$ ו-$\|\gamma''\|^3=|t|^3(4+9t^2)^{3/2}$, ולכן $\kappa=\frac{6}{|t|(4+9t^2)^{3/2}}\to\infty$'
+        correct: true
+        feedback: >-
+          בדיוק. רדיוס העקמומיות שואף לאפס בחוד. הנוסחה עובדת רק כש-$\gamma'\ne0$; ב-$t=0$ היא לא מוגדרת.
+      - text: 'לא: לפונקציה חלקה כל הנגזרות רציפות, ולכן גם $\kappa$ רציפה ובפרט חסומה ליד $0$'
+        feedback: >-
+          $\kappa$ היא מנה, עם $\|\gamma'\|^3$ במכנה. החלקות של $\gamma$ לא מונעת מהמכנה להתאפס.
+        misconception: MC-c0-smooth-map-smooth-image
+      - text: 'כן, אבל רק אם $\gamma$ אינה גזירה ב-$t=0$'
+        feedback: >-
+          $(t^2,t^3)$ גזירה אינסוף פעמים בכל מקום. מה שמתאפס הוא $\gamma'(0)$, לא הגזירות.
+        misconception: MC-c0-smooth-map-smooth-image
+    hints:
+      - 'חזרו לשיעור 1.1 (חוד במסילה חלקה) ולשיעור 1.3 (הנוסחה של העקמומיות, ומה במכנה שלה).'
+
+  - id: Q-1-review-09
+    type: numeric
+    objectives: [OBJ-1.6-3, OBJ-1.5-1, OBJ-1.4-1]
+    level: mid
+    prompt: >-
+      המסילה בפרמטר אורך הקשת עם $k\equiv2$ מתחילה ב-$(0,0)$ בכיוון $\mathbf t(0)=(0,1)$. היא מעגל; מהו רכיב ה-$x$ של
+      מרכזו?
+    answer: -0.5
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $\mathbf n_s(0)$ הוא $(0,1)$ מסובב ב-$+90^\circ$, כלומר $(-1,0)$, ו-$k>0$ פירושו שהמרכז בכיוון $\mathbf n_s$
+      במרחק $\frac1k=\frac12$: $(-\frac12,0)$. בדיקה: אחרי חצי סיבוב המסילה ב-$(-1,0)$.
+    wrongFeedback: >-
+      $k>0$: המסילה פונה שמאלה. לאן מצביע $(0,1)$ מסובב ברבע סיבוב נגד כיוון השעון? והרדיוס הוא $\frac{1}{|k|}$.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          זה המרכז של מסילה שפונה ימינה. במוסכמה של הקורס $k>0$ פירושו שמאלה, ו-$\mathbf n_s(0)=(-1,0)$.
+        misconception: MC-c1-signed-sign-convention
+      - value: -2
+        feedback: >-
+          הכיוון נכון, אבל המרחק הוא $\rho=\frac1k=\frac12$, לא $k$.
+        misconception: MC-c1-curvature-radius
+    hints:
+      - 'חזרו לשיעור 1.5 (הנורמל המסובב והסימן של $k$) ולשיעור 1.6 (עקמומיות קבועה).'
+
+  - id: Q-1-review-10
+    type: numeric
+    objectives: [OBJ-1.5-2, OBJ-1.2-3]
+    level: mid
+    prompt: >-
+      חשבו את $\int k\,ds$ לאורך המעגל $\gamma(t)=(2\cos t,\ 2\sin t)$, $t\in[0,2\pi]$.
+    answer: 6.2831853
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $2\pi$. $k=\frac12$ ו-$ds=\|\gamma'(t)\|\,dt=2\,dt$, ולכן $\int_0^{2\pi}\frac12\cdot2\,dt=2\pi$: המשיק הסתובב
+      פעם אחת, בלי קשר לרדיוס.
+    wrongFeedback: >-
+      $t$ אינו אורך הקשת. החליפו $ds=\|\gamma'(t)\|\,dt$, או חשבו כמה הסתובבה זווית המשיק.
+    commonWrong:
+      - value: 3.1415927
+        feedback: >-
+          $\int_0^{2\pi}\frac12\,dt=\pi$: חסר $\|\gamma'\|=2$. אורך הקשת של המעגל הוא $4\pi$, לא $2\pi$.
+        misconception: MC-c1-ds-is-dt
+      - value: 0
+        feedback: >-
+          המשיק חזר לכיוונו, אבל זווית המשיק, כפונקציה רציפה, עלתה ב-$2\pi$.
+        misconception: MC-c1-theta-mod-2pi
+    hints:
+      - 'חזרו לשיעור 1.5 ($k=\frac{d\theta}{ds}$) ולשיעור 1.2 (המעבר מ-$t$ ל-$s$).'
+
+  - id: Q-1-review-11
+    type: numeric
+    objectives: [OBJ-1.5-3, OBJ-1.2-3]
+    level: mid
+    prompt: >-
+      $\gamma$ היא ספירלת קורנו, $k(s)=s$, בפרמטר אורך הקשת. המסילה $3\gamma$ (הגדלה פי $3$) מתוארת בפרמטר אורך הקשת
+      שלה, $\sigma$, עם $\sigma=0$ באותה נקודה התחלה. מהי העקמומיות המסומנת של $3\gamma$ ב-$\sigma=9$?
+    answer: 1
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. הגדלה פי $3$ מכפילה את אורך הקשת ב-$3$ ומחלקת את העקמומיות ב-$3$. ב-$\sigma=9$ נמצאת הנקודה $3\gamma(3)$,
+      ושם $k=\frac{k_\gamma(3)}{3}=\frac33=1$. בכלל: $\tilde k(\sigma)=\frac{\sigma}{9}$.
+    wrongFeedback: >-
+      קודם מצאו לאיזה $s$ של $\gamma$ מתאים $\sigma=9$ ($\sigma=3s$), אחר כך מה הגדלה עושה לעקמומיות.
+    commonWrong:
+      - value: 9
+        feedback: >-
+          זו $k_\gamma(9)$, או $3k_\gamma(3)$. הגדלה **מחלקת** את העקמומיות, ואורך הקשת שלה גדל פי $3$.
+        misconception: MC-c1-curvature-scaling
+      - value: 3
+        feedback: >-
+          $\frac{k_\gamma(9)}{3}$: חילקתם נכון ב-$3$, אבל ב-$\sigma=9$ נמצאת הנקודה $s=3$ של $\gamma$, לא $s=9$.
+        misconception: MC-c1-unit-speed-scaling
+    hints:
+      - 'חזרו לשיעור 1.2 (פרמטר אורך הקשת) ולשיעור 1.3 (מה הגדלה עושה לעקמומיות).'
+
+  - id: Q-1-review-12
+    type: rank
+    objectives: [OBJ-1.3-2, OBJ-1.3-3, OBJ-1.2-3, OBJ-0.3-2]
+    level: mid
+    help: >-
+      סדרו את שלבי הגזירה של נוסחת העקמומיות בפרמטר כללי, מהראשון לאחרון.
+    prompt: >-
+      $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, ו-$\kappa(t)>0$. הוכיחו ש-$\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}$.
+    items:
+      - id: speed
+        label: 'נסמן $v(t)=\|\gamma''(t)\|=\frac{ds}{dt}$; אז $\gamma''(t)=v(t)\,\mathbf t(t)$'
+      - id: second
+        label: 'גוזרים לפי $t$, עם $\frac{d\mathbf t}{dt}=\frac{d\mathbf t}{ds}\frac{ds}{dt}=\kappa v\,\mathbf n$: $\gamma''''=v''\mathbf t+\kappa v^2\,\mathbf n$'
+      - id: cross
+        label: '$$\gamma''\times\gamma''''=v\mathbf t\times(v''\mathbf t+\kappa v^2\mathbf n)=\kappa v^3\,\mathbf t\times\mathbf n$$'
+      - id: unit
+        label: 'לוקחים נורמה: $\mathbf t$ ו-$\mathbf n$ וקטורי יחידה ניצבים, ולכן $\|\mathbf t\times\mathbf n\|=1$ ו-$\|\gamma''\times\gamma''''\|=\kappa v^3$'
+      - id: done
+        label: 'מחלקים ב-$v^3>0$ (המסילה רגולרית): $\kappa=\frac{\|\gamma''\times\gamma''''\|}{v^3}$'
+    order: [speed, second, cross, unit, done]
+    correctFeedback: >-
+      נכון. כאן רואים את מקור החזקה השלישית: $v$ מגיע מ-$\gamma'$, ו-$v^2$ מהנגזרת השנייה. כש-$\kappa=0$ שני הצדדים
+      אפס, כי אז $\gamma''\parallel\gamma'$, והנוסחה נכונה גם שם.
+    wrongFeedback: >-
+      מתחילים מפירוק $\gamma'$ לגודל וכיוון, גוזרים פעם נוספת בכלל השרשרת, ורק אז לוקחים מכפלה וקטורית ונורמה.
+    hints:
+      - 'חזרו לשיעור 1.3 (העקמומיות והנורמל הראשי), ולשיעור 0.3 (כלל השרשרת).'
+
+  - id: Q-1-review-13
+    type: twotier
+    objectives: [OBJ-1.6-3, OBJ-1.4-1, OBJ-1.5-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\gamma$ מסילה מישורית רגולרית מסדר $C^2$, בפרמטר אורך הקשת על קטע, וכל המעגלים המנשקים שלה הם ברדיוס $R$. האם
+      $\gamma$ היא בהכרח קשת של מעגל ברדיוס $R$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. $\kappa\equiv\frac1R$, ובמישור, בזכות הרציפות של $k$, זה מספיק.
+      - text: לא
+        feedback: >-
+          צורת S משתי קשתות ברדיוס $R$ אינה מסדר $C^2$: $k$ קופצת בנקודת החיבור מ-$k=\frac1R$ ל-$k=-\frac1R$.
+        misconception: MC-c1-sign-switch-anywhere
+    reasons:
+      - text: '$|k|=\frac1R$ ו-$k$ רציפה; לפי משפט ערך הביניים $k$ אינה מחליפה סימן, כלומר $k\equiv\pm\frac1R$, ולפי שיעור 1.6 זו קשת מעגל ברדיוס $R$'
+        correct: true
+        feedback: >-
+          בדיוק. אילו $k$ הייתה מקבלת את שני הערכים, היא הייתה עוברת באפס, ו-$|k|$ אינו מתאפס.
+      - text: 'לא: אפשר לחבר קשת שפונה שמאלה לקשת שפונה ימינה, שתיהן ברדיוס $R$'
+        feedback: >-
+          בחיבור כזה $k$ קופצת, ולכן המסילה אינה מסדר $C^2$. במסילה מסדר $C^2$ הפונקציה $k=\det(\mathbf t,\mathbf t')$
+          רציפה.
+        misconception: MC-c1-sign-switch-anywhere
+      - text: 'כן: בכל ממד, עקמומיות קבועה פירושה מעגל'
+        feedback: >-
+          במרחב זה לא נכון: לסליל $(a\cos t,a\sin t,bt)$ עקמומיות קבועה $\frac{a}{a^2+b^2}$. הטיעון כאן עובד כי במישור
+          יש $k$ ומשפט יחידות.
+        misconception: MC-c1-unsigned-determines
+    hints:
+      - 'חזרו לשיעור 1.4 (רדיוס העקמומיות), לשיעור 1.5 ($|k|=\kappa$) ולשיעור 1.6 (מסילות עם עקמומיות קבועה).'
+
+  - id: Q-1-review-14
+    type: numeric
+    objectives: [OBJ-1.2-3, OBJ-1.5-1, OBJ-1.3-2]
+    level: exam
+    prompt: >-
+      $\gamma(t)=(e^t\cos t,\ e^t\sin t)$, ואורך הקשת $s$ נמדד מ-$t=0$. חשבו את העקמומיות המסומנת בנקודה שבה
+      $s=\sqrt2$.
+    answer: 0.35355339
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\frac{1}{2\sqrt2}$. $x'y''-y'x''=2e^{2t}$ ו-$\|\gamma'\|^3=2\sqrt2e^{3t}$, ולכן $k(t)=\frac{1}{\sqrt2e^t}$.
+      $s(t)=\sqrt2(e^t-1)$, כלומר $\sqrt2e^t=s+\sqrt2$, ו-$k=\frac{1}{s+\sqrt2}$. ב-$s=\sqrt2$: $\frac1{2\sqrt2}$. זו
+      הספירלה הלוגריתמית: העקמומיות ביחס הפוך לאורך הקשת שנמדד מהראשית, שאליה המסילה שואפת כש-$t\to-\infty$; האורך
+      הזה הוא $\int_{-\infty}^t\sqrt2e^\tau d\tau=\sqrt2e^t=s+\sqrt2$.
+    wrongFeedback: >-
+      חשבו את $k$ כפונקציה של $t$, את $s(t)$, ומצאו את ה-$t$ שבו $s=\sqrt2$. אל תניחו ש-$t$ הוא אורך הקשת.
+    commonWrong:
+      - value: 0.17190949
+        feedback: >-
+          זו $k$ ב-$t=\sqrt2$. אבל $t$ אינו אורך הקשת (המהירות $\sqrt2e^t$); $s=\sqrt2$ מתקבל ב-$t=\ln2$.
+        misconception: MC-c1-unit-speed-scaling
+      - value: 0.29289322
+        feedback: >-
+          זה מתקבל מ-$s=e^t-1$, כלומר מהמהירות $e^t$. אבל $\|\gamma'\|^2=e^{2t}\big((\cos t-\sin t)^2+(\sin t+\cos t)^2\big)=2e^{2t}$.
+        misconception: MC-c1-speed-norm
+      - value: -0.35355339
+        feedback: >-
+          הספירלה נפרשת נגד כיוון השעון ($t$ עולה, הזווית עולה): היא פונה שמאלה, ו-$k>0$.
+        misconception: MC-c1-signed-sign-convention
+    hints:
+      - 'חזרו לשיעור 1.2 (המעבר לפרמטר אורך הקשת) ולשיעור 1.5 (הנוסחה של $k$ בפרמטר כללי).'
+
+  - id: Q-1-review-15
+    type: mc
+    objectives: [OBJ-1.5-2, OBJ-1.5-1, OBJ-1.1-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      צורת השמונה $\gamma(t)=(\sin t,\ \sin 2t)$, $t\in[0,2\pi]$, עוברת פעמיים בראשית. איזו טענה נכונה?
+    choices:
+      - text: 'היא רגולרית, ו-$\int k\,ds=0$: באונה הימנית $k<0$ ובשמאלית $k>0$, והפניות מתקזזות'
+        correct: true
+        feedback: >-
+          נכון. $\gamma'=(\cos t,2\cos 2t)$ מתאפס רק אם $\cos t=0$, ואז $\cos2t=-1$: אף פעם. המשיק בסוף הוא המשיק
+          בהתחלה, $(1,2)$, והזווית חזרה לערכה, כי הסיבוב בכיוון השעון באונה הימנית בוטל באונה השמאלית.
+      - text: 'היא רגולרית, ו-$\int k\,ds=2\pi$, כמו בכל מסילה סגורה'
+        feedback: >-
+          $2\pi$ היא הפנייה הכוללת של מסילה סגורה פשוטה שמקיפים נגד כיוון השעון. כאן המשיק מסתובב בכיוון השעון באונה
+          אחת ונגדו בשנייה.
+        misconception: MC-c1-closed-turns-once
+      - text: 'היא רגולרית, ו-$\int k\,ds=4\pi$: סיבוב שלם בכל אונה'
+        feedback: >-
+          זה סופר את שתי האונות עם אותו סימן, כאילו $k=\kappa$. באונה הימנית המסילה פונה ימינה, ושם $k<0$.
+        misconception: MC-c1-ns-is-n
+      - text: 'היא אינה רגולרית בראשית, כי שם היא חותכת את עצמה'
+        feedback: >-
+          חיתוך עצמי הוא תכונה של התמונה. ב-$t=0$ וב-$t=\pi$ הנגזרות הן $(1,2)$ ו-$(-1,2)$, שתיהן שונות מאפס.
+        misconception: MC-c1-regular-image-nice
+    hints:
+      - 'חזרו לשיעור 1.5 (הפנייה הכוללת והסימן של $k$) ולשיעור 1.1 (רגולריות מול חיתוך עצמי).'

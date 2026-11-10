@@ -1,0 +1,84 @@
+# Misconceptions first detected in lesson 4.2 (normal and geodesic curvature).
+- id: MC-c4-curvature-sum
+  title: מחברים את העקמומיות הנורמלית והגאודזית במקום את ריבועיהן
+  belief: >-
+    $\kappa=\kappa_n+\kappa_g$, ולכן $\kappa_g=\kappa-\kappa_n$.
+  truth: >-
+    וקטור העקמומיות $\mathbf t'=\kappa\mathbf n$ מתפרק לשני רכיבים **ניצבים**: $\mathbf t'=\kappa_n\hat{\mathbf N}+\kappa_g(\hat{\mathbf N}\times\mathbf t)$.
+    לכן לפי פיתגורס $\kappa^2=\kappa_n^2+\kappa_g^2$, ו-$|\kappa_g|=\sqrt{\kappa^2-\kappa_n^2}$.
+  remedy: { lesson: '4.2', label: 'הפירוק של וקטור העקמומיות לשני רכיבים ניצבים' }
+
+- id: MC-c4-accel-has-tangent-part
+  title: חושבים שלווקטור העקמומיות יש רכיב בכיוון המשיק
+  belief: >-
+    במסילה בפרמטר אורך קשת, $\gamma''$ מתפרק לרכיב משיק, רכיב נורמלי ורכיב גאודזי.
+  truth: >-
+    בפרמטר אורך קשת $\|\mathbf t\|=1$, ולכן $\mathbf t'\cdot\mathbf t=0$. וקטור העקמומיות ניצב ל-$\mathbf t$ ושוכב
+    במישור של $\hat{\mathbf N}$ ו-$\hat{\mathbf N}\times\mathbf t$. רכיב משיק מופיע רק כשהמהירות אינה קבועה.
+  remedy: { lesson: '4.2', label: 'הבסיס האורתונורמלי t, N̂, N̂×t' }
+
+- id: MC-c4-kn-without-Q1
+  title: מחשבים עקמומיות נורמלית בלי לחלק בתבנית הראשונה
+  belief: >-
+    $\kappa_n$ בכיוון $(du,dv)$ הוא $Q_2(du,dv)$, או $Q_2$ חלקי $du^2+dv^2$.
+  truth: >-
+    $\kappa_n=\frac{Q_2(du,dv)}{Q_1(du,dv)}$. המכנה הוא ריבוע **אורך** הווקטור המשיק $du\,\sigma_u+dv\,\sigma_v$, והוא
+    $Q_1$, לא $du^2+dv^2$ (אלא אם $E=G=1$, $F=0$). בלי המכנה התוצאה תלויה באורך הווקטור, ואינה עקמומיות.
+  remedy: { lesson: '4.2', label: 'העקמומיות הנורמלית כמנה Q₂/Q₁' }
+
+- id: MC-c4-kn-sqrt-Q1
+  title: מחלקים בשורש של התבנית הראשונה במקום בתבנית עצמה
+  belief: >-
+    $\kappa_n=\frac{Q_2(\gamma')}{\sqrt{Q_1(\gamma')}}=\frac{\gamma''\cdot\hat{\mathbf N}}{\|\gamma'\|}$.
+  truth: >-
+    $\kappa_n=\frac{\gamma''\cdot\hat{\mathbf N}}{\|\gamma'\|^2}$: כשעוברים לפרמטר אורך קשת, כל גזירה לפי $s$ מוסיפה
+    גורם $\frac1{\|\gamma'\|}$, ויש שתי גזירות. המנה $\frac{Q_2}{Q_1}$ הומוגנית מסדר אפס, וזה מה שהופך אותה לתלויה רק
+    בכיוון.
+  remedy: { lesson: '4.2', label: 'הוכחת הנוסחה κₙ = Q₂/Q₁' }
+
+- id: MC-c4-kn-depends-on-speed
+  title: חושבים שהעקמומיות הנורמלית תלויה במהירות או בכיוון התנועה
+  belief: >-
+    שתי מסילות שעוברות ב-$P$ עם מהירויות $v$ ו-$-2v$ מקבלות עקמומיות נורמלית שונה (פי 4, או בסימן הפוך).
+  truth: >-
+    $Q_2(\lambda v)=\lambda^2Q_2(v)$ ו-$Q_1(\lambda v)=\lambda^2Q_1(v)$, ולכן המנה לא תלויה ב-$\lambda\neq0$, גם לא בסימנו.
+    $\kappa_n$ תלויה רק בישר המשיק, לא במהירות ולא בכיוון ההליכה עליו.
+  remedy: { lesson: '4.2', label: 'העקמומיות הנורמלית תלויה רק בכיוון' }
+
+- id: MC-c4-tangent-fixes-curvature
+  title: חושבים שמסילות עם אותו משיק מקבלות אותה עקמומיות
+  belief: >-
+    לפי משפט מנייה, כל המסילות על משטח שמשיקות זו לזו ב-$P$ מקבלות שם אותה עקמומיות $\kappa$.
+  truth: >-
+    משפט מנייה קובע רק את **העקמומיות הנורמלית**. העקמומיות עצמה היא $\kappa=\sqrt{\kappa_n^2+\kappa_g^2}$, ו-$\kappa_g$
+    משתנה ממסילה למסילה. על ספרת היחידה, המעגל הגדול והמעגל ברדיוס $\frac12$ שמשיק לו ב-$P$ הם בעלי $\kappa=1$
+    ו-$\kappa=2$, ושניהם עם $|\kappa_n|=1$.
+  remedy: { lesson: '4.2', label: 'משפט מנייה: מה נקבע ומה לא' }
+
+- id: MC-c4-meusnier-multiply
+  title: מכפילים בקוסינוס במקום לחלק בו במשפט מנייה
+  belief: >-
+    חתך מוטה בזווית $\theta$ מהנורמל עקום פחות מהחתך הנורמלי: $\kappa=\kappa_n\cos\theta$.
+  truth: >-
+    $\kappa_n=\kappa\cos\theta$ (כש-$\theta$ היא הזווית בין $\mathbf n$ ל-$\hat{\mathbf N}$), ולכן
+    $\kappa=\frac{|\kappa_n|}{|\cos\theta|}\ge|\kappa_n|$: חתך מוטה עקום **יותר**. דוגמה: המעגלים הקטנים על הספרה עקומים
+    יותר מהמעגל הגדול.
+  remedy: { lesson: '4.2', label: 'משפט מנייה: החתכים המוטים' }
+
+- id: MC-c4-osculating-frame
+  title: מפרקים את וקטור העקמומיות במישור המנשק במקום בבסיס שקובע המשטח
+  belief: >-
+    כדי לתאר מסילה על משטח מפרקים את $\mathbf t'$ לפי $\mathbf t$ ו-$\mathbf n$, כמו בפרנה-סרה.
+  truth: >-
+    $\mathbf n$ נקבע על ידי הנגזרת השנייה של המסילה, ולא על ידי המשטח. הבסיס שהמשטח והמשיק קובעים הוא
+    $\mathbf t,\ \hat{\mathbf N},\ \hat{\mathbf N}\times\mathbf t$, ו-$\mathbf t'=\kappa_n\hat{\mathbf N}+\kappa_g(\hat{\mathbf N}\times\mathbf t)$.
+  remedy: { lesson: '4.2', label: 'הפירוק של וקטור העקמומיות לנורמלי ולגאודזי' }
+
+- id: MC-c4-curve-on-sphere-flat
+  title: חושבים שמסילה על משטח עקום יכולה להיות כמעט ישרה
+  belief: >-
+    על ספרת היחידה אפשר לצייר מסילה שמתעקמת לאט, עם עקמומיות קטנה כרצוננו.
+  truth: >-
+    $\kappa\ge|\kappa_n|=\left|\frac{Q_2}{Q_1}\right|$ בכל נקודה. על ספרת היחידה $|\kappa_n|=1$ בכל כיוון, ולכן כל
+    מסילה עליה מקיימת $\kappa\ge1$; המעגלים הגדולים משיגים את השוויון.
+  remedy: { lesson: '4.2', label: 'מנייה ופיתגורס: עקמומיות של מסילות על הספרה' }

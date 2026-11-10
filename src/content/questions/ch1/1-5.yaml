@@ -1,0 +1,334 @@
+# Lesson 1.5 — signed curvature of a plane curve.
+# Objectives (src/course.ts):
+#   OBJ-1.5-1  signed curvature via the normal rotated by a quarter turn; its sign by the turning direction
+#   OBJ-1.5-2  signed curvature is the rate of change of the tangent angle in arc length
+#   OBJ-1.5-3  how k changes under reversal and reflection, and why it does not under translation and rotation
+# Conventions: n_s = t rotated by +90°, t′ = k n_s (derivative in s); k > 0 turning left.
+chapter: 1
+questions:
+  - id: Q-1.5-ns
+    type: mc
+    objectives: [OBJ-1.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      במסילה מישורית, **הנורמל המסובב** $\mathbf n_s$ הוא $\mathbf t$ מסובב ברבע סיבוב בכיוון החיובי ($+90^\circ$, נגד
+      כיוון השעון), ו**העקמומיות המסומנת** $k$ מוגדרת על ידי $\mathbf t'=k\,\mathbf n_s$ (גזירה לפי אורך הקשת). אם
+      $\mathbf t(s)=(\cos\theta,\sin\theta)$, מהו $\mathbf n_s(s)$?
+    choices:
+      - text: '$(-\sin\theta,\ \cos\theta)$, המוגדר בכל נקודה רגולרית, גם במקום שבו $\kappa=0$'
+        correct: true
+        feedback: >-
+          נכון. סיבוב ב-$+90^\circ$ שולח $(a,b)$ ל-$(-b,a)$. $\mathbf n_s$ תלוי רק ב-$\mathbf t$, ולכן מוגדר בכל נקודה
+          רגולרית.
+      - text: '$(\sin\theta,\ -\cos\theta)$, המוגדר בכל נקודה רגולרית, גם במקום שבו $\kappa=0$'
+        feedback: >-
+          זה $\mathbf t$ מסובב **עם** כיוון השעון, ב-$-90^\circ$. עם הבחירה הזו כל הסימנים מתהפכים: מעגל נגד כיוון השעון
+          היה מקבל $k<0$. המוסכמה בקורס היא $+90^\circ$: $(a,b)\mapsto(-b,a)$.
+        misconception: MC-c1-signed-sign-convention
+      - text: 'הנורמל הראשי $\mathbf n=\frac{\mathbf t''}{\kappa}$, המצביע אל הצד הקעור'
+        feedback: >-
+          $\mathbf n$ מצביע תמיד אל הצד הקעור, ולכן מתהפך כשהמסילה עוברת מפנייה שמאלה לפנייה ימינה, ולא מוגדר
+          כש-$\kappa=0$. $\mathbf n_s$ נקבע לפי $\mathbf t$ בלבד: $\mathbf n_s=\pm\mathbf n$, לפי כיוון הפנייה.
+        misconception: MC-c1-ns-is-n
+
+  - id: Q-1.5-clockwise
+    type: numeric
+    objectives: [OBJ-1.5-1]
+    level: basic
+    prompt: >-
+      בפרמטר כללי $k=\frac{x'y''-y'x''}{(x'^2+y'^2)^{3/2}}$: כמו הנוסחה של $\kappa$ במישור, בלי ערך מוחלט. חשבו את
+      העקמומיות המסומנת של $\gamma(t)=(2\cos t,\ -2\sin t)$.
+    answer: -0.5
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $k=-\frac12$. $k=\frac{x'y''-y'x''}{(x'^2+y'^2)^{3/2}}$, עם
+      $x'y''-y'x''=(-2\sin t)(2\sin t)-(-2\cos t)(-2\cos t)=-4$ ו-$\|\gamma'\|^3=8$. המסילה מקיפה מעגל ברדיוס $2$
+      בכיוון השעון, כלומר פונה ימינה.
+    wrongFeedback: >-
+      השתמשו בנוסחה $k=\frac{x'y''-y'x''}{(x'^2+y'^2)^{3/2}}$, בלי ערך מוחלט, ובדקו את כיוון ההקפה.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          $\frac12$ היא $\kappa$. המסילה פונה ימינה (בכיוון השעון), ולכן $\mathbf n_s=-\mathbf n$ ו-$k=-\kappa$.
+        misconception: MC-c1-ns-is-n
+      - value: -2
+        feedback: >-
+          הסימן נכון, אבל $2$ הוא הרדיוס. $|k|=\frac1r=\frac12$.
+        misconception: MC-c1-curvature-radius
+
+  - id: Q-1.5-reverse
+    type: mc
+    objectives: [OBJ-1.5-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma$ מסילה מישורית בפרמטר אורך הקשת עם עקמומיות מסומנת $k_\gamma(s)$, ו-$\delta(s)=\gamma(-s)$ היא אותה
+      מסילה בכיוון ההפוך. מהי $k_\delta(s)$?
+    choices:
+      - text: '$k_\delta(s)=-k_\gamma(-s)$'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf t_\delta(s)=-\mathbf t_\gamma(-s)$, ולכן גם $\mathbf n_{s}$ מתהפך; אבל
+          $\frac{d}{ds}\mathbf t_\delta(s)=\mathbf t_\gamma'(-s)$ לא מתהפך (שני סימנים). מה שפנה שמאלה פונה עכשיו ימינה.
+      - text: '$k_\delta(s)=k_\gamma(-s)$'
+        feedback: >-
+          זה נכון ל-$\kappa$, לא ל-$k$. נסו את המעגל: נגד כיוון השעון $k=\frac1r$, ובכיוון השעון $k=-\frac1r$.
+        misconception: MC-c1-signed-reversal-invariant
+      - text: '$k_\delta(s)=-k_\gamma(s)$'
+        feedback: >-
+          הסימן נכון, אבל הנקודה לא: $\delta(s)$ היא הנקודה $\gamma(-s)$, ושם צריך לחשב את $k_\gamma$.
+        misconception: MC-c0-chain-wrong-point
+      - text: '$\kappa_\delta(s)=-\kappa_\gamma(-s)$, ו-$k$ לא משתנה'
+        feedback: >-
+          $\kappa\ge0$ תמיד, ולכן אינה יכולה להחליף סימן. מה שמחליף סימן הוא $k$.
+        misconception: MC-c1-curvature-depends-orientation
+
+  - id: Q-1.5-reflect-num
+    type: numeric
+    objectives: [OBJ-1.5-3]
+    level: basic
+    prompt: >-
+      לאליפסה $\gamma(t)=(2\cos t,\ \sin t)$ יש $k(0)=2$ בנקודה $(2,0)$. משקפים אותה בציר $x$ ומקבלים
+      $\delta(t)=(2\cos t,\ -\sin t)$. מהי $k_\delta(0)$?
+    answer: -2
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. שיקוף הופך שמאל וימין: $k_\delta=-k_\gamma$ בנקודה המתאימה, ו-$\kappa$ לא משתנה. ישירות:
+      $x'y''-y'x''=(-2\sin t)(\sin t)-(-\cos t)(-2\cos t)=-2$, ו-$\|\delta'(0)\|=1$.
+    wrongFeedback: >-
+      $\delta$ מקיפה את האליפסה בכיוון השעון. חשבו את $x'y''-y'x''$ ב-$t=0$, בלי ערך מוחלט.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          שיקוף שומר מרחקים ולכן את $\kappa=2$, אבל הוא הופך את כיוון הפנייה: $k=-2$.
+        misconception: MC-c1-reflection-keeps-k
+      - value: -0.5
+        feedback: >-
+          הסימן נכון, אבל $\frac12$ הוא רדיוס העקמומיות ב-$(2,0)$. $|k|=\kappa=2$.
+        misconception: MC-c1-curvature-radius
+
+  - id: Q-1.5-cubic-sign
+    type: numeric
+    objectives: [OBJ-1.5-1]
+    level: mid
+    prompt: >-
+      חשבו את העקמומיות המסומנת של $\gamma(t)=(t,\ t^3)$ ב-$t=-1$.
+    answer: -0.18973666
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $k=\frac{f''}{(1+f'^2)^{3/2}}=\frac{-6}{10^{3/2}}\approx-0.190$. לגרף שעוברים עליו משמאל לימין $k$ הוא
+      $f''$ עם סימנו: ב-$t<0$ הגרף קעור כלפי מטה, והמסילה פונה ימינה.
+    wrongFeedback: >-
+      $x'y''-y'x''=f''$ לגרף $(t,f(t))$. אל תוסיפו ערך מוחלט: הסימן הוא חלק מהתשובה.
+    commonWrong:
+      - value: 0.18973666
+        feedback: >-
+          זו $\kappa$. כאן $f''(-1)=-6<0$: המסילה פונה ימינה, ולכן $k<0$.
+        misconception: MC-c1-ns-is-n
+      - value: -6
+        feedback: >-
+          $f''(-1)=-6$ היא רק המונה. מחלקים ב-$(1+f'^2)^{3/2}=10^{3/2}$, כי השיפוע שם $3$.
+        misconception: MC-c1-graph-curvature-fpp
+
+  - id: Q-1.5-figure8
+    type: mc
+    objectives: [OBJ-1.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      צורת השמונה $\gamma(t)=(\sin t,\ \sin 2t)$, $t\in[0,2\pi]$, עוברת ב-$(1,0)$ ב-$t=\frac\pi2$ וב-$(-1,0)$
+      ב-$t=\frac{3\pi}2$. מהם הסימנים של $k$ בשתי הנקודות?
+    choices:
+      - text: '$k<0$ ב-$(1,0)$ ו-$k>0$ ב-$(-1,0)$'
+        correct: true
+        feedback: >-
+          נכון. ב-$t=\frac\pi2$: $\gamma'=(0,-2)$, $\gamma''=(-1,0)$, ו-$x'y''-y'x''=0-(-2)(-1)=-2$, כלומר
+          $k=-\frac14$. ב-$t=\frac{3\pi}2$ מתקבל $+2$ ו-$k=\frac14$. האונה הימנית נעברת בכיוון השעון והשמאלית נגדו.
+      - text: '$k>0$ בשתיהן: בשתי הנקודות המסילה מתעקלת'
+        feedback: >-
+          בשתיהן $\kappa=\frac14>0$, אבל $k$ מבחין בכיוון הפנייה. ב-$(1,0)$ המסילה יורדת ($\gamma'=(0,-2)$) ופונה
+          אל הראשית, כלומר ימינה.
+        misconception: MC-c1-ns-is-n
+      - text: '$k>0$ ב-$(1,0)$ ו-$k<0$ ב-$(-1,0)$'
+        feedback: >-
+          הסימנים הפוכים. במוסכמה של הקורס $k>0$ בפנייה שמאלה (נגד כיוון השעון), והאונה הימנית נעברת בכיוון השעון.
+        misconception: MC-c1-signed-sign-convention
+
+  - id: Q-1.5-theta
+    type: numeric
+    objectives: [OBJ-1.5-2]
+    level: mid
+    prompt: >-
+      חשבו את $\int k\,ds$ לאורך הפרבולה $y=x^2$ מ-$(0,0)$ עד $(1,1)$, כשעוברים עליה משמאל לימין.
+    answer: 1.1071487
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\arctan2\approx1.107$. $\int k\,ds$ הוא זווית המשיק בסוף פחות זווית המשיק בהתחלה, וזווית המשיק של
+      גרף היא $\theta=\arctan f'$: מ-$\arctan0=0$ עד $\arctan2$.
+    wrongFeedback: >-
+      אין צורך באינטגרל: $k=\frac{d\theta}{ds}$, ולכן $\int k\,ds$ הוא השינוי בזווית המשיק. מה הזווית של המשיק לגרף
+      שיפועו $f'$?
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $2=f'(1)-f'(0)$ הוא השינוי בשיפוע. $\int k\,ds$ הוא השינוי בזווית, $\arctan f'$.
+        misconception: MC-c1-theta-is-slope
+      - value: -1.1071487
+        feedback: >-
+          הפרבולה קעורה כלפי מעלה ונעברת משמאל לימין, כלומר פונה שמאלה: $k>0$ והזווית עולה.
+        misconception: MC-c1-signed-sign-convention
+
+  - id: Q-1.5-dtheta-proof
+    type: rank
+    objectives: [OBJ-1.5-2]
+    level: mid
+    help: >-
+      סדרו את שלבי ההוכחה ש-$k=\frac{d\theta}{ds}$, מהראשון לאחרון.
+    prompt: >-
+      $\gamma$ מסילה מישורית בפרמטר אורך הקשת, מסדר $C^2$. הוכיחו שהעקמומיות המסומנת היא קצב השינוי של זווית
+      המשיק.
+    items:
+      - id: lift
+        label: 'בוחרים פונקציה גזירה $\theta(s)$ כך ש-$\mathbf t(s)=(\cos\theta(s),\ \sin\theta(s))$'
+      - id: diff
+        label: 'גוזרים: $\mathbf t''(s)=\theta''(s)\,\big(-\sin\theta(s),\ \cos\theta(s)\big)$'
+      - id: rotate
+        label: '$(-\sin\theta,\cos\theta)$ הוא $\mathbf t$ מסובב ב-$+90^\circ$, כלומר $\mathbf n_s(s)$'
+      - id: compare
+        label: 'משווים להגדרה $\mathbf t''=k\,\mathbf n_s$: שני המקדמים של אותו וקטור יחידה $\mathbf n_s$ שווים'
+      - id: done
+        label: 'לכן $k(s)=\theta''(s)$'
+    order: [lift, [diff, rotate], compare, done]
+    correctFeedback: >-
+      נכון. השלב הראשון הוא למה: לפונקציה רציפה (וגזירה) אל מעגל היחידה יש "הרמה" רציפה (וגזירה) $\theta$, יחידה עד
+      כדי $2\pi m$. ההבדל הזה נעלם בגזירה, ולכן $\theta'$ מוגדר היטב. הגזירה והזיהוי של $(-\sin\theta,\cos\theta)$
+      נשענים שניהם רק על בחירת הזווית, ולכן כל סדר ביניהם טוב.
+    wrongFeedback: >-
+      מתחילים מבחירת הזווית. אחריה, בכל סדר, גוזרים ומזהים את $(-\sin\theta,\cos\theta)$ כ-$\mathbf n_s$, ורק אז משווים
+      להגדרה של $k$.
+
+  - id: Q-1.5-total-zero
+    type: twotier
+    objectives: [OBJ-1.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ל-$\gamma(t)=(t,t^3)$ על $[-1,1]$ מתקיים $\int k\,ds=0$. האם מזה נובע שהמסילה היא קטע ישר?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון, וברור שהיא לא ישרה. $\int k\,ds=0$ אומר רק שהמשיק חזר לזווית ההתחלתית שלו.
+      - text: כן
+        feedback: >-
+          אם המשיק לא הסתובב **בכלל**, אז כן. אבל כאן הוא הסתובב ימינה ואחר כך שמאלה, באותה מידה.
+        misconception: MC-c1-total-turning-zero-straight
+    reasons:
+      - text: 'הזווית יורדת מ-$\arctan3$ ל-$0$ (ב-$t<0$, $k<0$) ועולה חזרה ל-$\arctan3$ (ב-$t>0$, $k>0$); הפניות מתקזזות, ו-$\int|k|\,ds=2\arctan3$'
+        correct: true
+        feedback: >-
+          בדיוק. ההפרש $\theta(1)-\theta(-1)=\arctan3-\arctan3=0$, אבל $\theta$ לא קבועה. רק $k\equiv0$ נותן ישר.
+      - text: 'הפנייה הכוללת אפס, ולכן המשיק לא השתנה לאורך המסילה'
+        feedback: >-
+          $\int k\,ds=0$ אומר ש-$\theta$ שווה בקצוות, לא שהיא קבועה. כאן היא יורדת ל-$0$ ב-$t=0$ ועולה חזרה.
+        misconception: MC-c1-total-turning-zero-straight
+      - text: 'בכלל לא ייתכן ש-$\int k\,ds=0$ כאן, כי $\kappa>0$ לכל $t\ne0$'
+        feedback: >-
+          $\int\kappa\,ds>0$, נכון. אבל $k$ שלילית ב-$t<0$ (קעור כלפי מטה) וחיובית ב-$t>0$, ו-$\int k\,ds$ סופר את שתי
+          הפניות עם סימן.
+        misconception: MC-c1-ns-is-n
+
+  - id: Q-1.5-transform
+    type: multi
+    objectives: [OBJ-1.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהפעולות הבאות נותנות, **לכל** מסילה מישורית $\gamma$ בפרמטר אורך הקשת מסדר $C^2$, מסילה שהעקמומיות המסומנת
+      שלה **שווה** לזו של $\gamma$ בנקודה המתאימה? סמנו את כולן.
+    choices:
+      - text: 'הזזה: $\gamma(s)+c$'
+        correct: true
+        feedback: נכון. $\mathbf t$ ו-$\mathbf t'$ לא משתנים.
+      - text: 'סיבוב: $R\gamma(s)$, עם $R$ סיבוב ב-$30^\circ$'
+        correct: true
+        feedback: >-
+          נכון. $R$ מתחלף עם הסיבוב ברבע סיבוב, ולכן $\mathbf n_s$ של $R\gamma$ הוא $R\mathbf n_s$ ו-$(R\mathbf t)'=kR\mathbf n_s$.
+      - text: 'שיקוף בציר $x$ וגם היפוך כיוון: $\sigma(\gamma(-s))$'
+        correct: true
+        feedback: >-
+          נכון. כל אחד מהשניים מחליף את הסימן של $k$, ושני ההיפוכים מתקזזים: $k(s)=k_\gamma(-s)$, בנקודה המתאימה
+          $\gamma(-s)$.
+      - text: 'שיקוף בציר $x$: $\sigma(\gamma(s))$'
+        feedback: >-
+          שיקוף שומר את $\kappa$ אבל הופך שמאל וימין, ולכן $k\mapsto-k$. מעגל נגד כיוון השעון הופך למעגל בכיוון השעון.
+        misconception: MC-c1-reflection-keeps-k
+      - text: 'הגדלה: $2\gamma$'
+        feedback: >-
+          הגדלה פי $2$ מחלקת את $k$ ב-$2$ בנקודה המתאימה (וגם מכפילה את אורך הקשת).
+        misconception: MC-c1-curvature-scaling
+      - text: '$(x,y)\mapsto(x,\ x+y)$'
+        feedback: >-
+          זו העתקת גזירה, לא תנועה קשיחה: היא לא שומרת מרחקים, ולכן משנה עקמומיות. למעגל היחידה היא נותנת אליפסה.
+        misconception: MC-c1-shear-is-rotation
+
+  - id: Q-1.5-ellipse-turning
+    type: numeric
+    objectives: [OBJ-1.5-2]
+    level: mid
+    prompt: >-
+      חשבו את $\int k\,ds$ לאורך האליפסה $\gamma(t)=(2\cos t,\ \sin t)$, $t\in[0,2\pi]$ (סיבוב אחד נגד כיוון השעון).
+    answer: 6.2831853
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $2\pi$. דרך אחת: $k>0$ לכל $t$, ולכן $\theta$ עולה ממש, והמשיק $\frac{(-2\sin t,\cos t)}{\|\gamma'\|}$
+      מקיף את מעגל היחידה פעם אחת. דרך שנייה, ישירה:
+      $$\int_0^{2\pi}k(t)\|\gamma'(t)\|\,dt=\int_0^{2\pi}\frac{2\,dt}{4\sin^2t+\cos^2t}=2\pi.$$
+    wrongFeedback: >-
+      $\int k\,ds=\theta(2\pi)-\theta(0)$, כש-$\theta$ היא זווית המשיק כפונקציה **רציפה**. כמה פעמים המשיק מסתובב?
+    commonWrong:
+      - value: 0
+        feedback: >-
+          המשיק אכן חוזר לכיוונו ההתחלתי, אבל $\theta$ היא פונקציה רציפה, לא זווית ב-$[0,2\pi)$: היא עלתה ב-$2\pi$.
+        misconception: MC-c1-theta-mod-2pi
+      - value: -6.2831853
+        feedback: >-
+          ההקפה היא נגד כיוון השעון, כלומר פנייה שמאלה כל הזמן: $k>0$, וההפרש חיובי.
+        misconception: MC-c1-signed-sign-convention
+
+  - id: Q-1.5-mirror
+    type: twotier
+    objectives: [OBJ-1.5-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\gamma:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת, ו-$\sigma$ שיקוף בישר. נניח שיש סיבוב והזזה $A$ (תנועה קשיחה
+      בלי שיקוף) כך ש-$A(\gamma(s))=\sigma(\gamma(s))$ **לכל** $s$. מה אפשר להסיק על $\gamma$?
+    choices:
+      - text: '$\gamma$ היא קטע ישר'
+        correct: true
+        feedback: >-
+          נכון. ולהפך, לכל קטע ישר יש $A$ כזו: סיבוב שלוקח את הכיוון שלו לכיוון של השיקוף שלו, ואחריו הזזה.
+      - text: '$\gamma$ היא קטע ישר או קשת של מעגל'
+        feedback: >-
+          קשת מעגל סימטרית לשיקוף בקוטר, אבל השיקוף שולח את $\gamma(s)$ ל-$\gamma(L-s)$, נקודה אחרת. השוויון כאן הוא
+          נקודה-נקודה, באותו $s$.
+        misconception: MC-c0-curve-is-image
+      - text: 'אי אפשר להסיק דבר: כל מסילה סימטרית לישר כלשהו מקיימת זאת'
+        feedback: >-
+          סימטריה של התמונה אינה שוויון של מסילות עם אותו פרמטר. ראו את הנימוק הנכון: התנאי כופה $k\equiv0$.
+        misconception: MC-c0-curve-is-image
+    reasons:
+      - text: '$k_{A\circ\gamma}=k_\gamma$ ו-$k_{\sigma\circ\gamma}=-k_\gamma$; זו אותה מסילה, ולכן $k_\gamma=-k_\gamma$, כלומר $k\equiv0$, $\theta$ קבועה ו-$\gamma$ ישרה'
+        correct: true
+        feedback: >-
+          בדיוק: עקמומיות מסומנת היא שפה טובה להבדל בין סיבוב לשיקוף. סיבוב שומר עליה, שיקוף הופך אותה.
+      - text: 'מעגל סימטרי לכל קוטר, ולכן $\sigma(\gamma)=\gamma=A(\gamma)$ עם $A$ הזהות'
+        feedback: >-
+          זה שוויון של תמונות. השיקוף בקוטר מזיז את רוב נקודות המעגל, ולכן $\sigma(\gamma(s))\ne\gamma(s)$ ברוב ה-$s$.
+        misconception: MC-c0-curve-is-image
+      - text: 'גם סיבוב וגם שיקוף שומרים את $\kappa$, ולכן התנאי לא מגביל את $\gamma$'
+        feedback: >-
+          הם שומרים את $\kappa$, אבל שיקוף הופך את $k$. כאן $k$ הוא המידע שמכריע.
+        misconception: MC-c1-reflection-keeps-k

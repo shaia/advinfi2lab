@@ -1,0 +1,415 @@
+# Lesson 10.1 — the trigonometric system and the partial sum as a projection.
+# Objectives (src/course.ts):
+#   OBJ-10.1-1  compute Fourier coefficients of simple functions, using even and odd symmetry
+#   OBJ-10.1-2  show that the partial sum is the projection onto trigonometric polynomials of degree N
+#   OBJ-10.1-3  deduce that the partial sum is the closest trigonometric polynomial in mean square
+# Conventions: on [−π, π], a_n = (1/π)∫ f cos nx, b_n = (1/π)∫ f sin nx, series a_0/2 + Σ(a_n cos nx + b_n sin nx);
+# T_N = span{1, cos x, sin x, …, cos Nx, sin Nx}; the inner product of H is ∫fg.
+chapter: 10
+questions:
+  - id: Q-10.1-parity
+    type: mc
+    objectives: [OBJ-10.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      **מקדמי פורייה** של $f$ על $[-\pi,\pi]$ הם $a_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx$ ($n\ge0$) ו-$b_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx$
+      ($n\ge1$), וטור פורייה הוא $\frac{a_0}2+\sum_{n\ge1}(a_n\cos nx+b_n\sin nx)$. $f$ אינטגרבילית ו**אי-זוגית** על
+      $[-\pi,\pi]$. אילו ממקדמי פורייה שלה מתאפסים בוודאות?
+    choices:
+      - text: 'כל המקדמים $a_n$, כולל $a_0$'
+        correct: true
+        feedback: >-
+          נכון. $f(x)\cos nx$ היא מכפלה של אי-זוגית בזוגית, ולכן אי-זוגית, והאינטגרל שלה על קטע סימטרי הוא אפס.
+          נשארים רק הסינוסים: $f\sim\sum b_n\sin nx$.
+      - text: 'כל המקדמים $b_n$'
+        feedback: >-
+          הפוך. $\sin nx$ אי-זוגית, ולכן $f(x)\sin nx$ היא מכפלה של שתי אי-זוגיות, כלומר **זוגית**, והאינטגרל שלה בדרך
+          כלל אינו אפס. עבור $f(x)=x$: $b_1=2$.
+        misconception: MC-c10-parity-swapped
+      - text: 'רק $a_0$'
+        feedback: >-
+          $a_0=\frac1\pi\int f=0$ אכן, אבל זה רק חלק מהתמונה: אותו נימוק עובד לכל $a_n$, כי $\cos nx$ זוגית לכל
+          $n$ ו-$f\cos nx$ אי-זוגית.
+        misconception: MC-c10-parity-swapped
+      - text: 'כל המקדמים, כי האינטגרל של פונקציה אי-זוגית הוא אפס'
+        feedback: >-
+          האינטגרנד ב-$b_n$ הוא $f(x)\sin nx$, לא $f$ עצמה, והוא זוגי. אם כל המקדמים היו אפס, הטור של $x$ היה אפס.
+        misconception: MC-c10-parity-swapped
+
+  - id: Q-10.1-bx
+    type: numeric
+    objectives: [OBJ-10.1-1]
+    level: basic
+    prompt: >-
+      חשבו את המקדם $b_3$ של $f(x)=x$ על $[-\pi,\pi]$.
+    answer: 0.6666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $b_n=\frac2\pi\int_0^{\pi}x\sin nx\,dx=\frac2\pi\left[-\frac{x\cos nx}{n}\right]_0^{\pi}+\frac2{\pi n}\int_0^\pi\cos nx\,dx=\frac{2(-1)^{n+1}}{n}$,
+      ולכן $b_3=\frac23$.
+    wrongFeedback: >-
+      $x\sin nx$ זוגית, ולכן $b_n=\frac2\pi\int_0^\pi x\sin nx\,dx$. עשו אינטגרציה בחלקים, וזכרו ש-$\cos n\pi=(-1)^n$.
+    commonWrong:
+      - value: -0.6666667
+        feedback: >-
+          הסימן הפוך: $\cos 3\pi=-1$, ולכן $-\frac{\pi\cos3\pi}{3}=+\frac\pi3$.
+        misconception: MC-c10-cos-n-pi
+      - value: 0.3333333
+        feedback: >-
+          עברתם לחצי הקטע ושכחתם את הגורם 2: $\int_{-\pi}^{\pi}=2\int_0^\pi$ כשהאינטגרנד זוגי.
+        misconception: MC-c10-parity-factor-two
+      - value: 2.0943951
+        feedback: >-
+          זה $\int_{-\pi}^{\pi}x\sin3x\,dx=\frac{2\pi}3$. המקדם הוא האינטגרל כפול $\frac1\pi$.
+        misconception: MC-c10-forget-1-over-pi
+
+  - id: Q-10.1-absconst
+    type: numeric
+    objectives: [OBJ-10.1-1]
+    level: basic
+    prompt: >-
+      מהו **האיבר הקבוע** בטור פורייה של $f(x)=|x|$ על $[-\pi,\pi]$?
+    answer: 1.5707963
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $a_0=\frac1\pi\int_{-\pi}^{\pi}|x|\,dx=\frac1\pi\cdot\pi^2=\pi$, והאיבר הקבוע הוא $\frac{a_0}2=\frac\pi2$:
+      הממוצע של $|x|$ על הקטע.
+    wrongFeedback: >-
+      האיבר הקבוע של הטור הוא $\frac{a_0}2$, והוא שווה לממוצע $\frac1{2\pi}\int_{-\pi}^{\pi}f$.
+    commonWrong:
+      - value: 3.1415927
+        feedback: >-
+          זה $a_0$. הטור מתחיל ב-$\frac{a_0}2$, כי $\|1\|^2=2\pi$ ולא $\pi$.
+        misconception: MC-c10-a0-not-halved
+      - value: 0.7853982
+        feedback: >-
+          חישבתם $a_0=\frac1\pi\int_0^\pi x\,dx=\frac\pi2$ בלי הגורם 2 של הזוגיות, ואז חילקתם ב-2.
+        misconception: MC-c10-parity-factor-two
+      - value: 4.9348022
+        feedback: >-
+          זה $\frac12\int_{-\pi}^{\pi}|x|\,dx=\frac{\pi^2}2$: חסר הגורם $\frac1\pi$.
+        misconception: MC-c10-forget-1-over-pi
+
+  - id: Q-10.1-onb
+    type: mc
+    objectives: [OBJ-10.1-2]
+    level: basic
+    prompt: >-
+      במרחב $H[-\pi,\pi]$ עם $\langle f,g\rangle=\int_{-\pi}^{\pi}fg$, איזו מהמערכות הבאות **אורתונורמלית**?
+    choices:
+      - text: '$\frac1{\sqrt{2\pi}},\ \frac{\cos nx}{\sqrt\pi},\ \frac{\sin nx}{\sqrt\pi}$ ($n\ge1$)'
+        correct: true
+        feedback: >-
+          נכון. הפונקציות ניצבות זו לזו (שיעור 9.2), ו-$\|1\|^2=2\pi$, $\|\cos nx\|^2=\|\sin nx\|^2=\pi$, ולכן מחלקים
+          בשורש של הנורמות האלה.
+      - text: '$1,\ \cos nx,\ \sin nx$ ($n\ge1$)'
+        feedback: >-
+          המערכת אורתוגונלית אבל לא מנורמלת: $\|\cos nx\|^2=\pi\ne1$.
+        misconception: MC-c9-orthogonal-normalized
+      - text: '$\frac1{\sqrt\pi},\ \frac{\cos nx}{\sqrt\pi},\ \frac{\sin nx}{\sqrt\pi}$ ($n\ge1$)'
+        feedback: >-
+          הפונקציה הקבועה שונה: $\|1\|^2=\int_{-\pi}^\pi1=2\pi$, ולכן $\left\|\frac1{\sqrt\pi}\right\|^2=2$. זו בדיוק
+          הסיבה ל-$\frac{a_0}2$ בטור.
+        misconception: MC-c10-a0-not-halved
+      - text: '$\frac1{2\pi},\ \frac{\cos nx}{\pi},\ \frac{\sin nx}{\pi}$ ($n\ge1$)'
+        feedback: >-
+          כאן חילקו בריבוע הנורמה במקום בנורמה: $\left\|\frac{\cos nx}{\pi}\right\|^2=\frac{\pi}{\pi^2}=\frac1\pi$.
+        misconception: MC-c9-trig-norm-2pi
+
+  - id: Q-10.1-norms
+    type: mc
+    objectives: [OBJ-10.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      נסמן ב-$T_N$ את הפולינומים הטריגונומטריים ממעלה עד $N$, הצירופים הלינאריים של $1,\cos x,\sin x,\dots,\cos Nx,\sin Nx$,
+      וב-$S_Nf=\frac{a_0}2+\sum_{n=1}^N(a_n\cos nx+b_n\sin nx)$ את הסכום החלקי. בשיעור הזה נראה ש-$S_Nf$ הוא ההטלה של $f$
+      על $T_N$. בהטלה הזו האיבר הקבוע יוצא $\frac{a_0}2$ ולא $a_0$, אף ש-$a_0$ ו-$a_n$ מוגדרים באותה נוסחה עם
+      $\frac1\pi$. מה הסיבה?
+    choices:
+      - text: '$\|1\|^2=2\pi$, ואילו $\|\cos nx\|^2=\pi$; הרכיב בכיוון $u$ הוא $\frac{\langle f,u\rangle}{\|u\|^2}u$'
+        correct: true
+        feedback: >-
+          נכון. $\frac{\langle f,1\rangle}{\|1\|^2}=\frac1{2\pi}\int f=\frac{a_0}2$ ו-$\frac{\langle f,\cos nx\rangle}{\|\cos nx\|^2}=\frac1\pi\int f\cos nx=a_n$.
+          הנוסחה האחידה עם $\frac1\pi$ נוחה, והמחיר הוא החצי באיבר הקבוע.
+      - text: מוסכמה בלבד; אפשר באותה מידה לכתוב $a_0$ ולקבל אותה הטלה
+        feedback: >-
+          לא: עם $a_0$ האיבר הקבוע כפול מהממוצע של $f$, וזו כבר לא ההטלה. עבור $f\equiv1$ מקבלים $a_0=2$, והאיבר
+          הקבוע חייב להיות 1.
+        misconception: MC-c10-a0-not-halved
+      - text: 'כי $\|1\|=1$ ו-$\|\cos nx\|^2=\frac12$'
+        feedback: >-
+          $\frac12$ הוא הממוצע של $\cos^2nx$, לא האינטגרל שלו. על $[-\pi,\pi]$: $\int\cos^2nx=\pi$ ו-$\int1=2\pi$.
+        misconception: MC-c9-trig-norm-2pi
+      - text: 'כי מקדמי פורייה הם $\langle f,\cos nx\rangle$, והמערכת אורתונורמלית'
+        feedback: >-
+          המערכת אינה מנורמלת, ולכן הרכיב הוא $\frac{\langle f,u\rangle}{\|u\|^2}$ ולא $\langle f,u\rangle$.
+        misconception: MC-c9-coef-no-divide
+
+  - id: Q-10.1-period
+    type: twotier
+    objectives: [OBJ-10.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ מחזורית ב-$2\pi$ ואינטגרבילית. האם
+      $$\frac1\pi\int_0^{2\pi}f(x)\cos nx\,dx=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx\ ?$$
+    choices:
+      - text: כן, לכל $n$
+        correct: true
+        feedback: >-
+          נכון. לכן מותר לחשב את המקדמים של פונקציה שנתונה על $(0,2\pi)$, כמו $\frac{\pi-x}2$, ישירות על $(0,2\pi)$.
+      - text: לא, הנוסחה למקדמים מוגדרת רק על $[-\pi,\pi]$
+        feedback: >-
+          האינטגרנד מחזורי ב-$2\pi$, ואינטגרל של פונקציה מחזורית על כל קטע באורך מחזור אחד שווה. טור פורייה מתאר
+          את ההמשכה המחזורית, לא את הקטע שבחרנו לכתוב עליו.
+        misconception: MC-c10-endpoint-not-periodic
+    reasons:
+      - text: 'האינטגרנד מחזורי ב-$2\pi$, ולכן $\int_{-\pi}^{0}=\int_{\pi}^{2\pi}$ (הצבה $x\mapsto x+2\pi$)'
+        correct: true
+        feedback: >-
+          בדיוק: $\int_0^{2\pi}=\int_0^\pi+\int_\pi^{2\pi}=\int_0^\pi+\int_{-\pi}^0=\int_{-\pi}^\pi$.
+      - text: 'כי $f$ זוגית, ולכן $\int_{-\pi}^{0}=\int_0^{\pi}$'
+        feedback: >-
+          לא נתון ש-$f$ זוגית, וגם לא צריך: הנימוק הוא מחזוריות בלבד.
+        misconception: MC-c10-parity-swapped
+      - text: 'לא, כי ב-$x=\pi$ הערכים של $f$ שונים משני הצדדים'
+        feedback: >-
+          ערך בנקודה אחת לא משנה אינטגרל. מה שקובע הוא שהאינטגרנד מחזורי.
+        misconception: MC-c10-endpoint-not-periodic
+
+  - id: Q-10.1-abs-a1
+    type: numeric
+    objectives: [OBJ-10.1-1]
+    level: mid
+    prompt: >-
+      חשבו את $a_1$, מקדם $\cos x$ בטור פורייה של $f(x)=|x|$ על $[-\pi,\pi]$.
+    answer: -1.2732395
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $a_n=\frac2\pi\int_0^\pi x\cos nx\,dx=\frac2\pi\left[\frac{x\sin nx}n+\frac{\cos nx}{n^2}\right]_0^\pi=\frac{2((-1)^n-1)}{\pi n^2}$,
+      ולכן $a_1=-\frac4\pi$, ו-$a_n=0$ לכל $n$ זוגי.
+    wrongFeedback: >-
+      $|x|\cos x$ זוגית: $a_1=\frac2\pi\int_0^\pi x\cos x\,dx$. אינטגרציה בחלקים נותנת $[x\sin x+\cos x]_0^\pi$.
+    commonWrong:
+      - value: -0.6366198
+        feedback: >-
+          זה $-\frac2\pi$: חסר הגורם 2 שמגיע מהמעבר לחצי הקטע.
+        misconception: MC-c10-parity-factor-two
+      - value: 0
+        feedback: >-
+          הצבתם $\cos\pi=1$. בפועל $\cos\pi=-1$, ולכן $[\cos x]_0^\pi=-2$.
+        misconception: MC-c10-cos-n-pi
+      - value: -4
+        feedback: >-
+          זה $\int_{-\pi}^{\pi}|x|\cos x\,dx$. המקדם הוא האינטגרל כפול $\frac1\pi$.
+        misconception: MC-c10-forget-1-over-pi
+
+  - id: Q-10.1-multi-parity
+    type: multi
+    objectives: [OBJ-10.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לאילו מהפונקציות הבאות על $[-\pi,\pi]$ **כל** המקדמים $a_n$ (כולל $a_0$) שווים לאפס? סמנו את כולן.
+    choices:
+      - text: '$x|x|$'
+        correct: true
+        feedback: 'נכון: $x$ אי-זוגית ו-$|x|$ זוגית, והמכפלה אי-זוגית.'
+      - text: '$x+x^3$'
+        correct: true
+        feedback: 'נכון: סכום של אי-זוגיות הוא אי-זוגי.'
+      - text: '$\sin x\cos x$'
+        correct: true
+        feedback: 'נכון: זה $\frac12\sin2x$, אי-זוגית. בטור שלה יש איבר אחד, $b_2=\frac12$.'
+      - text: '$x\sin x$'
+        feedback: >-
+          מכפלה של שתי פונקציות אי-זוגיות היא **זוגית**: $(-x)\sin(-x)=x\sin x$. לכן דווקא כל ה-$b_n$ מתאפסים,
+          ו-$a_0=\frac2\pi\int_0^\pi x\sin x\,dx=2\ne0$.
+        misconception: MC-c10-parity-swapped
+      - text: '$|\sin x|$'
+        feedback: >-
+          $|\sin x|$ זוגית, ולכן מתאפסים ה-$b_n$, לא ה-$a_n$. למשל $a_0=\frac2\pi\int_0^\pi\sin x\,dx=\frac4\pi$.
+        misconception: MC-c10-parity-swapped
+
+  - id: Q-10.1-sin3
+    type: mc
+    objectives: [OBJ-10.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=\sin^3x$. מהו $S_5f$? (רמז: $\sin^3x=\frac34\sin x-\frac14\sin3x$.)
+    choices:
+      - text: '$f$ עצמה'
+        correct: true
+        feedback: >-
+          נכון. $f\in T_3\subset T_5$, והטלה על תת-מרחב משאירה במקומו כל איבר שלו. בפרט $b_1=\frac34$, $b_3=-\frac14$,
+          וכל שאר המקדמים אפס.
+      - text: '$\frac34\sin x$'
+        feedback: >-
+          זה $S_1f=S_2f$. ב-$S_5f$ נכנס גם $b_3\sin3x=-\frac14\sin3x$, ומקבלים את $f$ בדיוק.
+        misconception: MC-c10-coefficients-change-with-N
+      - text: 'קירוב של $f$ ששונה ממנה, כי סכום חלקי הוא תמיד רק קירוב'
+        feedback: >-
+          $S_N$ היא הטלה, ולכן $S_Nf=f$ כש-$f\in T_N$. קירוב אמיתי יש רק כש-$f\notin T_N$.
+        misconception: MC-c10-projection-not-identity
+      - text: '$\sin^3 x$ פחות השגיאה $\frac14\sin3x$'
+        feedback: >-
+          ההפרש $f-S_Nf$ ניצב ל-$T_N$, ו-$\sin3x\in T_5$ אינו ניצב לעצמו. לכן אין כאן שגיאה: $f-S_5f=0$.
+        misconception: MC-c10-projection-not-identity
+
+  - id: Q-10.1-proof-rank
+    type: rank
+    objectives: [OBJ-10.1-2]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה ש-$S_Nf=P_{T_N}f$, כלומר שהסכום החלקי הוא ההטלה האורתוגונלית על $T_N$.
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: orth
+        label: 'בודקים ש-$1,\cos x,\sin x,\dots,\cos Nx,\sin Nx$ ניצבות זו לזו ב-$H[-\pi,\pi]$ (שיעור 9.2)'
+      - id: norm
+        label: 'מחשבים $\|1\|^2=2\pi$ ו-$\|\cos nx\|^2=\|\sin nx\|^2=\pi$, ומנרמלים: מתקבל בסיס אורתונורמלי של $T_N$'
+      - id: proj
+        label: 'משתמשים בנוסחת ההטלה במערכת אורתונורמלית: $P_{T_N}f=\sum_k\langle f,e_k\rangle e_k$ (שיעור 9.3)'
+      - id: coef
+        label: 'מחשבים כל איבר: $\langle f,\frac{\cos nx}{\sqrt\pi}\rangle\frac{\cos nx}{\sqrt\pi}=a_n\cos nx$, ובאיבר הקבוע $\frac1{2\pi}\int f=\frac{a_0}2$'
+      - id: sum
+        label: 'מחברים: $P_{T_N}f=\frac{a_0}2+\sum_{n=1}^N(a_n\cos nx+b_n\sin nx)=S_Nf$'
+    order: [orth, norm, proj, coef, sum]
+    correctFeedback: >-
+      נכון. ההוכחה כולה היא חישוב של נוסחת ההטלה מפרק 9 בבסיס הטריגונומטרי המנורמל.
+    wrongFeedback: >-
+      התחילו מהמערכת: קודם אורתוגונליות ונרמול, רק אז נוסחת ההטלה, ובסוף זיהוי המקדמים.
+
+  - id: Q-10.1-nested
+    type: twotier
+    objectives: [OBJ-10.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f\in H[-\pi,\pi]$. האם ייתכן ש-$\|f-S_5f\|>\|f-S_4f\|$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. השגיאה בממוצע ריבועי אינה עולה כשמגדילים את $N$.
+      - text: כן
+        feedback: >-
+          בנורמה של $H$ זה בלתי אפשרי. מה שיכול להיראות גרוע יותר ליד קפיצה הוא השגיאה **המקסימלית** (גיבס, שיעור 10.3),
+          וזו נורמה אחרת.
+        misconception: MC-c9-ls-is-uniform
+    reasons:
+      - text: '$S_4f\in T_4\subset T_5$, ו-$S_5f$ הוא הקרוב ביותר ל-$f$ מכל $T_5$, ולכן $\|f-S_5f\|\le\|f-S_4f\|$'
+        correct: true
+        feedback: >-
+          בדיוק: הקירוב הטוב ביותר מתוך קבוצה גדולה יותר אינו גרוע מהקירוב הטוב ביותר מתוך תת-קבוצה שלה.
+      - text: 'כי כשמגדילים את $N$ מחשבים מחדש את $a_1,\dots,a_4$ ומקבלים ערכים טובים יותר'
+        feedback: >-
+          המקדמים לא משתנים עם $N$: $S_5f=S_4f+a_5\cos5x+b_5\sin5x$. השיפור בא מהאיבר שנוסף ומהניצבות.
+        misconception: MC-c10-coefficients-change-with-N
+
+  - id: Q-10.1-best
+    type: twotier
+    objectives: [OBJ-10.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=x^2$ על $[-\pi,\pi]$ ו-$N=0$: מבין הקבועים $c$, ההטלה $S_0f=\frac{a_0}2=\frac{\pi^2}3$ ממזערת את
+      $\int_{-\pi}^{\pi}(f-c)^2$. האם היא ממזערת גם את $\max_{[-\pi,\pi]}|f-c|$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $\max|x^2-c|=\max(c,\ \pi^2-c)$, והוא מינימלי ב-$c=\frac{\pi^2}2$, עם ערך $\frac{\pi^2}2$. עבור
+          $c=\frac{\pi^2}3$ הוא $\frac{2\pi^2}3$.
+      - text: כן
+        feedback: >-
+          ההטלה היא הקרובה ביותר בנורמה של $H$ בלבד. כאן $\max|x^2-\frac{\pi^2}3|=\frac{2\pi^2}3>\frac{\pi^2}2=\max|x^2-\frac{\pi^2}2|$.
+        misconception: MC-c9-ls-is-uniform
+    reasons:
+      - text: 'השגיאה המקסימלית מינימלית באמצע הטווח, $c=\frac{\pi^2}2$, והממוצע $\frac{\pi^2}3$ שונה ממנו'
+        correct: true
+        feedback: >-
+          בדיוק. לכל נורמה "קרוב ביותר" משלה; פיתגורס וההטלה שייכים רק לנורמה שבאה ממכפלה פנימית.
+      - text: 'הקירוב הטוב ביותר יחיד, ולכן הוא אותו קבוע בכל מובן'
+        feedback: >-
+          היחידות היא בתוך נורמה אחת. בנורמות שונות הקירובים הטובים ביותר שונים: $\frac{\pi^2}3$ מול $\frac{\pi^2}2$.
+        misconception: MC-c9-ls-is-uniform
+      - text: 'הקבוע הטוב ביותר בכל מובן הוא $f(0)=0$'
+        feedback: >-
+          ערך בנקודה אחת לא קובע קירוב. ב-$H$ הקבוע הטוב ביותר הוא הממוצע, ובמקסימום הוא אמצע הטווח.
+        misconception: MC-c9-ls-pointwise
+
+  - id: Q-10.1-sin3dist
+    type: numeric
+    objectives: [OBJ-10.1-3, OBJ-10.1-2]
+    level: mid
+    prompt: >-
+      $f(x)=\sin^3x=\frac34\sin x-\frac14\sin3x$. חשבו את
+      $$\min_{T\in T_1}\ \frac1\pi\int_{-\pi}^{\pi}\big(f(x)-T(x)\big)^2dx.$$
+    answer: 0.0625
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. המינימום מתקבל ב-$T=S_1f=\frac34\sin x$, וההפרש הוא $-\frac14\sin3x$:
+      $\frac1\pi\int\frac1{16}\sin^23x\,dx=\frac1{16}$.
+    wrongFeedback: >-
+      הקירוב הטוב ביותר מ-$T_1$ הוא $S_1f$. חשבו את $f-S_1f$ ואת ריבוע הנורמה שלו, ואל תשכחו את $\frac1\pi$.
+    commonWrong:
+      - value: 0.1963495
+        feedback: >-
+          זה $\int\frac1{16}\sin^23x\,dx=\frac\pi{16}$, בלי הגורם $\frac1\pi$ שבשאלה.
+        misconception: MC-c10-forget-1-over-pi
+      - value: 0
+        feedback: >-
+          $f\notin T_1$: יש לה רכיב $\sin3x$. ב-$T_3$ המרחק היה אפס, ב-$T_1$ לא.
+        misconception: MC-c10-projection-not-identity
+
+  - id: Q-10.1-bestconst
+    type: numeric
+    objectives: [OBJ-10.1-3, OBJ-10.1-1]
+    level: exam
+    prompt: >-
+      חשבו את
+      $$\min_{c,d\in\mathbb R}\ \frac1\pi\int_{-\pi}^{\pi}\big(|x|-c-d\cos x\big)^2dx.$$
+    answer: 0.0237951
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $c+d\cos x$ רץ על המרחב $\mathrm{span}\{1,\cos x\}$, וההטלה של $|x|$ עליו היא $\frac\pi2-\frac4\pi\cos x$
+      (אין רכיב $\sin x$ כי $|x|$ זוגית). מפיתגורס המינימום הוא
+      $\frac1\pi\int x^2-\frac{a_0^2}2-a_1^2=\frac{2\pi^2}3-\frac{\pi^2}2-\frac{16}{\pi^2}=\frac{\pi^2}6-\frac{16}{\pi^2}\approx0.0238$.
+    wrongFeedback: >-
+      המינימום הוא ריבוע המרחק מ-$|x|$ להטלה שלה. מפיתגורס: $\frac1\pi\|f\|^2$ פחות $\frac{a_0^2}2+a_1^2$.
+    commonWrong:
+      - value: -4.9110071
+        feedback: >-
+          הפחתתם $a_0^2=\pi^2$ במקום $\frac{a_0^2}2$, וקיבלתם ריבוע מרחק שלילי: סימן בטוח לטעות.
+        misconception: MC-c10-a0-not-halved
+      - value: 0.0747546
+        feedback: >-
+          זה $\int(|x|-S_1)^2$ עצמו, בלי הגורם $\frac1\pi$ שבשאלה.
+        misconception: MC-c10-forget-1-over-pi
+
+  - id: Q-10.1-cosproj
+    type: numeric
+    objectives: [OBJ-10.1-2, OBJ-10.1-1]
+    level: exam
+    prompt: >-
+      $Y=\mathrm{span}\{1,\cos x,\cos2x\}\subset H[-\pi,\pi]$ ו-$f(x)=x^3+x^2$. חשבו את $(P_Yf)(0)$.
+    answer: 0.2898681
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $x^3$ אי-זוגית ולכן ניצבת לכל $Y$, ו-$P_Yf=P_Y(x^2)=\frac{\pi^2}3-4\cos x+\cos2x$ (המקדמים של $x^2$
+      הם $a_0=\frac{2\pi^2}3$, $a_n=\frac{4(-1)^n}{n^2}$). ב-0: $\frac{\pi^2}3-3\approx0.2899$.
+    wrongFeedback: >-
+      $Y$ נפרש על ידי איברים של המערכת הטריגונומטרית, ולכן $P_Yf=\frac{a_0}2+a_1\cos x+a_2\cos2x$. מה התרומה של $x^3$?
+    commonWrong:
+      - value: 3.5797363
+        feedback: >-
+          לקחתם את $a_0=\frac{2\pi^2}3$ כאיבר הקבוע. האיבר הקבוע של ההטלה הוא $\frac{a_0}2$.
+        misconception: MC-c10-a0-not-halved
+      - value: 8.2898681
+        feedback: >-
+          לקחתם $a_1=+4$. בפועל $a_1=\frac{4(-1)^1}{1^2}=-4$, כי $\cos\pi=-1$.
+        misconception: MC-c10-cos-n-pi

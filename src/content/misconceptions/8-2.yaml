@@ -1,0 +1,65 @@
+# Misconceptions first detected in lesson 8.2 (2- and 3-forms, the wedge product, the dictionary to fields).
+- id: MC-c8-wedge-commutes
+  title: חושבים שמכפלת יתד חילופית
+  belief: >-
+    $dx\wedge dy=dy\wedge dx$, כמו בכפל של מספרים או ב-$dx\,dy$ של אינטגרל כפול.
+  truth: >-
+    מכפלת יתד של תבניות מסדר 1 אנטי-סימטרית: $\alpha\wedge\beta=-\beta\wedge\alpha$, ובפרט $dy\wedge dx=-dx\wedge dy$.
+    כל החלפה של שני גורמים סמוכים מחליפה סימן.
+  remedy: { lesson: '8.2', label: 'מכפלת יתד: אנטי-סימטריה' }
+
+- id: MC-c8-wedge-self-nonzero
+  title: חושבים שמכפלת יתד של תבנית בעצמה היא ריבוע
+  belief: >-
+    $\alpha\wedge\alpha$ דומה ל-$\alpha^2$, למשל $(P\,dx+Q\,dy)\wedge(P\,dx+Q\,dy)=(P^2+Q^2)\,dx\wedge dy$, או שכל
+    מכפלה של סכומים פותחים כמו בכפל רגיל בלי לבטל איברים.
+  truth: >-
+    לתבנית $\alpha$ מסדר 1, $\alpha\wedge\alpha=-\alpha\wedge\alpha$, ולכן $\alpha\wedge\alpha=0$. בפתיחת סוגריים
+    $dx\wedge dx=0$, והאיברים המעורבים מתבטלים בזוגות: $PQ\,dx\wedge dy+QP\,dy\wedge dx=0$.
+  remedy: { lesson: '8.2', label: 'מכפלת תבנית מסדר 1 בעצמה' }
+
+- id: MC-c8-permutation-sign
+  title: טועים בסימן של סידור מחדש של שלושה דיפרנציאלים
+  belief: >-
+    כל שינוי סדר של $dx$, $dy$, $dz$ מחליף סימן, ולכן $dy\wedge dz\wedge dx=-dx\wedge dy\wedge dz$.
+  truth: >-
+    הסימן הוא הסימן של התמורה. תמורה מעגלית של שלושה היא שתי החלפות, ולכן
+    $dy\wedge dz\wedge dx=dz\wedge dx\wedge dy=dx\wedge dy\wedge dz$, ואילו החלפה אחת, למשל
+    $dy\wedge dx\wedge dz$, נותנת סימן מינוס.
+  remedy: { lesson: '8.2', label: 'תבניות מסדר 3 וסימן התמורה' }
+
+- id: MC-c8-dict-sign
+  title: מבלבלים בין dz יתד dx לבין dx יתד dz במילון לשדות
+  belief: >-
+    המקדם של $dx\wedge dz$ בתבנית מסדר 2 הוא הרכיב השני של השדה.
+  truth: >-
+    המילון הוא $F_1\,dy\wedge dz+F_2\,dz\wedge dx+F_3\,dx\wedge dy$, בסדר מעגלי. כי $dx\wedge dz=-dz\wedge dx$, תבנית
+    $B\,dx\wedge dz$ מתאימה לרכיב שני $-B$.
+  remedy: { lesson: '8.2', label: 'המילון בין תבניות מסדר 2 לשדות' }
+
+- id: MC-c8-dict-index
+  title: מתאימים את המקדם של dx יתד dy לרכיב הראשון של השדה
+  belief: >-
+    בתבנית מסדר 2 המקדם של $dx\wedge dy$ הוא הרכיב הראשון, כי $dx$ מופיע בו.
+  truth: >-
+    כל רכיב מתאים לקואורדינטה **החסרה**: $dy\wedge dz$ לרכיב הראשון, $dz\wedge dx$ לשני, $dx\wedge dy$ לשלישי. כך
+    $\eta(v,w)=F\cdot(v\times w)$, והרכיב השלישי של $v\times w$ הוא $v_1w_2-v_2w_1=dx\wedge dy(v,w)$.
+  remedy: { lesson: '8.2', label: 'המילון בין תבניות מסדר 2 לשדות' }
+
+- id: MC-c8-wedge-unsigned
+  title: חושבים ש-dx יתד dy על שני וקטורים הוא שטח חיובי של המקבילית
+  belief: >-
+    $dx\wedge dy(v,w)$ הוא השטח של המקבילית שנפרשת על ידי $v$ ו-$w$, תמיד אי-שלילי.
+  truth: >-
+    $dx\wedge dy(v,w)=v_1w_2-v_2w_1$ הוא השטח **המסומן** של ההטלה של המקבילית על מישור $xy$: הוא מחליף סימן כשמחליפים
+    את $v$ ו-$w$, והוא אפס כשההטלה מנוונת, גם כשהמקבילית עצמה אינה מנוונת.
+  remedy: { lesson: '8.2', label: 'מכפלת יתד כדטרמיננטה' }
+
+- id: MC-c8-wedge-product-only
+  title: מחשבים מכפלת יתד על זוג וקטורים כמכפלה פשוטה של הערכים
+  belief: >-
+    $(\alpha\wedge\beta)(v,w)=\alpha(v)\,\beta(w)$, או סכום של מכפלות במקום הפרש.
+  truth: >-
+    $(\alpha\wedge\beta)(v,w)=\alpha(v)\beta(w)-\alpha(w)\beta(v)$, הדטרמיננטה של המטריצה
+    $\begin{pmatrix}\alpha(v)&\alpha(w)\\ \beta(v)&\beta(w)\end{pmatrix}$. בלי האיבר המחוסר אין אנטי-סימטריה.
+  remedy: { lesson: '8.2', label: 'מכפלת יתד כדטרמיננטה' }

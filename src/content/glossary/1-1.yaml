@@ -1,0 +1,55 @@
+# Terms first defined in lesson 1.1 (smooth and regular curves, the image, the tangent).
+# "מסילה" and "פרמטריזציה" themselves belong to chapter 0 (lesson 0.1).
+- id: curve-image
+  term: תמונה של מסילה
+  en: trace (image) of a curve
+  symbol: '\gamma(I)'
+  definition: >-
+    קבוצת הנקודות $\gamma(I)=\{\gamma(t):t\in I\}$ שהמסילה $\gamma:I\to\mathbb R^n$ מציירת. מסילה היא פונקציה, והתמונה
+    היא רק קבוצה: ל-$(\cos t,\sin t)$ ול-$(\cos2t,\sin2t)$ על $[0,2\pi]$ אותה תמונה, מעגל היחידה.
+  lesson: '1.1'
+- id: smooth-curve
+  term: מסילה חלקה
+  en: smooth curve
+  definition: >-
+    מסילה $\gamma:I\to\mathbb R^n$ שכל רכיביה גזירים אינסוף פעמים (בקורס מספיק לרוב "גזירה ברציפות כמה פעמים
+    שצריך"). חלקות היא תכונה של הפרמטריזציה, ואינה מבטיחה תמונה בלי חודים: $(t^2,t^3)$ חלקה.
+  lesson: '1.1'
+- id: regular-curve
+  term: מסילה רגולרית
+  en: regular curve
+  definition: >-
+    מסילה גזירה ברציפות שמקיימת $\gamma'(t)\ne0$ לכל $t\in I$. בנקודה רגולרית יש ישר משיק, ומסילה רגולרית אפשר
+    לפרמטר לפי אורך הקשת.
+  lesson: '1.1'
+- id: cusp
+  term: חוד
+  en: cusp
+  definition: >-
+    נקודה של התמונה שבה המסילה מגיעה בכיוון מסוים ויוצאת בכיוון ההפוך, כמו ב-$(t^2,t^3)$ בראשית: שם $\gamma'(0)=0$
+    ו-$\frac{\gamma'}{\|\gamma'\|}$ קופץ מ-$(-1,0)$ ל-$(1,0)$. במסילה חלקה חוד יכול להופיע רק בנקודה לא רגולרית.
+  lesson: '1.1'
+- id: tangent-vector
+  term: וקטור משיק
+  en: tangent vector (velocity)
+  symbol: '\gamma''(t)'
+  definition: >-
+    הנגזרת $\gamma'(t)$, וקטור המהירות. הכיוון שלו (כשהוא שונה מאפס) הוא כיוון התנועה, והאורך שלו תלוי
+    בפרמטריזציה: בהחלפת פרמטר $\gamma\circ\varphi$ הוא מוכפל ב-$\varphi'$.
+  lesson: '1.1'
+- id: tangent-line
+  term: ישר משיק
+  en: tangent line
+  definition: >-
+    בנקודה רגולרית $t_0$: הישר $\{\gamma(t_0)+\lambda\gamma'(t_0):\lambda\in\mathbb R\}$. הוא לא תלוי בפרמטריזציה,
+    אף שוקטור המשיק תלוי.
+  lesson: '1.1'
+- id: reparametrization
+  term: החלפת פרמטר
+  en: reparametrization
+  symbol: '\gamma\circ\varphi'
+  definition: >-
+    המסילה $\delta=\gamma\circ\varphi$, כש-$\varphi:J\to I$ גזירה ברציפות, על, עם $\varphi'\ne0$ (ולכן מונוטונית
+    ממש). כש-$\varphi'>0$ הכיוון נשמר, וכש-$\varphi'<0$ הוא מתהפך. גדלים גאומטריים, כמו אורך ועקמומיות, לא משתנים
+    בהחלפת פרמטר.
+  lesson: '1.1'

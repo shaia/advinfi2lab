@@ -1,0 +1,9 @@
+# Terms first defined in lesson 1.6 (the plane curve determined by its curvature).
+- id: cornu-spiral
+  term: ספירלת קורנו
+  en: Cornu (Euler) spiral, clothoid
+  definition: >-
+    המסילה המישורית שבה העקמומיות המסומנת שווה לאורך הקשת, $k(s)=s$: $\theta=\frac{s^2}{2}$ ו-
+    $\gamma(s)=\int_0^s\big(\cos\frac{u^2}2,\sin\frac{u^2}2\big)du$. אורכה אינסופי, והיא מתלפפת אל
+    $\big(\frac{\sqrt\pi}2,\frac{\sqrt\pi}2\big)$. נקראת גם קלותואידה.
+  lesson: '1.6'

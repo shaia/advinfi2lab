@@ -1,0 +1,40 @@
+# Terms first defined in lesson 5.2 (polar, cylindrical and spherical coordinates).
+- id: cylindrical-coordinates
+  term: קואורדינטות גליליות
+  en: cylindrical coordinates
+  symbol: '(r\cos\theta,\ r\sin\theta,\ z)'
+  definition: >-
+    $x=r\cos\theta$, $y=r\sin\theta$, $z=z$, עם $r\ge0$ ו-$0\le\theta\le2\pi$: קוטביות במישור $xy$ והגובה כמו שהוא.
+    היעקוביאן הוא $r$, ולכן $dV=r\,dr\,d\theta\,dz$.
+  lesson: '5.2'
+- id: spherical-coordinates
+  term: קואורדינטות כדוריות
+  en: spherical coordinates
+  symbol: '(\rho\sin\varphi\cos\theta,\ \rho\sin\varphi\sin\theta,\ \rho\cos\varphi)'
+  definition: >-
+    $\rho\ge0$ המרחק מהראשית, $0\le\varphi\le\pi$ הזווית מציר $z$ החיובי, ו-$0\le\theta\le2\pi$ הזווית סביב ציר $z$.
+    מקדם הנפח הוא $\rho^2\sin\varphi$, ולכן $dV=\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta$. אם במקום $\varphi$
+    משתמשים בזווית רוחב מקו המשווה, $\sin$ מתחלף ב-$\cos$.
+  lesson: '5.2'
+- id: improper-double-integral
+  term: אינטגרל כפול לא אמיתי
+  en: improper double integral
+  definition: >-
+    אינטגרל של פונקציה על תחום לא חסום, כמו $\mathbb R^2$, המוגדר כגבול של אינטגרלים על תחומים חסומים שגדלים
+    וממצים אותו. לפונקציה אי-שלילית הגבול אינו תלוי במשפחת התחומים (ריבועים, עיגולים).
+  lesson: '5.2'
+- id: gaussian-integral
+  term: אינטגרל גאוס
+  en: Gaussian integral
+  symbol: '\int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt\pi'
+  definition: >-
+    $\int_{-\infty}^\infty e^{-x^2}dx=\sqrt\pi$. מחשבים את ריבועו כאינטגרל כפול על המישור, בקוטביות: היעקוביאן $r$ נותן
+    לאינטגרנד $re^{-r^2}$ פונקציה קדומה אלמנטרית.
+  lesson: '5.2'
+- id: moment-of-inertia
+  term: מומנט התמד
+  en: moment of inertia
+  definition: >-
+    מומנט ההתמד של גוף $E$ עם צפיפות $\delta$ סביב ציר הוא $\iiint_E d^2\,\delta\,dV$, כש-$d$ המרחק מהציר. סביב ציר
+    $z$: $d^2=x^2+y^2$.
+  lesson: '5.2'

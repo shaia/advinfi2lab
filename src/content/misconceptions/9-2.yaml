@@ -1,0 +1,77 @@
+# Misconceptions first detected in lesson 9.2 (orthonormal systems, Gram–Schmidt, Legendre, Pythagoras).
+- id: MC-c9-orthogonal-normalized
+  title: מבלבלים בין מערכת אורתוגונלית למערכת אורתונורמלית
+  belief: >-
+    המערכת $1,\cos x,\sin x,\cos2x,\dots$ על $[-\pi,\pi]$ אורתונורמלית, כי האיברים ניצבים זה לזה.
+  truth: >-
+    ניצבות היא רק חצי מהתנאי; צריך גם $\|e_k\|=1$. על $[-\pi,\pi]$: $\|1\|^2=2\pi$ ו-$\|\cos nx\|^2=\|\sin nx\|^2=\pi$,
+    ולכן המערכת האורתונורמלית היא $\frac1{\sqrt{2\pi}},\frac{\cos nx}{\sqrt\pi},\frac{\sin nx}{\sqrt\pi}$.
+  remedy: { lesson: '9.2', label: 'מערכת אורתונורמלית: ניצבות ונורמה 1' }
+
+- id: MC-c9-trig-norm-2pi
+  title: טועים בנורמה של קוסינוס או סינוס על קטע באורך שתי פאי
+  belief: >-
+    $\int_{-\pi}^{\pi}\cos^2nx\,dx=2\pi$ (כמו לפונקציה הקבועה 1), או $0$ (כמו בין שתי פונקציות שונות).
+  truth: >-
+    $\cos^2nx=\frac12(1+\cos2nx)$, ולכן לכל $n\ge1$ האינטגרל הוא $\pi$: חצי מאורך הקטע.
+  remedy: { lesson: '9.2', label: 'האורתוגונליות של הפונקציות הטריגונומטריות' }
+
+- id: MC-c9-orthogonality-any-interval
+  title: חושבים שאורתוגונליות של פונקציות אינה תלויה בקטע
+  belief: >-
+    $1$ ו-$x$ ניצבות, ו-$1,\cos x,\sin x,\dots$ ניצבות, על כל קטע.
+  truth: >-
+    המכפלה הפנימית היא אינטגרל על קטע מסוים. $\int_{-1}^1x\,dx=0$ אבל $\int_0^1x\,dx=\frac12$, ו-$\int_0^\pi\sin x\,dx=2$.
+    על קטע אחר גרם-שמידט נותן פולינומים אחרים.
+  remedy: { lesson: '9.2', label: 'אורתוגונליות תלויה בקטע' }
+
+- id: MC-c9-coef-no-divide
+  title: שוכחים לחלק בריבוע הנורמה כשהבסיס אינו מנורמל
+  belief: >-
+    המקדם של $u$ (בגרם-שמידט, בפיתוח או בהטלה) הוא $\langle f,u\rangle$ גם כש-$\|u\|\neq1$.
+  truth: >-
+    במערכת אורתוגונלית $u_1,\dots,u_n$ המקדם הוא $\frac{\langle f,u_k\rangle}{\|u_k\|^2}$. הנוסחה $\langle f,e_k\rangle$
+    נכונה רק כש-$\|e_k\|=1$. למשל $\langle x^2,1\rangle=\frac23$ על $[-1,1]$, אבל הרכיב של $x^2$ בכיוון 1 הוא $\frac13$.
+  remedy: { lesson: '9.2', label: 'גרם-שמידט: המקדם של כל צעד' }
+
+- id: MC-c9-legendre-unit
+  title: חושבים שפולינומי לז׳נדר מנורמלים
+  belief: >-
+    $\|P_n\|=1$ על $[-1,1]$, כי הם יוצאים מגרם-שמידט.
+  truth: >-
+    $P_n$ מנורמלים לפי $P_n(1)=1$, לא לפי הנורמה: $\|P_n\|^2=\frac2{2n+1}$, למשל $\|P_0\|^2=2$ ו-$\|P_2\|^2=\frac25$.
+    המערכת האורתונורמלית היא $e_n=\sqrt{\frac{2n+1}2}P_n$.
+  remedy: { lesson: '9.2', label: 'פולינומי לז׳נדר והנורמה שלהם' }
+
+- id: MC-c9-constant-not-squared
+  title: מוציאים קבוע מריבוע הנורמה בלי לרבע אותו
+  belief: >-
+    $\|cf\|^2=c\,\|f\|^2$, למשל $\left\|\frac{3x^2-1}2\right\|^2=\frac12\|3x^2-1\|^2$.
+  truth: >-
+    $\|cf\|=|c|\,\|f\|$, ולכן $\|cf\|^2=c^2\|f\|^2$: $\left\|\frac{3x^2-1}2\right\|^2=\frac14\cdot\frac85=\frac25$.
+  remedy: { lesson: '9.2', label: 'חישוב נורמות של פולינומי לז׳נדר' }
+
+- id: MC-c9-pythagoras-add-norms
+  title: מחברים נורמות במקום ריבועי נורמות
+  belief: >-
+    אם $e_1\perp e_2$ מנורמלים, אז $\|3e_1-4e_2\|=3+4$ או $3-4$.
+  truth: >-
+    משפט פיתגורס הוא על ריבועים: $\|3e_1-4e_2\|^2=9+16$, ולכן $\|3e_1-4e_2\|=5$. הסימן של המקדם נעלם בריבוע.
+  remedy: { lesson: '9.2', label: 'משפט פיתגורס במרחב מכפלה פנימית' }
+
+- id: MC-c9-pythagoras-no-weights
+  title: משתמשים במשפט פיתגורס בבסיס אורתוגונלי בלי ריבועי הנורמות של האיברים
+  belief: >-
+    אם $f=\sum c_ku_k$ עם $u_k$ ניצבים, אז $\|f\|^2=\sum c_k^2$.
+  truth: >-
+    $\|f\|^2=\sum c_k^2\|u_k\|^2$. רק במערכת אורתונורמלית $\|f\|^2=\sum c_k^2$. ב-$2P_0-P_1+3P_2$ על $[-1,1]$:
+    $4\cdot2+1\cdot\frac23+9\cdot\frac25=\frac{184}{15}$, לא $14$.
+  remedy: { lesson: '9.2', label: 'פיתגורס עם בסיס לא מנורמל' }
+
+- id: MC-c9-pythagoras-one-way
+  title: חושבים שמשפט פיתגורס אינו הפיך
+  belief: >-
+    $\|x+y\|^2=\|x\|^2+\|y\|^2$ יכול להתקיים גם כש-$x$ ו-$y$ אינם ניצבים.
+  truth: >-
+    במרחב ממשי $\|x+y\|^2-\|x\|^2-\|y\|^2=2\langle x,y\rangle$, ולכן השוויון שקול ל-$\langle x,y\rangle=0$.
+  remedy: { lesson: '9.2', label: 'משפט פיתגורס בשני הכיוונים' }

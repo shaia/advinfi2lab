@@ -1,0 +1,7 @@
+---
+/** Lessons 1.1–1.5 figure: <Spread figure={PlaneCurve} figureProps={{ curve, curves, t, layers, toggles, n, reversible, tasks }}>. */
+import PlaneCurve, { type PlaneCurveProps } from './PlaneCurve';
+type Props = PlaneCurveProps;
+---
+
+<PlaneCurve client:visible {...Astro.props} />

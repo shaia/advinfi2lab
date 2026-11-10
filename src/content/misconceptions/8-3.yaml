@@ -1,0 +1,62 @@
+# Misconceptions first detected in lesson 8.3 (the exterior derivative, d² = 0, the Leibniz rule).
+- id: MC-c8-d-order-sign
+  title: כותבים את הדיפרנציאל של המקדם אחרי הדיפרנציאל הקיים ומקבלים סימן הפוך
+  belief: >-
+    $d(P\,dx+Q\,dy)=(P_y-Q_x)\,dx\wedge dy$, כי "גוזרים את $P$ לפי $y$ וכותבים $dx\wedge dy$".
+  truth: >-
+    לפי ההגדרה $d(f\,dx_I)=df\wedge dx_I$: הדיפרנציאל של המקדם בא **ראשון**. לכן
+    $d(P\,dx)=P_y\,dy\wedge dx=-P_y\,dx\wedge dy$, ו-$d(P\,dx+Q\,dy)=(Q_x-P_y)\,dx\wedge dy$.
+  remedy: { lesson: '8.3', label: 'ההגדרה של הנגזרת החיצונית' }
+
+- id: MC-c8-d-is-div
+  title: גוזרים כל מקדם לפי המשתנה של הדיפרנציאל שלו
+  belief: >-
+    $d(P\,dx+Q\,dy)=(P_x+Q_y)\,dx\wedge dy$, כמו דיברגנץ.
+  truth: >-
+    ב-$d(P\,dx)=P_x\,dx\wedge dx+P_y\,dy\wedge dx$ האיבר עם $P_x$ מתאפס, כי $dx\wedge dx=0$. נשארות רק הנגזרות לפי
+    המשתנים **האחרים**: $d(P\,dx+Q\,dy)=(Q_x-P_y)\,dx\wedge dy$, הרוטור הסקלרי של משפט גרין.
+  remedy: { lesson: '8.3', label: 'הנגזרת החיצונית במישור' }
+
+- id: MC-c8-d-present-variable
+  title: גוזרים מקדם של תבנית מסדר 2 לפי משתנה שכבר מופיע בה
+  belief: >-
+    ב-$d(A\,dy\wedge dz)$ גוזרים את $A$ לפי $y$ או לפי $z$.
+  truth: >-
+    $d(A\,dy\wedge dz)=A_x\,dx\wedge dy\wedge dz$: האיברים $A_y\,dy\wedge dy\wedge dz$ ו-$A_z\,dz\wedge dy\wedge dz$
+    מתאפסים. נשארת רק הנגזרת לפי המשתנה החסר, ולכן $d$ של תבנית מסדר 2 הוא הדיברגנץ של השדה שלה.
+  remedy: { lesson: '8.3', label: 'הנגזרת החיצונית של תבנית מסדר 2' }
+
+- id: MC-c8-dict-degree
+  title: מתאימים את d לאופרטור הלא נכון לפי סדר התבנית
+  belief: >-
+    $d$ של תבנית מסדר 1 הוא דיברגנץ, או שהזהות $d(d\omega)=0$ לתבנית מסדר 1 היא "רוטור של גרדיאנט אפס".
+  truth: >-
+    ב-$\mathbb R^3$: $d$ על פונקציה הוא גרדיאנט, על תבנית מסדר 1 רוטור, על תבנית מסדר 2 דיברגנץ. לכן $d(df)=0$ היא
+    $\nabla\times\nabla f=0$, ו-$d(d\omega)=0$ לתבנית מסדר 1 היא $\nabla\cdot(\nabla\times F)=0$.
+  remedy: { lesson: '8.3', label: 'הנגזרת החיצונית במילון של השדות' }
+
+- id: MC-c8-leibniz-sign
+  title: שוכחים את הסימן בכלל לייבניץ לנגזרת חיצונית
+  belief: >-
+    $d(\alpha\wedge\beta)=d\alpha\wedge\beta+\alpha\wedge d\beta$ לכל שתי תבניות.
+  truth: >-
+    $d(\alpha\wedge\beta)=d\alpha\wedge\beta+(-1)^k\alpha\wedge d\beta$ כש-$\alpha$ מסדר $k$: כדי להגיע ל-$\beta$,
+    ה-$d$ "עובר" את $k$ הדיפרנציאלים של $\alpha$. לשתי תבניות מסדר 1 הסימן הוא מינוס; לפונקציה ($k=0$) פלוס.
+  remedy: { lesson: '8.3', label: 'כלל לייבניץ' }
+
+- id: MC-c8-d-ignores-function
+  title: מוציאים פונקציה מחוץ לנגזרת החיצונית כאילו הייתה קבוע
+  belief: >-
+    $d(f\alpha)=f\,d\alpha$.
+  truth: >-
+    $d(f\alpha)=df\wedge\alpha+f\,d\alpha$ (כלל לייבניץ עם $k=0$). רק קבוע יוצא החוצה בלי איבר נוסף.
+  remedy: { lesson: '8.3', label: 'כלל לייבניץ' }
+
+- id: MC-c8-dd-trivial
+  title: חושבים ש-d פעמיים אפס בגלל סיבה שאינה הסיבה
+  belief: >-
+    $d(df)=0$ "כי $df$ כבר נגזרת" או "כי הנגזרת של קבוע היא אפס", בלי לשים לב מאיפה הביטול בא.
+  truth: >-
+    $d(df)=\sum_{i,j}f_{x_jx_i}\,dx_j\wedge dx_i$. האיברים עם $i=j$ מתאפסים, ושני האיברים של כל זוג $i\ne j$ מתבטלים כי
+    $f_{x_ix_j}=f_{x_jx_i}$ (משפט שוורץ, דורש $f\in C^2$) ו-$dx_i\wedge dx_j=-dx_j\wedge dx_i$. שני המרכיבים נחוצים.
+  remedy: { lesson: '8.3', label: 'הוכחת d בריבוע שווה אפס' }

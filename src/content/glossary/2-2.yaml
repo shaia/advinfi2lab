@@ -1,0 +1,17 @@
+# Terms first defined in lesson 2.2 (torsion).
+- id: torsion
+  term: פיתול
+  en: torsion
+  symbol: '\tau'
+  definition: >-
+    במסילה בפרמטר אורך הקשת עם $\kappa>0$, הפיתול $\tau(s)$ מוגדר על ידי $\mathbf b'(s)=-\tau(s)\,\mathbf n(s)$ (הסימן של הקורס).
+    בפרמטר כללי $\tau=\frac{(\gamma'\times\gamma'')\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}$. הוא מסומן: חיובי בסליל ימני,
+    שלילי בסליל שמאלי, ואפס זהותית בדיוק במסילות מישוריות.
+  lesson: '2.2'
+- id: right-handed-helix
+  term: סליל ימני
+  en: right-handed helix
+  definition: >-
+    הסליל $(a\cos t,a\sin t,bt)$ עם $a>0$ ו-$b>0$: הוא עולה בכיוון הציר כשמסתובבים נגד כיוון השעון במבט מלמעלה (מ-$+z$), כמו בורג רגיל, ו-$\tau=\frac{b}{a^2+b^2}>0$.
+    כש-$b<0$ הסליל שמאלי ו-$\tau<0$; כל אחד מהם הוא תמונת המראה של השני.
+  lesson: '2.2'

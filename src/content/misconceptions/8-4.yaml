@@ -1,0 +1,55 @@
+# Misconceptions first detected in lesson 8.4 (pullback, integrals of 2- and 3-forms, orientation).
+- id: MC-c8-pullback-forget-differential
+  title: במשיכה לאחור מציבים במקדמים בלבד ומשאירים את הדיפרנציאלים
+  belief: >-
+    $\varphi^*(y\,dx)$ לאורך $\varphi(t)=(t^2,t^3)$ הוא $t^3\,dt$: מציבים $y=t^3$ ומחליפים את $dx$ ב-$dt$.
+  truth: >-
+    גם הדיפרנציאלים נמשכים: $\varphi^*dx=d(x\circ\varphi)=2t\,dt$. לכן $\varphi^*(y\,dx)=t^3\cdot2t\,dt=2t^4\,dt$.
+  remedy: { lesson: '8.4', label: 'משיכה לאחור: מקדמים ודיפרנציאלים' }
+
+- id: MC-c8-pullback-differentiate-coefficient
+  title: במשיכה לאחור גוזרים גם את המקדם
+  belief: >-
+    $\varphi^*(y\,dx)$ לאורך $\varphi(t)=(t^2,t^3)$ הוא $(t^3)'\cdot2t\,dt=6t^3\,dt$: כל מה שמופיע בתבנית נגזר.
+  truth: >-
+    המקדם רק מוצב, $y\circ\varphi=t^3$; רק הדיפרנציאלים הופכים לנגזרות, $\varphi^*dx=2t\,dt$. לכן
+    $\varphi^*(y\,dx)=2t^4\,dt$.
+  remedy: { lesson: '8.4', label: 'משיכה לאחור: מקדמים ודיפרנציאלים' }
+
+- id: MC-c8-pullback-no-jacobian
+  title: חושבים שמשיכה לאחור של dx יתד dy היא du יתד dv
+  belief: >-
+    $\varphi^*(dx\wedge dy)=du\wedge dv$, ולכן $\int_S\eta$ הוא האינטגרל של המקדם של $\eta$ (מוצב ב-$\varphi$) על $D$
+    בלי שום גורם.
+  truth: >-
+    $\varphi^*(dx\wedge dy)=(x_u\,du+x_v\,dv)\wedge(y_u\,du+y_v\,dv)=(x_uy_v-x_vy_u)\,du\wedge dv=\det J\,du\wedge dv$.
+    היעקוביאן נכנס דרך מכפלת היתד.
+  remedy: { lesson: '8.4', label: 'משיכה לאחור של dx יתד dy' }
+
+- id: MC-c8-pullback-drop-coefficient
+  title: במשיכה לאחור מושכים רק את הדיפרנציאלים ושוכחים את המקדם
+  belief: >-
+    $\varphi^*(f\,dx\wedge dy)=\det J\,du\wedge dv$, כאילו המקדם $f$ נבלע או נשאר מחוץ לאינטגרל.
+  truth: >-
+    $\varphi^*(f\,dx\wedge dy)=(f\circ\varphi)\det J\,du\wedge dv$: המקדם מוצב ב-$\varphi$ ונשאר באינטגרנד. בלי המקדם
+    מחשבים את האינטגרל של $dx\wedge dy$, כלומר שטח מסומן של הטלה.
+  remedy: { lesson: '8.4', label: 'משיכה לאחור: מקדמים ודיפרנציאלים' }
+
+- id: MC-c8-pullback-wrong-point
+  title: מעריכים את התבנית בנקודה של התחום במקום בתמונה שלה
+  belief: >-
+    $(\varphi^*\omega)_p(v_1,v_2)=\omega_p(v_1,v_2)$, או $\omega_{\varphi(p)}(v_1,v_2)$ בלי לשנות את הווקטורים.
+  truth: >-
+    $(\varphi^*\omega)_p(v_1,v_2)=\omega_{\varphi(p)}\big(D\varphi_p v_1,\,D\varphi_p v_2\big)$: גם הנקודה וגם
+    הווקטורים עוברים דרך $\varphi$. $\omega$ מוגדרת על המרחב של התמונה, ושם נמצאים $\varphi(p)$ ו-$D\varphi_pv$.
+  remedy: { lesson: '8.4', label: 'ההגדרה של המשיכה לאחור' }
+
+- id: MC-c8-orientation-abs-det
+  title: מכניסים ערך מוחלט של היעקוביאן לאינטגרל של תבנית
+  belief: >-
+    $\int_D\varphi^*(f\,dx\wedge dy)=\iint_D f(\varphi)\,|\det J|\,du\,dv$ תמיד, ולכן האינטגרל של תבנית אינו תלוי
+    בפרמטריזציה ובכיוון שלה.
+  truth: >-
+    במשיכה לאחור מופיע $\det J$ **עם סימן**. האינטגרל של תבנית שווה לאינטגרל של החלפת המשתנים כש-$\det J>0$
+    (ההעתקה שומרת כיוון), ושווה למינוס שלו כש-$\det J<0$. החלפת $u$ ו-$v$ הופכת את הסימן.
+  remedy: { lesson: '8.4', label: 'החלפת משתנים בתוך המשיכה לאחור, עם סימן' }

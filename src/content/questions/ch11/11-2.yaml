@@ -1,0 +1,428 @@
+# Lesson 11.2 — the Lipschitz condition and non-uniqueness.
+# Objectives (src/course.ts):
+#   OBJ-11.2-1  define the Lipschitz condition in y uniformly in t; bounded ∂f/∂y on a convex set implies it
+#              (the one-variable mean value theorem in y with t fixed: no several-variable differentiability needed)
+#   OBJ-11.2-2  show by example that without it an IVP can have infinitely many solutions
+#   OBJ-11.2-3  decide whether a given right-hand side is locally or globally Lipschitz
+chapter: 11
+questions:
+  - id: Q-11.2-def
+    type: mc
+    objectives: [OBJ-11.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      פונקציה $g$ של משתנה אחד היא ליפשיצית עם קבוע $L$ אם $|g(y_1)-g(y_2)|\le L|y_1-y_2|$ לכל $y_1,y_2$. עכשיו
+      $f$ מוגדרת ב-$D=I\times\mathbb{R}$, כש-$I$ קטע. מה פירוש "$f$ מקיימת תנאי ליפשיץ במשתנה התלוי ב-$D$, באופן
+      אחיד ב-$t$"?
+    choices:
+      - text: '$\exists L\ge0\ \forall t\in I\ \forall y_1,y_2\in\mathbb{R}:\ |f(t,y_1)-f(t,y_2)|\le L|y_1-y_2|$'
+        correct: true
+        feedback: >-
+          נכון. קבוע אחד $L$ לכל הזמנים, וההשוואה היא בין שני ערכים של $y$ **באותו** $t$.
+      - text: '$\forall t\in I\ \exists L\ge0\ \forall y_1,y_2\in\mathbb{R}:\ |f(t,y_1)-f(t,y_2)|\le L|y_1-y_2|$'
+        feedback: >-
+          כאן $L$ רשאי להיות תלוי ב-$t$. הפונקציה $f(t,y)=ty$ על $\mathbb{R}\times\mathbb{R}$ מקיימת את זה עם
+          $L=|t|$, אבל אין קבוע אחד לכל $t$. "אחיד ב-$t$" פירושו ש-$L$ בא לפני $t$.
+        misconception: MC-c11-lipschitz-L-depends-on-t
+      - text: '$\exists L\ge0\ \forall (t_1,y_1),(t_2,y_2)\in D:\ |f(t_1,y_1)-f(t_2,y_2)|\le L(|t_1-t_2|+|y_1-y_2|)$'
+        feedback: >-
+          זה תנאי ליפשיץ בשני המשתנים יחד, חזק יותר מהדרוש. $f(t,y)=\sqrt{|t|}$ מקיימת את התנאי ב-$y$ עם $L=0$, אבל
+          לא את התנאי הזה (ב-$t$ ליד 0). ב-$t$ דורשים רק רציפות.
+        misconception: MC-c11-lipschitz-in-t
+      - text: '$\exists L\ge0\ \forall (t,y)\in D:\ \left|\frac{\partial f}{\partial y}(t,y)\right|\le L$'
+        feedback: >-
+          זה תנאי **מספיק** (בתחום קמור), לא ההגדרה: הוא דורש גזירות. $f(t,y)=|y|$ אינה גזירה ב-$y=0$ ובכל זאת
+          מקיימת את התנאי עם $L=1$.
+        misconception: MC-c11-lipschitz-needs-derivative
+
+  - id: Q-11.2-negate
+    type: mc
+    objectives: [OBJ-11.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה פירוש "$f$ **אינה** מקיימת תנאי ליפשיץ ב-$y$ ב-$D=I\times\mathbb{R}$, באופן אחיד ב-$t$"?
+    choices:
+      - text: '$\forall L\ge0\ \exists t\in I\ \exists y_1,y_2:\ |f(t,y_1)-f(t,y_2)|>L|y_1-y_2|$'
+        correct: true
+        feedback: >-
+          נכון. כל כמת מתהפך והאי-שוויון נשלל: לכל קבוע מועמד יש זוג נקודות באותו $t$ שמנת ההפרשים שלו גדולה ממנו.
+          במילים, מנות ההפרשים אינן חסומות.
+      - text: '$\exists L\ge0\ \forall t\in I\ \forall y_1,y_2:\ |f(t,y_1)-f(t,y_2)|>L|y_1-y_2|$'
+        feedback: >-
+          לא הפכו את הכמתים. הטענה הזו גם בלתי אפשרית: עבור $y_1=y_2$ שני האגפים אפס. השלילה צריכה להיות "לכל
+          $L$ קיים זוג רע".
+        misconception: MC-c11-lipschitz-negation
+      - text: '$\forall t\in I\ \forall L\ge0\ \exists y_1,y_2:\ |f(t,y_1)-f(t,y_2)|>L|y_1-y_2|$'
+        feedback: >-
+          זה אומר שלכל $t$ בנפרד הפונקציה $y\mapsto f(t,y)$ אינה ליפשיצית: חזק מדי. $f=ty$ אינה ליפשיצית באופן
+          אחיד, ובכל זאת לכל $t$ קבוע היא ליפשיצית (ב-$t=0$ היא אפס).
+        misconception: MC-c11-lipschitz-L-depends-on-t
+      - text: '$\forall L\ge0\ \exists t\in I\ \forall y_1\ne y_2:\ |f(t,y_1)-f(t,y_2)|>L|y_1-y_2|$'
+        feedback: >-
+          מספיק זוג **אחד** רע, לא כל הזוגות. עבור $f=y^2$ (לא ליפשיצית ב-$\mathbb{R}$) הזוג $y_1=0$, $y_2=\frac1{10}$
+          נותן מנת הפרשים $\frac1{10}$, קטנה מ-$L=1$.
+        misconception: MC-c11-lipschitz-negation
+
+  - id: Q-11.2-L-value
+    type: numeric
+    objectives: [OBJ-11.2-1]
+    level: basic
+    prompt: >-
+      $f(t,y)=t\sin(2y)$ ב-$D=[-3,3]\times\mathbb{R}$. מהו קבוע ליפשיץ **הקטן ביותר** של $f$ ב-$y$ ב-$D$?
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{\partial f}{\partial y}=2t\cos(2y)$, ולכן $\left|\frac{\partial f}{\partial y}\right|\le6$ ב-$D$, ומשפט
+      הערך הממוצע ב-$y$ נותן $L=6$. אין קבוע קטן יותר: ב-$t=3$ מנת ההפרשים בין $y=0$ ל-$y=\eta$ שואפת ל-$6$
+      כש-$\eta\to0$.
+    wrongFeedback: >-
+      חשבו את $\frac{\partial f}{\partial y}$ (עם $t$ קבוע) ומצאו את הסופרמום של הערך המוחלט שלה על כל $D$, כלומר גם
+      על כל $t\in[-3,3]$.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          3 הוא $\max_D|f|$, החסם על **ערכי** $f$. קבוע ליפשיץ חוסם את קצב השינוי ב-$y$, ובו נכנס גם הגורם 2
+          מכלל השרשרת: $2t\cos 2y$.
+        misconception: MC-c11-M-vs-L
+      - value: 2
+        feedback: >-
+          2 הוא הקבוע עבור $t=1$ בלבד. הקבוע צריך להתאים לכל $t\in[-3,3]$ בבת אחת, והגרוע ביותר הוא $|t|=3$.
+        misconception: MC-c11-lipschitz-L-depends-on-t
+
+  - id: Q-11.2-cube-root
+    type: multi
+    objectives: [OBJ-11.2-2]
+    level: basic
+    prompt: >-
+      $y^{2/3}$ פירושו $(\sqrt[3]{y})^2\ge0$. אילו מהפונקציות הבאות הן פתרונות של $y'=3y^{2/3}$, $y(0)=0$ על כל
+      $\mathbb{R}$? סמנו את כולן.
+    choices:
+      - text: '$y\equiv0$'
+        correct: true
+        feedback: 'נכון: $y''=0=3\cdot0^{2/3}$ ו-$y(0)=0$.'
+      - text: '$y=t^3$'
+        correct: true
+        feedback: >-
+          נכון: $y'=3t^2$ ו-$3(t^3)^{2/3}=3(\sqrt[3]{t^3})^2=3t^2$ לכל $t$, גם שלילי.
+      - text: '$y=0$ עבור $t\le2$, ו-$y=(t-2)^3$ עבור $t>2$'
+        correct: true
+        feedback: >-
+          נכון. בכל צד המשוואה מתקיימת, וב-$t=2$ שתי הנגזרות החד-צדדיות 0, ולכן $y'(2)=0=3y(2)^{2/3}$. כך לכל $c\ge0$
+          יש פתרון אחר.
+      - text: '$y=(t-2)^3$ לכל $t$'
+        feedback: >-
+          היא מקיימת את המשוואה, אבל $y(0)=-8\ne0$: זה פתרון של בעיית התחלה אחרת.
+        misconception: MC-c11-forget-initial-condition
+      - text: '$y=(t+2)^3$ עבור $t\ge-2$, ו-$y=0$ עבור $t<-2$'
+        feedback: >-
+          המשוואה מתקיימת בכל מקום, אבל $y(0)=8$. כדי ש-$y(0)=0$ ההדבקה צריכה להיות בנקודה $c\ge0$.
+        misconception: MC-c11-forget-initial-condition
+
+  - id: Q-11.2-y2
+    type: twotier
+    objectives: [OBJ-11.2-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם $f(t,y)=y^2$ מקיימת תנאי ליפשיץ ב-$y$ בכל $\mathbb{R}\times\mathbb{R}$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. היא ליפשיצית מקומית (בכל רצועה $|y|\le b$ עם $L=2b$) אבל לא גלובלית.
+      - text: כן
+        feedback: >-
+          $\frac{|(n+1)^2-n^2|}{|(n+1)-n|}=2n+1$, וזה לא חסום. אין קבוע אחד שמתאים לכל $y$.
+        misconception: MC-c11-local-is-global-lipschitz
+    reasons:
+      - text: >-
+          $|y_1^2-y_2^2|=|y_1+y_2|\,|y_1-y_2|$, ו-$|y_1+y_2|$ אינו חסום: עם $y_1=n+1$, $y_2=n$ מנת ההפרשים $2n+1$
+        correct: true
+        feedback: >-
+          בדיוק. הפירוק מראה גם את הצד החיובי: ברצועה $|y|\le b$ מתקבל $|y_1+y_2|\le2b$, כלומר $L=2b$.
+      - text: >-
+          בכל רצועה $|y|\le b$ היא ליפשיצית, וכל $y$ נמצא באיזו רצועה, ולכן היא ליפשיצית בכל המישור
+        feedback: >-
+          הקבוע $2b$ גדל עם הרצועה. ליפשיץ גלובלי דורש קבוע **אחד** לכל $y$, וכאן אין כזה.
+        misconception: MC-c11-local-is-global-lipschitz
+      - text: >-
+          הנגזרת $2y$ רציפה, ופונקציה עם נגזרת רציפה ליפשיצית
+        feedback: >-
+          נגזרת רציפה נותנת ליפשיץ רק בקבוצה שבה היא **חסומה** (וקמורה). על כל הישר $2y$ אינה חסומה.
+        misconception: MC-c11-continuous-implies-lipschitz
+
+  - id: Q-11.2-convex
+    type: twotier
+    objectives: [OBJ-11.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $D=\mathbb{R}\times(\mathbb{R}\setminus\{0\})$ ו-$f(t,y)=\operatorname{sgn}y$. ב-$D$ מתקיים
+      $\frac{\partial f}{\partial y}=0$. האם $f$ מקיימת תנאי ליפשיץ ב-$y$ ב-$D$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. הנגזרת החלקית אפס, ובכל זאת $f$ קופצת מ-$-1$ ל-1 בין שתי נקודות קרובות כרצוננו.
+      - text: כן, עם $L=0$
+        feedback: >-
+          עם $L=0$ היה צריך $f(t,y_1)=f(t,y_2)$ לכל $y_1,y_2$, אבל $f(t,1)-f(t,-1)=2$. הנגזרת אפס רק בתוך כל
+          חצי-ישר בנפרד.
+        misconception: MC-c11-bounded-derivative-any-domain
+    reasons:
+      - text: >-
+          החתך $\mathbb{R}\setminus\{0\}$ אינו קטע, ובין $-\frac1n$ ל-$\frac1n$ מנת ההפרשים היא $n$
+        correct: true
+        feedback: >-
+          בדיוק. ההוכחה ש"נגזרת חסומה גוררת ליפשיץ" צריכה שהקטע $[y_1,y_2]$ יהיה בתוך התחום, כלומר תחום קמור ב-$y$.
+      - text: >-
+          $\frac{\partial f}{\partial y}=0$, ולכן לכל $t$ הפונקציה $y\mapsto f(t,y)$ קבועה
+        feedback: >-
+          נגזרת אפס נותנת פונקציה קבועה רק על **קטע**. כאן היא קבועה על כל אחד משני חצאי הישר, עם ערכים שונים.
+        misconception: MC-c11-bounded-derivative-any-domain
+      - text: >-
+          $|f|\le1$ ב-$D$, ולכן $|f(t,y_1)-f(t,y_2)|\le2$: פונקציה חסומה כך ליפשיצית
+        feedback: >-
+          חסם על **ערכי** $f$ אינו חסם על מנות ההפרשים. כאן ערכי $f$ חסומים ב-1 ומנות ההפרשים אינן חסומות.
+        misconception: MC-c11-M-vs-L
+
+  - id: Q-11.2-rank-mvt
+    type: rank
+    objectives: [OBJ-11.2-1]
+    level: mid
+    prompt: >-
+      $D=I\times J$ עם $I,J$ קטעים, $f:D\to\mathbb{R}$, ולכל $t\in I$ הפונקציה $y\mapsto f(t,y)$ גזירה ב-$J$ עם
+      $\left|\frac{\partial f}{\partial y}(t,y)\right|\le K$ לכל $(t,y)\in D$. הוכיחו ש-$f$ מקיימת תנאי ליפשיץ ב-$y$ ב-$D$
+      עם $L=K$.
+    help: >-
+      סדרו את שלבי ההוכחה מהראשון לאחרון. (ההוכחה משתמשת רק במשפט הערך הממוצע במשתנה אחד: את $t$ מקבעים.)
+    items:
+      - id: a
+        label: >-
+          יהיו $t\in I$ ו-$y_1<y_2$ ב-$J$. מקבעים את $t$ ומגדירים $g(y)=f(t,y)$.
+      - id: b
+        label: >-
+          $J$ קטע, ולכן $[y_1,y_2]\subseteq J$, ו-$g$ גזירה עליו עם $g'(y)=\frac{\partial f}{\partial y}(t,y)$.
+      - id: c
+        label: >-
+          לפי משפט הערך הממוצע יש $\xi\in(y_1,y_2)$ עם $g(y_2)-g(y_1)=g'(\xi)(y_2-y_1)$.
+      - id: d
+        label: >-
+          לכן $|f(t,y_2)-f(t,y_1)|=|g'(\xi)|\,|y_2-y_1|\le K|y_2-y_1|$.
+      - id: e
+        label: >-
+          $K$ אינו תלוי ב-$t$, ב-$y_1$ או ב-$y_2$, ולכן התנאי מתקיים עם $L=K$ באופן אחיד ב-$t$.
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. שלב ב הוא המקום שבו משתמשים בכך ש-$J$ קטע (הקמירות ב-$y$), ושלב ה הוא המקום שבו החסם המשותף $K$ נותן
+      אחידות ב-$t$.
+    wrongFeedback: >-
+      מתחילים בקיבוע $t$ והגדרת פונקציה של משתנה אחד; רק אז אפשר להפעיל את משפט הערך הממוצע, ורק בסוף שואלים אם
+      הקבוע תלוי ב-$t$.
+    explanation: >-
+      אין צורך בגזירות בכמה משתנים: הנגזרת החלקית לפי $y$ היא נגזרת רגילה של $g(y)=f(t,y)$ כש-$t$ קבוע. מה
+      שכן דרוש הוא שכל החתך $\{y:(t,y)\in D\}$ יהיה קטע, ובפרט זה נכון כש-$D$ קמור.
+
+  - id: Q-11.2-not-lip-at-0
+    type: twotier
+    objectives: [OBJ-11.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(t,y)=3y^{2/3}$ רציפה במישור. האם היא מקיימת תנאי ליפשיץ ב-$y$ במלבן $R=\{|t|\le1,\ |y|\le1\}$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. וזה מה שמאפשר את אינסוף הפתרונות של $y'=3y^{2/3}$, $y(0)=0$.
+      - text: כן
+        feedback: >-
+          מנת ההפרשים בין $y=\frac1{n^3}$ ל-0 היא $\frac{3/n^2}{1/n^3}=3n$, וזה לא חסום ב-$R$.
+        misconception: MC-c11-continuous-implies-lipschitz
+    reasons:
+      - text: >-
+          $\frac{|f(t,y)-f(t,0)|}{|y|}=3|y|^{-1/3}\to\infty$ כש-$y\to0$
+        correct: true
+        feedback: >-
+          בדיוק. השלילה של תנאי ליפשיץ היא "לכל $L$ יש זוג עם מנה גדולה מ-$L$", וכאן הזוג הוא $\frac1{n^3}$ ו-0 עם
+          $n>\frac L3$.
+      - text: >-
+          $f$ אינה גזירה ב-$y=0$, ופונקציה שאינה גזירה בנקודה אינה ליפשיצית סביבה
+        feedback: >-
+          המסקנה נכונה והנימוק לא: $|y|$ אינה גזירה ב-0 והיא ליפשיצית. מה שמכשיל את $y^{2/3}$ הוא שמנות ההפרשים
+          שלה ליד 0 אינן חסומות.
+        misconception: MC-c11-lipschitz-needs-derivative
+      - text: >-
+          $f$ רציפה על המלבן הסגור והחסום $R$, ולכן ליפשיצית בו
+        feedback: >-
+          רציפות על קבוצה קומפקטית נותנת רציפות במידה שווה, לא ליפשיץ. $3y^{2/3}$ רציפה על $R$ ואינה ליפשיצית.
+        misconception: MC-c11-continuous-implies-lipschitz
+
+  - id: Q-11.2-sqrt-family
+    type: numeric
+    objectives: [OBJ-11.2-2]
+    level: mid
+    prompt: >-
+      לכל $c\ge0$, הפונקציה $y_c(t)=0$ עבור $t\le c$ ו-$y_c(t)=(t-c)^2$ עבור $t>c$ פותרת את $y'=2\sqrt{|y|}$,
+      $y(0)=0$. עבור איזה $c\ge0$ מתקיים $y_c(5)=9$?
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. צריך $5>c$ ו-$(5-c)^2=9$, כלומר $c=2$. בדיקה: $y_2'(t)=2(t-2)=2\sqrt{(t-2)^2}$ עבור $t>2$. עבור $c\ge5$
+      מתקבל $y_c(5)=0$.
+    wrongFeedback: >-
+      הציבו $t=5$ בנוסחה הנכונה: היא תלויה בשאלה אם $5$ גדול מ-$c$ או לא.
+    commonWrong:
+      - value: 8
+        feedback: >-
+          $c=8$ פותר את $(5-c)^2=9$, אבל אז $5\le c$, ושם $y_8(5)=0$: החלק $(t-c)^2$ חל רק אחרי $c$. (גם
+          $(t-8)^2$ לבדה, לכל $t$, אינה פתרון: עבור $t<8$ הנגזרת שלה שלילית.)
+        misconception: MC-c11-formula-everywhere
+
+  - id: Q-11.2-local-global
+    type: multi
+    objectives: [OBJ-11.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהפונקציות הבאות מקיימות תנאי ליפשיץ ב-$y$ בכל $\mathbb{R}\times\mathbb{R}$ (גלובלית)? סמנו את כולן.
+    choices:
+      - text: '$f(t,y)=|y|$'
+        correct: true
+        feedback: >-
+          נכון, עם $L=1$: $\big||y_1|-|y_2|\big|\le|y_1-y_2|$ (אי-שוויון המשולש), אף שאינה גזירה ב-0.
+      - text: '$f(t,y)=y\sin t$'
+        correct: true
+        feedback: >-
+          נכון, עם $L=1$: $|y_1\sin t-y_2\sin t|=|\sin t|\,|y_1-y_2|\le|y_1-y_2|$.
+      - text: '$f(t,y)=\arctan y+t^2$'
+        correct: true
+        feedback: >-
+          נכון, עם $L=1$: $t^2$ מתבטל בהפרש, ו-$\left|\frac{1}{1+y^2}\right|\le1$ על כל הישר, שהוא קטע. $f$ אינה
+          חסומה, וזה לא משנה.
+      - text: '$f(t,y)=y^2$'
+        feedback: >-
+          ליפשיצית רק מקומית: ברצועה $|y|\le b$ הקבוע $2b$, ומנת ההפרשים בין $n+1$ ל-$n$ היא $2n+1$.
+        misconception: MC-c11-local-is-global-lipschitz
+      - text: '$f(t,y)=ty$'
+        feedback: >-
+          לכל $t$ קבוע הקבוע הוא $|t|$, ואין קבוע אחד לכל $t\in\mathbb{R}$. (בכל רצועה $[\alpha,\beta]\times\mathbb{R}$
+          כן: עם $\max(|\alpha|,|\beta|)$.)
+        misconception: MC-c11-lipschitz-L-depends-on-t
+      - text: '$f(t,y)=\sqrt{|y|}$'
+        feedback: >-
+          אפילו לא מקומית ליד $y=0$: $\frac{\sqrt{1/n^2}}{1/n^2}=n$. היא רציפה, וזה לא מספיק.
+        misconception: MC-c11-continuous-implies-lipschitz
+
+  - id: Q-11.2-L-y23
+    type: numeric
+    objectives: [OBJ-11.2-3]
+    level: mid
+    prompt: >-
+      $f(t,y)=y^{2/3}$ אינה ליפשיצית ליד $y=0$, אבל רחוק מ-0 היא כן. מהו קבוע ליפשיץ **הקטן ביותר** שלה ב-$y$ במלבן
+      $R=\{|t|\le1,\ \frac18\le y\le8\}$?
+    answer: 1.3333333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $L=\frac43$. $\frac{\partial f}{\partial y}=\frac23y^{-1/3}$ יורדת ב-$y$, ולכן הסופרמום שלה על
+      $[\frac18,8]$ מתקבל ב-$y=\frac18$: $\frac23\cdot2=\frac43$. ליד הקצה הזה מנות ההפרשים שואפות ל-$\frac43$, ולכן אין
+      קבוע קטן יותר.
+    wrongFeedback: >-
+      חשבו את $\frac{\partial f}{\partial y}$ ומצאו את הסופרמום של הערך המוחלט שלה על כל הקטע $[\frac18,8]$. איפה
+      הנגזרת הכי גדולה?
+    commonWrong:
+      - value: 0.3333333333
+        feedback: >-
+          $\frac13$ היא הנגזרת ב-$y=8$, הקצה שבו היא **הקטנה** ביותר. הקבוע צריך לחסום את כל מנות ההפרשים, ולכן
+          לוקחים את הסופרמום, שמתקבל בקצה הקרוב ל-0.
+        misconception: MC-c11-L-not-sup
+      - value: 0.4761904762
+        feedback: >-
+          $\frac{10}{21}=\frac{4-\frac14}{8-\frac18}$ היא מנת ההפרשים בין שני הקצוות בלבד. קבוע ליפשיץ חוסם את מנת
+          ההפרשים של **כל** זוג, וזוגות קרובים ל-$\frac18$ נותנים מנה קרובה ל-$\frac43$.
+        misconception: MC-c11-L-not-sup
+
+  - id: Q-11.2-norm
+    type: twotier
+    objectives: [OBJ-11.2-3, OBJ-11.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(t,y)=\sqrt{t^2+y^2}$, המרחק של $(t,y)$ מהראשית. האם $f$ מקיימת תנאי ליפשיץ ב-$y$ בכל $\mathbb{R}^2$, עם
+      $L=1$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. $f$ אינה חסומה ואינה גזירה בראשית, ובכל זאת היא ליפשיצית גלובלית ב-$y$ עם $L=1$.
+      - text: לא
+        feedback: >-
+          ההוכחה אינה צריכה נגזרות: אי-שוויון המשולש של הנורמה האוקלידית נותן את החסם ישירות, לכל $t$.
+        misconception: MC-c11-lipschitz-needs-derivative
+    reasons:
+      - text: >-
+          אי-שוויון המשולש ההפוך: $\big|\|(t,y_1)\|-\|(t,y_2)\|\big|\le\|(0,y_1-y_2)\|=|y_1-y_2|$
+        correct: true
+        feedback: >-
+          בדיוק, וזה עובד באותו אופן לכל $t$, כולל $t=0$, שם $f(0,y)=|y|$.
+      - text: >-
+          $f$ אינה גזירה בראשית, ולכן אין לה תנאי ליפשיץ באף מלבן שמכיל את הראשית
+        feedback: >-
+          אי-גזירות בנקודה אינה סותרת ליפשיץ: $f(0,y)=|y|$ ליפשיצית עם $L=1$.
+        misconception: MC-c11-lipschitz-needs-derivative
+      - text: >-
+          $f$ אינה חסומה במישור, ולכן גם מנות ההפרשים $\frac{|f(t,y_1)-f(t,y_2)|}{|y_1-y_2|}$ אינן חסומות
+        feedback: >-
+          ליפשיץ מגביל את קצב השינוי, לא את הערכים. גם $f(t,y)=y$ אינה חסומה וליפשיצית עם $L=1$.
+        misconception: MC-c11-lipschitz-implies-bounded
+      - text: >-
+          $f$ רציפה במישור, ולכן ליפשיצית
+        feedback: >-
+          המסקנה נכונה כאן במקרה. $\sqrt{|y|}$ רציפה ואינה ליפשיצית; צריך נימוק שחוסם את מנות ההפרשים.
+        misconception: MC-c11-continuous-implies-lipschitz
+
+  - id: Q-11.2-wiggle
+    type: twotier
+    objectives: [OBJ-11.2-3, OBJ-11.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f(t,y)=y\sin\frac1y$ עבור $y\ne0$, ו-$f(t,0)=0$. לכל $y\ne0$ מתקיים
+      $\frac{|f(t,y)-f(t,0)|}{|y-0|}=\left|\sin\frac1y\right|\le1$. האם $f$ מקיימת תנאי ליפשיץ ב-$y$ במלבן
+      $R=\{|t|\le1,\ |y|\le1\}$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. מנות ההפרשים מול הנקודה 0 חסומות, אבל מנות ההפרשים בין שתי נקודות קרובות ל-0 אינן חסומות.
+      - text: כן, עם $L=1$
+        feedback: >-
+          החסם $\left|\sin\frac1y\right|\le1$ בודק רק זוגות שאחת הנקודות בהם היא 0. תנאי ליפשיץ דורש חסם לכל זוג,
+          וזוגות של שתי נקודות קרובות ל-0, שבאחת $\sin\frac1y=1$ ובשנייה $-1$, נותנים מנות גדולות כרצוננו.
+        misconception: MC-c11-lipschitz-at-one-point
+    reasons:
+      - text: >-
+          בין $y_1=\frac{1}{2\pi n+\pi/2}$ ל-$y_2=\frac{1}{2\pi n+3\pi/2}$ מנת ההפרשים היא $4n+2$
+        correct: true
+        feedback: >-
+          בדיוק: $f(t,y_1)=y_1$ ו-$f(t,y_2)=-y_2$, ו-$\frac{y_1+y_2}{y_1-y_2}=\frac{a+b}{b-a}$ עם $a=2\pi n+\frac\pi2$, $b=2\pi n+\frac{3\pi}2$, כלומר
+          $\frac{4\pi n+2\pi}{\pi}$. אפשר גם כך: הנגזרת $\sin\frac1y-\frac1y\cos\frac1y$ אינה חסומה ליד 0, ונגזרת היא
+          גבול של מנות הפרשים.
+      - text: >-
+          מנות ההפרשים מול 0 חסומות ב-1, ולכן ליד 0, הנקודה הבעייתית היחידה, אין בעיה
+        feedback: >-
+          תנאי ליפשיץ משווה **כל** שני ערכים של $y$, לא רק ערך מול הנקודה המיוחדת. כאן הבעיה היא בזוגות שבהם שתי
+          הנקודות קרובות ל-0 וזו לזו.
+        misconception: MC-c11-lipschitz-at-one-point
+      - text: >-
+          $|f(t,y)|\le|y|$, ו-$|y|$ ליפשיצית עם $L=1$, ולכן גם $f$
+        feedback: >-
+          חסם על **ערכי** $f$ אינו חסם על מנות ההפרשים שלה. פונקציה שכלואה בין $-|y|$ ל-$|y|$ יכולה להתנדנד מהר
+          מאוד ביניהם.
+        misconception: MC-c11-M-vs-L
+    explanation: >-
+      אי-ליפשיציות אינה גוררת כמה פתרונות. לבעיה $y'=f(t,y)$, $y(0)=0$ דווקא יש פתרון יחיד, $y\equiv0$: החסם
+      $|f(t,y)|\le|y|$ מספיק כדי להשוות כל פתרון לפתרון האפס (נראה איך, בעזרת אי-שוויון גרונוול, בשיעור 11.4).
+      תנאי ליפשיץ הוא תנאי מספיק ליחידות, לא הכרחי.

@@ -1,0 +1,37 @@
+# Terms first defined in lesson 10.3 (pointwise convergence: the Dirichlet kernel).
+- id: dirichlet-kernel
+  term: גרעין דיריכלה
+  en: Dirichlet kernel
+  symbol: 'D_N(t)'
+  definition: >-
+    $D_N(t)=1+2\sum_{k=1}^N\cos kt=\frac{\sin((N+\frac12)t)}{\sin(t/2)}$, עם $D_N(0)=2N+1$ ו-$\frac1{2\pi}\int_{-\pi}^{\pi}D_N=1$.
+    הסכום החלקי הוא קונבולוציה איתו: $S_Nf(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-t)D_N(t)\,dt$. הוא אינו חיובי.
+  lesson: '10.3'
+- id: piecewise-differentiable
+  term: פונקציה גזירה למקוטעין
+  en: piecewise differentiable function
+  definition: >-
+    $f$ על $[a,b]$ שהקטע מתחלק עבורה למספר סופי של תת-קטעים, ובפנים כל אחד $f$ גזירה, ול-$f$ ול-$f'$ יש גבולות
+    חד-צדדיים סופיים בקצוות. מותרות קפיצות ופינות במספר סופי של נקודות.
+  lesson: '10.3'
+- id: pointwise-convergence-theorem
+  term: משפט ההתכנסות הנקודתית
+  en: pointwise convergence theorem for Fourier series
+  definition: >-
+    אם $f$ מחזורית ב-$2\pi$ וגזירה למקוטעין, אז לכל $x$: $S_Nf(x)\to\frac{f(x^+)+f(x^-)}2$. בנקודת רציפות הגבול הוא
+    $f(x)$, ובנקודת קפיצה הממוצע של הגבולות החד-צדדיים, בלי קשר לערך $f(x)$.
+  lesson: '10.3'
+- id: gibbs-phenomenon
+  term: תופעת גיבס
+  en: Gibbs phenomenon
+  definition: >-
+    ליד קפיצה הסכומים החלקיים חורגים מעבר לערכי הפונקציה בכ-$9\%$ מגודל הקפיצה, בכל צד. כש-$N$ גדל החריגה נדחסת
+    לעבר הקפיצה ואינה קטנה; לגל הריבועי $\pm1$, $\max S_Nf\to1.179$ בערך.
+  lesson: '10.3'
+- id: localization-principle
+  term: עקרון המקומיות
+  en: Riemann's localization principle
+  definition: >-
+    אם $f,g\in H$ מחזוריות ושוות בסביבה של $x_0$, אז $S_Nf(x_0)-S_Ng(x_0)\to0$: ההתכנסות של טור פורייה בנקודה, ולאן,
+    תלויות רק בערכי הפונקציה ליד הנקודה, אף שכל מקדם תלוי בכל הפונקציה. ההוכחה: גרעין דיריכלה ולמת רימן-לבג.
+  lesson: '10.3'

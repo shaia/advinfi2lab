@@ -1,0 +1,25 @@
+# Terms first defined in lesson 7.6 (potentials on star-shaped regions, the inverse-square field).
+- id: star-shaped
+  term: תחום כוכבי
+  en: star-shaped region
+  definition: >-
+    תחום $U$ שיש בו נקודה $p$ כך שלכל $\mathbf x\in U$ הקטע מ-$p$ ל-$\mathbf x$ כולו ב-$U$. כל תחום קמור כוכבי. בתחום כוכבי שדה
+    מסדר $C^1$ עם רוטור אפס הוא גרדיאנט, ושדה עם דיברגנץ אפס הוא רוטור.
+  reject: [כוכבני]
+  lesson: '7.6'
+- id: vector-potential
+  term: פוטנציאל וקטורי
+  en: vector potential
+  definition: >-
+    שדה $\mathbf G$ כך ש-$\nabla\times\mathbf G=\mathbf F$. תנאי הכרחי לקיומו (ל-$\mathbf G\in C^2$) הוא $\nabla\cdot\mathbf F=0$, ובתחום
+    כוכבי ביחס לראשית התנאי מספיק: $\mathbf G(\mathbf x)=\int_0^1t\,\mathbf F(t\mathbf x)\times\mathbf x\,dt$. הוא אינו יחיד: אפשר להוסיף
+    לו כל גרדיאנט.
+  lesson: '7.6'
+- id: inverse-square-field
+  term: שדה ריבוע-הפוך
+  en: inverse-square field
+  symbol: '\frac{\mathbf x}{\|\mathbf x\|^3}'
+  definition: >-
+    השדה $\frac{\mathbf x}{\|\mathbf x\|^3}$ ב-$\mathbb R^3\setminus\{0\}$, שגודלו $\frac1{\|\mathbf x\|^2}$. הדיברגנץ שלו אפס מחוץ לראשית,
+    והשטף שלו דרך משטח סגור הוא $4\pi$ אם המשטח מקיף את הראשית ו-$0$ אם לא.
+  lesson: '7.6'

@@ -1,0 +1,392 @@
+# Lesson 4.2 — normal and geodesic curvature.
+# Objectives (src/course.ts):
+#   OBJ-4.2-1  split the curvature vector into a normal and a geodesic part; prove κ² = κₙ² + κ_g²
+#   OBJ-4.2-2  prove κₙ = Q₂(γ′)/Q₁(γ′), so κₙ depends only on the direction
+#   OBJ-4.2-3  Meusnier: all curves on a surface with the same tangent have the same κₙ
+# For a unit-speed curve on M: t′ = κn = κₙ N̂ + κ_g (N̂ × t), κₙ = t′·N̂, κ_g = t′·(N̂ × t).
+chapter: 4
+questions:
+  - id: Q-4.2-frame
+    type: mc
+    objectives: [OBJ-4.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma(s)$ מסילה בפרמטר אורך קשת על משטח $M$, $\mathbf t=\gamma'$, ו-$\hat{\mathbf N}$ הנורמל למשטח לאורכה.
+      איזה מישור (דרך הראשית), שנקבע רק על ידי המשטח והמשיק $\mathbf t$ (בלי הנגזרת השנייה של המסילה), מכיל תמיד את
+      וקטור העקמומיות $\mathbf t'=\kappa\mathbf n$?
+    choices:
+      - text: 'במישור הנפרש על ידי $\hat{\mathbf N}$ ו-$\hat{\mathbf N}\times\mathbf t$'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf t'\perp\mathbf t$ (כי $\|\mathbf t\|=1$), ו-$\mathbf t,\hat{\mathbf N},\hat{\mathbf N}\times\mathbf t$
+          בסיס אורתונורמלי. לכן $\mathbf t'=\kappa_n\hat{\mathbf N}+\kappa_g(\hat{\mathbf N}\times\mathbf t)$.
+      - text: 'במישור הנפרש על ידי $\mathbf t$ ו-$\hat{\mathbf N}$'
+        feedback: >-
+          ל-$\mathbf t'$ אין רכיב בכיוון $\mathbf t$: גוזרים את $\mathbf t\cdot\mathbf t=1$ ומקבלים $\mathbf t'\cdot\mathbf t=0$.
+          במישור הזה $\mathbf t'$ היה חייב להיות כפולה של $\hat{\mathbf N}$, וזה נכון רק למסילות עם $\kappa_g=0$.
+        misconception: MC-c4-accel-has-tangent-part
+      - text: 'במישור הנפרש על ידי $\mathbf t$ ו-$\mathbf n$'
+        feedback: >-
+          זה המישור המנשק. הוא אכן מכיל את $\mathbf t'=\kappa\mathbf n$, אבל הוא נקבע על ידי $\mathbf n$, כלומר על ידי
+          הנגזרת השנייה של המסילה, ולא רק על ידי המשטח והמשיק. את $\mathbf t'$ מפרקים לפי $\hat{\mathbf N}$
+          ו-$\hat{\mathbf N}\times\mathbf t$, וכך נולדים $\kappa_n$ ו-$\kappa_g$.
+        misconception: MC-c4-osculating-frame
+
+  - id: Q-4.2-pyth
+    type: numeric
+    objectives: [OBJ-4.2-1]
+    level: basic
+    prompt: >-
+      למסילה על משטח, בנקודה $P$: העקמומיות היא $\kappa=13$ והעקמומיות הנורמלית $\kappa_n=5$. מהו $|\kappa_g|$ ב-$P$?
+    answer: 12
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\kappa_g^2=\kappa^2-\kappa_n^2=169-25=144$.
+    wrongFeedback: >-
+      שני הרכיבים של וקטור העקמומיות ניצבים זה לזה. השתמשו בפיתגורס.
+    commonWrong:
+      - value: 8
+        feedback: >-
+          $13-5=8$ מניח $\kappa=\kappa_n+\kappa_g$. הרכיבים ניצבים, ולכן מתחברים הריבועים: $\kappa^2=\kappa_n^2+\kappa_g^2$.
+        misconception: MC-c4-curvature-sum
+      - value: 144
+        feedback: >-
+          זה $\kappa_g^2$. חסר שורש.
+        misconception: MC-c4-curvature-sum
+
+  - id: Q-4.2-formula
+    type: mc
+    objectives: [OBJ-4.2-2]
+    level: basic
+    prompt: >-
+      $\gamma(t)=\sigma(u(t),v(t))$ מסילה רגולרית על משטח, **לא** בהכרח בפרמטר אורך קשת. מהי העקמומיות הנורמלית שלה?
+    choices:
+      - text: '$\kappa_n=\frac{Q_2(\dot u,\dot v)}{Q_1(\dot u,\dot v)}$'
+        correct: true
+        feedback: >-
+          נכון. המונה הוא $\ddot\gamma\cdot\hat{\mathbf N}$, והמכנה הוא $\|\dot\gamma\|^2$: שתי גזירות, ולכן ריבוע המהירות.
+      - text: '$\kappa_n=Q_2(\dot u,\dot v)$'
+        feedback: >-
+          זה נכון רק במהירות 1. אם מכפילים את המהירות פי 2, $Q_2$ גדל פי 4, והעקמומיות של אותה עקבה לא אמורה להשתנות.
+        misconception: MC-c4-kn-without-Q1
+      - text: '$\kappa_n=\frac{Q_2(\dot u,\dot v)}{\sqrt{Q_1(\dot u,\dot v)}}$'
+        feedback: >-
+          המנה הזו גדלה פי 2 כשהמהירות גדלה פי 2. המכנה הוא ריבוע המהירות, $Q_1$, כי $\kappa_n$ היא נגזרת שנייה לפי
+          אורך הקשת.
+        misconception: MC-c4-kn-sqrt-Q1
+      - text: '$\kappa_n=\frac{Q_2(\dot u,\dot v)}{\dot u^2+\dot v^2}$'
+        feedback: >-
+          $\dot u^2+\dot v^2$ הוא ריבוע האורך במישור הפרמטרים, לא על המשטח. האורך על המשטח הוא $\|\dot\gamma\|^2=Q_1(\dot u,\dot v)$.
+        misconception: MC-c4-kn-without-Q1
+
+  - id: Q-4.2-meusnier
+    type: mc
+    objectives: [OBJ-4.2-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      משפט מנייה הוא מסקנה ישירה של הנוסחה $\kappa_n=\frac{Q_2(\dot u,\dot v)}{Q_1(\dot u,\dot v)}$ מהשאלה הקודמת. מה
+      הוא אומר על מסילות במשטח $M$ שעוברות בנקודה $P$ עם אותו ישר משיק?
+    choices:
+      - text: 'לכולן אותה עקמומיות נורמלית ב-$P$'
+        correct: true
+        feedback: >-
+          נכון. $\kappa_n=\frac{Q_2(v)}{Q_1(v)}$ תלויה רק בכיוון $v$ של המשיק, לא במסילה.
+      - text: 'לכולן אותה עקמומיות ב-$P$'
+        feedback: >-
+          לא: על ספרת היחידה המעגל הגדול והמעגל ברדיוס $\frac12$ שמשיק לו ב-$P$ הם בעלי $\kappa=1$ ו-$\kappa=2$. משותפת
+          להם רק $\kappa_n$.
+        misconception: MC-c4-tangent-fixes-curvature
+      - text: 'לכולן אותה עקמומיות גאודזית ב-$P$'
+        feedback: >-
+          $\kappa_g$ משתנה ממסילה למסילה: למעגל הגדול על הספרה $\kappa_g=0$, ולמעגל קטן שמשיק לו $\kappa_g\neq0$.
+        misconception: MC-c4-tangent-fixes-curvature
+      - text: 'העקמומיות של כל אחת היא $\kappa_n\cos\theta$, כש-$\theta$ הזווית בין $\mathbf n$ ל-$\hat{\mathbf N}$'
+        feedback: >-
+          הפוך: $\kappa_n=\kappa\cos\theta$, ולכן $\kappa=\frac{|\kappa_n|}{|\cos\theta|}\ge|\kappa_n|$. מסילה מוטה עקומה
+          יותר מהחתך הנורמלי, לא פחות.
+        misconception: MC-c4-meusnier-multiply
+
+  - id: Q-4.2-cyl
+    type: numeric
+    objectives: [OBJ-4.2-2]
+    level: basic
+    prompt: >-
+      הגליל $\sigma(u,v)=(2\cos u,\,2\sin u,\,v)$ עם הנורמל $\hat{\mathbf N}=(\cos u,\sin u,0)$ (החוצה). כאן $E=4$,
+      $F=0$, $G=1$, $L=-2$, $M=N=0$. מהי העקמומיות הנורמלית בכיוון $(du,dv)=(1,2)$, כלומר בכיוון
+      $\sigma_u+2\sigma_v$?
+    answer: -0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $Q_2(1,2)=-2$ ו-$Q_1(1,2)=4\cdot1+1\cdot4=8$, ולכן $\kappa_n=-\frac28=-\frac14$. הסימן שלילי כי הגליל
+      מתעקם הרחק מהנורמל החוצה.
+    wrongFeedback: >-
+      הציבו את הכיוון ב-$Q_2$ וב-$Q_1$ וחלקו. שימו לב ש-$Q_1=4\,du^2+dv^2$.
+    commonWrong:
+      - value: -2
+        feedback: >-
+          זה $Q_2(1,2)$ בלי לחלק. $\kappa_n$ לא תלויה באורך הווקטור, ולכן מחלקים בריבוע אורכו, $Q_1$.
+        misconception: MC-c4-kn-without-Q1
+      - value: -0.4
+        feedback: >-
+          חילקתם ב-$1^2+2^2=5$, ריבוע האורך במישור הפרמטרים. אורך הווקטור $\sigma_u+2\sigma_v$ במרחב הוא $\sqrt{Q_1}=\sqrt8$.
+        misconception: MC-c4-kn-without-Q1
+      - value: -0.7071068
+        feedback: >-
+          $-\frac{2}{\sqrt8}$: חילקתם באורך ולא בריבוע האורך.
+        misconception: MC-c4-kn-sqrt-Q1
+      - value: 0.25
+        feedback: >-
+          הגודל נכון, הסימן לא. עם הנורמל החוצה $L=\sigma_{uu}\cdot\hat{\mathbf N}=-2$, כי $\sigma_{uu}$ מצביע פנימה.
+        misconception: MC-c4-Q2-orientation-free
+
+  - id: Q-4.2-latitude
+    type: numeric
+    objectives: [OBJ-4.2-1]
+    level: mid
+    prompt: >-
+      על ספרת היחידה, מקביל הרוחב בגובה $z=\sin\frac\pi3$, כלומר המעגל $\sigma(u,\frac\pi3)$ בפרמטריזציה
+      $\sigma(u,v)=(\cos u\cos v,\,\sin u\cos v,\,\sin v)$. בכל כיוון על ספרת היחידה $|\kappa_n|=1$. מהו $|\kappa_g|$ של
+      מקביל הרוחב?
+    answer: 1.7320508
+    tolerance: 0.0001
+    correctFeedback: >-
+      נכון: $\sqrt3=\tan\frac\pi3$. מקביל הרוחב הוא מעגל ברדיוס $\cos\frac\pi3=\frac12$, ולכן $\kappa=2$, ו-$\kappa_g^2=4-1=3$.
+      באופן כללי במקביל $v=v_0$: $|\kappa_g|=\tan|v_0|$.
+    wrongFeedback: >-
+      חשבו קודם את העקמומיות של המעגל במרחב (מה הרדיוס שלו?), ואז השתמשו ב-$\kappa^2=\kappa_n^2+\kappa_g^2$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $2-1=1$ מניח $\kappa_g=\kappa-|\kappa_n|$. הרכיבים ניצבים: $\kappa_g^2=\kappa^2-\kappa_n^2=3$.
+        misconception: MC-c4-curvature-sum
+      - value: 3
+        feedback: >-
+          זה $\kappa_g^2$. חסר שורש.
+        misconception: MC-c4-curvature-sum
+      - value: 2
+        feedback: >-
+          2 היא העקמומיות $\kappa$ של המעגל במרחב. חלק ממנה, $|\kappa_n|=1$, "שייך" לספרה, והשאר הוא $\kappa_g$.
+        misconception: MC-c4-curvature-sum
+
+  - id: Q-4.2-bound
+    type: twotier
+    objectives: [OBJ-4.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם ייתכן שמסילה על משטח מקיימת בנקודה $P$ את אי-השוויון $\kappa(P)<|\kappa_n(P)|$?
+    choices:
+      - text: 'לא'
+        correct: true
+        feedback: 'נכון. תמיד $\kappa\ge|\kappa_n|$, ושוויון בדיוק כש-$\kappa_g=0$.'
+      - text: 'כן, כש-$\kappa_g<0$ ו-$\kappa_n>0$: אז $\kappa=\kappa_n+\kappa_g<\kappa_n$'
+        feedback: >-
+          $\kappa_g$ אכן חתומה, אבל הרכיבים לא מתחברים כמספרים. $\kappa_n$ ו-$\kappa_g$ הם רכיבים של אותו וקטור
+          $\mathbf t'$ שאורכו $\kappa$, בכיוונים ניצבים, ורכיב של וקטור לא ארוך מהווקטור.
+        misconception: MC-c4-curvature-sum
+    reasons:
+      - text: '$\kappa^2=\kappa_n^2+\kappa_g^2\ge\kappa_n^2$, כי $\kappa_n$ ו-$\kappa_g$ רכיבי $\mathbf t^{\prime}$ בבסיס אורתונורמלי'
+        correct: true
+        feedback: 'בדיוק: רכיב של וקטור בכיוון יחידה הוא לכל היותר אורך הווקטור.'
+      - text: '$\kappa=\kappa_n+\kappa_g$, ושני הרכיבים אי-שליליים, ולכן $\kappa$ גדול מכל אחד מהם'
+        feedback: >-
+          הנוסחה הזו שגויה, ו-$\kappa_g$ גם יכולה להיות שלילית (היא חתומה, לפי $\hat{\mathbf N}\times\mathbf t$), וכך גם
+          $\kappa_n$.
+        misconception: MC-c4-curvature-sum
+      - text: 'לפי משפט מנייה כל מסילה מקיימת $\kappa=|\kappa_n|$, ולכן אין פער בכלל'
+        feedback: >-
+          משפט מנייה קובע את $\kappa_n$ לפי הכיוון, לא את $\kappa$. מעגל קטן על הספרה עקום יותר מ-$|\kappa_n|=1$.
+        misconception: MC-c4-tangent-fixes-curvature
+
+  - id: Q-4.2-speed
+    type: twotier
+    objectives: [OBJ-4.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שתי מסילות על משטח עוברות בנקודה $P$, האחת עם וקטור מהירות $w$ והשנייה עם $-2w$. האם העקמומיות הנורמלית שלהן
+      ב-$P$ (ביחס לאותו $\hat{\mathbf N}$) שווה?
+    choices:
+      - text: 'כן'
+        correct: true
+        feedback: 'נכון. $\kappa_n$ תלויה רק בישר המשיק, לא במהירות ולא בכיוון ההליכה עליו.'
+      - text: 'לא: היא גדולה פי 4 במסילה השנייה'
+        feedback: >-
+          $Q_2$ גדלה פי 4, אבל גם $Q_1$, והמנה לא משתנה. בלי החלוקה ב-$Q_1$ זו לא הייתה עקמומיות.
+        misconception: MC-c4-kn-depends-on-speed
+      - text: 'לא: הסימן מתהפך, כי המהירות הפוכה'
+        feedback: >-
+          $Q_2(-2w)=4Q_2(w)$: תבנית ריבועית לא מבחינה בין $w$ ל-$-w$. הסימן של $\kappa_n$ תלוי רק ב-$\hat{\mathbf N}$.
+        misconception: MC-c4-kn-depends-on-speed
+    reasons:
+      - text: '$Q_2(\lambda w)=\lambda^2Q_2(w)$ ו-$Q_1(\lambda w)=\lambda^2Q_1(w)$, ולכן המנה לא תלויה ב-$\lambda\neq0$'
+        correct: true
+        feedback: 'בדיוק: מנה של שתי תבניות ריבועיות היא הומוגנית מסדר אפס.'
+      - text: 'מהירויות מקבילות ב-$P$ פירושן ששתי המסילות עוברות ליד $P$ על אותה עקבה, ולכן כל העקמומיויות שלהן שוות'
+        feedback: >-
+          המסילות יכולות להיות שונות לגמרי (ועם $\kappa$ שונה). מה שמשותף להן הוא רק הישר המשיק ב-$P$, וזה מספיק ל-$\kappa_n$.
+        misconception: MC-c4-tangent-fixes-curvature
+      - text: 'העקמומיות הנורמלית היא $Q_2(\gamma^{\prime})$, ולכן תלויה רק במשטח'
+        feedback: >-
+          $Q_2(\gamma')$ לבדה **כן** תלויה במהירות: היא גדלה פי 4 כשהמהירות גדלה פי 2. רק המנה $\frac{Q_2}{Q_1}$ לא.
+        misconception: MC-c4-kn-without-Q1
+
+  - id: Q-4.2-tangent
+    type: twotier
+    objectives: [OBJ-4.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שתי מסילות על משטח משיקות זו לזו בנקודה $P$ (אותו ישר משיק). האם בהכרח יש להן אותה עקמומיות $\kappa$ ב-$P$?
+    choices:
+      - text: 'לא'
+        correct: true
+        feedback: >-
+          נכון. על ספרת היחידה המעגל הגדול ($\kappa=1$) ומעגל ברדיוס $\frac12$ שמשיק לו ($\kappa=2$).
+      - text: 'כן, לפי משפט מנייה'
+        feedback: 'משפט מנייה קובע רק את $\kappa_n$. $\kappa_g$, ולכן גם $\kappa$, יכולה להיות שונה.'
+        misconception: MC-c4-tangent-fixes-curvature
+    reasons:
+      - text: 'משותפת להן $\kappa_n$, אבל $\kappa_g$ יכולה להיות שונה, ו-$\kappa=\sqrt{\kappa_n^2+\kappa_g^2}$'
+        correct: true
+        feedback: >-
+          בדיוק. כש-$\kappa>0$ ו-$\cos\theta\ne0$, כאשר $\theta$ הזווית בין $\mathbf n$ ל-$\hat{\mathbf N}$, העקמומיות היא
+          $|\kappa_n|/|\cos\theta|$, והזווית הזו משתנה ממסילה למסילה. כש-$\cos\theta=0$ (הנורמל הראשי משיק למשטח) מתקיים
+          $\kappa_n=0$, והיא לא קובעת את $\kappa$ כלל.
+      - text: 'העקמומיות תלויה רק בווקטור המהירות ב-$P$'
+        feedback: >-
+          העקמומיות תלויה בנגזרת השנייה. שתי מסילות במישור שמשיקות בראשית, ציר $x$ והפרבולה $y=x^2$, הן בעלות $\kappa=0$
+          ו-$\kappa=2$.
+        misconception: MC-c4-tangent-fixes-curvature
+      - text: 'העקמומיות היא $\kappa_n\cos\theta$, והזווית יכולה להשתנות'
+        feedback: >-
+          המסקנה נכונה, אבל הנוסחה הפוכה: $\kappa_n=\kappa\cos\theta$.
+        misconception: MC-c4-meusnier-multiply
+
+  - id: Q-4.2-tilt
+    type: numeric
+    objectives: [OBJ-4.2-3]
+    level: mid
+    prompt: >-
+      הגליל $x^2+y^2=4$ והנקודה $P=(2,0,0)$, שבה $\hat{\mathbf N}=(1,0,0)$. בכיוון המשיק האופקי $(0,1,0)$
+      $|\kappa_n|=\frac12$. חותכים את הגליל במישור שעובר ב-$P$, מכיל את הכיוון $(0,1,0)$ ויוצר זווית $60^\circ$ עם
+      $\hat{\mathbf N}$ (כלומר נפרש על ידי $(0,1,0)$ ו-$(\cos60^\circ,0,\sin60^\circ)$). מהי העקמומיות של האליפסה
+      שמתקבלת, בנקודה $P$?
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הנורמל הראשי של האליפסה ב-$P$ נמצא במישור החתך וניצב למשיק, ולכן הוא בכיוון $\pm(\cos60^\circ,0,\sin60^\circ)$
+      ויוצר עם $\hat{\mathbf N}$ זווית $\theta$ שבה $|\cos\theta|=\frac12$. לפי מנייה $|\kappa_n|=\kappa|\cos\theta|$, כלומר
+      $\frac12=\frac12\kappa$, ולכן $\kappa=1$. (בדיקה ישירה: בקואורדינטות $a,b$ של המישור, הגליל נותן
+      $b\approx-\frac{a^2}2$, עקמומיות 1.)
+    wrongFeedback: >-
+      כל המסילות עם המשיק $(0,1,0)$ ב-$P$ מקבלות אותה $\kappa_n$. השתמשו ב-$\kappa_n=\kappa\cos\theta$.
+    commonWrong:
+      - value: 0.25
+        feedback: >-
+          הכפלתם ב-$\cos60^\circ$. הנוסחה היא $|\kappa_n|=\kappa\cos\theta$, ולכן מחלקים: חתך מוטה עקום יותר.
+        misconception: MC-c4-meusnier-multiply
+      - value: 0.5
+        feedback: >-
+          זו העקמומיות של **החתך הנורמלי** (המעגל האופקי). לאליפסה אותה $\kappa_n$, אבל היא עקומה יותר.
+        misconception: MC-c4-tangent-fixes-curvature
+
+  - id: Q-4.2-pythproof
+    type: rank
+    objectives: [OBJ-4.2-1]
+    level: exam
+    prompt: >-
+      סדרו את שלבי ההוכחה של $\kappa^2=\kappa_n^2+\kappa_g^2$ למסילה $\gamma$ על משטח $M$.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון. שני שלבים שאפשר לכתוב בכל סדר מסומנים כשקולים.
+    items:
+      - id: arc
+        label: >-
+          עוברים לפרמטר אורך קשת (העקמומיות לא תלויה בפרמטריזציה): $\mathbf t=\gamma'$, $\mathbf t'=\kappa\mathbf n$,
+          ולכן $\|\mathbf t'\|=\kappa$
+      - id: perp
+        label: >-
+          גוזרים את $\mathbf t\cdot\mathbf t=1$ ומקבלים $\mathbf t'\cdot\mathbf t=0$
+      - id: basis
+        label: >-
+          $\mathbf t$ משיק למשטח ולכן ניצב ל-$\hat{\mathbf N}$; לכן $\mathbf t,\ \hat{\mathbf N},\ \hat{\mathbf N}\times\mathbf t$
+          בסיס אורתונורמלי של $\mathbb R^3$
+      - id: expand
+        label: >-
+          מפתחים בבסיס: $\mathbf t'=(\mathbf t'\cdot\mathbf t)\mathbf t+\kappa_n\hat{\mathbf N}+\kappa_g(\hat{\mathbf N}\times\mathbf t)=\kappa_n\hat{\mathbf N}+\kappa_g(\hat{\mathbf N}\times\mathbf t)$
+      - id: pyth
+        label: >-
+          בבסיס אורתונורמלי ריבוע האורך הוא סכום ריבועי הרכיבים: $\kappa^2=\|\mathbf t'\|^2=\kappa_n^2+\kappa_g^2$
+    order: [arc, [perp, basis], expand, pyth]
+    correctFeedback: >-
+      נכון. רעיון ההוכחה: וקטור העקמומיות ניצב למשיק, ולכן חי במישור של שני וקטורי יחידה ניצבים, $\hat{\mathbf N}$
+      ו-$\hat{\mathbf N}\times\mathbf t$. $\kappa_n$ ו-$\kappa_g$ הם רכיביו שם, והשאר פיתגורס.
+    wrongFeedback: >-
+      התחילו מפרמטר אורך קשת (שם $\|\mathbf t'\|=\kappa$), הכינו את שתי העובדות שצריך לבסיס, ורק אז פתחו ושימו פיתגורס.
+
+  - id: Q-4.2-knproof
+    type: rank
+    objectives: [OBJ-4.2-2]
+    level: exam
+    prompt: >-
+      סדרו את שלבי ההוכחה של $\kappa_n=\frac{Q_2(\dot u,\dot v)}{Q_1(\dot u,\dot v)}$ למסילה רגולרית
+      $\gamma(t)=\sigma(u(t),v(t))$.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון.
+    items:
+      - id: arc
+        label: >-
+          $\frac{d\mathbf t}{ds}=\frac{1}{\|\dot\gamma\|}\frac{d}{dt}\frac{\dot\gamma}{\|\dot\gamma\|}=\frac{\ddot\gamma}{\|\dot\gamma\|^2}+c\,\dot\gamma$
+          לאיזשהו מספר $c$, ולכן $\kappa_n=\frac{d\mathbf t}{ds}\cdot\hat{\mathbf N}=\frac{\ddot\gamma\cdot\hat{\mathbf N}}{\|\dot\gamma\|^2}$
+      - id: velocity
+        label: >-
+          את המכנה שבביטוי הזה מחשבים בכלל השרשרת: $\dot\gamma=\dot u\,\sigma_u+\dot v\,\sigma_v$, ולכן
+          $\|\dot\gamma\|^2=Q_1(\dot u,\dot v)$
+      - id: accel
+        label: >-
+          בשביל המונה גוזרים את $\dot\gamma$ הזה שוב: $\ddot\gamma=\dot u^2\sigma_{uu}+2\dot u\dot v\,\sigma_{uv}+\dot v^2\sigma_{vv}+\ddot u\,\sigma_u+\ddot v\,\sigma_v$
+      - id: dot
+        label: >-
+          במכפלה עם $\hat{\mathbf N}$ האיברים עם $\sigma_u,\sigma_v$ נעלמים: $\ddot\gamma\cdot\hat{\mathbf N}=Q_2(\dot u,\dot v)$
+      - id: result
+        label: >-
+          לכן $\kappa_n=\frac{Q_2(\dot u,\dot v)}{Q_1(\dot u,\dot v)}$; זו מנה של שתי תבניות ריבועיות, ולכן היא תלויה רק
+          בכיוון של $(\dot u,\dot v)$
+    order: [arc, velocity, accel, dot, result]
+    correctFeedback: >-
+      נכון. רעיון ההוכחה: הנגזרת השנייה מתפרקת לחלק משיק (שתלוי בקצב) ולחלק שבא מ-$\sigma_{uu},\sigma_{uv},\sigma_{vv}$;
+      המכפלה בנורמל משאירה רק את השני, וזה בדיוק $Q_2$.
+    wrongFeedback: >-
+      קודם מבטאים את $\kappa_n$ דרך $\ddot\gamma$ ו-$\|\dot\gamma\|$ (מעבר לאורך קשת), אחר כך מחשבים אותם בעזרת כלל
+      השרשרת, ורק בסוף מכפילים ב-$\hat{\mathbf N}$.
+
+  - id: Q-4.2-sphere
+    type: twotier
+    objectives: [OBJ-4.2-1, OBJ-4.2-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן שמסילה חלקה ורגולרית שמונחת כולה על ספרת היחידה מקיימת בנקודה כלשהי $\kappa=\frac12$?
+    choices:
+      - text: 'לא'
+        correct: true
+        feedback: 'נכון. כל מסילה על ספרת היחידה מקיימת $\kappa\ge1$ בכל נקודה.'
+      - text: 'כן, מסילה שמתעקמת לאט, כמעט ישרה'
+        feedback: >-
+          מסילה על הספרה לא יכולה להיות "כמעט ישרה": היא כפויה להתעקם לפחות כמו הספרה. גם המעגלים הגדולים, הפחות
+          עקומים, הם בעלי $\kappa=1$.
+        misconception: MC-c4-curve-on-sphere-flat
+    reasons:
+      - text: 'על ספרת היחידה $Q_2=\pm Q_1$, ולכן $|\kappa_n|=1$ בכל כיוון, ו-$\kappa=\sqrt{\kappa_n^2+\kappa_g^2}\ge1$'
+        correct: true
+        feedback: >-
+          בדיוק. שתי עובדות: משפט מנייה (כל כיוון נותן $|\kappa_n|=1$) ופיתגורס ($\kappa\ge|\kappa_n|$).
+      - text: 'על ספרת היחידה $|\kappa_n|=1$ בכל כיוון, ו-$\kappa=|\kappa_n|+|\kappa_g|$, ולכן $\kappa\ge1$'
+        feedback: >-
+          המסקנה נכונה, הנימוק לא: $\kappa$ אינה סכום הרכיבים. $\kappa_n$ ו-$\kappa_g$ הם רכיבים ניצבים של $\mathbf t'$,
+          ולכן $\kappa^2=\kappa_n^2+\kappa_g^2$, ו-$\kappa$ קטנה מ-$|\kappa_n|+|\kappa_g|$ כששניהם שונים מאפס.
+        misconception: MC-c4-curvature-sum
+      - text: '$\kappa=|\kappa_n|=1$ לכל מסילה על ספרת היחידה'
+        feedback: >-
+          רק למסילות עם $\kappa_g=0$. מקביל הרוחב בגובה $\sin\frac\pi3$ הוא בעל $\kappa=2$.
+        misconception: MC-c4-tangent-fixes-curvature

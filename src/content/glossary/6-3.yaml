@@ -1,0 +1,19 @@
+# Terms first defined in lesson 6.3 (flux through an oriented surface).
+- id: flux
+  term: שטף
+  en: flux
+  symbol: '\iint_S\mathbf F\cdot d\mathbf S'
+  definition: >-
+    השטף של שדה רציף $\mathbf F$ דרך משטח מכוון $S$ עם פרמטריזציה $\sigma:D\to S$ שהנורמל שלה בכיוון של $S$:
+    $\iint_S\mathbf F\cdot d\mathbf S=\iint_D\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)\,du\,dv=\iint_S(\mathbf F\cdot\hat{\mathbf N})\,dS$.
+    מחליף סימן כשהופכים את כיוון המשטח.
+  reject: [פלאקס]
+  lesson: '6.3'
+- id: vector-area-element
+  term: אלמנט שטח וקטורי
+  en: vector area element
+  symbol: 'd\mathbf S=\hat{\mathbf N}\,dS'
+  definition: >-
+    $d\mathbf S=\hat{\mathbf N}\,dS=(\sigma_u\times\sigma_v)\,du\,dv$: הנורמל הלא מנורמל כבר כולל את אלמנט השטח
+    $dS=\|\sigma_u\times\sigma_v\|\,du\,dv$, ולכן בשטף אין להכפיל בו שוב.
+  lesson: '6.3'

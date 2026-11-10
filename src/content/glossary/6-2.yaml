@@ -1,0 +1,40 @@
+# Terms first defined in lesson 6.2 (conservative fields and potentials).
+- id: piecewise-smooth-curve
+  term: מסילה חלקה למקוטעין
+  en: piecewise smooth curve
+  definition: >-
+    מסילה רציפה $\gamma:[a,b]\to\mathbb R^n$ עם חלוקה $a=t_0<\dots<t_k=b$ כך שעל כל קטע $[t_{i-1},t_i]$ היא גזירה ברציפות. אינטגרל
+    עליה הוא סכום האינטגרלים על הקטעים. דוגמה: השפה של ריבוע.
+  lesson: '6.2'
+- id: conservative-field
+  term: שדה משמר
+  en: conservative vector field
+  definition: >-
+    שדה רציף $\mathbf F$ על קבוצה פתוחה וקשירה $U$ שיש לו פוטנציאל: $\mathbf F=\nabla\varphi$ על $U$. שקול לאי-תלות במסלול,
+    ולאינטגרל אפס על כל מסילה סגורה ב-$U$. התכונה תלויה בתחום: שדה הסיבוב משמר בחצי המישור $x>0$ ולא ב-$\mathbb R^2\setminus\{0\}$.
+  reject: [שדה קונסרבטיבי]
+  lesson: '6.2'
+- id: potential
+  term: פוטנציאל
+  en: potential (of a vector field)
+  symbol: '\varphi'
+  definition: >-
+    פונקציה גזירה ברציפות $\varphi:U\to\mathbb R$ עם $\nabla\varphi=\mathbf F$. אז
+    $\int_\gamma\mathbf F\cdot d\mathbf s=\varphi(\gamma(b))-\varphi(\gamma(a))$ לכל מסילה חלקה למקוטעין ב-$U$. על $U$ קשירה
+    הפוטנציאל יחיד עד כדי קבוע.
+  lesson: '6.2'
+- id: path-independence
+  term: אי-תלות במסלול
+  en: path independence
+  definition: >-
+    תכונה של שדה $\mathbf F$ על $U$: לכל שתי מסילות ב-$U$ עם אותה נקודת התחלה ואותה נקודת סוף, האינטגרלים הקוויים של $\mathbf F$
+    שווים.
+  lesson: '6.2'
+- id: winding-field
+  term: שדה הסיבוב
+  en: winding (angular) field
+  symbol: '\mathbf W=\frac{(-y,\ x)}{x^2+y^2}'
+  definition: >-
+    השדה $\mathbf W=\frac{(-y,\,x)}{x^2+y^2}$ על $\mathbb R^2\setminus\{0\}$. הנגזרות המעורבות שלו שוות, אבל האינטגרל שלו על כל
+    מעגל סביב הראשית נגד כיוון השעון הוא $2\pi$, ולכן אינו משמר שם. בחצי המישור $x>0$ הוא $\nabla\arctan\frac yx$.
+  lesson: '6.2'

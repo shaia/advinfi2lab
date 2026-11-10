@@ -1,0 +1,32 @@
+# Terms first defined in lesson 4.4.
+- id: shape-operator
+  term: אופרטור הצורה
+  en: shape operator (Weingarten map)
+  symbol: 'S'
+  definition: >-
+    ההעתקה הלינארית $S:T_pM\to T_pM$ שמקיימת $Q_2(v)=\langle Sv,v\rangle$, כלומר $S=-d\hat{\mathbf N}$. בבסיס
+    $\sigma_u,\sigma_v$ מטריצתה $\begin{pmatrix}E&F\\F&G\end{pmatrix}^{-1}\begin{pmatrix}L&M\\M&N\end{pmatrix}$. היא
+    סימטרית ביחס למכפלה הפנימית של המישור המשיק.
+  lesson: '4.4'
+- id: principal-curvatures
+  term: עקמומיויות ראשיות
+  en: principal curvatures
+  symbol: '\kappa_1\ge\kappa_2'
+  definition: >-
+    המקסימום והמינימום של העקמומיות הנורמלית $\kappa_n(v)$ על פני כיווני היחידה $v$ במישור המשיק; הם הערכים העצמיים
+    של אופרטור הצורה. כשהופכים את הנורמל $(\kappa_1,\kappa_2)\mapsto(-\kappa_2,-\kappa_1)$.
+  lesson: '4.4'
+- id: principal-directions
+  term: כיוונים ראשיים
+  en: principal directions
+  definition: >-
+    הכיוונים במישור המשיק שבהם העקמומיות הנורמלית מקבלת את $\kappa_1$ ואת $\kappa_2$: הווקטורים העצמיים של אופרטור
+    הצורה. בנקודה שאינה טבורית הם שניים והם ניצבים; בנקודה טבורית כל כיוון ראשי.
+  lesson: '4.4'
+- id: euler-formula
+  term: נוסחת אוילר
+  en: Euler's formula
+  symbol: '\kappa_n(\theta)=\kappa_1\cos^2\theta+\kappa_2\sin^2\theta'
+  definition: >-
+    העקמומיות הנורמלית בכיוון שיוצר זווית $\theta$ עם הכיוון הראשי של $\kappa_1$.
+  lesson: '4.4'

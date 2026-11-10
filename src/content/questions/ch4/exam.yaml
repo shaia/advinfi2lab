@@ -1,0 +1,562 @@
+# Chapter 4 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (7 points): a verdict and a written justification. Long questions (20 points): 3–4 parts.
+# Every open part has a model solution ending in a result step and a rubric.
+chapter: 4
+questions:
+  - id: Q-4-exam-1
+    type: exam
+    title: שתי נקודות בלי גאודזית
+    prompt: >-
+      האם ייתכן שעל משטח חלק $M$ יש שתי נקודות $P\neq Q$ כך שאין אף גאודזית על $M$ שעוברת דרך שתיהן?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-4.3-3]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'כן, ייתכן'
+            correct: true
+            feedback: 'נכון. מספיק להוציא נקודה אחת מהמשטח, במקום הנכון.'
+          - text: 'לא: בין כל שתי נקודות של משטח יש גאודזית'
+            feedback: >-
+              זה נכון במישור, על הספרה ועל הגליל, אבל לא על כל משטח: במישור בלי הראשית, הישר היחיד דרך $(-1,0,0)$
+              ו-$(1,0,0)$ עובר בנקודה החסרה.
+            misconception: MC-c4-geodesic-exists
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-4.3-3, OBJ-4.3-2]
+        prompt: >-
+          הוכיחו את תשובתכם.
+        solution:
+          - kind: idea
+            text: >-
+              במישור הגאודזיות הן ישרים. אם מוציאים מהמישור נקודה שנמצאת על הקטע בין $P$ ל-$Q$, הישר היחיד דרכן "נשבר", ולא
+              נשארת גאודזית שמחברת אותן.
+          - kind: given
+            text: >-
+              $M=\{(x,y,0):(x,y)\neq(0,0)\}$, קבוצה פתוחה של המישור $z=0$, ולכן משטח חלק (עם $\sigma(x,y)=(x,y,0)$).
+              $P=(-1,0,0)$, $Q=(1,0,0)$.
+          - kind: step
+            text: >-
+              על $M$ הנורמל קבוע, $\hat{\mathbf N}=(0,0,1)$, ולמסילה $\gamma$ במישור $\gamma''\perp\hat{\mathbf N}$, ולכן
+              $\kappa_n=0$ ו-$\kappa^2=\kappa_g^2$. אם $\gamma$ גאודזית, $\kappa\equiv0$, ולכן (בפרמטר אורך קשת $\mathbf t'=0$)
+              העקבה שלה מוכלת בישר אחד.
+          - kind: step
+            text: >-
+              ישר שמכיל את $P$ ואת $Q$ הוא ציר $x$. מסילה רציפה בציר $x$ שעוברת ב-$x=-1$ וב-$x=1$ עוברת, לפי משפט ערך
+              הביניים על הקואורדינטה $x$, גם ב-$x=0$, כלומר בראשית.
+          - kind: check
+            text: 'הראשית אינה ב-$M$, ולכן אין מסילה כזו על $M$.'
+          - kind: result
+            text: 'כן, ייתכן: במישור בלי הראשית אין גאודזית שעוברת דרך $(-1,0,0)$ ו-$(1,0,0)$.'
+        rubric:
+          - text: 'דוגמה מפורשת: משטח חלק ושתי נקודות עליו (למשל המישור בלי הראשית)'
+            weight: 2
+          - text: 'נימוק שהגאודזיות של (חלק פתוח של) המישור מוכלות בישרים: $\kappa_n=0$ ולכן $\kappa=|\kappa_g|=0$'
+            weight: 2
+          - text: 'נימוק שכל מסילה כזו בין $P$ ל-$Q$ עוברת בנקודה החסרה (ערך הביניים)'
+            weight: 1
+
+  - id: Q-4-exam-2
+    type: exam
+    title: עקמומיות נורמלית שלילית ועקמומיות ממוצעת
+    prompt: >-
+      $P$ נקודה של משטח מכוון $M$ עם נורמל $\hat{\mathbf N}$. האם ייתכן שהעקמומיות הנורמלית ב-$P$ שלילית בכל כיוון משיק, אבל
+      $H(P)>0$ (ביחס לאותו $\hat{\mathbf N}$)?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-4.5-1]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא'
+            correct: true
+            feedback: 'נכון. $H$ היא ממוצע של שתי עקמומיויות נורמליות, ושתיהן שליליות.'
+          - text: 'כן, כי $H$ ו-$\kappa_n$ מודדות דברים שונים'
+            feedback: >-
+              $H=\frac{\kappa_1+\kappa_2}2$, ו-$\kappa_1,\kappa_2$ הן ערכים של $\kappa_n$, ביחס לאותו נורמל. אין מקום לסימן
+              אחר.
+            misconception: MC-c4-Q2-orientation-free
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-4.4-1, OBJ-4.5-1]
+        prompt: >-
+          הוכיחו את תשובתכם.
+        solution:
+          - kind: given
+            text: '$\kappa_n(v)<0$ לכל וקטור יחידה $v\in T_PM$.'
+          - kind: goal
+            text: '$H(P)<0$; בפרט לא ייתכן $H(P)>0$.'
+          - kind: idea
+            text: >-
+              העקמומיויות הראשיות הן ערכים של $\kappa_n$ (המקסימום והמינימום שלה), ולכן הן יורשות ממנה את הסימן.
+          - kind: theorem
+            text: >-
+              $\kappa_n$ פונקציה רציפה על מעגל כיווני היחידה, שהוא קומפקטי, ולכן מקבלת מקסימום $\kappa_1=\kappa_n(e_1)$ ומינימום
+              $\kappa_2=\kappa_n(e_2)$.
+          - kind: step
+            text: '$\kappa_1=\kappa_n(e_1)<0$, כי $e_1$ הוא אחד הכיוונים. ו-$\kappa_2\le\kappa_1<0$.'
+          - kind: computation
+            text: '$H=\frac{\kappa_1+\kappa_2}{2}<0$.'
+          - kind: result
+            text: 'לא ייתכן: אם $\kappa_n<0$ בכל כיוון אז $H<0$ (וגם $K=\kappa_1\kappa_2>0$, הנקודה אליפטית).'
+        rubric:
+          - text: 'זיהוי $\kappa_1$ כמקסימום של $\kappa_n$, שמתקבל בכיוון מסוים (קומפקטיות או אוילר)'
+            weight: 2
+          - text: 'מסקנה $\kappa_1<0$ ו-$\kappa_2<0$ (ולא רק "קטן או שווה")'
+            weight: 2
+          - text: '$H=\frac{\kappa_1+\kappa_2}2<0$, עם אותו נורמל לאורך כל הטיעון'
+            weight: 1
+
+  - id: Q-4-exam-3
+    type: exam
+    title: עקמומיות של מסילה על ספרה
+    prompt: >-
+      האם ייתכן שמסילה חלקה ורגולרית, שמונחת כולה על הספרה $x^2+y^2+z^2=9$, מקיימת בנקודה כלשהי $\kappa=\frac14$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-4.2-1]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא'
+            correct: true
+            feedback: 'נכון. כל מסילה על ספרה ברדיוס 3 מקיימת $\kappa\ge\frac13$.'
+          - text: 'כן: $\kappa=\kappa_n+\kappa_g$, ו-$\kappa_g$ בסימן הפוך ל-$\kappa_n$ יכולה להקטין את $\kappa$ מתחת ל-$\frac13$'
+            feedback: >-
+              $\kappa_n$ ו-$\kappa_g$ הם רכיבים **ניצבים** של $\mathbf t'$, ולכן $\kappa^2=\kappa_n^2+\kappa_g^2$ ואין ביניהם
+              ביטול. מסילה על הספרה כפויה להתעקם לפחות כמו הספרה: גם המעגלים הגדולים, הפחות עקומים, הם בעלי
+              $\kappa=\frac13>\frac14$.
+            misconception: MC-c4-curvature-sum
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-4.2-1, OBJ-4.2-3]
+        prompt: >-
+          הוכיחו את תשובתכם.
+        solution:
+          - kind: idea
+            text: >-
+              העקמומיות של מסילה על משטח לפחות כגודל העקמומיות הנורמלית שלה, ועל הספרה העקמומיות הנורמלית ידועה בכל כיוון.
+          - kind: step
+            text: >-
+              על הספרה ברדיוס 3 עם הנורמל החוצה $\hat{\mathbf N}=\frac p3$ מתקיים $Q_2=-\frac13Q_1$ (למשל: $\hat{\mathbf N}_u=\frac13\sigma_u$,
+              ולכן $L=-\sigma_u\cdot\hat{\mathbf N}_u=-\frac13E$ וכן הלאה). לכן $\kappa_n=\frac{Q_2}{Q_1}=-\frac13$ בכל כיוון.
+          - kind: theorem
+            text: >-
+              לכל מסילה על משטח $\kappa^2=\kappa_n^2+\kappa_g^2$, ולכן $\kappa\ge|\kappa_n|$.
+          - kind: computation
+            text: 'בכל נקודה של המסילה: $\kappa\ge\frac13>\frac14$.'
+          - kind: result
+            text: 'לא ייתכן: כל מסילה על הספרה ברדיוס 3 מקיימת $\kappa\ge\frac13$ בכל נקודה.'
+        rubric:
+          - text: 'חישוב או נימוק ש-$|\kappa_n|=\frac13$ בכל כיוון על הספרה (מנייה: תלוי רק בכיוון)'
+            weight: 2
+          - text: 'שימוש ב-$\kappa^2=\kappa_n^2+\kappa_g^2$ כדי לקבל $\kappa\ge|\kappa_n|$'
+            weight: 2
+          - text: 'המסקנה נאמרת לכל נקודה של כל מסילה, לא רק למעגלים'
+            weight: 1
+
+  - id: Q-4-exam-4
+    type: exam
+    title: איזומטריה ומשטח מינימלי
+    prompt: >-
+      האם קיימים שני משטחים איזומטריים מקומית (כלומר חלק פתוח של האחד איזומטרי לחלק פתוח של השני) כך שהאחד מינימלי והשני
+      לא?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-4.7-1]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'כן'
+            correct: true
+            feedback: 'נכון. מינימליות היא תנאי על $H$, ו-$H$ אינה תכונה פנימית.'
+          - text: 'לא: לפי המשפט המופלא איזומטריה שומרת על העקמומיות'
+            feedback: >-
+              המשפט המופלא שומר רק על $K$. $H$ משתנה: המישור והגליל איזומטריים מקומית, עם $H=0$ מול $|H|=\frac12$.
+            misconception: MC-c4-H-intrinsic
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-4.7-1, OBJ-4.6-3]
+        prompt: >-
+          הוכיחו את תשובתכם.
+        solution:
+          - kind: idea
+            text: >-
+              מגלגלים דף: המישור מינימלי והגליל לא, ובכל זאת אורכים לא משתנים בגלגול.
+          - kind: given
+            text: >-
+              $\sigma_1(u,v)=(u,v,0)$ (מישור) ו-$\sigma_2(u,v)=(\cos u,\sin u,v)$ (הגליל ברדיוס 1), על התחום $0<u<2\pi$, $v\in\mathbb R$.
+          - kind: computation
+            text: >-
+              ב-$\sigma_1$: $E=G=1$, $F=0$. ב-$\sigma_2$: $\sigma_u=(-\sin u,\cos u,0)$, $\sigma_v=(0,0,1)$, ולכן גם $E=G=1$, $F=0$.
+              אותה $Q_1$, ולכן $\sigma_2\circ\sigma_1^{-1}$ איזומטריה מקומית (שיעור 3.5).
+          - kind: computation
+            text: >-
+              במישור $Q_2=0$, ולכן $H\equiv0$: מינימלי. בגליל עם $\hat{\mathbf N}=(\cos u,\sin u,0)$: $L=-1$, $M=N=0$, ולכן
+              $\kappa_1=0$, $\kappa_2=-1$ ו-$H=-\frac12\neq0$ בכל נקודה.
+          - kind: result
+            text: 'כן: המישור (מינימלי) והגליל (לא מינימלי) איזומטריים מקומית.'
+        rubric:
+          - text: 'בחירת זוג מתאים ונימוק שהם איזומטריים מקומית (אותה $Q_1$ בפרמטריזציות מתאימות)'
+            weight: 2
+          - text: 'חישוב $H=0$ למישור'
+            weight: 1
+          - text: 'חישוב $H\neq0$ לגליל, עם נורמל מוצהר'
+            weight: 2
+
+  - id: Q-4-exam-5
+    type: exam
+    title: עקמומיות נורמלית וגאודזית של מקבילי רוחב
+    prompt: >-
+      $M$ משטח חלק מכוון עם נורמל $\hat{\mathbf N}$, ו-$\gamma$ מסילה חלקה ורגולרית על $M$.
+    parts:
+      - label: א
+        points: 8
+        type: open
+        objectives: [OBJ-4.2-1]
+        prompt: >-
+          הגדירו את העקמומיות הנורמלית $\kappa_n$ ואת העקמומיות הגאודזית $\kappa_g$ של $\gamma$, והוכיחו ש-$\kappa^2=\kappa_n^2+\kappa_g^2$.
+        solution:
+          - kind: definition
+            text: >-
+              נפרמטר לפי אורך קשת $s$ (העקמומיות לא תלויה בפרמטריזציה), $\mathbf t=\gamma'(s)$, ו-$\mathbf t'=\kappa\mathbf n$.
+              מגדירים $\kappa_n=\mathbf t'\cdot\hat{\mathbf N}$ ו-$\kappa_g=\mathbf t'\cdot(\hat{\mathbf N}\times\mathbf t)$.
+          - kind: idea
+            text: >-
+              $\mathbf t'$ ניצב ל-$\mathbf t$, ולכן חי במישור הנפרש על ידי שני וקטורי יחידה ניצבים, $\hat{\mathbf N}$
+              ו-$\hat{\mathbf N}\times\mathbf t$. $\kappa_n$ ו-$\kappa_g$ הם רכיביו שם, והשאר פיתגורס.
+          - kind: step
+            text: >-
+              $\mathbf t\cdot\mathbf t=1$; גוזרים ומקבלים $2\mathbf t'\cdot\mathbf t=0$.
+          - kind: step
+            text: >-
+              $\mathbf t$ משיק ל-$M$ ולכן ניצב ל-$\hat{\mathbf N}$. שני וקטורי יחידה ניצבים, ולכן
+              $\mathbf t,\ \hat{\mathbf N},\ \hat{\mathbf N}\times\mathbf t$ בסיס אורתונורמלי של $\mathbb R^3$.
+          - kind: computation
+            text: >-
+              בבסיס אורתונורמלי $\mathbf t'=(\mathbf t'\cdot\mathbf t)\mathbf t+(\mathbf t'\cdot\hat{\mathbf N})\hat{\mathbf N}+(\mathbf t'\cdot(\hat{\mathbf N}\times\mathbf t))(\hat{\mathbf N}\times\mathbf t)=\kappa_n\hat{\mathbf N}+\kappa_g(\hat{\mathbf N}\times\mathbf t)$.
+          - kind: result
+            text: >-
+              $\kappa^2=\|\mathbf t'\|^2=\kappa_n^2+\kappa_g^2$ (ריבוע האורך בבסיס אורתונורמלי הוא סכום ריבועי הרכיבים).
+        rubric:
+          - text: 'הגדרות נכונות של $\kappa_n$ ו-$\kappa_g$ (בפרמטר אורך קשת, או עם החלוקה המתאימה ב-$\|\gamma^{\prime}\|$)'
+            weight: 2
+          - text: '$\mathbf t^{\prime}\perp\mathbf t$ מגזירת $\|\mathbf t\|^2=1$'
+            weight: 2
+          - text: 'נימוק ש-$\mathbf t,\hat{\mathbf N},\hat{\mathbf N}\times\mathbf t$ בסיס אורתונורמלי'
+            weight: 2
+          - text: 'פירוק $\mathbf t^{\prime}$ בבסיס ופיתגורס'
+            weight: 2
+      - label: ב
+        points: 6
+        type: numeric
+        objectives: [OBJ-4.2-1, OBJ-4.2-3]
+        prompt: >-
+          $M$ הספרה ברדיוס 2, ו-$\gamma$ מקביל הרוחב $\sigma(u,\frac\pi3)$ בפרמטריזציה
+          $\sigma(u,v)=(2\cos u\cos v,\,2\sin u\cos v,\,2\sin v)$, כלומר המעגל $x^2+y^2=1$ בגובה $z=\sqrt3$. מהו $|\kappa_g|$
+          של $\gamma$?
+        answer: 0.8660254
+        tolerance: 0.0001
+        correctFeedback: >-
+          נכון: $\frac{\sqrt3}2$. המעגל ברדיוס 1, ולכן $\kappa=1$. על ספרה ברדיוס 2, $|\kappa_n|=\frac12$ בכל כיוון. לכן
+          $\kappa_g^2=1-\frac14=\frac34$. באופן כללי, במקביל $v_0$ על ספרה ברדיוס $R$: $|\kappa_g|=\frac{\tan|v_0|}{R}$.
+        wrongFeedback: >-
+          חשבו את רדיוס המעגל (ולכן את $\kappa$) ואת $|\kappa_n|$ על הספרה, והציבו בסעיף א.
+        commonWrong:
+          - value: 0.5
+            feedback: '$1-\frac12$: חיסרתם את העקמומיויות במקום את ריבועיהן.'
+            misconception: MC-c4-curvature-sum
+          - value: 0.75
+            feedback: 'זה $\kappa_g^2$. חסר שורש.'
+            misconception: MC-c4-curvature-sum
+          - value: 1
+            feedback: >-
+              1 היא העקמומיות של המעגל במרחב. חלק ממנה, $|\kappa_n|=\frac12$, בא מהספרה, ורק השאר הוא $\kappa_g$.
+      - label: ג
+        points: 6
+        type: twotier
+        objectives: [OBJ-4.3-2, OBJ-4.3-1]
+        qualitative: true
+        prompt: >-
+          אילו ממקבילי הרוחב $v=v_0$ ($|v_0|<\frac\pi2$) של הספרה ברדיוס $R$ הם גאודזיות?
+        choices:
+          - text: 'רק קו המשווה, $v_0=0$'
+            correct: true
+            feedback: 'נכון. רק הוא מעגל גדול.'
+          - text: 'כולם: הם חתכים מישוריים של הספרה'
+            feedback: >-
+              חתך מישורי הוא גאודזית רק אם המישור מכיל את הנורמל, כלומר עובר במרכז. מקביל עם $v_0\neq0$ אינו כזה.
+            misconception: MC-c4-plane-section-geodesic
+          - text: 'אף אחד: לכולם עקמומיות חיובית'
+            feedback: >-
+              גאודזית לא דורשת $\kappa=0$, רק $\kappa_g=0$. לקו המשווה $\kappa=\frac1R$, וכולה נורמלית.
+            misconception: MC-c4-geodesic-straight
+        reasons:
+          - text: '$|\kappa_g|=\sqrt{\kappa^2-\kappa_n^2}=\sqrt{\frac{1}{R^2\cos^2v_0}-\frac1{R^2}}=\frac{\tan|v_0|}{R}$, וזה אפס בדיוק כש-$v_0=0$'
+            correct: true
+            feedback: 'בדיוק: סעיף א נותן את $\kappa_g$ מתוך $\kappa$ ו-$\kappa_n$, בלי לחשב את $\hat{\mathbf N}\times\mathbf t$.'
+          - text: 'לכל המקבילים $|\kappa_n|=\frac1R$, ולכן כולם גאודזיות'
+            feedback: >-
+              $|\kappa_n|=\frac1R$ לכל מסילה על הספרה. מה שמבחין גאודזית הוא $\kappa_g$, ו-$\kappa=\frac1{R\cos v_0}$ גדולה
+              מ-$\frac1R$ כש-$v_0\neq0$.
+            misconception: MC-c4-geodesic-kn-zero
+          - text: 'התאוצה של כל מקביל מצביעה לציר $z$, ולכן ניצבת לספרה'
+            feedback: >-
+              התאוצה מצביעה לציר $z$, אבל הנורמל לספרה מצביע למרכז. שני הכיוונים מתלכדים רק בקו המשווה.
+            misconception: MC-c4-plane-section-geodesic
+
+  - id: Q-4-exam-6
+    type: exam
+    title: מסילות עקומות דרך נקודה
+    prompt: >-
+      $M$ משטח חלק מכוון ו-$P\in M$. ידוע שכל מסילה חלקה ורגולרית על $M$ שעוברת ב-$P$ מקיימת ב-$P$ את אי-השוויון $\kappa\ge2$.
+    parts:
+      - label: א
+        points: 6
+        type: open
+        objectives: [OBJ-4.2-3, OBJ-4.2-1]
+        prompt: >-
+          הוכיחו ש-$|\kappa_n(v)|\ge2$ לכל כיוון משיק $v$ ב-$P$.
+        solution:
+          - kind: goal
+            text: 'לכל וקטור יחידה $v\in T_PM$: $|\kappa_n(v)|\ge2$.'
+          - kind: idea
+            text: >-
+              מספיק למצוא מסילה אחת עם משיק $v$ שכל העקמומיות שלה נורמלית: החתך הנורמלי. אז $\kappa=|\kappa_n(v)|$, והנתון
+              נותן את החסם.
+          - kind: step
+            text: >-
+              יהי $\Pi$ המישור דרך $P$ שנפרש על ידי $v$ ו-$\hat{\mathbf N}(P)$. $\Pi$ חותך את $T_PM$ בישר בכיוון $v$, ולכן (לפי
+              הפונקציה הסתומה) ליד $P$ החיתוך $\Pi\cap M$ הוא מסילה חלקה ורגולרית $\gamma$ עם $\gamma'(0)\parallel v$.
+          - kind: theorem
+            text: >-
+              משפט מנייה: לכל המסילות עם המשיק $v$ אותה $\kappa_n(v)$, ו-$\kappa_n=\kappa\cos\theta$, כש-$\theta$ הזווית בין
+              $\mathbf n$ ל-$\hat{\mathbf N}$.
+          - kind: step
+            text: >-
+              לפי הנתון $\kappa_\gamma(P)\ge2>0$, ולכן $\mathbf n$ מוגדר. $\gamma$ מוכלת ב-$\Pi$, ולכן $\mathbf n\in\Pi$ וניצב
+              ל-$v$; היחידים כאלה הם $\pm\hat{\mathbf N}(P)$. לכן $|\cos\theta|=1$.
+          - kind: result
+            text: '$|\kappa_n(v)|=\kappa_\gamma(P)\ge2$, לכל כיוון $v$.'
+        rubric:
+          - text: 'בחירת החתך הנורמלי (או מסילה אחרת עם $\kappa_g=0$ ב-$P$) בכיוון $v$'
+            weight: 2
+          - text: 'נימוק ש-$\mathbf n=\pm\hat{\mathbf N}$ בחתך הנורמלי, ולכן $\kappa=|\kappa_n|$'
+            weight: 2
+          - text: 'שימוש בנתון על החתך כדי לקבל $|\kappa_n(v)|\ge2$ לכל $v$'
+            weight: 2
+      - label: ב
+        points: 6
+        type: mc
+        objectives: [OBJ-4.4-1, OBJ-4.4-3]
+        standalone: false
+        prompt: >-
+          מה נובע מסעיף א על העקמומיויות הראשיות $\kappa_1\ge\kappa_2$ ב-$P$, ולמה?
+        choices:
+          - text: 'או ש-$\kappa_2\ge2$, או ש-$\kappa_1\le-2$: כי $\kappa_n(\theta)=\kappa_1\cos^2\theta+\kappa_2\sin^2\theta$ רציפה ב-$\theta$ ולא מקבלת ערכים ב-$(-2,2)$'
+            correct: true
+            feedback: >-
+              נכון. אילו $\kappa_1\ge2$ ו-$\kappa_2\le-2$, לפי ערך הביניים $\kappa_n$ הייתה מקבלת את 0 בכיוון כלשהו בין
+              $e_1$ ל-$e_2$. לכן כל הערכים באותו צד, והמקסימום והמינימום שניהם $\ge2$ או שניהם $\le-2$.
+          - text: 'ייתכן גם $\kappa_1\ge2$ ו-$\kappa_2\le-2$: סעיף א חוסם רק את $|\kappa_n|$, וזה מתקיים גם כששתי העקמומיויות הראשיות גדולות בערכן המוחלט ובסימנים הפוכים'
+            feedback: >-
+              אז לפי אוילר $\kappa_n(\theta)=\kappa_2+(\kappa_1-\kappa_2)\cos^2\theta$ עוברת ברציפות מ-$\kappa_1$ ל-$\kappa_2$
+              ומקבלת את 0, בסתירה לסעיף א.
+            misconception: MC-c4-euler-linear
+          - text: 'רק $|\kappa_1|\ge2$: $\kappa_1$ שייכת לכיוון של המסילה העקומה ביותר דרך $P$, ועל $\kappa_2$ אי אפשר לומר דבר'
+            feedback: >-
+              סעיף א נותן חסם **לכל** כיוון, ובפרט לכיוון הראשי של $\kappa_2$: $|\kappa_2|=|\kappa_n(e_2)|\ge2$.
+            misconception: MC-c4-principal-from-curves
+      - label: ג
+        points: 4
+        type: numeric
+        objectives: [OBJ-4.5-1, OBJ-4.5-2]
+        standalone: false
+        prompt: >-
+          מהו הערך הקטן ביותר האפשרי של $K(P)$?
+        answer: 4
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\kappa_1,\kappa_2$ שתיהן $\ge2$ או שתיהן $\le-2$, ולכן $K=\kappa_1\kappa_2\ge4$, ו-$P$ אליפטית. השוויון
+          מתקבל בספרה ברדיוס $\frac12$, שבה כל מסילה מקיימת $\kappa\ge2$.
+        wrongFeedback: >-
+          $K=\kappa_1\kappa_2$, ושני הגורמים באותו סימן ובגודל לפחות 2.
+        commonWrong:
+          - value: 2
+            feedback: '2 הוא החסם לכל עקמומיות ראשית. $K$ היא מכפלה של שתיים: $2\cdot2$.'
+            misconception: MC-c4-K-is-principal
+          - value: -4
+            feedback: >-
+              $K$ שלילית דורשת עקמומיויות ראשיות בסימנים הפוכים, ולפי סעיף ב זה בלתי אפשרי. ($K$ גם לא תלויה בכיוון הנורמל.)
+            misconception: MC-c4-K-changes-sign
+      - label: ד
+        points: 4
+        type: twotier
+        objectives: [OBJ-4.5-1]
+        standalone: false
+        qualitative: true
+        prompt: >-
+          מה אפשר לומר על $H(P)$?
+        choices:
+          - text: '$|H(P)|\ge2$, והסימן תלוי בבחירת $\hat{\mathbf N}$'
+            correct: true
+            feedback: 'נכון. לכל אחד משני הנורמלים $H$ אחרת, באותו גודל.'
+          - text: '$H(P)\ge2$'
+            feedback: >-
+              עם הנורמל ההפוך כל העקמומיויות מחליפות סימן, וגם $H$. הנתון על $\kappa$ לא תלוי בנורמל, ולכן לא יכול לקבוע את
+              הסימן של $H$.
+            misconception: MC-c4-Q2-orientation-free
+          - text: '$|H(P)|\ge4$'
+            feedback: '$H$ היא ממוצע, לא סכום: $\frac{2+2}2=2$.'
+            misconception: MC-c4-H-sum
+        reasons:
+          - text: '$H=\frac{\kappa_1+\kappa_2}2$, ושתיהן $\ge2$ או שתיהן $\le-2$; היפוך הנורמל מחליף ביניהן'
+            correct: true
+            feedback: 'בדיוק. ובספרה ברדיוס $\frac12$: $H=\pm2$.'
+          - text: '$H^2\ge K\ge4$, ולכן $H\ge2$'
+            feedback: >-
+              $H^2\ge K$ נכון תמיד, ו-$K\ge4$ נכון כאן, אבל מ-$H^2\ge4$ נובע רק $|H|\ge2$, לא $H\ge2$: עם הנורמל ההפוך
+              $H\le-2$. הסימן הוא חלק מהתשובה.
+            misconception: MC-c4-Q2-orientation-free
+          - text: '$H$ היא העקמומיות של המסילה הכי עקומה דרך $P$'
+            feedback: >-
+              אין מסילה "הכי עקומה": $\kappa$ של מסילות דרך $P$ אינה חסומה. $H$ היא ממוצע של שתי עקמומיויות נורמליות.
+            misconception: MC-c4-principal-from-curves
+
+  - id: Q-4-exam-7
+    type: exam
+    title: העקמומיות של הטורוס
+    prompt: >-
+      $\sigma(u,v)=((3+\cos v)\cos u,\,(3+\cos v)\sin u,\,\sin v)$, $u,v\in\mathbb R$, הוא טורוס, עם הנורמל
+      $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$.
+    parts:
+      - label: א
+        points: 6
+        type: open
+        objectives: [OBJ-4.1-1, OBJ-3.4-1]
+        prompt: >-
+          חשבו את $E,F,G$, את $\hat{\mathbf N}$ ואת $L,M,N$. לאיזה צד של הצינור מצביע $\hat{\mathbf N}$?
+        solution:
+          - kind: computation
+            text: >-
+              $\sigma_u=(3+\cos v)(-\sin u,\cos u,0)$, $\sigma_v=(-\sin v\cos u,\,-\sin v\sin u,\,\cos v)$. לכן
+              $E=(3+\cos v)^2$, $F=0$, $G=1$.
+          - kind: computation
+            text: >-
+              $\sigma_u\times\sigma_v=(3+\cos v)(\cos v\cos u,\,\cos v\sin u,\,\sin v)$, ולכן
+              $\hat{\mathbf N}=(\cos v\cos u,\,\cos v\sin u,\,\sin v)$.
+          - kind: check
+            text: >-
+              $\sigma-(3\cos u,3\sin u,0)=\hat{\mathbf N}$: הנורמל הוא הווקטור ממעגל הליבה לנקודה, ולכן מצביע **החוצה
+              מהצינור**.
+          - kind: computation
+            text: >-
+              $\sigma_{uu}=-(3+\cos v)(\cos u,\sin u,0)$, ולכן $L=-(3+\cos v)\cos v$. $\sigma_{uv}=\sin v(\sin u,-\cos u,0)$,
+              ולכן $M=0$. $\sigma_{vv}=-\hat{\mathbf N}$, ולכן $N=-1$ (המקדם, לא הנורמל).
+          - kind: result
+            text: >-
+              $Q_1=(3+\cos v)^2\,du^2+dv^2$, $Q_2=-(3+\cos v)\cos v\,du^2-dv^2$, ו-$\hat{\mathbf N}$ מצביע החוצה מהצינור.
+        rubric:
+          - text: '$E,F,G$ נכונים'
+            weight: 1
+          - text: '$\hat{\mathbf N}$ נכון, עם קביעה מנומקת של הצד'
+            weight: 2
+          - text: '$L$ נכון כולל הסימן'
+            weight: 1
+          - text: '$M=0$ ו-$N=-1$, בלי לבלבל בין המקדם $N$ לנורמל $\hat{\mathbf N}$'
+            weight: 2
+      - label: ב
+        points: 5
+        type: numeric
+        objectives: [OBJ-4.5-1]
+        standalone: false
+        prompt: >-
+          חשבו את העקמומיות הממוצעת $H$, ביחס ל-$\hat{\mathbf N}$ של סעיף א, בנקודות שבהן $v=\frac\pi3$.
+        answer: -0.5714286
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון: $-\frac47$. ב-$v=\frac\pi3$: $E=\frac{49}4$, $F=0$, $G=1$, $L=-\frac72\cdot\frac12=-\frac74$, $M=0$, $N=-1$. לכן
+          $H=\frac{EN-2FM+GL}{2(EG-F^2)}=\frac{-\frac{49}4-\frac74}{2\cdot\frac{49}4}=-\frac47$. בדיקה: כש-$F=M=0$,
+          $\kappa_{1,2}=\frac LE,\frac NG=-\frac17,-1$, והממוצע $-\frac47$.
+        wrongFeedback: >-
+          הציבו את התוצאות של סעיף א, ב-$v=\frac\pi3$, ב-$H=\frac{EN-2FM+GL}{2(EG-F^2)}$.
+        commonWrong:
+          - value: -1.1428571
+            feedback: 'זה $\kappa_1+\kappa_2$. העקמומיות הממוצעת היא חצי מזה.'
+            misconception: MC-c4-H-sum
+          - value: 0.5714286
+            feedback: >-
+              הסימן הפוך. $\hat{\mathbf N}$ של סעיף א מצביע החוצה מהצינור, והצינור מתעקם הרחק ממנו: $N=-1<0$.
+            misconception: MC-c4-Q2-orientation-free
+          - value: -1.375
+            feedback: >-
+              $\frac{L+N}2$: לקחתם את $L,N$ כעקמומיויות הראשיות, בלי לחלק ב-$E$ וב-$G$.
+            misconception: MC-c4-eigen-of-Q2
+          - value: 0.1428571
+            feedback: '$\frac17$ היא עקמומיות גאוס $\frac{LN-M^2}{EG-F^2}$, לא $H$.'
+            misconception: MC-c4-K-is-principal
+      - label: ג
+        points: 4
+        type: multi
+        objectives: [OBJ-4.5-2, OBJ-4.5-3]
+        standalone: false
+        prompt: >-
+          לפי $K=\frac{\cos v}{3+\cos v}$, סמנו את כל הטענות הנכונות.
+        choices:
+          - text: 'הנקודות עם $\cos v>0$ (החצי החיצוני) אליפטיות'
+            correct: true
+            feedback: 'נכון. שם הטורוס כמו כיפה, בצד אחד של המישור המשיק.'
+          - text: 'הנקודות עם $\cos v<0$ (החצי הפנימי) היפרבוליות'
+            correct: true
+            feedback: 'נכון. שם הטורוס כמו אוכף: לאורך המעגל ולרוחב הצינור הוא מתעקם לצדדים הפוכים.'
+          - text: 'המעגלים $v=\pm\frac\pi2$ (העליון והתחתון) עשויים מנקודות פרבוליות'
+            correct: true
+            feedback: 'נכון. $K=0$ ו-$Q_2=-dv^2\neq0$.'
+          - text: 'המעגלים $v=\pm\frac\pi2$ עשויים מנקודות מישוריות'
+            feedback: '$K=0$, אבל $N=-1\neq0$: הצינור מתעקם בכיוון $v$. מישורית פירושו $Q_2=0$.'
+            misconception: MC-c4-K-zero-planar
+      - label: ד
+        points: 5
+        type: twotier
+        objectives: [OBJ-4.7-1, OBJ-4.7-2]
+        qualitative: true
+        prompt: >-
+          ($K=\frac{\cos v}{3+\cos v}$.) האם יש איזומטריה מקומית מסביבה של נקודה על המשווה החיצוני של הטורוס לסביבה של
+          נקודה על המשווה הפנימי שלו?
+        choices:
+          - text: 'לא'
+            correct: true
+            feedback: 'נכון. אף שזה אותו משטח, שני החלקים שונים "מבפנים".'
+          - text: 'כן: בשני המשווים אותה עקמומיות ראשית $\kappa_2=-1$, בכיוון הצינור'
+            feedback: >-
+              עקמומיות ראשית אחת אינה תכונה פנימית, ואינה נשמרת באיזומטריה. מה שנשמר הוא $K$, ובה שני המשווים שונים.
+            misconception: MC-c4-H-intrinsic
+        reasons:
+          - text: 'איזומטריה מקומית שומרת על $K$ (המשפט המופלא). על המשווה החיצוני $K=\frac14$, ובסביבה קטנה שלו $K>0$; על הפנימי $K=-\frac12<0$'
+            correct: true
+            feedback: 'בדיוק. אפילו נקודה אחת עם $K$ שונה מספיקה; כאן הסימנים הפוכים.'
+          - text: 'ל-$H$ ערכים שונים בשני המשווים, ואיזומטריה מקומית שומרת על $H$'
+            feedback: '$H$ אינה נשמרת באיזומטריות, ולכן ההבדל בה לא מוכיח דבר.'
+            misconception: MC-c4-H-intrinsic
+          - text: 'הרדיוסים של שני המשווים שונים, 4 ו-2, ואיזומטריה שומרת על העקמומיות של מסילות'
+            feedback: >-
+              רדיוס של מעגל במרחב, ועקמומיות של מסילה במרחב, אינם מושגים פנימיים של המשטח. המישור והגליל איזומטריים מקומית
+              אף שבאחד יש מעגלים ובשני ישרים.
+            misconception: MC-c3-curvature-of-curve-intrinsic

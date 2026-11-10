@@ -1,0 +1,49 @@
+# Terms first defined in lesson 10.6 (the Weierstrass approximation theorem).
+- id: weierstrass-approximation-theorem
+  term: משפט הקירוב של ויירשטראס
+  en: Weierstrass approximation theorem
+  definition: >-
+    לכל $f$ רציפה על קטע סגור וחסום $[a,b]$ ולכל $\varepsilon>0$ יש פולינום $p$ עם $\max_{[a,b]}|f-p|<\varepsilon$. בגרסה
+    הטריגונומטרית: לכל $f$ רציפה ומחזורית ב-$2\pi$ יש פולינום טריגונומטרי $T$ עם $\max|f-T|<\varepsilon$.
+  lesson: '10.6'
+- id: bernstein-polynomial
+  term: פולינום ברנשטיין
+  en: Bernstein polynomial
+  symbol: 'B_nf'
+  definition: >-
+    לפונקציה $f$ על $[0,1]$: $B_nf(x)=\sum_{k=0}^nf\!\left(\frac kn\right)\binom nk x^k(1-x)^{n-k}$. הוא משחזר את $1$ ואת $x$,
+    $B_n(x^2)=x^2+\frac{x(1-x)}n$, ו-$B_nf\to f$ במידה שווה לכל $f$ רציפה. הוא אינו הטלה ואינו אינטרפולציה.
+  lesson: '10.6'
+- id: dense-subset
+  term: קבוצה צפופה
+  en: dense subset
+  definition: >-
+    $A$ צפופה במרחב נורמי $X$ אם לכל $x\in X$ ולכל $\varepsilon>0$ יש $a\in A$ עם $\|x-a\|<\varepsilon$. הפולינומים צפופים
+    ב-$C[a,b]$ עם נורמת המקסימום (ויירשטראס) וגם ב-$H[a,b]$.
+  lesson: '10.6'
+- id: cesaro-means
+  term: ממוצעי צזרו
+  en: Cesàro means
+  symbol: '\sigma_Nf=\frac{1}{N+1}\sum_{n=0}^{N}S_nf'
+  definition: >-
+    לסדרה $s_0,s_1,\dots$: $\sigma_N=\frac{s_0+\dots+s_N}{N+1}$. אם $s_N\to s$ אז $\sigma_N\to s$, אבל לא להפך ($1,0,1,0,\dots$).
+    לטור פורייה: $\sigma_Nf=\frac{1}{N+1}\sum_{n=0}^{N}S_nf=\frac{a_0}2+\sum_{n=1}^N\left(1-\frac n{N+1}\right)(a_n\cos nx+b_n\sin nx)$.
+  reject: [ממוצעי צ'זארו, ממוצעי צזארו]
+  lesson: '10.6'
+- id: fejer-kernel
+  term: גרעין פייר
+  en: Fejér kernel
+  symbol: 'F_N(t)'
+  definition: >-
+    $F_N=\frac1{N+1}\sum_{k=0}^ND_k$, ובצורה סגורה $\frac{1}{N+1}\left(\frac{\sin\frac{(N+1)t}{2}}{\sin(t/2)}\right)^2$, עם $F_N(0)=N+1$.
+    הוא אי-שלילי (מתאפס רק בנקודות בודדות), $\frac1{2\pi}\int_{-\pi}^{\pi}F_N=1$, והמסה שלו מתרכזת ליד 0. $\sigma_Nf(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-t)F_N(t)\,dt$.
+  reject: [גרעין פג'ר, גרעין פחר]
+  lesson: '10.6'
+- id: fejer-theorem
+  term: משפט פייר
+  en: Fejér's theorem
+  definition: >-
+    לכל $f$ רציפה ומחזורית ב-$2\pi$, ממוצעי צזרו $\sigma_Nf$ מתכנסים ל-$f$ במידה שווה, בלי שום הנחת גזירות. מסקנה: הגרסה
+    הטריגונומטרית של משפט ויירשטראס, כי כל $\sigma_Nf$ הוא פולינום טריגונומטרי.
+  reject: [משפט פג'ר]
+  lesson: '10.6'

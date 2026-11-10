@@ -1,0 +1,64 @@
+# Terms first defined in lesson 9.1 (inner product spaces).
+- id: inner-product
+  term: מכפלה פנימית
+  en: inner product
+  symbol: '\langle x,y\rangle'
+  definition: >-
+    פונקציה שמתאימה לכל שני וקטורים $x,y$ במרחב וקטורי ממשי מספר $\langle x,y\rangle$, והיא סימטרית
+    ($\langle x,y\rangle=\langle y,x\rangle$), לינארית במשתנה הראשון, וחיובית מוחלטת: $\langle x,x\rangle\ge0$, עם שוויון רק
+    כש-$x=0$.
+  lesson: '9.1'
+- id: inner-product-space
+  term: מרחב מכפלה פנימית
+  en: inner product space
+  definition: >-
+    מרחב וקטורי ממשי עם מכפלה פנימית. הדוגמאות של הקורס: $\mathbb R^n$ עם המכפלה הסקלרית, $\ell^2$ עם
+    $\sum x_ny_n$, ו-$C[a,b]$ עם $\int_a^b fg$.
+  lesson: '9.1'
+- id: induced-norm
+  term: נורמה מושרית
+  en: induced norm
+  symbol: '\|x\|=\sqrt{\langle x,x\rangle}'
+  definition: >-
+    הנורמה $\|x\|=\sqrt{\langle x,x\rangle}$ של מרחב מכפלה פנימית, והמרחק $\|x-y\|$. ב-$C[a,b]$ זו
+    $\|f\|=\sqrt{\int_a^bf^2}$, שנקראת גם הנורמה של הממוצע הריבועי.
+  lesson: '9.1'
+- id: ell-two
+  term: מרחב הסדרות ℓ²
+  en: the sequence space ell-two
+  symbol: '\ell^2'
+  definition: >-
+    מרחב הסדרות הממשיות $x=(x_n)_{n\in\mathbb N}$ עם $\sum x_n^2<\infty$, עם המכפלה הפנימית $\langle x,y\rangle=\sum x_ny_n$
+    (הטור מתכנס בהחלט, כי $|x_ny_n|\le\frac12(x_n^2+y_n^2)$).
+  lesson: '9.1'
+- id: cauchy-schwarz-inequality
+  term: אי-שוויון קושי-שוורץ
+  en: Cauchy–Schwarz inequality
+  symbol: '|\langle x,y\rangle|\le\|x\|\,\|y\|'
+  definition: >-
+    בכל מרחב מכפלה פנימית $|\langle x,y\rangle|\le\|x\|\,\|y\|$, עם שוויון בדיוק כש-$x,y$ תלויים לינארית. ממנו נובע
+    אי-שוויון המשולש $\|x+y\|\le\|x\|+\|y\|$.
+  lesson: '9.1'
+- id: parallelogram-law
+  term: חוק המקבילית
+  en: parallelogram law
+  symbol: '\|x+y\|^2+\|x-y\|^2=2\|x\|^2+2\|y\|^2'
+  definition: >-
+    בכל מרחב מכפלה פנימית $\|x+y\|^2+\|x-y\|^2=2\|x\|^2+2\|y\|^2$: סכום ריבועי האלכסונים שווה לסכום ריבועי הצלעות. נורמה
+    שאינה מקיימת אותו אינה באה ממכפלה פנימית.
+  lesson: '9.1'
+- id: polarization-identity
+  term: זהות הפולריזציה
+  en: polarization identity
+  symbol: '\langle x,y\rangle=\tfrac14\left(\|x+y\|^2-\|x-y\|^2\right)'
+  definition: >-
+    במרחב מכפלה פנימית ממשי $\langle x,y\rangle=\frac14\left(\|x+y\|^2-\|x-y\|^2\right)$: הנורמה קובעת את המכפלה הפנימית.
+  lesson: '9.1'
+- id: max-norm
+  term: נורמת המקסימום
+  en: maximum norm (sup norm)
+  symbol: '\|f\|_\infty=\max_{[a,b]}|f|'
+  definition: >-
+    הנורמה $\|f\|_\infty=\max_{[a,b]}|f|$ על $C[a,b]$. ההתכנסות בה היא התכנסות במידה שווה, והמרחב שלם בה, אבל היא אינה באה
+    ממכפלה פנימית: חוק המקבילית נכשל ב-$f\equiv1$, $g(x)=x$ על $[0,1]$.
+  lesson: '9.1'

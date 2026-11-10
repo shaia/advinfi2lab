@@ -1,0 +1,838 @@
+# Chapter 10 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (part א of the final): 7 points, a verdict plus an open justification.
+# Long questions (parts ב, ג of the final): 20 points in 2–4 parts, each with at least one open part graded against a
+# model solution and a rubric. Every number was recomputed (scratchpad ch10/nums.ts, nums2.ts).
+chapter: 10
+questions:
+  - id: Q-10-exam-1
+    type: exam
+    title: הטלה על קוסינוסים
+    prompt: >-
+      ב-$H[-\pi,\pi]$ עם $\langle f,g\rangle=\int_{-\pi}^{\pi}fg$ נתון תת-המרחב
+      $Y=\mathrm{span}\{1,\cos x,\cos2x,\dots,\cos5x\}$ והפונקציה $f(x)=x^3-2x$. האם ייתכן ש-$P_Yf\ne0$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-10.1-1]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא: $P_Yf=0$'
+            correct: true
+            feedback: 'נכון. $f$ אי-זוגית ולכן ניצבת לכל פונקציה זוגית, ובפרט לכל $Y$.'
+          - text: 'כן: $P_Yf$ הוא הסכום החלקי $S_5f$, ואינו אפס'
+            feedback: >-
+              $S_5f$ כולל גם סינוסים, ו-$Y$ לא. ההטלה על $Y$ לוקחת רק את המקדמים $a_0,\dots,a_5$, וכולם אפס כי $f$ אי-זוגית.
+            misconception: MC-c10-parity-swapped
+          - text: 'כן: רק $a_0=0$, ושאר המקדמים $a_k$ לא בהכרח'
+            feedback: >-
+              $f(x)\cos kx$ אי-זוגית לכל $k$, ולא רק ל-$k=0$, ולכן כל ה-$a_k$ מתאפסים.
+            misconception: MC-c10-parity-swapped
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-10.1-2, OBJ-10.1-1]
+        prompt: >-
+          נמקו את התשובה, וחשבו גם את $\|f-P_Yf\|$ במונחי $\|f\|$.
+        solution:
+          - kind: given
+            text: '$f(x)=x^3-2x$, ו-$Y$ נפרש על ידי $1,\cos x,\dots,\cos5x$.'
+          - kind: idea
+            text: >-
+              הפונקציות הפורשות את $Y$ ניצבות זו לזו, ולכן ההטלה היא סכום הרכיבים בכיווניהן. כל רכיב הוא מכפלה פנימית
+              של פונקציה אי-זוגית בזוגית.
+          - kind: theorem
+            text: >-
+              במערכת אורתוגונלית $u_0,\dots,u_5$ (שיעור 9.3):
+              $P_Yf=\sum_{k=0}^5\frac{\langle f,u_k\rangle}{\|u_k\|^2}u_k$. כאן $u_0=1$, $u_k=\cos kx$, ו-$\int\cos kx\cos mx=0$ ל-$k\ne m$.
+          - kind: computation
+            text: >-
+              $f(-x)=-x^3+2x=-f(x)$, ו-$\cos kx$ זוגית, ולכן $f(x)\cos kx$ אי-זוגית ו-$\langle f,u_k\rangle=\int_{-\pi}^{\pi}f(x)\cos kx\,dx=0$
+              לכל $k=0,\dots,5$.
+          - kind: step
+            text: 'כל המקדמים בנוסחת ההטלה אפס, ולכן $P_Yf=0$. בפרט $f\perp Y$.'
+          - kind: computation
+            text: '$\|f-P_Yf\|=\|f-0\|=\|f\|$: כל $f$ נמצאת "מחוץ" ל-$Y$, ואף איבר של $Y$ אינו קרוב אליה יותר מ-0.'
+          - kind: result
+            text: 'לא ייתכן: $P_Yf=0$ ו-$\|f-P_Yf\|=\|f\|$.'
+        rubric:
+          - text: 'נוסחת ההטלה במערכת אורתוגונלית (או אפיון ההטלה בתנאי הניצבות)'
+            weight: 2
+          - text: 'הוכחה ש-$\int f\cos kx=0$ לכל $k$ מאי-זוגיות האינטגרנד, כולל $k=0$'
+            weight: 2
+          - text: 'המסקנה $P_Yf=0$ והמרחק $\|f-P_Yf\|=\|f\|$'
+            weight: 1
+
+  - id: Q-10-exam-2
+    type: exam
+    title: טור שמקדמיו דועכים לאט
+    prompt: >-
+      האם קיימת $f\in H[-\pi,\pi]$ שמקדמי פורייה שלה הם $a_n=0$ לכל $n\ge0$ ו-$b_n=\frac1{\ln(n+1)}$ לכל $n\ge1$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-10.2-3]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא'
+            correct: true
+            feedback: 'נכון. סכום ריבועי המקדמים מתבדר, ובסל אוסר זאת.'
+          - text: 'כן, כי $b_n\to0$ כפי שרימן-לבג דורשת'
+            feedback: >-
+              רימן-לבג היא תנאי הכרחי חלש. בסל דורש יותר: $\sum b_n^2<\infty$.
+            misconception: MC-c10-coeffs-to-zero-enough
+          - text: 'כן, כי הטור $\sum\frac{\sin nx}{\ln(n+1)}$ מתכנס בכל נקודה'
+            feedback: >-
+              גם אם הטור מתכנס בכל נקודה, זה לא הופך אותו לטור פורייה של פונקציה ב-$H$.
+            misconception: MC-c10-convergent-series-is-fourier
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-10.2-3, OBJ-10.2-1]
+        prompt: >-
+          הוכיחו את התשובה.
+        solution:
+          - kind: goal
+            text: 'אין $f\in H$ עם $b_n=\frac1{\ln(n+1)}$.'
+          - kind: idea
+            text: >-
+              אילו הייתה, בסל היה נותן $\sum b_n^2<\infty$. מראים ש-$b_n^2\ge\frac1n$, ולכן הסכום מתבדר.
+          - kind: theorem
+            text: 'בסל: לכל $f\in H$, $\frac{a_0^2}2+\sum_{n\ge1}(a_n^2+b_n^2)\le\frac1\pi\int_{-\pi}^{\pi}f^2<\infty$.'
+          - kind: step
+            text: >-
+              טענה: $\ln(1+t)\le\sqrt t$ לכל $t\ge0$. נגדיר $h(t)=\sqrt t-\ln(1+t)$; אז $h(0)=0$ ו-
+              $h'(t)=\frac1{2\sqrt t}-\frac1{1+t}=\frac{(\sqrt t-1)^2}{2\sqrt t\,(1+t)}\ge0$ ל-$t>0$, ולכן $h\ge0$.
+          - kind: computation
+            text: 'לכן $b_n^2=\frac1{\ln^2(n+1)}\ge\frac1n$ לכל $n\ge1$, ו-$\sum b_n^2\ge\sum\frac1n=\infty$.'
+          - kind: step
+            text: 'זה סותר את בסל, ולכן אין $f\in H$ כזו.'
+          - kind: result
+            text: 'לא קיימת: בסל דורש $\sum b_n^2<\infty$, וכאן $\sum\frac1{\ln^2(n+1)}=\infty$.'
+        rubric:
+          - text: 'ניסוח נכון של בסל, עם $\frac1\pi\int f^2$ באגף הימני'
+            weight: 1
+          - text: 'השוואה מוכחת של $b_n^2$ לטור מתבדר (למשל $\ln(n+1)\le\sqrt n$, או טיעון שקול)'
+            weight: 3
+          - text: 'המסקנה שהסכום מתבדר והסתירה לבסל'
+            weight: 1
+
+  - id: Q-10-exam-3
+    type: exam
+    title: התכנסות בממוצע בלי התכנסות בנקודה
+    prompt: >-
+      האם ייתכן ש-$f\in H[-\pi,\pi]$ מקיימת $\|f-S_Nf\|\to0$, ובכל זאת יש נקודה $x_0$ שבה $S_Nf(x_0)\not\to f(x_0)$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-10.5-3]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'כן'
+            correct: true
+            feedback: 'נכון. הנורמה של $H$ לא רואה ערך בנקודה בודדת.'
+          - text: 'לא, כי התכנסות בממוצע ריבועי גוררת התכנסות נקודתית'
+            feedback: >-
+              הגרירה נכונה רק בכיוון ההפוך: מהתכנסות במידה שווה נובעת התכנסות בממוצע ריבועי.
+            misconception: MC-c9-L2-implies-uniform
+          - text: 'לא, כי $\|f-S_Nf\|\to0$ רק לפונקציות רציפות, ושם יש גם התכנסות נקודתית'
+            feedback: >-
+              ההתכנסות בממוצע ריבועי חלה על כל $f\in H$, גם עם קפיצות.
+            misconception: MC-c10-parseval-needs-continuity
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-10.5-3, OBJ-10.5-1, OBJ-10.3-2]
+        prompt: >-
+          תנו דוגמה והוכיחו שהיא מקיימת את שתי הדרישות.
+        solution:
+          - kind: idea
+            text: >-
+              בוחרים פונקציה עם קפיצה, ובנקודת הקפיצה נותנים לה ערך שאינו הממוצע של הגבולות החד-צדדיים. הטור "לא יודע"
+              מה הערך הזה.
+          - kind: given
+            text: '$f(x)=1$ ל-$0\le x<\pi$, $f(x)=-1$ ל-$-\pi\le x<0$; בפרט $f(0)=1$.'
+          - kind: computation
+            text: >-
+              $f$ אי-זוגית פרט לנקודה 0, וערך בנקודה אחת לא משנה אינטגרל: $a_n=0$, ו-
+              $b_n=\frac2\pi\int_0^\pi\sin nx\,dx=\frac{2(1-(-1)^n)}{\pi n}$, כלומר $\frac4{\pi n}$ ל-$n$ אי-זוגי ו-0 לזוגי.
+          - kind: step
+            text: 'לכן $S_Nf(0)=\sum b_n\sin0=0$ לכל $N$, ו-$S_Nf(0)\to0\ne1=f(0)$.'
+          - kind: theorem
+            text: 'משפט ההתכנסות בממוצע ריבועי (שיעור 10.5): לכל $f\in H$, $\|f-S_Nf\|\to0$. $f$ חסומה עם מספר סופי של קפיצות, ולכן $f\in H$.'
+          - kind: check
+            text: >-
+              אפשר גם ישירות: $\frac1\pi\|f-S_Nf\|^2=2-\sum_{n\le N}b_n^2\to0$, כי מפרסבל $\sum b_n^2=\frac1\pi\int f^2=2$.
+          - kind: result
+            text: 'כן. לגל הריבועי עם $f(0)=1$: $\|f-S_Nf\|\to0$ אבל $S_Nf(0)=0$ לכל $N$.'
+        rubric:
+          - text: 'דוגמה מפורשת שבה הערך בנקודה שונה מגבול הסכומים החלקיים שם'
+            weight: 1
+          - text: 'חישוב (או נימוק) ש-$S_Nf(x_0)$ שואף לערך אחר מ-$f(x_0)$'
+            weight: 2
+          - text: 'הצדקה של $\|f-S_Nf\|\to0$: המשפט לכל $f\in H$, או פרסבל'
+            weight: 2
+
+  - id: Q-10-exam-4
+    type: exam
+    title: קירוב טריגונומטרי של המשכה לא רציפה
+    prompt: >-
+      $f$ היא ההמשכה המחזורית ב-$2\pi$ של $x^2$ מהקטע $[0,2\pi)$ לכל $\mathbb R$. האם קיימת סדרת פולינומים טריגונומטריים
+      $T_k$ כך ש-$T_k\to f$ במידה שווה על $\mathbb R$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-10.6-1]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא'
+            correct: true
+            feedback: 'נכון. $f$ קופצת ב-0 (ובכל $2\pi k$), וגבול במידה שווה של פונקציות רציפות רציף.'
+          - text: 'כן, לפי הגרסה הטריגונומטרית של ויירשטראס, כי $x^2$ רציפה'
+            feedback: >-
+              הגרסה הטריגונומטרית דורשת פונקציה רציפה על המעגל. $x^2$ רציפה על $[0,2\pi)$, אבל ההמשכה המחזורית שלה קופצת.
+            misconception: MC-c10-trig-approx-nonperiodic
+          - text: 'כן, כי $x^2$ חלקה, ולכן טור פורייה שלה מתכנס במידה שווה'
+            feedback: >-
+              מה שקובע הוא ההמשכה המחזורית: $f(0)=0$ אבל $f(x)\to4\pi^2$ כש-$x\to0^-$.
+            misconception: MC-c10-smooth-on-interval-uniform
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-10.4-3, OBJ-10.6-1]
+        prompt: >-
+          הוכיחו את התשובה, והסבירו במשפט אחד למה אין סתירה למשפט הקירוב של ויירשטראס על הקטע $[0,2\pi]$.
+        solution:
+          - kind: goal
+            text: 'אין פולינומים טריגונומטריים $T_k$ עם $\sup_{\mathbb R}|T_k-f|\to0$.'
+          - kind: idea
+            text: 'פולינום טריגונומטרי רציף; גבול במידה שווה של פונקציות רציפות רציף; ו-$f$ אינה רציפה ב-0.'
+          - kind: step
+            text: 'נניח בשלילה ש-$T_k\to f$ במידה שווה. כל $T_k$ רציף, ולכן $f$ רציפה (אינפי 2: גבול במידה שווה של רציפות).'
+          - kind: computation
+            text: >-
+              אבל $f(0)=0^2=0$, ולכל $x\in(-2\pi,0)$, $f(x)=(x+2\pi)^2$, ולכן $\lim_{x\to0^-}f(x)=4\pi^2\ne0$. סתירה.
+          - kind: check
+            text: >-
+              אין סתירה לוויירשטראס: על הקטע הסגור $[0,2\pi]$ הפונקציה $x^2$ היא כבר פולינום. מה שנכשל כאן הוא הקירוב
+              בפונקציות **מחזוריות**, שחייבות לקבל ערכים שווים ב-0 וב-$2\pi$.
+          - kind: result
+            text: 'לא קיימת סדרה כזו: $f$ אינה רציפה ב-0, וגבול במידה שווה של פולינומים טריגונומטריים רציף.'
+        rubric:
+          - text: 'השימוש בכך שגבול במידה שווה של פונקציות רציפות הוא רציף'
+            weight: 2
+          - text: 'הוכחה מפורשת שההמשכה אינה רציפה ב-0 (שני הגבולות החד-צדדיים, $0$ ו-$4\pi^2$)'
+            weight: 2
+          - text: 'הסבר למה אין סתירה לוויירשטראס על $[0,2\pi]$ (מחזוריות מול קטע)'
+            weight: 1
+
+  - id: Q-10-exam-5
+    type: exam
+    title: חצי רמפה וסכום ההופכיים של הריבועים האי-זוגיים
+    prompt: >-
+      $f$ מחזורית ב-$2\pi$, ועל $(-\pi,\pi]$: $f(x)=0$ ל-$-\pi<x\le0$ ו-$f(x)=x$ ל-$0<x<\pi$ (ו-$f(\pi)$ כלשהו).
+    parts:
+      - label: א
+        points: 5
+        type: open
+        objectives: [OBJ-10.3-2]
+        prompt: >-
+          נסחו משפט על התכנסות נקודתית של טור פורייה, כולל ההנחות.
+        solution:
+          - kind: definition
+            text: >-
+              $f$ מחזורית ב-$2\pi$ היא **גזירה למקוטעין** אם $[-\pi,\pi]$ מתחלק למספר סופי של קטעים, ובפנים כל קטע $f$ גזירה,
+              ול-$f$ ול-$f'$ יש גבולות חד-צדדיים סופיים בקצוות הקטעים.
+          - kind: theorem
+            text: >-
+              אם $f$ מחזורית ב-$2\pi$ וגזירה למקוטעין, אז לכל $x\in\mathbb R$
+              $$S_Nf(x)\to\frac{f(x^+)+f(x^-)}2.$$
+              בפרט בכל נקודת רציפות $S_Nf(x)\to f(x)$.
+          - kind: check
+            text: 'רציפות לבדה אינה מספיקה; וערך הפונקציה בנקודת קפיצה אינו משפיע על הגבול.'
+          - kind: result
+            text: 'בנקודה $x$: הממוצע של הגבולות החד-צדדיים, לכל $f$ מחזורית וגזירה למקוטעין.'
+        rubric:
+          - text: 'ההנחות: מחזורית, גזירה למקוטעין (עם גבולות חד-צדדיים של $f$ ושל $f''$)'
+            weight: 2
+          - text: 'המסקנה: התכנסות לממוצע $\frac{f(x^+)+f(x^-)}2$ בכל נקודה'
+            weight: 2
+          - text: 'ההבחנה בין נקודת רציפות לנקודת קפיצה'
+            weight: 1
+
+      - label: ב
+        points: 6
+        type: open
+        objectives: [OBJ-10.1-1]
+        prompt: >-
+          חשבו את מקדמי פורייה $a_0$, $a_n$, $b_n$ של $f$.
+        solution:
+          - kind: idea
+            text: '$f=0$ על חצי הקטע, ולכן כל אינטגרל מצטמצם ל-$[0,\pi]$. אין זוגיות לנצל; עושים אינטגרציה בחלקים.'
+          - kind: computation
+            text: '$a_0=\frac1\pi\int_0^\pi x\,dx=\frac\pi2$.'
+          - kind: computation
+            text: >-
+              $a_n=\frac1\pi\int_0^\pi x\cos nx\,dx=\frac1\pi\left[\frac{x\sin nx}n+\frac{\cos nx}{n^2}\right]_0^\pi=\frac{(-1)^n-1}{\pi n^2}$,
+              כלומר $-\frac2{\pi n^2}$ ל-$n$ אי-זוגי ו-0 ל-$n$ זוגי.
+          - kind: computation
+            text: >-
+              $b_n=\frac1\pi\int_0^\pi x\sin nx\,dx=\frac1\pi\left[-\frac{x\cos nx}n+\frac{\sin nx}{n^2}\right]_0^\pi=\frac{(-1)^{n+1}}{n}$.
+          - kind: check
+            text: '$a_1=-\frac2\pi\approx-0.637$ ו-$b_2=-\frac12$, כפי שמתקבל גם בחישוב נומרי.'
+          - kind: result
+            text: '$a_0=\frac\pi2$, $a_n=\frac{(-1)^n-1}{\pi n^2}$, $b_n=\frac{(-1)^{n+1}}n$.'
+        rubric:
+          - text: '$a_0=\frac\pi2$, ובטור האיבר הקבוע $\frac\pi4$'
+            weight: 1
+          - text: '$a_n$ נכון, כולל ההתאפסות ל-$n$ זוגי'
+            weight: 2
+          - text: '$b_n$ נכון, כולל הסימן $(-1)^{n+1}$'
+            weight: 2
+          - text: 'אינטגרציה בחלקים מוצגת עם $\cos n\pi=(-1)^n$'
+            weight: 1
+
+      - label: ג
+        points: 4
+        type: numeric
+        objectives: [OBJ-10.3-2]
+        standalone: false
+        prompt: >-
+          לאיזה מספר מתכנס טור פורייה של $f$ בנקודה $x=\pi$?
+        answer: 1.5707963
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $f(\pi^-)=\pi$ ומימין ל-$\pi$ (כמו ב-$-\pi^+$) $f=0$, והממוצע $\frac\pi2$. בדיקה מהמקדמים:
+          $\frac\pi4+\sum a_n(-1)^n=\frac\pi4+\frac2\pi\sum\frac1{n^2}$ על האי-זוגיים $=\frac\pi4+\frac\pi4$.
+        wrongFeedback: >-
+          $f$ גזירה למקוטעין, ו-$\pi$ היא נקודת קפיצה של ההמשכה המחזורית. מהם שני הגבולות החד-צדדיים?
+        commonWrong:
+          - value: 3.1415927
+            feedback: >-
+              זה $f(\pi^-)=\pi$. מימין ל-$\pi$ ההמשכה חוזרת ל-0, והטור מתכנס לממוצע.
+            misconception: MC-c10-endpoint-not-periodic
+          - value: 0
+            feedback: >-
+              זה הגבול מימין בלבד. בנקודת קפיצה הטור מתכנס לממוצע של שני הצדדים.
+            misconception: MC-c10-value-at-jump
+
+      - label: ד
+        points: 5
+        type: open
+        objectives: [OBJ-10.3-2]
+        standalone: false
+        prompt: >-
+          הסיקו מהטור ש-$\sum_{k=0}^\infty\frac1{(2k+1)^2}=\frac{\pi^2}8$.
+        solution:
+          - kind: idea
+            text: 'מציבים נקודה שבה $f$ רציפה וה-$b_n\sin nx$ מתאפסים: $x=0$.'
+          - kind: step
+            text: '$f(0^+)=f(0^-)=0$, ולכן לפי המשפט מסעיף א הטור מתכנס ב-0 ל-$f(0)=0$.'
+          - kind: computation
+            text: >-
+              ב-$x=0$: $\sin0=0$ ו-$\cos0=1$, ולכן
+              $0=\frac{a_0}2+\sum_{n\ge1}a_n=\frac\pi4-\frac2\pi\sum_{k\ge0}\frac1{(2k+1)^2}$.
+          - kind: computation
+            text: '$\sum_{k\ge0}\frac1{(2k+1)^2}=\frac\pi4\cdot\frac\pi2=\frac{\pi^2}8$.'
+          - kind: check
+            text: 'אותו ערך יוצא מ-$x=\pi$ (סעיף ג) ומפרסבל לגל הריבועי. נומרית $\frac{\pi^2}8\approx1.2337$.'
+          - kind: result
+            text: '$\sum_{k=0}^\infty\frac1{(2k+1)^2}=\frac{\pi^2}8$.'
+        rubric:
+          - text: 'בחירת נקודה מתאימה והצדקה שהטור מתכנס שם לערך הנכון (רציפות ב-0, או ממוצע ב-$\pi$)'
+            weight: 2
+          - text: 'הצבה נכונה עם $\frac{a_0}2=\frac\pi4$ ורק המקדמים האי-זוגיים'
+            weight: 2
+          - text: 'חילוץ הסכום $\frac{\pi^2}8$'
+            weight: 1
+
+  - id: Q-10-exam-6
+    type: exam
+    title: פולינום ממעלה שלוש ושני טורים מספריים
+    prompt: >-
+      $f(x)=x(\pi^2-x^2)$ על $[-\pi,\pi]$, מומשכת למחזורית ב-$2\pi$.
+    parts:
+      - label: א
+        points: 6
+        type: open
+        objectives: [OBJ-10.1-1, OBJ-10.4-2]
+        prompt: >-
+          הראו ש-$a_n=0$ לכל $n$ וש-$b_n=\frac{12(-1)^{n+1}}{n^3}$.
+        solution:
+          - kind: idea
+            text: >-
+              $f$ אי-זוגית, ולכן נשארים רק סינוסים. את $b_n$ מחשבים באינטגרציה בחלקים פעמיים; איברי השפה מתאפסים כי
+              $f(0)=f(\pi)=0$ ו-$\sin n\pi=0$.
+          - kind: step
+            text: '$f(-x)=-f(x)$, ולכן $f\cos nx$ אי-זוגית ו-$a_n=0$; ו-$b_n=\frac2\pi\int_0^\pi f(x)\sin nx\,dx$.'
+          - kind: computation
+            text: >-
+              $\int_0^\pi f\sin nx=\left[-\frac{f\cos nx}n\right]_0^\pi+\frac1n\int_0^\pi f'\cos nx=\frac1n\int_0^\pi f'\cos nx$,
+              כי $f(0)=f(\pi)=0$.
+          - kind: computation
+            text: >-
+              $\frac1n\int_0^\pi f'\cos nx=\frac1n\left[\frac{f'\sin nx}n\right]_0^\pi-\frac1{n^2}\int_0^\pi f''\sin nx=\frac6{n^2}\int_0^\pi x\sin nx\,dx$,
+              כי $f''(x)=-6x$.
+          - kind: computation
+            text: '$\int_0^\pi x\sin nx\,dx=\frac{\pi(-1)^{n+1}}n$, ולכן $b_n=\frac2\pi\cdot\frac6{n^2}\cdot\frac{\pi(-1)^{n+1}}n=\frac{12(-1)^{n+1}}{n^3}$.'
+          - kind: check
+            text: '$b_1=12$, $b_2=-1.5$, $b_3=\frac49$, כמו בחישוב נומרי של האינטגרלים.'
+          - kind: result
+            text: '$a_n=0$ ו-$b_n=\frac{12(-1)^{n+1}}{n^3}$.'
+        rubric:
+          - text: 'אי-זוגיות נותנת $a_n=0$ ואת $b_n$ כאינטגרל על $[0,\pi]$ עם הגורם 2'
+            weight: 1
+          - text: 'שתי אינטגרציות בחלקים עם הצדקה של התאפסות איברי השפה'
+            weight: 3
+          - text: 'החישוב הסופי, כולל הסימן $(-1)^{n+1}$'
+            weight: 2
+
+      - label: ב
+        points: 4
+        type: twotier
+        objectives: [OBJ-10.4-1, OBJ-10.4-2]
+        qualitative: true
+        standalone: false
+        prompt: >-
+          האם טור פורייה של $f$ מתכנס אליה במידה שווה על $\mathbb R$?
+        choices:
+          - text: 'כן'
+            correct: true
+            feedback: 'נכון. $\sum|b_n|=12\sum\frac1{n^3}<\infty$, וגם ההמשכה רציפה ($f(\pm\pi)=0$) וגזירה למקוטעין.'
+          - text: 'לא, כי ההמשכה של פולינום לא מחזורי קופצת בקצוות'
+            feedback: >-
+              כאן אין קפיצה: $f(-\pi)=f(\pi)=0$. צריך לבדוק את ערכי הקצוות, לא להניח.
+            misconception: MC-c10-smooth-on-interval-uniform
+        reasons:
+          - text: 'מבחן M עם $\sum|b_n|=12\sum\frac1{n^3}<\infty$, והגבול הוא $f$ לפי ההתכנסות הנקודתית'
+            correct: true
+            feedback: >-
+              בדיוק. הגבול במידה שווה רציף, ובכל נקודה הוא $f(x)$ כי $f$ רציפה וגזירה למקוטעין.
+          - text: 'כי $f$ פולינום, חלק על $[-\pi,\pi]$'
+            feedback: >-
+              חלקות על הקטע אינה התנאי: $x^3$ חלקה גם היא, וההמשכה שלה קופצת. מה שמציל כאן הוא $f(-\pi)=f(\pi)$.
+            misconception: MC-c10-smooth-on-interval-uniform
+          - text: 'כי $\sum b_n^2<\infty$'
+            feedback: >-
+              זה נכון לכל $f\in H$, גם לגל ריבועי. במידה שווה דורש $\sum|b_n|<\infty$ או רציפות על המעגל.
+            misconception: MC-c10-squares-vs-abs
+
+      - label: ג
+        points: 6
+        type: open
+        objectives: [OBJ-10.5-2]
+        standalone: false
+        prompt: >-
+          נסחו את שוויון פרסבל והסיקו ש-$\sum_{n=1}^\infty\frac1{n^6}=\frac{\pi^6}{945}$.
+        solution:
+          - kind: theorem
+            text: 'פרסבל: לכל $f\in H[-\pi,\pi]$, $\frac1\pi\int_{-\pi}^{\pi}f^2=\frac{a_0^2}2+\sum_{n\ge1}(a_n^2+b_n^2)$.'
+          - kind: computation
+            text: >-
+              $\frac1\pi\int_{-\pi}^{\pi}x^2(\pi^2-x^2)^2dx=\frac2\pi\int_0^\pi(\pi^4x^2-2\pi^2x^4+x^6)dx=2\pi^6\left(\frac13-\frac25+\frac17\right)=\frac{16\pi^6}{105}$.
+          - kind: computation
+            text: '$\sum b_n^2=144\sum\frac1{n^6}$.'
+          - kind: step
+            text: '$144\sum\frac1{n^6}=\frac{16\pi^6}{105}$, ולכן $\sum\frac1{n^6}=\frac{16\pi^6}{105\cdot144}=\frac{\pi^6}{945}$.'
+          - kind: check
+            text: 'נומרית $\frac{\pi^6}{945}\approx1.01734$, ו-$1+\frac1{64}+\frac1{729}\approx1.0170$: סביר.'
+          - kind: result
+            text: '$\sum_{n\ge1}\frac1{n^6}=\frac{\pi^6}{945}$.'
+        rubric:
+          - text: 'ניסוח נכון של פרסבל, עם $\frac1\pi$ ו-$\frac{a_0^2}2$'
+            weight: 2
+          - text: 'חישוב $\frac1\pi\int f^2=\frac{16\pi^6}{105}$'
+            weight: 2
+          - text: '$b_n^2=\frac{144}{n^6}$ והמסקנה $\frac{\pi^6}{945}$'
+            weight: 2
+
+      - label: ד
+        points: 4
+        type: numeric
+        objectives: [OBJ-10.3-2]
+        standalone: false
+        prompt: >-
+          הציבו $x=\frac\pi2$ בטור וחשבו את
+          $$\sum_{k=0}^\infty\frac{(-1)^k}{(2k+1)^3}=1-\frac1{27}+\frac1{125}-\cdots$$
+        answer: 0.9689461
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $f(\frac\pi2)=\frac\pi2\cdot\frac{3\pi^2}4=\frac{3\pi^3}8$. ב-$x=\frac\pi2$ רק $n=2k+1$ תורמים, עם
+          $\sin\frac{(2k+1)\pi}2=(-1)^k$ ו-$(-1)^{n+1}=1$: $\frac{3\pi^3}8=12\sum\frac{(-1)^k}{(2k+1)^3}$, והסכום $\frac{\pi^3}{32}\approx0.9689$.
+        wrongFeedback: >-
+          הטור מתכנס ל-$f(\frac\pi2)$ (סעיף ב). זהו את האיברים שאינם מתאפסים ואת סימניהם, ואל תשכחו את הגורם 12:
+          אם יצא לכם $\frac{3\pi^3}8\approx11.63$, עוד לא חילקתם בו.
+        commonWrong:
+          - value: 11.6273538
+            feedback: >-
+              זה $\frac{3\pi^3}8=f(\frac\pi2)$, ערך הטור כולו. הסכום המבוקש הוא בלי הגורם 12 של המקדמים:
+              $\frac{3\pi^3}{8\cdot12}=\frac{\pi^3}{32}$. (סכום שהאיבר הראשון שלו 1 והשאר קטנים לא יכול להיות 11.6.)
+            misconception: MC-c10-series-value-is-sum
+
+  - id: Q-10-exam-7
+    type: exam
+    title: ויירשטראס, ברנשטיין וצפיפות ב-H
+    prompt: >-
+      פולינום ברנשטיין של $f:[0,1]\to\mathbb R$ הוא $B_nf(x)=\sum_{k=0}^nf\!\left(\frac kn\right)\binom nk x^k(1-x)^{n-k}$.
+    parts:
+      - label: א
+        points: 4
+        type: open
+        objectives: [OBJ-10.6-1]
+        prompt: >-
+          נסחו את משפט הקירוב של ויירשטראס ואת הגרסה הטריגונומטרית שלו.
+        solution:
+          - kind: theorem
+            text: >-
+              **ויירשטראס:** לכל $f$ רציפה על קטע סגור וחסום $[a,b]$ ולכל $\varepsilon>0$ יש פולינום $p$ עם
+              $\max_{[a,b]}|f-p|<\varepsilon$.
+          - kind: theorem
+            text: >-
+              **הגרסה הטריגונומטרית:** לכל $f$ רציפה על $\mathbb R$ ומחזורית ב-$2\pi$ ולכל $\varepsilon>0$ יש פולינום
+              טריגונומטרי $T$ עם $\max_{\mathbb R}|f-T|<\varepsilon$.
+          - kind: check
+            text: 'ההנחות חיוניות: $\frac1x$ על $(0,1]$ אינה מקורבת; $x$ על $[-\pi,\pi]$ אינה מקורבת טריגונומטרית ($f(-\pi)\ne f(\pi)$).'
+          - kind: result
+            text: 'הפולינומים צפופים ב-$C[a,b]$, והפולינומים הטריגונומטריים צפופים בפונקציות הרציפות על המעגל, בנורמת המקסימום.'
+        rubric:
+          - text: 'ויירשטראס עם ההנחות: רציפה, קטע סגור וחסום, קירוב במידה שווה'
+            weight: 2
+          - text: 'הגרסה הטריגונומטרית עם הנחת המחזוריות והרציפות'
+            weight: 2
+
+      - label: ב
+        points: 6
+        type: open
+        objectives: [OBJ-10.6-2]
+        prompt: >-
+          הוכיחו ש-$B_n(1)=1$, $B_n(x)=x$ ו-$B_n(x^2)=x^2+\frac{x(1-x)}n$.
+        solution:
+          - kind: idea
+            text: >-
+              משתמשים בבינום של ניוטון לאחר שמוציאים מהסכום $k$ או $k(k-1)$: $k\binom nk=n\binom{n-1}{k-1}$ ו-
+              $k(k-1)\binom nk=n(n-1)\binom{n-2}{k-2}$.
+          - kind: computation
+            text: '$B_n(1)=\sum_k\binom nk x^k(1-x)^{n-k}=(x+1-x)^n=1$.'
+          - kind: computation
+            text: >-
+              $\sum_k k\binom nk x^k(1-x)^{n-k}=nx\sum_k\binom{n-1}{k-1}x^{k-1}(1-x)^{n-k}=nx$, ולכן
+              $B_n(x)=\frac1n\cdot nx=x$.
+          - kind: computation
+            text: >-
+              $\sum_k k(k-1)\binom nk x^k(1-x)^{n-k}=n(n-1)x^2$. כי $k^2=k(k-1)+k$:
+              $B_n(x^2)=\frac{n(n-1)x^2+nx}{n^2}=x^2-\frac{x^2}n+\frac xn=x^2+\frac{x(1-x)}n$.
+          - kind: check
+            text: 'ב-$n=4$, $x=\frac12$: $\frac14+\frac1{16}=\frac5{16}$, כמו בחישוב ישיר של הסכום.'
+          - kind: result
+            text: '$B_n1=1$, $B_nx=x$, $B_n(x^2)=x^2+\frac{x(1-x)}n$.'
+        rubric:
+          - text: '$B_n1=1$ מהבינום'
+            weight: 1
+          - text: '$B_nx=x$ דרך $k\binom nk=n\binom{n-1}{k-1}$'
+            weight: 2
+          - text: '$B_n(x^2)$ דרך $k^2=k(k-1)+k$ ופישוט נכון'
+            weight: 3
+
+      - label: ג
+        points: 4
+        type: numeric
+        objectives: [OBJ-10.6-2]
+        standalone: false
+        prompt: >-
+          מהו ה-$n$ הקטן ביותר שעבורו $\max_{[0,1]}\big|B_n(x^2)-x^2\big|\le0.002$?
+        answer: 125
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\max_{[0,1]}\frac{x(1-x)}n=\frac1{4n}$, ו-$\frac1{4n}\le0.002\iff n\ge125$.
+        wrongFeedback: >-
+          מצאו את המקסימום של $x(1-x)$ על $[0,1]$ ופתרו את אי-השוויון.
+        commonWrong:
+          - value: 500
+            feedback: >-
+              חסמתם $x(1-x)\le1$. המקסימום הוא $\frac14$, ב-$x=\frac12$.
+            misconception: MC-c10-sup-not-maximized
+
+      - label: ד
+        points: 6
+        type: open
+        objectives: [OBJ-10.6-3]
+        prompt: >-
+          $f\in H[0,1]$ מקיימת $\int_0^1f(x)x^k\,dx=0$ לכל $k=0,1,2,\dots$. הוכיחו ש-$\|f\|=0$. מותר להשתמש בכך שהפונקציות
+          הרציפות צפופות ב-$H[0,1]$.
+        solution:
+          - kind: idea
+            text: '$f$ ניצבת לכל הפולינומים; אם הם צפופים ב-$H$, היא ניצבת גם לעצמה.'
+          - kind: step
+            text: >-
+              צפיפות הפולינומים ב-$H$: יהי $\varepsilon>0$. יש $g$ רציפה עם $\|f-g\|<\frac\varepsilon2$, ולפי ויירשטראס פולינום $p$
+              עם $\max_{[0,1]}|g-p|<\frac\varepsilon2$. אז $\|g-p\|\le\sqrt{1-0}\,\max|g-p|<\frac\varepsilon2$, ו-$\|f-p\|<\varepsilon$.
+          - kind: step
+            text: 'מהנתון ומהלינאריות $\langle f,p\rangle=0$ לכל פולינום $p$.'
+          - kind: computation
+            text: >-
+              $\|f\|^2=\langle f,f\rangle=\langle f,f-p\rangle+\langle f,p\rangle=\langle f,f-p\rangle\le\|f\|\,\|f-p\|\le\|f\|\,\varepsilon$
+              (קושי-שוורץ).
+          - kind: step
+            text: 'אם $\|f\|>0$, מחלקים ב-$\|f\|$ ומקבלים $\|f\|\le\|f-p\|<\varepsilon$ לכל $\varepsilon>0$; לכן $\|f\|=0$ בכל מקרה.'
+          - kind: result
+            text: '$\|f\|=0$: ב-$H[0,1]$ הפונקציה היחידה שניצבת לכל הפולינומים היא האפס.'
+        rubric:
+          - text: 'צפיפות הפולינומים ב-$H$ מוויירשטראס ומצפיפות הרציפות, עם $\|\cdot\|\le\sqrt{b-a}\,\max|\cdot|$'
+            weight: 2
+          - text: '$\langle f,p\rangle=0$ לכל פולינום, מהנתון ומלינאריות'
+            weight: 1
+          - text: 'הפירוק $\|f\|^2=\langle f,f-p\rangle$ וקושי-שוורץ'
+            weight: 2
+          - text: 'המסקנה $\|f\|=0$, כולל המקרה $\|f\|=0$ מלכתחילה'
+            weight: 1
+
+  # Q-10-exam-8 and -9 came from advinfilab's former Fourier chapter (exam questions 2 and 3, 25 points each; handover
+  # 2026-11-06), cut to 20 points: exam-8 keeps all three parts (9+10+6 → 8+8+4); exam-9 drops part ג (Σ1/n⁶ from
+  # x(π²−x²), already Q-10-exam-6 ג) and keeps א, ב, ד (5+12+4 → 4+12+4).
+  - id: Q-10-exam-8
+    type: exam
+    title: גרעין פייר ויחידות
+    prompt: >-
+      $D_k(t)=1+2\sum_{j=1}^{k}\cos jt=\frac{\sin((k+\frac12)t)}{\sin(t/2)}$ הוא גרעין דיריכלה,
+      $F_N(t)=\frac{1}{N+1}\sum_{k=0}^{N}D_k(t)$ הוא גרעין פייר, ו-$\sigma_Nf=\frac{1}{N+1}\sum_{n=0}^{N}S_nf$ ממוצע צזרו של
+      טור פורייה של $f$.
+    parts:
+      - label: א
+        points: 8
+        type: open
+        objectives: [OBJ-10.6-4]
+        prompt: >-
+          הוכיחו ש-$F_N(t)=\frac{1}{N+1}\cdot\frac{\sin^2\frac{(N+1)t}{2}}{\sin^2(t/2)}$ ל-$t\notin2\pi\mathbb{Z}$, והסיקו
+          ש-$F_N\ge0$ ו-$\frac{1}{2\pi}\int_{-\pi}^{\pi}F_N=1$.
+        solution:
+          - kind: given
+            text: '$D_k(t)=\frac{\sin((k+\frac12)t)}{\sin(t/2)}$ ו-$D_k(t)=1+2\sum_{j=1}^{k}\cos jt$.'
+          - kind: goal
+            text: 'הצורה הסגורה של $F_N$, $F_N\ge0$, ו-$\frac1{2\pi}\int F_N=1$.'
+          - kind: idea
+            text: >-
+              הכפל ב-$\sin(t/2)$ הופך כל $D_k$ לסינוס אחד; כפל נוסף ב-$2\sin(t/2)$ הופך אותו להפרש של שני קוסינוסים, והסכום
+              על $k$ טלסקופי.
+          - kind: computation
+            text: >-
+              $2\sin^2(t/2)D_k(t)=2\sin(t/2)\sin((k+\tfrac12)t)=\cos(kt)-\cos((k+1)t)$, לפי $2\sin A\sin B=\cos(A-B)-\cos(A+B)$.
+          - kind: computation
+            text: >-
+              סכום על $k=0,\dots,N$: $2\sin^2(t/2)\sum_{k=0}^{N}D_k(t)=1-\cos((N+1)t)=2\sin^2\frac{(N+1)t}{2}$.
+          - kind: step
+            text: >-
+              מחלקים ב-$2(N+1)\sin^2(t/2)\ne0$: $F_N(t)=\frac{1}{N+1}\cdot\frac{\sin^2\frac{(N+1)t}{2}}{\sin^2(t/2)}$. זה ריבוע חלקי
+              מספר חיובי, ולכן $F_N(t)\ge0$; ב-$t\in2\pi\mathbb{Z}$, $F_N=N+1>0$ מהסכום.
+          - kind: step
+            text: >-
+              לכל $k$: $\frac{1}{2\pi}\int_{-\pi}^{\pi}D_k=\frac{1}{2\pi}\int_{-\pi}^{\pi}\left(1+2\sum_{j=1}^{k}\cos jt\right)dt=1$, כי
+              האינטגרל של $\cos jt$ על מחזור מתאפס.
+          - kind: check
+            text: 'ב-$N=2$, $t=\pi$: הנוסחה נותנת $\frac13$, וגם $\frac{D_0+D_1+D_2}3=\frac{1-1+1}3=\frac13$.'
+          - kind: result
+            text: '$F_N=\frac{1}{N+1}\frac{\sin^2((N+1)t/2)}{\sin^2(t/2)}\ge0$, ו-$\frac1{2\pi}\int F_N=\frac{1}{N+1}\sum_{k=0}^{N}1=1$.'
+        rubric:
+          - text: 'הזהות $2\sin^2(t/2)D_k=\cos kt-\cos(k+1)t$ (או חישוב שקול, למשל סכום הנדסי)'
+            weight: 3
+          - text: 'הסכום הטלסקופי והגעה לצורה הסגורה'
+            weight: 2
+          - text: 'מסקנת החיוביות, כולל הנקודות שבהן $\sin(t/2)=0$'
+            weight: 1
+          - text: 'חישוב $\frac{1}{2\pi}\int D_k=1$ והסקת $\frac1{2\pi}\int F_N=1$ מהלינאריות'
+            weight: 2
+
+      - label: ב
+        points: 8
+        type: open
+        objectives: [OBJ-10.6-5]
+        prompt: >-
+          מותר להשתמש במשפט פייר: לכל $f$ רציפה ומחזורית ב-$2\pi$, $\sigma_Nf\to f$ במידה שווה. הוכיחו: אם $f,g$ רציפות
+          ומחזוריות ב-$2\pi$ ולשתיהן אותם מקדמי פורייה, אז $f=g$ בכל נקודה. הסבירו גם למה $\sigma_Nh$ תלוי רק במקדמים של $h$.
+        solution:
+          - kind: given
+            text: '$f,g$ רציפות ומחזוריות ב-$2\pi$, עם $a_n(f)=a_n(g)$ ו-$b_n(f)=b_n(g)$ לכל $n$.'
+          - kind: goal
+            text: '$f(x)=g(x)$ לכל $x\in\mathbb{R}$.'
+          - kind: idea
+            text: >-
+              עוברים להפרש $h=f-g$, שכל מקדמיו אפס. הממוצעים $\sigma_Nh$ בנויים מהמקדמים בלבד, ולכן הם אפס; משפט פייר אומר
+              שהם שואפים ל-$h$.
+          - kind: step
+            text: '$h=f-g$ רציפה ומחזורית, והמקדמים לינאריים ב-$f$, ולכן $a_n(h)=a_n(f)-a_n(g)=0$ ו-$b_n(h)=0$ לכל $n$.'
+          - kind: step
+            text: >-
+              $S_nh=\frac{a_0(h)}{2}+\sum_{k\le n}(a_k(h)\cos kx+b_k(h)\sin kx)$ הוא צירוף של המקדמים בלבד, ולכן $S_nh\equiv0$
+              לכל $n$, ו-$\sigma_Nh=\frac{1}{N+1}\sum_{n\le N}S_nh\equiv0$.
+          - kind: theorem
+            text: 'משפט פייר על $h$ הרציפה: $\max|\sigma_Nh-h|\to0$.'
+          - kind: step
+            text: '$\max|h|=\max|0-h|=\max|\sigma_Nh-h|\to0$, אבל צד שמאל לא תלוי ב-$N$, ולכן $\max|h|=0$.'
+          - kind: result
+            text: '$h\equiv0$, כלומר $f=g$ בכל נקודה: פונקציה רציפה ומחזורית נקבעת על ידי מקדמי פורייה שלה.'
+        rubric:
+          - text: 'מעבר להפרש $h=f-g$ ושימוש בלינאריות של המקדמים'
+            weight: 2
+          - text: 'הסבר ש-$S_nh$ ו-$\sigma_Nh$ נבנים מהמקדמים בלבד, ולכן מתאפסים'
+            weight: 2
+          - text: 'הפעלת משפט פייר על $h$, עם ציון שנדרשת הרציפות של $h$'
+            weight: 2
+          - text: 'מסקנה מסודרת: מספר שאינו תלוי ב-$N$ ושואף ל-0 הוא 0'
+            weight: 2
+
+      - label: ג
+        points: 4
+        type: twotier
+        objectives: [OBJ-10.6-5]
+        qualitative: true
+        standalone: false
+        prompt: >-
+          האם הטענה של סעיף ב נשארת נכונה ל-$f,g$ **רציפות למקוטעין**?
+        choices:
+          - text: לא
+            correct: true
+            feedback: >-
+              נכון. $f=0$, ו-$g$ ששווה 1 ב-$x\in2\pi\mathbb Z$ ו-0 בשאר הנקודות, הן בעלות אותם מקדמים (כולם 0), ו-$f\ne g$.
+          - text: כן
+            feedback: >-
+              שינוי בנקודה אחת לא משנה אף אינטגרל, ולכן לא משנה אף מקדם. $g$ ששווה 1 רק ב-$2\pi\mathbb Z$ נותנת אותם מקדמים
+              כמו $f=0$.
+            misconception: MC-c10-h-sees-points
+        reasons:
+          - text: 'ל-$g$ ששווה 1 רק ב-$x\in2\pi\mathbb{Z}$ ו-0 בשאר הנקודות כל המקדמים 0, כמו ל-$f=0$; ובהוכחה, משפט פייר דורש רציפות'
+            correct: true
+            feedback: >-
+              בדיוק. לפונקציות רציפות למקוטעין נשאר רק "שוויון פרט למספר סופי של נקודות בכל מחזור", כלומר שוויון כאיברים של $H$.
+          - text: 'ההוכחה של סעיף ב לא השתמשה ברציפות, ולכן היא עובדת גם כאן'
+            feedback: >-
+              היא השתמשה בה: משפט פייר (התכנסות במידה שווה של $\sigma_Nh$ ל-$h$) נכון רק ל-$h$ רציפה.
+            misconception: MC-c10-uniform-limit-can-jump
+          - text: 'אותם מקדמים פירושם אותם אינטגרלים, ואינטגרלים שווים מתקבלים רק מפונקציות שוות בכל נקודה'
+            feedback: >-
+              שתי פונקציות שנבדלות בנקודה אחת נותנות אותם אינטגרלים. אינטגרלים לא רואים נקודות בודדות.
+            misconception: MC-c10-h-sees-points
+
+  - id: Q-10-exam-9
+    type: exam
+    title: שוויון פרסבל ואי-שוויון וירטינגר
+    prompt: >-
+      בשאלה זו $f$ מחזורית ב-$2\pi$ וגזירה ברציפות על $\mathbb{R}$, עם מקדמי פורייה $a_n,b_n$.
+    parts:
+      - label: א
+        points: 4
+        type: mc
+        objectives: [OBJ-10.4-2]
+        prompt: >-
+          מהם מקדמי פורייה של $f'$?
+        choices:
+          - text: '$a_0(f^{\prime})=0$, ולכל $n\ge1$: $a_n(f^{\prime})=n\,b_n$, $b_n(f^{\prime})=-n\,a_n$'
+            correct: true
+            feedback: >-
+              נכון. $a_0(f')=\frac{f(\pi)-f(-\pi)}{\pi}=0$ מהמחזוריות, והשאר באינטגרציה בחלקים, שבה איברי השפה מתבטלים.
+          - text: '$a_0(f^{\prime})=0$, ולכל $n\ge1$: $a_n(f^{\prime})=\frac{b_n}{n}$, $b_n(f^{\prime})=-\frac{a_n}{n}$'
+            feedback: >-
+              זה מה שקורה באינטגרציה. גזירה מכפילה ב-$n$: $(\sin nx)'=n\cos nx$.
+            misconception: MC-c10-derivative-coeffs-pairing
+          - text: '$a_0(f^{\prime})=0$, ולכל $n\ge1$: $a_n(f^{\prime})=-n\,b_n$, $b_n(f^{\prime})=n\,a_n$'
+            feedback: >-
+              הסימנים הפוכים: ל-$f=\sin x$, $f'=\cos x$, כלומר $a_1(f')=1=1\cdot b_1$.
+            misconception: MC-c10-derivative-coeffs-pairing
+          - text: 'אותן נוסחאות, אבל בתוספת איבר שפה $\frac{(-1)^n(f(\pi)-f(-\pi))}{\pi}$ שאינו מתאפס'
+            feedback: >-
+              איבר השפה הזה קיים לפונקציה שההמשכה שלה קופצת (כמו $x$). כאן $f$ מחזורית ורציפה, ולכן $f(\pi)=f(-\pi)$
+              והאיבר מתאפס.
+            misconception: MC-c10-derivative-coeffs-pairing
+
+      - label: ב
+        points: 12
+        type: open
+        objectives: [OBJ-10.5-4, OBJ-10.5-2]
+        standalone: false
+        prompt: >-
+          נניח בנוסף $\int_{-\pi}^{\pi}f=0$. הוכיחו את אי-שוויון וירטינגר $\int_{-\pi}^{\pi}f^2\le\int_{-\pi}^{\pi}(f')^2$,
+          והוכיחו ששוויון מתקיים אם ורק אם $f(x)=a\cos x+b\sin x$.
+        solution:
+          - kind: given
+            text: '$f$ מחזורית, גזירה ברציפות, $\int_{-\pi}^{\pi}f=0$, כלומר $a_0=0$.'
+          - kind: goal
+            text: '$\int f^2\le\int(f^{\prime})^2$, ושוויון בדיוק כש-$f=a\cos x+b\sin x$.'
+          - kind: idea
+            text: >-
+              לכתוב את שני האינטגרלים בעזרת פרסבל. הנגזרת מכפילה את המקדם ה-$n$ ב-$n$, ולכן צד ימין שוקל כל הרמוניה
+              ב-$n^2\ge1$.
+          - kind: theorem
+            text: >-
+              שוויון פרסבל, לכל $g\in H[-\pi,\pi]$: $\frac1\pi\int g^2=\frac{a_0(g)^2}{2}+\sum_{n\ge1}(a_n(g)^2+b_n(g)^2)$.
+          - kind: computation
+            text: >-
+              ל-$f$ (עם $a_0=0$): $\frac1\pi\int f^2=\sum_{n\ge1}(a_n^2+b_n^2)$. ל-$f'$, רציפה ומחזורית, לפי סעיף א:
+              $\frac1\pi\int(f')^2=\sum_{n\ge1}n^2(a_n^2+b_n^2)$.
+          - kind: step
+            text: >-
+              ההפרש: $\frac1\pi\left(\int(f')^2-\int f^2\right)=\sum_{n\ge1}(n^2-1)(a_n^2+b_n^2)\ge0$, כי כל מחובר אי-שלילי. זה
+              וירטינגר.
+          - kind: step
+            text: >-
+              שוויון אם ורק אם כל המחוברים אפס. ל-$n\ge2$, $n^2-1>0$, ולכן $a_n=b_n=0$ ל-$n\ge2$; $a_1,b_1$ חופשיים.
+          - kind: step
+            text: >-
+              ל-$g=f-a_1\cos x-b_1\sin x$ כל המקדמים אפס, ולכן לפי פרסבל $\int g^2=0$. $g$ רציפה, ולכן $g\equiv0$ (החיוביות
+              של המכפלה הפנימית על הפונקציות הרציפות), כלומר $f=a_1\cos x+b_1\sin x$.
+          - kind: check
+            text: >-
+              כיוון הפוך: ל-$f=a\cos x+b\sin x$, $\int f^2=\pi(a^2+b^2)=\int(f')^2$. ו-$f=1$ מראה שבלי $\int f=0$ אי-השוויון
+              נכשל ($2\pi>0$).
+          - kind: result
+            text: '$\int_{-\pi}^{\pi}f^2\le\int_{-\pi}^{\pi}(f^{\prime})^2$, עם שוויון אם ורק אם $f=a\cos x+b\sin x$.'
+        rubric:
+          - text: 'פרסבל ל-$f$ עם $a_0=0$, ול-$f^{\prime}$ עם המקדמים $n\,b_n$, $-n\,a_n$'
+            weight: 4
+          - text: 'השוואה איבר איבר, $\sum(n^2-1)(a_n^2+b_n^2)\ge0$'
+            weight: 3
+          - text: 'מקרה השוויון: כל המקדמים מ-$n\ge2$ מתאפסים'
+            weight: 2
+          - text: 'מעבר מהמקדמים לפונקציה (פרסבל להפרש ורציפות), ובדיקת הכיוון ההפוך'
+            weight: 3
+
+      - label: ג
+        points: 4
+        type: twotier
+        objectives: [OBJ-10.5-4]
+        qualitative: true
+        prompt: >-
+          $f(x)=x(\pi^2-x^2)$ על $[-\pi,\pi]$, מומשכת למחזוריות ב-$2\pi$. האם אי-שוויון וירטינגר חל על ההמשכה הזו?
+        choices:
+          - text: כן
+            correct: true
+            feedback: >-
+              נכון, וגם מספרית: $\frac{\int f^2}{\int(f')^2}=\frac{2\pi^2}{21}\approx0.940\le1$.
+          - text: לא
+            feedback: >-
+              כל ההנחות מתקיימות: ההמשכה גזירה ברציפות (כי $f(\pm\pi)=0$ ו-$f'(\pm\pi)=-2\pi^2$), ו-$\int f=0$ כי $f$
+              אי-זוגית. זה שהנגזרת השנייה קופצת לא משנה.
+            misconception: MC-c10-wirtinger-hypotheses
+        reasons:
+          - text: '$f(-\pi)=f(\pi)$ ו-$f^{\prime}(-\pi)=f^{\prime}(\pi)$, ולכן ההמשכה גזירה ברציפות; ו-$\int_{-\pi}^{\pi}f=0$ כי $f$ אי-זוגית'
+            correct: true
+            feedback: >-
+              בדיוק. בודקים את ההנחות על ההמשכה המחזורית, לא רק על הקטע.
+          - text: 'לא, כי $f^{\prime\prime}=-6x$ קופצת ב-$\pm\pi$'
+            feedback: >-
+              וירטינגר דורש רק נגזרת ראשונה רציפה. הקפיצה ב-$f''$ קובעת את הדעיכה $\frac{1}{n^3}$, לא את תוקף אי-השוויון.
+            misconception: MC-c10-wirtinger-hypotheses
+          - text: 'כן, כי וירטינגר חל על כל פונקציה גזירה ברציפות על הקטע $[-\pi,\pi]$, בלי קשר להמשכה'
+            feedback: >-
+              המסקנה נכונה והנימוק לא: $x$ על $[-\pi,\pi]$ גזירה ברציפות עם ממוצע אפס ומפרה אותו,
+              $\int_{-\pi}^{\pi}x^2=\frac{2\pi^3}3>2\pi=\int_{-\pi}^{\pi}1^2$. צריך גם מחזוריות של $f$ (ההמשכה רציפה וגזירה
+              ברציפות).
+            misconception: MC-c10-wirtinger-hypotheses

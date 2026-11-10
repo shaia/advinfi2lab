@@ -1,0 +1,17 @@
+---
+/**
+ * A link to a lesson, or to an anchor inside it (a worked example's id), that respects the base path.
+ * An unwritten lesson links to its group on the chapter practice page (lessonHref). Without text,
+ * the link reads "שיעור <id>".
+ */
+import { lessonHref, writtenLessons } from '~/lib/links';
+interface Props {
+  id: string;
+  anchor?: string;
+}
+const { id, anchor } = Astro.props;
+const href = lessonHref(id, await writtenLessons(), anchor);
+const hasText = Astro.slots.has('default');
+---
+
+<a href={href}>{hasText ? <slot /> : `שיעור ${id}`}</a>

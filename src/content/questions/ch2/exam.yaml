@@ -1,0 +1,515 @@
+# Chapter 2 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (7 points): a verdict and a written justification. Long questions (20 points): 2–4 parts.
+# No question depends on the enrichment lesson 2.5. Every number was recomputed with src/math/geometry.ts.
+chapter: 2
+questions:
+  - id: Q-2-exam-1
+    type: exam
+    title: פיתולים הפוכים
+    prompt: >-
+      $\gamma_1,\gamma_2:\mathbb R\to\mathbb R^3$ מסילות חלקות בפרמטר אורך הקשת, עם $\kappa_1(s)=\kappa_2(s)>0$ ו-$\tau_2(s)=-\tau_1(s)\ne0$
+      לכל $s\in\mathbb R$. האם ייתכן שקיימים סיבוב $A$ ($A^TA=I$, $\det A=1$), וקטור $c$, סימן $\varepsilon\in\{1,-1\}$ ומספר
+      $s_0$ כך ש-$\gamma_2(s)=A\gamma_1(\varepsilon s+s_0)+c$ לכל $s$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-2.4-1]
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא ייתכן'
+            correct: true
+            feedback: >-
+              נכון. סיבוב, הזזה והחלפת הפרמטר $s\mapsto\varepsilon s+s_0$ שומרים את הפיתול בנקודות המתאימות, ופיתול רציף שאינו
+              מתאפס אינו יכול להתאים למינוס עצמו.
+          - text: 'ייתכן: $\gamma_2$ היא תמונת המראה של $\gamma_1$'
+            feedback: >-
+              תמונת מראה דורשת שיקוף, $\det=-1$. השאלה מתירה רק סיבוב.
+            misconception: MC-c2-mirror-is-rigid
+          - text: 'ייתכן, אם בוחרים $\varepsilon=-1$: היפוך הכיוון הופך את סימן הפיתול'
+            feedback: >-
+              היפוך כיוון לא משנה את הפיתול (שיעור 2.2).
+            misconception: MC-c2-torsion-flips-with-orientation
+          - text: 'ייתכן, אם בוחרים $s_0$ מתאים'
+            feedback: >-
+              הזזת הפרמטר יכולה להתאים פונקציות שונות זו לזו, אבל לא פונקציה בעלת סימן קבוע לפונקציה בעלת הסימן ההפוך; ראו סעיף ב.
+            misconception: MC-c2-any-parameter
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-2.4-1, OBJ-2.2-1]
+        prompt: >-
+          נמקו את תשובתכם בהוכחה.
+        solution:
+          - kind: given
+            text: '$\kappa_1=\kappa_2>0$, $\tau_2=-\tau_1$, ו-$\tau_1(s)\ne0$ לכל $s$.'
+          - kind: idea
+            text: >-
+              אם המסילות נבדלות בתנועה כזו, הפיתול של $\gamma_2$ ב-$s$ שווה לפיתול של $\gamma_1$ בנקודה המתאימה. אבל $\tau_1$
+              רציפה ואינה מתאפסת, ולכן הסימן שלה קבוע, והסימן של $\tau_2=-\tau_1$ הפוך בכל מקום.
+          - kind: step
+            text: >-
+              סיבוב והזזה שומרים את הפיתול: $A\mathbf u\times A\mathbf w=A(\mathbf u\times\mathbf w)$ כש-$\det A=1$, ולכן השלשה של
+              $A\gamma+c$ היא $(A\mathbf t,A\mathbf n,A\mathbf b)$ ו-$(A\mathbf b)'=-\tau A\mathbf n$.
+          - kind: step
+            text: >-
+              $s\mapsto\varepsilon s+s_0$ היא החלפת פרמטר ששומרת אורך קשת, וגם היפוך כיוון ($\varepsilon=-1$) לא משנה את הפיתול
+              בנקודה. לכן מהשוויון בשאלה נובע $\tau_2(s)=\tau_1(\varepsilon s+s_0)$ לכל $s$.
+          - kind: theorem
+            text: >-
+              לפי משפט ערך הביניים, $\tau_1$ רציפה ושונה מאפס בכל $\mathbb R$, ולכן בעלת סימן קבוע; נניח $\tau_1>0$ (המקרה השני
+              זהה).
+          - kind: step
+            text: >-
+              אז $\tau_2(s)=\tau_1(\varepsilon s+s_0)>0$, ומצד שני $\tau_2(s)=-\tau_1(s)<0$. סתירה.
+          - kind: result
+            text: 'לא קיימים $A,c,\varepsilon,s_0$ כאלה: המסילות אינן נבדלות בסיבוב, בהזזה ובהחלפת פרמטר.'
+        rubric:
+          - text: 'נימוק שסיבוב והזזה שומרים את הפיתול (כולל ש-$\det A=1$ חיוני: שיקוף הופך אותו)'
+            weight: 2
+          - text: 'נימוק שהחלפת הפרמטר $\varepsilon s+s_0$, גם עם $\varepsilon=-1$, שומרת את הפיתול בנקודה'
+            weight: 2
+          - text: 'שימוש בערך הביניים: פיתול רציף שאינו מתאפס הוא בעל סימן קבוע'
+            weight: 2
+          - text: 'הסתירה בין $\tau_2(s)=\tau_1(\varepsilon s+s_0)$ לבין $\tau_2=-\tau_1$'
+            weight: 1
+
+  - id: Q-2-exam-2
+    type: exam
+    title: מישורים מנשקים דרך נקודה
+    prompt: >-
+      $\gamma:I\to\mathbb R^3$ מסילה חלקה בפרמטר אורך הקשת, עם $\kappa(s)>0$ ו-$\tau(s)\ne0$ לכל $s$. האם ייתכן שכל המישורים
+      המנשקים של $\gamma$ עוברים דרך נקודה קבועה אחת $P$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-2.1-2]
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא ייתכן'
+            correct: true
+            feedback: >-
+              נכון. כש-$\tau\equiv0$ זה ייתכן (כל המישורים המנשקים הם המישור של המסילה), אבל כאן $\tau\ne0$.
+          - text: 'ייתכן, למשל בסליל: כל המישורים המנשקים שלו עוברים דרך נקודה על הציר'
+            feedback: >-
+              המישורים המנשקים של סליל נוטים מהציר ומסתובבים סביבו, ואין נקודה משותפת לכולם. סעיף ב מוכיח שאין כזו לאף מסילה עם
+              $\tau\ne0$.
+            misconception: MC-c2-helix-binormal-axis
+          - text: 'ייתכן לכל מסילה: כל שני מישורים נחתכים'
+            feedback: >-
+              שני מישורים נחתכים בישר (אם אינם מקבילים), אבל שלושה מישורים או יותר בדרך כלל אינם עוברים דרך נקודה משותפת אחת.
+            misconception: MC-c2-plane-mixup
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-2.1-2, OBJ-2.3-1]
+        prompt: >-
+          הוכיחו את תשובתכם.
+        solution:
+          - kind: given
+            text: '$(P-\gamma(s))\cdot\mathbf b(s)=0$ לכל $s$ (הנקודה $P$ במישור המנשק), $\kappa>0$, $\tau\ne0$.'
+          - kind: idea
+            text: >-
+              נגזור את התנאי שוב ושוב ונקבל, בעזרת משוואות פרנה-סרה, שגם הרכיבים של $P-\gamma$ לאורך $\mathbf n$ ולאורך $\mathbf t$
+              מתאפסים. אז $P=\gamma(s)$ לכל $s$, בסתירה לרגולריות.
+          - kind: computation
+            text: >-
+              גזירה, עם $(P-\gamma)'=-\mathbf t$ ו-$\mathbf b'=-\tau\mathbf n$:
+              $-\mathbf t\cdot\mathbf b-\tau\,(P-\gamma)\cdot\mathbf n=0$. כי $\mathbf t\cdot\mathbf b=0$ ו-$\tau\ne0$:
+              $(P-\gamma)\cdot\mathbf n=0$.
+          - kind: computation
+            text: >-
+              גזירה שוב, עם $\mathbf n'=-\kappa\mathbf t+\tau\mathbf b$:
+              $-\mathbf t\cdot\mathbf n-\kappa\,(P-\gamma)\cdot\mathbf t+\tau\,(P-\gamma)\cdot\mathbf b=0$. האיבר הראשון והאחרון
+              אפס, ו-$\kappa>0$, ולכן $(P-\gamma)\cdot\mathbf t=0$.
+          - kind: step
+            text: >-
+              שלושת הרכיבים של $P-\gamma(s)$ בבסיס האורתונורמלי $\mathbf t,\mathbf n,\mathbf b$ אפס, ולכן $\gamma(s)=P$ לכל $s$.
+          - kind: check
+            text: >-
+              אבל אז $\gamma'\equiv0$, בסתירה ל-$\|\gamma'\|=1$. (כש-$\tau\equiv0$ השלב הראשון נכשל, ובאמת כל מסילה מישורית היא
+              דוגמה.)
+          - kind: result
+            text: 'לא ייתכן: אין נקודה שכל המישורים המנשקים עוברים דרכה כש-$\tau\ne0$ בכל נקודה.'
+        rubric:
+          - text: 'ניסוח התנאי כ-$(P-\gamma)\cdot\mathbf b=0$ לכל $s$'
+            weight: 1
+          - text: 'גזירה ראשונה נכונה עם $\mathbf b''=-\tau\mathbf n$, והמסקנה $(P-\gamma)\cdot\mathbf n=0$ בעזרת $\tau\ne0$'
+            weight: 2
+          - text: 'גזירה שנייה עם $\mathbf n''=-\kappa\mathbf t+\tau\mathbf b$, והמסקנה $(P-\gamma)\cdot\mathbf t=0$ בעזרת $\kappa>0$'
+            weight: 1.5
+          - text: 'הסתירה: כל הרכיבים אפס, ולכן המסילה קבועה'
+            weight: 0.5
+
+  - id: Q-2-exam-3
+    type: exam
+    title: נורמלים דרך נקודה
+    prompt: >-
+      $\gamma:I\to\mathbb R^3$ מסילה חלקה בפרמטר אורך הקשת עם $\kappa>0$ בכל נקודה. האם ייתכן שכל הישרים הנורמליים הראשיים
+      $\{\gamma(s)+\lambda\,\mathbf n(s):\lambda\in\mathbb R\}$ עוברים דרך נקודה קבועה $P$, ו-$\gamma$ אינה קשת של מעגל?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-2.3-1]
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא ייתכן: $\gamma$ חייבת להיות קשת של מעגל שמרכזו $P$'
+            correct: true
+            feedback: >-
+              נכון. התנאי מאלץ גם $\kappa$ קבועה וגם $\tau\equiv0$.
+          - text: 'ייתכן: בסליל כל הנורמלים הראשיים פוגשים את הציר'
+            feedback: >-
+              הנורמלים של סליל פוגשים את הציר, כל אחד בנקודה אחרת (בגובה של הנקודה על הסליל). אין נקודה אחת שכולם עוברים דרכה.
+            misconception: MC-c2-helix-radius-1-over-kappa
+          - text: 'ייתכן: כל מסילה עם עקמומיות קבועה מקיימת זאת'
+            feedback: >-
+              לסליל יש עקמומיות קבועה, והנורמלים שלו לא עוברים דרך נקודה אחת. במרחב עקמומיות קבועה אינה מספיקה כדי להיות מעגל.
+            misconception: MC-c2-kappa-alone-determines
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-2.3-1, OBJ-2.2-3, OBJ-1.6-3]
+        prompt: >-
+          הוכיחו את תשובתכם.
+        solution:
+          - kind: given
+            text: '$P=\gamma(s)+\lambda(s)\,\mathbf n(s)$ לכל $s$, ו-$\lambda(s)=(P-\gamma(s))\cdot\mathbf n(s)$ פונקציה חלקה.'
+          - kind: idea
+            text: >-
+              נגזור את הזהות $P=\gamma+\lambda\mathbf n$ ונפרק בבסיס של פרנה: כל אחד משלושת המקדמים חייב להתאפס.
+          - kind: computation
+            text: >-
+              $0=\mathbf t+\lambda'\mathbf n+\lambda(-\kappa\mathbf t+\tau\mathbf b)=(1-\lambda\kappa)\mathbf t+\lambda'\mathbf n+\lambda\tau\,\mathbf b$.
+          - kind: step
+            text: >-
+              לכן $\lambda\kappa=1$, $\lambda'=0$ ו-$\lambda\tau=0$. מהראשון $\lambda=\frac1\kappa\ne0$, מהשני $\lambda$ קבוע, ולכן
+              $\kappa$ קבועה; מהשלישי $\tau\equiv0$.
+          - kind: theorem
+            text: >-
+              מסילה עם $\kappa>0$ ו-$\tau\equiv0$ מוכלת במישור (שיעור 2.2), ובמישור מסילה עם עקמומיות קבועה $\kappa$ היא קשת של
+              מעגל ברדיוס $\frac1\kappa$ (שיעור 1.6).
+          - kind: check
+            text: '$\|\gamma(s)-P\|=|\lambda|=\frac1\kappa$: המרכז הוא $P$.'
+          - kind: result
+            text: 'לא ייתכן: $\gamma$ היא קשת של מעגל שמרכזו $P$ ורדיוסו $\frac1\kappa$.'
+        rubric:
+          - text: 'כתיבת התנאי כזהות $P=\gamma+\lambda\mathbf n$ עם $\lambda$ גזירה (למשל $\lambda=(P-\gamma)\cdot\mathbf n$)'
+            weight: 1
+          - text: 'גזירה נכונה עם $\mathbf n''=-\kappa\mathbf t+\tau\mathbf b$ ופירוק בבסיס של פרנה'
+            weight: 2
+          - text: 'המסקנות $\lambda\kappa=1$, $\lambda''=0$, $\tau=0$, ומהן $\kappa$ קבועה'
+            weight: 1
+          - text: 'השלמה: $\tau\equiv0$ נותן מישורית, ועקמומיות קבועה במישור נותנת מעגל'
+            weight: 1
+
+  - id: Q-2-exam-4
+    type: exam
+    title: מסילה שאינה מישורית
+    prompt: >-
+      נתונה המסילה $\gamma(t)=\left(t,\ t^2,\ \frac23t^3\right)$, $t\in\mathbb R$. (שימו לב: $\|\gamma'(t)\|=1+2t^2$.)
+    parts:
+      - label: א
+        points: 5
+        type: numeric
+        objectives: [OBJ-2.2-2]
+        prompt: >-
+          חשבו את הפיתול $\tau(1)$.
+        answer: 0.2222222
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון. $\gamma'=(1,2t,2t^2)$, $\gamma''=(0,2,4t)$, $\gamma'''=(0,0,4)$, ו-$\gamma'\times\gamma''=(4t^2,-4t,2)$. המכפלה
+          המשולשת היא $8$ והמכנה $\|\gamma'\times\gamma''\|^2=4(1+2t^2)^2$, ולכן $\tau(t)=\frac{2}{(1+2t^2)^2}$ ו-$\tau(1)=\frac29$.
+        wrongFeedback: >-
+          $\tau=\frac{(\gamma'\times\gamma'')\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}$. ב-$t=1$: $\gamma'\times\gamma''=(4,-4,2)$.
+        commonWrong:
+          - value: 1.3333333
+            feedback: >-
+              זה $\frac86$: המכנה בלי ריבוע. $\|(4,-4,2)\|^2=36$.
+            misconception: MC-c2-torsion-denominator
+          - value: 0.0109739
+            feedback: >-
+              זה $\frac{8}{3^6}$: חילקתם ב-$\|\gamma'\|^6$. המכנה הוא $\|\gamma'\times\gamma''\|^2$.
+            misconception: MC-c2-torsion-denominator
+          - value: -0.2222222
+            feedback: >-
+              הסימן: $(4,-4,2)\cdot(0,0,4)=8>0$.
+            misconception: MC-c2-torsion-sign
+          - value: 2
+            feedback: >-
+              זה $\tau(0)$. הפיתול כאן תלוי ב-$t$.
+      - label: ב
+        points: 5
+        type: numeric
+        objectives: [OBJ-2.1-2]
+        prompt: >-
+          המישור המנשק בנקודה $\gamma(1)$ חותך את ציר ה-$z$ בנקודה $(0,0,z_0)$. מצאו את $z_0$.
+        answer: 0.6666667
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון. הנורמל $(4,-4,2)\parallel(2,-2,1)$ והנקודה $(1,1,\frac23)$: $2x-2y+z=\frac23$, ולכן $z_0=\frac23$.
+        wrongFeedback: >-
+          הנורמל של המישור המנשק הוא $\gamma'(1)\times\gamma''(1)$, והמישור עובר דרך $\gamma(1)=(1,1,\frac23)$.
+        commonWrong:
+          - value: 2.1666667
+            feedback: >-
+              זה המישור הנורמלי, $x+2y+2z=\frac{13}{3}$, שהנורמל שלו $\gamma'(1)$.
+            misconception: MC-c2-plane-mixup
+          - value: 1.1666667
+            feedback: >-
+              לקחתם את $\gamma''(1)=(0,2,4)$ כנורמל. $\gamma''$ מונח בתוך המישור המנשק.
+            misconception: MC-c2-n-is-gamma2
+          - value: -0.8333333
+            feedback: >-
+              זה המישור המיישר, שהנורמל שלו $\mathbf n(1)\parallel(-2,-1,2)$.
+            misconception: MC-c2-plane-mixup
+      - label: ג
+        points: 10
+        type: open
+        objectives: [OBJ-2.2-3, OBJ-2.2-2]
+        prompt: >-
+          הוכיחו שאף קשת $\gamma([\alpha,\beta])$ עם $\alpha<\beta$ אינה מוכלת במישור. (אפשר להשתמש במשפט של שיעור 2.2, או
+          להוכיח ישירות.)
+        solution:
+          - kind: goal
+            text: 'אין מישור שמכיל את $\gamma(t)$ לכל $t\in[\alpha,\beta]$.'
+          - kind: idea
+            text: >-
+              אם הקשת במישור, כל הנגזרות של $\gamma$ מקבילות למישור, ולכן שלוש הנגזרות הראשונות תלויות לינארית והמכפלה המשולשת
+              שלהן אפס. כאן היא תמיד $8$.
+          - kind: step
+            text: >-
+              נניח בשלילה ש-$(\gamma(t)-p)\cdot\mathbf e=0$ לכל $t\in[\alpha,\beta]$, עם $\mathbf e$ וקטור יחידה. גזירה פעם, פעמיים
+              ושלוש (בפנים הקטע): $\gamma'\cdot\mathbf e=\gamma''\cdot\mathbf e=\gamma'''\cdot\mathbf e=0$.
+          - kind: step
+            text: >-
+              אז $\gamma',\gamma'',\gamma'''$ שייכים למרחב הדו-ממדי $\mathbf e^\perp$, ולכן תלויים לינארית:
+              $(\gamma'\times\gamma'')\cdot\gamma'''=\det(\gamma',\gamma'',\gamma''')=0$.
+          - kind: computation
+            text: >-
+              אבל $(\gamma'\times\gamma'')\cdot\gamma'''=(4t^2,-4t,2)\cdot(0,0,4)=8\ne0$ לכל $t$. סתירה.
+          - kind: check
+            text: >-
+              אותה מסקנה דרך המשפט: $\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}=\frac{2}{(1+2t^2)^2}>0$, ו-$\tau(t)=\frac{2}{(1+2t^2)^2}\ne0$,
+              ולכן לפי המשפט "מישורית אם ורק אם $\tau\equiv0$" על הקטע $[\alpha,\beta]$ הקשת אינה מישורית.
+          - kind: result
+            text: 'אף קשת לא טריוויאלית של $\gamma$ אינה מוכלת במישור.'
+        rubric:
+          - text: 'ניסוח ההנחה בשלילה עם נורמל קבוע $\mathbf e$ לכל הקשת'
+            weight: 1
+          - text: 'גזירה שלוש פעמים והמסקנה ש-$\gamma'',\gamma'''',\gamma''''''$ ניצבים ל-$\mathbf e$'
+            weight: 3
+          - text: 'המעבר לתלות לינארית ולמכפלה משולשת אפס (או ל-$\tau=0$ דרך המשפט, עם בדיקה ש-$\kappa>0$)'
+            weight: 3
+          - text: 'חישוב נכון של המכפלה המשולשת ($8$) או של $\tau(t)>0$, והסתירה'
+            weight: 3
+
+  - id: Q-2-exam-5
+    type: exam
+    title: משפט היחידות
+    prompt: >-
+      שאלה על משפט הקיום והיחידות של מסילות במרחב.
+    parts:
+      - label: א
+        points: 5
+        type: open
+        objectives: [OBJ-2.4-1]
+        prompt: >-
+          נסחו את משפט הקיום והיחידות לעקמומיות ולפיתול, עם כל ההנחות.
+        solution:
+          - kind: given
+            text: '$I$ קטע, $\kappa:I\to(0,\infty)$ ו-$\tau:I\to\mathbb R$ פונקציות רציפות.'
+          - kind: theorem
+            text: >-
+              קיום: יש מסילה $\gamma:I\to\mathbb R^3$, בפרמטר אורך הקשת ($\|\gamma'\|\equiv1$), שהעקמומיות שלה ב-$s$ היא $\kappa(s)$
+              והפיתול $\tau(s)$, עם $\mathbf b'=-\tau\mathbf n$.
+          - kind: theorem
+            text: >-
+              יחידות: אם $\tilde\gamma$ מסילה נוספת כזו, יש סיבוב $A$ ($A^TA=I$, $\det A=1$) ווקטור $c$ כך ש-$\tilde\gamma(s)=A\gamma(s)+c$
+              לכל $s\in I$. לכל $s_0\in I$, נקודה $p_0$ ושלשה אורתונורמלית ימנית נתונה יש מסילה יחידה כזו עם $\gamma(s_0)=p_0$
+              והשלשה הנתונה ב-$s_0$.
+          - kind: result
+            text: 'העקמומיות החיובית והפיתול, כפונקציות של אורך הקשת, קובעים את המסילה עד כדי סיבוב והזזה.'
+        rubric:
+          - text: 'ההנחות: $\kappa>0$ ו-$\tau$ רציפות על קטע'
+            weight: 1.5
+          - text: 'הפרמטר הוא אורך הקשת, וגם $\kappa,\tau$ הם פונקציות שלו'
+            weight: 1
+          - text: 'חלק הקיום מנוסח'
+            weight: 1
+          - text: 'חלק היחידות עם התנועה הנכונה: סיבוב ($\det A=1$) והזזה, לא שיקוף'
+            weight: 1.5
+      - label: ב
+        points: 11
+        type: open
+        objectives: [OBJ-2.4-2]
+        prompt: >-
+          הוכיחו את חלק היחידות.
+        solution:
+          - kind: given
+            text: '$\gamma,\tilde\gamma:I\to\mathbb R^3$ בפרמטר אורך הקשת, עם אותן $\kappa(s)>0$ ו-$\tau(s)$.'
+          - kind: goal
+            text: '$\tilde\gamma=A\gamma+c$ עם $A$ סיבוב.'
+          - kind: idea
+            text: >-
+              אחרי תנועה שמיישרת את המסילות בנקודה אחת, מראים שהשלשות שלהן נשארות שוות, בעזרת גודל אחד שמסכם את ההשוואה בין השלשות
+              ואינו משתנה; ומשלשות שוות מקבלים מסילות שוות.
+          - kind: step
+            text: >-
+              יהי $s_0\in I$. השלשות של $\gamma$ ושל $\tilde\gamma$ ב-$s_0$ הן בסיסים אורתונורמליים ימניים, ולכן יש סיבוב $B$ שמעביר
+              את השלשה של $\tilde\gamma$ לזו של $\gamma$, ו-$d$ עם $B\tilde\gamma(s_0)+d=\gamma(s_0)$. המסילה $\hat\gamma=B\tilde\gamma+d$
+              בעלת אותן $\kappa,\tau$ (סיבוב והזזה שומרים אותם), ושלשתה $(B\tilde{\mathbf t},B\tilde{\mathbf n},B\tilde{\mathbf b})$.
+          - kind: definition
+            text: '$f(s)=\mathbf t\cdot\hat{\mathbf t}+\mathbf n\cdot\hat{\mathbf n}+\mathbf b\cdot\hat{\mathbf b}$.'
+          - kind: computation
+            text: >-
+              לפי משוואות פרנה-סרה לשתי המסילות:
+              $$f'=\kappa\mathbf n\cdot\hat{\mathbf t}+\kappa\mathbf t\cdot\hat{\mathbf n}+(-\kappa\mathbf t+\tau\mathbf b)\cdot\hat{\mathbf n}+\mathbf n\cdot(-\kappa\hat{\mathbf t}+\tau\hat{\mathbf b})-\tau\mathbf n\cdot\hat{\mathbf b}-\tau\mathbf b\cdot\hat{\mathbf n}=0.$$
+          - kind: step
+            text: >-
+              $f(s_0)=3$, ולכן $f\equiv3$. כל מחובר הוא מכפלה של שני וקטורי יחידה, ולכן לכל היותר 1 (קושי-שוורץ), עם שוויון רק
+              כשהווקטורים שווים. סכום של שלושה כאלה שווה 3 רק אם כל אחד שווה 1: $\mathbf t=\hat{\mathbf t}$ לכל $s$ (וכך גם $\mathbf n,\mathbf b$).
+          - kind: step
+            text: >-
+              $(\gamma-\hat\gamma)'=\mathbf t-\hat{\mathbf t}=0$ ו-$\gamma(s_0)=\hat\gamma(s_0)$, ולכן $\gamma=\hat\gamma=B\tilde\gamma+d$.
+          - kind: result
+            text: '$\tilde\gamma=A\gamma+c$ עם $A=B^{-1}=B^T$ סיבוב ו-$c=-B^Td$.'
+        rubric:
+          - text: 'יישור בנקודה $s_0$ בסיבוב (עם נימוק שהשלשות ימניות ולכן אין צורך בשיקוף) ובהזזה'
+            weight: 2
+          - text: 'הגדרת $f$ וחישוב $f''=0$ בעזרת משוואות פרנה-סרה של שתי המסילות, עם אותן $\kappa,\tau$'
+            weight: 4
+          - text: 'המעבר מ-$f\equiv3$ לשוויון השלשות בקושי-שוורץ'
+            weight: 3
+          - text: 'אינטגרציה של $\mathbf t=\hat{\mathbf t}$ עם תנאי ההתחלה, וחזרה לתנועה המקורית'
+            weight: 2
+      - label: ג
+        points: 4
+        type: twotier
+        objectives: [OBJ-2.4-3]
+        qualitative: true
+        prompt: >-
+          האם חלק היחידות נשאר נכון אם מתירים ל-$\kappa$ להתאפס, ומשווים את הפיתולים רק בנקודות שבהן $\kappa>0$?
+        choices:
+          - text: 'לא'
+            correct: true
+            feedback: >-
+              נכון. במקום שבו $\kappa=0$ אין שלשה, וההוכחה של סעיף ב לא מתחילה; והטענה באמת נכשלת.
+          - text: 'כן, ההוכחה עובדת כמו שהיא'
+            feedback: >-
+              ההוכחה משתמשת ב-$\mathbf n$ וב-$\mathbf b$, שלא מוגדרים כש-$\kappa=0$.
+            misconception: MC-c2-theorem-allows-zero-kappa
+        reasons:
+          - text: 'מסילה מישורית שבאמצעה קטע ישר ($\kappa$ חלקה, ואפס על הקטע), ואותה מסילה אחרי סיבוב של החלק שאחרי הקטע סביב הישר שלו: אותה $\kappa(s)$, אחת מישורית ואחת לא'
+            correct: true
+            feedback: >-
+              בדיוק. בשתיהן $\tau=0$ בכל נקודה שבה $\kappa>0$, ולכן גם הפיתול לא מבחין ביניהן. המסילה המסובבת חלקה: הסיבוב
+              משאיר את הקטע ואת המשיק לאורכו במקומם, וכל הנגזרות מסדר 2 ומעלה מתאפסות בקצה הקטע משני הצדדים, כי $\kappa$ וכל
+              נגזרותיה מתאפסות שם. (אם $\kappa$ רק רציפה, ההדבקה גזירה ברציפות פעמיים; ובקשתות מעגל משני צידי הקטע $\kappa$
+              אינה רציפה כלל, וההדבקה אינה גזירה פעמיים.)
+          - text: 'כש-$\kappa=0$ המסילה אינה רגולרית'
+            feedback: >-
+              ישר רגולרי לגמרי ($\gamma'\ne0$) ו-$\kappa=0$ בו. הבעיה היא שהשלשה לא מוגדרת, לא הרגולריות.
+            misconception: MC-c2-kappa-zero-singular
+          - text: 'הפיתול לא רציף בנקודות שבהן $\kappa=0$'
+            feedback: >-
+              הפיתול לא מוגדר שם בכלל. גם אם משלימים אותו ב-0, הדוגמה של הקטע הישר נשארת דוגמה נגדית.
+            misconception: MC-c2-planar-without-kappa
+
+  - id: Q-2-exam-6
+    type: exam
+    title: עקמומיות ופיתול קבועים
+    prompt: >-
+      $\gamma$ מסילה בפרמטר אורך הקשת עם $\kappa\equiv\kappa_0>0$ ו-$\tau\equiv\tau_0\ne0$ קבועים.
+    parts:
+      - label: א
+        points: 4
+        type: numeric
+        objectives: [OBJ-2.3-3]
+        prompt: >-
+          עבור $\kappa_0=1$, $\tau_0=2$: $\gamma$ היא סליל מעגלי. מהו הרדיוס שלו?
+        answer: 0.2
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $a=\frac{\kappa_0}{\kappa_0^2+\tau_0^2}=\frac15$, והגובה ליחידת זווית $b=\frac25$.
+        wrongFeedback: >-
+          לסליל $(a\cos t,a\sin t,bt)$: $\kappa=\frac{a}{a^2+b^2}$, $\tau=\frac{b}{a^2+b^2}$. הפכו את הקשר.
+        commonWrong:
+          - value: 1
+            feedback: >-
+              $\frac{1}{\kappa_0}=1$ הוא רדיוס המעגל המנשק, לא רדיוס הגליל.
+            misconception: MC-c2-helix-radius-1-over-kappa
+          - value: 0.4
+            feedback: >-
+              זה $b=\frac{\tau_0}{\kappa_0^2+\tau_0^2}$, הגובה.
+          - value: 0.4472136
+            feedback: >-
+              זה $\frac{1}{\sqrt5}$. המכנה הוא $\kappa_0^2+\tau_0^2$ בלי שורש.
+            misconception: MC-c2-helix-radius-1-over-kappa
+      - label: ב
+        points: 12
+        type: open
+        objectives: [OBJ-2.3-3, OBJ-2.3-1]
+        prompt: >-
+          יהי $a=\frac{\kappa_0}{\kappa_0^2+\tau_0^2}$. הוכיחו, בלי משפט היחידות, ש-$\gamma$ מונחת על גליל מעגלי ברדיוס $a$ שהציר שלו
+          מקביל ל-$\boldsymbol\omega=\tau_0\mathbf t+\kappa_0\mathbf b$. (רמז: הסתכלו על $c(s)=\gamma(s)+a\,\mathbf n(s)$.)
+        solution:
+          - kind: goal
+            text: 'יש ישר $L$ בכיוון $\boldsymbol\omega$ כך שהמרחק מכל $\gamma(s)$ ל-$L$ הוא $a$.'
+          - kind: idea
+            text: >-
+              בסליל, הנקודה $\gamma+a\mathbf n$ היא הנקודה על הציר שמול $\gamma$. נראה שהיא נעה על ישר בכיוון קבוע, ושהמרחק ממנה
+              ל-$\gamma$ ניצב לישר.
+          - kind: computation
+            text: '$\boldsymbol\omega''=\tau_0\mathbf t''+\kappa_0\mathbf b''=\tau_0\kappa_0\mathbf n-\kappa_0\tau_0\mathbf n=0$: $\boldsymbol\omega$ וקטור קבוע, שאינו אפס.'
+          - kind: computation
+            text: >-
+              $c'=\mathbf t+a(-\kappa_0\mathbf t+\tau_0\mathbf b)=(1-a\kappa_0)\mathbf t+a\tau_0\mathbf b$. כי
+              $1-a\kappa_0=\frac{\tau_0^2}{\kappa_0^2+\tau_0^2}$ ו-$a\tau_0=\frac{\kappa_0\tau_0}{\kappa_0^2+\tau_0^2}$:
+              $$c'=\frac{\tau_0}{\kappa_0^2+\tau_0^2}\,\boldsymbol\omega.$$
+          - kind: step
+            text: >-
+              $c'$ הוא כפולה קבועה של וקטור קבוע, ולכן $c(s)=c(s_0)+\frac{\tau_0(s-s_0)}{\kappa_0^2+\tau_0^2}\boldsymbol\omega$:
+              $c(s)$ נע על הישר $L$ דרך $c(s_0)$ בכיוון $\boldsymbol\omega$.
+          - kind: step
+            text: >-
+              $\gamma(s)-c(s)=-a\,\mathbf n(s)$, ו-$\mathbf n\cdot\boldsymbol\omega=0$. לכן $c(s)$ הוא הנקודה על $L$ הקרובה ביותר
+              ל-$\gamma(s)$ (ההפרש ניצב ל-$L$), והמרחק הוא $\|a\mathbf n\|=a$.
+          - kind: check
+            text: >-
+              בסליל $(a\cos t,a\sin t,bt)$: $\mathbf n=(-\cos t,-\sin t,0)$ ו-$c=(0,0,bt)$, על ציר ה-$z$. ואם $\tau_0\to0$, הציר
+              "נעצר" ($c'\to0$) והמסילה הופכת למעגל עם מרכז $c$.
+          - kind: result
+            text: '$\gamma$ מונחת על הגליל ברדיוס $a=\frac{\kappa_0}{\kappa_0^2+\tau_0^2}$ סביב הישר $L$, המקביל ל-$\tau_0\mathbf t+\kappa_0\mathbf b$.'
+        rubric:
+          - text: 'הוכחה ש-$\boldsymbol\omega$ קבוע, ממשוואות פרנה-סרה'
+            weight: 3
+          - text: 'חישוב $c''$ והצגתו ככפולה קבועה של $\boldsymbol\omega$'
+            weight: 4
+          - text: 'המסקנה ש-$c$ נע על ישר'
+            weight: 2
+          - text: 'המרחק: $\gamma-c=-a\mathbf n$ ניצב לישר, ולכן המרחק לישר הוא $a$'
+            weight: 3
+      - label: ג
+        points: 4
+        type: mc
+        objectives: [OBJ-2.2-1]
+        prompt: >-
+          מה קובע הסימן של $\tau_0$?
+        choices:
+          - text: 'אם הסליל ימני ($\tau_0>0$) או שמאלי ($\tau_0<0$)'
+            correct: true
+            feedback: >-
+              נכון. שני הסלילים עם $\pm\tau_0$ הם תמונות מראה זה של זה, ואין סיבוב שמעביר אחד לשני.
+          - text: 'את כיוון ההליכה על הסליל'
+            feedback: >-
+              היפוך כיוון לא משנה את הפיתול. סליל ימני נשאר ימני כשהולכים עליו לאחור.
+            misconception: MC-c2-torsion-flips-with-orientation
+          - text: 'שום דבר: הפיתול מוגדר עד כדי סימן'
+            feedback: >-
+              הפיתול מוגדר עם סימן, דרך $\mathbf b'=-\tau\mathbf n$, וסיבוב לא משנה אותו. רק שיקוף הופך אותו.
+            misconception: MC-c2-torsion-nonnegative

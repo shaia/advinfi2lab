@@ -1,0 +1,307 @@
+# Lesson 0.5 — review: the Riemann integral in ℝⁿ and Fubini's theorem. No change of variables here (chapter 5).
+# Objectives (src/course.ts):
+#   OBJ-0.5-1  define the Riemann integral on a box and on a domain with area (Jordan measurable); recognise simple domains
+#   OBJ-0.5-2  apply Fubini's theorem to double and triple integrals, including changing the order of integration
+#   OBJ-0.5-3  compute area and volume as the integral of 1 over the domain
+chapter: 0
+questions:
+  - id: Q-0.5-def
+    type: mc
+    objectives: [OBJ-0.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ חסומה על תיבה $Q\subset\mathbb R^n$. מתי $f$ אינטגרבילית רימן על $Q$?
+    choices:
+      - text: 'כשלכל $\varepsilon>0$ יש חלוקה $P$ של $Q$ שעבורה $U(f,P)-L(f,P)<\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון: תנאי רימן. הסכום העליון $U$ והתחתון $L$ נבנים מהסופרמום ומהאינפימום של $f$ על כל תת-תיבה, כפול הנפח שלה;
+          אז האינטגרל הוא הערך המשותף $\sup_P L=\inf_P U$.
+      - text: 'תמיד: כל פונקציה חסומה על תיבה אינטגרבילית'
+        feedback: >-
+          חסימות היא רק תנאי הכרחי. הפונקציה ששווה $1$ כששתי הקואורדינטות רציונליות ו-$0$ אחרת, חסומה על $[0,1]^2$, ולכל
+          חלוקה $U=1$ ו-$L=0$.
+        misconception: MC-c0-bounded-integrable
+      - text: 'כשיש חלוקה אחת $P$ שעבורה $U(f,P)-L(f,P)$ קטן מ-$1$'
+        feedback: >-
+          חלוקה אחת אומרת מעט: לכל פונקציה חסומה על $[0,1]^2$ בין $0$ ל-$\frac12$ ההפרש קטן מ-$1$ כבר בחלוקה הטריוויאלית.
+          התנאי הוא "לכל $\varepsilon$".
+        misconception: MC-c0-bounded-integrable
+
+  - id: Q-0.5-simple
+    type: mc
+    objectives: [OBJ-0.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזה מהתחומים הבאים **אינו** תחום פשוט ביחס ל-$x$, כלומר אינו מהצורה $\{a\le x\le b,\ \varphi_1(x)\le y\le\varphi_2(x)\}$ עם
+      $\varphi_1,\varphi_2$ רציפות?
+    choices:
+      - text: 'הטבעת $1\le x^2+y^2\le4$'
+        correct: true
+        feedback: >-
+          נכון. הישר האנכי $x=0$ חותך אותה בשני קטעים נפרדים, $1\le y\le2$ ו-$-2\le y\le-1$, ולכן אין פונקציות $\varphi_1,\varphi_2$
+          כאלה. מפרקים אותה לארבעה תחומים פשוטים.
+      - text: 'עיגול היחידה $x^2+y^2\le1$'
+        feedback: >-
+          השפה עקומה, אבל זה תחום פשוט: $-1\le x\le1$ ו-$-\sqrt{1-x^2}\le y\le\sqrt{1-x^2}$, עם פונקציות רציפות.
+        misconception: MC-c0-simple-means-straight-edges
+      - text: 'המשולש שקודקודיו $(0,0)$, $(1,0)$, $(1,1)$'
+        feedback: >-
+          הצלע המשופעת אינה מפריעה: $0\le x\le1$, $0\le y\le x$.
+        misconception: MC-c0-simple-means-straight-edges
+      - text: 'התחום שבין $y=x^2$ ל-$y=1$'
+        feedback: >-
+          $-1\le x\le1$, $x^2\le y\le1$: תחום פשוט.
+        misconception: MC-c0-simple-means-straight-edges
+
+  - id: Q-0.5-rational
+    type: twotier
+    objectives: [OBJ-0.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x,y)=1$ כש-$x$ ו-$y$ שניהם רציונליים, ו-$f(x,y)=0$ אחרת. האם $f$ אינטגרבילית רימן על $[0,1]^2$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $f$ חסומה, אבל אינה אינטגרבילית רימן.
+      - text: 'כן, והאינטגרל $0$'
+        feedback: >-
+          זה היה נכון באינטגרל של לבג, שלא נלמד בקורס. באינטגרל רימן כל תת-תיבה מכילה ערכים $0$ ו-$1$.
+        misconception: MC-c0-riemann-ignores-countable
+    reasons:
+      - text: 'בכל תת-תיבה יש נקודות עם שתי קואורדינטות רציונליות ונקודות אחרות, ולכן לכל חלוקה $U(f,P)=1$ ו-$L(f,P)=0$'
+        correct: true
+        feedback: >-
+          בדיוק. הרציונליים צפופים וגם האי-רציונליים, ולכן הסופרמום על כל תת-תיבה $1$ והאינפימום $0$.
+      - text: 'הנקודות שבהן $f=1$ הן קבוצה בת מנייה, ולכן לא משפיעות'
+        feedback: >-
+          מה שקובע הוא קבוצת נקודות **אי-הרציפות**, וכאן $f$ אינה רציפה באף נקודה: כל הריבוע.
+        misconception: MC-c0-riemann-ignores-countable
+      - text: '$f$ חסומה על תיבה, ולכן אינטגרבילית'
+        feedback: >-
+          חסימות אינה מספיקה, והפונקציה הזו היא בדיוק הדוגמה הנגדית.
+        misconception: MC-c0-bounded-integrable
+
+  - id: Q-0.5-jordan
+    type: multi
+    objectives: [OBJ-0.5-1]
+    level: mid
+    prompt: >-
+      לאילו מהקבוצות הבאות יש שטח (הן מדידות ז׳ורדן)? סמנו את כולן.
+    choices:
+      - text: 'עיגול'
+        correct: true
+        feedback: 'נכון: השפה היא מעגל, גרף של שתי פונקציות רציפות, ושטחה אפס.'
+      - text: '$\{(x,y):\ 0\le x\le1,\ 0\le y\le g(x)\}$ עם $g\ge0$ רציפה'
+        correct: true
+        feedback: >-
+          נכון. השפה מורכבת מקטעים ומגרף של פונקציה רציפה על קטע, וגרף כזה הוא בעל שטח אפס (מכסים אותו במלבנים צרים,
+          לפי רציפות במידה שווה).
+      - text: '$\{(x,y)\in[0,1]^2:\ x\in\mathbb Q\}$'
+        feedback: >-
+          לקבוצה הזו כל נקודה בריבוע היא נקודת שפה, כי בכל סביבה יש $x$ רציונלי ו-$x$ אי-רציונלי. השפה היא כל הריבוע,
+          שטחה $1$, ולכן לקבוצה אין שטח.
+        misconception: MC-c0-jordan-boundary
+      - text: 'כל קבוצה חסומה במישור'
+        feedback: >-
+          הקבוצה מהסעיף הקודם חסומה ואין לה שטח. לקבוצה יש שטח בדיוק כשהשפה שלה בעלת שטח אפס.
+        misconception: MC-c0-jordan-boundary
+
+  - id: Q-0.5-box
+    type: numeric
+    objectives: [OBJ-0.5-2]
+    level: basic
+    prompt: >-
+      חשבו את $\displaystyle\iint_{[0,1]\times[0,2]}(x+2y)\,dA$, כש-$x\in[0,1]$ ו-$y\in[0,2]$.
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי פוביני: $\int_0^1\left(\int_0^2(x+2y)\,dy\right)dx=\int_0^1(2x+4)\,dx=1+4=5$. גם הסדר השני נותן $5$:
+      $\int_0^2(\frac12+2y)\,dy=1+4$.
+    wrongFeedback: >-
+      כתבו את האינטגרל כאינטגרל חוזר: הפנימי לפי $y$ מ-$0$ עד $2$, החיצוני לפי $x$ מ-$0$ עד $1$.
+    commonWrong:
+      - value: 4
+        feedback: >-
+          זה $\int_0^2\int_0^1(x+2y)\,dy\,dx$: החלפתם את התפקידים של $x$ ו-$y$ בגבולות. $x$ נע על $[0,1]$ ו-$y$ על $[0,2]$, בכל סדר.
+        misconception: MC-c0-fubini-swap-symbols
+
+  - id: Q-0.5-swap-limits
+    type: mc
+    objectives: [OBJ-0.5-2, OBJ-0.5-1]
+    level: mid
+    prompt: >-
+      החליפו את סדר האינטגרציה: $\displaystyle\int_0^1\int_{x^2}^{x}f(x,y)\,dy\,dx=\ ?$
+    choices:
+      - text: '$\displaystyle\int_0^1\int_{y}^{\sqrt y}f(x,y)\,dx\,dy$'
+        correct: true
+        feedback: >-
+          נכון. התחום הוא $0\le x\le1$, $x^2\le y\le x$. לכל $y\in[0,1]$, $x$ צריך לקיים $y\le x$ (מ-$y\le x$) ו-$x\le\sqrt y$
+          (מ-$x^2\le y$). בדיקה: ב-$y=\frac14$ מתקבל $\frac14\le x\le\frac12$.
+      - text: '$\displaystyle\int_0^1\int_{x^2}^{x}f(x,y)\,dx\,dy$'
+        feedback: >-
+          הגבולות $x^2$ ו-$x$ תלויים ב-$x$, ואי אפשר שיהיו גבולות של אינטגרל לפי $x$. צריך לתאר את התחום מחדש.
+        misconception: MC-c0-fubini-swap-symbols
+      - text: '$\displaystyle\int_0^1\int_{\sqrt y}^{y}f(x,y)\,dx\,dy$'
+        feedback: >-
+          הגבולות הפוכים: ל-$y\in(0,1)$ מתקיים $\sqrt y>y$, והאינטגרל הפנימי היה יוצא עם סימן הפוך. הכניסה לתחום (משמאל)
+          היא $x=y$, והיציאה $x=\sqrt y$.
+        misconception: MC-c0-fubini-wrong-region
+      - text: '$\displaystyle\int_0^1\int_{0}^{1}f(x,y)\,dx\,dy$'
+        feedback: >-
+          זה כל הריבוע, לא התחום שבין הפרבולה לישר.
+        misconception: MC-c0-fubini-wrong-region
+
+  - id: Q-0.5-swap-exp
+    type: numeric
+    objectives: [OBJ-0.5-2]
+    level: mid
+    prompt: >-
+      חשבו את $\displaystyle\int_0^1\int_x^1 e^{y^2}\,dy\,dx$. (רמז: לפונקציה $e^{y^2}$ אין פונקציה קדומה אלמנטרית; החליפו
+      סדר.)
+    answer: 0.8591409
+    tolerance: 0.0002
+    correctFeedback: >-
+      נכון: $\frac{e-1}{2}\approx0.8591$. התחום $0\le x\le y\le1$ מתואר גם כ-$0\le y\le1$, $0\le x\le y$. אז
+      $\int_0^1\left(\int_0^y dx\right)e^{y^2}dy=\int_0^1 y\,e^{y^2}dy=\frac12\left[e^{y^2}\right]_0^1=\frac{e-1}2$. פוביני מותר כי
+      $e^{y^2}$ רציפה על המשולש.
+    wrongFeedback: >-
+      שרטטו את המשולש $0\le x\le y\le1$ ותארו אותו עם $y$ בחוץ. האינטגרל הפנימי לפי $x$ נותן גורם $y$, והוא מה שמאפשר
+      את הפונקציה הקדומה.
+    commonWrong:
+      - value: 0.6035108
+        feedback: >-
+          זה $\int_0^1(1-y)e^{y^2}dy$, האינטגרל על המשולש **המשלים** $y\le x\le1$. לכל $y$, $x$ נע מ-$0$ עד $y$.
+        misconception: MC-c0-fubini-wrong-region
+      - value: 1.4626517
+        feedback: >-
+          זה $\int_0^1 e^{y^2}dy$, כאילו האינטגרל הפנימי לפי $x$ שווה $1$. אבל $x$ נע מ-$0$ עד $y$, והאורך הוא $y$.
+        misconception: MC-c0-fubini-wrong-region
+
+  - id: Q-0.5-fubini-fail
+    type: twotier
+    objectives: [OBJ-0.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f(x,y)=\frac{x^2-y^2}{(x^2+y^2)^2}$ על $(0,1]^2$. לכל $x\in(0,1]$: $\int_0^1f(x,y)\,dy=\frac{1}{1+x^2}$, ולכן
+      $\int_0^1\int_0^1f\,dy\,dx=\frac\pi4$; ובסדר השני $\int_0^1\int_0^1f\,dx\,dy=-\frac\pi4$. האם זה סותר את משפט פוביני?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. ההנחה של פוביני, ש-$f$ אינטגרבילית על הריבוע, אינה מתקיימת.
+      - text: כן
+        feedback: >-
+          משפט נסתר רק כשההנחות שלו מתקיימות והמסקנה לא. כאן $f$ אינה חסומה ליד הראשית, ולכן אינה אינטגרבילית רימן על
+          הריבוע.
+        misconception: MC-c0-fubini-no-hypotheses
+    reasons:
+      - text: '$f$ אינה חסומה ליד הראשית (למשל $f(x,0)=\frac1{x^2}$), ולכן אינה אינטגרבילית רימן על הריבוע'
+        correct: true
+        feedback: >-
+          בדיוק. פוביני מבטיח שוויון של שני האינטגרלים החוזרים לפונקציה אינטגרבילית (למשל רציפה על תיבה סגורה). כאן שני
+          האינטגרלים החוזרים קיימים, ובכל זאת שונים.
+      - text: 'הפונקציה אנטי-סימטרית, $f(y,x)=-f(x,y)$, ולכן האינטגרל שלה אפס, ואחד החישובים שגוי'
+        feedback: >-
+          שני החישובים נכונים. האנטי-סימטריה אכן מסבירה למה התוצאות הפוכות בסימן, אבל אין כאן "אינטגרל כפול" שיכול להיות
+          אפס: $f$ אינה אינטגרבילית.
+        misconception: MC-c0-fubini-no-hypotheses
+      - text: 'אפשר תמיד להחליף סדר אינטגרציה, כך שהתוצאה $-\frac\pi4$ חייבת להיות טעות חישוב'
+        feedback: >-
+          החלפת סדר מותרת תחת ההנחות של פוביני בלבד. בדקו: $\frac{\partial}{\partial y}\frac{y}{x^2+y^2}=f(x,y)$, ובאופן
+          סימטרי $\frac{\partial}{\partial x}\frac{-x}{x^2+y^2}=f(x,y)$.
+        misconception: MC-c0-fubini-no-hypotheses
+
+  - id: Q-0.5-area
+    type: numeric
+    objectives: [OBJ-0.5-3]
+    level: basic
+    prompt: >-
+      חשבו את השטח של התחום $D=\{(x,y):\ 0\le x\le1,\ x^2\le y\le x\}$ כ-$\iint_D1\,dA$.
+    answer: 0.1666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\frac16$. $\int_0^1\int_{x^2}^{x}1\,dy\,dx=\int_0^1(x-x^2)\,dx=\frac12-\frac13=\frac16$.
+    wrongFeedback: >-
+      האינטגרל הפנימי של $1$ לפי $y$ הוא אורך הקטע $[x^2,x]$, כלומר $x-x^2$.
+    commonWrong:
+      - value: -0.1666667
+        feedback: >-
+          שטח אינו שלילי. הגבולות הפוכים: על $[0,1]$, $x^2\le x$, ולכן הגבול התחתון $x^2$ והעליון $x$.
+        misconception: MC-c0-fubini-wrong-region
+
+  - id: Q-0.5-pyramid
+    type: numeric
+    objectives: [OBJ-0.5-3]
+    level: mid
+    prompt: >-
+      פירמידה שבסיסה הריבוע $[-1,1]^2$ במישור $z=0$ וקודקודה $(0,0,3)$. בגובה $z\in[0,3]$ החתך הוא הריבוע
+      $|x|,|y|\le1-\frac z3$. חשבו את הנפח שלה כ-$\iiint 1\,dV$, בעזרת פוביני.
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. שטח החתך בגובה $z$ הוא $A(z)=\left(2\left(1-\frac z3\right)\right)^2$, ולפי פוביני
+      $V=\int_0^3A(z)\,dz=4\int_0^3\left(1-\frac z3\right)^2dz=4\cdot1=4$. זה שליש מבסיס ($4$) כפול גובה ($3$).
+    wrongFeedback: >-
+      פוביני: $\iiint1\,dV=\int_0^3\left(\iint_{P_z}1\,dA\right)dz=\int_0^3A(z)\,dz$, כש-$P_z$ החתך בגובה $z$. אורך הצלע של
+      החתך הוא $2\left(1-\frac z3\right)$.
+    commonWrong:
+      - value: 12
+        feedback: >-
+          $12$ הוא שטח הבסיס כפול הגובה, נפח של מנסרה. כאן החתך קטן עם הגובה, ו-$A(z)$ אינו קבוע.
+        misconception: MC-c0-cross-section-constant
+
+  - id: Q-0.5-cavalieri
+    type: twotier
+    objectives: [OBJ-0.5-3, OBJ-0.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לשני גופים חסומים $K_1,K_2\subset\mathbb R^3$, שלשניהם יש נפח, אותו שטח חתך בכל גובה: $A_1(z)=A_2(z)$ לכל $z$. האם
+      בהכרח יש להם אותו נפח?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. לפי פוביני $\operatorname{vol}(K_i)=\int A_i(z)\,dz$, והאינטגרנדים שווים.
+      - text: 'לא, זה תלוי גם בצורת החתכים'
+        feedback: >-
+          הנפח מתקבל מאינטגרל של שטחי החתכים בלבד. עיגול וריבוע בעלי אותו שטח תורמים אותו דבר.
+        misconception: MC-c0-cavalieri-shape
+    reasons:
+      - text: 'לפי פוביני $\iiint_K1\,dV=\int\left(\iint_{K_z}1\,dA\right)dz=\int A(z)\,dz$, כש-$K_z$ החתך בגובה $z$'
+        correct: true
+        feedback: >-
+          בדיוק: עיקרון קוולירי הוא פוביני לפונקציה $1$. (בהנחה שהחתכים בעלי שטח; זה מתקיים בגופים שלנו.)
+      - text: 'אם החתכים באותו שטח, הם חופפים, ולכן הגופים חופפים'
+        feedback: >-
+          חתכים באותו שטח אינם חופפים בהכרח: עיגול וריבוע. הגופים יכולים להיות שונים בצורה ובכל זאת שווים בנפח.
+        misconception: MC-c0-cavalieri-shape
+      - text: 'הנפח הוא שטח החתך התחתון כפול הגובה'
+        feedback: >-
+          רק כשהחתך קבוע. בפירמידה, למשל, זה נותן פי $3$ מהנפח.
+        misconception: MC-c0-cross-section-constant
+
+  - id: Q-0.5-tetra
+    type: numeric
+    objectives: [OBJ-0.5-2, OBJ-0.5-3]
+    level: exam
+    prompt: >-
+      $T=\{(x,y,z):\ x,y,z\ge0,\ x+y+z\le1\}$. חשבו את $\iiint_T x\,dV$.
+    answer: 0.0416667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\frac1{24}$. $\int_0^1\int_0^{1-x}\int_0^{1-x-y}x\,dz\,dy\,dx=\int_0^1x\int_0^{1-x}(1-x-y)\,dy\,dx=\int_0^1x\frac{(1-x)^2}2dx=\frac12\cdot\frac1{12}=\frac1{24}$.
+      בדיקה: הנפח הוא $\frac16$ והממוצע של $x$ על $T$ הוא $\frac14$ (מרכז הכובד של טטראדר), ו-$\frac16\cdot\frac14=\frac1{24}$.
+    wrongFeedback: >-
+      תארו את $T$ כ-$0\le x\le1$, $0\le y\le1-x$, $0\le z\le1-x-y$, ושלבו מבפנים החוצה.
+    commonWrong:
+      - value: 0.1666667
+        feedback: >-
+          $\frac16$ הוא **הנפח** של $T$, $\iiint_T1\,dV$. כאן האינטגרנד הוא $x$.
+        misconception: MC-c0-integrand-dropped

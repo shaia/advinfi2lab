@@ -1,0 +1,149 @@
+---
+/**
+ * Cover illustration: curvature drawn exactly. The ellipse γ(t) = (2 cos t, sin t), the point γ(t₀) with
+ * t₀ = 0.25, its unit tangent t and principal normal n, and the osculating circle: centre γ + n/κ, radius
+ * ρ = 1/κ. κ, the frame and the centre come from src/math/geometry.ts (κ = 2/(4 sin² t + cos² t)^{3/2}, so
+ * here κ ≈ 1.554 and ρ ≈ 0.644), so the picture is a check on the numbers, not a decoration
+ * (tests/e2e/home.spec.ts reads the circle back and checks that it passes through the point with radius 1/κ
+ * and its centre on the normal). The tangent and the normal also differ in arrowhead (filled triangle vs open
+ * chevron) and carry their letters: never colour alone. The circle draws itself in once, unless the reader
+ * asked for stillness.
+ */
+import { curvature, frenet, osculatingCentre } from '~/math/geometry';
+
+const W = 640;
+const H = 420;
+const S = 118; // px per unit, equal on both axes so the circle is round
+const cx = W / 2;
+const cy = H / 2;
+const sx = (x: number) => cx + x * S;
+const sy = (y: number) => cy - y * S; // y-up world
+
+const ellipse = (t: number): readonly [number, number, number] => [2 * Math.cos(t), Math.sin(t), 0];
+const t0 = 0.25;
+const P = ellipse(t0);
+const kappa = curvature(ellipse, t0);
+const rho = 1 / kappa;
+const { t: T, n: Nrm } = frenet(ellipse, t0);
+const C = osculatingCentre(ellipse, t0);
+
+const path = Array.from({ length: 241 }, (_, i) => {
+  const [x, y] = ellipse((i / 240) * 2 * Math.PI);
+  return `${i === 0 ? 'M' : 'L'}${sx(x).toFixed(2)},${sy(y).toFixed(2)}`;
+}).join(' ') + ' Z';
+
+const LEN = 0.85; // arrow length in world units
+const tip = (d: readonly number[]) => [P[0] + LEN * d[0], P[1] + LEN * d[1]] as const;
+const tT = tip(T);
+const tN = tip(Nrm);
+/** an arrowhead at the tip of direction d: a filled triangle (shape 'tri') or an open chevron ('chev'), in px */
+function head(end: readonly [number, number], d: readonly number[]): string {
+  const [ex, ey] = [sx(end[0]), sy(end[1])];
+  const [ux, uy] = [d[0], -d[1]]; // screen direction
+  const [px, py] = [-uy, ux];
+  const back = 13, half = 6.5;
+  return `${(ex - ux * back + px * half).toFixed(2)},${(ey - uy * back + py * half).toFixed(2)} ${ex.toFixed(2)},${ey.toFixed(2)} ${(ex - ux * back - px * half).toFixed(2)},${(ey - uy * back - py * half).toFixed(2)}`;
+}
+const label = (end: readonly [number, number], d: readonly number[], k = 0.2) => ({ x: sx(end[0] + k * d[0]), y: sy(end[1] + k * d[1]) + 6 });
+---
+
+<svg
+  class="cover-art"
+  viewBox={`0 0 ${W} ${H}`}
+  role="img"
+  aria-label={`אליפסה, ונקודה עליה עם וקטור המשיק t ווקטור הנורמל הראשי n. המעגל המנשק בנקודה עובר דרכה, מרכזו על הנורמל, ורדיוסו אחד חלקי העקמומיות: בערך ${rho.toFixed(2)}`}
+  data-kappa={kappa}
+  data-scale={S}
+>
+  <line class="axis" x1={sx(-2.5)} y1={sy(0)} x2={sx(2.5)} y2={sy(0)} />
+  <line class="axis" x1={sx(0)} y1={sy(-1.5)} x2={sx(0)} y2={sy(1.5)} />
+  <path class="curve" d={path} />
+  <circle class="osc" cx={sx(C[0])} cy={sy(C[1])} r={rho * S} data-cx={C[0]} data-cy={C[1]} />
+  <line class="radius" x1={sx(C[0])} y1={sy(C[1])} x2={sx(P[0])} y2={sy(P[1])} />
+  <circle class="centre" cx={sx(C[0])} cy={sy(C[1])} r="4" />
+  <g class="frame">
+    <line class="t" x1={sx(P[0])} y1={sy(P[1])} x2={sx(tT[0])} y2={sy(tT[1])} />
+    <polygon class="t head" points={head(tT, T)} />
+    <line class="n" x1={sx(P[0])} y1={sy(P[1])} x2={sx(tN[0])} y2={sy(tN[1])} />
+    <polyline class="n head" points={head(tN, Nrm)} />
+  </g>
+  <circle class="point" cx={sx(P[0])} cy={sy(P[1])} r="5.5" data-x={P[0]} data-y={P[1]} />
+  <g class="labels">
+    <text class="t" x={label(tT, T).x} y={label(tT, T).y}>t</text>
+    <text class="n" x={label(tN, Nrm).x} y={label(tN, Nrm).y}>n</text>
+    <text x={sx((C[0] + P[0]) / 2)} y={sy((C[1] + P[1]) / 2) + 26}>ρ = 1/κ</text>
+  </g>
+</svg>
+
+<style>
+  .cover-art {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    direction: ltr;
+  }
+  .axis {
+    stroke: var(--ink-3);
+    stroke-width: 1;
+  }
+  .curve {
+    fill: none;
+    stroke: var(--curve);
+    stroke-width: 2.4;
+  }
+  .osc {
+    fill: none;
+    stroke: var(--normal);
+    stroke-width: 1.6;
+    stroke-dasharray: 7 5;
+    animation: draw 1.4s ease-out both;
+  }
+  .radius {
+    stroke: var(--ink-2);
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+  }
+  .centre {
+    fill: var(--normal);
+  }
+  .point {
+    fill: var(--curve);
+    stroke: var(--paper);
+    stroke-width: 2;
+  }
+  .frame line {
+    stroke-width: 2.6;
+  }
+  .frame .t {
+    stroke: var(--tangent);
+  }
+  .frame polygon.t {
+    fill: var(--tangent);
+  }
+  .frame .n {
+    stroke: var(--normal);
+  }
+  .frame polyline.n {
+    fill: none;
+    stroke-width: 2.6;
+    stroke-linejoin: round;
+  }
+  .labels text {
+    font: 600 17px var(--font-ui);
+    fill: var(--ink-2);
+    text-anchor: middle;
+  }
+  .labels .t {
+    fill: var(--tangent);
+    font-style: italic;
+  }
+  .labels .n {
+    fill: var(--normal);
+    font-style: italic;
+  }
+  @keyframes draw {
+    from {
+      opacity: 0;
+    }
+  }
+</style>

@@ -1,0 +1,428 @@
+# Chapter 9 review — inner product spaces and projections (lessons 9.1–9.5), easy to hard.
+# Every lesson is touched; most questions combine two lessons. Each hint names the lesson to go back to.
+# Nothing here uses chapter 10 (Fourier convergence, Bessel, Parseval). Numbers recomputed in scratchpad ch9/check*.ts.
+chapter: 9
+questions:
+  - id: Q-9-review-01
+    type: numeric
+    objectives: [OBJ-9.1-1]
+    level: basic
+    prompt: >-
+      ב-$C[-1,1]$ עם $\langle f,g\rangle=\int_{-1}^1fg$, חשבו את $\langle 1+x,\ x\rangle$.
+    answer: 0.6666666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\int_{-1}^1(x+x^2)\,dx=0+\frac23$. החלק $\int_{-1}^1x\,dx$ מתאפס כי האינטגרנד אי-זוגי.
+    wrongFeedback: >-
+      הכפילו את הפונקציות ובצעו אינטגרציה על $[-1,1]$, לא על $[0,1]$.
+    commonWrong:
+      - value: 0.8333333333
+        feedback: >-
+          $\frac12+\frac13$ הוא האינטגרל על $[0,1]$. המכפלה הפנימית תלויה בקטע, וכאן הוא $[-1,1]$.
+        misconception: MC-c9-orthogonality-any-interval
+    hints:
+      - 'חזרו לשיעור 9.1: המכפלה הפנימית על מרחב הפונקציות הרציפות.'
+
+  - id: Q-9-review-02
+    type: twotier
+    objectives: [OBJ-9.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם הנורמה $\|f\|_1=\int_0^1|f|$ על $C[0,1]$ באה ממכפלה פנימית?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון: חוק המקבילית נכשל בה.
+      - text: כן
+        feedback: >-
+          היא נורמה, אבל לא כל נורמה באה ממכפלה פנימית. בדקו את חוק המקבילית על $f(x)=x$ ו-$g(x)=1-x$.
+        misconception: MC-c9-every-norm-inner
+    reasons:
+      - text: 'עם $f=x$, $g=1-x$: $\|f+g\|_1^2+\|f-g\|_1^2=1+\frac14$, ואילו $2\|f\|_1^2+2\|g\|_1^2=\frac12+\frac12=1$'
+        correct: true
+        feedback: >-
+          בדיוק: $\|f+g\|_1=\int_0^11=1$, $\|f-g\|_1=\int_0^1|2x-1|\,dx=\frac12$, $\|f\|_1=\|g\|_1=\frac12$.
+      - text: 'כן, כי היא אינטגרל, כמו $\int fg$'
+        feedback: >-
+          גם נורמת המקסימום "נראית" טבעית ולא באה ממכפלה פנימית. המבחן הוא חוק המקבילית, והוא נכשל כאן.
+        misconception: MC-c9-every-norm-inner
+      - text: 'עם $f=g\equiv1$ החוק מתקיים, $4+0=2+2$, ולכן הנורמה באה ממכפלה פנימית'
+        feedback: >-
+          זוג אחד אינו מוכיח זהות. הזוג $x$, $1-x$ מפר אותה.
+        misconception: MC-c9-one-example-proves
+    hints:
+      - 'חזרו לשיעור 9.1: חוק המקבילית כמבחן לנורמה שבאה ממכפלה פנימית.'
+
+  - id: Q-9-review-03
+    type: numeric
+    objectives: [OBJ-9.2-1, OBJ-9.2-3]
+    level: basic
+    prompt: >-
+      ב-$C[-\pi,\pi]$ עם $\int fg$, חשבו את $\|\cos x+2\sin3x\|^2$.
+    answer: 15.7079632679
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\cos x\perp\sin3x$, ולכן מפיתגורס $\|\cos x\|^2+4\|\sin3x\|^2=\pi+4\pi=5\pi$.
+    wrongFeedback: >-
+      הפונקציות ניצבות אבל לא מנורמלות: $\|\cos x\|^2=\|\sin3x\|^2=\pi$.
+    commonWrong:
+      - value: 5
+        feedback: >-
+          $1+4$ נכון רק במערכת אורתונורמלית. כאן כל ריבוע מוכפל ב-$\pi$.
+        misconception: MC-c9-pythagoras-no-weights
+      - value: 31.4159265359
+        feedback: >-
+          $10\pi$: $\|\cos x\|^2=\pi$, לא $2\pi$.
+        misconception: MC-c9-trig-norm-2pi
+      - value: 28.2743338823
+        feedback: >-
+          $9\pi=(1+2)^2\pi$: חיברתם את המקדמים לפני הריבוע. בווקטורים ניצבים מחברים ריבועים.
+        misconception: MC-c9-pythagoras-add-norms
+    hints:
+      - 'חזרו לשיעור 9.2: האורתוגונליות של הפונקציות הטריגונומטריות ומשפט פיתגורס.'
+
+  - id: Q-9-review-04
+    type: numeric
+    objectives: [OBJ-9.3-3]
+    level: basic
+    prompt: >-
+      מהו הקבוע הקרוב ביותר ל-$e^x$ ב-$C[0,1]$ עם $\int fg$?
+    answer: 1.7182818285
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\frac{\langle e^x,1\rangle}{\|1\|^2}=\int_0^1e^x\,dx=e-1$, הממוצע האינטגרלי.
+    wrongFeedback: >-
+      ההטלה על הקבועים היא $\frac{\langle f,1\rangle}{\langle1,1\rangle}$.
+    commonWrong:
+      - value: 1.8591409142
+        feedback: >-
+          $\frac{1+e}2$ הוא ממוצע הערכים בקצוות. הקירוב תלוי בכל הערכים, דרך האינטגרל.
+        misconception: MC-c9-ls-pointwise
+      - value: 1.6487212707
+        feedback: >-
+          $e^{1/2}$ הוא הערך באמצע. הקבוע הטוב ביותר הוא $\int_0^1e^x\,dx$.
+        misconception: MC-c9-ls-pointwise
+    hints:
+      - 'חזרו לשיעור 9.3: הקבוע הטוב ביותר הוא הממוצע.'
+
+  - id: Q-9-review-05
+    type: numeric
+    objectives: [OBJ-9.2-1, OBJ-9.3-1]
+    level: mid
+    prompt: >-
+      ב-$C[-\pi,\pi]$ עם $\int fg$, יהי $Y$ תת-המרחב שנפרש על ידי $1$ ו-$\cos x$, ו-$f(x)=\cos^2x+\sin x$. כתבו
+      $P_Yf=\alpha+\beta\cos x$. מהו $\alpha$?
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f=\frac12+\frac12\cos2x+\sin x$, ושני האיברים האחרונים ניצבים ל-$1$ ול-$\cos x$. לכן $P_Yf=\frac12$
+      ($\alpha=\frac12$, $\beta=0$).
+    wrongFeedback: >-
+      כתבו את $\cos^2x$ בעזרת $\cos2x$, או חשבו $\alpha=\frac{\langle f,1\rangle}{\|1\|^2}$ עם $\|1\|^2=2\pi$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          ל-$\cos^2x$ אין קבוע "גלוי", אבל $\cos^2x=\frac12+\frac12\cos2x$. ההטלה נקבעת מהמכפלות הפנימיות.
+        misconception: MC-c9-projection-drop-hidden
+      - value: 3.1415926536
+        feedback: >-
+          $\pi=\langle f,1\rangle$. המקדם הוא $\frac{\langle f,1\rangle}{\|1\|^2}=\frac{\pi}{2\pi}$.
+        misconception: MC-c9-coef-no-divide
+    hints:
+      - 'חזרו לשיעור 9.3: חישוב הטלה בעזרת מערכת אורתוגונלית; ולשיעור 9.2 לנורמות של הפונקציות הטריגונומטריות.'
+
+  - id: Q-9-review-06
+    type: numeric
+    objectives: [OBJ-9.2-2, OBJ-9.3-3]
+    level: mid
+    prompt: >-
+      ב-$C[-1,1]$ עם $\int fg$, יהי $p$ הישר הקרוב ביותר ל-$|x|$. חשבו את $\||x|-p\|^2$.
+    answer: 0.1666666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $1$ ו-$x$ ניצבים על $[-1,1]$; $\langle|x|,x\rangle=0$ (אי-זוגי), ו-$\frac{\langle|x|,1\rangle}{\|1\|^2}=\frac12$. לכן
+      $p=\frac12$ ו-$\||x|-p\|^2=\||x|\|^2-\frac14\|1\|^2=\frac23-\frac12=\frac16$.
+    wrongFeedback: >-
+      השתמשו בבסיס האורתוגונלי $P_0=1$, $P_1=x$, ובפיתגורס: $\|f-p\|^2=\|f\|^2-\|p\|^2$.
+    commonWrong:
+      - value: 0.4166666667
+        feedback: >-
+          $\frac23-\frac14$: שכחתם ש-$\|p\|^2=\left(\frac12\right)^2\|1\|^2$ עם $\|1\|^2=2$.
+        misconception: MC-c9-pythagoras-no-weights
+      - value: 0.4082482905
+        feedback: >-
+          זה $\frac1{\sqrt6}$, המרחק עצמו. השאלה מבקשת את ריבועו.
+        misconception: MC-c9-norm-vs-square
+    hints:
+      - 'חזרו לשיעור 9.3: הפולינום הטוב ביותר ומרחקו; ולשיעור 9.2 ל-$P_0$, $P_1$ ולנורמות שלהם.'
+
+  - id: Q-9-review-07
+    type: numeric
+    objectives: [OBJ-9.2-2, OBJ-9.1-1]
+    level: mid
+    prompt: >-
+      ב-$C[0,2]$ עם $\int_0^2fg$, הפולינום $x^2-2x+c$ ניצב ל-$1$ ול-$x$. מהו $c$?
+    answer: 0.6666666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הניצבות ל-1: $\int_0^2(x^2-2x+c)\,dx=\frac83-4+2c=0$, ולכן $c=\frac23$; ואז גם
+      $\int_0^2x(x^2-2x+\frac23)\,dx=4-\frac{16}3+\frac43=0$. זה $(x-1)^2-\frac13$: הפולינום $P_2$ מוזז מ-$[-1,1]$ ל-$[0,2]$.
+    wrongFeedback: >-
+      כתבו את תנאי הניצבות ל-1 כמשוואה ב-$c$, ובדקו גם את הניצבות ל-$x$.
+    commonWrong:
+      - value: -0.3333333333
+        feedback: >-
+          זה הקבוע של $x^2-\frac13$, הניצב ל-1 על $[-1,1]$. על $[0,2]$ המכפלות אחרות.
+        misconception: MC-c9-orthogonality-any-interval
+      - value: 1.3333333333
+        feedback: >-
+          כתבתם $\int_0^2c\,dx=c$ וקיבלתם $\frac83-4+c=0$. אבל $\int_0^2c\,dx=c\,\|1\|^2=2c$: הנורמה בריבוע של הקבוע 1
+          היא אורך הקטע, 2.
+        misconception: MC-c9-cs-interval-length
+    hints:
+      - 'חזרו לשיעור 9.2: גרם-שמידט תלוי בקטע.'
+
+  - id: Q-9-review-08
+    type: multi
+    objectives: [OBJ-9.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהסדרות הבאות (עם $n\in\mathbb N$) שייכות ל-$\ell^2$? סמנו את כולן.
+    choices:
+      - text: '$x_n=\frac1n$'
+        correct: true
+        feedback: 'נכון: $\sum\frac1{n^2}$ מתכנס.'
+      - text: '$x_n=\frac1{\sqrt n}$'
+        feedback: >-
+          $\sum x_n^2=\sum\frac1n$ מתבדר. האיברים שואפים ל-0, וזה לא מספיק.
+        misconception: MC-c9-terms-to-zero
+      - text: '$x_n=\frac{\sin n}n$'
+        correct: true
+        feedback: 'נכון: $\frac{\sin^2n}{n^2}\le\frac1{n^2}$, ומבחן ההשוואה.'
+      - text: '$x_n=n^{-0.6}$'
+        correct: true
+        feedback: 'נכון: $\sum n^{-1.2}$ מתכנס, כי $1.2>1$.'
+      - text: '$x_n=\frac{(-1)^n}{\sqrt n}$'
+        feedback: >-
+          הטור $\sum\frac{(-1)^n}{\sqrt n}$ מתכנס (לייבניץ), אבל השייכות ל-$\ell^2$ נקבעת מסכום הריבועים, $\sum\frac1n=\infty$.
+        misconception: MC-c9-norm-without-square
+    hints:
+      - 'חזרו לשיעור 9.1: המרחב $\ell^2$ מוגדר בסכום הריבועים.'
+
+  - id: Q-9-review-09
+    type: twotier
+    objectives: [OBJ-9.1-2, OBJ-9.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם ייתכן שבמרחב מכפלה פנימית $x\perp y$, $\|x\|=3$, $\|y\|=4$ ו-$\|x-y\|=7$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון: הניצבות קובעת $\|x-y\|=5$.
+      - text: כן
+        feedback: >-
+          אי-שוויון המשולש מתיר עד 7, אבל הניצבות קובעת את הערך בדיוק: $\|x-y\|^2=9+16$.
+        misconception: MC-c9-pythagoras-add-norms
+    reasons:
+      - text: 'מפיתגורס $\|x-y\|^2=\|x\|^2+\|y\|^2=25$, ולכן $\|x-y\|=5\neq7$'
+        correct: true
+        feedback: >-
+          בדיוק. השוויון $\|x-y\|=\|x\|+\|y\|$ מתקבל רק כש-$y$ כפולה שלילית של $x$, וזה סותר ניצבות ($x,y\neq0$).
+      - text: 'אי-שוויון המשולש נותן $\|x-y\|\le7$, ולכן 7 אפשרי'
+        feedback: >-
+          אי-שוויון המשולש הוא רק חסם. הניצבות קובעת את הערך: $5$.
+        misconception: MC-c9-pythagoras-add-norms
+      - text: 'בניצבות $\|x-y\|^2=\|x\|^2-\|y\|^2$, ולכן הערך דמיוני'
+        feedback: >-
+          $\|x-y\|^2=\|x\|^2-2\langle x,y\rangle+\|y\|^2$, ובניצבות האיבר המעורב נעלם; הסימן של $\|y\|^2$ חיובי.
+        misconception: MC-c9-drop-cross-term
+    hints:
+      - 'חזרו לשיעור 9.2: משפט פיתגורס; ולשיעור 9.1 לאי-שוויון המשולש.'
+
+  - id: Q-9-review-10
+    type: twotier
+    objectives: [OBJ-9.1-3, OBJ-9.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      במרחב מכפלה פנימית ממשי, ידוע ש-$\|x+y\|=\|x-y\|$. האם בהכרח $x\perp y$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון: מקבילית שאלכסוניה שווים היא מלבן.
+      - text: לא, רק אם בנוסף $\|x\|=\|y\|$
+        feedback: >-
+          $\|x\|=\|y\|$ הוא התנאי לכך שהאלכסונים ניצבים זה לזה (מעוין). אלכסונים **שווים** נותנים ניצבות של הצלעות, בלי תנאי נוסף.
+        misconception: MC-c9-parallelogram-form
+    reasons:
+      - text: 'מזהות הפולריזציה $\langle x,y\rangle=\frac14\left(\|x+y\|^2-\|x-y\|^2\right)=0$'
+        correct: true
+        feedback: >-
+          בדיוק.
+      - text: 'מחוק המקבילית נובע $\|x\|=\|y\|$, ולכן המקבילית מעוין והצלעות ניצבות'
+        feedback: >-
+          חוק המקבילית נותן כאן $2\|x\|^2+2\|y\|^2=2\|x+y\|^2$, ולא שום דבר על $\|x\|$ לעומת $\|y\|$: $x=(1,0)$ ו-$y=(0,2)$
+          מקיימים $\|x+y\|=\|x-y\|$ עם $\|x\|\neq\|y\|$. ובמעוין דווקא האלכסונים ניצבים, לא הצלעות.
+        misconception: MC-c9-parallelogram-form
+      - text: 'כי $\|x+y\|=\|x\|+\|y\|$ ו-$\|x-y\|=\|x\|-\|y\|$'
+        feedback: >-
+          אלה לא זהויות. $\|x+y\|=\|x\|+\|y\|$ רק כשהם באותו כיוון.
+        misconception: MC-c9-identity-no-squares
+    hints:
+      - 'חזרו לשיעור 9.1: זהות הפולריזציה.'
+
+  - id: Q-9-review-11
+    type: twotier
+    objectives: [OBJ-9.3-2, OBJ-9.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $Y$ תת-מרחב סוף-ממדי של $C[a,b]$ עם $\int fg$, ו-$f_n\to f$ במידה שווה על $[a,b]$. האם $\|P_Yf_n-P_Yf\|\to0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון: ההטלה לא מגדילה מרחקים, והתכנסות במידה שווה גוררת התכנסות בממוצע ריבועי.
+      - text: לא בהכרח, כי התכנסות במידה שווה אינה גוררת התכנסות בממוצע ריבועי
+        feedback: >-
+          הכיוון הפוך: $\|g\|_2\le\sqrt{b-a}\max|g|$, ולכן במידה שווה גורר ממוצע ריבועי. מה שלא נכון הוא הכיוון ההפוך.
+        misconception: MC-c9-L2-implies-uniform
+    reasons:
+      - text: '$P_Y$ לינארית ו-$\|P_Yh\|\le\|h\|$ (מפיתגורס $\|h\|^2=\|P_Yh\|^2+\|h-P_Yh\|^2$), ולכן $\|P_Yf_n-P_Yf\|\le\|f_n-f\|\le\sqrt{b-a}\max|f_n-f|\to0$'
+        correct: true
+        feedback: >-
+          בדיוק: שני צעדים, כל אחד משיעור אחר.
+      - text: '$\|P_Yh\|\le\max|h|$, ולכן $\|P_Yf_n-P_Yf\|\le\max|f_n-f|$'
+        feedback: >-
+          חסר הגורם $\sqrt{b-a}$: $\|P_Yh\|\le\|h\|\le\sqrt{b-a}\max|h|$. המסקנה נכונה, אבל החסם שגוי כש-$b-a>1$.
+        misconception: MC-c9-sup-bound-length
+      - text: 'ההטלה שומרת על נורמות, $\|P_Yh\|=\|h\|$'
+        feedback: >-
+          רק ל-$h\in Y$. באופן כללי $\|P_Yh\|^2=\|h\|^2-\|h-P_Yh\|^2\le\|h\|^2$.
+        misconception: MC-c9-drop-cross-term
+    hints:
+      - 'חזרו לשיעור 9.3 (פיתגורס להטלה) ולשיעור 9.4 (השוואה בין הנורמות).'
+
+  - id: Q-9-review-12
+    type: numeric
+    objectives: [OBJ-9.5-1, OBJ-9.1-2]
+    level: exam
+    prompt: >-
+      ב-$C[0,1]$ עם $\int fg$ (מרחב שאינו שלם), תהי $B=\{f:\|f\|\le1\}$ ו-$g(x)=2x$. מהו המרחק של $g$ מ-$B$?
+    answer: 0.1547005384
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\|g\|=\frac2{\sqrt3}>1$. לכל $f\in B$, מאי-שוויון המשולש $\|g-f\|\ge\|g\|-\|f\|\ge\|g\|-1$, ושוויון מתקבל ב-$f=\frac{g}{\|g\|}=\sqrt3x\in B$.
+      לכן המרחק $\frac2{\sqrt3}-1\approx0.155$, והנקודה הקרובה ביותר קיימת גם בלי שלמות.
+    wrongFeedback: >-
+      חשבו את $\|g\|$, ובדקו את הנקודה $\frac{g}{\|g\|}$ על שפת הכדור.
+    commonWrong:
+      - value: 1.1547005384
+        feedback: >-
+          $\frac2{\sqrt3}=\|g\|$ הוא המרחק למרכז, 0. המרחק לכדור קטן ממנו ברדיוס.
+        misconception: MC-c9-distance-to-center
+      - value: 0.3333333333
+        feedback: >-
+          $\|g\|^2-1=\frac43-1$: חיסרתם את הרדיוס מריבוע הנורמה.
+        misconception: MC-c9-norm-vs-square
+    hints:
+      - 'חזרו לשיעור 9.5: ההטלה על כדור; ולשיעור 9.1 לאי-שוויון המשולש.'
+
+  - id: Q-9-review-13
+    type: rank
+    objectives: [OBJ-9.3-1, OBJ-9.3-2, OBJ-9.5-2]
+    level: exam
+    prompt: >-
+      סדרו את צעדי ההוכחה שבכל מרחב מכפלה פנימית (גם לא שלם) יש לכל $x$ נקודה יחידה הקרובה ביותר בתת-מרחב סוף-ממדי $Y$.
+    help: סדרו מהצעד הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'מפעילים גרם-שמידט על בסיס של $Y$ ומקבלים בסיס אורתונורמלי $e_1,\dots,e_n$'
+      - id: b
+        label: 'מגדירים $y=\sum_{k=1}^n\langle x,e_k\rangle e_k\in Y$'
+      - id: c
+        label: '$\langle x-y,e_j\rangle=0$ לכל $j$, ומהלינאריות $x-y\perp Y$'
+      - id: d
+        label: 'לכל $z\in Y$, מפיתגורס $\|x-z\|^2=\|x-y\|^2+\|y-z\|^2\ge\|x-y\|^2$'
+      - id: e
+        label: 'שוויון רק כש-$z=y$; לכן $y=P_Yx$, ולא השתמשנו בשלמות'
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. הרעיון: בממד סופי בונים את ההטלה במפורש, ולכן אין צורך בסדרה ממזערת ובגבול שלה. זה גם מראה שתת-מרחב סוף-ממדי
+      תמיד שלם "מספיק" בשביל משפט ההטלה.
+    wrongFeedback: >-
+      קודם הבסיס האורתונורמלי, אחר כך ההגדרה של $y$, הניצבות של השגיאה, פיתגורס, והמסקנה.
+    hints:
+      - 'חזרו לשיעור 9.3: ההטלה כקירוב הטוב ביותר; ולשיעור 9.5 להשוואה עם המקרה הכללי.'
+
+  - id: Q-9-review-14
+    type: mc
+    objectives: [OBJ-9.2-2, OBJ-9.3-3]
+    level: exam
+    prompt: >-
+      מהו הפולינום ממעלה עד 2 הקרוב ביותר ל-$x^3$ ב-$C[0,1]$ עם $\int_0^1fg$?
+    choices:
+      - text: '$\frac32x^2-\frac35x+\frac1{20}$'
+        correct: true
+        feedback: >-
+          נכון. אפשר בגרם-שמידט על $1,x,x^2$ ב-$[0,1]$ (מתקבלים $1,\ x-\frac12,\ x^2-x+\frac16$), או ישירות מהדרישה שהשגיאה
+          ניצבת ל-$1,x,x^2$: שלוש משוואות לינאריות במקדמים. בדיקה: השגיאה
+          $x^3-\frac32x^2+\frac35x-\frac1{20}=\frac1{20}(20x^3-30x^2+12x-1)$, ולמשל
+          $\int_0^1\left(x^3-\frac32x^2+\frac35x-\frac1{20}\right)dx=\frac14-\frac12+\frac3{10}-\frac1{20}=0$; באותו אופן היא ניצבת
+          ל-$x$ ול-$x^2$.
+      - text: '$\frac35x$'
+        feedback: >-
+          זה הקירוב הטוב ביותר על $[-1,1]$, שם $x^3$ אי-זוגית והרכיבים הזוגיים מתאפסים. על $[0,1]$ אין סימטריה כזו:
+          $\langle x^3-\frac35x,1\rangle=\frac14-\frac3{10}\neq0$.
+        misconception: MC-c9-orthogonality-any-interval
+      - text: '$\frac16x^2+\frac15x+\frac14$'
+        feedback: >-
+          אלה המקדמים $\langle x^3,x^2\rangle,\langle x^3,x\rangle,\langle x^3,1\rangle$: נוסחת המקדמים עם הבסיס $1,x,x^2$, שאינו
+          אורתוגונלי על $[0,1]$.
+        misconception: MC-c9-projection-any-basis
+      - text: '$\frac32x^2-\frac35x$'
+        feedback: >-
+          הפולינום הזה מתאפס ב-0 כמו $x^3$, אבל הקירוב אינו אינטרפולציה: השגיאה שלו אינה ניצבת ל-1, כי
+          $\int_0^1\left(x^3-\frac32x^2+\frac35x\right)dx=\frac1{20}\neq0$.
+        misconception: MC-c9-ls-pointwise
+    hints:
+      - 'חזרו לשיעור 9.3 (ריבועים פחותים) ולשיעור 9.2 (גרם-שמידט ופולינומי לז׳נדר).'
+
+  - id: Q-9-review-15
+    type: twotier
+    objectives: [OBJ-9.4-2, OBJ-9.5-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      ב-$H[-1,1]$ עם $\int fg$, תהי $H$ המדרגה ($0$ ל-$x\le0$, $1$ ל-$x>0$). האם יש בתת-המרחב $C[-1,1]$ נקודה קרובה ביותר
+      ל-$H$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון: המרחק הוא 0 ואינו מתקבל.
+      - text: כן, רמפה $f_n$ עם $n$ גדול מספיק
+        feedback: >-
+          $\|f_n-H\|^2=\frac1{3n}$, והרמפה הבאה תמיד קרובה יותר. אין רמפה "אחרונה".
+        misconception: MC-c9-inf-attained
+    reasons:
+      - text: 'הרמפות נותנות $d(H,C[-1,1])=0$; נקודה קרובה ביותר הייתה פונקציה רציפה $g$ עם $\int(g-H)^2=0$, ואין כזו (שיעור 9.4). $C[-1,1]$ אינו סגור ב-$H[-1,1]$'
+        correct: true
+        feedback: >-
+          בדיוק. אותה דוגמה שמראה ש-$C[-1,1]$ אינו שלם בנורמה הזו מראה שהוא אינו סגור בתוך $H[-1,1]$.
+      - text: '$C[-1,1]$ סגור, כי הוא שלם בנורמת המקסימום'
+        feedback: >-
+          הסגירות נמדדת בנורמה של $\int fg$. בה הרמפות הרציפות שואפות ל-$H$, שאינה רציפה.
+        misconception: MC-c9-L2-limit-continuous
+      - text: 'יש נקודה קרובה ביותר: $H$ עצמה'
+        feedback: >-
+          $H\notin C[-1,1]$. הנקודה הקרובה ביותר צריכה להיות בתת-הקבוצה שעליה מטילים.
+        misconception: MC-c9-projection-keeps-outside
+    hints:
+      - 'חזרו לשיעור 9.4 (הרמפות שמתקרבות למדרגה) ולשיעור 9.5 (דוגמאות בלי נקודה קרובה ביותר).'

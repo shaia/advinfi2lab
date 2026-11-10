@@ -1,0 +1,408 @@
+# Lesson 6.2 — conservative fields and potentials.
+# Objectives (src/course.ts):
+#   OBJ-6.2-1  prove that the line integral of a gradient is the difference of the potential at the ends
+#   OBJ-6.2-2  prove the equivalence: conservative, path independent, zero on every closed curve
+#   OBJ-6.2-3  find a potential; show the winding field is not conservative on the plane without the origin
+# Throughout: U ⊂ ℝⁿ open and connected, curves piecewise smooth. No Green (chapter 7): every circulation is computed directly.
+# Keys recomputed with lineIntegral and windingField (src/math/vectorcalc.ts).
+chapter: 6
+questions:
+  - id: Q-6.2-def
+    type: mc
+    objectives: [OBJ-6.2-2, OBJ-6.2-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $U\subseteq\mathbb{R}^n$ פתוחה וקשירה, ו-$\mathbf F$ שדה רציף על $U$. $\mathbf F$ נקרא **שדה משמר** על $U$ אם יש
+      לו **פוטנציאל**: פונקציה $\varphi:U\to\mathbb{R}$ גזירה ברציפות כך ש-$\nabla\varphi=\mathbf F$ בכל $U$. נניח
+      ש-$\mathbf F$ משמר על $U$ וגם גזיר ברציפות. איזו טענה נובעת מכך ישירות?
+    choices:
+      - text: '$\frac{\partial F_i}{\partial x_j}=\frac{\partial F_j}{\partial x_i}$ לכל $i,j$, בכל נקודה של $U$'
+        correct: true
+        feedback: >-
+          נכון. $F_i=\partial_i\varphi$, ו-$\varphi$ גזירה פעמיים ברציפות כי $\mathbf F$ גזיר ברציפות; לפי שוורץ
+          $\partial_j\partial_i\varphi=\partial_i\partial_j\varphi$. זה תנאי **הכרחי**. בשיעור נראה שהוא אינו מספיק: שדה
+          הסיבוב מקיים אותו ב-$\mathbb{R}^2\setminus\{0\}$ ואינו משמר שם.
+      - text: '$\frac{\partial F_i}{\partial x_j}=\frac{\partial F_j}{\partial x_i}$ לכל $i,j$, וכל שדה גזיר ברציפות על $U$ שמקיים זאת הוא משמר על $U$'
+        feedback: >-
+          החלק הראשון נכון, השני לא: שדה הסיבוב $\frac{(-y,x)}{x^2+y^2}$ מקיים את השוויון ב-$\mathbb{R}^2\setminus\{0\}$,
+          והאינטגרל שלו על מעגל היחידה הוא $2\pi$. אילו היה לו פוטנציאל, האינטגרל על מסילה סגורה היה אפס.
+        misconception: MC-c6-mixed-partials-suffice
+      - text: '$\mathbf F$ מוגדר ורציף בכל $\mathbb{R}^n$, כי לפוטנציאל אסור שתהיה נקודה שבה אינו מוגדר'
+        feedback: >-
+          $\frac{(x,y)}{x^2+y^2}$ אינו מוגדר בראשית, והוא הגרדיאנט של $\frac12\ln(x^2+y^2)$ על $\mathbb{R}^2\setminus\{0\}$:
+          משמר שם. ההגדרה דורשת פוטנציאל על $U$ בלבד.
+        misconception: MC-c6-singularity-means-nonconservative
+      - text: 'הפוטנציאל יחיד: אם $\nabla\varphi=\nabla\psi=\mathbf F$ על $U$, אז $\varphi=\psi$'
+        feedback: >-
+          $\varphi+5$ הוא פוטנציאל באותה מידה. מה שנכון (כי $U$ קשירה) הוא ש-$\varphi-\psi$ קבועה. כשמחפשים פוטנציאל,
+          ה"קבוע" הזה הוא החופש שנשאר.
+        misconception: MC-c6-potential-unique
+
+  - id: Q-6.2-ftc
+    type: numeric
+    objectives: [OBJ-6.2-1]
+    level: basic
+    prompt: >-
+      $\mathbf F(x,y,z)=(2xy,\ x^2,\ 1)$ הוא הגרדיאנט של $\varphi=x^2y+z$. חשבו את $\int_\gamma\mathbf F\cdot d\mathbf s$
+      לאורך מסילה חלקה כלשהי מ-$(1,1,0)$ ל-$(2,3,1)$.
+    answer: 12
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\varphi(2,3,1)-\varphi(1,1,0)=(4\cdot3+1)-(1\cdot1+0)=13-1=12$, לכל מסילה בין הנקודות.
+    wrongFeedback: >-
+      $\int_\gamma\nabla\varphi\cdot d\mathbf s=\varphi(\gamma(b))-\varphi(\gamma(a))$: הציבו את נקודת הסוף ואת נקודת
+      ההתחלה בפוטנציאל והחסירו.
+    commonWrong:
+      - value: -12
+        feedback: >-
+          זה ההתחלה פחות הסוף. כלל השרשרת נותן $\frac{d}{dt}\varphi(\gamma(t))=\nabla\varphi\cdot\gamma'$, והמשפט היסודי
+          נותן ערך בסוף פחות ערך בהתחלה.
+        misconception: MC-c6-potential-order
+
+  - id: Q-6.2-find
+    type: mc
+    objectives: [OBJ-6.2-3]
+    level: basic
+    prompt: >-
+      מצאו פוטנציאל לשדה $\mathbf F(x,y,z)=(2xy+z,\ x^2,\ x)$ על $\mathbb{R}^3$.
+    choices:
+      - text: '$\varphi=x^2y+xz$'
+        correct: true
+        feedback: >-
+          נכון. $\int(2xy+z)\,dx=x^2y+xz+g(y,z)$; ההשוואה $\varphi_y=x^2+g_y=x^2$ נותנת $g_y=0$, וההשוואה
+          $\varphi_z=x+g_z=x$ נותנת $g_z=0$. בדיקה: $\nabla(x^2y+xz)=(2xy+z,\ x^2,\ x)$.
+      - text: '$\varphi=2x^2y+2xz$'
+        feedback: >-
+          זה סכום שלוש הפונקציות הקדומות, $(x^2y+xz)+x^2y+xz$. האיברים $x^2y$ ו-$xz$ נספרו פעמיים, והגרדיאנט יוצא
+          $2\mathbf F$.
+        misconception: MC-c6-sum-antiderivatives
+      - text: '$\varphi=x^2y+z$'
+        feedback: >-
+          $\nabla(x^2y+z)=(2xy,\ x^2,\ 1)\ne\mathbf F$. את ה"קבוע" $g(y,z)$ קובעים מההשוואה לרכיבים האחרים, ולא מנחשים.
+        misconception: MC-c6-integration-constant
+      - text: אין לשדה פוטנציאל
+        feedback: >-
+          יש: $\nabla(x^2y+xz)=\mathbf F$. גם התנאי ההכרחי מתקיים: $\partial_yF_1=2x=\partial_xF_2$,
+          $\partial_zF_1=1=\partial_xF_3$, $\partial_zF_2=0=\partial_yF_3$.
+        misconception: MC-c6-sum-antiderivatives
+
+  - id: Q-6.2-closed-grad
+    type: twotier
+    objectives: [OBJ-6.2-1, OBJ-6.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\varphi$ גזירה ברציפות על $U$ פתוחה, ו-$\gamma$ מסילה סגורה וחלקה למקוטעין ב-$U$. האם בהכרח
+      $\oint_\gamma\nabla\varphi\cdot d\mathbf s=0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון, לכל $U$ פתוחה, גם עם חורים.
+      - text: רק אם ל-$U$ אין חורים
+        feedback: >-
+          המשפט היסודי לא שואל על חורים: אם השדה **הוא** גרדיאנט של $\varphi$ על $U$, כל אינטגרל סגור הוא אפס. החורים
+          משנים רק את השאלה אם שדה נתון הוא גרדיאנט.
+        misconception: MC-c6-singularity-means-nonconservative
+    reasons:
+      - text: 'האינטגרל שווה ל-$\varphi(\gamma(b))-\varphi(\gamma(a))$, ובמסילה סגורה $\gamma(b)=\gamma(a)$'
+        correct: true
+        feedback: >-
+          בדיוק. האינטגרנד $\nabla\varphi\cdot\gamma'$ יכול להיות חיובי בחלק מהדרך ושלילי בחלק אחר; רק הסכום אפס.
+      - text: 'הגרדיאנט ניצב למסילה בכל נקודה, ולכן $\nabla\varphi\cdot\gamma''=0$ לאורך כל הדרך'
+        feedback: >-
+          הגרדיאנט ניצב לקווי הרמה של $\varphi$, לא למסילה כלשהי. על מעגל היחידה עם $\varphi=x$, האינטגרנד הוא
+          $(1,0)\cdot(-\sin t,\cos t)=-\sin t$, שאינו אפס, והאינטגרל בכל זאת אפס.
+        misconception: MC-c6-gradient-perpendicular
+      - text: 'לגרדיאנט יש נגזרות חלקיות מעורבות שוות, וכל שדה כזה נותן אפס על כל מסילה סגורה'
+        feedback: >-
+          החלק הראשון נכון (כש-$\varphi$ גזירה פעמיים ברציפות), השני לא: לשדה הסיבוב הנגזרות המעורבות שוות, והאינטגרל על
+          מעגל היחידה $2\pi$. מה שנותן אפס הוא הפוטנציאל.
+        misconception: MC-c6-mixed-partials-suffice
+
+  - id: Q-6.2-ftc-proof
+    type: rank
+    objectives: [OBJ-6.2-1]
+    level: mid
+    prompt: >-
+      הוכחה: אם $\varphi$ גזירה ברציפות על $U$ ו-$\gamma:[a,b]\to U$ חלקה למקוטעין, אז
+      $\int_\gamma\nabla\varphi\cdot d\mathbf s=\varphi(\gamma(b))-\varphi(\gamma(a))$.
+    help: סדרו את שלבי ההוכחה, מהראשון לאחרון.
+    items:
+      - id: chain
+        label: 'על קטע שבו $\gamma$ חלקה, לפי כלל השרשרת $\frac{d}{dt}\varphi(\gamma(t))=\nabla\varphi(\gamma(t))\cdot\gamma''(t)$.'
+      - id: rewrite
+        label: 'לכן על הקטע $[t_{i-1},t_i]$ האינטגרל הוא $\int_{t_{i-1}}^{t_i}\frac{d}{dt}\varphi(\gamma(t))\,dt$.'
+      - id: ftc
+        label: 'לפי המשפט היסודי של החשבון האינפיניטסימלי, זה $\varphi(\gamma(t_i))-\varphi(\gamma(t_{i-1}))$.'
+      - id: sum
+        label: 'מחברים על כל הקטעים: הסכום טלסקופי, ונשאר $\varphi(\gamma(b))-\varphi(\gamma(a))$.'
+    order: [chain, rewrite, ftc, sum]
+    correctFeedback: >-
+      נכון. הרעיון: האינטגרנד הוא נגזרת של פונקציה במשתנה אחד, $t\mapsto\varphi(\gamma(t))$. הפינות של מסילה חלקה למקוטעין
+      מטופלות בסכום הטלסקופי.
+    wrongFeedback: >-
+      מתחילים בכלל השרשרת, שהופך את האינטגרנד לנגזרת; אחר כך המשפט היסודי על כל קטע חלק; ובסוף מחברים את הקטעים.
+
+  - id: Q-6.2-helix
+    type: numeric
+    objectives: [OBJ-6.2-1, OBJ-6.2-3]
+    level: mid
+    prompt: >-
+      חשבו את $\int_\gamma\mathbf F\cdot d\mathbf s$ עבור $\mathbf F(x,y,z)=(2xz,\ 0,\ x^2)$ לאורך הסליל
+      $\gamma(t)=(\cos t,\ \sin t,\ t)$, $t\in[0,2\pi]$. (מצאו קודם פוטנציאל.)
+    answer: 6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi$. $\mathbf F=\nabla(x^2z)$, והסליל מתחיל ב-$(1,0,0)$ ומסתיים ב-$(1,0,2\pi)$, ולכן האינטגרל הוא
+      $1\cdot2\pi-1\cdot0=2\pi$. חישוב ישיר נותן את אותו ערך.
+    wrongFeedback: >-
+      מצאו $\varphi$ עם $\nabla\varphi=\mathbf F$ (נסו $x^2z$), ואז הציבו את נקודת הסוף ואת נקודת ההתחלה של הסליל.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          הסליל אינו מסילה סגורה: רק ההיטל שלו למישור $xy$ חוזר לנקודת ההתחלה. בסוף $z=2\pi$, לא $0$.
+        misconception: MC-c6-shadow-closed
+      - value: -6.2831853
+        feedback: >-
+          זה $\varphi(1,0,0)-\varphi(1,0,2\pi)$, ההתחלה פחות הסוף. המשפט היסודי נותן את הסוף פחות ההתחלה.
+        misconception: MC-c6-potential-order
+
+  - id: Q-6.2-value
+    type: numeric
+    objectives: [OBJ-6.2-3, OBJ-6.2-1]
+    level: mid
+    prompt: >-
+      $\mathbf F(x,y)=(e^y,\ xe^y+1)$. חשבו את $\int_\gamma\mathbf F\cdot d\mathbf s$ לאורך
+      $\gamma(t)=\left(2\sin\frac{\pi t}{2},\ t^3\ln3\right)$, $t\in[0,1]$. (חישוב ישיר קשה כאן; חפשו פוטנציאל.)
+    answer: 7.0986123
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $6+\ln3$. $\int e^y\,dx=xe^y+g(y)$, וההשוואה $xe^y+g'(y)=xe^y+1$ נותנת $g(y)=y$, ולכן $\varphi=xe^y+y$.
+      המסילה עוברת מ-$(0,0)$ ל-$(2,\ln3)$, והאינטגרל הוא $\varphi(2,\ln3)-\varphi(0,0)=2\cdot3+\ln3$.
+    wrongFeedback: >-
+      חשבו פונקציה קדומה של הרכיב הראשון לפי $x$, עם "קבוע" שתלוי ב-$y$, וקבעו אותו מהרכיב השני. אחר כך הציבו את נקודות הקצה,
+      $\gamma(0)=(0,0)$ ו-$\gamma(1)=(2,\ln3)$.
+    commonWrong:
+      - value: 6
+        feedback: >-
+          $6=\varphi(2,\ln3)$ עבור $\varphi=xe^y$. אבל $\nabla(xe^y)=(e^y,\ xe^y)$, בלי המחובר 1 ברכיב השני: חסרה הפונקציה $g(y)=y$.
+        misconception: MC-c6-integration-constant
+      - value: -7.0986123
+        feedback: >-
+          זה ההתחלה פחות הסוף. הסימן הנכון: ערך בסוף פחות ערך בהתחלה.
+        misconception: MC-c6-potential-order
+
+  - id: Q-6.2-one-curve
+    type: twotier
+    objectives: [OBJ-6.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbf F(x,y)=(0,\ x^2)$. האינטגרל שלו על מעגל היחידה הוא $\int_0^{2\pi}\cos^3t\,dt=0$. האם $\mathbf F$ משמר
+      על $\mathbb{R}^2$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. אפס על מסילה סגורה אחת אינו אפס על כל מסילה סגורה.
+      - text: כן
+        feedback: >-
+          השקילות דורשת אפס על **כל** מסילה סגורה. מסילה סגורה אחת היא רק דוגמה.
+        misconception: MC-c6-few-curves-suffice
+    reasons:
+      - text: 'מ-$(0,0)$ ל-$(1,1)$: דרך $(1,0)$ האינטגרל $\int_0^1 1\,dy=1$, ודרך $(0,1)$ הוא $0$; אין אי-תלות במסלול'
+        correct: true
+        feedback: >-
+          בדיוק. על הקטע האופקי $dy=0$, ועל הקטע האנכי $x$ קבוע: $x=1$ בדרך הראשונה, $x=0$ בשנייה. בלשון מסילות
+          סגורות: הריבוע $[0,1]^2$ נגד כיוון השעון נותן $1\ne0$.
+      - text: 'האינטגרל על מעגל היחידה אפס, ולכן השדה משמר'
+        feedback: >-
+          זו מסקנה ממסילה אחת. הריבוע $[0,1]^2$ נגד כיוון השעון נותן 1.
+        misconception: MC-c6-few-curves-suffice
+      - text: '$\mathbf F$ הוא הגרדיאנט של $x^2y$, כי $\int x^2\,dy=x^2y$, ולכן הוא משמר'
+        feedback: >-
+          $\nabla(x^2y)=(2xy,\ x^2)\ne(0,\ x^2)$. פונקציה קדומה של רכיב אחד אינה פוטנציאל; צריך לבדוק את כל הרכיבים.
+        misconception: MC-c6-sum-antiderivatives
+
+  - id: Q-6.2-closed-to-path
+    type: twotier
+    objectives: [OBJ-6.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$\oint_C\mathbf F\cdot d\mathbf s=0$ לכל מסילה סגורה $C$ ב-$U$. האם מכאן שלכל שתי מסילות $\gamma_1,\gamma_2$
+      ב-$U$ מ-$A$ ל-$B$ מתקיים $\int_{\gamma_1}\mathbf F\cdot d\mathbf s=\int_{\gamma_2}\mathbf F\cdot d\mathbf s$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. זה אחד מכיווני השקילות, והוא קצר.
+      - text: 'לא, צריך בנוסף שלשדה יהיה פוטנציאל'
+        feedback: >-
+          לא צריך שום דבר נוסף: הנימוק הנכון משתמש רק בהנחה. (ולמעשה, מאי-התלות במסלול **בונים** פוטנציאל.)
+        misconception: MC-c6-circular-potential
+    reasons:
+      - text: '$\gamma_1$ ואחריה ההפוכה של $\gamma_2$ היא מסילה סגורה מ-$A$ חזרה ל-$A$, ולכן $0=\int_{\gamma_1}\mathbf F\cdot d\mathbf s-\int_{\gamma_2}\mathbf F\cdot d\mathbf s$'
+        correct: true
+        feedback: >-
+          בדיוק. היפוך הכיוון של $\gamma_2$ מחליף את הסימן של האינטגרל שלה, וזה כל ההבדל.
+      - text: '$\gamma_1$ ואחריה $\gamma_2$ היא מסילה סגורה, ולכן $\int_{\gamma_1}\mathbf F\cdot d\mathbf s+\int_{\gamma_2}\mathbf F\cdot d\mathbf s=0$'
+        feedback: >-
+          שתיהן הולכות מ-$A$ ל-$B$, ולכן $\gamma_1$ ואחריה $\gamma_2$ אינה מוגדרת כמסילה רציפה, וודאי אינה סגורה. צריך
+          להפוך את אחת מהן, ואז הסימן מתחלף.
+        misconception: MC-c6-orientation-irrelevant
+      - text: 'לפי המשפט היסודי, שני האינטגרלים שווים ל-$\varphi(B)-\varphi(A)$'
+        feedback: >-
+          המשפט היסודי דורש פוטנציאל $\varphi$, וקיומו הוא בדיוק מה שלא ידוע. זה נימוק מעגלי.
+        misconception: MC-c6-circular-potential
+
+  - id: Q-6.2-mixed
+    type: mc
+    objectives: [OBJ-6.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      איזה מהשדות הבאים **אינו** משמר על $\mathbb{R}^2$?
+    choices:
+      - text: '$(y,\ -x)$'
+        correct: true
+        feedback: >-
+          נכון. לשדה משמר גזיר ברציפות $\partial_yP=\partial_xQ$ (לפי שוויון הנגזרות המעורבות של $\varphi$). כאן
+          $\partial_yP=1$ ו-$\partial_xQ=-1$. בחישוב ישיר: על מעגל היחידה נגד כיוון השעון $\oint\mathbf F\cdot d\mathbf s=-2\pi\ne0$.
+      - text: '$(y,\ x)$'
+        feedback: >-
+          זה $\nabla(xy)$, ולכן משמר: $\partial_yP=1=\partial_xQ$. אולי הסימן ב-$(y,x)$ לעומת $(-y,x)$ בלבל: שימו לב שכאן אין
+          מינוס.
+        misconception: MC-c6-conservative-by-look
+      - text: '$(y\cos(xy),\ x\cos(xy))$'
+        feedback: >-
+          זה $\nabla\sin(xy)$, ולכן משמר. שדה שנראה מסובך יכול להיות גרדיאנט; בודקים את הנגזרות המעורבות ומחפשים פוטנציאל.
+        misconception: MC-c6-conservative-by-look
+      - text: '$(e^x,\ \cos y)$'
+        feedback: >-
+          זה $\nabla(e^x+\sin y)$: כל רכיב תלוי רק במשתנה שלו, והשדה משמר.
+        misconception: MC-c6-conservative-by-look
+    explanation: >-
+      שוויון הנגזרות המעורבות הוא תנאי **הכרחי**: כשהוא נכשל, השדה אינו משמר. כשהוא מתקיים, צריך עדיין פוטנציאל (או
+      נימוק אחר); שדה הסיבוב ב-$\mathbb{R}^2\setminus\{0\}$ מראה שהתנאי לבדו לא מספיק.
+
+  - id: Q-6.2-winding
+    type: numeric
+    objectives: [OBJ-6.2-3]
+    level: mid
+    prompt: >-
+      שדה הסיבוב $\mathbf W(x,y)=\left(\frac{-y}{x^2+y^2},\ \frac{x}{x^2+y^2}\right)$ מוגדר על $\mathbb{R}^2\setminus\{0\}$.
+      חשבו ישירות את $\oint_C\mathbf W\cdot d\mathbf s$, כאשר $C$ המעגל שרדיוסו 3 סביב הראשית, פעם אחת נגד כיוון השעון.
+    answer: 6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi$. עם $\gamma(t)=(3\cos t,3\sin t)$: $\mathbf W(\gamma)=\frac13(-\sin t,\cos t)$ ו-$\gamma'=3(-\sin t,\cos t)$,
+      ולכן $\mathbf W\cdot\gamma'=1$ והאינטגרל $2\pi$, בלי תלות ברדיוס.
+    wrongFeedback: >-
+      הציבו $\gamma(t)=(3\cos t,3\sin t)$. המכנה הוא $x^2+y^2=9$; כפלו סקלרית ב-$\gamma'(t)$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          אפס היה יוצא לשדה משמר. $\mathbf W$ מקיים $\partial_yP=\partial_xQ$ ב-$\mathbb{R}^2\setminus\{0\}$, אבל זה לא
+          מספיק: החישוב הישיר נותן $2\pi$.
+        misconception: MC-c6-mixed-partials-suffice
+      - value: -6.2831853
+        feedback: >-
+          מינוס $2\pi$ הוא האינטגרל עם כיוון השעון. נגד כיוון השעון השדה והמשיק באותו כיוון.
+        misconception: MC-c6-orientation-irrelevant
+      - value: 18.849556
+        feedback: >-
+          $6\pi$: הכפילו גם ב-$\|\gamma'\|=3$, או שכחו שהמכנה $x^2+y^2=9$ מבטל את אחד הגורמים 3. האינטגרנד הוא בדיוק 1.
+        misconception: MC-c6-extra-norm
+
+  - id: Q-6.2-winding-not
+    type: twotier
+    objectives: [OBJ-6.2-3, OBJ-6.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם שדה הסיבוב $\mathbf W=\frac{(-y,\ x)}{x^2+y^2}$ משמר על $\mathbb{R}^2\setminus\{0\}$? בחרו תשובה ונימוק שמוכיח
+      אותה בלי משפטים מפרק 7.
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. שדה משמר נותן אפס על כל מסילה סגורה בתחום, ושדה הסיבוב לא.
+      - text: 'כן, כי $\partial_yP=\partial_xQ$ בכל התחום'
+        feedback: >-
+          השוויון נכון, $\partial_yP=\partial_xQ=\frac{y^2-x^2}{(x^2+y^2)^2}$, אבל הוא תנאי הכרחי בלבד. החישוב על המעגל
+          מכריע.
+        misconception: MC-c6-mixed-partials-suffice
+    reasons:
+      - text: 'על מעגל היחידה נגד כיוון השעון $\mathbf W(\gamma(t))\cdot\gamma''(t)=\sin^2t+\cos^2t=1$, והאינטגרל $2\pi\ne0$, אף שהמעגל ב-$\mathbb{R}^2\setminus\{0\}$'
+        correct: true
+        feedback: >-
+          בדיוק: מסילה סגורה אחת בתחום עם אינטגרל שונה מאפס מספיקה כדי לשלול. (כדי **להוכיח** שדה משמר, מסילה אחת
+          אינה מספיקה; כדי לשלול, מספיקה.)
+      - text: 'הנגזרות המעורבות של $\mathbf W$ אינן שוות, $\partial_yP\ne\partial_xQ$ מחוץ לצירים, ולכן התנאי ההכרחי נכשל'
+        feedback: >-
+          הן שוות: $\frac{y^2-x^2}{(x^2+y^2)^2}$ בשתיהן. זה מה שהופך את שדה הסיבוב לדוגמה החשובה.
+        misconception: MC-c6-mixed-partials-suffice
+      - text: '$\mathbf W$ אינו מוגדר בראשית, שנמצאת בתוך המעגל, ושדה עם נקודה כזו בתוך מסילה סגורה אינו משמר'
+        feedback: >-
+          גם $\frac{(x,y)}{x^2+y^2}$ אינו מוגדר בראשית, והוא $\nabla\frac12\ln(x^2+y^2)$, משמר. החור מאפשר לשדה להיות לא
+          משמר, אבל לא מוכיח זאת; החישוב מוכיח.
+        misconception: MC-c6-singularity-means-nonconservative
+
+  - id: Q-6.2-path-proof
+    type: rank
+    objectives: [OBJ-6.2-2]
+    level: exam
+    prompt: >-
+      הוכחה: אם $\mathbf F$ רציף על $U\subseteq\mathbb{R}^n$ פתוחה וקשירה, והאינטגרל הקווי שלו אינו תלוי במסלול, אז
+      $\mathbf F$ משמר.
+    help: סדרו את שלבי ההוכחה, מהראשון לאחרון.
+    items:
+      - id: define
+        label: 'נקבע $p_0\in U$ ונגדיר $\varphi(p)=\int\mathbf F\cdot d\mathbf s$ לאורך מסילה ב-$U$ מ-$p_0$ ל-$p$.'
+      - id: welldef
+        label: 'ההגדרה טובה: מסילה כזו קיימת כי $U$ קשירה, והערך לא תלוי בבחירתה לפי ההנחה.'
+      - id: segment
+        label: 'כי $U$ פתוחה, לכל $h$ קטן הקטע מ-$p$ ל-$p+h\mathbf e_1$ ב-$U$; ממשיכים את המסילה ל-$p$ בקטע הזה.'
+      - id: quotient
+        label: 'לכן $\frac{\varphi(p+h\mathbf e_1)-\varphi(p)}{h}=\frac1h\int_0^h F_1(p+t\mathbf e_1)\,dt$.'
+      - id: limit
+        label: 'לפי רציפות $F_1$ המנה שואפת ל-$F_1(p)$, כלומר $\partial_1\varphi=F_1$; כך לכל רכיב, ו-$\nabla\varphi=\mathbf F$.'
+    order: [define, [welldef, segment], quotient, limit]
+    correctFeedback: >-
+      נכון. שימו לב לתפקיד של כל הנחה: קשירות (יש מסילה), אי-תלות (הערך מוגדר היטב), פתיחות (הקטע הקטן בתוך $U$),
+      רציפות (הגבול של הממוצע). $\varphi$ גזירה ברציפות כי $\nabla\varphi=\mathbf F$ רציף. ההגדרה הטובה והקטע הקטן
+      נשענים שניהם רק על ההגדרה של $\varphi$, ולכן כל סדר ביניהם טוב.
+    wrongFeedback: >-
+      קודם מגדירים את המועמד לפוטנציאל. אחר כך, בכל סדר, מראים שהוא מוגדר היטב ובונים את הקטע הקטן בכיוון ציר; המנה
+      משתמשת בשניהם, והגבול אחרון.
+
+  - id: Q-6.2-half-plane
+    type: twotier
+    objectives: [OBJ-6.2-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם שדה הסיבוב $\mathbf W=\frac{(-y,\ x)}{x^2+y^2}$ משמר על חצי המישור $H=\{(x,y):x>0\}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. "משמר" היא תכונה של שדה על תחום, ו-$H$ קטן מ-$\mathbb{R}^2\setminus\{0\}$.
+      - text: 'לא, כי הוא אינו משמר על $\mathbb{R}^2\setminus\{0\}$'
+        feedback: >-
+          מתחום גדול לא משמר לא נובע דבר על תת-תחום. ב-$H$ יש לשדה פוטנציאל מפורש.
+        misconception: MC-c6-conservative-domain-free
+    reasons:
+      - text: 'ב-$H$ מתקיים $\mathbf W=\nabla\arctan\frac yx$'
+        correct: true
+        feedback: >-
+          בדיוק. $\partial_x\arctan\frac yx=\frac{-y/x^2}{1+y^2/x^2}=\frac{-y}{x^2+y^2}$ ו-$\partial_y\arctan\frac yx=\frac{1/x}{1+y^2/x^2}=\frac{x}{x^2+y^2}$.
+          זו זווית הקוטבית $\theta$, שמוגדרת ברציפות ב-$H$ ולא על כל $\mathbb{R}^2\setminus\{0\}$.
+      - text: 'ב-$H$ מתקיים $\partial_yP=\partial_xQ$, ושוויון זה מספיק כדי ששדה יהיה משמר על כל תחום פתוח'
+        feedback: >-
+          המסקנה נכונה, אבל הנימוק לא: אותו שוויון מתקיים גם ב-$\mathbb{R}^2\setminus\{0\}$, שם השדה אינו משמר. צריך
+          פוטנציאל.
+        misconception: MC-c6-mixed-partials-suffice
+      - text: 'אף מעגל סביב הראשית אינו מוכל ב-$H$, ושדה שאינו משמר נותן תמיד אינטגרל שונה מאפס על מעגל כזה'
+        feedback: >-
+          החלק הראשון נכון, השני לא: $(0,x^2)$ אינו משמר על $\mathbb{R}^2$ ונותן אפס על מעגל היחידה. צריך אפס על **כל**
+          מסילה סגורה ב-$H$, לא רק לדעת שמעגלים מסוימים חסרים. הפוטנציאל נותן את זה מיד.
+        misconception: MC-c6-few-curves-suffice

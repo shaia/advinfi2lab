@@ -1,0 +1,408 @@
+# Chapter 5 review — change of variables and surface area (lessons 5.1–5.4), easy to hard.
+# Every lesson is touched; most questions combine two lessons, some reach back to chapters 0–4. Each hint names
+# the lesson to go back to. Nothing here uses chapter 6 (fields along curves, flux).
+chapter: 5
+questions:
+  - id: Q-5-review-01
+    type: numeric
+    objectives: [OBJ-5.1-1]
+    level: basic
+    prompt: >-
+      $T$ הוא המשולש שקודקודיו $(0,0)$, $(1,0)$, $(0,1)$. מהו השטח של התמונה של $T$ תחת
+      $\varphi(u,v)=(3u+v,\ u-v)$?
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\det D\varphi=-3-1=-4$, ולכן שטח התמונה הוא $|{-4}|\cdot\frac12=2$.
+    wrongFeedback: >-
+      לפי נוסחת החלפת המשתנים עם $f=1$, שטח התמונה הוא $\iint_T|\det D\varphi|\,du\,dv$.
+    commonWrong:
+      - value: -2
+        feedback: >-
+          שכחתם ערך מוחלט: הדטרמיננטה שלילית, אבל שטח לא.
+        misconception: MC-c5-signed-jacobian
+      - value: 0.125
+        feedback: >-
+          זה $\frac12\cdot\frac14$: חילקתם ביעקוביאן במקום לכפול. $\varphi$ שולחת את $T$ אל התמונה, ומגדילה שטחים
+          פי 4.
+        misconception: MC-c5-inverse-jacobian
+      - value: 0.5
+        feedback: >-
+          זה שטח $T$ עצמו. ההעתקה משנה שטחים פי $|\det D\varphi|$.
+        misconception: MC-c5-forgot-jacobian
+    hints:
+      - 'חזרו לשיעור 5.1: הערך המוחלט של היעקוביאן הוא מקדם שינוי השטח.'
+
+  - id: Q-5-review-02
+    type: mc
+    objectives: [OBJ-5.2-1]
+    level: basic
+    prompt: >-
+      בקואורדינטות גליליות $x=r\cos\theta$, $y=r\sin\theta$, $z=z$, מהו אלמנט הנפח $dV$?
+    choices:
+      - text: '$r\,dr\,d\theta\,dz$'
+        correct: true
+        feedback: >-
+          נכון. בגליליות $z$ לא משתנה, והיעקוביאן הוא היעקוביאן של הקוטביות, $r$.
+      - text: '$dr\,d\theta\,dz$'
+        feedback: >-
+          חסר היעקוביאן. בדיקה: נפח הגליל ברדיוס 1 וגובה 1 היה יוצא $2\pi$ ולא $\pi$.
+        misconception: MC-c5-forgot-jacobian
+      - text: '$r^2\sin\theta\,dr\,d\theta\,dz$'
+        feedback: >-
+          זה מזכיר את היעקוביאן הכדורי $\rho^2\sin\varphi$, אבל בגליליות אין זווית מציר $z$: רק סיבוב סביבו.
+        misconception: MC-c5-spherical-jacobian
+      - text: '$\frac1r\,dr\,d\theta\,dz$'
+        feedback: >-
+          זה היעקוביאן של ההעתקה ההפוכה $(x,y,z)\mapsto(r,\theta,z)$.
+        misconception: MC-c5-inverse-jacobian
+    hints:
+      - 'חזרו לשיעור 5.2: היעקוביאן של הגליליות.'
+
+  - id: Q-5-review-03
+    type: numeric
+    objectives: [OBJ-5.3-1, OBJ-3.4-1]
+    level: basic
+    prompt: >-
+      לגליל $\sigma(u,v)=(2\cos u,\ 2\sin u,\ v)$, $0\le u\le2\pi$, $0\le v\le3$: חשבו את $E,F,G$, ומהם את השטח.
+    answer: 37.699112
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $12\pi$. $E=4$, $F=0$, $G=1$, ו-$\iint\sqrt{EG-F^2}=2\cdot2\pi\cdot3$: היקף כפול גובה.
+    wrongFeedback: >-
+      $E=\sigma_u\cdot\sigma_u$, $F=\sigma_u\cdot\sigma_v$, $G=\sigma_v\cdot\sigma_v$, ואלמנט השטח $\sqrt{EG-F^2}$.
+    commonWrong:
+      - value: 75.398224
+        feedback: >-
+          זה $24\pi=\iint(EG-F^2)$, בלי השורש.
+        misconception: MC-c5-area-no-root
+    hints:
+      - 'חזרו לשיעור 3.4 (מקדמי התבנית הראשונה) ולשיעור 5.3 (השטח מהם).'
+
+  - id: Q-5-review-04
+    type: mc
+    objectives: [OBJ-5.4-1, OBJ-1.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma:[a,b]\to\mathbb R^3$ מסילה רגולרית. מהו $\int_\gamma1\,ds$?
+    choices:
+      - text: 'אורך המסילה, $\int_a^b\|\gamma''(t)\|\,dt$, שאינו תלוי בפרמטריזציה ובכיוון'
+        correct: true
+        feedback: >-
+          נכון. אינטגרל לפי אורך קשת הוא הכללה של אורך הקשת משיעור 1.2, ואי-התלות בפרמטריזציה עוברת אליו באותה הוכחה.
+      - text: '$b-a$, אורך קטע הפרמטר'
+        feedback: >-
+          $b-a$ תלוי בפרמטריזציה: $\gamma(2t)$ על $[\frac a2,\frac b2]$ היא אותה מסילה עם קטע קצר פי 2. חסר $\|\gamma'\|$.
+        misconception: MC-c5-line-no-speed
+      - text: 'אורך המסילה בכיוון הטבעי, ומינוס האורך כשהולכים בכיוון ההפוך'
+        feedback: >-
+          אורך אינו שלילי. בהיפוך כיוון $\|\gamma'\|$ לא משתנה, ומה שמופיע בהחלפת הפרמטר הוא $|h'|$.
+        misconception: MC-c5-scalar-orientation
+    hints:
+      - 'חזרו לשיעור 1.2 (אורך קשת ואי-התלות בפרמטריזציה) ולשיעור 5.4 (אינטגרל לפי אורך קשת).'
+
+  - id: Q-5-review-05
+    type: numeric
+    objectives: [OBJ-5.1-2, OBJ-5.2-1]
+    level: mid
+    prompt: >-
+      חשבו את השטח של האליפסה $\frac{x^2}{9}+\frac{y^2}{4}\le1$ בעזרת $x=3r\cos\theta$, $y=2r\sin\theta$.
+    answer: 18.849556
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $6\pi$. $\det\frac{\partial(x,y)}{\partial(r,\theta)}=6r$: הקוטביות תורמות $r$ והמתיחה הלינארית $3\cdot2$.
+      $\int_0^{2\pi}\int_0^16r\,dr\,d\theta=6\pi=\pi ab$.
+    wrongFeedback: >-
+      ההעתקה היא קוטביות ואחריה המתיחה $(x,y)\mapsto(3x,2y)$; היעקוביאנים מוכפלים (כלל השרשרת).
+    commonWrong:
+      - value: 3.141593
+        feedback: >-
+          זה $\pi$, עם היעקוביאן $r$ של הקוטביות בלבד. המתיחה $(3x,2y)$ מוסיפה גורם 6.
+        misconception: MC-c5-forgot-jacobian
+      - value: 0.523599
+        feedback: >-
+          זה $\frac\pi6$: חילקתם ב-6 במקום לכפול. ההעתקה מותחת את העיגול לאליפסה, ולכן מגדילה שטח.
+        misconception: MC-c5-inverse-jacobian
+    hints:
+      - 'חזרו לשיעור 5.2 (קוטביות) ולשיעור 5.1 (החלפה לינארית ומקדם השטח שלה).'
+
+  - id: Q-5-review-06
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    level: mid
+    prompt: >-
+      חשבו את $\iint_A\frac{1}{x^2+y^2}\,dx\,dy$, כש-$A$ הטבעת $1\le x^2+y^2\le4$.
+    answer: 4.355172
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi\ln2$. בקוטביות: $\int_0^{2\pi}\int_1^2\frac1{r^2}\,r\,dr\,d\theta=2\pi\ln2$.
+    wrongFeedback: >-
+      בקוטביות הטבעת היא $[1,2]\times[0,2\pi]$, האינטגרנד $\frac1{r^2}$, והיעקוביאן $r$.
+    commonWrong:
+      - value: 3.141593
+        feedback: >-
+          זה $2\pi\int_1^2r^{-2}\,dr=\pi$, בלי היעקוביאן $r$.
+        misconception: MC-c5-forgot-jacobian
+    hints:
+      - 'חזרו לשיעור 5.2: בחירת קואורדינטות לפי התחום והאינטגרנד.'
+
+  - id: Q-5-review-07
+    type: twotier
+    objectives: [OBJ-5.3-3, OBJ-5.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם ייתכן ש-$f$, גזירה ברציפות ולא קבועה על עיגול היחידה הסגור, מקיימת: שטח הגרף שלה הוא בדיוק $\pi$?
+    choices:
+      - text: לא ייתכן
+        correct: true
+        feedback: >-
+          נכון. השטח של גרף של פונקציה לא קבועה גדול ממש משטח התחום.
+      - text: ייתכן
+        feedback: >-
+          $\sqrt{1+f_x^2+f_y^2}\ge1$ בכל נקודה, ובנקודה שבה הגרדיאנט שונה מאפס האי-שוויון ממש. ראו את הנימוק.
+        misconception: MC-c5-area-vs-volume
+    reasons:
+      - text: 'כי $f$ לא קבועה, $\nabla f(p)\neq0$ בנקודה פנימית $p$; מרציפות $\sqrt{1+f_x^2+f_y^2}>1+\delta$ על עיגול קטן סביב $p$, ובשאר התחום הוא לפחות 1; לכן השטח גדול ממש מ-$\pi$'
+        correct: true
+        feedback: >-
+          בדיוק. (אם הגרדיאנט היה אפס בכל נקודה פנימית, $f$ הייתה קבועה, כי העיגול קשיר.) "כמעט שטוח" עדיין נותן
+          שטח גדול ממש.
+      - text: 'ייתכן: עם $f=\varepsilon x$ התוספת לשטח היא מסדר $\varepsilon^2$, ולכן ל-$\varepsilon$ קטן מספיק השטח הוא $\pi$'
+        feedback: >-
+          השטח הוא $\pi\sqrt{1+\varepsilon^2}>\pi$ לכל $\varepsilon\neq0$. גובה קטן לא מבטל את התוספת: השטח תלוי
+          בשיפוע, לא בגובה.
+        misconception: MC-c5-area-vs-volume
+      - text: 'ייתכן: הגרף הוא תמונה חד-חד-ערכית של העיגול, ולכן שטחו תמיד שווה לשטח העיגול, $\pi$'
+        feedback: >-
+          הגרף מעל התחום הוא פרמטריזציה $\sigma(x,y)=(x,y,f)$ שמותחת שטחים בגורם $\sqrt{1+f_x^2+f_y^2}$. רק לפונקציה
+          קבועה הגורם הוא 1.
+        misconception: MC-c5-forgot-jacobian
+    hints:
+      - 'חזרו לשיעור 5.3: השטח של גרף, והגורם $\sqrt{1+f_x^2+f_y^2}\ge1$.'
+
+  - id: Q-5-review-08
+    type: numeric
+    objectives: [OBJ-5.4-3, OBJ-5.3-3]
+    level: mid
+    prompt: >-
+      מהו הממוצע של $z^2$ על הגליל $x^2+y^2=1$, $0\le z\le3$ (ממוצע לפי שטח)?
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. בפרמטריזציה $(\cos u,\sin u,z)$ של הגליל ברדיוס 1, $dS=du\,dz$, ולכן $\iint z^2\,dS=2\pi\cdot9=18\pi$, השטח $6\pi$, והממוצע $3$.
+    wrongFeedback: >-
+      הממוצע הוא $\frac{1}{A}\iint_Sz^2\,dS$, כש-$A$ שטח הגליל.
+    commonWrong:
+      - value: 56.548668
+        feedback: >-
+          זה $18\pi=\iint_Sz^2\,dS$, בלי לחלק בשטח $6\pi$.
+        misconception: MC-c5-centroid-no-normalize
+    hints:
+      - 'חזרו לשיעור 5.3 (אלמנט השטח של הגליל) ולשיעור 5.4 (ממוצע לפי שטח).'
+
+  - id: Q-5-review-09
+    type: twotier
+    objectives: [OBJ-5.1-3, OBJ-0.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\varphi(r,\theta)=(r\cos\theta,r\sin\theta)$ על $[1,2]\times[0,4\pi]$ מקיימת $\det D\varphi=r\ge1$ בכל
+      נקודה, ולפי משפט הפונקציה ההפוכה היא הפיכה ליד כל נקודה. האם
+      $$\iint_{1\le x^2+y^2\le4}f\,dx\,dy=\int_0^{4\pi}\int_1^2f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta$$
+      לכל $f$ רציפה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. עם $f=1$ אגף שמאל הוא $3\pi$ ואגף ימין $6\pi$.
+      - text: כן
+        feedback: >-
+          בדקו עם $f=1$: $\int_0^{4\pi}\int_1^2r\,dr\,d\theta=4\pi\cdot\frac32=6\pi$, אבל שטח הטבעת $3\pi$.
+        misconception: MC-c5-local-to-global-injective
+    reasons:
+      - text: 'הפיכות מקומית אינה חד-חד-ערכיות: $\theta$ ו-$\theta+2\pi$ נותנות אותה נקודה, והטבעת מכוסה פעמיים'
+        correct: true
+        feedback: >-
+          בדיוק. משפט הפונקציה ההפוכה נותן העתקה הפיכה על סביבה קטנה של כל נקודה, לא על כל התחום.
+      - text: 'היעקוביאן שונה מאפס בכל נקודה, ולכן לפי משפט הפונקציה ההפוכה ההעתקה חד-חד-ערכית'
+        feedback: >-
+          המשפט מקומי. כאן ההעתקה הפיכה ליד כל נקודה ובכל זאת אינה חד-חד-ערכית על כל התחום.
+        misconception: MC-c5-local-to-global-injective
+      - text: 'הנוסחה נכשלת כי היעקוביאן מתאפס ב-$r=0$'
+        feedback: >-
+          כאן $1\le r\le2$, כך שהיעקוביאן לא מתאפס בכלל. ובכל מקרה $r=0$ היה קבוצה בעלת שטח אפס.
+        misconception: MC-c5-hypotheses-everywhere
+    hints:
+      - 'חזרו לשיעור 0.4 (משפט הפונקציה ההפוכה הוא מקומי) ולשיעור 5.1 (תנאי הנוסחה).'
+
+  - id: Q-5-review-10
+    type: numeric
+    objectives: [OBJ-5.2-3, OBJ-5.1-2]
+    level: mid
+    prompt: >-
+      חשבו את $\iint_{\mathbb R^2}e^{-(x^2+4y^2)}\,dx\,dy$.
+    answer: 1.570796
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac\pi2$. עם $x=u$, $y=\frac v2$: $dx\,dy=\frac12\,du\,dv$, ו-
+      $\frac12\iint e^{-(u^2+v^2)}\,du\,dv=\frac\pi2$. אפשר גם בפוביני: $\sqrt\pi\cdot\frac{\sqrt\pi}{2}$.
+    wrongFeedback: >-
+      החלפה לינארית $v=2y$ מביאה לאינטגרל של אינטגרל גאוס הכפול, $\iint e^{-(u^2+v^2)}=\pi$. אל תשכחו את מקדם השטח.
+    commonWrong:
+      - value: 3.141593
+        feedback: >-
+          זה $\iint e^{-(u^2+v^2)}=\pi$, בלי מקדם השטח $\frac12$ של ההחלפה $y=\frac v2$.
+        misconception: MC-c5-forgot-jacobian
+      - value: 6.283185
+        feedback: >-
+          כפלתם ב-2 במקום ב-$\frac12$: $\frac{\partial(u,v)}{\partial(x,y)}=2$, וצריך את ההופכי שלו.
+        misconception: MC-c5-inverse-jacobian
+    hints:
+      - 'חזרו לשיעור 5.2 (אינטגרל גאוס) ולשיעור 5.1 (החלפה לינארית).'
+
+  - id: Q-5-review-15
+    type: multi
+    objectives: [OBJ-5.4-3, OBJ-5.3-2, OBJ-5.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הופכים את הכיוון: את סדר הפרמטרים של משטח, את כיוון המעבר על מסילה, או מחליפים משתנים בשיקוף. אילו
+      מהגדלים הבאים **מחליפים סימן**? סמנו את כולם.
+    choices:
+      - text: 'הדטרמיננטה $\det D\varphi$ של ההעתקה'
+        correct: true
+        feedback: >-
+          נכון. הרכבה עם שיקוף כופלת את הדטרמיננטה ב-$-1$. לכן בנוסחת החלפת המשתנים מופיע הערך המוחלט שלה.
+      - text: 'הווקטור $\sigma_u\times\sigma_v$ (והנורמל)'
+        correct: true
+        feedback: >-
+          נכון. $\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$. רק האורך שלו נכנס לשטח.
+      - text: 'שטח המשטח'
+        feedback: >-
+          השטח הוא אינטגרל של $\|\sigma_u\times\sigma_v\|$, ואורך אינו מחליף סימן.
+        misconception: MC-c5-scalar-orientation
+      - text: '$\int_\gamma\rho\,ds$'
+        feedback: >-
+          $ds=\|\gamma'\|\,dt$ אינו תלוי בכיוון; בהחלפת הפרמטר מופיע $|h'|$.
+        misconception: MC-c5-scalar-orientation
+      - text: 'מרכז המסה של משטח'
+        feedback: >-
+          מרכז המסה הוא מנה של שני אינטגרלים לפי שטח, ושניהם אינם תלויים בכיוון.
+        misconception: MC-c5-scalar-orientation
+    hints:
+      - 'חזרו לשיעור 5.1 (הערך המוחלט), לשיעור 5.3 (השטח אינו תלוי בפרמטריזציה) ולשיעור 5.4 (אי-תלות בכיוון).'
+
+  - id: Q-5-review-11
+    type: numeric
+    objectives: [OBJ-5.3-3, OBJ-5.2-2]
+    level: mid
+    prompt: >-
+      חשבו את השטח של האוכף $z=xy$ מעל העיגול $x^2+y^2\le3$.
+    answer: 14.660766
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{14\pi}{3}$. $1+f_x^2+f_y^2=1+x^2+y^2=1+r^2$, ולכן
+      $$A=\int_0^{2\pi}\int_0^{\sqrt3}\sqrt{1+r^2}\,r\,dr\,d\theta=2\pi\cdot\frac{(1+r^2)^{3/2}}{3}\Big|_0^{\sqrt3}=\frac{2\pi}{3}(8-1).$$
+    wrongFeedback: >-
+      $f_x=y$, $f_y=x$. התחום עיגול: עברו לקוטביות עם היעקוביאן $r$.
+    commonWrong:
+      - value: 15.020141
+        feedback: >-
+          זה $2\pi\int_0^{\sqrt3}\sqrt{1+r^2}\,dr$, בלי היעקוביאן $r$ של הקוטביות.
+        misconception: MC-c5-forgot-jacobian
+      - value: 23.561945
+        feedback: >-
+          זה $\frac{15\pi}{2}=\iint(1+r^2)\,r\,dr\,d\theta$, בלי השורש.
+        misconception: MC-c5-area-no-root
+    hints:
+      - 'חזרו לשיעור 5.3 (שטח גרף) ולשיעור 5.2 (קוטביות).'
+
+  - id: Q-5-review-12
+    type: numeric
+    objectives: [OBJ-5.2-2, OBJ-5.4-3]
+    level: mid
+    prompt: >-
+      מהו הממוצע של המרחק מהראשית, $\sqrt{x^2+y^2+z^2}$, על כדור היחידה **המלא** (ממוצע לפי נפח)?
+    answer: 0.75
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\iiint\rho\,dV=\int_0^{2\pi}\int_0^\pi\int_0^1\rho\cdot\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta=\pi$, והנפח
+      $\frac{4\pi}3$; הממוצע $\frac34$. רוב הנפח קרוב לשפה, ולכן הממוצע גדול מ-$\frac12$.
+    wrongFeedback: >-
+      ממוצע לפי נפח הוא $\frac{1}{V}\iiint\rho\,dV$, ובכדוריות $dV=\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          זה הממוצע על **הספרה**, המעטפת, שם המרחק תמיד 1. בכדור המלא יש גם נקודות קרובות למרכז.
+        misconception: MC-c5-shell-vs-solid
+      - value: 3.141593
+        feedback: >-
+          זה $\iiint\rho\,dV=\pi$, בלי לחלק בנפח.
+        misconception: MC-c5-centroid-no-normalize
+      - value: 0.5
+        feedback: >-
+          זה $\int_0^1\rho\,d\rho$, הממוצע של $\rho$ על הקטע $[0,1]$, בלי המשקל $\rho^2$ של היעקוביאן. קליפה ברדיוס
+          $\rho$ מכילה נפח שגדל כמו $\rho^2$.
+        misconception: MC-c5-forgot-jacobian
+    hints:
+      - 'חזרו לשיעור 5.2 (כדוריות) ולשיעור 5.4 (ממוצע ומרכז מסה: גוף מלא מול מעטפת).'
+
+  - id: Q-5-review-13
+    type: twotier
+    objectives: [OBJ-5.3-1, OBJ-3.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma_1,\sigma_2:D\to\mathbb R^3$ פרמטריזציות חד-חד-ערכיות של שני משטחים, עם $E_1=E_2$, $F_1=F_2$,
+      $G_1=G_2$ בכל נקודה של $D$ (המשטחים איזומטריים). האם ייתכן שהשטחים שלהם שונים?
+    choices:
+      - text: לא ייתכן
+        correct: true
+        feedback: >-
+          נכון. השטח הוא תכונה פנימית.
+      - text: ייתכן
+        feedback: >-
+          השטח מחושב מ-$E,F,G$ בלבד. מלבן של נייר ($[0,2\pi]\times[0,1]$ במישור) והגליל שמתקבל מגלגולו איזומטריים,
+          ולשניהם שטח $2\pi$.
+        misconception: MC-c5-area-extrinsic
+    reasons:
+      - text: '$A=\iint_D\sqrt{EG-F^2}\,du\,dv$ תלוי רק במקדמי התבנית הראשונה, ואלה שווים'
+        correct: true
+        feedback: >-
+          בדיוק. גם אורכים וזוויות תלויים רק בתבנית הראשונה (שיעור 3.4), ולכן כל הגאומטריה הפנימית נשמרת.
+      - text: 'משטח מעוקם תופס יותר מקום במרחב, ולכן שטחו גדול יותר'
+        feedback: >-
+          כיפוף בלי מתיחה, כמו גלגול נייר, לא משנה אורכים, ולכן גם לא שטח. מה שתופס מקום במרחב קשור לשיכון, לא
+          לשטח.
+        misconception: MC-c5-area-extrinsic
+      - text: 'השטח תלוי גם בתבנית השנייה, שבה משטחים איזומטריים יכולים להיות שונים'
+        feedback: >-
+          התבנית השנייה אכן יכולה להיות שונה (מישור מול גליל), אבל היא לא מופיעה בנוסחת השטח.
+        misconception: MC-c5-area-extrinsic
+    hints:
+      - 'חזרו לשיעור 3.5 (איזומטריה שומרת על התבנית הראשונה) ולשיעור 5.3 (השטח מ-$E,F,G$).'
+
+  - id: Q-5-review-14
+    type: numeric
+    objectives: [OBJ-5.4-1, OBJ-1.2-1]
+    level: exam
+    prompt: >-
+      תיל בצורת קשת אחת של הציקלואידה $\gamma(t)=(t-\sin t,\ 1-\cos t)$, $0\le t\le2\pi$, עם צפיפות
+      $\rho(x,y)=y$. מהי המסה שלו?
+    answer: 10.666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{32}{3}$. $\|\gamma'(t)\|^2=(1-\cos t)^2+\sin^2t=2-2\cos t=4\sin^2\frac t2$, ולכן
+      $\|\gamma'\|=2\sin\frac t2$ (כי $0\le\frac t2\le\pi$) ו-$y=2\sin^2\frac t2$:
+      $$\int_0^{2\pi}4\sin^3\frac t2\,dt=8\int_0^\pi\sin^3s\,ds=8\cdot\frac43.$$
+    wrongFeedback: >-
+      חשבו את $\|\gamma'(t)\|$ בעזרת $1-\cos t=2\sin^2\frac t2$ (כמו בחישוב אורך הציקלואידה), והציבו.
+    commonWrong:
+      - value: 6.283185
+        feedback: >-
+          זה $\int_0^{2\pi}(1-\cos t)\,dt=2\pi$, בלי $\|\gamma'\|$.
+        misconception: MC-c5-line-no-speed
+    hints:
+      - 'חזרו לשיעור 1.2 (אורך הציקלואידה) ולשיעור 5.4 (אינטגרל לפי אורך קשת).'

@@ -1,0 +1,86 @@
+# Misconceptions first detected in lesson 7.1 (grad, curl, div).
+- id: MC-c7-operator-types
+  title: מפעילים אופרטור על סוג הפונקציה הלא נכון
+  belief: >-
+    אפשר להפעיל רוטור או דיברגנץ על פונקציה סקלרית, וגרדיאנט על שדה וקטורי, כאילו כל האופרטורים מקבלים ומחזירים
+    אותו סוג של עצם.
+  truth: >-
+    $\nabla f$ מקבל פונקציה סקלרית ומחזיר שדה וקטורי; $\nabla\times\mathbf F$ מקבל שדה וקטורי ב-$\mathbb R^3$ ומחזיר
+    שדה וקטורי; $\nabla\cdot\mathbf F$ מקבל שדה וקטורי ומחזיר פונקציה סקלרית. ביטוי כמו $\nabla\times(\nabla\cdot\mathbf F)$
+    אינו מוגדר.
+  remedy: { lesson: '7.1', label: 'שלושת האופרטורים: מה כל אחד מקבל ומה הוא מחזיר' }
+
+- id: MC-c7-curl-sign
+  title: הופכים את הסדר בהפרש של רכיב הרוטור
+  belief: >-
+    הרכיב השלישי של הרוטור הוא $\partial_y F_1-\partial_x F_2$, וכך גם בשאר הרכיבים: לא משנה איזו נגזרת באה קודם.
+  truth: >-
+    $\nabla\times\mathbf F=(\partial_y F_3-\partial_z F_2,\ \partial_z F_1-\partial_x F_3,\ \partial_x F_2-\partial_y F_1)$,
+    הדטרמיננטה הפורמלית עם $(\mathbf e_1,\mathbf e_2,\mathbf e_3)$ בשורה הראשונה. הסדר ההפוך נותן את מינוס הרוטור.
+  remedy: { lesson: '7.1', label: 'הרוטור כדטרמיננטה פורמלית' }
+
+- id: MC-c7-div-mixed-partials
+  title: מחשבים דיברגנץ מנגזרות של הרכיבים הלא נכונים
+  belief: >-
+    בדיברגנץ גוזרים כל רכיב לפי משתנה אחר, למשל $\partial_y F_1+\partial_z F_2+\partial_x F_3$.
+  truth: >-
+    $\nabla\cdot\mathbf F=\partial_x F_1+\partial_y F_2+\partial_z F_3$: כל רכיב נגזר לפי המשתנה שלו, וזה העקבה של
+    מטריצת יעקובי.
+  remedy: { lesson: '7.1', label: 'הדיברגנץ כעקבה של מטריצת יעקובי' }
+
+- id: MC-c7-identity-no-hypothesis
+  title: משתמשים בזהויות של רוטור ודיברגנץ בלי הנחת הגזירות
+  belief: >-
+    $\nabla\times\nabla f=0$ ו-$\nabla\cdot(\nabla\times\mathbf F)=0$ הן זהויות אלגבריות שנכונות לכל פונקציה, בלי שום
+    הנחה.
+  truth: >-
+    ההוכחה משתמשת בשוויון הנגזרות המעורבות (שוורץ), ולכן דורשת שהפונקציה תהיה $C^2$. בלי זה הנגזרות מסדר שני אולי
+    אינן קיימות או אינן שוות.
+  remedy: { lesson: '7.1', label: 'ההוכחה של רוטור גרדיאנט אפס' }
+
+- id: MC-c7-product-rule-missing
+  title: שוכחים מחובר בכלל המכפלה של דיברגנץ או רוטור
+  belief: >-
+    $\nabla\cdot(f\mathbf F)=f\,\nabla\cdot\mathbf F$, כאילו $f$ קבוע.
+  truth: >-
+    $\nabla\cdot(f\mathbf F)=\nabla f\cdot\mathbf F+f\,\nabla\cdot\mathbf F$ ו-$\nabla\times(f\mathbf F)=\nabla f\times\mathbf F+f\,\nabla\times\mathbf F$:
+    כמו בכלל המכפלה של לייבניץ, כל גורם נגזר בתורו.
+  remedy: { lesson: '7.1', label: 'זהויות המכפלה' }
+
+- id: MC-c7-curl-from-shape
+  title: מסיקים את הרוטור מצורת קווי השדה
+  belief: >-
+    שדה שקוויו ישרים הוא בלי רוטור, ושדה שקוויו מעגלים סביב נקודה הוא עם רוטור.
+  truth: >-
+    הרוטור מודד סיבוב מקומי, לא את צורת הקווים. לשדה הגזירה $(y,0,0)$ קווים ישרים ורוטור $(0,0,-1)$; לשדה הסיבוב
+    $\frac{(-y,x,0)}{x^2+y^2}$ קווים מעגליים ורוטור אפס מחוץ לציר $z$.
+  remedy: { lesson: '7.1', label: 'גלגל ההנעה הקטן' }
+
+- id: MC-c7-div-from-spread
+  title: מסיקים את הדיברגנץ מכך שהחצים מתרחקים
+  belief: >-
+    אם חצי השדה מצביעים החוצה מנקודה ומתפזרים, הדיברגנץ חיובי בכל מקום.
+  truth: >-
+    הדיברגנץ בנקודה הוא צפיפות השטף בה: מה שיוצא מקובייה קטנה פחות מה שנכנס, לחלק לנפח. ב-$\frac{\mathbf x}{\|\mathbf x\|^3}$
+    החצים מתפזרים אבל נחלשים בדיוק בקצב שמאזן את הפיזור, והדיברגנץ אפס מחוץ לראשית.
+  remedy: { lesson: '7.1', label: 'הדיברגנץ כצפיפות שטף' }
+
+- id: MC-c7-density-confusion
+  title: מחליפים בין צפיפות שטף לצפיפות סירקולציה
+  belief: >-
+    הדיברגנץ הוא הסירקולציה סביב לולאה קטנה לחלק לשטח, או שהרוטור הוא השטף דרך ספרה קטנה לחלק לנפח.
+  truth: >-
+    $\nabla\cdot\mathbf F(p)$ הוא גבול השטף החוצה דרך משטח סגור קטן סביב $p$ לחלק לנפח שהוא כולא. הרכיב של
+    $\nabla\times\mathbf F(p)$ בכיוון $\hat{\mathbf N}$ הוא גבול הסירקולציה סביב לולאה קטנה במישור הניצב ל-$\hat{\mathbf N}$
+    (בכיוון של כלל יד ימין) לחלק לשטח שהיא חוסמת.
+  remedy: { lesson: '7.1', label: 'צפיפות שטף וצפיפות סירקולציה' }
+
+- id: MC-c7-curl-preimage-unchecked
+  title: מניחים שכל שדה הוא רוטור של שדה אחר, ומנחשים אותו בלי בדיקה
+  belief: >-
+    לכל שדה $\mathbf F$ קיים $\mathbf G$ עם $\nabla\times\mathbf G=\mathbf F$, ומספיק לנחש $\mathbf G$ שהרכיבים שלו
+    "דומים" לאלה של $\mathbf F$.
+  truth: >-
+    אם $\mathbf F=\nabla\times\mathbf G$ עם $\mathbf G\in C^2$, אז $\nabla\cdot\mathbf F=0$. לכן שדה עם דיברגנץ שונה
+    מאפס, כמו $(x,y,z)$, אינו רוטור של שום שדה. וכל ניחוש של $\mathbf G$ בודקים בחישוב $\nabla\times\mathbf G$.
+  remedy: { lesson: '7.1', label: 'הדיברגנץ של רוטור אפס' }

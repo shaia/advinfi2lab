@@ -1,0 +1,45 @@
+---
+/**
+ * Chapter test: drawn from the chapter's understanding and review questions so that every objective of
+ * the course map is covered, whether or not its lesson is written yet.
+ */
+import { chapterQuestions, chaptersWithQuestions, testPool } from '~/assessment/bank';
+import TestRunner from '~/assessment/TestRunner';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { chapterObjectives, chapters } from '~/course';
+import { lessonHref, misconceptionLinks, writtenLessons } from '~/lib/links';
+import { url } from '~/lib/url';
+import '~/styles/lesson.css';
+import '~/styles/platform.css';
+
+export async function getStaticPaths() {
+  return (await chaptersWithQuestions()).map((n) => ({ params: { chapter: `ch${n}` }, props: { n } }));
+}
+
+const { n } = Astro.props;
+const chapter = chapters.find((c) => c.n === n);
+const pool = testPool(await chapterQuestions(n));
+const written = await writtenLessons();
+
+const objectives = chapterObjectives(n);
+const lessons = Object.fromEntries((chapter?.lessons ?? []).map((l) => [l.id, { title: l.title, href: lessonHref(l.id, written) }]));
+const misconceptions = await misconceptionLinks(written);
+---
+
+<BaseLayout title={`מבחן פרק ${n}`} description={`מבחן שמכסה את כל המטרות של פרק ${n}, עם דוח אחרי ההגשה`}>
+  <div class="platform">
+    <section class="sheet sheet-narrow">
+      <p class="kicker">פרק {n} · {chapter?.title}</p>
+      <h1>מבחן פרק</h1>
+      <TestRunner
+        client:load
+        pool={pool}
+        objectives={objectives}
+        lessons={lessons}
+        misconceptions={misconceptions}
+        practiceHref={url(`practice/ch${n}/`)}
+        meHref={url('me/')}
+      />
+    </section>
+  </div>
+</BaseLayout>

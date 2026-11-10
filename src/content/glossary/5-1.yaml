@@ -1,0 +1,26 @@
+# Terms first defined in lesson 5.1 (the change-of-variables formula).
+- id: change-of-variables-formula
+  term: נוסחת החלפת המשתנים
+  en: change of variables formula
+  symbol: '\iint_D f\,dx\,dy=\iint_{D^*}(f\circ\varphi)\,|\det D\varphi|\,du\,dv'
+  definition: >-
+    אם $\varphi:D^*\to D$ חד-חד-ערכית ועל, גזירה ברציפות, ו-$\det D\varphi\neq0$ פרט לקבוצה בעלת שטח אפס, אז לכל
+    $f$ רציפה (אינטגרבילית) על $D$:
+    $\iint_Df\,dx\,dy=\iint_{D^*}f(\varphi(u,v))\,|\det D\varphi(u,v)|\,du\,dv$. בקורס הנוסחה מנוסחת בלי הוכחה מלאה.
+  lesson: '5.1'
+- id: area-scaling-factor
+  term: מקדם שינוי השטח
+  en: area scaling factor (absolute value of the Jacobian)
+  symbol: '|\det D\varphi|'
+  definition: >-
+    הערך המוחלט של הדטרמיננטה של $D\varphi$ בנקודה. מלבן קטן בגודל $du\,dv$ סביב הנקודה עובר תחת $\varphi$ בקירוב
+    למקבילית ששטחה $|\det D\varphi|\,du\,dv$. סימן הדטרמיננטה אומר רק אם $\varphi$ שומרת על הכיוון או הופכת אותו.
+  lesson: '5.1'
+- id: image-of-region
+  term: התחום במשתנים החדשים
+  en: transformed region
+  symbol: 'D^*=\varphi^{-1}(D)'
+  definition: >-
+    בהחלפת משתנים $\varphi:D^*\to D$, התחום $D^*$ שעליו מאנטגרלים במשתנים החדשים. מוצאים אותו מהשפה של $D$: כל קו
+    שפה נכתב במשתנים החדשים, ובחירה טובה הופכת כל קו כזה לקו קבוע ($u=c$ או $v=c$).
+  lesson: '5.1'

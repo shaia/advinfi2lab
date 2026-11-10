@@ -1,0 +1,303 @@
+# Lesson 3.2 — graphs, level sets and change of parameters. Understanding questions, basic → mid → exam.
+# Objectives (src/course.ts):
+#   OBJ-3.2-1  a graph of a smooth function is a regular surface; a level set of a regular value is locally a graph
+#   OBJ-3.2-2  define a change of parameters and relate the partial derivatives before and after it
+#   OBJ-3.2-3  explain why every geometric notion of the course must not depend on the parametrization
+chapter: 3
+questions:
+  - id: Q-3.2-graph-cross
+    type: mc
+    objectives: [OBJ-3.2-1]
+    level: basic
+    prompt: >-
+      $f:D\to\mathbb R$ חלקה ו-$\sigma(x,y)=(x,\ y,\ f(x,y))$. מהו $\sigma_x\times\sigma_y$, ומה נובע ממנו?
+    choices:
+      - text: '$(-f_x,\ -f_y,\ 1)$; הרכיב השלישי הוא 1, ולכן הגרף רגולרי בכל נקודה'
+        correct: true
+        feedback: >-
+          נכון. $\sigma_x=(1,0,f_x)$ ו-$\sigma_y=(0,1,f_y)$, ולכן
+          $\sigma_x\times\sigma_y=(0\cdot f_y-f_x\cdot1,\ f_x\cdot0-1\cdot f_y,\ 1\cdot1-0\cdot0)=(-f_x,-f_y,1)$.
+      - text: '$(f_x,\ f_y,\ 1)$; הגרף רגולרי בכל נקודה'
+        feedback: >-
+          המסקנה נכונה, אבל שני הסימנים הראשונים הפוכים. בדיקה: $(f_x,f_y,1)\cdot\sigma_x=f_x+f_x=2f_x$, שאינו אפס בדרך כלל,
+          ולכן הווקטור הזה אינו ניצב ל-$\sigma_x$.
+        misconception: MC-c3-cross-minor-sign
+      - text: '$(-f_x,\ -f_y,\ 1)$; הגרף אינו רגולרי בנקודות שבהן $\nabla f=0$'
+        feedback: >-
+          ב-$\nabla f=0$ הווקטור הוא $(0,0,1)\ne0$: המישור המשיק אופקי, והגרף רגולרי. נקודה קריטית של $f$ אינה נקודה
+          סינגולרית של הגרף.
+        misconception: MC-c3-graph-critical-point
+
+  - id: Q-3.2-level-values
+    type: mc
+    objectives: [OBJ-3.2-1]
+    level: basic
+    prompt: >-
+      $F(x,y,z)=x^2+y^2-z^2$. לאילו ערכים $c$ המספר $c$ הוא **ערך רגולרי** של $F$, כך שמשפט הפונקציה הסתומה מבטיח
+      ש-$F^{-1}(c)$ משטח חלק?
+    choices:
+      - text: 'לכל $c\ne0$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla F=(2x,2y,-2z)$ מתאפס רק בראשית, ו-$F(0,0,0)=0$. לכן לכל $c\ne0$ הגרדיאנט אינו מתאפס על
+          $F^{-1}(c)$: ל-$c>0$ מתקבל היפרבולואיד ביריעה אחת, ול-$c<0$ היפרבולואיד בשתי יריעות.
+      - text: 'לכל $c$'
+        feedback: >-
+          ב-$c=0$ הראשית נמצאת על הקבוצה ושם $\nabla F=0$. אכן $F^{-1}(0)$ הוא החרוט הכפול, שאינו משטח חלק בקודקוד.
+        misconception: MC-c3-level-set-always-surface
+      - text: 'רק ל-$c>0$, כי ל-$c<0$ הקבוצה בנויה משני חלקים נפרדים'
+        feedback: >-
+          ל-$c<0$ הקבוצה היא היפרבולואיד בשתי יריעות, ו-$\nabla F\ne0$ על כולה. משטח לא חייב להיות קשיר: ההגדרה מקומית.
+        misconception: MC-c3-surface-must-be-connected
+
+  - id: Q-3.2-graph-regular
+    type: twotier
+    objectives: [OBJ-3.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f(x,y)=x^2-y^2$, ובראשית $\nabla f=0$ (נקודת אוכף). האם הגרף $z=f(x,y)$ הוא משטח רגולרי בראשית?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. לכל גרף של פונקציה חלקה הפרמטריזציה $(x,y,f(x,y))$ רגולרית בכל נקודה.
+      - text: לא
+        feedback: >-
+          נקודה קריטית של $f$ היא נקודה שבה המישור המשיק אופקי, לא נקודה שבה הוא חסר.
+        misconception: MC-c3-graph-critical-point
+    reasons:
+      - text: '$\sigma_x\times\sigma_y=(-f_x,-f_y,1)=(0,0,1)\ne0$ בראשית'
+        correct: true
+        feedback: >-
+          בדיוק. הרכיב השלישי של $\sigma_x\times\sigma_y$ הוא 1 תמיד, ולכן אין לגרף נקודות לא רגולריות בכלל.
+      - text: 'בראשית $\nabla f=0$, ולכן $\sigma_x$ ו-$\sigma_y$ מתאפסים'
+        feedback: >-
+          $\sigma_x=(1,0,f_x)=(1,0,0)$ ו-$\sigma_y=(0,1,0)$: הרכיבים 1 שבהתחלה לא נעלמים. רק הרכיב השלישי מתאפס.
+        misconception: MC-c3-graph-critical-point
+      - text: 'כי $f$ פולינום, ולכן הגרף שלו רגולרי'
+        feedback: >-
+          המסקנה נכונה והנימוק לא: מה שקובע הוא המבנה $(x,y,f)$, לא סוג הפונקציה. כל $f$ חלקה נותנת גרף רגולרי, ופולינום
+          כמו $(u^2,v,u^3)$ בתפקיד פרמטריזציה כללית יכול להיות לא רגולרי.
+        misconception: MC-c3-regularity-only-generic-point
+
+  - id: Q-3.2-chain
+    type: mc
+    objectives: [OBJ-3.2-2]
+    level: basic
+    prompt: >-
+      $\varphi(s,t)=(u(s,t),\,v(s,t))$ החלפת פרמטרים ו-$\tilde\sigma=\sigma\circ\varphi$. מהו $\tilde\sigma_s$?
+    choices:
+      - text: '$u_s\,\sigma_u+v_s\,\sigma_v$, עם $\sigma_u,\sigma_v$ מחושבים ב-$\varphi(s,t)$'
+        correct: true
+        feedback: >-
+          נכון: כלל השרשרת. $\tilde\sigma_s$ הוא קומבינציה של $\sigma_u,\sigma_v$, ולכן הוא במישור המשיק של $\sigma$.
+      - text: '$\sigma_u\frac{\partial s}{\partial u}+\sigma_v\frac{\partial s}{\partial v}$'
+        feedback: >-
+          זה כלל השרשרת הפוך. גוזרים את $\sigma(u(s,t),v(s,t))$ לפי $s$, ולכן מופיעות הנגזרות של $u$ ו-$v$ **לפי** $s$.
+        misconception: MC-c3-chain-rule-reparam
+      - text: '$u_s\,\sigma_u$ בלבד'
+        feedback: >-
+          גם $v$ תלוי ב-$s$ בדרך כלל. למשל ב-$\varphi(s,t)=(s+t,\,s-t)$ מתקבל $\tilde\sigma_s=\sigma_u+\sigma_v$.
+        misconception: MC-c3-chain-rule-reparam
+
+  - id: Q-3.2-det-factor
+    type: numeric
+    objectives: [OBJ-3.2-2]
+    level: basic
+    prompt: >-
+      $\varphi(s,t)=(2s+t,\ s-t)$ ו-$\tilde\sigma=\sigma\circ\varphi$. מצאו את המספר $\lambda$ כך ש-$\tilde\sigma_s\times\tilde\sigma_t=\lambda\,\sigma_u\times\sigma_v$
+      (בנקודות המתאימות).
+    answer: -3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\tilde\sigma_s=2\sigma_u+\sigma_v$ ו-$\tilde\sigma_t=\sigma_u-\sigma_v$, ולכן
+      $\tilde\sigma_s\times\tilde\sigma_t=-2\,\sigma_u\times\sigma_v+\sigma_v\times\sigma_u=-3\,\sigma_u\times\sigma_v$. זה
+      $\det\begin{pmatrix}2&1\\1&-1\end{pmatrix}=-3$. הסימן השלילי אומר שהנורמל היחידה מתהפך.
+    wrongFeedback: >-
+      כתבו $\tilde\sigma_s$ ו-$\tilde\sigma_t$ בעזרת כלל השרשרת, והכפילו וקטורית; זכרו ש-$\sigma_u\times\sigma_u=0$
+      ו-$\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          זה $|\det(D\varphi)|$. המכפלה הווקטורית מוכפלת בדטרמיננטה עם הסימן שלה, וכאן $-3<0$: הכיוון מתהפך.
+        misconception: MC-c3-reparam-keeps-normal-direction
+      - value: -1
+        feedback: >-
+          $-1=2\cdot(-1)+1\cdot1$: חיברתם במקום לחסר. הדטרמיננטה היא $2\cdot(-1)-1\cdot1=-3$.
+        misconception: MC-c3-cross-minor-sign
+      - value: -0.3333333
+        feedback: >-
+          זה $\frac{1}{\det}$, הדטרמיננטה של ההעתקה ההפוכה. כאן $\tilde\sigma=\sigma\circ\varphi$, ולכן מופיעה
+          $\det(D\varphi)$ עצמה.
+        misconception: MC-c3-chain-rule-reparam
+
+  - id: Q-3.2-why-independent
+    type: mc
+    objectives: [OBJ-3.2-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      למה כל מושג גאומטרי בקורס (מישור משיק, אורך, זווית, ובפרק 4 עקמומיות) צריך להיות **בלתי תלוי בפרמטריזציה**?
+    choices:
+      - text: 'כי המשטח הוא הקבוצה, ולאותה קבוצה יש הרבה פרמטריזציות; גודל שתלוי בבחירה מתאר את הקואורדינטות, לא את המשטח'
+        correct: true
+        feedback: >-
+          נכון. כמו שאורך של מסילה לא תלוי בפרמטריזציה (שיעור 1.2), גם גדלים על משטח צריכים לצאת זהים בכל פרמטריזציה.
+      - text: 'כי לכל משטח יש פרמטריזציה טבעית אחת, ואת המושגים מגדירים בעזרתה'
+        feedback: >-
+          אין פרמטריזציה טבעית אחת: לספרה יש קואורדינטות כדוריות, שישה גרפים, הטלה סטריאוגרפית ועוד, ואף אחת מהן לא מכסה
+          אותה בלי בעיות.
+        misconception: MC-c3-canonical-parametrization
+      - text: 'כי הנגזרות החלקיות $\sigma_u,\sigma_v$ לא תלויות בפרמטריזציה, ולכן גם מה שבנוי מהן'
+        feedback: >-
+          $\sigma_u$ דווקא תלוי בפרמטריזציה: ב-$\tilde\sigma(s,t)=\sigma(2s,t)$ מתקבל $\tilde\sigma_s=2\sigma_u$. לכן כל
+          מושג שבנוי מהנגזרות צריך הוכחה שהוא לא תלוי בבחירה.
+        misconception: MC-c3-partials-are-geometric
+
+  - id: Q-3.2-level-graph
+    type: mc
+    objectives: [OBJ-3.2-1]
+    level: mid
+    prompt: >-
+      הנקודה $p=(1,0,0)$ נמצאת על ההיפרבולואיד $x^2+y^2-z^2=1$. לפי משפט הפונקציה הסתומה, ליד $p$ ההיפרבולואיד הוא גרף
+      מהצורה:
+    choices:
+      - text: '$x=g(y,z)$, כי $F_x(p)=2\ne0$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla F(p)=(2,0,0)$: רק הנגזרת לפי $x$ שונה מאפס, ולכן פותרים עבור $x$. ואכן $x=\sqrt{1-y^2+z^2}$ ליד
+          $p$.
+      - text: '$z=g(x,y)$, כמו כל משטח'
+        feedback: >-
+          $F_z(p)=-2z=0$. ואכן ליד $p$ יש שתי נקודות על המשטח מעל כל $(x,y)$ עם $x^2+y^2>1$, $z=\pm\sqrt{x^2+y^2-1}$, ולכן
+          המשטח אינו גרף מעל $xy$ ליד $p$.
+        misconception: MC-c3-always-graph-over-xy
+      - text: 'אינו גרף ליד $p$, כי $F_z(p)=0$'
+        feedback: >-
+          המשפט צריך נגזרת חלקית **אחת** שאינה אפס, לא דווקא לפי $z$. כאן $F_x(p)\ne0$, ולכן המשטח גרף מעל המישור $yz$.
+        misconception: MC-c3-always-graph-over-xy
+
+  - id: Q-3.2-reparam-regular
+    type: twotier
+    objectives: [OBJ-3.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma$ פרמטריזציה רגולרית ו-$\varphi$ החלפת פרמטרים: חלקה, חד-חד-ערכית ועל, עם הופכית **חלקה**. האם
+      $\tilde\sigma=\sigma\circ\varphi$ בהכרח רגולרית?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. החלפת פרמטרים שומרת על רגולריות, ובזכות זה רגולריות היא תכונה יציבה.
+      - text: לא
+        feedback: >-
+          עם הופכית חלקה הדטרמיננטה של $D\varphi$ לא מתאפסת. ראו את הנימוק הנכון.
+        misconception: MC-c3-bijective-is-reparam
+    reasons:
+      - text: '$\tilde\sigma_s\times\tilde\sigma_t=\det(D\varphi)\,\sigma_u\times\sigma_v$, ומכלל השרשרת $D\varphi\cdot D(\varphi^{-1})=I$ נובע $\det(D\varphi)\ne0$'
+        correct: true
+        feedback: >-
+          בדיוק. שני הגורמים שונים מאפס, ולכן גם המכפלה. בלי חלקות ההופכית זה נכשל: $\varphi(s,t)=(s^3,t)$ חד-חד-ערכית
+          ועל, ו-$\det(D\varphi)=3s^2$ מתאפס ב-$s=0$.
+      - text: 'כי $\varphi$ חד-חד-ערכית ועל, ולכן לא "מאבדת" כיוונים'
+        feedback: >-
+          חד-חד-ערכיות לא מספיקה: $\varphi(s,t)=(s^3,t)$ חד-חד-ערכית ועל, ו-$\tilde\sigma_s=3s^2\sigma_u$ מתאפס ב-$s=0$.
+          את העבודה עושה חלקות ההופכית.
+        misconception: MC-c3-bijective-is-reparam
+      - text: 'כי $\tilde\sigma_s=\sigma_u$ ו-$\tilde\sigma_t=\sigma_v$ אחרי החלפת פרמטרים'
+        feedback: >-
+          הנגזרות משתנות: $\tilde\sigma_s=u_s\sigma_u+v_s\sigma_v$. מה שנשמר הוא רק המישור שהן פורשות.
+        misconception: MC-c3-chain-rule-reparam
+
+  - id: Q-3.2-which-depend
+    type: multi
+    objectives: [OBJ-3.2-3, OBJ-3.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\tilde\sigma=\sigma\circ\varphi$ החלפת פרמטרים, ו-$p=\sigma(u_0,v_0)=\tilde\sigma(s_0,t_0)$. אילו מהגדלים הבאים
+      **אינם** תלויים בפרמטריזציה (יוצאים זהים ל-$\sigma$ ול-$\tilde\sigma$)? סמנו את כולם.
+    choices:
+      - text: 'המישור $\operatorname{span}\{\sigma_u,\sigma_v\}$'
+        correct: true
+        feedback: >-
+          נכון. $\tilde\sigma_s,\tilde\sigma_t$ הם קומבינציות של $\sigma_u,\sigma_v$, ושני הזוגות פורשים מישור, ולכן אותו
+          מישור.
+      - text: 'הישר הנורמלי, $\{p+\lambda\,\sigma_u\times\sigma_v\}$'
+        correct: true
+        feedback: >-
+          נכון. $\tilde\sigma_s\times\tilde\sigma_t=\det(D\varphi)\,\sigma_u\times\sigma_v$ הוא כפולה שאינה אפס, ולכן הוא על
+          אותו ישר.
+      - text: 'הווקטור $\sigma_u$'
+        feedback: >-
+          ב-$\varphi(s,t)=(2s,t)$ מתקבל $\tilde\sigma_s=2\sigma_u$: אותו כיוון, אורך אחר. ב-$\varphi(s,t)=(s+t,t)$ משתנה גם
+          הכיוון של $\tilde\sigma_t=\sigma_u+\sigma_v$.
+        misconception: MC-c3-partials-are-geometric
+      - text: 'האורך $\|\sigma_u\times\sigma_v\|$'
+        feedback: >-
+          הוא מוכפל ב-$|\det(D\varphi)|$; ב-$\varphi(s,t)=(2s,t)$ הוא גדל פי 2. זה גודל השטח של המקבילית של הנגזרות, והוא
+          תלוי בקצב שבו הפרמטרים רצים.
+        misconception: MC-c3-partials-are-geometric
+      - text: 'הנורמל היחידה $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$'
+        feedback: >-
+          $\hat{\mathbf N}$ מוכפל בסימן של $\det(D\varphi)$. ב-$\varphi(s,t)=(t,s)$ הוא מתהפך. בלתי תלוי הוא רק הישר הנורמלי.
+        misconception: MC-c3-reparam-keeps-normal-direction
+
+  - id: Q-3.2-rank-plane
+    type: rank
+    objectives: [OBJ-3.2-2, OBJ-3.2-3]
+    level: mid
+    help: >-
+      סדרו את שלבי ההוכחה שהמישור $\operatorname{span}\{\sigma_u,\sigma_v\}$ אינו תלוי בפרמטריזציה, מהשלב הראשון
+      לאחרון.
+    prompt: >-
+      $\sigma$ פרמטריזציה רגולרית, $\varphi=(u,v)$ החלפת פרמטרים ו-$\tilde\sigma=\sigma\circ\varphi$. הוכיחו
+      ש-$\operatorname{span}\{\tilde\sigma_s,\tilde\sigma_t\}=\operatorname{span}\{\sigma_u,\sigma_v\}$ בנקודות המתאימות.
+    items:
+      - id: chain
+        label: 'כלל השרשרת: $\tilde\sigma_s=u_s\sigma_u+v_s\sigma_v$ ו-$\tilde\sigma_t=u_t\sigma_u+v_t\sigma_v$'
+      - id: subset
+        label: 'לכן $\tilde\sigma_s,\tilde\sigma_t\in\operatorname{span}\{\sigma_u,\sigma_v\}$, ומכאן $\operatorname{span}\{\tilde\sigma_s,\tilde\sigma_t\}\subseteq\operatorname{span}\{\sigma_u,\sigma_v\}$'
+      - id: dims
+        label: 'כדי להפוך את ההכלה לשוויון סופרים מימדים: שני המרחבים ממימד 2, כי $\sigma$ רגולרית, וגם $\tilde\sigma$ רגולרית כי $\tilde\sigma_s\times\tilde\sigma_t=\det(D\varphi)\,\sigma_u\times\sigma_v\ne0$'
+      - id: equal
+        label: 'תת-מרחב ממימד 2 של מרחב ממימד 2 הוא המרחב כולו, ולכן שני המישורים שווים'
+    order: [chain, subset, dims, equal]
+    correctFeedback: >-
+      נכון. הרעיון: הכלה אחת באה בחינם מכלל השרשרת, והשוויון בא מספירת מימדים. אותו טיעון, עם $\varphi^{-1}$ במקום
+      $\varphi$, נותן גם את ההכלה ההפוכה ישירות.
+    wrongFeedback: >-
+      התחילו ממה שכלל השרשרת נותן, הסיקו הכלה, ורק אז השתמשו במימדים כדי להפוך הכלה לשוויון.
+
+  - id: Q-3.2-regular-value
+    type: twotier
+    objectives: [OBJ-3.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן ש-$F:\mathbb R^3\to\mathbb R$ חלקה, $F^{-1}(0)$ הוא משטח חלק, ובכל זאת $\nabla F=0$ **בכל** נקודה של
+      $F^{-1}(0)$?
+    choices:
+      - text: כן, ייתכן
+        correct: true
+        feedback: >-
+          נכון. ערך רגולרי הוא תנאי מספיק לכך שקבוצת רמה תהיה משטח, לא תנאי הכרחי.
+      - text: לא, זה לא ייתכן
+        feedback: >-
+          משפט הפונקציה הסתומה אומר מה קורה **כש**-$\nabla F\ne0$; הוא לא אומר דבר כש-$\nabla F=0$. ראו את הדוגמה בנימוק
+          הנכון.
+        misconception: MC-c3-regular-value-necessary
+    reasons:
+      - text: '$F(x,y,z)=z^2$: $F^{-1}(0)$ הוא המישור $z=0$, ו-$\nabla F=(0,0,2z)=0$ בכל נקודה שלו'
+        correct: true
+        feedback: >-
+          בדיוק. אותה תופעה ב-$F=(x^2+y^2+z^2-1)^2$, שקבוצת האפסים שלה היא ספרת היחידה ו-$\nabla F=0$ עליה. אותו משטח הוא
+          גם $F_0^{-1}(0)$ ל-$F_0=z$, שאפס ערך רגולרי שלה: הרגולריות שייכת ל-$F$, לא לקבוצה.
+      - text: 'כל קבוצת רמה של פונקציה חלקה היא משטח, ולכן ודאי שייתכן'
+        feedback: >-
+          זה לא נכון: $x^2+y^2-z^2=0$ הוא חרוט כפול, שאינו משטח חלק בקודקוד. התשובה "כן" נכונה, אבל מסיבה אחרת.
+        misconception: MC-c3-level-set-always-surface
+      - text: 'לפי משפט הפונקציה הסתומה, קבוצת רמה של ערך לא רגולרי אינה משטח'
+        feedback: >-
+          המשפט נותן רק כיוון אחד: ערך רגולרי גורר משטח. הכיוון ההפוך לא נכון, כפי ש-$F=z^2$ מראה.
+        misconception: MC-c3-regular-value-necessary

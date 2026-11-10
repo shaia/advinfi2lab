@@ -1,0 +1,33 @@
+# Terms first defined in lesson 11.3.
+- id: picard-iterates
+  term: איטרציות פיקאר
+  en: Picard iterates
+  symbol: 'y_{k+1}(t)=y_0+\int_{t_0}^t f(s,y_k(s))\,ds'
+  definition: >-
+    הסדרה שמתחילה בפונקציה הקבועה $y_0$ ומתקבלת מהפעלה חוזרת של העתקת פיקאר
+    $Ty(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds$. בתנאי משפט פיקאר-לינדלוף היא מתכנסת במידה שווה לפתרון.
+  reject: [איטרציות פיקארד]
+  lesson: '11.3'
+- id: picard-lindelof-theorem
+  term: משפט פיקאר-לינדלוף
+  en: Picard–Lindelöf theorem
+  definition: >-
+    אם $f$ רציפה במלבן $R=\{|t-t_0|\le a,\ |y-y_0|\le b\}$ ומקיימת בו תנאי ליפשיץ ב-$y$ באופן אחיד ב-$t$, אז
+    לבעיית ההתחלה $y'=f(t,y)$, $y(t_0)=y_0$ יש פתרון יחיד בקטע $|t-t_0|\le h$, עם $M=\max_R|f|$ ו-$h=\min(a,\frac bM)$.
+  reject: [פיקארד-לינדלוף]
+  lesson: '11.3'
+- id: existence-interval
+  term: קטע הקיום
+  en: existence interval
+  definition: >-
+    הקטע שבו משפט קיום מבטיח פתרון, $|t-t_0|\le h$ עם $h=\min(a,\frac bM)$. זו הבטחה מלמטה: הפתרון עשוי להתקיים
+    בקטע גדול יותר.
+  lesson: '11.3'
+- id: banach-fixed-point-theorem
+  term: משפט נקודת השבת של בנך
+  en: Banach fixed point theorem (contraction mapping principle)
+  definition: >-
+    משפט מאינפי מתקדם 1. העתקה $T$ של מרחב מטרי שלם $X$ לתוך עצמו היא מכווצת אם קיים $q<1$ כך ש-$d(Tx,Tz)\le q\,d(x,z)$
+    לכל $x,z\in X$. להעתקה מכווצת יש נקודת שבת יחידה $x^*$, והאיטרציות $x_{n+1}=Tx_n$ מתכנסות אליה מכל $x_0$, עם
+    חסם השגיאה $d(x_n,x^*)\le\frac{q^n}{1-q}\,d(x_1,x_0)$.
+  lesson: '11.3'

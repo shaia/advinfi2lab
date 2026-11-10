@@ -1,0 +1,31 @@
+# Terms first defined in lesson 1.4 (radius of curvature and the osculating circle).
+- id: radius-of-curvature
+  term: רדיוס עקמומיות
+  en: radius of curvature
+  symbol: '\rho=\frac1\kappa'
+  definition: >-
+    $\rho=\frac{1}{\kappa}$ בנקודה שבה $\kappa>0$: הרדיוס של המעגל שמתעקל כמו המסילה באותה נקודה.
+  lesson: '1.4'
+- id: centre-of-curvature
+  term: מרכז עקמומיות
+  en: centre of curvature
+  symbol: '\gamma+\rho\,\mathbf n'
+  definition: >-
+    הנקודה $\gamma(s)+\rho(s)\mathbf n(s)$: הולכים מהמסילה מרחק $\rho$ בכיוון הנורמל הראשי, אל הצד הקעור.
+  lesson: '1.4'
+- id: osculating-circle
+  term: מעגל מנשק
+  en: osculating circle
+  definition: >-
+    בנקודה שבה $\kappa>0$: המעגל שמרכזו במרכז העקמומיות, רדיוסו $\rho$, והוא מונח במישור שנפרש על ידי
+    $\mathbf t$ ו-$\mathbf n$. זה המעגל היחיד שמתלכד עם המסילה עד סדר שני.
+  reject: [מעגל נושק, מעגל אוסקולטורי]
+  lesson: '1.4'
+- id: second-order-contact
+  term: מגע מסדר שני
+  en: second-order contact
+  definition: >-
+    שתי מסילות בפרמטר אורך הקשת, $\gamma$ ו-$c$, משיקות עד סדר שני בנקודה אם הערכים והנגזרות הראשונה והשנייה שלהן
+    שם שווים; אז $\|\gamma(s_0+h)-c(h)\|=o(h^2)$. הישר המשיק משיק רק עד סדר ראשון: המרחק אליו
+    $\frac{\kappa}{2}h^2+o(h^2)$.
+  lesson: '1.4'

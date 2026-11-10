@@ -1,0 +1,40 @@
+# Terms first defined in lesson 0.3 (the differential, the Jacobian matrix, the chain rule, the gradient).
+- id: differential
+  term: הדיפרנציאל
+  en: differential (derivative) of a map
+  symbol: 'DF(p)'
+  definition: >-
+    ל-$F:U\subseteq\mathbb R^n\to\mathbb R^m$ ונקודה $p\in U$: ההעתקה הלינארית $DF(p):\mathbb R^n\to\mathbb R^m$ שמקיימת
+    $\lim_{h\to0}\frac{\|F(p+h)-F(p)-DF(p)h\|}{\|h\|}=0$, כשהיא קיימת. זהו הקירוב הלינארי הטוב ביותר לשינוי $F(p+h)-F(p)$.
+  lesson: '0.3'
+- id: jacobian-matrix
+  term: מטריצת יעקובי
+  en: Jacobian matrix
+  definition: >-
+    המטריצה $m\times n$ של $DF(p)$ בבסיסים הסטנדרטיים: באיבר $(i,j)$ הנגזרת החלקית $\frac{\partial F_i}{\partial x_j}(p)$.
+    שורה לכל רכיב של $F$, עמודה לכל משתנה. כש-$m=n$ הדטרמיננטה שלה נקראת היעקוביאן.
+  lesson: '0.3'
+- id: chain-rule
+  term: כלל השרשרת
+  en: chain rule
+  symbol: 'D(G\circ F)(p)=DG(F(p))\,DF(p)'
+  definition: >-
+    אם $F$ דיפרנציאבילית ב-$p$ ו-$G$ דיפרנציאבילית ב-$F(p)$, אז $G\circ F$ דיפרנציאבילית ב-$p$ ו-$D(G\circ F)(p)=DG(F(p))\,DF(p)$.
+    למסילה: $\frac{d}{dt}f(\gamma(t))=\nabla f(\gamma(t))\cdot\gamma'(t)$.
+  lesson: '0.3'
+- id: gradient
+  term: גרדיאנט
+  en: gradient
+  symbol: '\nabla f'
+  definition: >-
+    לפונקציה דיפרנציאבילית $f:\mathbb R^n\to\mathbb R$: הווקטור $\nabla f(p)=\left(\frac{\partial f}{\partial x_1}(p),\dots,\frac{\partial f}{\partial x_n}(p)\right)$,
+    כך ש-$Df(p)h=\nabla f(p)\cdot h$. הוא ניצב לקבוצות הרמה של $f$, ומצביע לכיוון שבו $f$ עולה הכי מהר, בקצב $\|\nabla f(p)\|$.
+  reject: [גראדיאנט]
+  lesson: '0.3'
+- id: level-set
+  term: קבוצת רמה
+  en: level set
+  symbol: '\{F=c\}'
+  definition: >-
+    הקבוצה $\{x:\ F(x)=c\}$ של כל הנקודות שבהן $F$ מקבלת את הערך $c$. ל-$f:\mathbb R^2\to\mathbb R$ קוראים לה גם קו רמה.
+  lesson: '0.3'

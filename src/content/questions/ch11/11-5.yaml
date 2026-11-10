@@ -1,0 +1,330 @@
+# Lesson 11.5 — Peano's theorem (enrichment).
+# Objectives (src/course.ts):
+#   OBJ-11.5-1  state Peano's existence theorem for a merely continuous right-hand side
+#   OBJ-11.5-2  prove it with Euler polygons and the Arzelà–Ascoli theorem
+#   OBJ-11.5-3  explain why Peano guarantees existence but not uniqueness, with an example
+chapter: 11
+questions:
+  - id: Q-11.5-statement
+    type: mc
+    objectives: [OBJ-11.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $R=\{|t-t_0|\le a,\ |y-y_0|\le b\}$, $M=\max_R|f|$ ו-$h=\min(a,\frac bM)$. מה אומר משפט פאנו?
+    choices:
+      - text: >-
+          אם $f$ רציפה ב-$R$, אז לבעיית ההתחלה יש **לפחות** פתרון אחד בקטע $|t-t_0|\le h$
+        correct: true
+        feedback: >-
+          נכון. אותו קטע כמו בפיקאר-לינדלוף, בלי תנאי ליפשיץ, ובלי יחידות.
+      - text: >-
+          אם $f$ רציפה ב-$R$, אז לבעיית ההתחלה יש פתרון **יחיד** בקטע $|t-t_0|\le h$
+        feedback: >-
+          פאנו אינו נותן יחידות: $3y^{2/3}$ רציפה, ול-$y'=3y^{2/3}$, $y(0)=0$ יש אינסוף פתרונות.
+        misconception: MC-c11-continuity-gives-uniqueness
+      - text: >-
+          אם $f$ חסומה ב-$R$ (לא בהכרח רציפה), אז לבעיית ההתחלה יש פתרון בקטע $|t-t_0|\le h$
+        feedback: >-
+          בלי רציפות אין קיום: $f=\operatorname{sgn}t$ חסומה, ול-$y'=\operatorname{sgn}t$, $y(0)=0$ אין פתרון גזיר בשום
+          קטע שמכיל את 0 בפנים (שיעור 11.1).
+        misconception: MC-c11-peano-discontinuous
+      - text: >-
+          אם $f$ רציפה ב-$R$, אז לבעיית ההתחלה יש פתרון בכל הקטע $|t-t_0|\le a$
+        feedback: >-
+          הפתרון עלול לצאת מהמלבן לפני הזמן $a$, ושם $f$ אולי לא מוגדרת. הקטע המובטח הוא $h=\min(a,\frac bM)$.
+        misconception: MC-c11-interval-is-a
+
+  - id: Q-11.5-h
+    type: numeric
+    objectives: [OBJ-11.5-1]
+    level: basic
+    prompt: >-
+      $y'=3y^{2/3}$, $y(0)=0$, עם $a=2$ ו-$b=8$. מהו אורך חצי-הקטע $h=\min(a,\frac bM)$ שמשפט פאנו מבטיח?
+    answer: 0.6666666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $h=\frac23$. $M=\max_{|y|\le8}3|y|^{2/3}=3\cdot8^{2/3}=12$, ו-$\frac bM=\frac8{12}=\frac23<2$.
+    wrongFeedback: >-
+      $M$ הוא המקסימום של $|f|$ על **כל** המלבן, לא בנקודת ההתחלה. מצאו אותו ב-$|y|\le8$ והשוו את $\frac bM$ ל-$a$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $2=a$. זה מתקבל אם מתעלמים מ-$\frac bM$, או אם לוקחים את $M$ בנקודת ההתחלה ($f(0)=0$). המשפט משתמש רק
+          בחסם $M$ על **כל** המלבן: גרף שזז בקצב עד 12 מובטח שיישאר בגובה 8 רק עד הזמן $\frac23$. (כאן הפתרונות במקרה
+          קיימים גם הלאה, אבל המשפט לא יודע את זה.)
+        misconception: MC-c11-interval-is-a
+
+  - id: Q-11.5-euler-step
+    type: numeric
+    objectives: [OBJ-11.5-2]
+    level: basic
+    prompt: >-
+      בנו את מצולע אוילר של $y'=t+y$, $y(0)=0$ בקטע $[0,1]$ עם צעד $\frac12$: $y_{k+1}=y_k+\frac12f(t_k,y_k)$. מהו
+      ערך המצולע ב-$t=1$?
+    answer: 0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $y_1=0+\frac12(0+0)=0$, ו-$y_2=0+\frac12\left(\frac12+0\right)=\frac14$. הפתרון המדויק הוא $e-2\approx0.718$:
+      צעד גדול נותן קירוב גס, ולכן בהוכחה הצעד שואף ל-0.
+    wrongFeedback: >-
+      בכל צעד השיפוע הוא $f$ בנקודה **השמאלית**: $f(t_k,y_k)=t_k+y_k$. התחילו מ-$(t_0,y_0)=(0,0)$.
+    commonWrong:
+      - value: 0.7182818285
+        feedback: >-
+          $e-2$ הוא ערך הפתרון $e^t-1-t$ ב-1. מצולע אוילר הוא קירוב, וכאן עם שני צעדים בלבד הוא רחוק מהפתרון.
+        misconception: MC-c11-iterate-is-solution
+
+  - id: Q-11.5-nonunique
+    type: mc
+    objectives: [OBJ-11.5-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה נכון לגבי $y'=3y^{2/3}$, $y(0)=0$?
+    choices:
+      - text: >-
+          משפט פאנו חל ($f$ רציפה), פיקאר-לינדלוף לא ($f$ אינה ליפשיצית ליד 0), ויש אינסוף פתרונות
+        correct: true
+        feedback: >-
+          נכון. $y\equiv0$, $y=t^3$, ולכל $c\ge0$ ההדבקה של 0 עד $c$ עם $(t-c)^3$ אחריו. קיום בלי יחידות.
+      - text: >-
+          אין פתרון, כי $f$ אינה ליפשיצית ליד 0
+        feedback: >-
+          ליפשיץ נחוץ ליחידות, לא לקיום: $y\equiv0$ פתרון, ופאנו מבטיח פתרון לכל $f$ רציפה.
+        misconception: MC-c11-no-lipschitz-no-solution
+      - text: >-
+          יש בדיוק שני פתרונות, $0$ ו-$t^3$, כי ההדבקות אינן גזירות בנקודת ההדבקה
+        feedback: >-
+          ב-$c$ שתי הנגזרות החד-צדדיות של ההדבקה הן 0, ולכן היא גזירה שם ומקיימת $y'(c)=0=3y(c)^{2/3}$.
+        misconception: MC-c11-glued-not-differentiable
+      - text: >-
+          הפתרון יחיד, $y\equiv0$, כי כל מצולעי אוילר מ-$(0,0)$ הם אפס
+        feedback: >-
+          המצולעים אכן אפס ($f(t,0)=0$), ולכן הם מוצאים את הפתרון $y\equiv0$. אבל קירוב שמוצא פתרון אחד לא מוכיח
+          שאין אחרים: $t^3$ גם פתרון.
+        misconception: MC-c11-only-zero-solution
+
+  - id: Q-11.5-apply
+    type: multi
+    objectives: [OBJ-11.5-1]
+    level: mid
+    prompt: >-
+      לאילו מבעיות ההתחלה הבאות משפט פאנו מבטיח פתרון, ומשפט פיקאר-לינדלוף **לא** חל (באף מלבן סביב נקודת ההתחלה)?
+      סמנו את כולן. ($\operatorname{sgn}0=0$.)
+    choices:
+      - text: '$y''=\sqrt{|y|}$, $y(0)=0$'
+        correct: true
+        feedback: >-
+          נכון. $f$ רציפה, ואינה ליפשיצית באף מלבן שמכיל את $y=0$: $\frac{\sqrt{\eta}}{\eta}=\eta^{-1/2}\to\infty$.
+      - text: '$y''=y^{2/3}$, $y(0)=0$'
+        correct: true
+        feedback: >-
+          נכון, מאותה סיבה: מנת ההפרשים ליד 0 היא $|y|^{-1/3}$.
+      - text: '$y''=\operatorname{sgn}y$, $y(0)=0$'
+        feedback: >-
+          $f$ אינה רציפה ב-$y=0$, ולכן פאנו אינו חל. (במקרה $y\equiv0$ כן פותרת, כי $\operatorname{sgn}0=0$; אבל אף
+          משפט לא מבטיח את זה.)
+        misconception: MC-c11-peano-discontinuous
+      - text: '$y''=y^2$, $y(0)=1$'
+        feedback: >-
+          כאן **שני** המשפטים חלים: $y^2$ ליפשיצית בכל מלבן סגור וחסום (עם $L=2(1+b)$). פיקאר-לינדלוף צריך ליפשיץ
+          במלבן בלבד, לא גלובלית.
+        misconception: MC-c11-local-is-global-lipschitz
+      - text: '$y''=\sqrt{|y|}$, $y(0)=1$'
+        feedback: >-
+          במלבן $|y-1|\le\frac12$ הנגזרת $\frac{1}{2\sqrt y}$ חסומה ב-$\frac{1}{\sqrt2}$, ולכן פיקאר-לינדלוף חל. הבעיה
+          של $\sqrt{|y|}$ היא רק ליד $y=0$.
+        misconception: MC-c11-local-vs-global-uniqueness
+
+  - id: Q-11.5-euler-family
+    type: mc
+    objectives: [OBJ-11.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחת משפט פאנו בונים מצולעי אוילר $y_n$ עם צעד $\frac hn$ בקטע $I=[t_0-h,t_0+h]$. למה יש לסדרה $(y_n)$
+      תת-סדרה שמתכנסת במידה שווה ב-$I$?
+    choices:
+      - text: >-
+          כל $y_n$ ליפשיצית עם אותו קבוע $M$ ו-$|y_n-y_0|\le b$, ולכן לפי ארצלה-אסקולי יש תת-סדרה מתכנסת
+        correct: true
+        feedback: >-
+          נכון. קבוע ליפשיץ **משותף** נותן $\delta=\frac\varepsilon M$ אחד לכל המצולעים: זו הרציפות במידה אחידה
+          שארצלה-אסקולי דורש.
+      - text: >-
+          המצולעים הם סדרת קושי בנורמת הסופרמום, כי הצעדים $\frac hn$ שואפים ל-0, ו-$C(I)$ שלם
+        feedback: >-
+          בלי תנאי ליפשיץ אין שום הערכה של $\|y_n-y_m\|_\infty$, וכשאין יחידות זה אפילו לא נכון בהכרח. ההוכחה נשענת
+          על קומפקטיות, לא על שלמות.
+        misconception: MC-c11-euler-converges-whole
+      - text: >-
+          העתקת פיקאר מכווצת על הכדור $\|y-y_0\|_\infty\le b$, ולפי בנך האיטרציות מתכנסות
+        feedback: >-
+          בלי תנאי ליפשיץ $T$ אינה מכווצת. אילו הייתה, בנך היה נותן גם יחידות, וזה סותר את הדוגמה $3y^{2/3}$.
+        misconception: MC-c11-peano-by-banach
+      - text: >-
+          כל $y_n$ רציפה בקטע סגור, ולכן רציפה במידה שווה, וזה מה שארצלה-אסקולי דורש
+        feedback: >-
+          ארצלה-אסקולי דורש **רציפות במידה אחידה** של המשפחה: אותו $\delta$ לכל $n$. כל אחת מהפונקציות $\sin nx$
+          רציפה במידה שווה, והמשפחה אינה רציפה במידה אחידה.
+        misconception: MC-c11-each-uc-enough
+
+  - id: Q-11.5-proof-uses
+    type: multi
+    objectives: [OBJ-11.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      במה משתמשת הוכחת משפט פאנו בעזרת מצולעי אוילר $y_n$? סמנו את כל מה שנחוץ בה.
+    choices:
+      - text: 'המצולעים חסומים במשותף: $|y_n-y_0|\le b$'
+        correct: true
+        feedback: >-
+          נכון. זו הנחת החסימות של ארצלה-אסקולי, והיא באה מ-$h\le\frac bM$.
+      - text: 'המצולעים רציפים במידה אחידה, כי כולם ליפשיציים עם אותו קבוע $M$'
+        correct: true
+        feedback: >-
+          נכון. זו ההנחה השנייה של ארצלה-אסקולי.
+      - text: '$f$ רציפה במידה שווה על המלבן הקומפקטי $R$'
+        correct: true
+        feedback: >-
+          נכון. זה מה שמאפשר להעביר את הגבול לתוך האינטגרל ולקבל שגבול התת-סדרה פותר את המשוואה האינטגרלית.
+      - text: '$f$ ליפשיצית ב-$y$, כדי שהעתקת פיקאר תהיה מכווצת'
+        feedback: >-
+          פאנו לא משתמש בליפשיץ ולא בבנך; זה כל העניין. עם ליפשיץ היה מתקבל גם פתרון יחיד.
+        misconception: MC-c11-peano-by-banach
+      - text: 'כל הסדרה $(y_n)$ מתכנסת במידה שווה, כי היא חסומה ורציפה במידה אחידה'
+        feedback: >-
+          ארצלה-אסקולי נותן רק תת-סדרה מתכנסת, וזה כל מה שההוכחה צריכה. משפחה חסומה ורציפה במידה אחידה לא חייבת
+          להתכנס: $(-1)^n$, כסדרה של פונקציות קבועות, היא דוגמה.
+        misconception: MC-c11-aa-whole-sequence
+
+  - id: Q-11.5-count
+    type: numeric
+    objectives: [OBJ-11.5-3]
+    level: mid
+    prompt: >-
+      מבין כל הפתרונות של $y'=3y^{2/3}$, $y(0)=0$ בקטע $[0,\infty)$, מהו הערך **הגדול ביותר** האפשרי של $y(2)$?
+    answer: 8
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $y(2)=8$, מהפתרון $t^3$. כל פתרון אי-שלילי ולא יורד ($y'\ge0$). איפה ש-$y>0$ מתקיים
+      $\left(y^{1/3}\right)'=\frac{y'}{3y^{2/3}}=1$, ולכן $y^{1/3}$ גדלה בקצב 1 לכל היותר מ-0: $y(t)\le t^3$. ההדבקות
+      $(t-c)^3$ עם $c\in[0,2]$ נותנות כל ערך ב-$[0,8]$.
+    wrongFeedback: >-
+      כתבו את כל הפתרונות: $0$ עד זמן $c\ge0$, ו-$(t-c)^3$ אחריו. איזה $c$ נותן את $y(2)$ הגדול ביותר?
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $y\equiv0$ הוא פתרון אחד, לא היחיד: $f$ אינה ליפשיצית ב-0, ולכן אין יחידות. $t^3$ נותן $y(2)=8$.
+        misconception: MC-c11-only-zero-solution
+
+  - id: Q-11.5-sqrt-ivp
+    type: twotier
+    objectives: [OBJ-11.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $y'=2\sqrt{|y|}$, $y(0)=1$. הפתרון $(t+1)^2$ מתקיים עבור $t\ge-1$. נכון או לא: לבעיה יש פתרון יחיד על כל
+      $\mathbb{R}$?
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. היחידות מתקיימת כל עוד $y>0$, כלומר עבור $t>-1$, ונשברת אחרי שהפתרון מגיע ל-0 אחורה בזמן.
+      - text: נכון
+        feedback: >-
+          עבור $t<-1$ יש אינסוף המשכים: $0$ ב-$[c,-1]$ ו-$-(t-c)^2$ עבור $t<c$, לכל $c\le-1$. כולם מתחברים בגזירות
+          ל-$(t+1)^2$.
+        misconception: MC-c11-local-vs-global-uniqueness
+    reasons:
+      - text: >-
+          כל עוד $y>0$ אגף ימין ליפשיצי סביב הפתרון; ב-$t=-1$ הפתרון מגיע ל-0, ומשם אחורה אפשר לחכות ב-0
+        correct: true
+        feedback: >-
+          בדיוק. תנאי ליפשיץ נבדק סביב המקום הנוכחי של הפתרון, לא רק סביב ערך ההתחלה.
+      - text: >-
+          $f$ ליפשיצית ליד ערך ההתחלה $y=1$, ולכן פיקאר-לינדלוף נותן יחידות לכל הזמנים
+        feedback: >-
+          פיקאר-לינדלוף נותן יחידות **מקומית**. הפתרון מגיע אחורה בזמן לאזור $y=0$, שבו התנאי נכשל.
+        misconception: MC-c11-local-vs-global-uniqueness
+      - text: >-
+          $f$ אינה ליפשיצית ב-$y=0$, ולכן אין יחידות באף קטע, גם לא בקטע קטן סביב $t=0$
+        feedback: >-
+          ליד $t=0$ הפתרון קרוב ל-1, ושם $f$ ליפשיצית: הפתרון יחיד בכל $(-1,\infty)$. נקודה רעה אחת של $f$ מקלקלת רק
+          פתרונות שמגיעים אליה.
+        misconception: MC-c11-local-vs-global-uniqueness
+
+  - id: Q-11.5-rank
+    type: rank
+    objectives: [OBJ-11.5-2]
+    level: exam
+    prompt: >-
+      הוכיחו את משפט פאנו: $f$ רציפה ב-$R$, ו-$I=[t_0-h,t_0+h]$ עם $h=\min(a,\frac bM)$. אז יש לבעיית ההתחלה פתרון
+      ב-$I$.
+    help: >-
+      סדרו את שלבי ההוכחה מהראשון לאחרון.
+    items:
+      - id: a
+        label: >-
+          לכל $n$ בונים את מצולע אוילר $y_n$ ב-$I$ עם צעד $\frac hn$, מ-$(t_0,y_0)$ לשני הכיוונים.
+      - id: b
+        label: >-
+          באינדוקציה על הצמתים: הגרף של $y_n$ ב-$R$, ו-$|y_n(t)-y_n(s)|\le M|t-s|$, כי כל שיפוע הוא ערך של $f$ ב-$R$.
+      - id: c
+        label: >-
+          המשפחה $(y_n)$ חסומה ב-$C(I)$ (על ידי $|y_0|+b$) ורציפה במידה אחידה (ליפשיץ עם קבוע $M$ משותף).
+      - id: d
+        label: >-
+          לפי ארצלה-אסקולי יש תת-סדרה $y_{n_k}$ שמתכנסת במידה שווה לפונקציה רציפה $y$.
+      - id: e
+        label: >-
+          $y_n(t)=y_0+\int_{t_0}^t f\big(\tau_n(s),y_n(\tau_n(s))\big)\,ds$, כש-$\tau_n(s)$ הקצה של הצעד שמכיל את $s$
+          שקרוב יותר ל-$t_0$; כי $f$ רציפה במידה שווה על הקומפקטי $R$, האינטגרנדים מתכנסים במידה שווה ל-$f(s,y(s))$.
+      - id: f
+        label: >-
+          בגבול $y(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds$, ולפי שיעור 11.1 $y$ פותרת את בעיית ההתחלה.
+    order: [a, b, c, d, e, f]
+    correctFeedback: >-
+      נכון. שלבים ב–ד הם הקומפקטיות (במקום כיווץ), ושלב ה הוא המקום היחיד שבו משתמשים ברציפות של $f$: היא מאפשרת
+      להעביר את הגבול לתוך האינטגרל.
+    wrongFeedback: >-
+      כדי להפעיל את ארצלה-אסקולי צריך קודם לדעת שהמשפחה חסומה ורציפה במידה אחידה; וכדי לדעת שהגבול פתרון צריך לעבור
+      דרך המשוואה האינטגרלית.
+    explanation: >-
+      בשלב ה (לאורך תת-הסדרה $n=n_k$): $|\tau_n(s)-s|\le\frac hn$ ו-$|y_n(\tau_n(s))-y(s)|\le|y_n(\tau_n(s))-y_n(s)|+|y_n(s)-y(s)|\le M\frac hn+\|y_n-y\|_\infty$, והרציפות
+      במידה שווה של $f$ על $R$ (משפט קנטור, אינפי מתקדם 1) הופכת קרבה של הנקודות לקרבה של הערכים, באחידות ב-$s$.
+
+  - id: Q-11.5-subsequence
+    type: twotier
+    objectives: [OBJ-11.5-2, OBJ-11.5-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      נכון או לא: ההוכחה של משפט פאנו מראה שכל הסדרה של מצולעי אוילר $y_n$ מתכנסת במידה שווה לפתרון?
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. ארצלה-אסקולי נותן רק תת-סדרה. כשאין יחידות, תת-סדרות שונות יכולות להתכנס לפתרונות שונים.
+      - text: נכון
+        feedback: >-
+          בהוכחה אין שום הערכה של $\|y_n-y_m\|$; יש רק קומפקטיות, והיא נותנת תת-סדרה מתכנסת.
+        misconception: MC-c11-euler-converges-whole
+    reasons:
+      - text: >-
+          ארצלה-אסקולי נותן רק תת-סדרה; כשאין יחידות, תת-סדרות שונות יכולות להתכנס לפתרונות שונים
+        correct: true
+        feedback: >-
+          בדיוק. זה הטיעון הסטנדרטי: אם כל תת-סדרה מכילה תת-סדרה שמתכנסת לאותו גבול $y$, אז הסדרה כולה מתכנסת ל-$y$.
+      - text: >-
+          לפי ארצלה-אסקולי, משפחה חסומה ורציפה במידה אחידה ב-$C(I)$ מתכנסת במידה שווה, כולה
+        feedback: >-
+          ארצלה-אסקולי אומר שהסגור קומפקטי, לא שהמשפחה מתכנסת: $\sin(x+n)$ חסומה ורציפה במידה אחידה ואינה מתכנסת.
+        misconception: MC-c11-euler-converges-whole
+      - text: >-
+          כל תת-סדרה מתכנסת לפתרון, והפתרון יחיד כי $f$ רציפה במלבן הקומפקטי $R$
+        feedback: >-
+          רציפות אינה נותנת יחידות: ל-$y'=3y^{2/3}$, $y(0)=0$ יש אינסוף פתרונות.
+        misconception: MC-c11-continuity-gives-uniqueness

@@ -1,0 +1,65 @@
+# Misconceptions first detected in lesson 1.1 (smooth and regular curves, trace, tangent).
+# Reused from chapter 0: MC-c0-curve-is-image (curve = its image), MC-c0-smooth-map-smooth-image (C^∞ ⇒ no cusp).
+- id: MC-c1-equation-is-image
+  title: חושבים שאם הנקודות מקיימות את המשוואה, התמונה היא כל הקבוצה
+  belief: >-
+    אם כל נקודה $\gamma(t)$ מקיימת $y=x^2$, אז התמונה של $\gamma$ היא כל הפרבולה.
+  truth: >-
+    המשוואה אומרת רק שהתמונה **מוכלת** בקבוצה. $(\sin t,\sin^2 t)$ מקיימת $y=x^2$, אבל התמונה שלה היא רק הקשת
+    $|x|\le1$, ו-$(e^t,e^{2t})$ מכסה רק את $x>0$. כדי לקבל שוויון צריך לבדוק שכל נקודה של הקבוצה מתקבלת.
+  remedy: { lesson: '1.1', anchor: equation-image, label: 'מסילה מול התמונה שלה' }
+
+- id: MC-c1-regular-image-nice
+  title: חושבים שמסילה רגולרית מציירת תמונה פשוטה בלי פינות
+  belief: >-
+    אם $\gamma'(t)\ne0$ לכל $t$, התמונה לא חותכת את עצמה ואין בה אף פינה.
+  truth: >-
+    רגולריות היא תכונה **מקומית** של הפרמטריזציה. $(t^3-t,\,t^2)$ רגולרית ועוברת פעמיים ב-$(0,1)$, ב-$t=\pm1$,
+    עם שני וקטורים משיקים שונים, $(2,-2)$ ו-$(2,2)$: על $[-1,1]$ התמונה היא לולאה עם פינה ב-$(0,1)$.
+  remedy: { lesson: '1.1', anchor: loop, label: 'מסילה רגולרית שחותכת את עצמה' }
+
+- id: MC-c1-zero-derivative-cusp
+  title: חושבים שנגזרת מתאפסת תמיד יוצרת חוד
+  belief: >-
+    אם $\gamma'(t_0)=0$, בתמונה יש חוד או פינה ב-$\gamma(t_0)$.
+  truth: >-
+    $\gamma'(t_0)=0$ רק **מאפשר** חוד. $(t^3,t^3)$ מקיימת $\gamma'(0)=0$, והתמונה שלה היא הישר $y=x$ בלי שום
+    שבירה: המסילה רק מאטה לרגע. ב-$(t^2,t^3)$ יש חוד כי וקטור המשיק היחידה מתהפך שם.
+  remedy: { lesson: '1.1', anchor: slow-line, label: 'מתי נגזרת אפס יוצרת חוד' }
+
+- id: MC-c1-parametric-slope
+  title: חושבים שהשיפוע של מסילה פרמטרית הוא הנגזרת של הרכיב השני
+  belief: >-
+    השיפוע של הישר המשיק ל-$(x(t),y(t))$ הוא $y'(t)$, או $\frac{x'(t)}{y'(t)}$.
+  truth: >-
+    הישר המשיק הוא $\gamma(t_0)+\lambda\gamma'(t_0)$, כלומר כיוונו $(x'(t_0),y'(t_0))$, והשיפוע שלו הוא
+    $\frac{y'(t_0)}{x'(t_0)}$ (כש-$x'(t_0)\ne0$). $y'(t)$ לבדו הוא קצב השינוי של $y$ לפי הפרמטר, לא לפי $x$.
+  remedy: { lesson: '1.1', anchor: tangent-def, label: 'הישר המשיק בנקודה רגולרית' }
+
+- id: MC-c1-tangent-vector-geometric
+  title: חושבים שוקטור המשיק הוא תכונה של התמונה
+  belief: >-
+    בנקודה של התמונה יש וקטור משיק אחד, ולכן שתי פרמטריזציות של אותה מסילה נותנות שם את אותו וקטור.
+  truth: >-
+    וקטור המשיק $\gamma'(t_0)$ תלוי בפרמטריזציה: בהחלפת פרמטר $\delta=\gamma\circ\varphi$ הוא מוכפל ב-$\varphi'$.
+    מה שלא תלוי בפרמטריזציה הוא **הישר המשיק**, וכשהכיוון נשמר ($\varphi'>0$) גם הכיוון של הווקטור.
+  remedy: { lesson: '1.1', anchor: tangent-reparam, label: 'וקטור משיק מול ישר משיק' }
+
+- id: MC-c1-reparam-chain-rule
+  title: שוכחים את הנגזרת של החלפת הפרמטר
+  belief: >-
+    אם $\delta(u)=\gamma(\varphi(u))$, אז $\delta'(u)=\gamma'(\varphi(u))$, או אפילו $\delta'(u)=\gamma'(u)$.
+  truth: >-
+    לפי כלל השרשרת $\delta'(u)=\varphi'(u)\,\gamma'(\varphi(u))$. הגורם $\varphi'(u)$ הוא מה שמשנה את אורך וקטור
+    המשיק, ובאורך הקשת הוא מה שמתקזז בהצבה $t=\varphi(u)$.
+  remedy: { lesson: '1.1', anchor: tangent-reparam, label: 'החלפת פרמטר וכלל השרשרת' }
+
+- id: MC-c1-tangent-at-singular
+  title: מפעילים את נוסחת הישר המשיק בנקודה לא רגולרית
+  belief: >-
+    גם כש-$\gamma'(t_0)=0$ הישר המשיק הוא $\gamma(t_0)+\lambda\gamma'(t_0)$, ו-$\frac{\gamma'}{\|\gamma'\|}$ ממשיך ברציפות
+    דרך $t_0$.
+  truth: >-
+    כש-$\gamma'(t_0)=0$ הנוסחה נותנת נקודה אחת, לא ישר. ב-$(t^2,t^3)$ הווקטור $\frac{\gamma'}{\|\gamma'\|}$ שואף
+    ל-$(1,0)$ מימין ול-$(-1,0)$ משמאל: הוא קופץ, וזה החוד.
+  remedy: { lesson: '1.1', anchor: singular, label: 'מה קורה בנקודה לא רגולרית' }

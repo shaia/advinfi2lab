@@ -1,0 +1,38 @@
+# Terms first defined in lesson 9.2 (orthonormal systems, Gram–Schmidt, Legendre).
+- id: orthogonal-vectors
+  term: וקטורים ניצבים
+  en: orthogonal vectors
+  symbol: 'x\perp y'
+  definition: >-
+    $x$ ו-$y$ במרחב מכפלה פנימית ניצבים (אורתוגונליים) אם $\langle x,y\rangle=0$. וקטור ניצב לתת-מרחב אם הוא ניצב לכל
+    איבר שלו; מספיק לבדוק על בסיס.
+  lesson: '9.2'
+- id: orthonormal-system
+  term: מערכת אורתונורמלית
+  en: orthonormal system
+  definition: >-
+    מערכת $e_1,e_2,\dots$ עם $\langle e_i,e_j\rangle=0$ לכל $i\neq j$ ו-$\|e_i\|=1$. מערכת שרק מקיימת את הניצבות נקראת
+    אורתוגונלית. על $[-\pi,\pi]$: $\frac1{\sqrt{2\pi}},\frac{\cos nx}{\sqrt\pi},\frac{\sin nx}{\sqrt\pi}$.
+  lesson: '9.2'
+- id: gram-schmidt
+  term: תהליך גרם-שמידט
+  en: Gram–Schmidt process
+  definition: >-
+    הופך סדרה בלתי תלויה $v_1,v_2,\dots$ למערכת אורתונורמלית שפורשת את אותם תתי-מרחבים: מחסרים מ-$v_k$ את רכיביו בכיווני
+    הקודמים, $u_k=v_k-\sum_{j<k}\langle v_k,e_j\rangle e_j$, ומנרמלים $e_k=\frac{u_k}{\|u_k\|}$.
+  lesson: '9.2'
+- id: legendre-polynomials
+  term: פולינומי לז׳נדר
+  en: Legendre polynomials
+  symbol: 'P_n'
+  definition: >-
+    הפולינומים שמתקבלים מגרם-שמידט על $1,x,x^2,\dots$ ב-$C[-1,1]$, מנורמלים לפי $P_n(1)=1$: $P_0=1$, $P_1=x$,
+    $P_2=\frac{3x^2-1}2$. $\|P_n\|^2=\frac2{2n+1}$, והמערכת האורתונורמלית היא $\sqrt{\frac{2n+1}2}P_n$.
+  lesson: '9.2'
+- id: pythagoras-inner-product
+  term: משפט פיתגורס במרחב מכפלה פנימית
+  en: Pythagorean theorem
+  definition: >-
+    אם $x\perp y$ אז $\|x+y\|^2=\|x\|^2+\|y\|^2$ (ובמרחב ממשי גם להפך). במערכת אורתונורמלית
+    $\left\|\sum c_ke_k\right\|^2=\sum c_k^2$, והמקדמים הם $c_k=\langle x,e_k\rangle$.
+  lesson: '9.2'

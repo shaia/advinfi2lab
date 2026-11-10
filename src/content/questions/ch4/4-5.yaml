@@ -1,0 +1,415 @@
+# Lesson 4.5 — Gauss curvature and mean curvature; classifying points.
+# Objectives (src/course.ts):
+#   OBJ-4.5-1  compute K and H from the first and second fundamental forms
+#   OBJ-4.5-2  classify a point as elliptic, hyperbolic, parabolic or planar by K; recognise an umbilic
+#   OBJ-4.5-3  the shape near each type; elliptic, hyperbolic, parabolic points on the torus, and why it has no
+#              planar or umbilic point
+# K = (LN − M²)/(EG − F²) = κ₁κ₂, H = (EN − 2FM + GL)/(2(EG − F²)) = (κ₁ + κ₂)/2.
+# The torus σ(u,v) = ((3 + cos v) cos u, (3 + cos v) sin u, sin v): N̂ = σ_u × σ_v/‖…‖ points out of the tube;
+# E = (3 + cos v)², F = 0, G = 1, L = −cos v (3 + cos v), M = 0, N = −1, K = cos v/(3 + cos v).
+chapter: 4
+questions:
+  - id: Q-4.5-formula
+    type: mc
+    objectives: [OBJ-4.5-1]
+    level: basic
+    prompt: >-
+      איזו נוסחה נותנת את עקמומיות גאוס בפרמטריזציה כללית?
+    choices:
+      - text: '$K=\frac{LN-M^2}{EG-F^2}$'
+        correct: true
+        feedback: >-
+          נכון. $K=\det S=\det(Q_1^{-1}Q_2)=\frac{\det Q_2}{\det Q_1}$, כאשר $Q_1,Q_2$ הן המטריצות
+          $\begin{pmatrix}E&F\\F&G\end{pmatrix}$ ו-$\begin{pmatrix}L&M\\M&N\end{pmatrix}$ ו-$S=Q_1^{-1}Q_2$ הוא אופרטור הצורה. באותו
+          אופן העקמומיות הממוצעת היא חצי העקבה של $S$: מ-$Q_1^{-1}=\frac1{EG-F^2}\begin{pmatrix}G&-F\\-F&E\end{pmatrix}$ מקבלים
+          $\operatorname{tr}(Q_1^{-1}Q_2)=\frac{GL-2FM+EN}{EG-F^2}$, ולכן $H=\frac{EN-2FM+GL}{2(EG-F^2)}$.
+      - text: '$K=\frac{LN-M^2}{\sqrt{EG-F^2}}$'
+        feedback: >-
+          $\sqrt{EG-F^2}=\|\sigma_u\times\sigma_v\|$ הוא שטח המקבילית שפורשים $\sigma_u,\sigma_v$, ואין לו מקום כאן: מחלקים
+          דטרמיננטה בדטרמיננטה. בספרה ברדיוס 2 בקואורדינטות רוחב ואורך, ב-$v=0$: $LN-M^2=4$, $EG-F^2=16$, ו-$K=\frac14$;
+          עם השורש היה יוצא $1$.
+        misconception: MC-c4-K-sqrt-denominator
+      - text: '$K=LN-M^2$'
+        feedback: >-
+          זה נכון רק כש-$\sigma_u,\sigma_v$ אורתונורמליים. בדוגמה של הספרה ברדיוס 2 זה נותן 4, במקום $\frac14$.
+        misconception: MC-c4-K-numerator-only
+
+  - id: Q-4.5-graph
+    type: numeric
+    objectives: [OBJ-4.5-1]
+    level: basic
+    prompt: >-
+      הגרף $z=x^2+3xy-y^2$ בראשית: $E=G=1$, $F=0$, $L=2$, $M=3$, $N=-2$. מהי עקמומיות גאוס שם?
+    answer: -13
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $K=\frac{2\cdot(-2)-3^2}{1}=-13$. בדיקה: $\kappa_{1,2}=\pm\sqrt{13}$ ו-$\kappa_1\kappa_2=-13$.
+    wrongFeedback: >-
+      $K=\frac{LN-M^2}{EG-F^2}$, והמכנה כאן 1.
+    commonWrong:
+      - value: -4
+        feedback: >-
+          שכחתם את $M^2$: $LN-M^2=-4-9$. המקדם המעורב משנה את הצורה, ובלעדיו האוכף היה "חלש" יותר.
+        misconception: MC-c4-diagonal-only
+      - value: -3.25
+        feedback: >-
+          לקחתם את מקדמי הפולינום, $1$, $1.5$, $-1$, במקום הנגזרות השניות, $2$, $3$, $-2$.
+        misconception: MC-c4-taylor-coefficient
+
+  - id: Q-4.5-sphereH
+    type: numeric
+    objectives: [OBJ-4.5-1]
+    level: basic
+    prompt: >-
+      הספרה ברדיוס 2, $\sigma(u,v)=(2\cos u\cos v,\,2\sin u\cos v,\,2\sin v)$, עם
+      $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$, שמצביע החוצה. כזכור $\kappa_n=\frac{Q_2}{Q_1}$
+      עם $L=\sigma_{uu}\cdot\hat{\mathbf N}$ וכו', ולכן $\kappa_n>0$ בכיוון שבו המשטח מתעקם אל עבר $\hat{\mathbf N}$
+      ו-$\kappa_n<0$ בכיוון שבו הוא מתעקם הרחק ממנו. מהי העקמומיות הממוצעת $H$, הממוצע של שתי העקמומיויות הראשיות?
+    answer: -0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. עם הנורמל החוצה $Q_2=-\frac12Q_1$, ולכן $\kappa_1=\kappa_2=-\frac12$ ו-$H=-\frac12$.
+    wrongFeedback: >-
+      כל חתך נורמלי הוא מעגל גדול ברדיוס 2. מה הסימן של $\kappa_n$ כשהנורמל מצביע החוצה?
+    commonWrong:
+      - value: -1
+        feedback: >-
+          זה $\kappa_1+\kappa_2$. העקמומיות הממוצעת היא **ממוצע**, ולכן מחלקים ב-2.
+        misconception: MC-c4-H-sum
+      - value: 0.5
+        feedback: >-
+          הגודל נכון. עם הנורמל החוצה הספרה מתעקמת הרחק ממנו, ולכן $H<0$; עם הנורמל פנימה $H=\frac12$.
+        misconception: MC-c4-Q2-orientation-free
+      - value: 0.25
+        feedback: >-
+          $\frac14$ היא עקמומיות גאוס, $\kappa_1\kappa_2$, לא הממוצע.
+        misconception: MC-c4-K-is-principal
+
+  - id: Q-4.5-classify
+    type: mc
+    objectives: [OBJ-4.5-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בנקודה $P$ של משטח $\kappa_1=0$ ו-$\kappa_2=-3$. מאיזה סוג הנקודה?
+    choices:
+      - text: 'פרבולית'
+        correct: true
+        feedback: >-
+          נכון. $K=0\cdot(-3)=0$, אבל $Q_2\neq0$: בדיוק אחת העקמומיויות הראשיות אפס, כמו בכל נקודה של הגליל.
+      - text: 'מישורית'
+        feedback: >-
+          נקודה מישורית דורשת ש**שתי** העקמומיויות הראשיות יתאפסו ($Q_2=0$). כאן $\kappa_2=-3$, והמשטח מתעקם בכיוון אחד.
+        misconception: MC-c4-K-zero-planar
+      - text: 'היפרבולית'
+        feedback: >-
+          הסוג נקבע לפי $K=\kappa_1\kappa_2=0$, לא לפי הסימן של $\kappa_2$ לבדה. היפרבולית פירושו $K<0$: שתי עקמומיויות
+          ראשיות בסימנים הפוכים.
+        misconception: MC-c4-K-is-principal
+
+  - id: Q-4.5-shape
+    type: multi
+    objectives: [OBJ-4.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהטענות הבאות נכונות לכל משטח? סמנו את כולן. ("בצד אחד" פירושו: בסביבה מנוקבת של הנקודה כל נקודות המשטח
+      בצד אחד של המישור המשיק, או עליו.)
+    choices:
+      - text: 'ליד נקודה אליפטית המשטח נמצא בצד אחד של המישור המשיק'
+        correct: true
+        feedback: >-
+          נכון. $K>0$ פירושו ש-$Q_2$ מוגדרת חיובית או מוגדרת שלילית, ולכן המרחק החתום $\frac12Q_2+o(h^2+k^2)$ בסימן
+          קבוע ליד הנקודה.
+      - text: 'ליד נקודה היפרבולית המשטח חוצה את המישור המשיק'
+        correct: true
+        feedback: >-
+          נכון. $K<0$ פירושו ש-$Q_2$ מקבלת ערכים חיוביים ושליליים: בכיוון אחד המשטח מעל המישור, ובכיוון אחר מתחתיו, כמו
+          באוכף.
+      - text: 'ליד נקודה פרבולית המשטח נמצא בצד אחד של המישור המשיק'
+        feedback: >-
+          בגליל כן, אבל לא תמיד: $z=x^2+y^3$ פרבולית בראשית ($\kappa_1=2$, $\kappa_2=0$), והנקודות $(0,y,y^3)$ חוצות את
+          המישור $z=0$. כשהתבנית השנייה מנוונת, האיברים מסדר שלישי מכריעים.
+        misconception: MC-c4-parabolic-one-side
+      - text: 'ליד נקודה מישורית המשטח מוכל במישור המשיק, בסביבה כלשהי של הנקודה'
+        feedback: >-
+          $Q_2=0$ אומר רק שהמרחק החתום מהמישור המשיק הוא $o(h^2+k^2)$, לא שהוא אפס. $z=x^4+y^4$ מישורית בראשית, ובכל
+          זאת כל נקודותיה פרט לראשית נמצאות מעל המישור $z=0$, לא עליו; ובאוכף הקוף $z=x^3-3xy^2$ הראשית מישורית, והמשטח
+          יוצא מהמישור לשני צדדיו.
+        misconception: MC-c4-parabolic-one-side
+
+  - id: Q-4.5-flip
+    type: twotier
+    objectives: [OBJ-4.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      במשטח מכוון מחליפים את $\hat{\mathbf N}$ ב-$-\hat{\mathbf N}$. מה קורה ל-$K$ ול-$H$?
+    choices:
+      - text: '$K$ לא משתנה, ו-$H$ מחליפה סימן'
+        correct: true
+        feedback: >-
+          נכון. בגלל זה הסוג של נקודה (אליפטית, היפרבולית…) הוא תכונה של המשטח, ואילו הסימן של $H$ מוגדר רק אחרי בחירת
+          נורמל.
+      - text: 'שתיהן מחליפות סימן'
+        feedback: >-
+          $K=\kappa_1\kappa_2$, ושני הגורמים מחליפים סימן. בספרה $K=\frac1{R^2}$ עם כל אחד משני הנורמלים.
+        misconception: MC-c4-K-changes-sign
+      - text: 'שתיהן לא משתנות'
+        feedback: >-
+          $H=\frac{\kappa_1+\kappa_2}2$ מחליפה סימן: בספרה ברדיוס $R$, $H=-\frac1R$ עם הנורמל החוצה ו-$H=\frac1R$ עם הנורמל פנימה.
+        misconception: MC-c4-Q2-orientation-free
+    reasons:
+      - text: '$(\kappa_1,\kappa_2)\mapsto(-\kappa_2,-\kappa_1)$: המכפלה נשמרת, והסכום מתהפך'
+        correct: true
+        feedback: 'בדיוק. ובמקדמים: $L,M,N$ מתהפכים, $LN-M^2$ נשאר, ו-$EN-2FM+GL$ מתהפך.'
+      - text: 'כל מה שנבנה מ-$L,M,N$ מחליף סימן'
+        feedback: >-
+          ביטוי **ריבועי** ב-$L,M,N$, כמו $LN-M^2$, לא מחליף סימן. רק ביטוי לינארי בהם, כמו $EN-2FM+GL$, מחליף.
+        misconception: MC-c4-K-changes-sign
+      - text: '$Q_1$ לא משתנה, ולכן גם $K$ ו-$H$'
+        feedback: >-
+          $Q_1$ אכן לא משתנה, אבל $H$ תלויה גם ב-$Q_2$, שמחליפה סימן.
+        misconception: MC-c4-Q2-orientation-free
+
+  - id: Q-4.5-umbilic
+    type: mc
+    objectives: [OBJ-4.5-2]
+    level: mid
+    prompt: >-
+      איזה תנאי על $K$ ו-$H$ שקול לכך ש-$P$ נקודה טבורית?
+    choices:
+      - text: '$H^2=K$'
+        correct: true
+        feedback: >-
+          נכון. $H^2-K=\frac{(\kappa_1+\kappa_2)^2}4-\kappa_1\kappa_2=\frac{(\kappa_1-\kappa_2)^2}4$, וזה אפס בדיוק
+          כש-$\kappa_1=\kappa_2$.
+      - text: '$K>0$'
+        feedback: >-
+          לאליפסואיד $\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1$ עם $a>b>c$ יש $K>0$ בכל נקודה, אבל רוב נקודותיו
+          לא טבוריות. וגם הפוך: בנקודה מישורית $K=0$ והיא טבורית.
+        misconception: MC-c4-planar-not-umbilic
+      - text: '$K=0$ ו-$H=0$ בלבד'
+        feedback: >-
+          זה מתאר רק את הנקודות הטבוריות **המישוריות**. בספרה כל נקודה טבורית, עם $H=\pm\frac1R\neq0$.
+        misconception: MC-c4-planar-not-umbilic
+
+  - id: Q-4.5-torusK
+    type: numeric
+    objectives: [OBJ-4.5-1, OBJ-4.5-3]
+    level: mid
+    prompt: >-
+      הטורוס $\sigma(u,v)=((3+\cos v)\cos u,\,(3+\cos v)\sin u,\,\sin v)$, עם
+      $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$, שמצביע החוצה מהצינור. מקדמי התבניות:
+      $E=(3+\cos v)^2$, $F=0$, $G=1$, $L=-\cos v\,(3+\cos v)$, $M=0$, $N=-1$. חשבו את $K$ בנקודות שבהן $v=\frac{2\pi}3$.
+    answer: -0.2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ב-$v=\frac{2\pi}3$: $\cos v=-\frac12$, ולכן $E=\frac{25}4$, $L=\frac54$, ו-$K=\frac{\frac54\cdot(-1)-0}{\frac{25}4\cdot1-0}=-\frac15$.
+      ובכלל $K=\frac{\cos v\,(3+\cos v)}{(3+\cos v)^2}=\frac{\cos v}{3+\cos v}$.
+    wrongFeedback: >-
+      הציבו $\cos\frac{2\pi}3$ במקדמים, ואז ב-$K=\frac{LN-M^2}{EG-F^2}$.
+    commonWrong:
+      - value: -1.25
+        feedback: >-
+          זה $LN-M^2$ בלי החלוקה ב-$EG-F^2=\frac{25}4$. כאן $\sigma_u$ באורך $\frac52$, לא וקטור יחידה.
+        misconception: MC-c4-K-numerator-only
+      - value: -0.5
+        feedback: >-
+          $\frac{-5/4}{\sqrt{25/4}}$: חילקתם בשורש של $EG-F^2$.
+        misconception: MC-c4-K-sqrt-denominator
+      - value: 0.1428571
+        feedback: >-
+          הצבתם $\cos\frac{2\pi}3=\frac12$ במקום $-\frac12$, וקיבלתם $\frac{1/2}{7/2}=\frac17$. ב-$v=\frac{2\pi}3$ הנקודה כבר
+          בחצי הפנימי של הטורוס, שם $\cos v<0$.
+
+  - id: Q-4.5-torus
+    type: multi
+    objectives: [OBJ-4.5-3, OBJ-4.5-2]
+    level: mid
+    prompt: >-
+      לטורוס של השאלה הקודמת, עם $K=\frac{\cos v}{3+\cos v}$ ו-$Q_2=-\cos v(3+\cos v)\,du^2-dv^2$ (הנורמל החוצה מהצינור),
+      אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: 'נקודות המשווה החיצוני ($v=0$) אליפטיות'
+        correct: true
+        feedback: 'נכון. $K=\frac14>0$: שם הטורוס נראה כמו כיפה, כולו מצד אחד של המישור המשיק.'
+      - text: 'נקודות המשווה הפנימי ($v=\pi$) היפרבוליות'
+        correct: true
+        feedback: >-
+          נכון. $K=\frac{-1}{2}<0$: לאורך המעגל הפנימי הטורוס מתעקם בכיוון אחד, ובחתך של הצינור בכיוון ההפוך, כמו אוכף.
+      - text: 'נקודות המעגל העליון ($v=\frac\pi2$) פרבוליות'
+        correct: true
+        feedback: >-
+          נכון. $K=0$, ו-$Q_2=-dv^2\neq0$: בכיוון המעגל העליון $\kappa_n=0$, ובכיוון הצינור $\kappa_n=-1$.
+      - text: 'נקודות המעגל העליון ($v=\frac\pi2$) מישוריות'
+        feedback: >-
+          $K=0$ לא מספיק. שם $N=-1\neq0$: הצינור עדיין מתעקם בכיוון $v$.
+        misconception: MC-c4-K-zero-planar
+
+  - id: Q-4.5-x4
+    type: twotier
+    objectives: [OBJ-4.5-2, OBJ-4.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      המשטח $z=x^4+y^4$ בראשית. מאיזה סוג הראשית?
+    choices:
+      - text: 'מישורית (ולכן גם טבורית)'
+        correct: true
+        feedback: >-
+          נכון. כל הנגזרות השניות מתאפסות בראשית, ולכן $Q_2=0$. ובכל זאת המשטח כולו מעל המישור המשיק: הסוג נקבע מסדר
+          שני, והצורה כאן נקבעת מסדר רביעי.
+      - text: 'אליפטית, כי המשטח כולו מעל המישור המשיק'
+        feedback: >-
+          "בצד אחד" לא גורר אליפטית: אליפטית מוגדרת על ידי $K>0$, וכאן $K=0$. ההפך כן נכון: אליפטית גוררת צד אחד.
+        misconception: MC-c4-parabolic-one-side
+      - text: 'פרבולית, כי $K=0$'
+        feedback: >-
+          פרבולית דורשת עקמומיות ראשית אחת שונה מאפס. כאן שתיהן אפס: $Q_2=0$.
+        misconception: MC-c4-K-zero-planar
+    reasons:
+      - text: '$f_{xx}=12x^2$, $f_{xy}=0$, $f_{yy}=12y^2$ מתאפסים בראשית, והמישור המשיק אופקי, ולכן $L=M=N=0$'
+        correct: true
+        feedback: 'בדיוק. ו-$Q_2=0$ פירושו $\kappa_1=\kappa_2=0$, ולכן הנקודה גם טבורית.'
+      - text: '$z\ge0$ ליד הראשית, ולכן $Q_2$ מוגדרת חיובית'
+        feedback: >-
+          $z\ge0$ מראה רק ש-$Q_2$ אינה שלילית בשום כיוון. היא יכולה להיות אפס, וכאן היא אפס.
+        misconception: MC-c4-parabolic-one-side
+      - text: '$K=0$, ולכן הנקודה פרבולית או מישורית, ושתיהן אותו דבר'
+        feedback: >-
+          הן שונות: בגליל כל נקודה פרבולית, ושם $Q_2\neq0$. צריך לבדוק אם $Q_2$ עצמה מתאפסת.
+        misconception: MC-c4-K-zero-planar
+
+  - id: Q-4.5-torusH
+    type: numeric
+    objectives: [OBJ-4.5-1]
+    level: mid
+    prompt: >-
+      לטורוס של השאלות הקודמות, במשווה הפנימי $v=\pi$: $E=4$, $F=0$, $G=1$, $L=2$, $M=0$, $N=-1$. הנורמל החוצה מהצינור
+      מצביע שם אל ציר $z$ (פנימה, אל מרכז הטורוס). חשבו את העקמומיות הממוצעת $H$.
+    answer: -0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $H=\frac{EN-2FM+GL}{2(EG-F^2)}=\frac{-4+2}{8}=-\frac14$. בדיקה: $\kappa_1=\frac LE=\frac12$ (לאורך המשווה)
+      ו-$\kappa_2=\frac NG=-1$ (לאורך הצינור), והממוצע $-\frac14$.
+    wrongFeedback: >-
+      כש-$F=M=0$, העקמומיויות הראשיות הן $\frac LE$ ו-$\frac NG$. חשבו אותן וקחו ממוצע.
+    commonWrong:
+      - value: -0.5
+        feedback: >-
+          זה $\kappa_1+\kappa_2$. העקמומיות הממוצעת היא חצי מזה.
+        misconception: MC-c4-H-sum
+      - value: 0.5
+        feedback: >-
+          $\frac{L+N}2=\frac{2-1}2$: לקחתם את $L,N$ כעקמומיויות הראשיות, בלי לחלק ב-$E$ וב-$G$.
+        misconception: MC-c4-eigen-of-Q2
+      - value: 0.25
+        feedback: >-
+          הסימן הפוך. עם הנורמל החוצה מהצינור, כל חתך של הצינור מתעקם הרחק מהנורמל, ו-$\kappa_2=-1$.
+        misconception: MC-c4-Q2-orientation-free
+
+  - id: Q-4.5-bound
+    type: twotier
+    objectives: [OBJ-4.5-1, OBJ-4.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בנקודה $P$ של משטח, ביחס לנורמל $\hat{\mathbf N}$, $\kappa_n(v)\ge2$ לכל כיוון $v$. מה אפשר לומר על $K$ ועל $H$
+      ב-$P$?
+    choices:
+      - text: '$K\ge4$ ו-$H\ge2$'
+        correct: true
+        feedback: 'נכון. בפרט $P$ אליפטית.'
+      - text: '$K\ge2$ ו-$H\ge2$'
+        feedback: >-
+          $K$ היא **מכפלה** של שתי עקמומיויות ראשיות, ששתיהן לפחות 2: $K\ge2\cdot2=4$.
+        misconception: MC-c4-K-is-principal
+      - text: '$K\ge4$ ו-$H\ge4$'
+        feedback: >-
+          $H$ היא ממוצע, לא סכום: $\frac{\kappa_1+\kappa_2}2\ge2$. החסם 4 מתאים לסכום.
+        misconception: MC-c4-H-sum
+    reasons:
+      - text: '$\kappa_2=\min_v\kappa_n(v)\ge2$ ו-$\kappa_1\ge\kappa_2\ge2$, ולכן $\kappa_1\kappa_2\ge4$ ו-$\frac{\kappa_1+\kappa_2}2\ge2$'
+        correct: true
+        feedback: 'בדיוק. שוויון בספרה ברדיוס $\frac12$ עם הנורמל פנימה.'
+      - text: '$L\ge2$ ו-$N\ge2$, ולכן $LN-M^2\ge4$'
+        feedback: >-
+          $L,N$ תלויים בפרמטריזציה ($L=\kappa_n(\sigma_u)\,E$), ו-$M^2$ מוריד מהמכפלה. החסם צריך לבוא מהעקמומיויות הראשיות.
+        misconception: MC-c4-eigen-of-Q2
+      - text: '$K$ היא העקמומיות הנורמלית המינימלית, ולכן $K\ge2$'
+        feedback: 'זו $\kappa_2$, לא $K$. $K=\kappa_1\kappa_2$.'
+        misconception: MC-c4-K-is-principal
+
+  - id: Q-4.5-saddleK
+    type: numeric
+    objectives: [OBJ-4.5-1]
+    level: exam
+    prompt: >-
+      האוכף $\sigma(x,y)=(x,\,y,\,xy)$ בנקודה $(1,1,1)$, עם הנורמל כלפי מעלה. חשבו את עקמומיות גאוס שם.
+    answer: -0.1111111
+    tolerance: 0.0001
+    correctFeedback: >-
+      נכון: $-\frac19$. $\sigma_x=(1,0,1)$, $\sigma_y=(0,1,1)$, ולכן $E=G=2$, $F=1$, $EG-F^2=3$.
+      $\hat{\mathbf N}=\frac{(-1,-1,1)}{\sqrt3}$, $\sigma_{xx}=\sigma_{yy}=0$, $\sigma_{xy}=(0,0,1)$, ולכן $L=N=0$,
+      $M=\frac1{\sqrt3}$. $K=\frac{0-\frac13}{3}=-\frac19$.
+    wrongFeedback: >-
+      בנקודה הזו המישור המשיק אינו אופקי: חשבו את $E,F,G$ ואת $\hat{\mathbf N}$ מחדש, ואז $L,M,N$.
+    commonWrong:
+      - value: -1
+        feedback: >-
+          זה $f_{xx}f_{yy}-f_{xy}^2$, הנוסחה שמתאימה רק לנקודה עם מישור משיק אופקי (כמו הראשית). כאן צריך גם לנרמל את
+          הנורמל וגם לחלק ב-$EG-F^2$: $K=\frac{f_{xx}f_{yy}-f_{xy}^2}{(1+f_x^2+f_y^2)^2}$.
+        misconception: MC-c4-K-numerator-only
+      - value: -0.3333333
+        feedback: >-
+          חסר אחד משני הגורמים של 3: או שלא חילקתם ב-$EG-F^2=3$, או שלא נרמלתם את הנורמל (אז $M=1$ במקום $\frac1{\sqrt3}$).
+          לגרף המכנה הכולל הוא $(1+f_x^2+f_y^2)^2=9$.
+        misconception: MC-c4-K-numerator-only
+      - value: -0.19245
+        feedback: >-
+          $\frac{-1/3}{\sqrt3}$: חילקתם בשורש של $EG-F^2$ במקום בו עצמו.
+        misconception: MC-c4-K-sqrt-denominator
+
+  - id: Q-4.5-torus-umbilic
+    type: twotier
+    objectives: [OBJ-4.5-3, OBJ-4.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      לטורוס של השאלות הקודמות ($E=(3+\cos v)^2$, $F=0$, $G=1$, $L=-\cos v\,(3+\cos v)$, $M=0$, $N=-1$, הנורמל החוצה
+      מהצינור): מצאו את כל הנקודות המישוריות ואת כל הנקודות הטבוריות שלו.
+    choices:
+      - text: 'אין בו אף נקודה מישורית ואף נקודה טבורית'
+        correct: true
+        feedback: >-
+          נכון. בכל נקודה של הטורוס שתי העקמומיויות הראשיות שונות זו מזו, ואחת מהן היא תמיד $-1$.
+      - text: 'המעגל העליון והמעגל התחתון ($v=\pm\frac\pi2$) מישוריים, כי שם $K=0$'
+        feedback: >-
+          שם $K=0$ אבל $N=-1\neq0$: הנקודות פרבוליות, לא מישוריות. מישורית דורשת $Q_2=0$.
+        misconception: MC-c4-K-zero-planar
+      - text: 'המשווה החיצוני ($v=0$) עשוי מנקודות טבוריות, כי שם $K>0$ והטורוס נראה כמו כיפה'
+        feedback: >-
+          $K>0$ לא גורר טבורית. ב-$v=0$ העקמומיויות הראשיות הן $\frac LE=-\frac14$ ו-$\frac NG=-1$, שונות זו מזו: הכיפה
+          מתעקמת לאורך הצינור פי ארבעה מאשר לאורך המשווה.
+        misconception: MC-c4-planar-not-umbilic
+    reasons:
+      - text: >-
+          $F=M=0$, ולכן העקמומיויות הראשיות הן $\frac LE=-\frac{\cos v}{3+\cos v}$ ו-$\frac NG=-1$; השנייה אף פעם לא אפס,
+          ושוויון ביניהן פירושו $\cos v=3+\cos v$
+        correct: true
+        feedback: >-
+          בדיוק. $\kappa=-1$ בכל נקודה פוסל נקודה מישורית, ו-$\cos v=3+\cos v$ פירושו $0=3$, ולכן אין נקודה טבורית. (בכלל
+          $\left|\frac{\cos v}{3+\cos v}\right|\le\frac12<1$.)
+      - text: >-
+          $K=\frac{\cos v}{3+\cos v}$ אינה קבועה על הטורוס, וליד נקודה טבורית $K$ קבועה, ולכן אין בו נקודה שבה $\kappa_1=\kappa_2$
+        feedback: >-
+          ההסקה שגויה: נקודה טבורית היא תכונה של נקודה אחת, ו-$K$ לא קבועה לא פוסלת אותה. לאליפסואיד סיבוב שאינו ספרה
+          $K$ אינה קבועה, ובכל זאת שני הקטבים שלו טבוריים.
+        misconception: MC-c4-umbilic-global
+      - text: >-
+          $K$ מקבלת על הטורוס גם ערכים חיוביים וגם שליליים, ולכן אין נקודה שבה $H^2=K$
+        feedback: >-
+          ההסקה שגויה: הסימן של $K$ במקום אחד לא אומר דבר על נקודה אחרת, ו-$H^2=K$ אפשרי בכל נקודה עם $K\ge0$. צריך לבדוק
+          את $\kappa_1-\kappa_2$ בכל נקודה.
+        misconception: MC-c4-umbilic-global

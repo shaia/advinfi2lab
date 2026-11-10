@@ -1,0 +1,612 @@
+# Chapter 9 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (part א of the final): 7 points, a verdict + an open justification.
+# Long questions (parts ב, ג): 20 points in 3–4 lettered parts, with open parts graded against a model solution and a rubric.
+# Every number was recomputed (scratchpad ch9/check.ts, check2.ts).
+chapter: 9
+questions:
+  # ================================================================ short (7 points)
+  - id: Q-9-exam-1
+    type: exam
+    title: מקבילית שאי אפשר לבנות
+    prompt: >-
+      האם ייתכן שבמרחב מכפלה פנימית יש וקטורים $x,y$ עם $\|x\|=1$, $\|y\|=2$, $\|x+y\|=1$ ו-$\|x-y\|=2$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-9.1-3]
+        qualitative: true
+        prompt: >-
+          הכריעו.
+        choices:
+          - text: לא ייתכן
+            correct: true
+            feedback: >-
+              נכון. אי-שוויון המשולש מתקיים בכל הנתונים, ולכן הוא לא מכריע; חוק המקבילית מכריע.
+          - text: ייתכן
+            feedback: >-
+              כל ארבעת המספרים עומדים באי-שוויון המשולש ($|1-2|\le1\le3$ ו-$|1-2|\le2\le3$), אבל נורמה שבאה ממכפלה
+              פנימית צריכה לקיים גם את חוק המקבילית.
+            misconception: MC-c9-every-norm-inner
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-9.1-3]
+        qualitative: true
+        prompt: >-
+          נמקו.
+        solution:
+          - kind: given
+            text: '$\|x\|=1$, $\|y\|=2$, $\|x+y\|=1$, $\|x-y\|=2$ במרחב מכפלה פנימית.'
+          - kind: idea
+            text: >-
+              כל נורמה שבאה ממכפלה פנימית מקיימת את חוק המקבילית, שנובע מפתיחת $\|x\pm y\|^2$. נבדוק אותו על הנתונים.
+          - kind: theorem
+            text: '$\|x+y\|^2+\|x-y\|^2=2\|x\|^2+2\|y\|^2$, כי $\|x\pm y\|^2=\|x\|^2\pm2\langle x,y\rangle+\|y\|^2$.'
+          - kind: computation
+            text: 'אגף שמאל: $1^2+2^2=5$. אגף ימין: $2\cdot1^2+2\cdot2^2=10$.'
+          - kind: result
+            text: '$5\neq10$, ולכן אין וקטורים כאלה באף מרחב מכפלה פנימית.'
+        rubric:
+          - text: 'ניסוח נכון של חוק המקבילית (עם המקדמים 2), או גזירה שלו מפתיחת הריבועים'
+            weight: 2
+          - text: 'הצבה נכונה של ארבעת הנתונים ומציאת הסתירה $5\neq10$'
+            weight: 2
+          - text: 'הבחנה שאי-שוויון המשולש לבדו אינו מספיק כדי להכריע'
+            weight: 1
+
+  - id: Q-9-exam-2
+    type: exam
+    title: שוויון בקושי-שוורץ
+    prompt: >-
+      האם קיימת פונקציה רציפה $f$ על $[0,1]$, **שאינה קבועה**, עם $\int_0^1f=1$ ו-$\int_0^1f^2=1$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-9.1-2]
+        qualitative: true
+        prompt: >-
+          הכריעו.
+        choices:
+          - text: לא קיימת
+            correct: true
+            feedback: >-
+              נכון. הנתונים נותנים שוויון בקושי-שוורץ, ושוויון מתקבל רק בפונקציה פרופורציונית ל-1.
+          - text: 'קיימת, למשל $f(x)=2x$'
+            feedback: >-
+              $\int_0^12x\,dx=1$, אבל $\int_0^14x^2\,dx=\frac43\neq1$. כל פונקציה לא קבועה עם $\int f=1$ נותנת $\int f^2>1$.
+            misconception: MC-c9-cs-equality
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-9.1-2]
+        qualitative: true
+        prompt: >-
+          הוכיחו את תשובתכם.
+        solution:
+          - kind: given
+            text: '$f\in C[0,1]$ עם $\langle f,1\rangle=\int_0^1f=1$ ו-$\|f\|^2=\int_0^1f^2=1$; כאן $\|1\|^2=1$.'
+          - kind: idea
+            text: >-
+              קושי-שוורץ עם $g\equiv1$ נותן $1=\langle f,1\rangle^2\le\|f\|^2\|1\|^2=1$: שוויון. בהוכחה של קושי-שוורץ
+              שוויון פירושו שהמרחק מ-$f$ להטלה שלה על הקבועים הוא אפס.
+          - kind: computation
+            text: >-
+              עם $t=\frac{\langle f,1\rangle}{\|1\|^2}=1$:
+              $\|f-t\cdot1\|^2=\|f\|^2-2t\langle f,1\rangle+t^2\|1\|^2=1-2+1=0$.
+          - kind: step
+            text: >-
+              $f-1$ רציפה ו-$\int_0^1(f-1)^2=0$, ולכן $f\equiv1$ (חיוביות מוחלטת ב-$C[0,1]$: אם $f(x_0)\neq1$, הרציפות
+              נותנת קטע שעליו $(f-1)^2$ חסומה מלרע במספר חיובי).
+          - kind: result
+            text: 'כל פונקציה רציפה עם הנתונים היא הקבוע 1. לכן אין פונקציה לא קבועה כזו.'
+        rubric:
+          - text: 'שימוש בקושי-שוורץ עם $g\equiv1$, כולל $\|1\|^2=1$ על $[0,1]$'
+            weight: 1
+          - text: 'הבחנה שיש שוויון, וחישוב $\|f-1\|^2=0$ (או ציטוט מנומק של תנאי השוויון: תלות לינארית)'
+            weight: 2
+          - text: 'מעבר מ-$\int(f-1)^2=0$ ל-$f\equiv1$, עם שימוש ברציפות'
+            weight: 2
+
+  - id: Q-9-exam-3
+    type: exam
+    title: הטלה של סינוס בשלישית
+    prompt: >-
+      $X$ מרחב הפונקציות הרציפות על $[-\pi,\pi]$ עם המכפלה הפנימית הרגילה $\langle f,g\rangle=\int_{-\pi}^{\pi}fg$. $Y$ תת-המרחב
+      עם הבסיס $\{\sin x,\sin2x\}$, ו-$f(x)=\sin^3x$.
+    parts:
+      - label: א
+        points: 3
+        type: mc
+        objectives: [OBJ-9.3-1]
+        prompt: >-
+          מהי $P_Yf$?
+        choices:
+          - text: '$\frac34\sin x$'
+            correct: true
+            feedback: >-
+              נכון: $\sin^3x=\frac34\sin x-\frac14\sin3x$, והאיבר השני ניצב ל-$Y$.
+          - text: '$\sin x$'
+            feedback: >-
+              $\sin^3x$ "נראית" כמו $\sin x$, אבל המקדם נקבע מהמכפלה הפנימית: $\frac{\langle\sin^3x,\sin x\rangle}{\pi}=\frac34$.
+            misconception: MC-c9-projection-drop-hidden
+          - text: '$\frac34\sin x-\frac14\sin3x$'
+            feedback: >-
+              זו $f$ עצמה. $\sin3x\notin Y$ וניצבת לו, ולכן נעלמת בהטלה.
+            misconception: MC-c9-projection-keeps-outside
+          - text: '$\frac{3\pi}4\sin x$'
+            feedback: >-
+              $\frac{3\pi}4=\langle f,\sin x\rangle$. המקדם הוא $\frac{\langle f,\sin x\rangle}{\|\sin x\|^2}$ עם $\|\sin x\|^2=\pi$.
+            misconception: MC-c9-coef-no-divide
+      - label: ב
+        points: 4
+        type: open
+        objectives: [OBJ-9.3-1, OBJ-9.3-2]
+        prompt: >-
+          נמקו את תשובתכם, וחשבו את המרחק $\|f-P_Yf\|$.
+        solution:
+          - kind: idea
+            text: >-
+              כותבים את $f$ כצירוף של פונקציות טריגונומטריות, ומשתמשים בכך ש-$\sin mx\perp\sin nx$ על $[-\pi,\pi]$ כש-$m\neq n$.
+              אחר כך מאמתים בתנאי הניצבות.
+          - kind: computation
+            text: >-
+              מ-$\sin3x=3\sin x-4\sin^3x$: $\sin^3x=\frac34\sin x-\frac14\sin3x$.
+          - kind: step
+            text: >-
+              $\frac34\sin x\in Y$, ו-$f-\frac34\sin x=-\frac14\sin3x$ ניצבת ל-$\sin x$ ול-$\sin2x$, ולכן ל-$Y$. לפי האפיון של
+              ההטלה (שייכת ל-$Y$, ההפרש ניצב ל-$Y$), $P_Yf=\frac34\sin x$.
+          - kind: computation
+            text: '$\|f-P_Yf\|=\frac14\|\sin3x\|=\frac14\sqrt{\int_{-\pi}^{\pi}\sin^23x\,dx}=\frac{\sqrt\pi}4$.'
+          - kind: result
+            text: '$P_Yf=\frac34\sin x$, והמרחק של $f$ מ-$Y$ הוא $\frac{\sqrt\pi}4\approx0.443$.'
+        rubric:
+          - text: 'הזהות $\sin^3x=\frac34\sin x-\frac14\sin3x$, או חישוב ישיר של $\frac{\langle f,\sin kx\rangle}{\pi}$ ל-$k=1,2$'
+            weight: 2
+          - text: 'נימוק שהרכיב $\sin3x$ ניצב ל-$Y$ ושלכן ההטלה היא $\frac34\sin x$ (או שימוש נכון בנוסחה עם בסיס מנורמל)'
+            weight: 2
+          - text: 'המרחק $\frac{\sqrt\pi}4$, עם $\|\sin3x\|^2=\pi$'
+            weight: 1
+
+  - id: Q-9-exam-4
+    type: exam
+    title: תת-מרחב סגור בלי הטלה
+    prompt: >-
+      האם ייתכן שבמרחב מכפלה פנימית $X$ יש תת-מרחב **סגור** $Y$ ווקטור $g$ כך שאין ב-$Y$ וקטור הקרוב ביותר ל-$g$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-9.5-3]
+        qualitative: true
+        prompt: >-
+          הכריעו.
+        choices:
+          - text: ייתכן
+            correct: true
+            feedback: >-
+              נכון. משפט ההטלה דורש גם שהמרחב יהיה שלם; בלי שלמות הוא יכול להיכשל גם לתת-מרחב סגור.
+          - text: לא ייתכן
+            feedback: >-
+              תת-מרחב סגור קמור, אבל משפט ההטלה צריך גם מרחב שלם. ב-$C[0,1]$ עם $\int fg$ הוא נכשל.
+            misconception: MC-c9-closed-enough
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-9.5-3, OBJ-9.4-2]
+        qualitative: true
+        prompt: >-
+          תנו דוגמה והוכיחו שהיא עובדת.
+        solution:
+          - kind: idea
+            text: >-
+              במרחב שאינו שלם, $C[0,1]$ עם $\int fg$, ניקח תת-מרחב סגור שהקירוב הטוב ביותר בו "רוצה" להיות פונקציה לא רציפה,
+              כמו בדוגמת הרמפות.
+          - kind: definition
+            text: '$X=C[0,1]$ עם $\int_0^1fg$; $Y$ תת-המרחב של הפונקציות ב-$X$ שמתאפסות על $[0,\frac12]$; $g\equiv1$.'
+          - kind: step
+            text: >-
+              $Y$ תת-מרחב סגור: אם $f_k\in Y$ ו-$\|f_k-f\|\to0$ עם $f\in X$, אז
+              $\int_0^{1/2}f^2=\int_0^{1/2}(f-f_k)^2\le\|f-f_k\|^2\to0$, ומהרציפות $f=0$ על $[0,\frac12]$.
+          - kind: computation
+            text: >-
+              לכל $f\in Y$: $\|1-f\|^2=\frac12+\int_{1/2}^1(1-f)^2\ge\frac12$. הרמפות $f_n$ (אפס עד $\frac12$, עולות בקו ישר
+              ל-1 על $[\frac12,\frac12+\frac1n]$, ואחר כך 1) נותנות $\|1-f_n\|^2=\frac12+\frac1{3n}\to\frac12$. לכן
+              $d(g,Y)^2=\frac12$.
+          - kind: step
+            text: >-
+              אם $f\in Y$ משיגה את המרחק, אז $\int_{1/2}^1(1-f)^2=0$, ומהרציפות $f\equiv1$ על $[\frac12,1]$; אבל $f(\frac12)=0$.
+              סתירה.
+          - kind: result
+            text: 'ייתכן: $Y$ סגור, $d(g,Y)=\frac1{\sqrt2}$, ואין וקטור ב-$Y$ שמשיג את המרחק. התנאי שנכשל הוא שלמות $X$.'
+        rubric:
+          - text: 'דוגמה במרחב שאינו שלם (לא בממד סופי ולא ב-$\ell^2$), עם תת-מרחב מפורש'
+            weight: 1
+          - text: 'הוכחה ש-$Y$ סגור'
+            weight: 1
+          - text: 'חישוב האינפימום ($\frac12$ למרחק בריבוע) עם סדרה שמשיגה אותו בגבול'
+            weight: 2
+          - text: 'הוכחה שהאינפימום לא מתקבל, עם שימוש ברציפות'
+            weight: 1
+
+  # ================================================================ long (20 points)
+  - id: Q-9-exam-5
+    type: exam
+    title: הישר הקרוב ביותר לפונקציה מעוקבת
+    prompt: >-
+      $X=C[0,1]$ עם $\langle f,g\rangle=\int_0^1fg$, ו-$Y\subset X$ תת-המרחב של הפולינומים ממעלה עד 1 (הישרים).
+    parts:
+      - label: א
+        points: 6
+        type: open
+        objectives: [OBJ-9.3-2]
+        prompt: >-
+          יהי $e_1,\dots,e_n$ בסיס אורתונורמלי של תת-מרחב $W$ של מרחב מכפלה פנימית, ו-$P_Wx=\sum_{k=1}^n\langle x,e_k\rangle e_k$.
+          הוכיחו ש-$x-P_Wx\perp W$, וש-$\|x-w\|\ge\|x-P_Wx\|$ לכל $w\in W$, עם שוויון רק כש-$w=P_Wx$.
+        solution:
+          - kind: goal
+            text: '$x-P_Wx\perp W$, ו-$P_Wx$ הוא הווקטור היחיד ב-$W$ הקרוב ביותר ל-$x$.'
+          - kind: idea
+            text: >-
+              קודם ניצבות השגיאה לאיברי הבסיס, ומהלינאריות לכל $W$. אחר כך מפרקים $x-w$ לסכום של שגיאה ניצבת וסטייה בתוך
+              $W$, ומשתמשים בפיתגורס.
+          - kind: computation
+            text: '$\langle x-P_Wx,e_j\rangle=\langle x,e_j\rangle-\sum_k\langle x,e_k\rangle\langle e_k,e_j\rangle=\langle x,e_j\rangle-\langle x,e_j\rangle=0$.'
+          - kind: step
+            text: 'כל $w\in W$ הוא $\sum c_je_j$, ולכן $\langle x-P_Wx,w\rangle=\sum c_j\langle x-P_Wx,e_j\rangle=0$.'
+          - kind: step
+            text: >-
+              יהי $w\in W$. אז $x-w=(x-P_Wx)+(P_Wx-w)$, והמחובר השני ב-$W$, ולכן ניצב לראשון. מפיתגורס
+              $\|x-w\|^2=\|x-P_Wx\|^2+\|P_Wx-w\|^2\ge\|x-P_Wx\|^2$.
+          - kind: result
+            text: 'שוויון רק כש-$\|P_Wx-w\|=0$, כלומר $w=P_Wx$. לכן $P_Wx$ הוא הקירוב הטוב ביותר, היחיד, ו-$x-P_Wx\perp W$.'
+        rubric:
+          - text: 'חישוב $\langle x-P_Wx,e_j\rangle=0$ בעזרת $\langle e_k,e_j\rangle=\delta_{kj}$'
+            weight: 2
+          - text: 'מעבר מניצבות לאיברי הבסיס לניצבות לכל $W$ (לינאריות)'
+            weight: 1
+          - text: 'הפירוק $x-w=(x-P_Wx)+(P_Wx-w)$ ושימוש מנומק בפיתגורס'
+            weight: 2
+          - text: 'טיפול במקרה השוויון (יחידות)'
+            weight: 1
+
+      - label: ב
+        points: 4
+        type: numeric
+        objectives: [OBJ-9.2-2]
+        prompt: >-
+          גרם-שמידט על $1,x$ ב-$X$ נותן בסיס אורתונורמלי $e_0=1$, $e_1=c\left(x-\frac12\right)$ של $Y$, עם $c>0$. מהו $c$?
+        answer: 3.4641016151
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון: $\left\|x-\frac12\right\|^2=\int_0^1\left(x-\frac12\right)^2dx=\frac1{12}$, ולכן $c=\sqrt{12}=2\sqrt3$.
+        wrongFeedback: >-
+          $c=\frac1{\|x-1/2\|}$. חשבו את $\int_0^1\left(x-\frac12\right)^2dx$.
+        commonWrong:
+          - value: 12
+            feedback: >-
+              $12=\frac1{\|x-1/2\|^2}$. מנרמלים בחלוקה בנורמה, לא בריבוע שלה.
+            misconception: MC-c9-norm-vs-square
+          - value: 2
+            feedback: >-
+              $2\left(x-\frac12\right)=2x-1$ הוא פולינום לז׳נדר המוזז, שמנורמל לפי ערכו 1 בקצה, לא לפי הנורמה:
+              $\|2x-1\|^2=\frac13$.
+            misconception: MC-c9-legendre-unit
+
+      - label: ג
+        points: 4
+        type: numeric
+        objectives: [OBJ-9.3-3]
+        prompt: >-
+          כתבו $P_Y(x^3)=ax+b$. מהו $a$?
+        answer: 0.9
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\langle x^3,1\rangle=\frac14$ ו-$\left\langle x^3,x-\frac12\right\rangle=\frac15-\frac18=\frac3{40}$, ולכן
+          $P_Y(x^3)=\frac14+\frac{3/40}{1/12}\left(x-\frac12\right)=\frac14+\frac9{10}\left(x-\frac12\right)$, ו-$a=\frac9{10}$.
+        wrongFeedback: >-
+          השתמשו בבסיס האורתוגונלי $1,\ x-\frac12$ מסעיף ב: המקדם של $x-\frac12$ הוא $\frac{\langle x^3,x-1/2\rangle}{\|x-1/2\|^2}$.
+        commonWrong:
+          - value: 0.2
+            feedback: >-
+              $\frac15=\langle x^3,x\rangle$: נוסחת המקדמים עם הבסיס $1,x$, שאינו אורתונורמלי על $[0,1]$.
+            misconception: MC-c9-projection-any-basis
+          - value: 0.075
+            feedback: >-
+              $\frac3{40}=\left\langle x^3,x-\frac12\right\rangle$, בלי לחלק ב-$\left\|x-\frac12\right\|^2=\frac1{12}$.
+            misconception: MC-c9-coef-no-divide
+
+      - label: ד
+        points: 6
+        type: open
+        standalone: false
+        objectives: [OBJ-9.3-3, OBJ-9.3-2]
+        prompt: >-
+          מצאו את $b$, ודאו שהשגיאה $x^3-P_Y(x^3)$ ניצבת ל-$1$ ול-$x$, וחשבו את המרחק $\left\|x^3-P_Y(x^3)\right\|$.
+        solution:
+          - kind: computation
+            text: '$P_Y(x^3)=\frac14+\frac9{10}\left(x-\frac12\right)=\frac9{10}x-\frac15$, ולכן $b=-\frac15$.'
+          - kind: check
+            text: >-
+              $\int_0^1\left(x^3-\frac9{10}x+\frac15\right)dx=\frac14-\frac9{20}+\frac15=0$ ו-
+              $\int_0^1x\left(x^3-\frac9{10}x+\frac15\right)dx=\frac15-\frac3{10}+\frac1{10}=0$.
+          - kind: idea
+            text: >-
+              את המרחק נותן פיתגורס: $\|x^3\|^2=\|P_Y(x^3)\|^2+\|x^3-P_Y(x^3)\|^2$, ואת $\|P_Y(x^3)\|^2$ מחשבים מהמקדמים בבסיס
+              האורתונורמלי $e_0,e_1$.
+          - kind: computation
+            text: >-
+              $\langle x^3,e_0\rangle=\frac14$, $\langle x^3,e_1\rangle=\sqrt{12}\cdot\frac3{40}$, ולכן
+              $\|P_Y(x^3)\|^2=\frac1{16}+12\cdot\frac9{1600}=\frac{13}{100}$; ו-$\|x^3\|^2=\int_0^1x^6=\frac17$.
+          - kind: computation
+            text: '$\left\|x^3-P_Y(x^3)\right\|^2=\frac17-\frac{13}{100}=\frac9{700}$.'
+          - kind: result
+            text: '$b=-\frac15$, והמרחק הוא $\sqrt{\frac9{700}}=\frac3{10\sqrt7}\approx0.113$.'
+        rubric:
+          - text: '$b=-\frac15$ מהמקדמים של סעיף ג (או ממשוואות הניצבות)'
+            weight: 1
+          - text: 'בדיקת שני תנאי הניצבות עם אינטגרלים נכונים'
+            weight: 2
+          - text: 'חישוב ריבוע המרחק, $\frac9{700}$, מפיתגורס או מאינטגרל ישיר'
+            weight: 2
+          - text: 'הוצאת שורש: המרחק $\frac3{10\sqrt7}$, לא ריבועו'
+            weight: 1
+
+  - id: Q-9-exam-6
+    type: exam
+    title: הטלה על קבוצה קמורה סגורה
+    prompt: >-
+      $X$ מרחב הילברט ממשי ו-$K\subset X$ קבוצה לא ריקה, סגורה וקמורה.
+    parts:
+      - label: א
+        points: 8
+        type: open
+        objectives: [OBJ-9.5-1]
+        prompt: >-
+          הוכיחו שלכל $x\in X$ יש נקודה יחידה $y\in K$ עם $\|x-y\|=\inf_{k\in K}\|x-k\|$.
+        solution:
+          - kind: goal
+            text: 'קיום ויחידות של נקודה $y\in K$ שמשיגה את $d=\inf_{k\in K}\|x-k\|$.'
+          - kind: idea
+            text: >-
+              סדרה ממזערת; חוק המקבילית, עם הקמירות (האמצע ב-$K$), מראה שהיא סדרת קושי; השלמות נותנת גבול והסגירות שהוא
+              ב-$K$. אותו אי-שוויון נותן יחידות.
+          - kind: step
+            text: 'קיים $d\ge0$ כי $K\neq\emptyset$. נבחר $y_n\in K$ עם $\|x-y_n\|^2<d^2+\frac1n$.'
+          - kind: theorem
+            text: >-
+              חוק המקבילית ל-$u=x-y_n$, $v=x-y_m$:
+              $\|y_n-y_m\|^2=2\|x-y_n\|^2+2\|x-y_m\|^2-4\left\|x-\frac{y_n+y_m}2\right\|^2$.
+          - kind: step
+            text: >-
+              מהקמירות $\frac{y_n+y_m}2\in K$, ולכן $\left\|x-\frac{y_n+y_m}2\right\|\ge d$, ו-
+              $\|y_n-y_m\|^2\le\frac2n+\frac2m\to0$. לכן $(y_n)$ סדרת קושי.
+          - kind: step
+            text: >-
+              $X$ שלם, ולכן $y_n\to y$; $K$ סגורה, ולכן $y\in K$. מרציפות הנורמה $\|x-y\|=\lim\|x-y_n\|=d$.
+          - kind: step
+            text: >-
+              יחידות: אם גם $z\in K$ עם $\|x-z\|=d$, אותו חישוב עם $y,z$ במקום $y_n,y_m$ נותן $\|y-z\|^2\le2d^2+2d^2-4d^2=0$.
+          - kind: result
+            text: 'לכל $x$ יש נקודה יחידה $y=P_Kx\in K$ הקרובה ביותר ל-$x$.'
+        rubric:
+          - text: 'הגדרת $d$ ובחירת סדרה ממזערת'
+            weight: 1
+          - text: 'חוק המקבילית בצורה הנכונה, עם $x-y_n$ ו-$x-y_m$'
+            weight: 2
+          - text: 'שימוש בקמירות לחסם $\left\|x-\frac{y_n+y_m}2\right\|\ge d$ ומסקנת קושי'
+            weight: 2
+          - text: 'שימוש מפורש בשלמות ובסגירות, ובכל אחת במקומה'
+            weight: 2
+          - text: 'יחידות'
+            weight: 1
+
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-9.5-2]
+        prompt: >-
+          הוכיחו ש-$y\in K$ היא $P_Kx$ אם ורק אם $\langle x-y,k-y\rangle\le0$ לכל $k\in K$.
+        solution:
+          - kind: idea
+            text: >-
+              כיוון אחד: מזיזים את $y$ מעט לכיוון $k$ בתוך $K$, והמרחק לא קטן; האיבר מסדר ראשון ב-$t$ קובע את הסימן. הכיוון
+              השני: פתיחת $\|x-k\|^2$ סביב $y$.
+          - kind: step
+            text: >-
+              (בכיוון הראשון נניח $y=P_Kx$.) יהי $k\in K$ ו-$t\in(0,1]$. מהקמירות $y+t(k-y)\in K$, ולכן
+              $\|x-y-t(k-y)\|^2\ge\|x-y\|^2$, כלומר $-2t\langle x-y,k-y\rangle+t^2\|k-y\|^2\ge0$.
+          - kind: step
+            text: 'מחלקים ב-$t>0$ ומשאיפים $t\to0^+$: $\langle x-y,k-y\rangle\le0$.'
+          - kind: step
+            text: >-
+              (בכיוון ההפוך.) אם $\langle x-y,k-y\rangle\le0$ לכל $k\in K$, אז
+              $\|x-k\|^2=\|(x-y)-(k-y)\|^2=\|x-y\|^2-2\langle x-y,k-y\rangle+\|k-y\|^2\ge\|x-y\|^2$.
+          - kind: result
+            text: 'לכן $y=P_Kx$ אם ורק אם $\langle x-y,k-y\rangle\le0$ לכל $k\in K$: הזווית ב-$y$ בין $x$ לכל נקודה של $K$ אינה חדה.'
+        rubric:
+          - text: 'שימוש בקמירות: הנקודות $y+t(k-y)$ ב-$K$'
+            weight: 1
+          - text: 'פיתוח הריבוע, חלוקה ב-$t$ ומעבר לגבול $t\to0^+$, עם הסימן הנכון'
+            weight: 2
+          - text: 'הכיוון ההפוך, מפתיחת $\|x-k\|^2$ סביב $y$'
+            weight: 2
+
+      - label: ג
+        points: 3
+        type: numeric
+        objectives: [OBJ-9.5-2]
+        prompt: >-
+          ב-$X=\ell^2$ תהי $K=\{x\in\ell^2:\ x_n\ge0\ \forall n\}$ ו-$x_n=\left(-\frac13\right)^n$. חשבו את $d(x,K)^2$.
+        answer: 0.1125
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $P_Kx=(\max(x_n,0))_n$ (תנאי הזווית מסעיף ב מתקיים: הרכיבים של $x-P_Kx$ שליליים בדיוק היכן ש-$P_Kx=0$).
+          המרחק בריבוע הוא סכום ריבועי האיברים השליליים, אלה עם $n$ אי-זוגי:
+          $\sum_{j\ge1}9^{-(2j-1)}=\frac{1/9}{1-1/81}=\frac9{80}$.
+        wrongFeedback: >-
+          נחשו את $P_Kx$: אפסו רק את האיברים השליליים. ודאו בתנאי הזווית וסכמו ריבועים.
+        commonWrong:
+          - value: 0.125
+            feedback: >-
+              $\frac18=\|x\|^2$, המרחק לנקודה 0 של $K$. אבל אפשר להשאיר את האיברים החיוביים, וזה מקרב.
+            misconception: MC-c9-distance-to-center
+          - value: 0.0125
+            feedback: >-
+              $\frac1{80}$: איפסתם את האיברים החיוביים (הזוגיים) במקום את השליליים.
+            misconception: MC-c9-obtuse-sign
+
+      - label: ד
+        points: 4
+        type: twotier
+        objectives: [OBJ-9.5-3]
+        qualitative: true
+        prompt: >-
+          האם הטענה של סעיף א נשארת נכונה כש-$X=C[-1,1]$ עם $\int fg$ (מרחב מכפלה פנימית שאינו שלם)?
+        choices:
+          - text: לא
+            correct: true
+            feedback: >-
+              נכון. השלמות משמשת בסעיף א בצעד "סדרת קושי מתכנסת", ובלעדיה ההוכחה, וגם הטענה, נופלות.
+          - text: כן
+            feedback: >-
+              בלי שלמות הסדרה הממזערת היא סדרת קושי בלי גבול. יש דוגמה נגדית עם תת-מרחב סגור.
+            misconception: MC-c9-closed-enough
+        reasons:
+          - text: '$K$ תת-המרחב של הפונקציות שמתאפסות על $[-1,0]$ (סגור וקמור), $x\equiv1$: המרחק הוא 1 (הרמפות), ומשיג אותו רק "$f=1$ על $(0,1]$", שאינו רציף'
+            correct: true
+            feedback: >-
+              בדיוק: $\|1-f\|^2=1+\int_0^1(1-f)^2$ לכל $f\in K$, הרמפות נותנות $1+\frac1{3n}$, ושוויון דורש $f\equiv1$ על $(0,1]$ עם $f(0)=0$.
+          - text: 'כן, כי כל תת-מרחב של $C[-1,1]$ שלם בנורמת המקסימום'
+            feedback: >-
+              הנורמה כאן היא של $\int fg$, ובה $C[-1,1]$ אינו שלם. השלמות בנורמה אחרת לא עוזרת.
+            misconception: MC-c9-L2-limit-continuous
+          - text: 'לא, כי במרחב שאינו שלם אין נקודה קרובה ביותר לאף קבוצה'
+            feedback: >-
+              זה חזק מדי: ההטלה על תת-מרחב סוף-ממדי, או על כדור סגור, קיימת בכל מרחב מכפלה פנימית. מה שנופל הוא הכלליות.
+            misconception: MC-c9-completeness-necessary
+
+  - id: Q-9-exam-7
+    type: exam
+    title: שלמות ואי-שלמות
+    prompt: >-
+      בשאלה זו $\ell^2$ הוא מרחב הסדרות עם $\sum x_n^2<\infty$, ו-$f_n$ הן הרמפות על $[-1,1]$: $f_n(x)=0$ ל-$x\le0$, $f_n(x)=nx$
+      ל-$0\le x\le\frac1n$, ו-$f_n(x)=1$ ל-$x\ge\frac1n$. $H$ היא המדרגה: $0$ ל-$x\le0$ ו-$1$ ל-$x>0$.
+    parts:
+      - label: א
+        points: 7
+        type: open
+        objectives: [OBJ-9.4-1]
+        prompt: >-
+          הגדירו מרחב הילברט, והוכיחו ש-$\ell^2$ הוא מרחב הילברט.
+        solution:
+          - kind: definition
+            text: 'מרחב הילברט הוא מרחב מכפלה פנימית שבו כל סדרת קושי, לפי הנורמה המושרית, מתכנסת לאיבר של המרחב.'
+          - kind: idea
+            text: >-
+              המועמד לגבול הוא הגבול בכל קואורדינטה. כדי לא להעביר גבול בתוך טור אינסופי, עובדים עם סכומים סופיים ומשחררים
+              את אורך הסכום רק בסוף.
+          - kind: step
+            text: >-
+              תהי $x^{(k)}$ סדרת קושי. $|x^{(k)}_n-x^{(m)}_n|\le\|x^{(k)}-x^{(m)}\|$, ולכן לכל $n$ הסדרה $x^{(k)}_n$ קושי ב-$\mathbb R$,
+              ומתכנסת ל-$y_n$.
+          - kind: step
+            text: >-
+              יהי $\varepsilon>0$ ו-$K$ כך ש-$\|x^{(k)}-x^{(m)}\|<\varepsilon$ ל-$k,m>K$. לכל $N$:
+              $\sum_{n\le N}(x^{(k)}_n-x^{(m)}_n)^2<\varepsilon^2$. משאיפים $m\to\infty$ (סכום סופי):
+              $\sum_{n\le N}(x^{(k)}_n-y_n)^2\le\varepsilon^2$.
+          - kind: step
+            text: >-
+              הסכומים החלקיים חסומים ב-$\varepsilon^2$ לכל $N$, ולכן $\sum_n(x^{(k)}_n-y_n)^2\le\varepsilon^2$: $x^{(k)}-y\in\ell^2$,
+              ומכאן $y=x^{(k)}-(x^{(k)}-y)\in\ell^2$ ($\ell^2$ מרחב וקטורי).
+          - kind: result
+            text: '$\|x^{(k)}-y\|\le\varepsilon$ לכל $k>K$, כלומר $x^{(k)}\to y\in\ell^2$. לכן $\ell^2$ שלם, כלומר מרחב הילברט.'
+        rubric:
+          - text: 'הגדרה נכונה של מרחב הילברט (מכפלה פנימית + שלמות)'
+            weight: 1
+          - text: 'בניית המועמד $y$ מהקואורדינטות, עם נימוק שכל קואורדינטה קושי'
+            weight: 2
+          - text: 'מעבר לגבול בסכום סופי ואחר כך $N\to\infty$, בלי להחליף גבול וטור אינסופי בלי הצדקה'
+            weight: 2
+          - text: 'הוכחה ש-$y\in\ell^2$, ומסקנת ההתכנסות בנורמה'
+            weight: 2
+
+      - label: ב
+        points: 4
+        type: numeric
+        objectives: [OBJ-9.4-2]
+        prompt: >-
+          חשבו את $\int_{-1}^1(f_2-f_4)^2\,dx$.
+        answer: 0.0416666667
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. על $[0,\frac14]$ ההפרש הוא $2x$, ועל $[\frac14,\frac12]$ הוא $1-2x$; כל חלק תורם $\frac1{48}$, ויחד $\frac1{24}$
+          (בהתאם ל-$\|f_n-f_{2n}\|^2=\frac1{12n}$).
+        wrongFeedback: >-
+          פצלו בנקודה $\frac14$, שבה $f_4$ מגיעה ל-1.
+        commonWrong:
+          - value: 0.25
+            feedback: >-
+              $\frac16+\frac1{12}=\|f_2-H\|^2+\|f_4-H\|^2$: פתחתם $\|(f_2-H)-(f_4-H)\|^2$ בלי האיבר המעורב.
+            misconception: MC-c9-drop-cross-term
+          - value: 0.2041241452
+            feedback: >-
+              זה $\frac1{\sqrt{24}}$, המרחק עצמו. השאלה מבקשת את האינטגרל של הריבוע.
+            misconception: MC-c9-norm-vs-square
+
+      - label: ג
+        points: 6
+        type: open
+        objectives: [OBJ-9.4-2]
+        prompt: >-
+          הוכיחו ש-$(f_n)$ היא סדרת קושי ב-$C[-1,1]$ עם $\int fg$, ושאין $g\in C[-1,1]$ עם $\|f_n-g\|\to0$. הסיקו ש-$C[-1,1]$ עם
+          הנורמה הזו אינו שלם.
+        solution:
+          - kind: idea
+            text: >-
+              הרמפות מתקרבות למדרגה $H$ בנורמה, ולכן קרובות זו לזו. גבול רציף היה במרחק 0 מ-$H$, וזה מכריח קפיצה.
+          - kind: computation
+            text: '$\|f_n-H\|^2=\int_0^{1/n}(1-nx)^2dx=\frac1{3n}$.'
+          - kind: step
+            text: >-
+              מאי-שוויון המשולש (ב-$H[-1,1]$, שמכיל את $H$ ואת $f_n$):
+              $\|f_n-f_m\|\le\|f_n-H\|+\|H-f_m\|=\frac1{\sqrt{3n}}+\frac1{\sqrt{3m}}\to0$, ולכן $(f_n)$ סדרת קושי.
+          - kind: step
+            text: >-
+              נניח $g\in C[-1,1]$ עם $\|f_n-g\|\to0$. אז $\|g-H\|\le\|g-f_n\|+\|f_n-H\|\to0$, כלומר $\int_{-1}^1(g-H)^2=0$.
+          - kind: step
+            text: >-
+              על $[-1,0]$ הפונקציה $g-H=g$ רציפה ו-$\int_{-1}^0g^2=0$, ולכן $g=0$ שם. לכל $\delta\in(0,1)$, על $[\delta,1]$
+              הפונקציה $g-1$ רציפה עם $\int(g-1)^2=0$, ולכן $g=1$ על $(0,1]$.
+          - kind: result
+            text: '$g(0)=0$ ו-$\lim_{x\to0^+}g(x)=1$: $g$ אינה רציפה, סתירה. לכן לסדרת הקושי $(f_n)$ אין גבול, ו-$C[-1,1]$ עם $\int fg$ אינו שלם.'
+        rubric:
+          - text: 'חישוב $\|f_n-H\|^2=\frac1{3n}$ (או חישוב ישיר של $\|f_n-f_m\|$) והוכחת קושי'
+            weight: 2
+          - text: 'מעבר מהתכנסות ל-$g$ ל-$\int(g-H)^2=0$'
+            weight: 2
+          - text: 'שימוש ברציפות על כל צד בנפרד, והסתירה ב-0'
+            weight: 2
+
+      - label: ד
+        points: 3
+        type: mc
+        objectives: [OBJ-9.4-3]
+        qualitative: true
+        prompt: >-
+          מה נכון לגבי $(f_n)$ במרחב $H[-1,1]$ של הקורס (פונקציות אינטגרביליות רימן עם $\int fg$)?
+        choices:
+          - text: 'היא מתכנסת ל-$H$, וגם לכל פונקציה ששווה ל-$H$ פרט למספר סופי של נקודות'
+            correct: true
+            feedback: >-
+              נכון: פונקציות כאלה במרחק 0 מ-$H$, ולכן הגבול יחיד רק אחרי שמזהים פונקציות במרחק 0.
+          - text: 'היא מתכנסת ל-$H$ בלבד; הגבול יחיד כפונקציה'
+            feedback: >-
+              ב-$H[-1,1]$ יש פונקציות שונות במרחק 0 זו מזו, למשל $H$ ו-$H$ עם ערך אחר בנקודה $\frac12$. לכן הגבול יחיד רק עד
+              כדי זיהוי.
+            misconception: MC-c9-riemann-definite
+          - text: 'היא מתכנסת ל-$H$ במידה שווה'
+            feedback: >-
+              $\sup|f_n-H|=1$ (ליד 0 מימין $f_n$ קטנה ו-$H=1$), כך שאין התכנסות במידה שווה; ההתכנסות היא בממוצע ריבועי בלבד.
+            misconception: MC-c9-L2-implies-uniform

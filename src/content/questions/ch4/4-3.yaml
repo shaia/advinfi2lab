@@ -1,0 +1,361 @@
+# Lesson 4.3 — geodesics.
+# Objectives (src/course.ts):
+#   OBJ-4.3-1  a geodesic is a curve with κ_g ≡ 0; its acceleration is normal to the surface
+#   OBJ-4.3-2  geodesics on the plane, the sphere and the cylinder (lines, great circles, helices)
+#   OBJ-4.3-3  finitely or infinitely many geodesics between two points; infinitely many on the cylinder
+# "Geodesics through P and Q" counts traces (sets of points), as on an 80316 exam.
+chapter: 4
+questions:
+  - id: Q-4.3-def
+    type: mc
+    objectives: [OBJ-4.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma(s)$ מסילה בפרמטר אורך קשת על משטח $M$, ו-$\gamma''=\kappa_n\hat{\mathbf N}+\kappa_g(\hat{\mathbf N}\times\mathbf t)$
+      הפירוק של וקטור העקמומיות משיעור 4.2. בקורס **גאודזית** היא מסילה שבה $\kappa_g=0$ בכל נקודה. איזה תיאור שקול
+      להגדרה הזו?
+    choices:
+      - text: 'כש-$\gamma^{\prime\prime}(s)$ ניצב למשטח (מקביל ל-$\hat{\mathbf N}$) בכל $s$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma''=\kappa_n\hat{\mathbf N}+\kappa_g(\hat{\mathbf N}\times\mathbf t)$, ולכן $\kappa_g\equiv0$ בדיוק כשהתאוצה
+          ניצבת למשטח. "המשטח הוא שמכופף אותה", לא היא עצמה.
+      - text: 'כש-$\gamma^{\prime\prime}(s)=0$ בכל $s$'
+        feedback: >-
+          זה מגדיר ישר. המעגל הגדול על ספרת היחידה הוא גאודזית עם $\|\gamma''\|=1$: התאוצה שלו מצביעה למרכז הספרה,
+          כלומר בכיוון הנורמל.
+        misconception: MC-c4-geodesic-straight
+      - text: 'כש-$\kappa_n(s)=0$ בכל $s$'
+        feedback: >-
+          זה הרכיב השני. בגאודזית מתאפס הרכיב **הגאודזי**, ונשאר $\kappa=|\kappa_n|$. למעגל הגדול על ספרת היחידה $|\kappa_n|=1$.
+        misconception: MC-c4-geodesic-kn-zero
+      - text: 'כש-$\gamma^{\prime\prime}(s)$ משיק למשטח בכל $s$'
+        feedback: >-
+          תאוצה משיקה פירושה $\kappa_n=\gamma''\cdot\hat{\mathbf N}=0$: שוב בלבול בין שני הרכיבים. בגאודזית התאוצה ניצבת
+          למשטח, לא משיקה לו.
+        misconception: MC-c4-geodesic-kn-zero
+
+  - id: Q-4.3-sphere
+    type: multi
+    objectives: [OBJ-4.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהמעגלים הבאים על ספרת היחידה $x^2+y^2+z^2=1$ הם גאודזיות (כשעוברים עליהם במהירות קבועה)? סמנו את כולם.
+    choices:
+      - text: 'קו המשווה $z=0$'
+        correct: true
+        feedback: 'נכון. מעגל גדול: התאוצה מצביעה למרכז הספרה, כלומר לאורך הנורמל.'
+      - text: 'החיתוך עם המישור $x+y+z=0$'
+        correct: true
+        feedback: >-
+          נכון. המישור עובר במרכז, ולכן החיתוך הוא מעגל גדול ברדיוס 1, ומרכזו (שאליו מצביעה התאוצה) הוא מרכז הספרה.
+      - text: 'מקביל הרוחב $z=\frac12$'
+        feedback: >-
+          זה מעגל ברדיוס $\frac{\sqrt3}2$ שמרכזו $(0,0,\frac12)$, לא מרכז הספרה. התאוצה מצביעה לציר $z$ ואינה ניצבת לספרה:
+          $|\kappa_g|=\tan\frac\pi6=\frac1{\sqrt3}\neq0$.
+        misconception: MC-c4-plane-section-geodesic
+      - text: 'החיתוך עם המישור $x=\frac12$'
+        feedback: >-
+          המישור לא עובר במרכז, ולכן זה מעגל קטן. כמו מקביל רוחב, הוא לא גאודזית.
+        misconception: MC-c4-plane-section-geodesic
+
+  - id: Q-4.3-plane
+    type: mc
+    objectives: [OBJ-4.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהן העקבות של הגאודזיות במישור $z=0$?
+    choices:
+      - text: 'ישרים (או קטעי ישרים)'
+        correct: true
+        feedback: >-
+          נכון. הנורמל קבוע, $\hat{\mathbf N}=(0,0,1)$, ולכן $\kappa_n=\gamma''\cdot\hat{\mathbf N}=0$ ו-$\kappa=|\kappa_g|$.
+          גאודזית היא אז מסילה עם $\kappa\equiv0$: ישר.
+      - text: 'כל מסילה במישור, כי שם העקמומיות הנורמלית אפס תמיד'
+        feedback: >-
+          $\kappa_n\equiv0$ במישור, נכון, אבל גאודזית מוגדרת על ידי $\kappa_g\equiv0$. במישור $\kappa_g=\pm\kappa$, ולמעגל
+          ברדיוס 1 $|\kappa_g|=1$.
+        misconception: MC-c4-geodesic-kn-zero
+      - text: 'אין גאודזיות במישור, כי גאודזית צריכה להתעקם יחד עם המשטח'
+        feedback: >-
+          גאודזית לא חייבת להתעקם: ישר שמוכל במשטח מקיים $\gamma''=0$, ולכן $\kappa_g=0$. במישור כל הגאודזיות הן כאלה.
+        misconception: MC-c4-geodesic-must-bend
+
+  - id: Q-4.3-normal
+    type: twotier
+    objectives: [OBJ-4.3-1]
+    level: mid
+    prompt: >-
+      למסילה $\gamma$ על משטח $M$ יש $\kappa>0$ בכל נקודה, והנורמל הראשי שלה מקיים $\mathbf n=\pm\hat{\mathbf N}$ בכל
+      נקודה. האם $\gamma$ גאודזית?
+    choices:
+      - text: 'כן'
+        correct: true
+        feedback: 'נכון. וגם להפך: בגאודזית עם $\kappa>0$ הנורמל הראשי הוא $\pm\hat{\mathbf N}$.'
+      - text: 'לא, כי $|\kappa_n|=\kappa>0$'
+        feedback: >-
+          גאודזית לא דורשת $\kappa_n=0$. כאן כל העקמומיות היא נורמלית, ובדיוק לכן הגאודזית ($\kappa_g=0$) מתקיימת.
+        misconception: MC-c4-geodesic-kn-zero
+    reasons:
+      - text: 'בפרמטר אורך קשת $\mathbf t^{\prime}=\kappa\mathbf n=\pm\kappa\hat{\mathbf N}$, ולכן $\kappa_g=\mathbf t^{\prime}\cdot(\hat{\mathbf N}\times\mathbf t)=0$'
+        correct: true
+        feedback: 'בדיוק. $\hat{\mathbf N}\times\mathbf t$ ניצב ל-$\hat{\mathbf N}$, ולכן רכיב התאוצה בכיוונו אפס.'
+      - text: '$|\kappa_n|=\kappa$, ולכן $\kappa_g=\kappa-|\kappa_n|=0$'
+        feedback: >-
+          המסקנה נכונה, החשבון לא: $\kappa_g$ אינה ההפרש. הקשר הוא $\kappa^2=\kappa_n^2+\kappa_g^2$ (ואז באמת $\kappa_g=0$),
+          אבל הדרך הישירה היא לחשב את $\mathbf t^{\prime}\cdot(\hat{\mathbf N}\times\mathbf t)$.
+        misconception: MC-c4-curvature-sum
+      - text: 'המסילה מישורית, ומסילה מישורית על משטח היא גאודזית'
+        feedback: >-
+          המסילה לא חייבת להיות מישורית, ומסילה מישורית לא חייבת להיות גאודזית: מקביל הרוחב $z=\frac12$ על הספרה מישורי
+          ואינו גאודזית.
+        misconception: MC-c4-plane-section-geodesic
+
+  - id: Q-4.3-speed
+    type: mc
+    objectives: [OBJ-4.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma(t)=(\cos t^2,\,\sin t^2,\,0)$, $t>0$, על ספרת היחידה. העקבה היא קו המשווה. איזו טענה נכונה?
+    choices:
+      - text: '$\kappa_g\equiv0$, אבל $\gamma^{\prime\prime}(1)$ אינו ניצב לספרה'
+        correct: true
+        feedback: >-
+          נכון. $\gamma'=2t(-\sin t^2,\cos t^2,0)$, מהירות $2t$, ו-$\gamma''=2(-\sin t^2,\cos t^2,0)+4t^2(-\cos t^2,-\sin t^2,0)$.
+          הרכיב המשיק של התאוצה הוא $\frac{d}{dt}(2t)=2\neq0$. התנאי $\kappa_g\equiv0$ תלוי רק בעקבה; "התאוצה ניצבת" דורש
+          מהירות קבועה.
+      - text: '$\gamma^{\prime\prime}(1)$ ניצב לספרה, כי העקבה היא מעגל גדול'
+        feedback: >-
+          המהירות $2t$ אינה קבועה, ולכן לתאוצה יש רכיב בכיוון המשיק, $\frac{d}{dt}\|\gamma'\|=2$.
+        misconception: MC-c4-geodesic-any-speed
+      - text: '$\gamma$ אינה גאודזית, כי $\gamma^{\prime\prime}(1)$ אינו ניצב לספרה'
+        feedback: >-
+          $\kappa_g$ מחושבת מהעקבה (בפרמטר אורך קשת), והעקבה היא קו המשווה, עם $\kappa_g=0$. התאוצה לא ניצבת רק בגלל
+          הקצב. אחרי מעבר למהירות קבועה היא ניצבת.
+        misconception: MC-c4-geodesic-any-speed
+
+  - id: Q-4.3-cyl
+    type: multi
+    objectives: [OBJ-4.3-2]
+    level: mid
+    prompt: >-
+      אילו מהמסילות הבאות על הגליל $x^2+y^2=1$ הן גאודזיות? סמנו את כולן.
+    choices:
+      - text: '$(1,0,t)$'
+        correct: true
+        feedback: 'נכון. ישר שמוכל במשטח: $\gamma''''=0$, ולכן $\kappa_g=0$.'
+      - text: '$(\cos t,\sin t,3)$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma''=-(\cos t,\sin t,0)$, ובגליל $\hat{\mathbf N}=\pm(x,y,0)$: התאוצה ניצבת למשטח.
+      - text: '$(\cos t,\sin t,2t)$'
+        correct: true
+        feedback: >-
+          נכון. גם כאן $\gamma''=-(\cos t,\sin t,0)$, כי $z$ לינארי ב-$t$. המהירות קבועה, $\sqrt5$, והתאוצה ניצבת לגליל.
+      - text: '$(\cos t,\sin t,\cos t)$'
+        feedback: >-
+          זו האליפסה שבחיתוך עם המישור $z=x$. ב-$t=0$: $\gamma''=(-1,0,-1)$, ויש לה רכיב בכיוון $z$, שמשיק לגליל;
+          $|\kappa_g|=1$ שם. חתך מישורי אינו בהכרח גאודזית.
+        misconception: MC-c4-plane-section-geodesic
+    explanation: >-
+      הגאודזיות של הגליל הן בדיוק $(\cos(\omega t+\theta_0),\sin(\omega t+\theta_0),ct+d)$: מהתנאי $\gamma''\parallel(x,y,0)$
+      מקבלים $z''=0$ ומהירות זוויתית קבועה. אלה ישרים ($\omega=0$), מעגלים ($c=0$) וסלילים.
+
+  - id: Q-4.3-helixkn
+    type: numeric
+    objectives: [OBJ-4.3-2]
+    level: mid
+    prompt: >-
+      הסליל $\gamma(t)=(\cos t,\,\sin t,\,t)$ על הגליל $\sigma(u,v)=(\cos u,\sin u,v)$, עם הנורמל החוצה
+      $\hat{\mathbf N}=(\cos u,\sin u,0)$. מהי העקמומיות הנורמלית שלו?
+    answer: -0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. כאן $Q_1=du^2+dv^2$, $Q_2=-du^2$ והכיוון $(1,1)$: $\kappa_n=\frac{-1}{2}$. הסליל גאודזית, ולכן
+      $\kappa=|\kappa_n|=\frac12$, בהתאם לנוסחה $\frac{a}{a^2+b^2}$ של עקמומיות הסליל.
+    wrongFeedback: >-
+      $\gamma(t)=\sigma(t,t)$. חשבו $Q_2/Q_1$ בכיוון $(1,1)$, או $\gamma''\cdot\hat{\mathbf N}/\|\gamma'\|^2$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          הסליל גאודזית, ולכן **$\kappa_g$** אפס, לא $\kappa_n$. העקמומיות שלו, $\frac12$, כולה נורמלית.
+        misconception: MC-c4-geodesic-kn-zero
+      - value: -1
+        feedback: >-
+          זה $Q_2(1,1)=-1$ בלי לחלק ב-$Q_1(1,1)=2$. את $-1$ מקבל רק המעגל האופקי, בכיוון $(1,0)$.
+        misconception: MC-c4-kn-without-Q1
+      - value: 0.5
+        feedback: >-
+          הנורמל החוצה ו-$\gamma''=-(\cos t,\sin t,0)$ מצביע פנימה, ולכן הסימן שלילי.
+        misconception: MC-c4-Q2-orientation-free
+
+  - id: Q-4.3-count
+    type: twotier
+    objectives: [OBJ-4.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      כמה גאודזיות שונות (כעקבות) על הגליל $x^2+y^2=1$ עוברות דרך שתי הנקודות $(1,0,0)$ ו-$(1,0,1)$?
+    choices:
+      - text: 'אינסוף'
+        correct: true
+        feedback: 'נכון. הישר האנכי, וסליל לכל מספר ליפופים, בשני כיווני הסיבוב.'
+      - text: 'בדיוק אחת, הישר $(1,0,t)$'
+        feedback: >-
+          במישור דרך שתי נקודות עובר ישר אחד, אבל על הגליל אפשר להגיע מנקודה לנקודה גם בסליל שמסתובב סביב הציר.
+        misconception: MC-c4-geodesic-unique
+    reasons:
+      - text: 'לכל $k\in\mathbb Z\setminus\{0\}$ הסליל $(\cos t,\sin t,\frac{t}{2\pi k})$ הוא גאודזית, והוא עובר ב-$(1,0,0)$ ב-$t=0$ וב-$(1,0,1)$ ב-$t=2\pi k$'
+        correct: true
+        feedback: >-
+          בדיוק. לכל $k$ שיפוע אחר, ולכן עקבה אחרת. כשפורשים את הגליל למישור (איזומטריה מקומית, שיעור 3.5) אלה ישרים
+          מהנקודה $(0,0)$ לנקודות $(2\pi k,1)$.
+      - text: 'דרך כל שתי נקודות על משטח עוברת גאודזית אחת, כמו ישר במישור, ולכן הישר $(1,0,t)$ הוא היחיד'
+        feedback: 'זה נכון במישור בלבד. כבר על הספרה, דרך הקטבים עוברים אינסוף מעגלים גדולים.'
+        misconception: MC-c4-geodesic-unique
+      - text: 'על הגליל דרך כל שתי נקודות שונות עוברות אינסוף גאודזיות, ולכן גם דרך שתי הנקודות האלה'
+        feedback: >-
+          המסקנה כאן נכונה, אבל הכלל הכללי לא הוכח, ונימוק צריך להראות את הגאודזיות עצמן. נסו לבדוק אם הכלל נכון גם
+          לשתי נקודות באותו גובה.
+        misconception: MC-c4-always-infinite-geodesics
+
+  - id: Q-4.3-pairs
+    type: multi
+    objectives: [OBJ-4.3-3]
+    level: mid
+    prompt: >-
+      דרך אילו מזוגות הנקודות הבאים עוברות אינסוף גאודזיות שונות (כעקבות)? סמנו את כולם.
+    choices:
+      - text: 'הקטבים $(0,0,1)$ ו-$(0,0,-1)$ על ספרת היחידה'
+        correct: true
+        feedback: 'נכון. כל מישור שמכיל את ציר $z$ חותך את הספרה במעגל גדול דרך שני הקטבים: כל קווי האורך.'
+      - text: '$(1,0,0)$ ו-$(0,1,0)$ על ספרת היחידה'
+        feedback: >-
+          הנקודות אינן אנטיפודליות, ולכן יש מישור אחד בלבד דרכן ודרך המרכז, $z=0$: מעגל גדול אחד, קו המשווה.
+        misconception: MC-c4-always-infinite-geodesics
+      - text: '$(1,0,0)$ ו-$(1,0,2)$ על הגליל $x^2+y^2=1$'
+        correct: true
+        feedback: 'נכון. הישר האנכי והסלילים $(\cos t,\sin t,\frac{t}{\pi k})$, $k\neq0$.'
+      - text: '$(1,0,0)$ ו-$(0,1,1)$ על הגליל $x^2+y^2=1$'
+        correct: true
+        feedback: >-
+          נכון, גם כשהזוויות שונות: הסלילים $\left(\cos t,\sin t,\frac{t}{\pi/2+2\pi k}\right)$, $k\in\mathbb Z$, עם $t$ מ-0
+          עד $\frac\pi2+2\pi k$. כל $k$ נותן שיפוע אחר, ולכן עקבה אחרת.
+
+  - id: Q-4.3-shortest
+    type: twotier
+    objectives: [OBJ-4.3-3, OBJ-4.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma$ קשת גאודזית על משטח, מ-$P$ ל-$Q$. האם בהכרח אין על המשטח מסילה קצרה ממנה מ-$P$ ל-$Q$?
+    choices:
+      - text: 'לא בהכרח'
+        correct: true
+        feedback: 'נכון. גאודזית היא תנאי מקומי על העקמומיות, לא תכונה של מינימום גלובלי.'
+      - text: 'כן, זו ההגדרה של גאודזית'
+        feedback: >-
+          ההגדרה בקורס היא $\kappa_g\equiv0$, ולא "המסילה הקצרה ביותר". על ספרת היחידה הקשת הארוכה של קו המשווה מ-$(1,0,0)$
+          ל-$(0,1,0)$, באורך $\frac{3\pi}2$, היא גאודזית, והקשת הקצרה, באורך $\frac\pi2$, קצרה ממנה.
+        misconception: MC-c4-geodesic-shortest
+    reasons:
+      - text: 'על הספרה שתי הקשתות של מעגל גדול בין שתי נקודות הן גאודזיות, ובדרך כלל אחת ארוכה מהשנייה'
+        correct: true
+        feedback: 'בדיוק. וגם על הגליל: הסליל שמסתובב פעמיים ארוך מזה שמסתובב פעם אחת.'
+      - text: 'גאודזית יכולה להיות לא חלקה בנקודות בודדות, ואז אפשר לקצר אותה ב"פינה"'
+        feedback: 'גאודזית היא מסילה חלקה ורגולרית לפי ההגדרה; זו לא הסיבה.'
+        misconception: MC-c4-geodesic-shortest
+      - text: 'דרך שתי נקודות עוברת גאודזית אחת בלבד, ולכן היא הקצרה'
+        feedback: 'דרך שתי נקודות יכולות לעבור כמה גאודזיות, וגם כשיש אחת היא לא בהכרח הקצרה.'
+        misconception: MC-c4-geodesic-unique
+
+  - id: Q-4.3-asymptotic
+    type: twotier
+    objectives: [OBJ-4.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מסילה $\gamma$ על משטח $M$ היא גאודזית, וגם העקמומיות הנורמלית שלה אפס בכל נקודה. מה היא?
+    choices:
+      - text: 'קטע של ישר'
+        correct: true
+        feedback: 'נכון. למשל ישר אנכי על הגליל, או ציר $x$ על האוכף $z=xy$.'
+      - text: 'כל מסילה עם $\kappa_n\equiv0$; התנאי הגאודזי לא מוסיף דבר'
+        feedback: >-
+          התנאי הגאודזי הוא על הרכיב **השני**, $\kappa_g$. שני התנאים יחד מאפסים את שני הרכיבים של וקטור העקמומיות.
+        misconception: MC-c4-geodesic-kn-zero
+      - text: 'מעגל גדול'
+        feedback: >-
+          למעגל גדול על ספרת היחידה $|\kappa_n|=1\neq0$. הוא גאודזית, אבל לא מקיים את התנאי השני.
+        misconception: MC-c4-geodesic-kn-zero
+    reasons:
+      - text: '$\kappa^2=\kappa_n^2+\kappa_g^2=0$, ומסילה עם עקמומיות אפס בכל נקודה היא ישר'
+        correct: true
+        feedback: 'בדיוק: $\mathbf t^{\prime}=0$, ולכן $\mathbf t$ קבוע.'
+      - text: '$\kappa=\kappa_n+\kappa_g=0$, ולכן עקמומיות המסילה אפס והיא ישר'
+        feedback: >-
+          המסקנה נכונה, הנוסחה לא: $\kappa$ היא שורש של סכום **ריבועים**. עם הנוסחה השגויה $\kappa_n=1$, $\kappa_g=-1$
+          היו נותנים $\kappa=0$.
+        misconception: MC-c4-curvature-sum
+      - text: 'גאודזית היא תמיד ישר, גם בלי התנאי על $\kappa_n$'
+        feedback: 'מעגל גדול על הספרה הוא גאודזית שאינה ישר.'
+        misconception: MC-c4-geodesic-straight
+
+  - id: Q-4.3-sameheight
+    type: twotier
+    objectives: [OBJ-4.3-3, OBJ-4.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      נכון או לא: על הגליל $x^2+y^2=1$, דרך כל שתי נקודות שונות עוברות אינסוף גאודזיות שונות.
+    choices:
+      - text: 'לא נכון'
+        correct: true
+        feedback: 'נכון. זה תלוי בזוג הנקודות.'
+      - text: 'נכון'
+        feedback: >-
+          זה נכון לנקודות בגבהים שונים, לא לכל זוג. נסו $(1,0,0)$ ו-$(-1,0,0)$.
+        misconception: MC-c4-always-infinite-geodesics
+    reasons:
+      - text: 'גאודזית $(\cos(\omega t+\theta_0),\sin(\omega t+\theta_0),ct+d)$ דרך $(1,0,0)$ ו-$(-1,0,0)$ צריכה $\omega\neq0$ ו-$c=0$: רק המעגל $z=0$'
+        correct: true
+        feedback: >-
+          בדיוק: דוגמה נגדית אחת מפילה טענה כללית. הזווית משתנה בין הנקודות, ולכן $\omega\neq0$; סליל עם $c\neq0$ מונוטוני
+          בגובה, ולכן לא עובר פעמיים בגובה 0.
+      - text: 'דרך כל שתי נקודות על משטח עוברת גאודזית אחת בלבד, ולכן אף פעם לא אינסוף'
+        feedback: 'גם זה לא נכון: דרך $(1,0,0)$ ו-$(1,0,1)$ עוברים אינסוף סלילים.'
+        misconception: MC-c4-geodesic-unique
+      - text: 'יש נקודות על הגליל שלא עוברת ביניהן אף גאודזית'
+        feedback: >-
+          על הגליל כל שתי נקודות מחוברות בגאודזית: כשפורשים אותו למישור יש תמיד ישר ביניהן. הבעיה היא הכמות, לא הקיום.
+        misconception: MC-c4-geodesic-exists
+
+  - id: Q-4.3-lengths
+    type: numeric
+    objectives: [OBJ-4.3-3]
+    level: exam
+    prompt: >-
+      על הגליל $x^2+y^2=1$: כמה קשתות גאודזיות שונות יש מ-$(1,0,0)$ ל-$(1,0,1)$ שאורכן **לכל היותר 10**?
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הקשתות הגאודזיות מ-$(1,0,0)$ ל-$(1,0,1)$ הן הסלילים $(\cos t,\sin t,\frac{t}{2\pi k})$, עם $t$ מ-0 עד $2\pi k$
+      ($k\in\mathbb Z\setminus\{0\}$), וגם הקטע האנכי ($k=0$). הגובה מונוטוני לאורך כל אחת, ולכן היא מגיעה ל-$(1,0,1)$ פעם אחת. האורך הוא $\sqrt{(2\pi k)^2+1}$: $1$ ל-$k=0$, $\sqrt{4\pi^2+1}\approx6.36$ ל-$k=\pm1$, ו-$\sqrt{16\pi^2+1}\approx12.6>10$
+      ל-$k=\pm2$. לכן $k\in\{-1,0,1\}$.
+    wrongFeedback: >-
+      פרשו את הגליל למישור: $(1,0,0)$ הולכת ל-$(0,0)$, ו-$(1,0,1)$ לכל אחת מהנקודות $(2\pi k,1)$, $k\in\mathbb Z$. כל
+      ישר כזה הוא גאודזית. ספרו אילו מהם באורך $\le10$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          הקטע האנכי הוא רק אחת מהן. יש גם סלילים שמסתובבים פעם אחת סביב הציר, בכל אחד משני הכיוונים, באורך
+          $\sqrt{4\pi^2+1}\approx6.36$.
+        misconception: MC-c4-geodesic-unique
+      - value: 2
+        feedback: >-
+          ספרתם סליל בכיוון אחד בלבד. הסליל עם $k=-1$ מסתובב בכיוון ההפוך, והוא עקבה אחרת באותו אורך.
+        misconception: MC-c4-geodesic-unique

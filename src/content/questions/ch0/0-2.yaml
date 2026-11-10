@@ -1,0 +1,371 @@
+# Lesson 0.2 — review: inner and cross product, orthogonal matrices, the spectral theorem.
+# Objectives (src/course.ts):
+#   OBJ-0.2-1  compute cross and triple products and use their properties: perpendicularity, length as the area of a
+#              parallelogram, the determinant as a volume
+#   OBJ-0.2-2  recognise a rigid motion (translation and orthogonal matrix); rotation vs reflection by the sign of det
+#   OBJ-0.2-3  apply the spectral theorem to a symmetric matrix: real eigenvalues, orthonormal eigenbasis
+chapter: 0
+questions:
+  - id: Q-0.2-swap
+    type: mc
+    objectives: [OBJ-0.2-1]
+    level: basic
+    prompt: >-
+      חשבו את $(0,1,0)\times(1,0,0)$.
+    choices:
+      - text: '$(0,0,-1)$'
+        correct: true
+        feedback: >-
+          נכון. $e_1\times e_2=e_3$, ולכן $e_2\times e_1=-(e_1\times e_2)=-e_3$. גם כלל יד ימין: מ-$e_2$ אל $e_1$ זה סיבוב
+          בכיוון השעון כשמסתכלים מלמעלה, והאגודל מצביע למטה.
+      - text: '$(0,0,1)$'
+        feedback: >-
+          זה $e_1\times e_2$. המכפלה הווקטורית אנטי-חילופית: החלפת הסדר הופכת את הסימן.
+        misconception: MC-c0-cross-commutative
+      - text: '$(0,0,0)$'
+        feedback: >-
+          המכפלה מתאפסת רק כשהווקטורים מקבילים. $e_1$ ו-$e_2$ ניצבים, ואורך המכפלה הוא $1\cdot1\cdot\sin 90^\circ=1$.
+        misconception: MC-c0-cross-zero-vector
+
+  - id: Q-0.2-area
+    type: numeric
+    objectives: [OBJ-0.2-1]
+    level: basic
+    prompt: >-
+      חשבו את שטח המקבילית שהווקטורים $u=(1,2,0)$ ו-$v=(0,1,3)$ פורשים.
+    answer: 6.78233
+    tolerance: 0.0003
+    correctFeedback: >-
+      נכון. $u\times v=(2\cdot3-0\cdot1,\ 0\cdot0-1\cdot3,\ 1\cdot1-2\cdot0)=(6,-3,1)$, והשטח הוא
+      $\|u\times v\|=\sqrt{36+9+1}=\sqrt{46}\approx6.782$.
+    wrongFeedback: >-
+      השטח הוא $\|u\times v\|$. חשבו את המכפלה הווקטורית רכיב אחר רכיב, ואז את האורך שלה.
+    commonWrong:
+      - value: 46
+        feedback: >-
+          $46$ הוא $\|u\times v\|^2$. האורך הוא השורש: $\sqrt{46}$.
+        misconception: MC-c0-norm-without-root
+      - value: 3.39116
+        feedback: >-
+          זה חצי מ-$\sqrt{46}$, שטח **המשולש** ש-$u$ ו-$v$ פורשים. המקבילית כפולה ממנו.
+        misconception: MC-c0-parallelogram-vs-triangle
+
+  - id: Q-0.2-props
+    type: multi
+    objectives: [OBJ-0.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהטענות הבאות נכונות **לכל** $u,v,w\in\mathbb R^3$? סמנו את כולן.
+    choices:
+      - text: '$u\times v$ ניצב גם ל-$u$ וגם ל-$v$'
+        correct: true
+        feedback: >-
+          נכון. $u\cdot(u\times v)=\det(u,u,v)=0$, כי יש בדטרמיננטה שתי שורות שוות.
+      - text: '$\|u\times v\|=\|u\|\,\|v\|\sin\theta$, כש-$\theta$ הזווית ביניהם'
+        correct: true
+        feedback: >-
+          נכון. לכן $\|u\times v\|$ הוא שטח המקבילית: בסיס $\|u\|$ כפול גובה $\|v\|\sin\theta$.
+      - text: '$u\times v=v\times u$'
+        feedback: >-
+          לא: $v\times u=-(u\times v)$. למשל $e_1\times e_2=e_3$ ו-$e_2\times e_1=-e_3$.
+        misconception: MC-c0-cross-commutative
+      - text: '$(u\times v)\times w=u\times(v\times w)$'
+        feedback: >-
+          לא: $(e_1\times e_1)\times e_2=0$, אבל $e_1\times(e_1\times e_2)=e_1\times e_3=-e_2$.
+        misconception: MC-c0-cross-associative
+      - text: 'אם $u\times v=0$, אז $u=0$ או $v=0$'
+        feedback: >-
+          לא: $(1,2,3)\times(2,4,6)=0$. המכפלה מתאפסת בדיוק כשהווקטורים תלויים לינארית.
+        misconception: MC-c0-cross-zero-vector
+
+  - id: Q-0.2-volume
+    type: numeric
+    objectives: [OBJ-0.2-1]
+    level: mid
+    prompt: >-
+      חשבו את נפח המקבילון שהווקטורים $u=(0,2,0)$, $v=(1,0,1)$ ו-$w=(1,1,3)$ פורשים.
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\det(u,v,w)=-4$ (פיתוח לפי השורה הראשונה: $-2\,(1\cdot3-1\cdot1)=-4$), והנפח הוא הערך המוחלט, $4$. הסימן
+      השלילי אומר שהשלשה $u,v,w$ שמאלית.
+    wrongFeedback: >-
+      הנפח הוא $|u\cdot(v\times w)|=|\det(u,v,w)|$. חשבו את הדטרמיננטה של המטריצה שהשורות שלה $u,v,w$.
+    commonWrong:
+      - value: -4
+        feedback: >-
+          זו הדטרמיננטה, עם סימן. נפח אינו שלילי: לוקחים ערך מוחלט. הסימן מראה רק שהשלשה שמאלית.
+        misconception: MC-c0-volume-signed
+      - value: 0.6666667
+        feedback: >-
+          זה $\frac46$, נפח **הטטראדר** שקודקודיו $0,u,v,w$. המקבילון גדול ממנו פי $6$.
+        misconception: MC-c0-parallelogram-vs-triangle
+
+  - id: Q-0.2-triple
+    type: mc
+    objectives: [OBJ-0.2-1]
+    level: mid
+    prompt: >-
+      ידוע ש-$u\cdot(v\times w)=5$. מהם $w\cdot(u\times v)$ ו-$v\cdot(u\times w)$?
+    choices:
+      - text: '$w\cdot(u\times v)=5$ ו-$v\cdot(u\times w)=-5$'
+        correct: true
+        feedback: >-
+          נכון. $u\cdot(v\times w)=\det(u,v,w)$. הסדר $(w,u,v)$ הוא החלפה מעגלית, שתי החלפות של זוגות, ולכן אותו ערך;
+          הסדר $(v,u,w)$ הוא החלפה אחת של זוג, והסימן מתהפך.
+      - text: 'שניהם $5$'
+        feedback: >-
+          המכפלה המשולשת היא דטרמיננטה, והחלפת שתי שורות הופכת את הסימן. $(v,u,w)$ מתקבל מ-$(u,v,w)$ בהחלפה אחת.
+        misconception: MC-c0-triple-order-irrelevant
+      - text: '$w\cdot(u\times v)=-5$ ו-$v\cdot(u\times w)=5$'
+        feedback: >-
+          הפוך. $(w,u,v)$ הוא סיבוב מעגלי של $(u,v,w)$, שתי החלפות, והסימן נשמר.
+        misconception: MC-c0-triple-order-irrelevant
+      - text: 'אי אפשר לדעת בלי הווקטורים עצמם'
+        feedback: >-
+          אפשר: שתי המכפלות הן אותה דטרמיננטה עם השורות בסדר אחר, ותמורה של שורות רק כופלת בסימן שלה.
+        misconception: MC-c0-triple-not-determinant
+
+  - id: Q-0.2-det-values
+    type: mc
+    objectives: [OBJ-0.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $A$ מטריצה אורתוגונלית מסדר $3\times3$, כלומר $A^{T}A=I$. אילו ערכים יכולה $\det A$ לקבל?
+    choices:
+      - text: 'רק $1$ או $-1$'
+        correct: true
+        feedback: >-
+          נכון. $1=\det I=\det(A^{T}A)=\det A^{T}\det A=(\det A)^2$. שני הערכים מתקבלים: $I$ ו-$\operatorname{diag}(-1,1,1)$.
+      - text: 'כל מספר שונה מאפס'
+        feedback: >-
+          מטריצה אורתוגונלית היא הפיכה, אבל הרבה יותר מזה: היא שומרת אורכים, ולכן גם נפחים. $(\det A)^2=1$.
+        misconception: MC-c0-orthogonal-any-invertible
+      - text: 'רק $1$'
+        feedback: >-
+          $\operatorname{diag}(-1,1,1)$, השיקוף במישור $x=0$, אורתוגונלית עם דטרמיננטה $-1$.
+        misconception: MC-c0-orthogonal-is-rotation
+
+  - id: Q-0.2-swap-matrix
+    type: mc
+    objectives: [OBJ-0.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה עושה המטריצה $A=\begin{pmatrix}0&1\\1&0\end{pmatrix}$ למישור?
+    choices:
+      - text: 'שיקוף בישר $y=x$; היא אורתוגונלית ו-$\det A=-1$'
+        correct: true
+        feedback: >-
+          נכון. $A(x,y)=(y,x)$: הנקודות על $y=x$ נשארות במקומן, והישר $y=-x$ מתהפך. $A^{T}A=I$, והסימן השלילי של
+          הדטרמיננטה מסמן היפוך כיוון.
+      - text: 'סיבוב ב-$90^\circ$ סביב הראשית; היא אורתוגונלית ו-$\det A=1$'
+        feedback: >-
+          סיבוב ב-$90^\circ$ הוא $\begin{pmatrix}0&-1\\1&0\end{pmatrix}$, עם דטרמיננטה $1$. כאן $\det A=-1$, וסיבוב שאינו הזהות
+          אינו מקבע ישר שלם כמו $y=x$.
+        misconception: MC-c0-orthogonal-is-rotation
+      - text: 'היא אינה אורתוגונלית, כי יש לה אפסים על האלכסון; היא מטילה את המישור על הישר $y=x$'
+        feedback: >-
+          אורתוגונליות פירושה שהעמודות אורתונורמליות. העמודות $(0,1)$ ו-$(1,0)$ אורתונורמליות.
+        misconception: MC-c0-orthogonal-by-pattern
+
+  - id: Q-0.2-which-orth
+    type: multi
+    objectives: [OBJ-0.2-2]
+    level: mid
+    prompt: >-
+      אילו מהמטריצות הבאות **אורתוגונליות**? סמנו את כולן.
+    choices:
+      - text: '$\frac{1}{\sqrt2}\begin{pmatrix}1&-1\\1&1\end{pmatrix}$'
+        correct: true
+        feedback: >-
+          נכון: סיבוב ב-$45^\circ$. העמודות באורך $1$ וניצבות, והדטרמיננטה $1$.
+      - text: '$\begin{pmatrix}0&0&1\\1&0&0\\0&1&0\end{pmatrix}$'
+        correct: true
+        feedback: >-
+          נכון: מטריצת תמורה. העמודות הן $e_2,e_3,e_1$, וקטורי הבסיס בסדר אחר. הדטרמיננטה $1$ (תמורה מעגלית), ולכן
+          זה סיבוב: סיבוב ב-$120^\circ$ סביב הציר $(1,1,1)$.
+      - text: '$\begin{pmatrix}-1&0&0\\0&1&0\\0&0&1\end{pmatrix}$'
+        correct: true
+        feedback: >-
+          נכון: שיקוף במישור $x=0$, עם דטרמיננטה $-1$. אורתוגונלית אינה בהכרח סיבוב.
+      - text: '$\begin{pmatrix}1&1\\0&1\end{pmatrix}$'
+        feedback: >-
+          הדטרמיננטה $1$, אבל העמודה השנייה $(1,1)$ באורך $\sqrt2$ ואינה ניצבת לראשונה. זו גזירה, והיא משנה אורכים.
+        misconception: MC-c0-det-one-is-rotation
+      - text: '$\begin{pmatrix}2&0\\0&\frac12\end{pmatrix}$'
+        feedback: >-
+          הדטרמיננטה $1$, אבל $e_1$ נשלח לווקטור באורך $2$. דטרמיננטה $\pm1$ אינה מספיקה לאורתוגונליות.
+        misconception: MC-c0-det-one-is-rotation
+
+  - id: Q-0.2-rigid-inner
+    type: mc
+    objectives: [OBJ-0.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $F(x)=Ax+b$ עם $A$ אורתוגונלית ו-$b\ne0$. מה מהבאים נכון **לכל** $A$ אורתוגונלית ו-$b\ne0$, ולכל $x,y,z\in\mathbb R^3$?
+    choices:
+      - text: '$\langle F(x)-F(z),\ F(y)-F(z)\rangle=\langle x-z,\ y-z\rangle$'
+        correct: true
+        feedback: >-
+          נכון. $F(x)-F(z)=A(x-z)$: ההזזה מתבטלת בהפרש, ו-$\langle Au,Av\rangle=\langle A^{T}Au,v\rangle=\langle u,v\rangle$.
+          לכן תנועה קשיחה שומרת מרחקים וזוויות.
+      - text: '$\langle F(x),\ F(y)\rangle=\langle x,y\rangle$'
+        feedback: >-
+          עם $x=y=0$: $\langle F(0),F(0)\rangle=\|b\|^2\ne0$. ההזזה לא שומרת מכפלות פנימיות של **נקודות**, רק של הפרשים.
+        misconception: MC-c0-translation-preserves-inner
+      - text: '$F(0)=0$'
+        feedback: >-
+          $F(0)=b\ne0$. תנועה קשיחה מזיזה גם את הראשית.
+        misconception: MC-c0-translation-preserves-inner
+      - text: '$\det\big(F(x)-F(w),\ F(y)-F(w),\ F(z)-F(w)\big)=\det(x-w,\ y-w,\ z-w)$ לכל $w$'
+        feedback: >-
+          אגף שמאל הוא $\det\big(A(x-w),A(y-w),A(z-w)\big)=\det A\cdot\det(x-w,\ y-w,\ z-w)$. זה שוויון רק כש-$\det A=1$; כש-$\det A=-1$
+          (שיקוף) הנפח נשמר והסימן, כלומר הכיוון, מתהפך.
+        misconception: MC-c0-orthogonal-is-rotation
+
+  - id: Q-0.2-cross-refl
+    type: twotier
+    objectives: [OBJ-0.2-2, OBJ-0.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $A$ מטריצה אורתוגונלית מסדר $3\times3$ עם $\det A=-1$. האם $(Au)\times(Av)=A(u\times v)$ לכל $u,v\in\mathbb R^3$?
+    choices:
+      - text: 'לא; לכל $u,v$ מתקיים $(Au)\times(Av)=-A(u\times v)$'
+        correct: true
+        feedback: >-
+          נכון. לכל מטריצה אורתוגונלית $(Au)\times(Av)=\det(A)\,A(u\times v)$. שיקוף הופך את כיוון המכפלה הווקטורית. בפרק 2
+          זה יסביר למה שיקוף הופך את הסימן של הפיתול.
+      - text: 'כן, כי $A$ שומרת אורכים וזוויות'
+        feedback: >-
+          $A$ שומרת את אורך המכפלה הווקטורית ואת הניצבות שלה, אבל לא את **הכיוון** שלה, שנקבע לפי כלל יד ימין.
+        misconception: MC-c0-cross-rigid-invariant
+    reasons:
+      - text: 'עם $A=-I$: $(-u)\times(-v)=u\times v$, בעוד ש-$A(u\times v)=-(u\times v)$'
+        correct: true
+        feedback: >-
+          בדיוק. $A=-I$ אורתוגונלית עם $\det(-I)=(-1)^3=-1$, ואם $u\times v\ne0$ שני האגפים שונים.
+      - text: 'שני האגפים בעלי אותו אורך וניצבים לאותו מישור, ולכן שווים'
+        feedback: >-
+          אורך וכיוון ניצב קובעים וקטור רק עד כדי סימן: יש שני וקטורים כאלה. כלל יד ימין בוחר ביניהם, ושיקוף מחליף ידיים.
+        misconception: MC-c0-cross-rigid-invariant
+      - text: 'מטריצה אורתוגונלית היא סיבוב, ולכן הכיוון נשמר'
+        feedback: >-
+          רק מטריצה אורתוגונלית עם דטרמיננטה $1$ היא סיבוב. כאן $\det A=-1$.
+        misconception: MC-c0-orthogonal-is-rotation
+
+  - id: Q-0.2-eigen
+    type: numeric
+    objectives: [OBJ-0.2-3]
+    level: basic
+    prompt: >-
+      מהו הערך העצמי **הקטן** של $A=\begin{pmatrix}1&2\\2&-2\end{pmatrix}$?
+    answer: -3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\det(A-\lambda I)=(1-\lambda)(-2-\lambda)-4=\lambda^2+\lambda-6=(\lambda+3)(\lambda-2)$, ולכן הערכים העצמיים
+      הם $\lambda_1=2$ ו-$\lambda_2=-3$. בדיקה: הסכום $-1$ הוא העקבה, והמכפלה $-6$ היא הדטרמיננטה.
+    wrongFeedback: >-
+      פתרו $\det(A-\lambda I)=0$. אחר כך בדקו: סכום הערכים העצמיים שווה לעקבה ומכפלתם לדטרמיננטה.
+    commonWrong:
+      - value: -2
+        feedback: >-
+          $-2$ הוא איבר באלכסון. הערכים העצמיים הם איברי האלכסון רק במטריצה אלכסונית או משולשית.
+        misconception: MC-c0-eigen-diagonal
+      - value: 1
+        feedback: >-
+          $1$ הוא איבר באלכסון, לא ערך עצמי: $\det(A-I)=0\cdot(-3)-4=-4\ne0$.
+        misconception: MC-c0-eigen-diagonal
+
+  - id: Q-0.2-not-symmetric
+    type: twotier
+    objectives: [OBJ-0.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      למטריצה $B=\begin{pmatrix}1&1\\0&2\end{pmatrix}$ שני ערכים עצמיים ממשיים שונים, $1$ ו-$2$. האם יש ל-$\mathbb R^2$ בסיס
+      **אורתונורמלי** של וקטורים עצמיים של $B$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. ל-$B$ יש בסיס של וקטורים עצמיים, אבל לא אורתונורמלי. המשפט הספקטרלי דורש מטריצה סימטרית, ו-$B$ אינה כזו.
+      - text: כן
+        feedback: >-
+          ערכים עצמיים שונים מבטיחים וקטורים עצמיים בלתי תלויים, לא ניצבים. חשבו אותם: הם אינם ניצבים.
+        misconception: MC-c0-distinct-eigen-orthogonal
+    reasons:
+      - text: 'המרחבים העצמיים הם הישרים שפורשים $(1,0)$ ו-$(1,1)$, ואלה אינם ניצבים'
+        correct: true
+        feedback: >-
+          בדיוק: $(B-2I)(1,1)=(-1+1,\ 0)=0$, ו-$(1,0)\cdot(1,1)=1\ne0$. כל וקטור עצמי הוא כפולה של אחד מהשניים, ולכן אין
+          זוג ניצב.
+      - text: 'וקטורים עצמיים של ערכים עצמיים שונים תמיד ניצבים'
+        feedback: >-
+          זה נכון למטריצה **סימטרית**: $\lambda\langle v,w\rangle=\langle Bv,w\rangle=\langle v,Bw\rangle=\mu\langle v,w\rangle$. המעבר
+          האמצעי משתמש ב-$B^{T}=B$.
+        misconception: MC-c0-distinct-eigen-orthogonal
+      - text: 'לכל מטריצה עם ערכים עצמיים ממשיים יש בסיס אורתונורמלי של וקטורים עצמיים'
+        feedback: >-
+          $B$ עצמה היא דוגמה נגדית. ערכים עצמיים ממשיים אינם מספיקים; צריך סימטריה.
+        misconception: MC-c0-distinct-eigen-orthogonal
+
+  - id: Q-0.2-orth-proof
+    type: rank
+    objectives: [OBJ-0.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סדרו את ההוכחה לטענה: אם $A$ סימטרית, $Av=\lambda v$, $Aw=\mu w$ ו-$\lambda\ne\mu$, אז $v\perp w$.
+    help: סדרו את שלבי ההוכחה מהראשון (למעלה) לאחרון.
+    items:
+      - { id: s1, label: 'נחשב את $\langle Av,w\rangle$ בשתי דרכים.' }
+      - { id: s2, label: 'מצד אחד, $\langle Av,w\rangle=\langle\lambda v,w\rangle=\lambda\langle v,w\rangle$.' }
+      - { id: s3, label: 'מצד שני, כי $A^{T}=A$: $\langle Av,w\rangle=\langle v,Aw\rangle=\mu\langle v,w\rangle$.' }
+      - { id: s4, label: 'לכן $(\lambda-\mu)\langle v,w\rangle=0$.' }
+      - { id: s5, label: 'כי $\lambda\ne\mu$, מתקבל $\langle v,w\rangle=0$.' }
+    order: [s1, [s2, s3], s4, s5]
+    correctFeedback: >-
+      נכון. שני החישובים אינם תלויים זה בזה, ולכן כל סדר ביניהם טוב. הסימטריה נכנסת בצעד אחד בלבד,
+      $\langle Av,w\rangle=\langle v,A^{T}w\rangle=\langle v,Aw\rangle$; בלעדיה ההוכחה נופלת, כמו במטריצה
+      $\begin{pmatrix}1&1\\0&2\end{pmatrix}$.
+    wrongFeedback: >-
+      הרעיון: לחשב את אותו מספר, $\langle Av,w\rangle$, בשתי דרכים (בכל סדר), ולהשוות. ההשוואה באה אחרי שני החישובים,
+      והחלוקה ב-$\lambda-\mu$ בסוף.
+
+  - id: Q-0.2-max-form
+    type: numeric
+    objectives: [OBJ-0.2-3]
+    level: exam
+    prompt: >-
+      מצאו את הערך המקסימלי של $q(x,y)=x^2+6xy-3y^2$ על מעגל היחידה $x^2+y^2=1$.
+    answer: 2.6055512755
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\sqrt{13}-1\approx2.606$. $q(x)=x^{T}Ax$ עם $A=\begin{pmatrix}1&3\\3&-3\end{pmatrix}$ (המקדם $6$ של $xy$ מתחלק
+      לשני איברים של $3$). $\det(A-\lambda I)=\lambda^2+2\lambda-12$, ולכן $\lambda=-1\pm\sqrt{13}$. לפי המשפט הספקטרלי,
+      בבסיס אורתונורמלי של וקטורים עצמיים $q=\lambda_1y_1^2+\lambda_2y_2^2$ עם $y_1^2+y_2^2=1$: המקסימום הוא
+      $\lambda_1=\sqrt{13}-1$, בכיוון הווקטור העצמי $(3,\ \sqrt{13}-2)$, והמינימום $-1-\sqrt{13}$. בפרק 4 העקמומיויות הראשיות
+      יתקבלו בדיוק כך.
+    wrongFeedback: >-
+      כתבו את $q$ כ-$x^{T}Ax$ עם $A$ **סימטרית** (המקדם של $xy$ מתחלק לשני איברים שווים), ומצאו את הערכים העצמיים.
+    commonWrong:
+      - value: 4.6055512755
+        feedback: >-
+          $1+\sqrt{13}$ הוא הערך המוחלט של הערך העצמי $\lambda=-1-\sqrt{13}$, אבל $q$ בכיוון הזה שלילי: זה המינימום.
+          המקסימום הוא הערך העצמי הגדול ביותר עם הסימן שלו.
+        misconception: MC-c0-quadratic-max-absolute
+      - value: 5.3245553203
+        feedback: >-
+          זה $\sqrt{40}-1$, הערך העצמי הגדול של $\begin{pmatrix}1&6\\6&-3\end{pmatrix}$: שמתם את כל המקדם $6$ בשני האיברים
+          שמחוץ לאלכסון. אז $x^{T}Ax=x^2+12xy-3y^2$, לא $q$. המקדם מתחלק: $3+3=6$.
+        misconception: MC-c0-quadratic-form-matrix
+      - value: 1
+        feedback: >-
+          $1$ הוא הערך בנקודה $(1,0)$, האיבר הגדול באלכסון. אבל בכיוון הווקטור העצמי $(3,\ \sqrt{13}-2)$ (מנורמל) מתקבל
+          $\sqrt{13}-1>1$.
+        misconception: MC-c0-eigen-diagonal

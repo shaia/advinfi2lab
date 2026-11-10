@@ -1,0 +1,9 @@
+# Terms first defined in lesson 7.3 (applications of Green; the winding field itself belongs to lesson 6.2).
+- id: simply-connected
+  term: תחום פשוט קשר
+  en: simply connected region
+  definition: >-
+    תחום במישור שבו כל מסילה סגורה פשוטה חוסמת תחום שכולו מוכל בו; אינטואיטיבית, תחום בלי חורים. כל תחום קמור, ובפרט
+    עיגול וחצי מישור, הוא פשוט קשר; טבעת והמישור בלי נקודה אינם. בתחום פשוט קשר שדה מסדר $C^1$ עם $Q_x=P_y$ משמר.
+  reject: [פשוט-קשר, קשיר פשוט]
+  lesson: '7.3'

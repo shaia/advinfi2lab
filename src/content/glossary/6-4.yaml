@@ -1,0 +1,30 @@
+# Terms first defined in lesson 6.4 (closed curves and closed surfaces).
+- id: closed-curve
+  term: מסילה סגורה
+  en: closed curve
+  symbol: '\oint_\gamma'
+  definition: >-
+    מסילה $\gamma:[a,b]\to\mathbb R^n$ עם $\gamma(b)=\gamma(a)$. אינטגרל עליה מסמנים $\oint_\gamma$; הסימון אינו אומר שהאינטגרל אפס.
+  lesson: '6.4'
+- id: closed-surface
+  term: משטח סגור
+  en: closed surface
+  symbol: '\oiint_S'
+  definition: >-
+    משטח בלי שפה שהוא קבוצה סגורה וחסומה ב-$\mathbb R^3$ (עיגול פתוח, למשל, חסום ובלי שפה אך אינו סגור), כמו ספרה, טורוס, או השפה של גוף (גליל עם מכסים, שפת קובייה), שעשוי להיות בנוי מכמה חלקים חלקים.
+    אינטגרל עליו מסמנים $\oiint_S$, ובשטף משתמשים בנורמל החיצוני.
+  lesson: '6.4'
+- id: outward-normal
+  term: נורמל חיצוני
+  en: outward normal
+  definition: >-
+    על השפה של גוף חסום $V\subset\mathbb R^3$: הנורמל היחידה שמצביע החוצה מ-$V$. בגליל עם מכסים הוא $(0,0,1)$ על המכסה העליון,
+    $(0,0,-1)$ על התחתון, ואופקי ומתרחק מהציר על הדופן.
+  lesson: '6.4'
+- id: positive-boundary-orientation
+  term: הכיוון החיובי של השפה
+  en: positive orientation of the boundary
+  definition: >-
+    לתחום חסום $R$ במישור: כיוון ההליכה על כל רכיב של $\partial R$ שבו $R$ נמצא **משמאל**. על המעגל החיצוני של טבעת זה נגד
+    כיוון השעון, ועל המעגל הפנימי עם כיוון השעון.
+  lesson: '6.4'

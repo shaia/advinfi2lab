@@ -1,0 +1,418 @@
+# Workbook of lesson 1.4 — radius of curvature and the osculating circle.
+# Objectives (src/course.ts):
+#   OBJ-1.4-1  radius, centre of curvature and osculating circle, computed at a given point
+#   OBJ-1.4-2  second-order contact of the osculating circle; the tangent line only first-order
+#   OBJ-1.4-3  curvature of a graph y = f(x), and the points of maximal curvature
+# Every number recomputed with src/math/geometry.ts (curvature, osculatingCentre) on 2026-11-09.
+lesson: '1.4'
+practice:
+  - id: W-1.4-01
+    level: basic
+    objectives: [OBJ-1.4-1]
+    prompt: >-
+      מצאו את העקמומיות, את רדיוס העקמומיות ואת מרכז העקמומיות של ההיפרבולה $y=\frac1x$ בנקודה $(1,1)$.
+    answer: >-
+      $\kappa=\frac{1}{\sqrt2}$, $\rho=\sqrt2$, מרכז העקמומיות $(2,2)$.
+    solution:
+      - kind: computation
+        text: >-
+          $f'=-\frac{1}{x^2}$ ו-$f''=\frac{2}{x^3}$, ולכן ב-$x=1$: $f'=-1$, $f''=2$, $1+f'^2=2$.
+      - kind: computation
+        text: >-
+          $\kappa=\frac{|f''|}{(1+f'^2)^{3/2}}$, כלומר $\kappa=\frac{2}{2\sqrt2}=\frac{1}{\sqrt2}$, ולכן $\rho=\sqrt2$.
+      - kind: step
+        text: >-
+          $\mathbf t=\frac{(1,-1)}{\sqrt2}$. הגרף קעור כלפי מעלה ($f''>0$), ולכן $\mathbf n=\frac{(1,1)}{\sqrt2}$, והמרכז
+          $$(1,1)+\sqrt2\cdot\tfrac{1}{\sqrt2}(1,1)=(2,2).$$
+      - kind: check
+        text: >-
+          נוסחת המרכז של גרף: $x-\frac{f'(1+f'^2)}{f''}=1+\frac{2}{2}=2$ ו-$f+\frac{1+f'^2}{f''}=1+1=2$. ההיפרבולה סימטרית ביחס
+          לישר $y=x$, והמרכז אכן על הישר הזה.
+      - kind: result
+        text: >-
+          $\kappa=\frac{1}{\sqrt2}$, $\rho=\sqrt2$, מרכז $(2,2)$.
+
+  - id: W-1.4-02
+    level: basic
+    objectives: [OBJ-1.4-1]
+    prompt: >-
+      האליפסה $\gamma(t)=(3\cos t,\ 2\sin t)$. מצאו את רדיוס העקמומיות ואת מרכז העקמומיות בנקודות $(3,0)$ ו-$(0,2)$.
+    answer: >-
+      ב-$(3,0)$: $\rho=\frac43$, מרכז $(\frac53,0)$. ב-$(0,2)$: $\rho=\frac92$, מרכז $(0,-\frac52)$.
+    solution:
+      - kind: computation
+        text: >-
+          $\gamma'=(-3\sin t,\ 2\cos t)$ ו-$\gamma''=(-3\cos t,\ -2\sin t)$, ולכן $x'y''-y'x''=6\sin^2t+6\cos^2t$, כלומר $6$. לכן
+          $$\kappa(t)=\frac{6}{(9\sin^2t+4\cos^2t)^{3/2}}.$$
+      - kind: step
+        text: >-
+          ב-$t=0$, הנקודה $(3,0)$: $\kappa=\frac{6}{8}=\frac34$, $\rho=\frac43$. האליפסה קעורה פנימה, $\mathbf n=(-1,0)$, והמרכז
+          $(3-\frac43,\ 0)=(\frac53,\ 0)$.
+      - kind: step
+        text: >-
+          ב-$t=\frac\pi2$, הנקודה $(0,2)$: $\kappa=\frac{6}{27}=\frac29$, $\rho=\frac92$, $\mathbf n=(0,-1)$, והמרכז
+          $(0,\ 2-\frac92)=(0,-\frac52)$.
+      - kind: check
+        text: >-
+          באליפסה עם חצאי צירים $a>b$: $\rho=\frac{b^2}{a}$ בקצות הציר הארוך ו-$\rho=\frac{a^2}{b}$ בקצות הקצר. כאן $\frac43$ ו-$\frac92$.
+      - kind: result
+        text: >-
+          $(3,0)$: $\rho=\frac43$, מרכז $(\frac53,0)$. $(0,2)$: $\rho=\frac92$, מרכז $(0,-\frac52)$.
+
+  - id: W-1.4-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.4-2]
+    prompt: >-
+      $\gamma$ מסילה מישורית בפרמטר אורך הקשת עם $\gamma(s_0)=(0,0)$, $\mathbf t(s_0)=(1,0)$, $\kappa(s_0)=3$ ו-$\mathbf n(s_0)=(0,1)$.
+      אילו מהעקומים הבאים, כולם בפרמטר אורך הקשת, עוברים דרך הראשית במהירות $(1,0)$ ונמצאים במגע מסדר שני עם $\gamma$ ב-$s_0$?
+
+      (א) המעגל ברדיוס $\frac13$ שמרכזו $(0,\frac13)$.
+
+      (ב) המעגל ברדיוס $3$ שמרכזו $(0,3)$.
+
+      (ג) המעגל ברדיוס $\frac13$ שמרכזו $(0,-\frac13)$.
+
+      (ד) ציר ה-$x$, $\ell(h)=(h,0)$.
+    answer: >-
+      רק (א).
+    solution:
+      - kind: definition
+        text: >-
+          מגע מסדר שני: שוויון של הערך, המהירות והנגזרת השנייה. כאן $\gamma''(s_0)=\kappa\mathbf n=(0,3)$.
+      - kind: step
+        text: >-
+          למעגל ברדיוס $R$ בפרמטר אורך הקשת, הנגזרת השנייה באורך $\frac1R$ ומצביעה אל המרכז.
+      - kind: step
+        text: >-
+          (א) $\frac{1}{1/3}(0,1)=(0,3)$: כן. (ב) $\frac13(0,1)$: לא, הרדיוס לא נכון. (ג) $3(0,-1)$: לא, הצד לא נכון.
+          (ד) הנגזרת השנייה של ישר אפס: לא, רק מגע מסדר ראשון.
+      - kind: result
+        text: >-
+          רק (א), המעגל המנשק.
+
+  - id: W-1.4-04
+    level: mid
+    objectives: [OBJ-1.4-3]
+    prompt: >-
+      (א) חשבו את העקמומיות של $y=x^4$ כפונקציה של $x$. מה היא בנקודה התחתונה $(0,0)$?
+
+      (ב) מצאו את הנקודות שבהן העקמומיות מקסימלית, ואת הערך המקסימלי.
+    answer: >-
+      (א) $\kappa=\frac{12x^2}{(1+16x^6)^{3/2}}$, ו-$\kappa(0)=0$. (ב) ב-$x=\pm56^{-1/6}\approx\pm0.511$, עם $\kappa\approx2.151$.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $f'=4x^3$, $f''=12x^2$, ולכן $\kappa=\frac{12x^2}{(1+16x^6)^{3/2}}$. ב-$x=0$: $\kappa=0$, אף שזו נקודת מינימום ולא נקודה
+          שבה הקעירות מתחלפת: הגרף שטוח מאוד בתחתית.
+      - kind: computation
+        text: >-
+          (ב) $\kappa$ זוגית, ולכן מספיק $x>0$. בכלל המכפלה ובכלל השרשרת:
+          $$\kappa'(x)=\frac{24x(1+16x^6)-1728x^7}{(1+16x^6)^{5/2}}=\frac{24x(1-56x^6)}{(1+16x^6)^{5/2}}.$$
+      - kind: step
+        text: >-
+          ל-$x>0$: $\kappa'>0$ כש-$x^6<\frac1{56}$ ו-$\kappa'<0$ אחר כך, ו-$\kappa\to0$ ב-$0$ וב-$\infty$. לכן המקסימום ב-$x^6=\frac{1}{56}$,
+          כלומר $x=56^{-1/6}\approx0.5113$.
+      - kind: computation
+        text: >-
+          שם $1+16x^6=\frac{72}{56}=\frac97$ ו-$x^2=56^{-1/3}$, ולכן
+          $$\kappa_{\max}=12\cdot56^{-1/3}\Big(\frac79\Big)^{3/2}\approx2.151.$$
+      - kind: check
+        text: >-
+          חישוב מספרי: $\kappa(0.511)\approx2.1515$, ו-$\kappa(0.481)\approx2.1169$, $\kappa(0.541)\approx2.1176$, קטנים יותר.
+      - kind: result
+        text: >-
+          $\kappa(0)=0$; המקסימום $\approx2.151$ בשתי הנקודות $x=\pm56^{-1/6}$.
+
+  - id: W-1.4-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.4-1, OBJ-1.4-2]
+    prompt: >-
+      האליפסה $x^2/4+y^2=1$, בפרמטריזציה $(2\cos t,\ \sin t)$. קבעו אם כל טענה נכונה, ונמקו.
+
+      (א) מרכז העקמומיות בכל נקודה של האליפסה נמצא בתוך האליפסה.
+
+      (ב) המעגל המנשק ב-$(0,1)$ מוכל באליפסה.
+
+      (ג) המעגל המנשק ב-$(2,0)$ מוכל באליפסה (כולל השפה).
+    answer: >-
+      (א) לא: ב-$(0,1)$ המרכז $(0,-3)$. (ב) לא: הרדיוס $4$. (ג) נכון.
+    solution:
+      - kind: step
+        text: >-
+          (א) ב-$(0,1)$: $\rho=4$ ו-$\mathbf n=(0,-1)$ (שיעור 1.4), והמרכז $(0,-3)$, שמחוץ לאליפסה: $\frac04+9>1$.
+      - kind: step
+        text: >-
+          (ב) מעגל ברדיוס $4$ לא נכנס לאליפסה, שכל נקודותיה במרחק $2$ לכל היותר מהראשית: הקוטר שלו $8$.
+      - kind: step
+        text: >-
+          (ג) ב-$(2,0)$: $\rho=\frac12$, המרכז $(\frac32,0)$, ונקודות המעגל הן $(\frac32+\frac12\cos\varphi,\ \frac12\sin\varphi)$. מציבים,
+          עם $c=\cos\varphi$:
+          $$\frac{x^2}{4}+y^2=\frac{(\frac32+\frac c2)^2}{4}+\frac{1-c^2}{4}=\frac{13}{16}+\frac38c-\frac{3}{16}c^2.$$
+      - kind: step
+        text: >-
+          הפונקציה $\frac{13}{16}+\frac38c-\frac3{16}c^2$ עולה על $[-1,1]$ (נגזרתה $\frac38(1-c)\ge0$), ולכן המקסימום שלה ב-$c=1$, והוא
+          $\frac{13+6-3}{16}=1$. כלומר כל המעגל בתוך האליפסה, ונוגע בשפה רק ב-$(2,0)$.
+      - kind: check
+        text: >-
+          חישוב מספרי של $\max\big(\frac{x^2}4+y^2\big)$ על המעגל נותן $1$. בקצות הציר הארוך האליפסה הכי מעוקמת, והמעגל המנשק שם קטן;
+          בקצות הקצר הכי שטוחה, והמעגל גדול ובולט החוצה.
+      - kind: result
+        text: >-
+          (א) לא נכון. (ב) לא נכון. (ג) נכון.
+
+  - id: W-1.4-06
+    level: mid
+    objectives: [OBJ-1.4-2]
+    prompt: >-
+      הפרבולה $y=x^2$ והקודקוד $(0,0)$. נסמן ב-$s(x)$ את אורך הקשת מהקודקוד עד $(x,x^2)$.
+
+      (א) חשבו את $\lim_{x\to0}\frac{d_1(x)}{s(x)^2}$, כאשר $d_1(x)$ המרחק מ-$(x,x^2)$ לישר המשיק בקודקוד.
+
+      (ב) חשבו את המרחק $d_2(x)$ מ-$(x,x^2)$ למעגל המנשק בקודקוד, והראו ש-$\frac{d_2(x)}{s(x)^2}\to0$.
+    answer: >-
+      (א) $1=\frac\kappa2$. (ב) $d_2=\sqrt{x^4+\frac14}-\frac12\approx x^4$, ולכן הגבול $0$.
+    solution:
+      - kind: step
+        text: >-
+          הישר המשיק בקודקוד הוא $y=0$, ו-$d_1(x)=x^2$.
+      - kind: step
+        text: >-
+          $s(x)=\int_0^x\sqrt{1+4u^2}\,du$, ו-$\frac{s(x)}{x}\to1$ (המהירות בקודקוד היא $1$; לפי לופיטל או לפי רציפות האינטגרנד). לכן
+          $\frac{d_1}{s^2}=\frac{x^2}{x^2}\cdot\frac{x^2}{s^2}\to1$.
+      - kind: step
+        text: >-
+          (ב) המעגל המנשק: מרכז $(0,\frac12)$ ורדיוס $\frac12$. המרחק מנקודה למעגל הוא הערך המוחלט של ההפרש בין המרחק שלה
+          למרכז לבין הרדיוס. כאן המרחק למרכז הוא
+          $$\sqrt{x^2+(x^2-\tfrac12)^2}=\sqrt{x^4+\tfrac14}.$$
+      - kind: computation
+        text: >-
+          כופלים ומחלקים בצמוד:
+          $$d_2=\sqrt{x^4+\tfrac14}-\tfrac12=\frac{x^4}{\sqrt{x^4+\frac14}+\frac12}\le x^4,$$
+          ולכן $\frac{d_2}{s^2}\le\frac{x^4}{s^2}\to0$.
+      - kind: check
+        text: >-
+          ב-$x=0.01$: $\frac{d_1}{s^2}\approx0.99987$ ו-$d_2\approx10^{-8}=x^4$. המעגל נצמד לקודקוד אפילו יותר טוב מ-$o(s^2)$, כי שם $\kappa'=0$.
+      - kind: result
+        text: >-
+          (א) $1$, כלומר $\frac\kappa2$. (ב) $d_2\approx x^4$, והיחס שואף ל-$0$.
+
+  - id: W-1.4-07
+    level: mid
+    objectives: [OBJ-1.4-1]
+    prompt: >-
+      מצאו את מרכז העקמומיות של $y=x^3$ בנקודה $(1,1)$, ואת רדיוס העקמומיות שם.
+    answer: >-
+      מרכז $(-4,\ \frac83)$, $\rho=\frac{10\sqrt{10}}{6}\approx5.270$.
+    solution:
+      - kind: computation
+        text: >-
+          $f'(1)=3$, $f''(1)=6$, $1+f'^2=10$. לכן $\kappa=\frac{6}{10^{3/2}}$ ו-$\rho=\frac{10\sqrt{10}}{6}$.
+      - kind: computation
+        text: >-
+          לפי נוסחת המרכז של גרף:
+          $$x-\frac{f'(1+f'^2)}{f''}=1-\frac{3\cdot10}{6}=-4,\qquad f+\frac{1+f'^2}{f''}=1+\frac{10}{6}=\frac83.$$
+      - kind: check
+        text: >-
+          המרחק מ-$(1,1)$ ל-$(-4,\frac83)$ הוא $\sqrt{25+\frac{25}{9}}=\frac{5\sqrt{10}}{3}=\rho$. והכיוון $(-5,\frac53)\parallel(-3,1)$, ניצב
+          למשיק $(1,3)$ ופונה למעלה, אל הצד הקעור.
+      - kind: result
+        text: >-
+          מרכז העקמומיות $(-4,\frac83)$, $\rho=\frac{5\sqrt{10}}{3}\approx5.270$.
+
+  - id: W-1.4-08
+    level: exam
+    objectives: [OBJ-1.4-3, OBJ-1.4-1]
+    prompt: >-
+      $f(x)=\ln\cos x$ על $(-\frac\pi2,\frac\pi2)$.
+
+      (א) הוכיחו ש-$\kappa(x)=\cos x$. איפה העקמומיות מקסימלית?
+
+      (ב) מצאו את רדיוס העקמומיות ואת מרכז העקמומיות כפונקציות של $x$.
+    answer: >-
+      (א) המקסימום $1$ ב-$x=0$. (ב) $\rho=\frac{1}{\cos x}$, ומרכז $(x-\tan x,\ \ln\cos x-1)$.
+    solution:
+      - kind: computation
+        text: >-
+          $f'=-\tan x$, $f''=-\frac{1}{\cos^2x}$, ו-$1+f'^2=\frac{1}{\cos^2x}$. לכן
+          $$\kappa=\frac{1/\cos^2x}{(1/\cos^2x)^{3/2}}=\cos x,$$
+          כי $\cos x>0$ בקטע.
+      - kind: step
+        text: >-
+          (א) $\cos x\le1$ עם שוויון רק ב-$x=0$: המקסימום $1$ בנקודה $(0,0)$. בקצוות $\kappa\to0$: הגרף יורד לאינסוף וכמעט אנכי.
+      - kind: computation
+        text: >-
+          (ב) $\rho=\frac1{\cos x}$. הגרף קעור כלפי מטה ($f''<0$). בנוסחת המרכז:
+          $$x-\frac{f'(1+f'^2)}{f''}=x-\tan x,\qquad f+\frac{1+f'^2}{f''}=\ln\cos x-1.$$
+      - kind: check
+        text: >-
+          ב-$x=0$ המרכז $(0,-1)$, במרחק $1=\rho$ מתחת לנקודה. חישוב מספרי ב-$x=0.5$: $\kappa\approx0.8776=\cos0.5$ ומרכז $(-0.0463,\ -1.1306)$.
+      - kind: result
+        text: >-
+          $\kappa=\cos x$, מקסימלית ב-$x=0$; $\rho=\sec x$; מרכז $(x-\tan x,\ \ln\cos x-1)$.
+
+  - id: W-1.4-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.4-2]
+    prompt: >-
+      $f,g$ מסדר $C^2$ עם $f(x_0)=g(x_0)$ ו-$f'(x_0)=g'(x_0)$.
+
+      (א) הוכיחו: לגרפים של $f$ ושל $g$ יש באותה נקודה אותו מעגל מנשק (בהנחה ש-$f''(x_0)\ne0$) אם ורק אם $f''(x_0)=g''(x_0)$.
+
+      (ב) מצאו פרבולה $y=c+ax^2$ שיש לה ב-$(0,-1)$ אותו מעגל מנשק כמו למעגל היחידה.
+    answer: >-
+      (ב) $y=-1+\frac{x^2}{2}$.
+    solution:
+      - kind: idea
+        text: >-
+          המעגל המנשק נקבע על ידי הנקודה, $\mathbf t$, $\kappa$ ו-$\mathbf n$. בגרף, כש-$f$ ו-$f'$ נתונים, $\kappa$ ו-$\mathbf n$ נקבעים על ידי $f''$:
+          הגודל דרך $|f''|$ והצד דרך הסימן שלו.
+      - kind: step
+        text: >-
+          ($\Leftarrow$) אם גם $f''(x_0)=g''(x_0)$, נוסחת הרדיוס $\frac{(1+f'^2)^{3/2}}{|f''|}$ ונוסחת המרכז
+          $$\Big(x-\frac{f'(1+f'^2)}{f''},\ \ f+\frac{1+f'^2}{f''}\Big)$$
+          נותנות לשני הגרפים אותו מרכז ואותו רדיוס.
+      - kind: step
+        text: >-
+          ($\Rightarrow$) לגרף של $g$ יש מעגל מנשק, ולכן גם $g''(x_0)\ne0$ (כש-$g''=0$ העקמומיות אפס ואין מעגל), ומותר לחלק בו. אם המרכזים שווים, רכיב ה-$y$ שלהם שווה:
+          $$f+\frac{1+f'^2}{f''}=g+\frac{1+g'^2}{g''}.$$
+          כי $f=g$ ו-$f'=g'$, מתקבל
+          $\frac{1}{f''}=\frac{1}{g''}$, כלומר $f''(x_0)=g''(x_0)$.
+      - kind: step
+        text: >-
+          (ב) החצי התחתון של מעגל היחידה הוא $g(x)=-\sqrt{1-x^2}$: $g(0)=-1$, $g'(0)=0$, $g''(0)=1$. לפרבולה $f=c+ax^2$:
+          $f(0)=c$, $f'(0)=0$, $f''(0)=2a$. לכן $c=-1$ ו-$2a=1$.
+      - kind: check
+        text: >-
+          חישוב מספרי: מרכז העקמומיות של שני העקומים ב-$(0,-1)$ הוא הראשית, והרדיוס $1$. (ההנחה $f''(x_0)\ne0$ נחוצה כדי שיהיה מעגל מנשק.)
+      - kind: result
+        text: >-
+          (א) הוכח. (ב) $y=-1+\frac12x^2$.
+
+  - id: W-1.4-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.4-1]
+    prompt: >-
+      הסליל $\gamma(t)=(a\cos t,\ a\sin t,\ bt)$, $a>0$, $b\ne0$.
+
+      (א) לאילו $a,b$ מרכזי העקמומיות נמצאים על הגליל $x^2+y^2=a^2$ שעליו הסליל?
+
+      (ב) הראו שמקום מרכזי העקמומיות הוא סליל, ושמרכזי העקמומיות **שלו** נמצאים שוב על הגליל $x^2+y^2=a^2$.
+    answer: >-
+      (א) בדיוק כש-$|b|=a$. (ב) סליל ברדיוס $\frac{b^2}a$, ומרכזי העקמומיות שלו במרחק $\frac{b^2}{b^2/a}=a$ מהציר.
+    solution:
+      - kind: step
+        text: >-
+          מהשיעור: מרכז העקמומיות הוא
+          $$\mathbf p(t)=\Big(-\frac{b^2}{a}\cos t,\ -\frac{b^2}{a}\sin t,\ bt\Big),$$
+          במרחק $\frac{b^2}a$ מציר ה-$z$.
+      - kind: step
+        text: >-
+          (א) $\frac{b^2}{a}=a$ אם ורק אם $b^2=a^2$, כלומר $|b|=a$.
+      - kind: step
+        text: >-
+          (ב) נסמן $a'=\frac{b^2}a$ ו-$u=t+\pi$. אז $\mathbf p=\big(a'\cos u,\ a'\sin u,\ b u-b\pi\big)$: הסליל ברדיוס $a'$ ועם אותו $b$, מוזז
+          ב-$-b\pi$ לאורך הציר. הזזה לא משנה עקמומיות ונורמל, ולכן לפי השיעור מרכזי העקמומיות שלו במרחק $\frac{b^2}{a'}=a$ מהציר.
+      - kind: check
+        text: >-
+          חישוב מספרי ל-$a=2$, $b=1$: מרכזי העקמומיות במרחק $0.5$ מהציר, ומרכזי העקמומיות של עקום המרכזים במרחק $\approx1.997$ (שגיאת גזירה
+          נומרית כפולה; הערך המדויק $2$).
+      - kind: result
+        text: >-
+          (א) $|b|=a$. (ב) המרכזים יוצרים סליל ברדיוס $\frac{b^2}a$, ומרכזי העקמומיות שלו חוזרים לגליל ברדיוס $a$.
+challenge:
+  - id: W-1.4-c1
+    stars: 1
+    objectives: [OBJ-1.4-1]
+    prompt: >-
+      $\alpha$ מסילה מישורית רגולרית מסדר $C^3$ עם $\kappa>0$ בכל נקודה. מקום מרכזי העקמומיות שלה,
+      $\beta=\alpha+\rho\,\mathbf n$ עם $\rho=\frac1\kappa$, נקרא **האבולוטה** של $\alpha$. הוכיחו שבכל נקודה שבה $\beta$ רגולרית, הישר
+      המשיק לאבולוטה ב-$\beta(s)$ הוא הנורמל של $\alpha$ ב-$\alpha(s)$, כלומר הישר שעובר דרך $\alpha(s)$ בכיוון $\mathbf n(s)$.
+    answer: >-
+      $\beta'=\rho'\,\mathbf n$: האבולוטה זזה לאורך הנורמל של $\alpha$, והישר דרך $\beta(s)$ בכיוון $\mathbf n(s)$ עובר גם דרך $\alpha(s)$.
+    solution:
+      - kind: idea
+        text: >-
+          גוזרים את $\beta=\alpha+\rho\,\mathbf n$ בפרמטר אורך הקשת של $\alpha$. במישור $\mathbf n'=-\kappa\,\mathbf t$, והמחובר $\mathbf t$ מתבטל.
+      - kind: step
+        text: >-
+          נעבור לפרמטר אורך הקשת $s$ של $\alpha$ (החלפת פרמטר לא משנה את התמונה ואת הישרים המשיקים). במישור $\mathbf n'=-\kappa\,\mathbf t$:
+          $\mathbf n'\perp\mathbf n$ כי $\|\mathbf n\|=1$, ו-$\mathbf n'\cdot\mathbf t=-\mathbf n\cdot\mathbf t'=-\kappa$.
+      - kind: computation
+        text: >-
+          גוזרים בכלל המכפלה ומציבים $\mathbf n'=-\kappa\,\mathbf t$:
+          $$\beta'=\mathbf t+\rho'\,\mathbf n-\rho\kappa\,\mathbf t=\rho'\,\mathbf n,$$
+          כי $\rho\kappa=1$.
+      - kind: step
+        text: >-
+          היכן ש-$\beta$ רגולרית, $\rho'(s)\ne0$, והמשיק של $\beta$ בכיוון $\mathbf n(s)$. הישר המשיק $\{\beta(s)+\lambda\mathbf n(s)\}$ מכיל את
+          $\alpha(s)=\beta(s)-\rho\,\mathbf n(s)$, ולכן הוא הנורמל של $\alpha$ ב-$\alpha(s)$.
+      - kind: check
+        text: >-
+          בציקלואידה (דוגמה 4 בשיעור) האבולוטה היא $(t+\sin t,\ \cos t-1)$, ונגזרתה
+          $$(1+\cos t,\ -\sin t)=2\cos\tfrac t2\,\big(\cos\tfrac t2,\ -\sin\tfrac t2\big),$$
+          מקבילה ל-$\mathbf n=(\cos\frac t2,-\sin\frac t2)$. ותצפית (בלי הוכחה כאן): היכן ש-$\rho'=0$ מתאפסת גם $\beta'=\rho'\mathbf n$, והאבולוטה אינה רגולרית שם; בציקלואידה ב-$t=\pi$ רואים בה חוד.
+      - kind: result
+        text: >-
+          $\beta'=\rho'\,\mathbf n$, ולכן המשיק לאבולוטה הוא הנורמל של המסילה.
+    source:
+      name: 'do Carmo, Differential Geometry of Curves and Surfaces, §1-5 (as quoted in the Math 138A solutions, UC Riverside, 2019)'
+      year: 1976
+      problem: '1-5, exercise 7'
+      url: https://math.ucr.edu/~ryanta/teaching/math138a_winter2019/homework2.pdf
+      verified: '2026-11-09'
+      adapted: true
+
+  - id: W-1.4-c2
+    stars: 1
+    objectives: [OBJ-1.4-3]
+    prompt: >-
+      מסילה מישורית נתונה בקואורדינטות קוטביות, $r=r(\theta)$, כלומר $\gamma(\theta)=\big(r(\theta)\cos\theta,\ r(\theta)\sin\theta\big)$, עם
+      $r$ מסדר $C^2$ ו-$r^2+r'^2>0$. הוכיחו:
+      $$\kappa=\frac{|2r'^2-rr''+r^2|}{(r'^2+r^2)^{3/2}},$$
+      וחשבו את העקמומיות של הקרדיואידה $r=1+\cos\theta$.
+    answer: >-
+      לקרדיואידה $\kappa=\frac{3}{2\sqrt{2+2\cos\theta}}$, בכל $\theta\ne\pi$.
+    solution:
+      - kind: idea
+        text: >-
+          זו מסילה רגולרית בפרמטר $\theta$. משתמשים בנוסחה של המישור,
+          $$\kappa=\frac{|x'y''-y'x''|}{(x'^2+y'^2)^{3/2}},$$
+          ומחשבים את המונה ואת המכנה.
+      - kind: computation
+        text: >-
+          $x'=r'\cos\theta-r\sin\theta$, $y'=r'\sin\theta+r\cos\theta$, ולכן $x'^2+y'^2=r'^2+r^2$ (המחוברים המעורבים מתבטלים).
+      - kind: computation
+        text: >-
+          $x''=r''\cos\theta-2r'\sin\theta-r\cos\theta$ ו-$y''=r''\sin\theta+2r'\cos\theta-r\sin\theta$.
+      - kind: computation
+        text: >-
+          מכפילים ומקבצים לפי $\cos^2\theta+\sin^2\theta=1$; המחוברים עם $\sin\theta\cos\theta$ מתבטלים:
+          $$x'y''-y'x''=2r'^2-rr''+r^2.$$
+      - kind: computation
+        text: >-
+          קרדיואידה: $r=1+\cos\theta$, $r'=-\sin\theta$, $r''=-\cos\theta$. אז $r'^2+r^2=2+2\cos\theta$, ו-
+          $$\begin{aligned}2r'^2-rr''+r^2&=2\sin^2\theta+(1+\cos\theta)\cos\theta\\&\quad+(1+\cos\theta)^2=3(1+\cos\theta).\end{aligned}$$
+      - kind: step
+        text: >-
+          לכן
+          $$\kappa=\frac{3(1+\cos\theta)}{(2+2\cos\theta)^{3/2}}=\frac{3}{2\sqrt{2+2\cos\theta}}.$$
+          ב-$\theta=\pi$ המסילה עוברת בראשית
+          עם $\gamma'=0$: שם יש חוד, ו-$\kappa\to\infty$.
+      - kind: check
+        text: >-
+          מעגל $r\equiv R$: $\frac{R^2}{R^3}=\frac1R$. חישוב מספרי בקרדיואידה ב-$\theta=\frac\pi2$: $\kappa\approx1.0607=\frac{3}{2\sqrt2}$, גם בנוסחה
+          הקוטבית וגם ישירות.
+      - kind: result
+        text: >-
+          הנוסחה הוכחה; לקרדיואידה $\kappa=\frac{3}{2\sqrt{2+2\cos\theta}}$.
+    source:
+      name: 'do Carmo, Differential Geometry of Curves and Surfaces, §1-5 (as quoted in the Math 138A solutions, UC Riverside, 2019)'
+      year: 1976
+      problem: '1-5, exercise 11'
+      url: https://math.ucr.edu/~ryanta/teaching/math138a_winter2019/homework2.pdf
+      verified: '2026-11-09'
+      adapted: true

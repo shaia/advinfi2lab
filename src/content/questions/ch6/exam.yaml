@@ -1,0 +1,496 @@
+# Chapter 6 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (part א of the 2002 format): 7 points, a verdict and a written justification.
+# Long questions (parts ב, ג): 20 points in 3–4 parts. Every value is computed directly: no Green, Stokes or Gauss (chapter 7).
+# Keys recomputed with lineIntegral / flux / totalCurvature (src/math).
+chapter: 6
+questions:
+  - id: Q-6-exam-1
+    type: exam
+    title: אפס על כל מעגל סביב הראשית
+    prompt: >-
+      האם קיים שדה $\mathbf F$ גזיר ברציפות על $\mathbb{R}^2\setminus\{0\}$ כך ש-$\oint_{C_\rho}\mathbf F\cdot d\mathbf s=0$ לכל
+      מעגל $C_\rho$ שמרכזו בראשית ורדיוסו $\rho>0$ (נגד כיוון השעון), ובכל זאת $\mathbf F$ אינו משמר על $\mathbb{R}^2\setminus\{0\}$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-6.2-2]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: כן, קיים
+            correct: true
+            feedback: >-
+              נכון. משמר פירושו אפס על **כל** מסילה סגורה בתחום, ומעגלים סביב הראשית הם רק משפחה אחת של מסילות סגורות.
+          - text: לא, אפס על כל המעגלים האלה גורר שהשדה משמר
+            feedback: >-
+              מעגלים סביב הראשית הם רק חלק מהמסילות הסגורות. בסעיף ב תמצאו שדה שמתאפס עליהם ולא על ריבוע קטן.
+            misconception: MC-c6-few-curves-suffice
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-6.2-2, OBJ-6.2-3]
+        qualitative: true
+        prompt: >-
+          נמקו: תנו דוגמה, הראו שהיא מקיימת את התנאי על המעגלים, והוכיחו שאינה משמרת.
+        solution:
+          - kind: goal
+            text: 'שדה עם $\oint_{C_\rho}\mathbf F\cdot d\mathbf s=0$ לכל $\rho>0$, ומסילה סגורה ב-$\mathbb{R}^2\setminus\{0\}$ שעליה האינטגרל שונה מאפס.'
+          - kind: idea
+            text: >-
+              שדה ששוויון הנגזרות המעורבות נכשל בו, ושהאינטגרנד שלו על מעגל הוא פונקציה אי-זוגית סביב חצי סיבוב. לדוגמה
+              $\mathbf F=(0,\ x^2)$.
+          - kind: computation
+            text: >-
+              על $C_\rho$: $\gamma(t)=(\rho\cos t,\rho\sin t)$, $\gamma'=(-\rho\sin t,\rho\cos t)$, ולכן
+              $\mathbf F(\gamma)\cdot\gamma'=\rho^2\cos^2t\cdot\rho\cos t=\rho^3\cos^3t$. כי $\cos^3(t+\pi)=-\cos^3t$, האינטגרל
+              על $[0,2\pi]$ הוא $0$ לכל $\rho$.
+          - kind: computation
+            text: >-
+              הריבוע $[1,2]\times[0,1]$, שאינו מכיל את הראשית, נגד כיוון השעון: על הצלעות האופקיות $dy=0$ ולכן התרומה 0;
+              על $x=2$ עולים, $\int_0^1 4\,dy=4$; על $x=1$ יורדים, $\int_1^0 1\,dy=-1$. סך הכול $3\ne0$.
+          - kind: theorem
+            text: 'שדה משמר על $U$ נותן אינטגרל אפס על כל מסילה סגורה וחלקה למקוטעין ב-$U$ (שיעור 6.2).'
+          - kind: result
+            text: '$\mathbf F=(0,x^2)$ מתאפס על כל $C_\rho$ ואינו משמר על $\mathbb{R}^2\setminus\{0\}$. התשובה: כן.'
+        rubric:
+          - text: 'דוגמה מפורשת לשדה גזיר ברציפות על התחום'
+            weight: 1
+          - text: 'חישוב שהאינטגרל על $C_\rho$ אפס **לכל** $\rho>0$, לא רק על מעגל אחד'
+            weight: 2
+          - text: 'מסילה סגורה בתוך $\mathbb{R}^2\setminus\{0\}$ שהאינטגרל עליה חושב ישירות ושונה מאפס (או שתי מסילות עם אותם קצוות וערכים שונים)'
+            weight: 2
+          - text: 'המסקנה דרך השקילות "משמר גורר אפס על כל מסילה סגורה"'
+            weight: 1
+
+  - id: Q-6-exam-2
+    type: exam
+    title: אותו משטח, שני שטפים
+    prompt: >-
+      האם ייתכנו משטח $S$, שדה רציף $\mathbf F$, ושתי פרמטריזציות רגולריות וחד-חד-ערכיות $\sigma:D\to S$ ו-$\tau:D'\to S$ של
+      אותו משטח, כך ש-$\iint_D\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)\,du\,dv=5$ ו-$\iint_{D'}\mathbf F(\tau)\cdot(\tau_u\times\tau_v)\,du\,dv=-5$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-6.3-2]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: כן, ייתכן
+            correct: true
+            feedback: >-
+              נכון. שתי הפרמטריזציות יכולות לכוון את המשטח בשני כיוונים מנוגדים.
+          - text: 'לא, השטף דרך משטח לא תלוי בפרמטריזציה'
+            feedback: >-
+              השטף לא תלוי בפרמטריזציה **ששומרת על הכיוון**. החלפת סדר הפרמטרים הופכת את $\sigma_u\times\sigma_v$.
+            misconception: MC-c6-flux-orientation-free
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-6.3-2, OBJ-6.3-1]
+        qualitative: true
+        prompt: >-
+          נמקו: תנו דוגמה מפורשת והסבירו מה גורם להבדל.
+        solution:
+          - kind: idea
+            text: 'החלפת סדר הפרמטרים מחליפה את $\sigma_u\times\sigma_v$ ב-$\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$.'
+          - kind: given
+            text: '$S=[0,1]^2\times\{0\}$, $\mathbf F=(0,0,5)$, $\sigma(u,v)=(u,v,0)$ ו-$\tau(u,v)=(v,u,0)$, שתיהן על $[0,1]^2$.'
+          - kind: computation
+            text: >-
+              $\sigma_u\times\sigma_v=\mathbf e_1\times\mathbf e_2=\mathbf e_3$, ולכן $\iint\mathbf F\cdot\mathbf e_3\,du\,dv=5$.
+              $\tau_u\times\tau_v=\mathbf e_2\times\mathbf e_1=-\mathbf e_3$, ולכן $\iint\mathbf F\cdot(-\mathbf e_3)\,du\,dv=-5$.
+          - kind: step
+            text: >-
+              $\tau=\sigma\circ\psi$ עם $\psi(u,v)=(v,u)$ ו-$\det D\psi=-1$. החלפת משתנים שומרת על $|\det|$, אבל
+              $\tau_u\times\tau_v=\det D\psi\cdot(\sigma_u\times\sigma_v)\circ\psi$ נושא את הסימן.
+          - kind: result
+            text: 'כן. השטף מוגדר רק אחרי שבוחרים כיוון למשטח; שתי הפרמטריזציות נותנות את שני הכיוונים, והשטפים נגדיים.'
+        rubric:
+          - text: 'דוגמה מפורשת: משטח, שדה ושתי פרמטריזציות'
+            weight: 1
+          - text: 'חישוב נכון של שתי המכפלות הווקטוריות ושל שני האינטגרלים'
+            weight: 2
+          - text: 'הסבר שההבדל נובע מהיפוך הכיוון (יעקוביאן שלילי, או סדר הפרמטרים), לא מטעות'
+            weight: 2
+
+  - id: Q-6-exam-3
+    type: exam
+    title: שדה כלפי מעלה ושני חצאי ספרה
+    prompt: >-
+      $f:\mathbb{R}^3\to\mathbb{R}$ רציפה עם $f\ge0$, ו-$\mathbf F=(0,\ 0,\ f)$. נסמן ב-$S_+$ וב-$S_-$ את חצי ספרת היחידה העליון
+      ($z\ge0$) והתחתון ($z\le0$), כל אחד עם הנורמל החיצוני של כדור היחידה. האם ייתכן ש-$\iint_{S_+}\mathbf F\cdot d\mathbf S=\iint_{S_-}\mathbf F\cdot d\mathbf S\ne0$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-6.3-3]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: לא, לא ייתכן
+            correct: true
+            feedback: >-
+              נכון. לשני השטפים סימנים מנוגדים (או אפס), ולכן הם שווים רק כששניהם אפס.
+          - text: כן, למשל כש-$f$ קבועה
+            feedback: >-
+              ל-$f\equiv1$: דרך $S_+$ השטף $\pi$, ודרך $S_-$ הוא מינוס $\pi$, כי שם הנורמל החיצוני פונה כלפי מטה. הם נגדיים.
+            misconception: MC-c6-lids-same-normal
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-6.3-3, OBJ-6.4-1]
+        qualitative: true
+        prompt: >-
+          הוכיחו את התשובה, בלי לחשב אף שטף.
+        solution:
+          - kind: idea
+            text: 'לא מחשבים: קובעים את הסימן של $\mathbf F\cdot\hat{\mathbf N}$ על כל חצי.'
+          - kind: step
+            text: 'על ספרת היחידה הנורמל החיצוני הוא $\hat{\mathbf N}(x,y,z)=(x,y,z)$, ולכן $\mathbf F\cdot\hat{\mathbf N}=f\,z$.'
+          - kind: step
+            text: >-
+              על $S_+$: $z\ge0$ ו-$f\ge0$, ולכן $fz\ge0$ והשטף $\iint_{S_+}fz\,dS\ge0$. על $S_-$: $z\le0$, ולכן $fz\le0$ והשטף
+              $\le0$.
+          - kind: step
+            text: 'אם שני השטפים שווים, מספר שאינו שלילי שווה למספר שאינו חיובי, ולכן שניהם $0$.'
+          - kind: result
+            text: 'לא ייתכן: השוויון גורר ששני השטפים אפס.'
+        rubric:
+          - text: 'הנורמל החיצוני הנכון על כל חצי, ובפרט כלפי מטה על $S_-$'
+            weight: 2
+          - text: 'הסימן של $\mathbf F\cdot\hat{\mathbf N}$ על כל חצי, ושאינטגרל של פונקציה לא שלילית אינו שלילי'
+            weight: 2
+          - text: 'המסקנה: שוויון אפשרי רק כששני השטפים אפס'
+            weight: 1
+
+  - id: Q-6-exam-4
+    type: exam
+    title: שדה הסיבוב, פוטנציאל ותחום
+    prompt: >-
+      $\mathbf W(x,y)=\left(\frac{-y}{x^2+y^2},\ \frac{x}{x^2+y^2}\right)$ על $\mathbb{R}^2\setminus\{0\}$. כל המסילות חלקות
+      למקוטעין. אין להשתמש במשפט גרין.
+    parts:
+      - label: א
+        points: 4
+        type: open
+        objectives: [OBJ-6.2-1]
+        prompt: >-
+          נסחו והוכיחו את המשפט היסודי לאינטגרלים קוויים: אם $\varphi$ גזירה ברציפות על $U$ פתוחה ו-$\gamma:[a,b]\to U$ חלקה
+          למקוטעין, מהו $\int_\gamma\nabla\varphi\cdot d\mathbf s$?
+        solution:
+          - kind: theorem
+            text: '$\int_\gamma\nabla\varphi\cdot d\mathbf s=\varphi(\gamma(b))-\varphi(\gamma(a))$.'
+          - kind: idea
+            text: 'האינטגרנד הוא נגזרת של הפונקציה במשתנה אחד $t\mapsto\varphi(\gamma(t))$.'
+          - kind: step
+            text: >-
+              תהי $a=t_0<\dots<t_k=b$ חלוקה שעל כל קטע שלה $\gamma$ גזירה ברציפות. על $[t_{i-1},t_i]$, לפי כלל השרשרת,
+              $\frac{d}{dt}\varphi(\gamma(t))=\nabla\varphi(\gamma(t))\cdot\gamma'(t)$, ולפי המשפט היסודי של החשבון
+              האינפיניטסימלי האינטגרל על הקטע הוא $\varphi(\gamma(t_i))-\varphi(\gamma(t_{i-1}))$.
+          - kind: step
+            text: 'סכום על $i=1,\dots,k$ הוא טלסקופי.'
+          - kind: result
+            text: '$\int_\gamma\nabla\varphi\cdot d\mathbf s=\varphi(\gamma(b))-\varphi(\gamma(a))$; בפרט אפס על כל מסילה סגורה.'
+        rubric:
+          - text: 'ניסוח נכון, עם הסימן "סוף פחות התחלה"'
+            weight: 1
+          - text: 'כלל השרשרת שהופך את האינטגרנד לנגזרת של $\varphi\circ\gamma$'
+            weight: 2
+          - text: 'טיפול במסילה חלקה למקוטעין: פירוק לקטעים וסכום טלסקופי'
+            weight: 1
+      - label: ב
+        points: 5
+        type: numeric
+        objectives: [OBJ-6.2-3, OBJ-6.1-1]
+        prompt: >-
+          חשבו ישירות את $\oint_{C_\rho}\mathbf W\cdot d\mathbf s$, כאשר $C_\rho$ המעגל שרדיוסו $\rho$ סביב הראשית, נגד כיוון
+          השעון. (התשובה לא תלויה ב-$\rho$.)
+        answer: 6.2831853
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $2\pi$. $\mathbf W(\gamma)=\frac1\rho(-\sin t,\cos t)$ ו-$\gamma'=\rho(-\sin t,\cos t)$, ולכן האינטגרנד 1.
+        wrongFeedback: >-
+          הציבו $\gamma(t)=(\rho\cos t,\rho\sin t)$; המכנה הוא $\rho^2$.
+        commonWrong:
+          - value: 0
+            feedback: >-
+              אפס היה נכון אילו $\mathbf W$ היה גרדיאנט על כל $\mathbb{R}^2\setminus\{0\}$. שוויון הנגזרות המעורבות אינו
+              מספיק לזה, והחישוב נותן $2\pi$.
+            misconception: MC-c6-mixed-partials-suffice
+          - value: -6.2831853
+            feedback: >-
+              זה הכיוון עם כיוון השעון.
+            misconception: MC-c6-orientation-irrelevant
+      - label: ג
+        points: 5
+        type: open
+        objectives: [OBJ-6.2-3, OBJ-6.2-2]
+        prompt: >-
+          הסיקו ש-$\mathbf W$ אינו משמר על $\mathbb{R}^2\setminus\{0\}$, והוכיחו שהוא משמר על חצי המישור $H=\{x>0\}$.
+        solution:
+          - kind: step
+            text: >-
+              לפי סעיף א, אילו $\mathbf W=\nabla\varphi$ על $\mathbb{R}^2\setminus\{0\}$, האינטגרל על המסילה הסגורה $C_1$ היה $0$.
+              לפי סעיף ב הוא $2\pi$. לכן אין פוטנציאל על $\mathbb{R}^2\setminus\{0\}$.
+          - kind: idea
+            text: 'ב-$H$ הזווית הקוטבית היא פונקציה גזירה, $\theta=\arctan\frac yx$.'
+          - kind: computation
+            text: >-
+              $\partial_x\arctan\frac yx=\frac{-y/x^2}{1+y^2/x^2}=\frac{-y}{x^2+y^2}$ ו-$\partial_y\arctan\frac yx=\frac{1/x}{1+y^2/x^2}=\frac{x}{x^2+y^2}$.
+          - kind: check
+            text: '$\arctan\frac yx$ גזירה ברציפות על $H$ (שם $x\ne0$), ולכן $\mathbf W=\nabla\theta$ על $H$.'
+          - kind: result
+            text: '$\mathbf W$ אינו משמר על $\mathbb{R}^2\setminus\{0\}$ ומשמר על $H$: היותו משמר תלויה בתחום.'
+        rubric:
+          - text: 'הנימוק לאי-השימור: אינטגרל שונה מאפס על מסילה סגורה בתחום, יחד עם סעיף א'
+            weight: 2
+          - text: 'פוטנציאל מפורש על $H$ ובדיקה של שתי הנגזרות החלקיות'
+            weight: 2
+          - text: 'הבחנה שהפוטנציאל מוגדר וגזיר על $H$ ולא על כל $\mathbb{R}^2\setminus\{0\}$'
+            weight: 1
+      - label: ד
+        points: 6
+        type: numeric
+        objectives: [OBJ-6.2-3, OBJ-6.2-1]
+        prompt: >-
+          חשבו את $\int_\gamma\mathbf W\cdot d\mathbf s$ לאורך $\gamma(t)=(2-t^2,\ t)$, $t\in[-1,1]$.
+        answer: 1.5707963
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\frac\pi2$. המסילה כולה ב-$H$ (שם $x\ge1$), והיא הולכת מ-$(1,-1)$ ל-$(1,1)$. לפי סעיפים א ו-ג:
+          $\arctan1-\arctan(-1)=\frac\pi4+\frac\pi4$.
+        wrongFeedback: >-
+          בדקו שהמסילה כולה בחצי המישור $x>0$, ואז השתמשו בפוטנציאל $\arctan\frac yx$ בנקודות הקצה.
+        commonWrong:
+          - value: -1.5707963
+            feedback: >-
+              זה ההתחלה פחות הסוף. ב-$t=-1$ המסילה ב-$(1,-1)$ ובסוף ב-$(1,1)$.
+            misconception: MC-c6-potential-order
+          - value: 0
+            feedback: >-
+              המסילה אינה סגורה: היא מתחילה ב-$(1,-1)$ ומסתיימת ב-$(1,1)$. והיא גם לא מקיפה את הראשית, כך שאין כאן $2\pi$.
+            misconception: MC-c6-closed-means-zero
+
+  - id: Q-6-exam-5
+    type: exam
+    title: שטף דרך גליל סגור
+    prompt: >-
+      $V$ הגליל המלא $x^2+y^2\le4$, $0\le z\le3$, ו-$S=\partial V$ (דופן ושני מכסים) עם הנורמל החיצוני. אין להשתמש במשפט גאוס.
+    parts:
+      - label: א
+        points: 6
+        type: numeric
+        objectives: [OBJ-6.4-2, OBJ-6.3-1]
+        prompt: >-
+          חשבו את $\oiint_S\mathbf F\cdot d\mathbf S$ עבור $\mathbf F(x,y,z)=(x,\ y,\ 2z)$.
+        answer: 150.79645
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $48\pi$. דופן: $\hat{\mathbf N}=\frac{(x,y,0)}{2}$, $\mathbf F\cdot\hat{\mathbf N}=\frac{x^2+y^2}{2}=2$, שטח
+          $2\pi\cdot2\cdot3=12\pi$, תרומה $24\pi$. מכסה עליון: $2z=6$, שטח $4\pi$, תרומה $24\pi$. מכסה תחתון:
+          $\mathbf F\cdot(0,0,-1)=-2z=0$.
+        wrongFeedback: >-
+          שלושה חלקים. על כל אחד: הנורמל החיצוני, $\mathbf F\cdot\hat{\mathbf N}$, ושטח.
+        commonWrong:
+          - value: 75.398224
+            feedback: >-
+              $24\pi$ הוא חלק אחד בלבד: הדופן, או המכסה העליון. המשטח הסגור כולל את שלושת החלקים.
+            misconception: MC-c6-piece-forgotten
+          - value: 226.19467
+            feedback: >-
+              $72\pi$: על הדופן הכפילו ב-$\mathbf F\cdot(x,y,0)=x^2+y^2=4$ וגם בשטח, ויצא $48\pi$ במקום $24\pi$. $(x,y,0)$ אורכו 2,
+              ולכן או שמנרמלים אותו או שמשתמשים ב-$\sigma_u\times\sigma_v$ של הפרמטריזציה, לא בשניהם.
+            misconception: MC-c6-extra-norm
+      - label: ב
+        points: 4
+        type: mc
+        objectives: [OBJ-6.4-1, OBJ-6.3-2]
+        qualitative: true
+        prompt: >-
+          את המכסה התחתון מתארים כ-$\sigma(r,\theta)=(r\cos\theta,\ r\sin\theta,\ 0)$, $r\in[0,2]$, $\theta\in[0,2\pi]$. מה נכון?
+        choices:
+          - text: '$\sigma_r\times\sigma_\theta=(0,0,r)$ פונה לתוך $V$, ולכן השטף החיצוני הוא מינוס מה שהפרמטריזציה נותנת'
+            correct: true
+            feedback: נכון. במכסה התחתון החוצה הוא כלפי מטה.
+          - text: '$\sigma_r\times\sigma_\theta=(0,0,r)$ הוא הנורמל החיצוני, כמו במכסה העליון'
+            feedback: >-
+              במכסה העליון כן; בתחתון הגוף **מעל** המכסה, וכלפי מעלה פירושו פנימה.
+            misconception: MC-c6-lids-same-normal
+          - text: '$\sigma_r\times\sigma_\theta=(0,0,-r)$, כלפי חוץ'
+            feedback: >-
+              $(\cos\theta,\sin\theta,0)\times(-r\sin\theta,r\cos\theta,0)=(0,0,r\cos^2\theta+r\sin^2\theta)=(0,0,r)$.
+            misconception: MC-c6-cross-order
+      - label: ג
+        points: 6
+        type: open
+        objectives: [OBJ-6.4-2, OBJ-6.4-1]
+        prompt: >-
+          תהי $g:\mathbb{R}\to\mathbb{R}$ רציפה ו-$\mathbf G=(0,\ 0,\ g(z))$. הוכיחו ש-$\oiint_S\mathbf G\cdot d\mathbf S=4\pi\big(g(3)-g(0)\big)$.
+        solution:
+          - kind: idea
+            text: 'מפרקים את $S$ לשלושה חלקים; על הדופן $\mathbf G$ משיק, ועל המכסים הוא קבוע.'
+          - kind: step
+            text: >-
+              דופן: $\sigma(u,z)=(2\cos u,2\sin u,z)$, $\sigma_u\times\sigma_z=(2\cos u,2\sin u,0)$, כלפי חוץ. רכיב ה-$z$ שלו
+              אפס, ולכן $\mathbf G\cdot(\sigma_u\times\sigma_z)=0$ והתרומה $0$.
+          - kind: step
+            text: >-
+              מכסה עליון ($z=3$): $\hat{\mathbf N}=(0,0,1)$ ו-$\mathbf G\cdot\hat{\mathbf N}=g(3)$ קבוע; התרומה $g(3)\cdot4\pi$.
+          - kind: step
+            text: >-
+              מכסה תחתון ($z=0$): $\hat{\mathbf N}=(0,0,-1)$ (סעיף ב) ו-$\mathbf G\cdot\hat{\mathbf N}=-g(0)$; התרומה מינוס $4\pi g(0)$.
+          - kind: result
+            text: '$\oiint_S\mathbf G\cdot d\mathbf S=0+4\pi g(3)-4\pi g(0)=4\pi\big(g(3)-g(0)\big)$.'
+        rubric:
+          - text: 'פירוק לשלושה חלקים, כל אחד עם נורמל חיצוני נכון'
+            weight: 2
+          - text: 'הנימוק שהתרומה של הדופן אפס (הנורמל אופקי)'
+            weight: 1
+          - text: 'תרומת המכסים, עם הסימן השלילי במכסה התחתון'
+            weight: 2
+          - text: 'שימוש בכך ש-$\mathbf G$ קבוע על כל מכסה, ושטח מכסה $4\pi$'
+            weight: 1
+      - label: ד
+        points: 4
+        type: numeric
+        standalone: false
+        objectives: [OBJ-6.4-2]
+        prompt: >-
+          לפי סעיף ג, מהו $\oiint_S\mathbf G\cdot d\mathbf S$ עבור $\mathbf G=(0,\ 0,\ z^2)$?
+        answer: 113.09734
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $36\pi=4\pi(9-0)$. בדיקה ישירה: הדופן 0, המכסה העליון $9\cdot4\pi$, התחתון $0$.
+        wrongFeedback: >-
+          הציבו $g(z)=z^2$ בנוסחה של סעיף ג.
+        commonWrong:
+          - value: 28.274334
+            feedback: >-
+              $9\pi$ מתקבל עם שטח מכסה $\pi$. הרדיוס כאן 2, והשטח $4\pi$.
+            misconception: MC-c6-piece-forgotten
+
+  - id: Q-6-exam-6
+    type: exam
+    title: עקמומיות כוללת והעתקת גאוס
+    prompt: >-
+      בשאלה זו "משטח סגור" הוא משטח חלק, מכוון ובלי שפה ב-$\mathbb{R}^3$, שהוא קבוצה סגורה וחסומה. אפשר להשתמש בגאוס-בונה בניסוח של שיעור 6.5,
+      בלי הוכחה.
+    parts:
+      - label: א
+        points: 5
+        type: numeric
+        objectives: [OBJ-6.5-1]
+        prompt: >-
+          הטורוס $\big((2+\cos v)\cos u,\ (2+\cos v)\sin u,\ \sin v\big)$, ו-$T_+$ החלק החיצוני שלו, $v\in[-\frac\pi2,\frac\pi2]$.
+          נתון $K=\frac{\cos v}{2+\cos v}$ ו-$\|\sigma_u\times\sigma_v\|=2+\cos v$. חשבו את $\iint_{T_+}K\,dS$.
+        answer: 12.566371
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $4\pi$. $K\,dS=\cos v\,du\,dv$, ו-$\int_0^{2\pi}\int_{-\pi/2}^{\pi/2}\cos v\,dv\,du=2\pi\cdot2$.
+        wrongFeedback: >-
+          כפלו את $K$ באלמנט השטח וחשבו את האינטגרל על $u\in[0,2\pi]$, $v\in[-\frac\pi2,\frac\pi2]$.
+        commonWrong:
+          - value: 4.5439588
+            feedback: >-
+              זה $\iint K\,du\,dv=2\pi\int_{-\pi/2}^{\pi/2}\frac{\cos v}{2+\cos v}\,dv$, בלי אלמנט השטח. $dS=(2+\cos v)\,du\,dv$,
+              והגורם $2+\cos v$ מתבטל עם המכנה של $K$.
+            misconception: MC-c5-surface-no-dS
+      - label: ב
+        points: 6
+        type: open
+        objectives: [OBJ-6.5-2]
+        prompt: >-
+          הנורמל החיצוני של הטורוס הוא $\hat{\mathbf N}(u,v)=(\cos u\cos v,\ \sin u\cos v,\ \sin v)$. תארו את התמונה של העתקת
+          גאוס של $T_+$ ושל החלק הפנימי $T_-$ ($v\in[\frac\pi2,\frac{3\pi}2]$), והסבירו בעזרתה את סעיף א ואת העקמומיות הכוללת
+          של הטורוס כולו.
+        solution:
+          - kind: idea
+            text: 'העקמומיות הכוללת היא השטח המסומן של תמונת העתקת גאוס; הסימן של $K$ אומר אם ההעתקה שומרת כיוון.'
+          - kind: step
+            text: >-
+              $\hat{\mathbf N}(u,v)$ היא הפרמטריזציה של ספרת היחידה בקווי אורך ורוחב, עם $v$ כקו רוחב. על $T_+$,
+              $v\in[-\frac\pi2,\frac\pi2]$: ההעתקה חד-חד-ערכית (פרט לקבוצה בעלת שטח אפס) ועל ספרת היחידה.
+          - kind: step
+            text: >-
+              על $T_-$, נציב $v=\pi-w$ עם $w\in[-\frac\pi2,\frac\pi2]$: $\hat{\mathbf N}=(-\cos u\cos w,\ -\sin u\cos w,\ \sin w)$,
+              ושוב כל הספרה, פעם אחת.
+          - kind: step
+            text: >-
+              על $T_+$, $K=\frac{\cos v}{2+\cos v}>0$ (פרט לשפה) וההעתקה שומרת כיוון: השטח המסומן $4\pi$, כמו בסעיף א. על
+              $T_-$, $K<0$ וההעתקה הופכת כיוון: מינוס $4\pi$.
+          - kind: result
+            text: 'העתקת גאוס מכסה את הספרה פעמיים, בסימנים מנוגדים: $\iint_{T_+}K\,dS=4\pi$, $\iint_{T_-}K\,dS=-4\pi$, וסך הכול $0$.'
+        rubric:
+          - text: 'זיהוי ש-$\hat{\mathbf N}(u,v)$ מכסה את ספרת היחידה פעם אחת על כל חצי'
+            weight: 2
+          - text: 'הקשר בין הסימן של $K$ לשמירת הכיוון או להיפוכו'
+            weight: 2
+          - text: 'המסקנה $4\pi-4\pi=0$, בהתאמה לסעיף א'
+            weight: 2
+      - label: ג
+        points: 5
+        type: open
+        objectives: [OBJ-6.5-3, OBJ-4.4-1, OBJ-4.2-1]
+        prompt: >-
+          הוכיחו שבכל משטח סגור $M$ יש נקודה שבה $K>0$. (רמז: הנקודה של $M$ הרחוקה ביותר מהראשית.) הסיקו שבכל משטח סגור שאפשר
+          לעוות ברציפות לטורוס יש גם נקודה שבה $K<0$.
+        solution:
+          - kind: idea
+            text: >-
+              בנקודה הרחוקה ביותר המשטח מוכל בכדור שנוגע בו שם, ולכן מתעקם לפחות כמו הספרה החוסמת, בכל כיוון.
+          - kind: step
+            text: >-
+              $M$ סגורה וחסומה ו-$\|x\|^2$ רציפה, ולכן יש $p\in M$ שבה $\|x\|$ מקסימלי; $\rho=\|p\|>0$ (אחרת $M=\{0\}$).
+              לכל מסילה $\alpha$ על $M$ בפרמטר אורך הקשת עם $\alpha(0)=p$, ל-$f(s)=\|\alpha(s)\|^2$ יש מקסימום ב-$0$.
+          - kind: computation
+            text: >-
+              $f'(0)=2p\cdot\alpha'(0)=0$ לכל כיוון משיק, ולכן $p$ ניצב למישור המשיק ו-$\hat{\mathbf N}(p)=\pm\frac p\rho$.
+              $f''(0)=2\big(1+p\cdot\alpha''(0)\big)\le0$, כלומר $p\cdot\alpha''(0)\le-1$.
+          - kind: step
+            text: >-
+              עם $\hat{\mathbf N}=-\frac p\rho$: $\kappa_n=\alpha''(0)\cdot\hat{\mathbf N}=-\frac{p\cdot\alpha''(0)}{\rho}\ge\frac1\rho$
+              בכל כיוון. לכן $\kappa_1,\kappa_2\ge\frac1\rho$ ו-$K(p)=\kappa_1\kappa_2\ge\frac1{\rho^2}>0$ (ו-$K$ אינו תלוי בבחירת
+              הנורמל).
+          - kind: step
+            text: >-
+              משטח מצורת טורוס: לפי גאוס-בונה $\iint K\,dS=0$. יש נקודה עם $K>0$, ולכן ברציפות סביבה שבה $K>0$, שתורמת חיובי.
+              אילו $K\ge0$ בכל מקום, האינטגרל היה חיובי ממש. לכן יש נקודה עם $K<0$.
+          - kind: result
+            text: 'בכל משטח סגור יש נקודה אליפטית, ובכל משטח סגור מצורת טורוס יש גם נקודה היפרבולית.'
+        rubric:
+          - text: 'קיום הנקודה הרחוקה ביותר (רציפות על קבוצה סגורה וחסומה) והנימוק ש-$p$ ניצב למישור המשיק'
+            weight: 1
+          - text: 'הנגזרת השנייה של $\|\alpha\|^2$ והחסם $\kappa_n\ge\frac1\rho$ בכל כיוון, עם בחירת נורמל עקבית'
+            weight: 2
+          - text: 'המעבר מחסם על כל העקמומיות הנורמליות ל-$K>0$'
+            weight: 1
+          - text: 'המסקנה לטורוס דרך גאוס-בונה: אינטגרל אפס עם תרומה חיובית מחייב תרומה שלילית'
+            weight: 1
+      - label: ד
+        points: 4
+        type: numeric
+        objectives: [OBJ-6.5-2, OBJ-6.5-1]
+        prompt: >-
+          $C$ הכיפה של הספרה שרדיוסה 5 סביב הראשית שבה $z\ge3$. חשבו את $\iint_C K\,dS$.
+        answer: 2.5132741
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\frac{4\pi}{5}$. התמונה של העתקת גאוס היא הכיפה $z\ge\frac35$ של ספרת היחידה, בגובה $\frac25$, ששטחה
+          $2\pi\cdot\frac25$. ישירות: שטח $C$ הוא $2\pi\cdot5\cdot2=20\pi$, כפול $K=\frac1{25}$.
+        wrongFeedback: >-
+          שטח כיפה בגובה $h$ על ספרה ברדיוס $\rho$ הוא $2\pi\rho h$. מצאו את התמונה של $C$ בספרת היחידה, או כפלו את שטח $C$
+          ב-$K$.
+        commonWrong:
+          - value: 62.831853
+            feedback: >-
+              $20\pi$ הוא שטח הכיפה $C$ עצמה. העקמומיות הכוללת קטנה ממנו פי $5^2$.
+            misconception: MC-c6-total-is-area
+          - value: 12.566371
+            feedback: >-
+              $4\pi$ מתקבל מ-$K=\frac15$. בספרה שרדיוסה 5, $K=\frac{1}{25}$.
+            misconception: MC-c6-K-one-over-r

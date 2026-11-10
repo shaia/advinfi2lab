@@ -1,0 +1,10 @@
+# Terms first defined in lesson 8.3.
+- id: exterior-derivative
+  term: נגזרת חיצונית
+  en: exterior derivative
+  symbol: 'd\omega'
+  definition: >-
+    האופרטור שמעלה סדר באחד: $df=\sum f_{x_i}\,dx_i$ לפונקציה, ו-$d(f\,dx_{i_1}\wedge\dots\wedge dx_{i_k})=df\wedge dx_{i_1}\wedge\dots\wedge
+    dx_{i_k}$, בהרחבה לינארית. ב-$\mathbb R^3$ הוא גרדיאנט על פונקציות, רוטור על תבניות מסדר 1 ודיברגנץ על תבניות מסדר
+    2. מקיים $d(d\omega)=0$ ואת כלל לייבניץ $d(\alpha\wedge\beta)=d\alpha\wedge\beta+(-1)^k\alpha\wedge d\beta$.
+  lesson: '8.3'

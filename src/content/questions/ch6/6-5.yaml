@@ -1,0 +1,395 @@
+# Lesson 6.5 — total curvature.
+# Objectives (src/course.ts):
+#   OBJ-6.5-1  compute the integral of the Gauss curvature over the sphere and the torus
+#   OBJ-6.5-2  read the total curvature as the signed area of the image of the Gauss map
+#   OBJ-6.5-3  explain Gauss–Bonnet qualitatively: the total curvature of a closed surface depends only on its topological shape
+# Gauss–Bonnet is stated only in words (no proof, no Euler characteristic formula needed).
+# Keys recomputed with totalCurvature / surfaceArea (src/math/geometry.ts). Torus: SURFACES.torus(R, r), K dS = cos v du dv.
+chapter: 6
+questions:
+  - id: Q-6.5-sphere
+    type: numeric
+    objectives: [OBJ-6.5-1]
+    level: basic
+    prompt: >-
+      **העקמומיות הכוללת** של משטח $S$ היא $\iint_S K\,dS$, האינטגרל של עקמומיות גאוס לפי שטח. חשבו אותה עבור הספרה $S$
+      שרדיוסה 3.
+    answer: 12.566371
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $4\pi$. $K=\frac1{3^2}$ קבוע, והשטח $4\pi\cdot3^2$, ולכן $\iint K\,dS=\frac19\cdot36\pi=4\pi$, בלי תלות ברדיוס.
+    wrongFeedback: >-
+      בספרה שרדיוסה $r$ שתי העקמומיויות הראשיות שוות ל-$\frac1r$. חשבו את $K$ וכפלו בשטח.
+    commonWrong:
+      - value: 113.09734
+        feedback: >-
+          $36\pi$ הוא שטח הספרה. העקמומיות הכוללת היא $\iint K\,dS$, ו-$K=\frac19$ ולא 1.
+        misconception: MC-c6-total-is-area
+      - value: 37.699112
+        feedback: >-
+          $12\pi$ מתקבל מ-$K=\frac13$. אבל $K=\kappa_1\kappa_2=\frac13\cdot\frac13$.
+        misconception: MC-c6-K-one-over-r
+
+  - id: Q-6.5-gauss-sphere
+    type: mc
+    objectives: [OBJ-6.5-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      העתקת גאוס של משטח מכוון שולחת כל נקודה $p$ לנורמל $\hat{\mathbf N}(p)$, נקודה על ספרת היחידה. $K$ הוא
+      הדטרמיננטה של הדיפרנציאל שלה (שיעור 4.6), ולכן $K\,dS$ הוא אלמנט השטח של התמונה **עם סימן**: חיובי במקום שבו
+      ההעתקה שומרת כיוון ($K>0$), שלילי במקום שבו היא הופכת אותו ($K<0$). מכאן שהעקמומיות הכוללת היא השטח המסומן של
+      התמונה, כשהיא חד-חד-ערכית. מה עושה העתקת גאוס של הספרה $S_r$ שרדיוסה $r$ סביב הראשית, עם הנורמל החיצוני, ומה זה
+      אומר על $\iint_{S_r}K\,dS$?
+    choices:
+      - text: 'היא $p\mapsto\frac pr$, חד-חד-ערכית ועל ספרת היחידה ושומרת כיוון; לכן $\iint K\,dS=4\pi$ לכל $r$'
+        correct: true
+        feedback: >-
+          נכון. הספרה הקטנה והגדולה "מצביעות" לאותם כיוונים בדיוק, ולכן העקמומיות הכוללת שלהן שווה: שטח ספרת היחידה.
+      - text: 'היא $p\mapsto\frac pr$, והתמונה מכסה את $S_r$ פעם אחת; לכן $\iint K\,dS$ הוא שטח $S_r$, $4\pi r^2$'
+        feedback: >-
+          התמונה של העתקת גאוס היא תת-קבוצה של ספרת **היחידה**, לא של $S_r$. השטח של $S_r$ הוא $\iint1\,dS$, לא $\iint K\,dS$.
+        misconception: MC-c6-total-is-area
+      - text: 'היא $p\mapsto p$, ולכן התמונה היא $S_r$ עצמה, גדלה עם $r$, והעקמומיות הכוללת גדלה כמו $r^2$'
+        feedback: >-
+          $\hat{\mathbf N}(p)$ הוא וקטור יחידה, $\frac pr$, לא $p$. התמונה תמיד בספרת היחידה, וכאן היא כל ספרת היחידה.
+        misconception: MC-c6-total-depends-on-size
+      - text: 'היא $p\mapsto\frac pr$ אבל הופכת כיוון, כי הספרה "עקומה פנימה" ביחס לנורמל החיצוני; לכן $\iint K\,dS=-4\pi$'
+        feedback: >-
+          בספרה $K>0$, והעתקת גאוס שומרת כיוון במקום שבו $K>0$. עם הנורמל הפנימי ההעתקה היא $p\mapsto-\frac pr$, ועדיין
+          $K=\frac{1}{r^2}>0$.
+        misconception: MC-c6-K-sign-flips
+
+  - id: Q-6.5-scale
+    type: twotier
+    objectives: [OBJ-6.5-1, OBJ-6.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $S$ משטח, ו-$\lambda S=\{\lambda p:p\in S\}$ עם $\lambda>0$. איך מתייחסת $\iint_{\lambda S}K\,dS$ אל $\iint_S K\,dS$?
+    choices:
+      - text: הן שוות
+        correct: true
+        feedback: נכון. העקמומיות הכוללת אינה רואה גודל, רק צורה.
+      - text: 'הראשונה גדולה פי $\lambda^2$'
+        feedback: >-
+          פי $\lambda^2$ גדל השטח. העקמומיות של גאוס קטנה פי $\lambda^2$ באותו זמן, והמכפלה לא משתנה.
+        misconception: MC-c6-total-depends-on-size
+    reasons:
+      - text: 'בפרמטריזציה $\lambda\sigma$: $dS$ גדל פי $\lambda^2$, ושתי העקמומיויות הראשיות קטנות פי $\lambda$, כך ש-$K$ קטן פי $\lambda^2$'
+        correct: true
+        feedback: >-
+          בדיוק. $E,F,G$ גדלים פי $\lambda^2$ ו-$L,M,N$ פי $\lambda$, ולכן $K=\frac{LN-M^2}{EG-F^2}$ קטן פי $\lambda^2$. גם
+          העתקת גאוס לא משתנה: לנקודות המתאימות אותו נורמל.
+      - text: 'העקמומיות הכוללת שווה לשטח, והשטח גדל פי $\lambda^2$'
+        feedback: >-
+          העקמומיות הכוללת אינה השטח. לספרה שרדיוסה 1 ולספרה שרדיוסה 10 אותה עקמומיות כוללת, $4\pi$.
+        misconception: MC-c6-total-is-area
+      - text: '$K$ אינו משתנה בהגדלה, כי $K$ פנימי (המשפט המופלא)'
+        feedback: >-
+          המשפט המופלא אומר ש-$K$ נשמר תחת **איזומטריה**. הגדלה פי $\lambda\ne1$ אינה איזומטריה: היא מכפילה אורכים, ו-$K$
+          קטן פי $\lambda^2$.
+        misconception: MC-c6-total-depends-on-size
+
+  - id: Q-6.5-torus
+    type: numeric
+    objectives: [OBJ-6.5-1]
+    level: mid
+    prompt: >-
+      הטורוס $\sigma(u,v)=\big((3+\cos v)\cos u,\ (3+\cos v)\sin u,\ \sin v\big)$, $u,v\in[0,2\pi]$. עקמומיות גאוס שלו
+      היא $K=\frac{\cos v}{3+\cos v}$, ו-$\|\sigma_u\times\sigma_v\|=3+\cos v$. חשבו את $\iint K\,dS$ על כל הטורוס.
+    answer: 0
+    correctFeedback: >-
+      נכון. $K\,dS=\frac{\cos v}{3+\cos v}\cdot(3+\cos v)\,du\,dv=\cos v\,du\,dv$, ו-$\int_0^{2\pi}\int_0^{2\pi}\cos v\,dv\,du=0$.
+    wrongFeedback: >-
+      כפלו את $K$ באלמנט השטח: הגורם $3+\cos v$ מתבטל. אחר כך חשבו את האינטגרל על כל הטורוס, $v\in[0,2\pi]$.
+    commonWrong:
+      - value: 12.566371
+        feedback: >-
+          $4\pi$ הוא החלק החיצוני בלבד, $v\in[-\frac\pi2,\frac\pi2]$. בחלק הפנימי $K<0$, והוא תורם מינוס $4\pi$.
+        misconception: MC-c6-piece-forgotten
+      - value: 25.132741
+        feedback: >-
+          $8\pi=\iint|K|\,dS$: החלק הפנימי נספר בסימן חיובי. שם $K<0$, והתרומה שלילית.
+        misconception: MC-c6-total-abs
+
+  - id: Q-6.5-torus-integrand
+    type: mc
+    objectives: [OBJ-6.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בטורוס $\big((R+r\cos v)\cos u,\ (R+r\cos v)\sin u,\ r\sin v\big)$, עם $R>r>0$, מתקיים
+      $K=\frac{\cos v}{r(R+r\cos v)}$ ו-$dS=r(R+r\cos v)\,du\,dv$. איזה משפט נכון?
+    choices:
+      - text: '$K\,dS=\cos v\,du\,dv$, ולכן העקמומיות הכוללת $0$ לכל $R>r>0$'
+        correct: true
+        feedback: >-
+          נכון. כל התלות ב-$R$ וב-$r$ מתבטלת. גם כל חצי לבדו אינו תלוי בהם: החצי החיצוני נותן
+          $\int_0^{2\pi}\int_{-\pi/2}^{\pi/2}\cos v\,dv\,du=4\pi$, כמו ספרה שלמה, והפנימי מינוס $4\pi$.
+      - text: 'העקמומיות הכוללת תלויה ביחס $\frac Rr$, כי $K$ תלוי בו: טורוס "שמן" עקום יותר'
+        feedback: >-
+          $K$ אכן תלוי ב-$R$ וב-$r$, אבל המכפלה $K\,dS=\cos v\,du\,dv$ לא. העקמומיות הכוללת אינה רואה את הפרופורציות.
+        misconception: MC-c6-total-depends-on-size
+      - text: 'העקמומיות הכוללת היא $4\pi$ לכל $R>r>0$, כמו בכל משטח סגור'
+        feedback: >-
+          $4\pi$ נכון לספרה ולמשטחים שאפשר לעוות לספרה. לטורוס $\int_0^{2\pi}\cos v\,dv=0$.
+        misconception: MC-c6-total-always-4pi
+      - text: 'העקמומיות הכוללת היא שטח הטורוס, $4\pi^2Rr$, כי $K\,dS$ הוא אלמנט השטח'
+        feedback: >-
+          $4\pi^2Rr=\iint dS$ הוא השטח (שיעור 5.3). כאן מחשבים את האינטגרל של $K$, ולא של 1.
+        misconception: MC-c6-total-is-area
+
+  - id: Q-6.5-torus-cover
+    type: twotier
+    objectives: [OBJ-6.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בטורוס של השאלה הקודמת הנורמל החיצוני הוא $\hat{\mathbf N}(u,v)=(\cos u\cos v,\ \sin u\cos v,\ \sin v)$. איך מתיישבת
+      העקמומיות הכוללת $0$ עם הפירוש "השטח המסומן של תמונת העתקת גאוס"?
+    choices:
+      - text: 'התמונה מכסה את ספרת היחידה פעמיים, פעם בסימן חיובי ופעם בשלילי'
+        correct: true
+        feedback: >-
+          נכון. $\hat{\mathbf N}(u,v)$ היא בדיוק הפרמטריזציה של ספרת היחידה בקווי אורך ורוחב. החצי החיצוני,
+          $v\in[-\frac\pi2,\frac\pi2]$, מכסה את הספרה פעם אחת, והחצי הפנימי פעם נוספת.
+      - text: 'התמונה של העתקת גאוס של הטורוס היא קבוצה בעלת שטח אפס, למשל מעגל על הספרה'
+        feedback: >-
+          התמונה היא כל הספרה, בשטח $4\pi$: לכל כיוון יש נקודה בחלק החיצוני שהנורמל שלה בכיוון הזה. האפס בא מהסימן, לא
+          מתמונה קטנה.
+        misconception: MC-c6-zero-total-small-image
+    reasons:
+      - text: 'בחצי החיצוני $K>0$ והעתקת גאוס שומרת כיוון; בחצי הפנימי $K<0$ והיא הופכת כיוון, ולכן השטח נספר במינוס: $4\pi-4\pi=0$'
+        correct: true
+        feedback: >-
+          בדיוק. $K$ הוא הדטרמיננטה של הדיפרנציאל של העתקת גאוס, ולכן הסימן שלו אומר אם ההעתקה שומרת כיוון או הופכת אותו.
+      - text: 'שני החצאים מכסים את הספרה, ולכן העקמומיות הכוללת $8\pi$; החישוב שנתן 0 שגוי'
+        feedback: >-
+          $8\pi$ הוא $\iint|K|\,dS$, השטח בלי סימן. החישוב $\iint\cos v\,du\,dv=0$ נכון, וההסבר הוא הסימן.
+        misconception: MC-c6-total-abs
+      - text: 'בחצי הפנימי הנורמל החיצוני מצביע לתוך הגוף של הטורוס, ולכן השטח של התמונה שם נספר במינוס'
+        feedback: >-
+          הנורמל החיצוני מצביע החוצה מהגוף בכל הטורוס, גם בחצי הפנימי (לכיוון החור). מה שמתהפך שם הוא **כיוון** ההעתקה, לפי
+          הסימן של $K$, לא כיוון הנורמל.
+        misconception: MC-c6-K-sign-flips
+
+  - id: Q-6.5-cap
+    type: numeric
+    objectives: [OBJ-6.5-2, OBJ-6.5-1]
+    level: mid
+    prompt: >-
+      $C$ הכיפה של הספרה שרדיוסה 2 סביב הראשית שבה $z\ge1$. חשבו את $\iint_C K\,dS$. (מצאו את התמונה של העתקת גאוס, או
+      חשבו ישירות. נתון: השטח של כיפה בגובה $h$ על ספרה שרדיוסה $\rho$ הוא $2\pi\rho h$.)
+    answer: 3.1415927
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi$. $\hat{\mathbf N}=\frac p2$, ולכן התמונה היא הכיפה של ספרת היחידה שבה $z\ge\frac12$, שגובהה $\frac12$ ושטחה
+      $2\pi\cdot1\cdot\frac12=\pi$. ישירות: שטח $C$ הוא $2\pi\cdot2\cdot1=4\pi$, וכפול $K=\frac14$ שוב $\pi$.
+    wrongFeedback: >-
+      $\hat{\mathbf N}(p)=\frac p2$: מצאו את הכיפה של ספרת היחידה שהיא התמונה של $C$, ואת הגובה שלה.
+    commonWrong:
+      - value: 12.566371
+        feedback: >-
+          $4\pi$ הוא השטח של $C$ עצמה. העקמומיות הכוללת היא השטח של התמונה בספרת היחידה, קטן פי $2^2$.
+        misconception: MC-c6-total-is-area
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ מתקבל מ-$K=\frac12$. בספרה שרדיוסה 2, $K=\frac14$.
+        misconception: MC-c6-K-one-over-r
+
+  - id: Q-6.5-saddle
+    type: mc
+    objectives: [OBJ-6.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על האוכף $z=xy$ עם הנורמל כלפי מעלה, $K(0,0)=-1$. מסילה קטנה סגורה סביב הראשית במשטח, נגד כיוון השעון במבט מלמעלה,
+      עוברת דרך העתקת גאוס למסילה קטנה סביב הקוטב הצפוני של ספרת היחידה. מה נכון עליה?
+    choices:
+      - text: 'היא מקיפה את הקוטב עם כיוון השעון במבט מלמעלה, והשטח שהיא חוסמת נספר בעקמומיות הכוללת במינוס'
+        correct: true
+        feedback: >-
+          נכון. $K<0$ פירושו שהדיפרנציאל של העתקת גאוס הופך כיוון. בדיקה: ב-$(\varepsilon,0)$ הנורמל $\propto(0,-\varepsilon,1)$,
+          וב-$(0,\varepsilon)$ הוא $\propto(-\varepsilon,0,1)$; רבע סיבוב נגד כיוון השעון במשטח נותן רבע סיבוב עם כיוון השעון בתמונה.
+      - text: 'היא מקיפה את הקוטב נגד כיוון השעון במבט מלמעלה, כמו המסילה המקורית, והשטח שהיא חוסמת נספר בחיוב'
+        feedback: >-
+          כך זה בנקודה אליפטית, $K>0$. בנקודה היפרבולית ההעתקה הופכת כיוון; בדקו את הנורמל $(-y,-x,1)$ בארבע נקודות על
+          מעגל קטן.
+        misconception: MC-c6-total-abs
+      - text: 'הכיוון שלה תלוי בבחירת הנורמל: עם הנורמל כלפי מטה היא הייתה נגד כיוון השעון במבט מלמעלה'
+        feedback: >-
+          עם הנורמל כלפי מטה התמונה סביב הקוטב הדרומי, ועדיין $K(0,0)=-1$: גם שם ההעתקה הופכת כיוון. הסימן של $K$ אינו תלוי
+          בבחירת הנורמל.
+        misconception: MC-c6-K-sign-flips
+
+  - id: Q-6.5-flip
+    type: mc
+    objectives: [OBJ-6.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מחליפים את הנורמל של משטח מכוון $S$: $\hat{\mathbf N}\mapsto-\hat{\mathbf N}$. מה קורה ל-$\iint_S K\,dS$ ול-$\iint_S H\,dS$?
+    choices:
+      - text: 'הראשון לא משתנה, השני מחליף סימן'
+        correct: true
+        feedback: >-
+          נכון. $\kappa_1,\kappa_2$ מחליפות סימן, ולכן $H=\frac{\kappa_1+\kappa_2}2$ מחליף סימן ו-$K=\kappa_1\kappa_2$ לא. $dS$
+          אינו תלוי בנורמל. בניגוד לשטף, העקמומיות הכוללת אינה תלויה בכיוון.
+      - text: 'הראשון מחליף סימן, השני לא'
+        feedback: >-
+          הפוך. $K$ הוא מכפלה של שתי עקמומיויות שכל אחת מהן מחליפה סימן, ולכן הוא לא משתנה: ספרה עם נורמל פנימי היא עדיין
+          בעלת $K>0$. $H$, הממוצע שלהן, מחליף סימן.
+        misconception: MC-c6-K-sign-flips
+      - text: 'שניהם לא משתנים'
+        feedback: >-
+          $H$ מחליף סימן: בספרת היחידה $H=-1$ או $H=1$ לפי בחירת הנורמל (עם $L=\sigma_{uu}\cdot\hat{\mathbf N}$).
+        misconception: MC-c6-H-orientation-free
+      - text: 'שניהם מחליפים סימן, כמו כל אינטגרל על משטח מכוון'
+        feedback: >-
+          רק אינטגרנדים שבנויים מהנורמל באופן אי-זוגי מחליפים סימן, כמו $\mathbf F\cdot\hat{\mathbf N}$ בשטף. $K$ זוגי בנורמל.
+        misconception: MC-c6-flux-orientation-free
+
+  - id: Q-6.5-ellipsoid
+    type: twotier
+    objectives: [OBJ-6.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מהי העקמומיות הכוללת של האליפסואיד $\frac{x^2}{4}+\frac{y^2}{9}+z^2=1$?
+    choices:
+      - text: '$4\pi$'
+        correct: true
+        feedback: נכון, כמו לספרה.
+      - text: 'תלויה בצירים 2, 3 ו-1'
+        feedback: >-
+          $K$ משתנה מנקודה לנקודה ותלוי בצירים, אבל האינטגרל שלו לא: אפשר לעוות את האליפסואיד לספרה, והעקמומיות הכוללת לא
+          משתנה בעיוות.
+        misconception: MC-c6-total-depends-on-size
+    reasons:
+      - text: 'האליפסואיד הוא משטח סגור שאפשר לעוות ברציפות לספרה, ולפי גאוס-בונה העקמומיות הכוללת תלויה רק בצורה הטופולוגית'
+        correct: true
+        feedback: >-
+          בדיוק. אפשר גם לראות זאת ישירות: האליפסואיד קמור עם $K>0$, והעתקת גאוס שלו חד-חד-ערכית ועל ספרת היחידה.
+      - text: '$K$ קבוע על האליפסואיד, כמו על ספרה, ולכן העקמומיות הכוללת זהה לזו של ספרה'
+        feedback: >-
+          $K$ אינו קבוע: בקצה הציר הארוך המשטח עקום יותר מבאמצע. עיוות הספרה לאליפסואיד משנה את $K$ בכל נקודה; רק האינטגרל
+          נשמר.
+        misconception: MC-c6-K-pointwise-invariant
+      - text: 'השטח של האליפסואיד הוא $4\pi$, והעקמומיות הכוללת של משטח סגור שווה לשטח שלו'
+        feedback: >-
+          השטח גדול בהרבה מ-$4\pi$ (הצירים 2 ו-3 גדולים מ-1). העקמומיות הכוללת אינה השטח.
+        misconception: MC-c6-total-is-area
+
+  - id: Q-6.5-dent
+    type: mc
+    objectives: [OBJ-6.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לוחצים שקע קטן בספרה (המשטח נשאר חלק וסגור). בתחתית השקע $K>0$, בשוליים שלו נוצרת טבעת עם $K<0$. מה העקמומיות הכוללת
+      של המשטח החדש?
+    choices:
+      - text: '$4\pi$, כמו קודם'
+        correct: true
+        feedback: >-
+          נכון. העיוות לא שינה את הצורה הטופולוגית. האזור המעוות כולו (תחתית, שוליים ומעבר) תורם בדיוק כמו כיפת הספרה
+          שהוא החליף: התרומה השלילית של טבעת השוליים מתקזזת בעודף חיובי בתחתית השקע ובמעבר החד אליו.
+      - text: 'פחות מ-$4\pi$, בגלל האזור עם $K<0$'
+        feedback: >-
+          זה נשמע טבעי, אבל גאוס-בונה אומר שהסכום לא משתנה בעיוות חלק. ה"חוב" של $K<0$ מוחזר באזורים שבהם המשטח מתעקם חזק יותר.
+        misconception: MC-c6-dent-changes-total
+      - text: 'יותר מ-$4\pi$, כי נוסף אזור עם $K>0$ בתחתית השקע'
+        feedback: >-
+          גם התוספת החיובית מתקזזת. רק הצורה הטופולוגית קובעת את הסכום.
+        misconception: MC-c6-dent-changes-total
+      - text: 'אי אפשר לדעת בלי לחשב את $K$ בכל נקודה'
+        feedback: >-
+          זו בדיוק העוצמה של גאוס-בונה: את האינטגרל יודעים בלי לדעת את $K$.
+        misconception: MC-c6-dent-changes-total
+
+  - id: Q-6.5-closed
+    type: multi
+    objectives: [OBJ-6.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לפי גאוס-בונה (בניסוח של השיעור), אילו מהמשפטים הבאים נכונים? סמנו את כולם. "משטח סגור" כאן הוא משטח חלק, מכוון
+      ובלי שפה ב-$\mathbb{R}^3$, שהוא קבוצה סגורה וחסומה.
+    choices:
+      - text: 'לכל משטח סגור שאפשר לעוות ברציפות לטורוס, $\iint K\,dS=0$'
+        correct: true
+        feedback: נכון. כמו לטורוס עצמו, שחושב ישירות.
+      - text: 'לכל משטח סגור שאפשר לעוות ברציפות לספרה, $\iint K\,dS=4\pi$'
+        correct: true
+        feedback: נכון. אליפסואיד, קובייה מעוגלת, ספרה עם שקע.
+      - text: 'לכל משטח סגור, $\iint K\,dS=4\pi$'
+        feedback: >-
+          הטורוס הוא דוגמה נגדית: $0$. העקמומיות הכוללת תלויה בצורה הטופולוגית.
+        misconception: MC-c6-total-always-4pi
+      - text: 'בהגדלה של משטח סגור פי 2 העקמומיות הכוללת גדלה פי 4'
+        feedback: >-
+          לא: $K$ קטן פי 4 ו-$dS$ גדל פי 4. הגדלה היא עיוות שלא משנה את הצורה הטופולוגית.
+        misconception: MC-c6-total-depends-on-size
+      - text: 'אם לשני משטחים סגורים אותו שטח, יש להם אותה עקמומיות כוללת'
+        feedback: >-
+          ספרה וטורוס עם אותו שטח: $4\pi$ ו-$0$. השטח אינו קובע.
+        misconception: MC-c6-total-is-area
+    explanation: >-
+      הניסוח המדויק (שלא נדרש כאן): $\iint K\,dS=4\pi(1-g)$, כאשר $g$ מספר ה"חורים" (הגנוס). מה שנדרש הוא העיקרון: עיוות
+      חלק של משטח סגור לא משנה את $\iint K\,dS$.
+
+  - id: Q-6.5-paraboloid
+    type: numeric
+    objectives: [OBJ-6.5-2]
+    level: exam
+    prompt: >-
+      $P$ החלק של הפרבולואיד $z=x^2+y^2$ שמעל $x^2+y^2\le1$, עם הנורמל כלפי מעלה. חשבו את $\iint_P K\,dS$ בלי לחשב את $K$:
+      מצאו את התמונה של העתקת גאוס.
+    answer: 3.4732594
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi\left(1-\frac1{\sqrt5}\right)$. $\hat{\mathbf N}=\frac{(-2x,-2y,1)}{\sqrt{1+4x^2+4y^2}}$, ורכיב ה-$z$ שלו,
+      $\frac{1}{\sqrt{1+4\rho^2}}$, יורד מ-1 בראשית ל-$\frac1{\sqrt5}$ בשפה. ההעתקה חד-חד-ערכית ושומרת כיוון ($K>0$), והתמונה
+      היא הכיפה $z\ge\frac{1}{\sqrt5}$ של ספרת היחידה, שגובהה $1-\frac1{\sqrt5}$ ושטחה $2\pi\left(1-\frac{1}{\sqrt5}\right)$.
+      (אינטגרציה ישירה של $K=\frac{4}{(1+4\rho^2)^2}$ מול $dS$ נותנת את אותו מספר.)
+    wrongFeedback: >-
+      חשבו את $\hat{\mathbf N}$ של הגרף, בדקו אילו ערכים מקבל רכיב ה-$z$ שלו על התחום, והשתמשו בשטח כיפה, $2\pi h$.
+    commonWrong:
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא חצי ספרה, התמונה של הפרבולואיד **כולו** (כל $\rho\ge0$). כאן $\rho\le1$, והנורמל לא מגיע לאופקי.
+        misconception: MC-c6-gauss-image-guess
+      - value: 5.3304135
+        feedback: >-
+          זה השטח של $P$ עצמו, $\frac\pi6(5\sqrt5-1)$. העקמומיות הכוללת היא שטח התמונה בספרת היחידה, לא שטח המשטח.
+        misconception: MC-c6-total-is-area
+
+  - id: Q-6.5-torus-positive
+    type: twotier
+    objectives: [OBJ-6.5-3, OBJ-6.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן משטח סגור, שאפשר לעוות ברציפות לטורוס, שבו $K>0$ בכל נקודה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. העקמומיות הכוללת שלו חייבת להיות 0.
+      - text: 'כן, אם מנפחים את הטורוס מספיק כדי שהחור הפנימי ייסגר כמעט'
+        feedback: >-
+          כל עוד נשאר חור, זה עדיין משטח מצורת טורוס, והעקמומיות הכוללת 0. אם החור נסגר לגמרי, המשטח כבר אינו מצורת טורוס.
+        misconception: MC-c6-dent-changes-total
+    reasons:
+      - text: 'לפי גאוס-בונה $\iint K\,dS=0$, ואילו $K>0$ רציף על משטח בעל שטח חיובי נותן אינטגרל חיובי'
+        correct: true
+        feedback: >-
+          בדיוק. אינטגרל של פונקציה רציפה וחיובית ממש אינו אפס. לכן בכל משטח מצורת טורוס יש נקודות עם $K<0$ (ונקודות עם $K>0$).
+      - text: 'בטורוס הסטנדרטי יש נקודות עם $K<0$, ולכן גם בכל עיוות שלו יש נקודות כאלה'
+        feedback: >-
+          החלק הראשון נכון, אבל המסקנה אינה נובעת ממנו: השאלה על **כל** משטח מצורת טורוס. מדוגמה אחת לא נובע דבר על עיוותים שלה; גאוס-בונה כן.
+        misconception: MC-c6-few-curves-suffice
+      - text: 'העתקת גאוס של כל משטח מצורת טורוס מכסה את הספרה בדיוק פעמיים'
+        feedback: >-
+          זה לא נכון לכל עיוות; מה שנשמר הוא השטח **המסומן**, 0, לא מספר הכיסויים. מספר הכיסויים יכול להשתנות.
+        misconception: MC-c6-total-abs

@@ -1,0 +1,47 @@
+# Terms first defined in lesson 10.1 (the trigonometric system and the partial sum as a projection).
+- id: trigonometric-system
+  term: המערכת הטריגונומטרית
+  en: trigonometric system
+  definition: >-
+    הפונקציות $1,\cos x,\sin x,\cos2x,\sin2x,\dots$ על $[-\pi,\pi]$. הן ניצבות זו לזו ב-$H[-\pi,\pi]$, עם
+    $\|1\|^2=2\pi$ ו-$\|\cos nx\|^2=\|\sin nx\|^2=\pi$; המערכת המנורמלת היא
+    $\frac1{\sqrt{2\pi}},\frac{\cos nx}{\sqrt\pi},\frac{\sin nx}{\sqrt\pi}$.
+  lesson: '10.1'
+- id: trigonometric-polynomial
+  term: פולינום טריגונומטרי
+  en: trigonometric polynomial
+  symbol: 'T_N'
+  definition: >-
+    צירוף לינארי סופי $c_0+\sum_{n=1}^N(c_n\cos nx+d_n\sin nx)$. הוא ממעלה $N$ לכל היותר אם אין בו תדירות גבוהה מ-$N$;
+    המרחב שלהם הוא $T_N$, ממימד $2N+1$.
+  lesson: '10.1'
+- id: fourier-coefficients
+  term: מקדמי פורייה
+  en: Fourier coefficients
+  symbol: 'a_n,\ b_n'
+  definition: >-
+    לפונקציה $f\in H[-\pi,\pi]$: $a_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx$ ($n\ge0$) ו-
+    $b_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx$ ($n\ge1$). ל-$f$ אי-זוגית $a_n=0$, ול-$f$ זוגית $b_n=0$.
+  lesson: '10.1'
+- id: fourier-series
+  term: טור פורייה
+  en: Fourier series
+  definition: >-
+    הטור $\frac{a_0}2+\sum_{n\ge1}(a_n\cos nx+b_n\sin nx)$ שבנוי ממקדמי פורייה של $f$. הוא פונקציה מחזורית ב-$2\pi$,
+    ולכן מתאר את ההמשכה המחזורית של $f$.
+  lesson: '10.1'
+- id: fourier-partial-sum
+  term: הסכום החלקי של טור פורייה
+  en: partial sum of a Fourier series
+  symbol: 'S_Nf'
+  definition: >-
+    $S_Nf(x)=\frac{a_0}2+\sum_{n=1}^N(a_n\cos nx+b_n\sin nx)$. זו ההטלה האורתוגונלית של $f$ על $T_N$, ולכן הפולינום
+    הטריגונומטרי ממעלה $N$ הקרוב ביותר ל-$f$ בנורמה של $H$.
+  lesson: '10.1'
+- id: periodic-extension
+  term: המשכה מחזורית
+  en: periodic extension
+  definition: >-
+    לפונקציה $f$ על קטע באורך $2\pi$: הפונקציה על $\mathbb R$ שמקיימת $F(x+2\pi)=F(x)$ ושווה ל-$f$ על הקטע. אם
+    $f(-\pi)\ne f(\pi)$ להמשכה של $f$ מ-$[-\pi,\pi)$ יש קפיצה ב-$\pm\pi$.
+  lesson: '10.1'

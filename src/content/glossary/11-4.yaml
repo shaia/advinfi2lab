@@ -1,0 +1,18 @@
+# Terms first defined in lesson 11.4.
+- id: gronwall-inequality
+  term: אי-שוויון גרונוול
+  en: Grönwall's inequality
+  symbol: 'u(t)\le C+\int_{t_0}^t Lu(s)\,ds\ \Rightarrow\ u(t)\le Ce^{L(t-t_0)}'
+  definition: >-
+    אם $u$ רציפה ואי-שלילית ב-$[t_0,t_1]$, $C\ge0$, $L\ge0$ ו-$u(t)\le C+\int_{t_0}^t Lu(s)\,ds$ לכל $t$ בקטע, אז
+    $u(t)\le Ce^{L(t-t_0)}$ לכל $t$ בקטע.
+  reject: [גרונוואל]
+  lesson: '11.4'
+- id: continuous-dependence
+  term: תלות רציפה בתנאי ההתחלה
+  en: continuous dependence on initial conditions
+  symbol: '|y_1(t)-y_2(t)|\le|y_1(t_0)-y_2(t_0)|e^{L|t-t_0|}'
+  definition: >-
+    שינוי קטן בתנאי ההתחלה משנה מעט את הפתרון בכל קטע זמן חסום. כש-$f$ ליפשיצית ב-$y$ עם קבוע $L$, גרונוול נותן
+    את החסם $|y_1(t)-y_2(t)|\le|y_1(t_0)-y_2(t_0)|e^{L|t-t_0|}$.
+  lesson: '11.4'

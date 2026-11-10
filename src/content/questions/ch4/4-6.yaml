@@ -1,0 +1,375 @@
+# Lesson 4.6 — the Gauss map and minimal surfaces.
+# Objectives (src/course.ts):
+#   OBJ-4.6-1  the Gauss map; its differential is minus the shape operator
+#   OBJ-4.6-2  K as the ratio of the area of the Gauss image to the area on the surface
+#   OBJ-4.6-3  minimal surfaces H = 0; the catenoid is minimal; no elliptic point on a minimal surface
+# Area here is the area of a small parallelogram, ‖a × b‖ (chapter 0); the surface integral comes in chapter 5.
+# N̂_u × N̂_v = K σ_u × σ_v. Catenoid σ(u,v) = (c cosh(v/c) cos u, c cosh(v/c) sin u, v): K = −1/(c² cosh⁴(v/c)).
+chapter: 4
+questions:
+  - id: Q-4.6-def
+    type: mc
+    objectives: [OBJ-4.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $M$ משטח מכוון עם נורמל יחידה $\hat{\mathbf N}$. מהי העתקת גאוס של $M$?
+    choices:
+      - text: 'ההעתקה $M\to S^2$ ששולחת את $p$ לנקודה $\hat{\mathbf N}(p)$ על ספרת היחידה'
+        correct: true
+        feedback: >-
+          נכון. מזיזים את וקטור היחידה הנורמלי לראשית, והקצה שלו הוא נקודה על $S^2$. כמה מהר הנקודה הזו זזה כשהולכים
+          על $M$ מודד כמה המשטח מתעקם.
+      - text: 'ההעתקה ששולחת את $p=\sigma(u,v)$ לווקטור הנורמל $\sigma_u\times\sigma_v$ בנקודה הזו'
+        feedback: >-
+          האורך של $\sigma_u\times\sigma_v$ תלוי בפרמטריזציה. העתקת גאוס משתמשת בנורמל **היחידה**, ולכן התמונה שלה על
+          $S^2$ תלויה רק במשטח ובכיוון שנבחר.
+        misconception: MC-c4-gauss-map-target
+      - text: 'ההעתקה ששולחת את $p$ למישור המשיק $T_pM$, המישור הניצב ל-$\hat{\mathbf N}(p)$'
+        feedback: >-
+          המישור המשיק נקבע על ידי הנורמל, אבל אינו נקודה. העתקת גאוס מקבלת ערכים ב-$S^2$, ועל זה בנויה ההשוואה בין
+          שטחים בשיעור הזה.
+        misconception: MC-c4-gauss-map-target
+      - text: 'ההעתקה ששולחת את $p$ ל-$p+\hat{\mathbf N}(p)$'
+        feedback: >-
+          זה משטח מקביל במרחק 1, ולא ספרת היחידה. בספרה ברדיוס 3 התמונה הייתה ספרה ברדיוס 4. העתקת גאוס "שוכחת" את $p$
+          ומשאירה רק את הכיוון $\hat{\mathbf N}(p)$.
+        misconception: MC-c4-gauss-map-target
+
+  - id: Q-4.6-cyl
+    type: mc
+    objectives: [OBJ-4.6-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בשיעור מוכיחים ש-$\hat{\mathbf N}_u\times\hat{\mathbf N}_v=K\,\sigma_u\times\sigma_v$: מקבילית קטנה על המשטח, הנפרשת
+      על ידי $h\sigma_u,k\sigma_v$, נשלחת על ידי העתקת גאוס (עד סדר ראשון) למקבילית הנפרשת על ידי
+      $h\hat{\mathbf N}_u,k\hat{\mathbf N}_v$. מהי התמונה של העתקת גאוס של הגליל $x^2+y^2=1$, עם הנורמל
+      $\hat{\mathbf N}=(x,y,0)$, ומה היא אומרת על $K$?
+    choices:
+      - text: 'קו המשווה של $S^2$, מסילה שאין לה שטח; ואכן $K=0$'
+        correct: true
+        feedback: >-
+          נכון. $\hat{\mathbf N}=(x,y,0)$ לא תלוי ב-$z$: כל ישר של הגליל נשלח לנקודה אחת. בפרמטריזציה
+          $(\cos u,\sin u,v)$, $\hat{\mathbf N}_v=0$, ולכן מקבילית קטנה על הגליל נשלחת למקבילית מנוונת, ו-$K=0$.
+      - text: 'נקודה אחת, כמו במישור'
+        feedback: >-
+          במישור הנורמל קבוע, אבל בגליל הוא מסתובב כשמקיפים את הציר. התמונה היא מעגל שלם; היא רק לא "מתפשטת" בכיוון
+          השני.
+        misconception: MC-c4-K-zero-planar
+      - text: 'רצועה סביב קו המשווה, עם שטח חיובי, כי הגליל מתעקם'
+        feedback: >-
+          שטח התמונה תלוי בהתעקמות בשני כיוונים יחד: $\hat{\mathbf N}_u\times\hat{\mathbf N}_v=K\,\sigma_u\times\sigma_v$. הגליל
+          מתעקם רק בכיוון אחד, ולכן המקבילית בתמונה מנוונת.
+        misconception: MC-c4-area-ratio-signed
+
+  - id: Q-4.6-sphere
+    type: mc
+    objectives: [OBJ-4.6-1]
+    level: basic
+    prompt: >-
+      בספרה ברדיוס 2 עם הנורמל החוצה $\hat{\mathbf N}(p)=\frac p2$. בשיעור מראים שהדיפרנציאל של העתקת גאוס הוא מינוס
+      אופרטור הצורה: $d\hat{\mathbf N}_p=-S$. מהו $S$ בכל נקודה?
+    choices:
+      - text: '$S=-\frac12\,\mathrm{id}$'
+        correct: true
+        feedback: >-
+          נכון. $d\hat{\mathbf N}=\frac12\,\mathrm{id}$, כי $\hat{\mathbf N}$ הוא העתקה לינארית של $p$; ו-$S=-d\hat{\mathbf N}$.
+          זה מתאים ל-$\kappa_1=\kappa_2=-\frac12$ עם הנורמל החוצה.
+      - text: '$S=\frac12\,\mathrm{id}$'
+        feedback: >-
+          זה $d\hat{\mathbf N}$, לא $S$. הסימן נולד מ-$L=\sigma_{uu}\cdot\hat{\mathbf N}=-\sigma_u\cdot\hat{\mathbf N}_u$. עם הנורמל
+          החוצה הספרה מתעקמת הרחק ממנו, ולכן העקמומיויות שליליות.
+        misconception: MC-c4-dN-equals-S
+      - text: '$S$ שולח כל וקטור משיק לכפולה של $\hat{\mathbf N}$'
+        feedback: >-
+          $\hat{\mathbf N}_u\cdot\hat{\mathbf N}=0$ (גוזרים את $\|\hat{\mathbf N}\|^2=1$), ולכן $d\hat{\mathbf N}$ ו-$S$ שולחים את
+          $T_pM$ לעצמו.
+        misconception: MC-c4-dN-normal-part
+
+  - id: Q-4.6-mindef
+    type: mc
+    objectives: [OBJ-4.6-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מתי משטח $M$ נקרא משטח מינימלי?
+    choices:
+      - text: 'כשהעקמומיות הממוצעת שלו אפס בכל נקודה'
+        correct: true
+        feedback: >-
+          נכון: $H\equiv0$, כלומר $\kappa_2=-\kappa_1$ בכל נקודה. השם בא מבעיית השטח המינימלי של קרום סבון, אבל
+          ההגדרה בקורס היא $H\equiv0$.
+      - text: 'כשעקמומיות גאוס שלו אפס בכל נקודה'
+        feedback: >-
+          זה משטח "שטוח", כמו הגליל. בגליל $H=\pm\frac1{2r}\neq0$, ולכן הוא לא מינימלי; והקטנואיד מינימלי עם $K<0$.
+        misconception: MC-c4-minimal-flat
+      - text: 'כשהעקמומיות הממוצעת שלו מתאפסת בנקודה אחת לפחות'
+        feedback: >-
+          לאוכף $z=xy$ יש $H=0$ בראשית, אבל ב-$(1,1,1)$ $H\approx-0.19$. ההגדרה דורשת $H=0$ בכל נקודה.
+        misconception: MC-c4-minimal-pointwise
+      - text: 'כששתי העקמומיויות הראשיות שלו אפס בכל נקודה'
+        feedback: >-
+          זה מגדיר את המישור (כל נקודה מישורית). המישור אכן מינימלי, אבל יש עוד: בקטנואיד $\kappa_{1,2}=\pm\frac{1}{c\cosh^2(v/c)}\neq0$.
+        misconception: MC-c4-minimal-flat
+
+  - id: Q-4.6-ratio
+    type: numeric
+    objectives: [OBJ-4.6-2]
+    level: basic
+    prompt: >-
+      על הטורוס $\sigma(u,v)=((3+\cos v)\cos u,\,(3+\cos v)\sin u,\,\sin v)$ עקמומיות גאוס במשווה הפנימי היא $K=-\frac12$.
+      מקבילית קטנה שם, הנפרשת על ידי $h\sigma_u$ ו-$k\sigma_v$, נשלחת על ידי העתקת גאוס (עד סדר ראשון) למקבילית
+      הנפרשת על ידי $h\hat{\mathbf N}_u$ ו-$k\hat{\mathbf N}_v$. מהו היחס בין השטח של המקבילית בתמונה לשטח של המקבילית
+      על הטורוס?
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\|h\hat{\mathbf N}_u\times k\hat{\mathbf N}_v\|=|K|\,\|h\sigma_u\times k\sigma_v\|$, ולכן היחס $|K|=\frac12$. הסימן
+      השלילי של $K$ אומר שהמקבילית בתמונה **הפוכה בכיוונה**, לא שהשטח שלילי.
+    wrongFeedback: >-
+      $\hat{\mathbf N}_u\times\hat{\mathbf N}_v=K\,\sigma_u\times\sigma_v$. שטח מקבילית הוא אורך המכפלה הווקטורית.
+    commonWrong:
+      - value: -0.5
+        feedback: >-
+          שטח הוא אורך של וקטור, ולכן אי-שלילי: היחס הוא $|K|$. הסימן של $K$ אומר אם הכיוון נשמר.
+        misconception: MC-c4-area-ratio-signed
+      - value: 2
+        feedback: >-
+          זה היחס ההפוך, שטח על הטורוס חלקי שטח התמונה. הנוסחה $\hat{\mathbf N}_u\times\hat{\mathbf N}_v=K\,\sigma_u\times\sigma_v$
+          אומרת שהתמונה **קטנה** פי $|K|$ כאן.
+
+  - id: Q-4.6-tangent
+    type: twotier
+    objectives: [OBJ-4.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם הדיפרנציאל של העתקת גאוס בנקודה $p$ שולח את המישור המשיק $T_pM$ לתוך $T_pM$ עצמו?
+    choices:
+      - text: 'כן'
+        correct: true
+        feedback: >-
+          נכון. בזכות זה אפשר לראות את $d\hat{\mathbf N}_p$ כהעתקה לינארית ממרחב דו-ממדי לעצמו, עם דטרמיננטה ועקבה, ולכן
+          $K=\det S$ ו-$H=\frac12\operatorname{tr}S$.
+      - text: 'לא, לנגזרת של הנורמל יש גם רכיב נורמלי'
+        feedback: >-
+          לכל וקטור יחידה, הנגזרת ניצבת אליו: אורכו קבוע. כאן הווקטור הוא $\hat{\mathbf N}$, ולכן $\hat{\mathbf N}_u\perp\hat{\mathbf N}$.
+        misconception: MC-c4-dN-normal-part
+    reasons:
+      - text: 'גוזרים את $\hat{\mathbf N}\cdot\hat{\mathbf N}=1$: $2\hat{\mathbf N}_u\cdot\hat{\mathbf N}=0$, וכך גם ל-$v$; וקטור שניצב ל-$\hat{\mathbf N}$ נמצא ב-$T_pM$'
+        correct: true
+        feedback: 'בדיוק. (המישור המשיק ל-$S^2$ ב-$\hat{\mathbf N}(p)$ הוא $\hat{\mathbf N}(p)^\perp=T_pM$.)'
+      - text: 'גוזרים את $\sigma_u\cdot\hat{\mathbf N}=0$: $\hat{\mathbf N}_u\cdot\sigma_u=0$'
+        feedback: >-
+          הגזירה הזו נותנת $\sigma_{uu}\cdot\hat{\mathbf N}+\sigma_u\cdot\hat{\mathbf N}_u=0$, כלומר $\sigma_u\cdot\hat{\mathbf N}_u=-L$, לא אפס.
+          היא אומרת משהו על **הרכיב המשיק** של $\hat{\mathbf N}_u$, לא על הרכיב הנורמלי.
+        misconception: MC-c4-dN-equals-S
+      - text: '$\hat{\mathbf N}$ ניצב ל-$T_pM$ בכל נקודה, ולכן גם הנגזרות שלו ניצבות ל-$T_pM$'
+        feedback: >-
+          ההסקה שגויה: נגזרת של וקטור ניצב לא חייבת להיות ניצבת. בספרה ברדיוס $R$ עם הנורמל החוצה
+          $\hat{\mathbf N}_u=\frac1R\sigma_u$, וזה וקטור משיק. מה שנשמר הוא **האורך** של $\hat{\mathbf N}$, ולכן הנגזרת
+          ניצבת ל-$\hat{\mathbf N}$ עצמו.
+        misconception: MC-c4-dN-normal-part
+
+  - id: Q-4.6-orient
+    type: twotier
+    objectives: [OBJ-4.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בנקודה היפרבולית $p$ מקיפים לולאה קטנה סביב $p$ על המשטח, נגד כיוון השעון כשמסתכלים מקצה $\hat{\mathbf N}$. מה
+      עושה התמונה שלה על $S^2$ סביב $\hat{\mathbf N}(p)$, כשמסתכלים מבחוץ?
+    choices:
+      - text: 'מקיפה בכיוון השעון: העתקת גאוס הופכת את הכיוון'
+        correct: true
+        feedback: >-
+          נכון. בנקודה אליפטית היא הייתה מקיפה נגד כיוון השעון. זו המשמעות של הסימן של $K$.
+      - text: 'מקיפה נגד כיוון השעון, כמו הלולאה'
+        feedback: >-
+          זה מה שקורה בנקודה אליפטית ($K>0$). בנקודה היפרבולית $K<0$, והמכפלה $\hat{\mathbf N}_u\times\hat{\mathbf N}_v$
+          מצביעה הפוך מ-$\sigma_u\times\sigma_v$.
+        misconception: MC-c4-K-changes-sign
+      - text: 'מתכווצת לנקודה, כי השטח שלילי'
+        feedback: >-
+          השטח לא שלילי; היחס הוא $|K|>0$, ולכן התמונה היא לולאה אמיתית. מה שמתהפך הוא הכיוון.
+        misconception: MC-c4-area-ratio-signed
+    reasons:
+      - text: '$\hat{\mathbf N}_u\times\hat{\mathbf N}_v=K\,\sigma_u\times\sigma_v$ עם $K<0$: המקבילית בתמונה מכוונת הפוך לזו שעל המשטח'
+        correct: true
+        feedback: >-
+          בדיוק. שתי המקביליות ניצבות ל-$\hat{\mathbf N}(p)$ (המישורים המשיקים מקבילים), ו-$K<0$ הופך את הנורמל שלהן.
+      - text: 'העתקת גאוס הופכת את הנורמל של המקבילית, והיפוך הנורמל מחליף את הסימן של $K$, ולכן גם את כיוון הלולאה'
+        feedback: >-
+          $K$ לא משתנה כשהופכים את הנורמל; וכאן הנורמל בכלל לא הוחלף. הכיוון מתהפך בגלל הסימן של $K$ עצמו.
+        misconception: MC-c4-K-changes-sign
+      - text: 'יחס השטחים הוא $K$, ושטח שלילי פירושו לולאה הפוכה'
+        feedback: >-
+          המסקנה נכונה, אבל ההסבר מערבב: היחס בין **השטחים** הוא $|K|$, והסימן מגיע מההשוואה בין שתי המכפלות הווקטוריות.
+        misconception: MC-c4-area-ratio-signed
+
+  - id: Q-4.6-which
+    type: multi
+    objectives: [OBJ-4.6-3]
+    level: mid
+    prompt: >-
+      אילו מהמשטחים הבאים מינימליים? סמנו את כולם.
+    choices:
+      - text: 'המישור'
+        correct: true
+        feedback: 'נכון. $Q_2=0$, ולכן $H=0$ בכל נקודה.'
+      - text: 'הקטנואיד $(\cosh v\cos u,\,\cosh v\sin u,\,v)$'
+        correct: true
+        feedback: >-
+          נכון. $E=G=\cosh^2v$, $F=0$, $L=-1$, $M=0$, $N=1$ (עם $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$),
+          ולכן $EN+GL=0$ ו-$H=0$.
+      - text: 'ההליקואיד $(v\cos u,\,v\sin u,\,u)$'
+        correct: true
+        feedback: >-
+          נכון. $E=1+v^2$, $F=0$, $G=1$, $L=N=0$ (כי $\sigma_{uu}$ אופקי ורדיאלי ו-$\sigma_{vv}=0$), ולכן $EN-2FM+GL=0$.
+      - text: 'הגליל $x^2+y^2=1$'
+        feedback: >-
+          לגליל $K=0$, אבל $H=\pm\frac12$. מינימלי פירושו $H\equiv0$, לא $K\equiv0$.
+        misconception: MC-c4-minimal-flat
+      - text: 'האוכף $z=xy$'
+        feedback: >-
+          בראשית $H=0$, אבל ב-$(1,1,1)$ עם הנורמל כלפי מעלה $H=-\frac{1}{3\sqrt3}\neq0$. מינימלי דורש $H=0$ בכל נקודה.
+        misconception: MC-c4-minimal-pointwise
+
+  - id: Q-4.6-catenoid
+    type: numeric
+    objectives: [OBJ-4.6-3]
+    level: mid
+    prompt: >-
+      בקטנואיד $\sigma(u,v)=(\cosh v\cos u,\,\cosh v\sin u,\,v)$ העקמומיויות הראשיות הן $\pm\frac{1}{\cosh^2v}$. מהי
+      עקמומיות גאוס ב-$v=\ln2$?
+    answer: -0.4096
+    tolerance: 0.0001
+    correctFeedback: >-
+      נכון. $\cosh(\ln2)=\frac{2+\frac12}{2}=\frac54$, ולכן $K=-\frac{1}{\cosh^4v}=-\left(\frac45\right)^4=-\frac{256}{625}$.
+    wrongFeedback: >-
+      $K=\kappa_1\kappa_2=\frac{1}{\cosh^2v}\cdot\left(-\frac1{\cosh^2v}\right)$. חשבו את $\cosh(\ln2)$ מההגדרה.
+    commonWrong:
+      - value: -0.64
+        feedback: >-
+          $-\frac1{\cosh^2v}=-0.64$ היא העקמומיות הראשית $\kappa_2$. $K$ היא מכפלה של שתיהן: $-0.64^2$.
+        misconception: MC-c4-K-is-principal
+      - value: 0.4096
+        feedback: >-
+          $K=\kappa_1\kappa_2$ עם סימנים הפוכים, ולכן שלילית. במשטח מינימלי $K\le0$ תמיד.
+        misconception: MC-c4-minimal-elliptic
+
+  - id: Q-4.6-noelliptic
+    type: twotier
+    objectives: [OBJ-4.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם ייתכן שבמשטח מינימלי יש נקודה אליפטית?
+    choices:
+      - text: 'לא'
+        correct: true
+        feedback: 'נכון. כל נקודה של משטח מינימלי היא היפרבולית או מישורית.'
+      - text: 'כן, אם שתי העקמומיויות הראשיות שם גדולות'
+        feedback: >-
+          ב-$H=0$ הן לא יכולות להיות שתיהן חיוביות: $\kappa_2=-\kappa_1$.
+        misconception: MC-c4-minimal-elliptic
+    reasons:
+      - text: '$H=0$ נותן $\kappa_2=-\kappa_1$, ולכן $K=\kappa_1\kappa_2=-\kappa_1^2\le0$'
+        correct: true
+        feedback: 'בדיוק: שורה אחת. וגם $K=0$ רק כש-$\kappa_1=\kappa_2=0$, כלומר בנקודה מישורית.'
+      - text: 'משטח מינימלי הוא שטוח, ולכן $K=0$ בכל נקודה'
+        feedback: 'משטח מינימלי לא חייב להיות שטוח: בקטנואיד $K=-1$ במעגל הצר.'
+        misconception: MC-c4-minimal-flat
+      - text: '$H$ ו-$K$ בלתי תלויים, ולכן $H=0$ לא מגביל את $K$'
+        feedback: >-
+          הם קשורים: $H^2\ge K$ תמיד (כי $H^2-K=\frac{(\kappa_1-\kappa_2)^2}4$). עם $H=0$ זה נותן $K\le0$.
+        misconception: MC-c4-minimal-elliptic
+
+  - id: Q-4.6-umbilic
+    type: twotier
+    objectives: [OBJ-4.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $P$ נקודה טבורית של משטח מינימלי $M$. מה אפשר לומר על $P$?
+    choices:
+      - text: '$P$ נקודה מישורית: $Q_2(P)=0$ ו-$K(P)=0$'
+        correct: true
+        feedback: >-
+          נכון. ויש משטחים מינימליים עם נקודות כאלה: במישור כל נקודה כזו. בקטנואיד אין אף אחת, כי $K=-\frac1{\cosh^4v}\neq0$.
+      - text: 'אין נקודה כזו: במשטח מינימלי אין נקודות טבוריות'
+        feedback: >-
+          המישור מינימלי, וכל נקודה שלו טבורית ($\kappa_1=\kappa_2=0$). מה שלא קיים במשטח מינימלי הוא נקודה טבורית **שאינה
+          מישורית**.
+        misconception: MC-c4-minimal-no-umbilic
+      - text: '$P$ אליפטית, כמו נקודה של ספרה: $K(P)=H(P)^2>0$'
+        feedback: >-
+          במשטח מינימלי $K=-\kappa_1^2\le0$, ולכן אין נקודה אליפטית בכלל.
+        misconception: MC-c4-minimal-elliptic
+    reasons:
+      - text: 'טבורית: $\kappa_1=\kappa_2$; מינימלי: $\kappa_1+\kappa_2=0$. יחד: $\kappa_1=\kappa_2=0$'
+        correct: true
+        feedback: 'בדיוק. שתי משוואות לינאריות בשני נעלמים, עם הפתרון היחיד $0$.'
+      - text: 'במשטח מינימלי $\kappa_2=-\kappa_1$, ולכן $\kappa_1\neq\kappa_2$ בכל נקודה'
+        feedback: >-
+          $\kappa_2=-\kappa_1$ ו-$\kappa_1\neq\kappa_2$ שקולים רק כש-$\kappa_1\neq0$. המקרה $\kappa_1=0$ הוא בדיוק הנקודה המישורית.
+        misconception: MC-c4-minimal-no-umbilic
+      - text: 'בנקודה טבורית $H^2=K$, ובמשטח מינימלי $K>0$'
+        feedback: >-
+          $H^2=K$ נכון, אבל במשטח מינימלי $K\le0$, לא $K>0$. עם $H=0$ מקבלים $K=0$.
+        misconception: MC-c4-minimal-elliptic
+
+  - id: Q-4.6-crossproof
+    type: rank
+    objectives: [OBJ-4.6-2, OBJ-4.6-1]
+    level: exam
+    prompt: >-
+      סדרו את שלבי ההוכחה של $\hat{\mathbf N}_u\times\hat{\mathbf N}_v=K\,\sigma_u\times\sigma_v$.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון. שני שלבים שאפשר לכתוב בכל סדר מסומנים כשקולים.
+    items:
+      - id: tangent
+        label: 'גוזרים את $\hat{\mathbf N}\cdot\hat{\mathbf N}=1$: $\hat{\mathbf N}_u,\hat{\mathbf N}_v$ ניצבים ל-$\hat{\mathbf N}$, ולכן הם ב-$T_pM$'
+      - id: write
+        label: 'לכן אפשר לכתוב $\hat{\mathbf N}_u=a\sigma_u+b\sigma_v$ ו-$\hat{\mathbf N}_v=c\sigma_u+d\sigma_v$'
+      - id: matrix
+        label: 'המטריצה $\begin{pmatrix}a&c\\b&d\end{pmatrix}$ היא המטריצה של $d\hat{\mathbf N}=-S$ בבסיס $\sigma_u,\sigma_v$'
+      - id: cross
+        label: '$\hat{\mathbf N}_u\times\hat{\mathbf N}_v=(ad-bc)\,\sigma_u\times\sigma_v$, כי $\sigma_u\times\sigma_u=\sigma_v\times\sigma_v=0$ ו-$\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$'
+      - id: det
+        label: 'מהמטריצה, $ad-bc=\det(-S)=(-1)^2\det S=K$, ובהצבה במכפלה הווקטורית: $\hat{\mathbf N}_u\times\hat{\mathbf N}_v=K\,\sigma_u\times\sigma_v$'
+    order: [tangent, write, [matrix, cross], det]
+    correctFeedback: >-
+      נכון. רעיון ההוכחה: מכפלה וקטורית של שני צירופים לינאריים של $\sigma_u,\sigma_v$ היא הדטרמיננטה של המקדמים כפול
+      $\sigma_u\times\sigma_v$; והמקדמים כאן הם המטריצה של $-S$, שהדטרמיננטה שלה $K$ במימד 2.
+    wrongFeedback: >-
+      קודם צריך לדעת ש-$\hat{\mathbf N}_u,\hat{\mathbf N}_v$ משיקים (אחרת אי אפשר לכתוב אותם בבסיס $\sigma_u,\sigma_v$). הצעד
+      האחרון הוא זיהוי הדטרמיננטה.
+
+  - id: Q-4.6-waist
+    type: numeric
+    objectives: [OBJ-4.6-3]
+    level: exam
+    prompt: >-
+      הקטנואיד עם $c=2$: $\sigma(u,v)=(2\cosh\frac v2\cos u,\,2\cosh\frac v2\sin u,\,v)$. חשבו את עקמומיות גאוס במעגל הצר
+      ($v=0$).
+    answer: -0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ב-$v=0$: $E=4$, $G=1$, $F=0$; $\sigma_{uu}=(-2\cos u,-2\sin u,0)$, $\sigma_{vv}=(\frac12\cos u,\frac12\sin u,0)$,
+      $\hat{\mathbf N}=(\cos u,\sin u,0)$, ולכן $L=-2$, $N=\frac12$, $M=0$. $K=\frac{-1}{4}$, ו-$\kappa_{1,2}=\frac NG,\frac LE=\pm\frac12$:
+      $H=0$, כמו שצריך.
+    wrongFeedback: >-
+      חשבו $E,F,G,L,M,N$ ב-$v=0$, או השתמשו ב-$K=-\frac{1}{c^2\cosh^4(v/c)}$.
+    commonWrong:
+      - value: -0.5
+        feedback: >-
+          $-\frac12$ היא העקמומיות הראשית $\kappa_2$ (אחד חלקי רדיוס המעגל הצר). $K=\kappa_1\kappa_2=-\frac14$.
+        misconception: MC-c4-K-is-principal
+      - value: -1
+        feedback: >-
+          זה $LN-M^2$ בלי החלוקה ב-$EG-F^2=4$.
+        misconception: MC-c4-K-numerator-only
+      - value: 0.25
+        feedback: 'במשטח מינימלי $K\le0$. העקמומיויות הראשיות בסימנים הפוכים.'
+        misconception: MC-c4-minimal-elliptic

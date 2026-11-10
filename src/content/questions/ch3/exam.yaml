@@ -1,0 +1,591 @@
+# Chapter 3 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (7 points): a verdict + an open justification. Long questions (20 points): 2–5 parts.
+# Every open part has a model solution ending in a result step and a rubric for self-grading.
+chapter: 3
+questions:
+  - id: Q-3-exam-1
+    type: exam
+    title: מקדמים שאינם תבנית ראשונה
+    prompt: >-
+      האם ייתכן שבנקודה מסוימת של פרמטריזציה **רגולרית** $\sigma(u,v)$ של משטח מתקיים $E=1$, $F=2$, $G=3$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-3.4-3]
+        qualitative: true
+        prompt: >-
+          הכריעו.
+        choices:
+          - text: לא, זה לא ייתכן
+            correct: true
+            feedback: >-
+              נכון: $EG-F^2=3-4=-1<0$, אבל $EG-F^2$ הוא ריבוע של אורך. סעיף ב מוכיח זאת.
+          - text: 'כן, כי $E=1>0$ ו-$G=3>0$, וזה מה שנדרש מריבועי אורכים'
+            feedback: >-
+              $E$ ו-$G$ חיוביים, אבל יש עוד אילוץ: לפי קושי-שוורץ $F^2\le EG$. כאן $F^2=4>3=EG$.
+            misconception: MC-c3-positive-diagonal-enough
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-3.4-3, OBJ-3.1-1]
+        prompt: >-
+          הוכיחו ש-$EG-F^2=\|\sigma_u\times\sigma_v\|^2$, והסיקו את התשובה לסעיף א.
+        solution:
+          - kind: given
+            text: '$E=\sigma_u\cdot\sigma_u$, $F=\sigma_u\cdot\sigma_v$, $G=\sigma_v\cdot\sigma_v$, ו-$\sigma$ רגולרית: $\sigma_u\times\sigma_v\ne0$.'
+          - kind: goal
+            text: '$EG-F^2=\|\sigma_u\times\sigma_v\|^2$, ומכאן $EG-F^2>0$.'
+          - kind: idea
+            text: >-
+              זהות לגרנז׳: שני הצדדים נכתבים בעזרת האורכים של $\sigma_u,\sigma_v$ והזווית $\theta$ ביניהם, והזהות היא
+              $\sin^2\theta+\cos^2\theta=1$.
+          - kind: theorem
+            text: >-
+              לשני וקטורים $a,b\ne0$ עם זווית $\theta\in[0,\pi]$ ביניהם: $a\cdot b=\|a\|\|b\|\cos\theta$ ו-$\|a\times b\|=\|a\|\|b\|\sin\theta$
+              (שיעור 0.2: אורך המכפלה הווקטורית הוא שטח המקבילית).
+          - kind: computation
+            text: >-
+              $$\|\sigma_u\times\sigma_v\|^2=\|\sigma_u\|^2\|\sigma_v\|^2\sin^2\theta=\|\sigma_u\|^2\|\sigma_v\|^2-\|\sigma_u\|^2\|\sigma_v\|^2\cos^2\theta=EG-F^2.$$
+          - kind: step
+            text: >-
+              בנקודה רגולרית $\sigma_u\times\sigma_v\ne0$, ולכן $EG-F^2>0$. (אילו אחד הווקטורים היה אפס, שני הצדדים היו אפס, ואין
+              צורך בזווית.)
+          - kind: check
+            text: 'בגרף $z=x^2-y^2$ בנקודה $(1,2)$: $E=5$, $F=-8$, $G=17$, $EG-F^2=21=\|(-2,4,1)\|^2$.'
+          - kind: result
+            text: >-
+              $EG-F^2=\|\sigma_u\times\sigma_v\|^2>0$ בכל נקודה רגולרית. עם $E=1$, $F=2$, $G=3$ מתקבל $EG-F^2=-1<0$, ולכן זה
+              לא ייתכן.
+        rubric:
+          - text: 'ניסוח מדויק של מה שמוכיחים: זהות לגרנז׳ עבור $\sigma_u,\sigma_v$'
+            weight: 1
+          - text: 'הוכחה של הזהות (בעזרת $\cos\theta$ ו-$\sin\theta$, או פיתוח ישיר ברכיבים), לא רק ציטוט'
+            weight: 2
+          - text: 'שימוש ברגולריות כדי לקבל אי-שוויון **חזק** $EG-F^2>0$'
+            weight: 1
+          - text: 'הצבה: $1\cdot3-2^2=-1$ והמסקנה "לא ייתכן"'
+            weight: 1
+
+  - id: Q-3-exam-2
+    type: exam
+    title: איזומטריה שמעקמת ישר
+    prompt: >-
+      האם ייתכן שאיזומטריה מקומית $f$ מחתיכה של המישור לחתיכה של משטח אחר מעבירה קטע ישר (מסילה עם עקמומיות $\kappa\equiv0$)
+      למסילה שעקמומיותה חיובית בכל נקודה?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-3.5-3]
+        qualitative: true
+        prompt: >-
+          הכריעו.
+        choices:
+          - text: כן, ייתכן
+            correct: true
+            feedback: >-
+              נכון. איזומטריה שומרת אורכים וזוויות, אבל העקמומיות של מסילה במרחב היא תכונה חיצונית.
+          - text: 'לא, כי איזומטריה שומרת את אורך הקשת, והעקמומיות מחושבת ממנו'
+            feedback: >-
+              העקמומיות היא $\|\frac{d\mathbf t}{ds}\|$, ו-$\mathbf t$ הוא וקטור במרחב. אורך הקשת לבדו אינו קובע אותה.
+            misconception: MC-c3-curvature-of-curve-intrinsic
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-3.5-2, OBJ-3.5-1, OBJ-1.3-2]
+        prompt: >-
+          תנו דוגמה והוכיחו אותה: הראו שההעתקה איזומטריה מקומית, וחשבו את העקמומיות של תמונת הקטע.
+        solution:
+          - kind: idea
+            text: >-
+              מלפפים את המישור על גליל: קטע אלכסוני הופך לסליל. איזומטריה בודקים בהשוואת $E,F,G$; את העקמומיות מחשבים
+              בנוסחה עם המכפלה הווקטורית.
+          - kind: definition
+            text: >-
+              $\sigma_1(x,y)=(x,y,0)$ על $0<x<2\pi$, ו-$\sigma_2(x,y)=(\cos x,\ \sin x,\ y)$ על אותו תחום. $f=\sigma_2\circ\sigma_1^{-1}$.
+          - kind: computation
+            text: >-
+              $\partial_x\sigma_2=(-\sin x,\cos x,0)$, $\partial_y\sigma_2=(0,0,1)$: $E=1$, $F=0$, $G=1$, בדיוק כמו ל-$\sigma_1$.
+              לכן לכל מסילה $(x(t),y(t))$ שתי התמונות באותו אורך $\int\sqrt{x'^2+y'^2}\,dt$: $f$ איזומטריה מקומית.
+          - kind: step
+            text: >-
+              הקטע $\ell(t)=\sigma_1(t,t)=(t,t,0)$, $0<t<2\pi$, עקמומיותו 0, ותמונתו $\gamma(t)=f(\ell(t))=(\cos t,\ \sin t,\ t)$.
+          - kind: computation
+            text: >-
+              $\gamma'=(-\sin t,\cos t,1)$, $\gamma''=(-\cos t,-\sin t,0)$, $\gamma'\times\gamma''=(\sin t,\ -\cos t,\ 1)$, ולכן
+              $$\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}=\frac{\sqrt2}{(\sqrt2)^3}=\frac12.$$
+          - kind: check
+            text: 'זה הסליל $(a\cos t,a\sin t,bt)$ עם $a=b=1$, ו-$\frac{a}{a^2+b^2}=\frac12$.'
+          - kind: result
+            text: >-
+              כן, ייתכן: הלפפת המישור על גליל היחידה היא איזומטריה מקומית, ומעבירה את הקטע $(t,t)$ לסליל שעקמומיותו
+              $\frac12>0$ בכל נקודה.
+        rubric:
+          - text: 'דוגמה מפורשת של העתקה ושל קטע'
+            weight: 1
+          - text: 'הוכחה שההעתקה איזומטריה מקומית: אותם $E,F,G$ (או חישוב ישיר של אורכים)'
+            weight: 2
+          - text: 'חישוב נכון של העקמומיות של התמונה, $\kappa=\frac12$'
+            weight: 1
+          - text: 'מסקנה מנוסחת: העקמומיות של מסילה אינה תכונה פנימית'
+            weight: 1
+
+  - id: Q-3-exam-3
+    type: exam
+    title: פרמטריזציה רגולרית אחת, משטח לא מכוון
+    prompt: >-
+      האם ייתכן ש-$\sigma:\mathbb R\times(-1,1)\to\mathbb R^3$ חלקה ורגולרית בכל נקודה, והתמונה שלה היא משטח חלק **שאינו
+      מכוון**?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-3.3-3]
+        qualitative: true
+        prompt: >-
+          הכריעו.
+        choices:
+          - text: כן, ייתכן
+            correct: true
+            feedback: >-
+              נכון: רצועת מביוס. רגולריות היא תנאי מקומי, וכיווניות גלובלית.
+          - text: 'לא, כי $\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$ הוא תמיד נורמל יחידה רציף על התמונה'
+            feedback: >-
+              הנוסחה היא פונקציה רציפה של $(u,v)$, לא של הנקודה במשטח. כש-$\sigma$ אינה חד-חד-ערכית, לאותה נקודה יכולים
+              להתאים שני נורמלים מנוגדים.
+            misconception: MC-c3-orientable-one-chart
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-3.3-3, OBJ-3.3-1]
+        prompt: >-
+          הוכיחו את תשובתכם בעזרת
+          $$\sigma(u,v)=\Big(\big(2+v\cos\tfrac u2\big)\cos u,\ \big(2+v\cos\tfrac u2\big)\sin u,\ v\sin\tfrac u2\Big)$$
+          (נתון ש-$\sigma$ רגולרית בכל נקודה; אין צורך להוכיח זאת).
+        solution:
+          - kind: goal
+            text: 'אין על התמונה $M$ נורמל יחידה רציף.'
+          - kind: idea
+            text: >-
+              לאורך המעגל האמצעי $v=0$ כל נורמל רציף חייב להיות $\pm\hat{\mathbf N}(u,0)$ עם סימן קבוע, אבל
+              $\hat{\mathbf N}(u,0)$ חוזר לנקודת ההתחלה הפוך.
+          - kind: computation
+            text: >-
+              $\cos\frac{u+2\pi}2=-\cos\frac u2$ ו-$\sin\frac{u+2\pi}2=-\sin\frac u2$, ולכן $\sigma(u+2\pi,-v)=\sigma(u,v)$. בפרט
+              $\sigma(0,0)=\sigma(2\pi,0)=(2,0,0)$.
+          - kind: computation
+            text: >-
+              ב-$v=0$: $\sigma_u=(-2\sin u,\ 2\cos u,\ 0)$ ו-$\sigma_v=(\cos\frac u2\cos u,\ \cos\frac u2\sin u,\ \sin\frac u2)$. ב-$u=0$:
+              $\sigma_u\times\sigma_v=(0,2,0)\times(1,0,0)=(0,0,-2)$; ב-$u=2\pi$: $(0,2,0)\times(-1,0,0)=(0,0,2)$. לכן
+              $\hat{\mathbf N}(0,0)=(0,0,-1)=-\hat{\mathbf N}(2\pi,0)$.
+          - kind: step
+            text: >-
+              נניח ש-$\mathbf n$ נורמל יחידה רציף על $M$. הפונקציה $\varepsilon(u)=\mathbf n(\sigma(u,0))\cdot\hat{\mathbf N}(u,0)$
+              רציפה על $[0,2\pi]$, ובכל $u$ מתקיים $\mathbf n=\pm\hat{\mathbf N}$, כלומר $\varepsilon(u)\in\{1,-1\}$. לפי משפט ערך
+              הביניים $\varepsilon$ קבועה.
+          - kind: step
+            text: >-
+              אבל $\mathbf n(\sigma(2\pi,0))=\mathbf n(\sigma(0,0))$, ולכן
+              $\varepsilon(2\pi)=\mathbf n(\sigma(0,0))\cdot(-\hat{\mathbf N}(0,0))=-\varepsilon(0)$. סתירה.
+          - kind: result
+            text: >-
+              כן, ייתכן: $\sigma$ רגולרית בכל נקודה, ותמונתה, רצועת מביוס, אינה מכוונת.
+        rubric:
+          - text: 'הזהות $\sigma(u+2\pi,-v)=\sigma(u,v)$, ובפרט ש-$(0,0)$ ו-$(2\pi,0)$ הם אותה נקודה'
+            weight: 1
+          - text: 'חישוב נכון של $\hat{\mathbf N}(0,0)$ ו-$\hat{\mathbf N}(2\pi,0)$ והתוצאה שהם מנוגדים'
+            weight: 2
+          - text: 'טיעון רציפות שלם: פונקציה רציפה עם ערכים $\pm1$ קבועה (לא רק "הנורמל מתהפך")'
+            weight: 2
+
+  - id: Q-3-exam-4
+    type: exam
+    title: הקטנואיד וההליקואיד
+    prompt: >-
+      על התחום $D=(0,2\pi)\times\mathbb R$ נתונות
+      $$\sigma(u,v)=(\cosh v\cos u,\ \cosh v\sin u,\ v),\qquad \tau(u,v)=(\sinh v\cos u,\ \sinh v\sin u,\ u).$$
+      $\sigma$ היא פרמטריזציה של חתיכה של **קטנואיד** (משטח הסיבוב של השרשרת $x=\cosh z$) ו-$\tau$ של חתיכה של
+      **הליקואיד** (משטח בורג). שתיהן חד-חד-ערכיות. נסמן $f=\tau\circ\sigma^{-1}$.
+    parts:
+      - label: א
+        points: 6
+        type: open
+        objectives: [OBJ-3.4-1, OBJ-3.1-1]
+        prompt: >-
+          חשבו את $E,F,G$ של $\sigma$ ושל $\tau$, והסיקו ששתיהן רגולריות.
+        solution:
+          - kind: computation
+            text: >-
+              $\sigma_u=(-\cosh v\sin u,\ \cosh v\cos u,\ 0)$, $\sigma_v=(\sinh v\cos u,\ \sinh v\sin u,\ 1)$. לכן
+              $E=\cosh^2v$, $F=-\cosh v\sinh v\sin u\cos u+\cosh v\sinh v\sin u\cos u=0$, $G=\sinh^2v+1=\cosh^2v$.
+          - kind: computation
+            text: >-
+              $\tau_u=(-\sinh v\sin u,\ \sinh v\cos u,\ 1)$, $\tau_v=(\cosh v\cos u,\ \cosh v\sin u,\ 0)$. לכן
+              $E=\sinh^2v+1=\cosh^2v$, $F=0$, $G=\cosh^2v$.
+          - kind: theorem
+            text: 'זהות לגרנז׳: $\|\sigma_u\times\sigma_v\|^2=EG-F^2$.'
+          - kind: step
+            text: >-
+              לשתיהן $EG-F^2=\cosh^4v>0$, ולכן $\sigma_u\times\sigma_v\ne0$ ו-$\tau_u\times\tau_v\ne0$ בכל נקודה.
+          - kind: result
+            text: 'לשתי הפרמטריזציות $E=G=\cosh^2v$, $F=0$; שתיהן רגולריות בכל $D$.'
+        rubric:
+          - text: 'נגזרות חלקיות נכונות של שתי הפרמטריזציות'
+            weight: 2
+          - text: 'חישוב נכון של שלושת המקדמים לכל אחת, כולל $F=0$ ושימוש ב-$\cosh^2-\sinh^2=1$'
+            weight: 2
+          - text: 'נימוק לרגולריות (דרך $EG-F^2>0$ או חישוב ישיר של המכפלה הווקטורית)'
+            weight: 1
+          - text: 'השוואה מפורשת: אותם $E,F,G$ באותה נקודה של $D$'
+            weight: 1
+      - label: ב
+        points: 3
+        type: mc
+        standalone: false
+        objectives: [OBJ-3.5-1, OBJ-3.5-3]
+        qualitative: true
+        prompt: >-
+          מה נובע מסעיף א?
+        choices:
+          - text: '$f$ היא איזומטריה (מקומית) מחתיכת הקטנואיד לחתיכת ההליקואיד'
+            correct: true
+            feedback: >-
+              נכון. מסילה $\sigma(u(t),v(t))$ עוברת ל-$\tau(u(t),v(t))$, ושני האורכים הם אותו אינטגרל.
+          - text: '$f$ היא צמצום של תנועה קשיחה של המרחב'
+            feedback: >-
+              תנועה קשיחה שומרת את העקמומיות של כל מסילה, ו-$f$ אינה שומרת (סעיף ד). איזומטריה שומרת אורכים **על
+              המשטח**, לא מרחקים במרחב.
+            misconception: MC-c3-isometry-is-rigid-motion
+          - text: 'הקטנואיד וההליקואיד הם אותו משטח במיקום אחר במרחב'
+            feedback: >-
+              הקטנואיד הוא משטח סיבוב, ובהליקואיד יש ישרים (הקווים $u=\text{const}$); אותה תבנית ראשונה אינה אותה צורה
+              במרחב.
+            misconception: MC-c3-q1-determines-shape
+      - label: ג
+        points: 4
+        type: numeric
+        objectives: [OBJ-3.4-2, OBJ-3.5-1]
+        prompt: >-
+          חשבו את אורך המסילה $\tau(t,t)$, $0\le t\le1$, על ההליקואיד. (מה האורך של $\sigma(t,t)$ על הקטנואיד?)
+        answer: 1.6619855
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\sqrt2\sinh1$. עם $u'=v'=1$: $\|\gamma'\|^2=\cosh^2t+\cosh^2t$, ולכן $\int_0^1\sqrt2\cosh t\,dt=\sqrt2\sinh1$.
+          אותו אורך בדיוק יוצא לקטנואיד, כי המקדמים זהים: זו האיזומטריה בפעולה.
+        wrongFeedback: >-
+          $\|\gamma'\|^2=Eu'^2+2Fu'v'+Gv'^2$ עם $E=G=\cosh^2t$, $F=0$; זכרו את השורש.
+        commonWrong:
+          - value: 2.8134302
+            feedback: >-
+              זה $\int_0^12\cosh^2t\,dt=1+\frac{\sinh2}{2}$, אינטגרל של $Q_1$ בלי שורש.
+            misconception: MC-c3-norm-vs-square
+          - value: 1.4142136
+            feedback: >-
+              זה $\sqrt2$, אורך הקטע מ-$(0,0)$ ל-$(1,1)$ במישור הפרמטרים. על המשטח כל יחידה נמתחת פי $\cosh t$.
+            misconception: MC-c3-q1-is-euclidean-in-params
+      - label: ד
+        points: 7
+        type: open
+        objectives: [OBJ-3.5-3, OBJ-1.3-2]
+        prompt: >-
+          המסילה $\alpha(u)=\sigma(u,0)$, $0<u<2\pi$, היא "המותניים" של הקטנואיד. מצאו את $f\circ\alpha$, חשבו את העקמומיות
+          של שתי המסילות ואת אורכיהן, והסבירו מה זה אומר על העקמומיות של מסילה על משטח.
+        solution:
+          - kind: given
+            text: '$\alpha(u)=(\cos u,\ \sin u,\ 0)$, ו-$f\circ\alpha(u)=\tau(u,0)=(0,0,u)$.'
+          - kind: idea
+            text: >-
+              איזומטריה שומרת אורכים; נבדוק אם היא שומרת גם עקמומיות. אם לא, העקמומיות היא תכונה חיצונית, ו-$f$ אינה
+              צמצום של תנועה קשיחה.
+          - kind: computation
+            text: >-
+              $\alpha$ הוא מעגל היחידה: $\|\alpha'\|=1$, האורך $2\pi$, והעקמומיות $1$. $f\circ\alpha$ הוא קטע של ציר $z$:
+              $\|(f\circ\alpha)'\|=\|(0,0,1)\|=1$, האורך $2\pi$, והעקמומיות $0$ (כי $(f\circ\alpha)''=0$).
+          - kind: check
+            text: >-
+              האורכים שווים, כפי שאיזומטריה מחייבת; ואכן לשתי המסילות $\|\gamma'\|^2=E(u,0)=\cosh^20=1$.
+          - kind: step
+            text: >-
+              העקמומיות לא נשמרה: $1\ne0$. לכן העקמומיות של מסילה על משטח, כמסילה במרחב, אינה נקבעת מהתבנית הראשונה. בפרט
+              $f$ אינה צמצום של תנועה קשיחה, כי תנועה קשיחה שומרת עקמומיות (שיעור 1.3).
+          - kind: result
+            text: >-
+              $f$ מעבירה את המעגל $\alpha$ (אורך $2\pi$, $\kappa=1$) לקטע $(0,0,u)$ (אורך $2\pi$, $\kappa=0$): אורך נשמר,
+              עקמומיות לא. העקמומיות של מסילה היא תכונה חיצונית.
+        rubric:
+          - text: 'מציאה נכונה של $f\circ\alpha(u)=(0,0,u)$'
+            weight: 2
+          - text: 'אורכים ועקמומיות נכונים לשתי המסילות'
+            weight: 2
+          - text: 'ההבחנה: האורך נשמר (איזומטריה), העקמומיות לא'
+            weight: 2
+          - text: 'מסקנה מנוסחת: העקמומיות תכונה חיצונית, ו-$f$ אינה תנועה קשיחה'
+            weight: 1
+
+  - id: Q-3-exam-5
+    type: exam
+    title: חתיכה של ספרה אינה איזומטרית למישור
+    prompt: >-
+      $S$ ספרת היחידה, $P=(0,0,1)$ הקוטב הצפוני, ו-$\sigma(u,v)=(\sin u\cos v,\ \sin u\sin v,\ \cos u)$ על
+      $0<u<\pi$, $0<v<2\pi$ ($u$ היא הקולטיטודה, הזווית מ-$P$). ל-$0<\rho<\pi$ נסמן
+      $C_\rho=\{p\in S:\ p_z=\cos\rho\}$, קו הרוחב בקולטיטודה $\rho$.
+    parts:
+      - label: א
+        points: 4
+        type: open
+        objectives: [OBJ-3.4-1, OBJ-3.3-1]
+        prompt: >-
+          חשבו את $E,F,G$ של $\sigma$ ואת $\hat{\mathbf N}$, וקבעו לאן $\hat{\mathbf N}$ מצביע.
+        solution:
+          - kind: computation
+            text: >-
+              $\sigma_u=(\cos u\cos v,\ \cos u\sin v,\ -\sin u)$, $\sigma_v=(-\sin u\sin v,\ \sin u\cos v,\ 0)$. לכן $E=1$,
+              $F=0$, $G=\sin^2u$.
+          - kind: computation
+            text: >-
+              $\sigma_u\times\sigma_v=(\sin^2u\cos v,\ \sin^2u\sin v,\ \sin u\cos u)=\sin u\cdot\sigma(u,v)$, ואורכו $\sin u>0$.
+          - kind: result
+            text: '$E=1$, $F=0$, $G=\sin^2u$, ו-$\hat{\mathbf N}=\sigma(u,v)$: הנורמל מצביע החוצה מהספרה.'
+        rubric:
+          - text: 'מקדמים נכונים, $E=1$, $F=0$, $G=\sin^2u$'
+            weight: 2
+          - text: '$\sigma_u\times\sigma_v=\sin u\,\sigma$ מחושב, והסימן נקבע לפי $\sin u>0$'
+            weight: 1
+          - text: 'הקביעה "החוצה" מנומקת ($\hat{\mathbf N}\cdot\sigma=1>0$)'
+            weight: 1
+      - label: ב
+        points: 3
+        type: numeric
+        objectives: [OBJ-3.4-2]
+        prompt: >-
+          חשבו את האורך של $C_\rho$ עבור $\rho=\frac\pi6$.
+        answer: 3.1415927
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\pi$. על $C_\rho$: $u=\rho$, $v$ רץ מ-0 עד $2\pi$, ו-$\|\gamma'\|=\sqrt G=\sin\rho$. האורך $2\pi\sin\frac\pi6=\pi$.
+        wrongFeedback: >-
+          על קו רוחב רק $v$ משתנה, ולכן $\|\gamma'\|=\sqrt G$.
+        commonWrong:
+          - value: 3.2898681
+            feedback: >-
+              זה $2\pi\cdot\frac\pi6$, אורך מעגל ברדיוס $\frac\pi6$ **במישור**. על הספרה הוא קצר יותר: $2\pi\sin\frac\pi6$.
+            misconception: MC-c3-every-surface-locally-flat
+          - value: 1.5707963
+            feedback: >-
+              זה $2\pi\sin^2\frac\pi6=2\pi G$: האורך הוא אינטגרל של $\sqrt G$, לא של $G$.
+            misconception: MC-c3-norm-vs-square
+      - label: ג
+        points: 7
+        type: open
+        objectives: [OBJ-3.5-3, OBJ-3.3-2]
+        prompt: >-
+          הוכיחו שכל מסילה חלקה $\gamma:[a,b]\to S$ עם $\gamma(a)=P$ ו-$\gamma(b)\in C_\rho$ אורכה לפחות $\rho$, ושיש מסילה
+          כזו באורך $\rho$ בדיוק. (כלומר: המרחק הפנימי מ-$P$ לכל נקודה של $C_\rho$ הוא $\rho$.)
+        solution:
+          - kind: idea
+            text: >-
+              נעקוב אחרי הקולטיטודה $h(t)=\arccos\gamma_z(t)$ לאורך המסילה. היא צריכה לעלות מ-0 ל-$\rho$, והמהירות של
+              $\gamma$ חוסמת מלמעלה את קצב השינוי שלה.
+          - kind: step
+            text: >-
+              כי $\gamma\cdot\gamma=1$, גזירה נותנת $\gamma'\cdot\gamma=0$: המהירות משיקה לספרה. לכן
+              $\gamma_z'=\gamma'\cdot e_3=\gamma'\cdot(e_3-\gamma_z\gamma)$, ו-$\|e_3-\gamma_z\gamma\|^2=1-2\gamma_z^2+\gamma_z^2=1-\gamma_z^2$.
+              לפי קושי-שוורץ $|\gamma_z'|\le\|\gamma'\|\sqrt{1-\gamma_z^2}$.
+          - kind: step
+            text: >-
+              $h$ רציפה על $[a,b]$, $h(a)=0$ ו-$h(b)=\rho$. נבחר $t_1=\min\{t:\ h(t)=\rho\}$ ו-$t_0=\max\{t\le t_1:\ h(t)=0\}$.
+              על $(t_0,t_1)$ מתקיים $0<h<\rho<\pi$, ולכן $|\gamma_z|<1$, $h$ גזירה, ו-$|h'|=\frac{|\gamma_z'|}{\sqrt{1-\gamma_z^2}}\le\|\gamma'\|$.
+          - kind: computation
+            text: >-
+              $$L(\gamma)\ge\int_{t_0}^{t_1}\|\gamma'\|\,dt\ge\int_{t_0}^{t_1}|h'|\,dt\ge h(t_1)-h(t_0)=\rho.$$
+          - kind: step
+            text: >-
+              הקשת של קו האורך $\mu(t)=(\sin t\cos v_0,\ \sin t\sin v_0,\ \cos t)$, $0\le t\le\rho$, מחברת את $P$ לנקודה של
+              $C_\rho$, עם $\|\mu'\|=1$, ולכן אורכה $\rho$.
+          - kind: result
+            text: >-
+              כל מסילה מ-$P$ ל-$C_\rho$ אורכה לפחות $\rho$, וקשת קו האורך משיגה $\rho$: המרחק הפנימי מ-$P$ לכל נקודה של $C_\rho$
+              הוא $\rho$.
+        rubric:
+          - text: 'האי-שוויון $|\gamma_z''|\le\|\gamma''\|\sqrt{1-\gamma_z^2}$, מנומק (משיקות ו-קושי-שוורץ, או $Q_1=du^2+\sin^2u\,dv^2\ge du^2$)'
+            weight: 3
+          - text: 'טיפול בנקודות הקצה: בחירת קטע שבו $0<h<\rho$, כך שהגזירה מוצדקת'
+            weight: 1
+          - text: 'חסימת האורך מלמטה ב-$\rho$ בעזרת אינטגרל של $|h''|$'
+            weight: 2
+          - text: 'מסילה מפורשת באורך $\rho$ בדיוק'
+            weight: 1
+      - label: ד
+        points: 4
+        type: open
+        standalone: false
+        objectives: [OBJ-3.5-3, OBJ-3.5-1]
+        prompt: >-
+          נניח שקיימת איזומטריה $f$ מסביבה $U$ של $P$ ב-$S$ לקבוצה פתוחה $V$ במישור. ל-$\rho$ קטן מספיק, $C_\rho$ והכיפה
+          שמעליו מוכלים ב-$U$, והעיגול ברדיוס $\rho$ סביב $f(P)$ מוכל ב-$V$. קבלו בלי הוכחה שאז $f$ מעבירה את $C_\rho$,
+          באופן חד-חד-ערכי ועל, למעגל ברדיוס $\rho$ סביב $f(P)$. (רמז למה זה נכון: $f$ שומרת אורכים של מסילות, ולכן גם
+          מרחקים פנימיים; לפי סעיף ג המרחק הפנימי מ-$P$ לכל נקודה של $C_\rho$ הוא $\rho$; ובמישור הקטע הישר הוא המסילה
+          הקצרה ביותר בין שתי נקודות, ולכן בתוך העיגול המרחק הפנימי הוא המרחק הרגיל.) הסיקו סתירה, ל-$\rho$ קטן מספיק כזה.
+        solution:
+          - kind: idea
+            text: 'איזומטריה שומרת אורכים של מסילות, ולכן אורך המעגל $C_\rho$ חייב להיות שווה לאורך תמונתו.'
+          - kind: given
+            text: >-
+              $\rho$ קטן מספיק כמו בניסוח, ו-$\gamma(v)=\sigma(\rho,v)$, $0\le v\le2\pi$, מסילה שעוברת פעם אחת על
+              $C_\rho\subseteq U$.
+          - kind: computation
+            text: 'לפי סעיף ב, $L(\gamma)=\int_0^{2\pi}\sqrt G\,dv=2\pi\sin\rho$.'
+          - kind: step
+            text: >-
+              $f$ איזומטריה, ולכן שומרת אורכים של מסילות: $L(f\circ\gamma)=L(\gamma)=2\pi\sin\rho$.
+          - kind: step
+            text: >-
+              מצד שני, לפי העובדה שקיבלנו, התמונה של $f\circ\gamma$ היא כל המעגל ברדיוס $\rho$ סביב $f(P)$. מסילה על המעגל
+              הזה שעוברת בכל נקודה שלו אורכה לפחות היקפו (כתבו אותה בזווית $\theta(v)$: האורך $\rho\int|\theta'|\,dv$ לפחות
+              $\rho$ כפול אורך קבוצת הזוויות שהיא מכסה, $2\pi$). לכן $L(f\circ\gamma)\ge2\pi\rho$.
+          - kind: theorem
+            text: '$\sin\rho<\rho$ לכל $\rho>0$ (הנגזרת של $\rho-\sin\rho$ היא $1-\cos\rho\ge0$, ואפס רק בנקודות בודדות).'
+          - kind: result
+            text: >-
+              $2\pi\rho\le L(f\circ\gamma)=2\pi\sin\rho<2\pi\rho$, סתירה. לכן אין סביבה של $P$ בספרה שאיזומטרית לקבוצה פתוחה
+              במישור; ומכיוון שכל נקודה של הספרה עוברת ל-$P$ בסיבוב, זה נכון בכל נקודה.
+        rubric:
+          - text: 'שימוש בכך שאיזומטריה שומרת את אורך $C_\rho$: $L(f\circ\gamma)=2\pi\sin\rho$'
+            weight: 2
+          - text: 'אורך התמונה לפחות $2\pi\rho$, והשוואה מול $2\pi\sin\rho$ עם הנימוק $\sin\rho<\rho$'
+            weight: 1
+          - text: 'מסקנה מנוסחת, כולל המעבר מ-$P$ לכל נקודה'
+            weight: 1
+      - label: ה
+        points: 2
+        type: mc
+        objectives: [OBJ-3.5-2, OBJ-3.5-3]
+        qualitative: true
+        prompt: >-
+          למה אותו טיעון אינו מוכיח שהגליל אינו איזומטרי מקומית למישור?
+        choices:
+          - text: 'כי על הגליל המעגל של הנקודות במרחק פנימי $\rho$ (קטן) מנקודה אורכו $2\pi\rho$, כמו במישור'
+            correct: true
+            feedback: >-
+              נכון. בפריסת הגליל, סביבה קטנה של נקודה היא דיסק במישור, ו"מעגל פנימי" הוא מעגל רגיל. אין סתירה.
+          - text: 'כי הנורמל של הגליל, בניגוד לזה של הספרה, קבוע'
+            feedback: >-
+              הנורמל של הגליל מסתובב סביב הציר. ובכל מקרה הנורמל הוא תכונה חיצונית, ואינו משחק תפקיד בטיעון.
+            misconception: MC-c3-normal-is-intrinsic
+          - text: 'כי הגליל אינו קומפקטי, כמו המישור'
+            feedback: >-
+              הטיעון מקומי לגמרי: הוא משווה מעגלים קטנים בתוך סביבה. קומפקטיות של כל המשטח אינה רלוונטית.
+            misconception: MC-c3-global-argument-for-local-claim
+
+  - id: Q-3-exam-6
+    type: exam
+    title: היפרבולואיד ביריעה אחת
+    prompt: >-
+      $F(x,y,z)=x^2+y^2-z^2$, ול-$c\in\mathbb R$ נסמן $S_c=F^{-1}(c)$.
+    parts:
+      - label: א
+        points: 3
+        type: mc
+        objectives: [OBJ-3.2-1]
+        prompt: >-
+          לאילו $c$ המספר $c$ הוא ערך רגולרי של $F$?
+        choices:
+          - text: 'לכל $c\ne0$'
+            correct: true
+            feedback: >-
+              נכון. $\nabla F=(2x,2y,-2z)$ מתאפס רק בראשית, ו-$F(0)=0$.
+          - text: 'לכל $c$'
+            feedback: >-
+              הראשית נמצאת על $S_0$ ושם $\nabla F=0$. $S_0$ הוא החרוט הכפול.
+            misconception: MC-c3-level-set-always-surface
+          - text: 'רק ל-$c>0$'
+            feedback: >-
+              ל-$c<0$ גם אין אפסים של $\nabla F$ על $S_c$; העובדה ש-$S_c$ בנוי משתי יריעות לא משנה.
+            misconception: MC-c3-surface-must-be-connected
+      - label: ב
+        points: 4
+        type: numeric
+        objectives: [OBJ-3.3-1]
+        prompt: >-
+          הנקודה $p=(2,1,2)$ על $S_1$. המישור המשיק ל-$S_1$ ב-$p$ הוא $2x+y-2z=d$. מהו $d$?
+        answer: 1
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\nabla F(p)=(4,2,-4)$, והמישור $4(x-2)+2(y-1)-4(z-2)=0$ הוא $2x+y-2z=1$. בדיקה: $4+1-4=1$.
+        wrongFeedback: >-
+          כתבו $\nabla F(p)\cdot(x-p)=0$ ופשטו; המישור צריך לעבור ב-$p$.
+        commonWrong:
+          - value: 0
+            feedback: >-
+              $2x+y-2z=0$ הוא $\nabla F(p)^{\perp}$, המרחב של וקטורי המהירות, שעובר בראשית. המישור המשיק עובר ב-$p$.
+            misconception: MC-c3-tangent-plane-through-origin
+      - label: ג
+        points: 6
+        type: open
+        objectives: [OBJ-3.3-1, OBJ-3.3-3, OBJ-3.1-2]
+        prompt: >-
+          הראו ש-$\sigma(u,v)=(\cosh v\cos u,\ \cosh v\sin u,\ \sinh v)$ היא פרמטריזציה רגולרית של $S_1$, וש-$\hat{\mathbf N}$
+          שלה שווה ל-$\frac{\nabla F}{\|\nabla F\|}$ בכל נקודה.
+        solution:
+          - kind: check
+            text: '$\cosh^2v(\cos^2u+\sin^2u)-\sinh^2v=1$, ולכן $\sigma(u,v)\in S_1$.'
+          - kind: computation
+            text: >-
+              $\sigma_u=(-\cosh v\sin u,\ \cosh v\cos u,\ 0)$, $\sigma_v=(\sinh v\cos u,\ \sinh v\sin u,\ \cosh v)$, ולכן
+              $$\sigma_u\times\sigma_v=\big(\cosh^2v\cos u,\ \cosh^2v\sin u,\ -\cosh v\sinh v\big)=\cosh v\,(x,\ y,\ -z).$$
+          - kind: step
+            text: >-
+              $\nabla F=(2x,2y,-2z)$, ולכן $\sigma_u\times\sigma_v=\frac{\cosh v}{2}\nabla F$. הכפולה $\frac{\cosh v}2$ חיובית,
+              ו-$\nabla F\ne0$ על $S_1$, ולכן $\sigma_u\times\sigma_v\ne0$: $\sigma$ רגולרית.
+          - kind: step
+            text: 'מנרמלים: כפולה חיובית של וקטור נותנת אחרי נרמול אותו וקטור יחידה.'
+          - kind: result
+            text: >-
+              $\sigma$ רגולרית, ו-$\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}=\frac{(x,y,-z)}{\sqrt{x^2+y^2+z^2}}=\frac{\nabla F}{\|\nabla F\|}$.
+              זה נורמל יחידה רציף על כל $S_1$, ולכן $S_1$ מכוון.
+        rubric:
+          - text: 'בדיקה ש-$\sigma$ מקיימת את המשוואה'
+            weight: 1
+          - text: 'מכפלה וקטורית נכונה, בסימנים הנכונים'
+            weight: 2
+          - text: 'זיהוי $\sigma_u\times\sigma_v$ ככפולה **חיובית** של $\nabla F$, ומכאן גם רגולריות'
+            weight: 2
+          - text: 'מסקנה נכונה על $\hat{\mathbf N}$'
+            weight: 1
+      - label: ד
+        points: 7
+        type: open
+        objectives: [OBJ-3.3-2, OBJ-3.3-1]
+        prompt: >-
+          הוכיחו באופן כללי: אם $c$ ערך רגולרי של פונקציה חלקה $G:\mathbb R^3\to\mathbb R$ ו-$p\in G^{-1}(c)$, אז
+          $T_p\big(G^{-1}(c)\big)=\nabla G(p)^{\perp}$. מותר להשתמש בכך ש-$G^{-1}(c)$ הוא משטח חלק ושהמישור המשיק הוא אוסף
+          וקטורי המהירות של מסילות במשטח.
+        solution:
+          - kind: given
+            text: '$S=G^{-1}(c)$ ו-$\nabla G(p)\ne0$. $T_pS$ הוא אוסף הווקטורים $\gamma''(0)$ של מסילות חלקות $\gamma$ ב-$S$ עם $\gamma(0)=p$, והוא מרחב ממימד 2.'
+          - kind: goal
+            text: '$T_pS=\nabla G(p)^{\perp}$.'
+          - kind: idea
+            text: >-
+              $G$ קבועה לאורך כל מסילה במשטח, ולכן הנגזרת שלה לאורך המסילה מתאפסת; זה נותן הכלה. השוויון בא ממימדים.
+          - kind: step
+            text: >-
+              תהי $\gamma$ מסילה ב-$S$ עם $\gamma(0)=p$. אז $G(\gamma(t))=c$ לכל $t$, ולפי כלל השרשרת
+              $0=\frac{d}{dt}G(\gamma(t))\big|_{t=0}=\nabla G(p)\cdot\gamma'(0)$. לכן $T_pS\subseteq\nabla G(p)^{\perp}$.
+          - kind: step
+            text: >-
+              $\nabla G(p)\ne0$, ולכן $\nabla G(p)^{\perp}$ הוא מרחב ממימד 2. גם $T_pS$ ממימד 2.
+          - kind: step
+            text: 'תת-מרחב ממימד 2 של מרחב ממימד 2 הוא המרחב כולו.'
+          - kind: result
+            text: '$T_pS=\nabla G(p)^{\perp}$, והמישור המשיק הגאומטרי הוא $\nabla G(p)\cdot(x-p)=0$.'
+        rubric:
+          - text: 'שימוש במסילה כלשהי במשטח ובכלל השרשרת כדי לקבל $\nabla G(p)\cdot\gamma''(0)=0$'
+            weight: 3
+          - text: 'ניסוח ההכלה $T_pS\subseteq\nabla G(p)^{\perp}$'
+            weight: 1
+          - text: 'נימוק מימדים: $\nabla G(p)\ne0$ נותן מימד 2, ו-$T_pS$ ממימד 2'
+            weight: 2
+          - text: 'המסקנה שההכלה היא שוויון'
+            weight: 1

@@ -1,0 +1,74 @@
+# Misconceptions first detected in lesson 1.2 (arc length and the arc-length parameter).
+- id: MC-c1-length-inf-polygons
+  title: חושבים שהקווים השבורים ארוכים מהמסילה, או שהמיתר הוא האורך
+  belief: >-
+    קו שבור "מקצר" פחות טוב מהמסילה ולכן ארוך ממנה, והאורך הוא האינפימום של אורכי הקווים השבורים; או שאורך מסילה
+    קרוב למרחק בין קצותיה.
+  truth: >-
+    לפי אי-שוויון המשולש, הוספת נקודה לחלוקה רק **מאריכה** את הקו השבור, וכל קו שבור חסום קצר מהמסילה או שווה לה.
+    לכן האורך הוא **הסופרמום**. האינפימום הוא אורך המיתר $\|\gamma(b)-\gamma(a)\|$, החלוקה הגסה ביותר.
+  remedy: { lesson: '1.2', anchor: polygons, label: 'אורך כסופרמום של קווים שבורים' }
+
+- id: MC-c1-speed-norm
+  title: מחשבים את אורך המהירות כסכום הרכיבים או משמיטים רכיב
+  belief: >-
+    $\|\gamma'(t)\|=|x'|+|y'|+|z'|$, או שאורך סליל הוא אורך ההיטל שלו על המישור.
+  truth: >-
+    $\|\gamma'\|=\sqrt{x'^2+y'^2+z'^2}$, וכל רכיב נכנס. בסליל $(3\cos t,3\sin t,4t)$ המהירות היא
+    $\sqrt{9+16}=5$, לא $3+4=7$ ולא $3$.
+  remedy: { lesson: '1.2', anchor: cycloid, label: 'אורך המהירות: כל הרכיבים, בנורמה האוקלידית' }
+
+- id: MC-c1-cycloid-base
+  title: חושבים שאורך הקשת של הציקלואידה הוא המרחק שהגלגל התגלגל
+  belief: >-
+    קשת אחת של הציקלואידה ארוכה כמו היקף הגלגל, $2\pi r$, כי זה המרחק שהמרכז עבר.
+  truth: >-
+    נקודה על השפה עולה ויורדת תוך כדי ההתגלגלות, ולכן עוברת יותר: $L=\int_0^{2\pi}2r\sin\frac t2\,dt=8r$, גדול
+    מ-$2\pi r\approx6.28r$.
+  remedy: { lesson: '1.2', anchor: ex-1-2-4, label: 'הציקלואידה: אורך 8r' }
+
+- id: MC-c1-substitution-factor
+  title: שוכחים את הגורם הפנימי כשמבצעים אינטגרציה של פונקציה של ct
+  belief: >-
+    $\int\sin\frac t2\,dt=-\cos\frac t2+C$.
+  truth: >-
+    $\int\sin\frac t2\,dt=-2\cos\frac t2+C$: גוזרים את התשובה ובודקים. בקשת הציקלואידה זה ההבדל בין $4r$ ל-$8r$.
+  remedy: { lesson: '1.2', anchor: ex-1-2-4, label: 'הציקלואידה: אורך 8r' }
+
+- id: MC-c1-reparam-any
+  title: חושבים שכל החלפת פרמטר שומרת על האורך
+  belief: >-
+    אם $\delta=\gamma\circ\varphi$ ו-$\varphi$ על אותו קטע, האורך של $\delta$ שווה לאורך של $\gamma$, גם כש-$\varphi$
+    אינה מונוטונית.
+  truth: >-
+    ההוכחה משתמשת ב-$\varphi'$ שאינו מחליף סימן (הצבה חד-חד-ערכית). כש-$\varphi$ הולכת וחוזרת, $\delta$ עוברת על
+    חלק מהמסילה פעמיים והאורך גדל: $\int\|\delta'\|=\int\|\gamma'(\varphi)\|\,|\varphi'|$ סופר כל מעבר.
+  remedy: { lesson: '1.2', anchor: monotone-needed, label: 'אי-תלות בפרמטריזציה: החלפה מונוטונית' }
+
+- id: MC-c1-reversal-negative-length
+  title: חושבים שהיפוך הכיוון הופך את האורך לשלילי
+  belief: >-
+    אם $\delta(u)=\gamma(a+b-u)$ אז $\varphi'=-1$ והאורך של $\delta$ הוא מינוס האורך של $\gamma$.
+  truth: >-
+    באורך מופיע $\|\delta'(u)\|=|\varphi'(u)|\,\|\gamma'(\varphi(u))\|$, עם ערך מוחלט. בהצבה $t=\varphi(u)$ גם
+    הגבולות מתהפכים, ושני ההיפוכים מתקזזים: האורך חיובי ושווה.
+  remedy: { lesson: '1.2', anchor: reparam-theorem, label: 'אי-תלות בפרמטריזציה: היפוך כיוון' }
+
+- id: MC-c1-unit-speed-scaling
+  title: חושבים שהפרמטר הטבעי של מסילה הוא אורך הקשת
+  belief: >-
+    $(r\cos s,r\sin s)$ או $(\cos s,\sin s,s)$ כבר בפרמטר אורך הקשת, כי $s$ הוא "הפרמטר הרגיל" של המסילה.
+  truth: >-
+    פרמטר אורך הקשת הוא פרמטר שבו $\|\gamma'(s)\|=1$ בדיוק. ל-$(r\cos s,r\sin s)$ המהירות $r$, ולסליל
+    $(\cos s,\sin s,s)$ המהירות $\sqrt2$. צריך לבדוק, ואם לא, לעבור ל-$s(t)=\int_{t_0}^t\|\gamma'\|$.
+  remedy: { lesson: '1.2', anchor: unit-speed, label: 'פרמטר אורך הקשת: מהירות 1' }
+
+- id: MC-c1-arc-length-any-curve
+  title: חושבים שכל מסילה חלקה אפשר לפרמטר מחדש לפי אורך הקשת בצורה גזירה
+  belief: >-
+    $s(t)$ עולה ממש, ולכן תמיד יש $t(s)$ גזירה ו-$\gamma(t(s))$ גזירה עם מהירות 1, גם כש-$\gamma'$ מתאפס.
+  truth: >-
+    ההפכית גזירה רק במקום שבו $s'(t)=\|\gamma'(t)\|\ne0$. ב-$(t^2,t^3)$ ליד $0$, $s\approx t|t|$, ולכן
+    $t\approx\operatorname{sgn}(s)\sqrt{|s|}$ ו-$x(s)=t^2\approx|s|$: הפרמטריזציה לפי אורך הקשת אינה גזירה
+    ב-$s=0$. רגולריות היא בדיוק התנאי.
+  remedy: { lesson: '1.2', anchor: regular-needed, label: 'מעבר לפרמטר אורך הקשת: למה צריך רגולריות' }

@@ -1,0 +1,19 @@
+# Terms first defined in lesson 5.3 (surface area).
+- id: surface-area
+  term: שטח של משטח
+  en: surface area
+  symbol: 'A(S)=\iint_D\|\sigma_u\times\sigma_v\|\,du\,dv'
+  definition: >-
+    לפרמטריזציה רגולרית וחד-חד-ערכית (פרט לקבוצה בעלת שטח אפס) $\sigma:D\to\mathbb R^3$ של $S$:
+    $A(S)=\iint_D\|\sigma_u\times\sigma_v\|\,du\,dv=\iint_D\sqrt{EG-F^2}\,du\,dv$. השטח אינו תלוי בפרמטריזציה, ותלוי
+    רק בתבנית הראשונה.
+  lesson: '5.3'
+- id: area-element
+  term: אלמנט שטח
+  en: area element
+  symbol: 'dS=\sqrt{EG-F^2}\,du\,dv'
+  definition: >-
+    $dS=\|\sigma_u\times\sigma_v\|\,du\,dv=\sqrt{EG-F^2}\,du\,dv$: השטח של המקבילית הקטנה שנפרשת על ידי
+    $\sigma_u\,du$ ו-$\sigma_v\,dv$. לגרף של $f$: $dS=\sqrt{1+f_x^2+f_y^2}\,dx\,dy$. הוא אינו שלילי ואינו תלוי
+    בכיוון הנורמל.
+  lesson: '5.3'

@@ -1,0 +1,17 @@
+# Terms first defined in lesson 3.4.
+- id: first-fundamental-form
+  term: התבנית היסודית הראשונה
+  en: first fundamental form
+  symbol: 'Q_1=E\,du^2+2F\,du\,dv+G\,dv^2'
+  definition: >-
+    הצמצום של המכפלה הפנימית של $\mathbb R^3$ למישור המשיק, בקואורדינטות $(a,b)$ של $w=a\sigma_u+b\sigma_v$:
+    $Q_1(a,b)=\|w\|^2=Ea^2+2Fab+Gb^2$. ממנה מחשבים אורכים של מסילות וזוויות ביניהן.
+  lesson: '3.4'
+- id: first-form-coefficients
+  term: מקדמי התבנית הראשונה
+  en: coefficients of the first fundamental form
+  symbol: 'E=\sigma_u\cdot\sigma_u,\ F=\sigma_u\cdot\sigma_v,\ G=\sigma_v\cdot\sigma_v'
+  definition: >-
+    שלוש הפונקציות $E,F,G$ על תחום הפרמטרים. בנקודה רגולרית $E>0$, $G>0$ ו-$EG-F^2=\|\sigma_u\times\sigma_v\|^2>0$ (זהות
+    לגרנז׳). הן תלויות בפרמטריזציה; $Q_1$ כתבנית על המישור המשיק אינה תלויה.
+  lesson: '3.4'

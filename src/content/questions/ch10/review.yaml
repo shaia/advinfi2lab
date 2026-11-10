@@ -1,0 +1,560 @@
+# Chapter 10 review — Fourier series and polynomial approximation (lessons 10.1–10.6), easy to hard.
+# Every lesson is touched; most questions combine two lessons, some reach back to chapter 9. Each hint names the lesson to go back to.
+chapter: 10
+questions:
+  - id: Q-10-review-01
+    type: numeric
+    objectives: [OBJ-10.1-1]
+    level: basic
+    prompt: >-
+      $f(x)=3+2\cos x-\sin4x$. מהו המקדם $a_0$ של $f$?
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f$ כבר פולינום טריגונומטרי, והאיבר הקבוע שלו, 3, הוא $\frac{a_0}2$. לכן $a_0=6$; ובחישוב:
+      $a_0=\frac1\pi\int_{-\pi}^{\pi}f=\frac{6\pi}\pi=6$.
+    wrongFeedback: >-
+      $a_0=\frac1\pi\int_{-\pi}^{\pi}f$, והאיבר הקבוע של הטור הוא $\frac{a_0}2$.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          3 הוא האיבר הקבוע, כלומר $\frac{a_0}2$. המקדם עצמו כפול.
+        misconception: MC-c10-a0-not-halved
+      - value: 18.8495559
+        feedback: >-
+          זה $\int_{-\pi}^{\pi}f=6\pi$, בלי $\frac1\pi$.
+        misconception: MC-c10-forget-1-over-pi
+    hints:
+      - 'חזרו לשיעור 10.1: מקדמי פורייה והאיבר הקבוע $\frac{a_0}2$.'
+
+  - id: Q-10-review-02
+    type: numeric
+    objectives: [OBJ-9.2-3, OBJ-10.1-2]
+    level: basic
+    prompt: >-
+      במערכת האורתונורמלית $e=\frac{\sin2x}{\sqrt\pi}$ של $H[-\pi,\pi]$, חשבו את הקואורדינטה $\langle x,e\rangle=\int_{-\pi}^{\pi}x\,\frac{\sin2x}{\sqrt\pi}\,dx$.
+      (ל-$f(x)=x$: $b_n=\frac{2(-1)^{n+1}}n$.)
+    answer: -1.7724539
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\langle f,\frac{\sin nx}{\sqrt\pi}\rangle=\frac1{\sqrt\pi}\cdot\pi b_n=\sqrt\pi\,b_n$, וכאן $b_2=-1$, ולכן $-\sqrt\pi$.
+    wrongFeedback: >-
+      $\int f\sin nx=\pi b_n$, והמערכת המנורמלת מוסיפה $\frac1{\sqrt\pi}$.
+    commonWrong:
+      - value: -1
+        feedback: >-
+          זה $b_2$. מקדם פורייה אינו הקואורדינטה במערכת האורתונורמלית: הם נבדלים בגורם $\sqrt\pi$.
+        misconception: MC-c9-orthogonal-normalized
+      - value: -3.1415927
+        feedback: >-
+          זה $\int x\sin2x=\pi b_2$, בלי הנרמול $\frac1{\sqrt\pi}$.
+        misconception: MC-c9-orthogonal-normalized
+    hints:
+      - 'חזרו לשיעור 9.2: מקדמים במערכת אורתונורמלית; ולשיעור 10.1: המערכת הטריגונומטרית המנורמלת.'
+
+  - id: Q-10-review-03
+    type: mc
+    objectives: [OBJ-10.4-1, OBJ-10.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      רוצים להוכיח שטור פורייה של $x^2$ על $[-\pi,\pi]$ מתכנס אליה **במידה שווה**. מה הטיעון?
+    choices:
+      - text: '$\sum|a_n|=4\sum\frac1{n^2}<\infty$, ולכן מבחן M נותן התכנסות במידה שווה'
+        correct: true
+        feedback: >-
+          נכון (ואת אותו תנאי מבטיחה גם העובדה שההמשכה רציפה וגזירה למקוטעין, שיעור 10.4). כדי לדעת שהגבול הוא $x^2$
+          משתמשים בהתכנסות הנקודתית (שיעור 10.3).
+      - text: 'ההמשכה גזירה למקוטעין, ולכן הטור מתכנס ל-$x^2$ בכל נקודה, כלומר במידה שווה'
+        feedback: >-
+          התכנסות בכל נקודה לבדה לא נותנת התכנסות במידה שווה: טור הגל הריבועי מתכנס בכל נקודה ולא במידה שווה.
+        misconception: MC-c10-pointwise-everywhere-uniform
+      - text: 'פרסבל: $\|f-S_Nf\|\to0$, ולכן גם $\max|f-S_Nf|\to0$'
+        feedback: >-
+          התכנסות בממוצע ריבועי חלשה מהתכנסות במידה שווה; היא נכונה גם לגל הריבועי.
+        misconception: MC-c9-L2-implies-uniform
+      - text: 'רימן-לבג: $a_n\to0$, ולכן הזנב של הטור קטן במידה שווה'
+        feedback: >-
+          $a_n\to0$ נכון לכל $f\in H$, ולא נותן כלום על התכנסות הטור: לגל הריבועי המקדמים שואפים ל-0 והזנב אינו קטן
+          במידה שווה.
+        misconception: MC-c10-coeffs-to-zero-enough
+    hints:
+      - 'חזרו לשיעור 10.4: התנאי על סכום הערכים המוחלטים ומבחן M.'
+
+  - id: Q-10-review-04
+    type: mc
+    objectives: [OBJ-10.6-1, OBJ-10.6-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      רוצים פולינומים $p_n$ עם $\max_{[0,1]}\left|p_n(x)-\left|x-\tfrac12\right|\right|\to0$. מה נכון?
+    choices:
+      - text: 'פולינומי ברנשטיין $B_nf$ עושים את זה'
+        correct: true
+        feedback: >-
+          נכון: $f$ רציפה על $[0,1]$, ו-$B_nf\to f$ במידה שווה לכל $f$ רציפה.
+      - text: 'פולינומי טיילור של $f$ סביב $\frac12$ עושים את זה'
+        feedback: >-
+          ל-$f$ אין נגזרת ב-$\frac12$, ולכן אין לה פולינום טיילור ממעלה 1 שם. ויירשטראס אינו טיילור.
+        misconception: MC-c10-weierstrass-via-taylor
+      - text: 'אין כאלה, כי $f$ אינה גזירה ב-$\frac12$'
+        feedback: >-
+          ויירשטראס דורש רציפות בלבד. ברנשטיין, למשל, משתמש רק בערכים $f(\frac kn)$.
+        misconception: MC-c10-weierstrass-via-taylor
+    hints:
+      - 'חזרו לשיעור 10.6: משפט ויירשטראס ופולינומי ברנשטיין.'
+
+  - id: Q-10-review-05
+    type: numeric
+    objectives: [OBJ-10.3-2, OBJ-10.1-1]
+    level: mid
+    prompt: >-
+      $f(x)=x^2+x$ על $(-\pi,\pi)$, מומשכת למחזורית ב-$2\pi$. לאיזה מספר מתכנס טור פורייה שלה בנקודה $x=\pi$?
+    answer: 9.8696044
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(\pi^-)=\pi^2+\pi$ ו-$f(-\pi^+)=\pi^2-\pi$, והממוצע $\pi^2$. אותו דבר מהטורים: $x^2$ רציפה בהמשכה ונותנת
+      $\pi^2$, ו-$x$ נותנת את הממוצע 0.
+    wrongFeedback: >-
+      הטור מתאר את ההמשכה המחזורית. מהם שני הגבולות החד-צדדיים שלה ב-$\pi$?
+    commonWrong:
+      - value: 13.0111971
+        feedback: >-
+          זה $f(\pi^-)=\pi^2+\pi$. ב-$\pi$ ההמשכה קופצת ל-$\pi^2-\pi$, והטור מתכנס לממוצע.
+        misconception: MC-c10-endpoint-not-periodic
+      - value: 6.7280117
+        feedback: >-
+          זה $f(-\pi^+)=\pi^2-\pi$, רק הגבול מצד אחד.
+        misconception: MC-c10-endpoint-not-periodic
+    hints:
+      - 'חזרו לשיעור 10.3: הממוצע של הגבולות החד-צדדיים, וההמשכה המחזורית בקצוות.'
+
+  - id: Q-10-review-06
+    type: multi
+    objectives: [OBJ-10.5-3, OBJ-10.4-3, OBJ-10.2-1, OBJ-10.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ הגל הריבועי $\pm1$ ($b_n=\frac4{\pi n}$ לאי-זוגיים). אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: '$\|f-S_Nf\|\to0$'
+        correct: true
+        feedback: 'נכון: לכל $f\in H$ (שיעור 10.5).'
+      - text: '$S_Nf(x)$ מתכנס לכל $x$, ובנקודות הקפיצה ל-0'
+        correct: true
+        feedback: 'נכון: $f$ גזירה למקוטעין, ובקפיצות הממוצע הוא 0 (שיעור 10.3).'
+      - text: '$\sum b_n^2<\infty$'
+        correct: true
+        feedback: 'נכון: בסל, ובעצם $\sum b_n^2=2$ (פרסבל).'
+      - text: '$S_Nf\to f$ במידה שווה על $[-\pi,\pi]$'
+        feedback: >-
+          לא: גבול במידה שווה של פונקציות רציפות רציף, והגל קופץ.
+        misconception: MC-c10-uniform-limit-can-jump
+      - text: '$\sum|b_n|<\infty$'
+        feedback: >-
+          לא: $\frac4\pi\sum\frac1n$ על האי-זוגיים מתבדר. סכום ריבועים סופי אינו סכום ערכים מוחלטים סופי.
+        misconception: MC-c10-squares-vs-abs
+    hints:
+      - 'חזרו לשיעור 10.5: שלושת סוגי ההתכנסות; לשיעור 10.4: למה קפיצה מונעת התכנסות במידה שווה; לשיעור 10.3: הגבול בנקודת קפיצה; ולשיעור 10.2: אי-שוויון בסל.'
+
+  - id: Q-10-review-07
+    type: numeric
+    objectives: [OBJ-10.5-2, OBJ-10.1-1]
+    level: mid
+    prompt: >-
+      ל-$f(x)=|\sin x|$ על $[-\pi,\pi]$: $a_0=\frac4\pi$, $a_{2k}=-\frac4{\pi(4k^2-1)}$ ל-$k\ge1$, ושאר המקדמים אפס.
+      השתמשו בשוויון פרסבל וחשבו את
+      $$\sum_{k=1}^\infty\frac1{(4k^2-1)^2}=\frac19+\frac1{225}+\frac1{1225}+\cdots$$
+    answer: 0.1168503
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{\pi^2-8}{16}$. $\frac1\pi\int_{-\pi}^{\pi}\sin^2x\,dx=1$, ו-$\frac{a_0^2}2=\frac8{\pi^2}$, ולכן
+      $1=\frac8{\pi^2}+\frac{16}{\pi^2}\sum\frac1{(4k^2-1)^2}$, כלומר $\sum\frac1{(4k^2-1)^2}=\frac{\pi^2-8}{16}\approx0.1169$.
+      בדיקה: האיבר הראשון לבדו $\frac19\approx0.111$.
+    wrongFeedback: >-
+      פרסבל: $\frac1\pi\int f^2=\frac{a_0^2}2+\sum(a_n^2+b_n^2)$. חשבו את אגף שמאל, הפחיתו את $\frac{a_0^2}2$, וחלקו
+      ב-$\frac{16}{\pi^2}$.
+    commonWrong:
+      - value: -0.3831497
+        feedback: >-
+          הפחתתם $a_0^2=\frac{16}{\pi^2}$ במקום $\frac{a_0^2}2$, וקיבלתם $\frac{\pi^2-16}{16}<0$: סכום של ריבועים אינו שלילי.
+        misconception: MC-c10-a0-not-halved
+      - value: 0.6168503
+        feedback: >-
+          $\frac{\pi^2}{16}$ מתקבל כששוכחים את האיבר $\frac{a_0^2}2$. גם האיבר הקבוע של הטור תורם לפרסבל.
+      - value: 1.4378923
+        feedback: >-
+          זה $\frac{\pi^3-8}{16}$: לקחתם $\int\sin^2x=\pi$ בלי $\frac1\pi$ באגף שמאל.
+        misconception: MC-c10-forget-1-over-pi
+    hints:
+      - 'חזרו לשיעור 10.5: שוויון פרסבל; ולשיעור 10.1: מקדמים על כל קטע באורך מחזור.'
+
+  - id: Q-10-review-08
+    type: twotier
+    objectives: [OBJ-10.2-1, OBJ-9.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f\in H[-\pi,\pi]$ מקיימת $a_0=0$, $\frac1\pi\int f^2=3$ ו-$a_1^2+b_1^2=3$. האם $f=a_1\cos x+b_1\sin x$ ב-$H$, כלומר
+      $\|f-(a_1\cos x+b_1\sin x)\|=0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. ההפרש בין האגפים של בסל עם $N=1$ הוא $\frac1\pi\|f-S_1f\|^2$, וכאן הוא $3-3=0$.'
+      - text: לא
+        feedback: >-
+          מפיתגורס $\frac1\pi\|f-S_1f\|^2=\frac1\pi\|f\|^2-\left(\frac{a_0^2}2+a_1^2+b_1^2\right)=0$. אין מקום לרכיב נוסף.
+        misconception: MC-c10-projection-not-identity
+    reasons:
+      - text: 'פיתגורס להטלה $S_1f$: $\frac1\pi\|f-S_1f\|^2=3-3=0$, ו-$S_1f=a_1\cos x+b_1\sin x$'
+        correct: true
+        feedback: >-
+          בדיוק. ובפרט כל שאר המקדמים של $f$ אפס, ו-$S_Nf=S_1f$ לכל $N\ge1$.
+      - text: 'לא: בבסל אין שוויון לעולם עבור $N$ סופי'
+        feedback: >-
+          יש, בדיוק כש-$f\in T_N$ ב-$H$. זה המצב כאן.
+        misconception: MC-c10-projection-not-identity
+      - text: 'כן, אבל רק אם $f$ רציפה'
+        feedback: >-
+          הטיעון הוא פיתגורס, והוא חל על כל $f\in H$. ב-$H$ המסקנה היא "מרחק אפס"; $f$ יכולה להיות שונה בכמה נקודות.
+        misconception: MC-c10-parseval-needs-continuity
+    hints:
+      - 'חזרו לשיעור 10.2: בסל מפיתגורס; ולשיעור 9.3: ההפרש ניצב להטלה.'
+
+  - id: Q-10-review-09
+    type: twotier
+    objectives: [OBJ-10.2-2, OBJ-10.4-3, OBJ-10.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      למקדמי הגל הריבועי $\pm1$, $b_n=\frac4{\pi n}\to0$. האם מזה נובע ש-$\max_{(0,\pi)}|f-S_Nf|\to0$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. המקדמים שואפים לאפס, ובכל זאת השגיאה המקסימלית לא קטנה.'
+      - text: כן
+        feedback: >-
+          $a_n,b_n\to0$ לכל $f\in H$, וזה לא אומר דבר על התכנסות במידה שווה. כאן ליד 0 השגיאה קרובה ל-1 לכל $N$.
+        misconception: MC-c10-coeffs-to-zero-enough
+    reasons:
+      - text: '$S_Nf$ רציף עם $S_Nf(0)=0$, ולכן קרוב ל-0 מימין $|f-S_Nf|$ קרוב ל-1 לכל $N$'
+        correct: true
+        feedback: >-
+          בדיוק. ובנוסף יש חריגת גיבס של כ-$0.18$ (שיעור 10.3). שאיפת המקדמים לאפס (נכונה לכל $f\in H$, שיעור 10.2) לא
+          אומרת דבר על השגיאה המקסימלית.
+      - text: 'חריגת גיבס נעלמת כש-$N$ גדל, ולכן השגיאה המקסימלית קטנה יחד עם המקדמים'
+        feedback: >-
+          החריגה זזה לעבר הקפיצה, וגובהה שואף לכ-$9\%$ מהקפיצה, לא לאפס.
+        misconception: MC-c10-gibbs-vanishes
+      - text: '$S_Nf(x)\to f(x)$ לכל $x\in(0,\pi)$, ולכן גם המקסימום של השגיאה שואף ל-0'
+        feedback: >-
+          התכנסות בכל נקודה אינה התכנסות במידה שווה.
+        misconception: MC-c10-pointwise-everywhere-uniform
+    hints:
+      - 'חזרו לשיעור 10.4: קפיצה מונעת התכנסות במידה שווה; לשיעור 10.3: תופעת גיבס; ולשיעור 10.2: מה למת רימן-לבג אומרת ומה לא.'
+
+  - id: Q-10-review-10
+    type: numeric
+    objectives: [OBJ-10.3-1, OBJ-10.1-1]
+    level: mid
+    prompt: >-
+      חשבו את $\frac1{2\pi}\int_{-\pi}^{\pi}t^2D_3(t)\,dt$, כש-$D_3$ גרעין דיריכלה. (טור פורייה של $x^2$ על $[-\pi,\pi]$
+      הוא $\frac{\pi^2}3+4\sum_{n\ge1}\frac{(-1)^n\cos nx}{n^2}$.)
+    answer: -0.1545763
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{\pi^2}3-\frac{31}9\approx-0.1546$. עם $f(x)=x^2$ (זוגית, מחזורית) הנוסחה
+      $S_Nf(x)=\frac1{2\pi}\int f(x-t)D_N(t)\,dt$ ב-$x=0$ נותנת בדיוק את האינטגרל, כי $f(-t)=t^2$. לכן הוא
+      $S_3f(0)=\frac{\pi^2}3+4\left(-1+\frac14-\frac19\right)$. (ישירות: $\frac1{2\pi}\int t^2\big(1+2\sum_{k=1}^3\cos kt\big)dt$,
+      איבר-איבר.) הערך שלילי אף ש-$t^2\ge0$, כי $D_3$ מחליף סימן.
+    wrongFeedback: >-
+      זהו $S_3f(0)$ של פונקציה מסוימת: איזו? השתמשו בנוסחת הקונבולוציה עם $x=0$, וסכמו את ארבעת האיברים הראשונים של
+      הטור.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $0=f(0)$ הוא הגבול של $S_Nf(0)$ כש-$N\to\infty$, לא הערך ב-$N=3$. האינטגרל הוא סכום חלקי, לא הגבול שלו.
+      - value: 3.2898681
+        feedback: >-
+          $\frac{\pi^2}3=\frac1{2\pi}\int t^2\,dt$: נשאר רק האיבר הקבוע 1 של $D_3$. גם האיברים $2\cos kt$ תורמים, כי
+          $t^2$ אינה ניצבת להם.
+        misconception: MC-c10-kernel-sum-form
+      - value: -0.3091526
+        feedback: >-
+          זה כפול מהתשובה: חישבתם $\frac1\pi\int t^2D_3$. השטח של $D_N$ הוא $2\pi$, ולכן מנרמלים ב-$\frac1{2\pi}$.
+        misconception: MC-c10-kernel-mass
+    hints:
+      - 'חזרו לשיעור 10.3: הסכום החלקי כקונבולוציה עם גרעין דיריכלה; ולשיעור 10.1: מקדמי פורייה של $x^2$.'
+
+  - id: Q-10-review-11
+    type: multi
+    objectives: [OBJ-10.5-2, OBJ-10.3-2, OBJ-10.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהטיעונים הבאים מוכיחים נכון ש-$\sum\frac1{n^2}=\frac{\pi^2}6$? סמנו את כולם.
+    choices:
+      - text: 'פרסבל ל-$f(x)=x$: $\frac{2\pi^2}3=\sum\frac4{n^2}$'
+        correct: true
+        feedback: 'נכון (שיעור 10.5).'
+      - text: 'התכנסות נקודתית של טור $x^2$ ב-$x=\pi$: $\pi^2=\frac{\pi^2}3+4\sum\frac1{n^2}$'
+        correct: true
+        feedback: >-
+          נכון: ההמשכה של $x^2$ רציפה ב-$\pi$ וגזירה למקוטעין, ו-$\cos n\pi=(-1)^n$ מבטל את הסימן (שיעור 10.3).
+      - text: 'התכנסות נקודתית של טור $x$ ב-$x=\pi$: $\pi=\sum\frac{2(-1)^{n+1}}n\sin n\pi$'
+        feedback: >-
+          ב-$\pi$ כל האיברים אפס, והטור מתכנס ל-0, הממוצע של $\pi$ ו-$-\pi$, ולא ל-$f(\pi)=\pi$. מכאן לא יוצא שום סכום.
+        misconception: MC-c10-endpoint-not-periodic
+      - text: 'בסל ל-$f(x)=x$: $\sum\frac4{n^2}\le\frac{2\pi^2}3$'
+        feedback: >-
+          בסל נותן רק $\sum\frac1{n^2}\le\frac{\pi^2}6$. השוויון הוא התוכן של פרסבל, לא של בסל.
+        misconception: MC-c10-bessel-reversed
+    hints:
+      - 'חזרו לשיעור 10.5: פרסבל; לשיעור 10.3: הצבה בנקודה שבה הטור מתכנס לערך הפונקציה; ולשיעור 10.2: מה בסל נותן (אי-שוויון בלבד).'
+
+  - id: Q-10-review-12
+    type: numeric
+    objectives: [OBJ-10.3-2, OBJ-10.4-2, OBJ-10.1-1]
+    level: exam
+    prompt: >-
+      ל-$f(x)=\cos\frac x2$ על $[-\pi,\pi]$: $a_0=\frac4\pi$ ו-$a_n=\frac{4(-1)^{n+1}}{\pi(4n^2-1)}$, $b_n=0$. השתמשו בטור בנקודה
+      $x=0$ (אחרי שתצדיקו שמותר) וחשבו את
+      $$\sum_{n=1}^\infty\frac{(-1)^{n+1}}{4n^2-1}=\frac13-\frac1{15}+\frac1{35}-\cdots$$
+    answer: 0.2853982
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ההמשכה רציפה ($\cos(\pm\frac\pi2)=0$) וגזירה למקוטעין, ולכן הטור מתכנס ל-$f$ בכל נקודה (ואף במידה שווה).
+      ב-0: $1=\frac2\pi+\frac4\pi\sum\frac{(-1)^{n+1}}{4n^2-1}$, ולכן הסכום $\frac\pi4-\frac12\approx0.2854$.
+    wrongFeedback: >-
+      הציבו $x=0$: $f(0)=1=\frac{a_0}2+\sum a_n$. הקפידו על $\frac{a_0}2$.
+    commonWrong:
+      - value: -0.2146018
+        feedback: >-
+          לקחתם $a_0=\frac4\pi$ כאיבר הקבוע במקום $\frac{a_0}2=\frac2\pi$, וקיבלתם $\frac\pi4-1<0$: סכום של טור שאיבריו מתחלפים
+          ומתחיל ב-$\frac13$ לא יכול להיות שלילי.
+        misconception: MC-c10-a0-not-halved
+    hints:
+      - 'חזרו לשיעור 10.3: מתי מותר להציב בטור; ולשיעור 10.4: רציפות על המעגל.'
+
+  - id: Q-10-review-13
+    type: twotier
+    objectives: [OBJ-10.5-2, OBJ-10.5-1, OBJ-9.1-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ רציפה על $[-\pi,\pi]$ (לא בהכרח $f(-\pi)=f(\pi)$), וכל מקדמי פורייה שלה אפס. האם $f\equiv0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. פרסבל נותן $\int f^2=0$, ולפונקציה רציפה זה גורר $f\equiv0$.'
+      - text: לא בהכרח
+        feedback: >-
+          פרסבל חל לכל $f\in H$, בלי תנאי מחזוריות: $\frac1\pi\int f^2=\frac{a_0^2}2+\sum(a_n^2+b_n^2)=0$.
+        misconception: MC-c10-trig-approx-nonperiodic
+    reasons:
+      - text: 'פרסבל: $\int f^2=0$; ולפונקציה רציפה $\int f^2=0$ גורר $f\equiv0$ (החיוביות של המכפלה ב-$C[a,b]$)'
+        correct: true
+        feedback: >-
+          בדיוק. בלי רציפות המסקנה הייתה רק $\|f\|=0$ ב-$H$.
+      - text: 'רק אם $f(-\pi)=f(\pi)$, כי אחרת אין התכנסות'
+        feedback: >-
+          המחזוריות נחוצה להתכנסות **במידה שווה**. ההתכנסות בממוצע ריבועי, ולכן פרסבל, חלות על כל $f\in H$.
+        misconception: MC-c10-trig-approx-nonperiodic
+      - text: 'לא: $f$ יכולה להיות ניצבת לכל המערכת הטריגונומטרית בלי להיות אפס'
+        feedback: >-
+          זה בדיוק מה שהשלמות (פרסבל) שוללת: פונקציה ב-$H$ שניצבת לכל המערכת היא בעלת נורמה 0.
+        misconception: MC-c10-projection-not-identity
+    hints:
+      - 'חזרו לשיעור 10.5: פרסבל לכל f ב-H; ולשיעור 9.1: החיוביות של המכפלה הפנימית על פונקציות רציפות.'
+
+  - id: Q-10-review-14
+    type: numeric
+    objectives: [OBJ-10.6-2, OBJ-10.6-3, OBJ-9.3-3]
+    level: exam
+    prompt: >-
+      פולינום ברנשטיין של $f$ על $[0,1]$ הוא $B_nf(x)=\sum_{k=0}^nf\!\left(\frac kn\right)\binom nk x^k(1-x)^{n-k}$. חשבו את
+      $B_3f$ ל-$f(x)=x^2$ מההגדרה, כתבו אותו בצורה $x^2+(\dots)$, והשוו לפולינום ממעלה עד 3 הקרוב ביותר ל-$x^2$ בריבועים
+      פחותים (שהוא $x^2$ עצמו). חשבו את $\int_0^1\big(x^2-B_3f(x)\big)^2dx$.
+    answer: 0.0037037
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac1{270}$. מההגדרה
+      $B_3f=0\cdot(1-x)^3+\frac19\cdot3x(1-x)^2+\frac49\cdot3x^2(1-x)+1\cdot x^3=\frac{x(1-x)^2+4x^2(1-x)}3+x^3$,
+      ואחרי פישוט $B_3f=x^2+\frac{x(1-x)}3$. לכן $\int_0^1\frac{x^2(1-x)^2}9dx=\frac19\cdot\frac1{30}=\frac1{270}$. ברנשטיין
+      אינו הקירוב הטוב ביותר ממעלתו בשום נורמה, כי $x^2$ עצמו במרחק 0: יתרונו שהוא מתכנס במידה שווה לכל $f$ רציפה.
+    wrongFeedback: >-
+      הציבו $f\!\left(\frac k3\right)=\frac{k^2}9$ לכל $k=0,\dots,3$, סכמו ופשטו עד $x^2+c\,x(1-x)$. אחר כך רבעו את
+      ההפרש, כולל הקבוע $c$, ושלבו: $\int_0^1x^2(1-x)^2dx=\frac1{30}$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $B_3f\ne x^2$: ברנשטיין לא משחזר פולינומים ממעלה 2, אף שהקירוב הטוב ביותר בריבועים פחותים כן.
+        misconception: MC-c10-bernstein-reproduces
+      - value: 0.0111111
+        feedback: >-
+          זה $\frac13\cdot\frac1{30}$: הוצאתם את $\frac13$ מהריבוע בלי לרבע אותו.
+        misconception: MC-c9-constant-not-squared
+      - value: 0.0083333
+        feedback: >-
+          $\frac1{120}$ שייך ל-$B_2f=x^2+\frac{x(1-x)}2$. ב-$B_3$ ההפרש הוא $\frac{x(1-x)}3$: המכנה הוא $n$.
+    hints:
+      - 'חזרו לשיעור 10.6: פולינומי ברנשטיין וההבדל מריבועים פחותים; ולשיעור 9.3: הפולינום הקרוב ביותר.'
+
+  - id: Q-10-review-15
+    type: numeric
+    objectives: [OBJ-9.5-2, OBJ-10.1-3]
+    level: exam
+    prompt: >-
+      $K=\{c\sin x:\ |c|\le1\}\subset H[-\pi,\pi]$ היא קבוצה קמורה סגורה. חשבו את
+      $$\min_{g\in K}\int_{-\pi}^{\pi}(x-g)^2dx.$$
+    answer: 11.2460732
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\int(x-c\sin x)^2=\frac{2\pi^3}3-4\pi c+\pi c^2$ (כי $\int x\sin x=2\pi$ ו-$\int\sin^2x=\pi$). המינימום ללא אילוץ
+      ב-$c=b_1=2$, מחוץ ל-$K$; על $[-1,1]$ הפרבולה יורדת, ולכן $c=1$ והערך $\frac{2\pi^3}3-3\pi\approx11.246$.
+    wrongFeedback: >-
+      כתבו את האינטגרל כפונקציה ריבועית של $c$ ומצאו את המינימום שלה על $[-1,1]$. ההטלה על תת-המרחב, $2\sin x$, אינה ב-$K$.
+    commonWrong:
+      - value: 8.1044805
+        feedback: >-
+          זה $\frac{2\pi^3}3-4\pi$, הערך ב-$c=2$: ההטלה על תת-המרחב $\{c\sin x\}$, בלי האילוץ. אבל $2\sin x\notin K$, ולכן
+          המינימום על $K$ גדול יותר: הפרבולה יורדת על $[-1,1]$, והמינימום ב-$c=1$.
+        misconception: MC-c9-unconstrained-projection
+    hints:
+      - 'חזרו לשיעור 9.5: הטלה על קבוצה קמורה; ולשיעור 10.1: המקדם $b_1$ כהטלה על $\sin x$.'
+
+  # Q-10-review-16…19 came from advinfilab's former Fourier chapter (review questions 08, 10, 11, 14; handover
+  # 2026-11-06), re-tagged to chapter 10 and recomputed (scratchpad merge-nums.ts).
+  - id: Q-10-review-16
+    type: rank
+    objectives: [OBJ-10.4-4, OBJ-10.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      כל פונקציה כאן נתונה על $[-\pi,\pi]$ ומומשכת למחזוריות ב-$2\pi$. סדרו אותן לפי מהירות הדעיכה של מקדמי פורייה שלהן,
+      מהמהירה ביותר לאיטית ביותר.
+    items:
+      - id: trig
+        label: '$\cos2x+\sin5x$'
+      - id: cubic
+        label: '$x(\pi^2-x^2)$'
+      - id: abs
+        label: '$|x|$'
+      - id: square
+        label: 'הגל הריבועי $\pm1$'
+    order: [trig, cubic, abs, square]
+    correctFeedback: >-
+      נכון. הפולינום הטריגונומטרי: המקדמים מתאפסים מ-$n=6$. $x(\pi^2-x^2)$: $|b_n|=\frac{12}{n^3}$ (ההמשכה ונגזרתה רציפות,
+      והקפיצה רק ב-$f''$). $|x|$: $\frac{4}{\pi n^2}$ (פינה). הגל הריבועי: $\frac{4}{\pi n}$ (קפיצה).
+    wrongFeedback: >-
+      שאלו לכל פונקציה: באיזו נגזרת של ההמשכה המחזורית מופיעה הקפיצה הראשונה? קפיצה ב-$f^{(k)}$ נותנת דעיכה כמו
+      $\frac{1}{n^{k+1}}$.
+    hints:
+      - 'חזרו לשיעור 10.4: חלקות וקצב הדעיכה של המקדמים; ולשיעור 10.1: המקדמים של $|x|$ ושל הגל הריבועי.'
+
+  - id: Q-10-review-17
+    type: twotier
+    objectives: [OBJ-10.1-3, OBJ-10.6-4]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\sigma_Nf=\frac{S_0f+\dots+S_Nf}{N+1}$ הוא ממוצע צזרו של טור פורייה. טענה: לכל $f$ רציפה ומחזורית ב-$2\pi$ ולכל
+      $N$, $\int_{-\pi}^{\pi}(f-S_Nf)^2\le\int_{-\pi}^{\pi}(f-\sigma_Nf)^2$. נכון או לא?
+    choices:
+      - text: נכון
+        correct: true
+        feedback: >-
+          נכון. בנורמה של $H$ הסכום $S_Nf$ קרוב ל-$f$ יותר מכל פולינום טריגונומטרי ממעלה $\le N$, ו-$\sigma_Nf$ הוא אחד מהם.
+      - text: לא נכון
+        feedback: >-
+          $S_Nf$ הוא ההטלה האורתוגונלית על $T_N$, ולכן הקירוב הטוב ביותר בנורמה הזו מכל איבר של $T_N$, כולל $\sigma_Nf$.
+        misconception: MC-c9-ls-is-uniform
+    reasons:
+      - text: '$S_Nf$ הוא ההטלה על $T_N$, הפולינומים הטריגונומטריים ממעלה $\le N$, ו-$\sigma_Nf\in T_N$'
+        correct: true
+        feedback: >-
+          בדיוק. בנורמת המקסימום התמונה הפוכה: שם $\sigma_Nf$ תמיד מתכנס ל-$f$, ו-$S_Nf$ לא בהכרח. כל נורמה והקירוב הטוב
+          שלה.
+      - text: 'לא נכון: $\sigma_Nf\to f$ במידה שווה ו-$S_Nf$ לא תמיד, ולכן $\sigma_Nf$ קרוב יותר בכל נורמה ולכל $N$'
+        feedback: >-
+          התכנסות במידה שווה היא תכונה של הסדרה, לא השוואה בכל $N$ ובכל נורמה. בנורמה של $H$ הסכום $S_Nf$ אופטימלי לכל $N$.
+        misconception: MC-c9-ls-is-uniform
+      - text: 'כי $\sigma_Nf=S_Nf$, ולכן יש שוויון'
+        feedback: >-
+          ל-$f=\cos x$: $S_1f=\cos x$ ו-$\sigma_1f=\frac{S_0f+S_1f}2=\frac12\cos x$. בדרך כלל יש אי-שוויון ממש.
+        misconception: MC-c10-fejer-for-partial-sums
+    hints:
+      - 'חזרו לשיעור 10.1: הסכום החלקי כקירוב הטוב ביותר; ולשיעור 10.6: $\sigma_Nf$ כפולינום טריגונומטרי ממעלה $N$.'
+
+  - id: Q-10-review-18
+    type: twotier
+    objectives: [OBJ-10.6-4, OBJ-10.6-5, OBJ-10.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ רציפה ומחזורית ב-$2\pi$ (לא נתון שהיא גזירה), וידוע שבנקודה $x_0$ הסדרה $S_Nf(x_0)$ מתכנסת למספר $L$. האם
+      בהכרח $L=f(x_0)$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. אם $S_Nf(x_0)\to L$, גם ממוצעי צזרו $\sigma_Nf(x_0)\to L$. לפי משפט פייר $\sigma_Nf(x_0)\to f(x_0)$. לגבול
+          יש ערך אחד.
+      - text: לא בהכרח
+        feedback: >-
+          בלי גזירות אין ערובה שהטור מתכנס, אבל **אם** הוא מתכנס, הגבול נקבע: ממוצעי צזרו של סדרה מתכנסת מתכנסים לאותו
+          גבול, ומשפט פייר אומר שהם מתכנסים ל-$f(x_0)$.
+        misconception: MC-c10-cesaro-changes-limit
+    reasons:
+      - text: 'ממוצעי צזרו שומרים על גבול קיים, ולפי משפט פייר $\sigma_Nf(x_0)\to f(x_0)$'
+        correct: true
+        feedback: >-
+          בדיוק: שני שיעורים בשורה אחת. משפט פייר לא יכול להוכיח שהטור מתכנס, אבל הוא קובע לאן, אם כן.
+      - text: 'לא: $\sigma_Nf(x_0)$ ו-$S_Nf(x_0)$ יכולים להתכנס לגבולות שונים'
+        feedback: >-
+          כשהסדרה $S_Nf(x_0)$ מתכנסת, הממוצעים שלה מתכנסים לאותו גבול. מיצוע לא משנה גבול קיים.
+        misconception: MC-c10-cesaro-changes-limit
+      - text: 'כן, כי לפי משפט ההתכנסות הנקודתית הטור מתכנס ל-$f(x_0)$'
+        feedback: >-
+          משפט ההתכנסות הנקודתית דורש גזירות למקוטעין, ופה היא לא נתונה. הנימוק הנכון עובר דרך משפט פייר.
+        misconception: MC-c10-continuity-enough-pointwise
+    hints:
+      - 'חזרו לשיעור 10.6: ממוצעי צזרו של סדרה מתכנסת ומשפט פייר; ולשיעור 10.3: ההנחות של משפט ההתכנסות הנקודתית.'
+
+  - id: Q-10-review-19
+    type: twotier
+    objectives: [OBJ-10.5-4, OBJ-10.4-2, OBJ-10.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      טענה: יש קבוע $C$ כך שלכל $f$ מחזורית ב-$2\pi$, גזירה ברציפות, עם $\int_{-\pi}^{\pi}f=0$:
+      $$\max_x|f(x)|\le C\left(\int_{-\pi}^{\pi}(f')^2\right)^{1/2}.$$
+      נכון או לא?
+    choices:
+      - text: נכון
+        correct: true
+        feedback: >-
+          נכון, עם $C=\sqrt{\pi/6}$. ל-$f=\sin x$: $1\le\sqrt{\pi/6}\cdot\sqrt\pi\approx1.28$.
+      - text: לא נכון
+        feedback: >-
+          הטור של $f$ מתכנס אליה במידה שווה, ו-$|f(x)|\le\sum\sqrt{a_n^2+b_n^2}$; קושי-שוורץ עם
+          $\sum n^2(a_n^2+b_n^2)=\frac1\pi\int(f')^2$ נותן את החסם.
+        misconception: MC-c10-decay-smoothness
+    reasons:
+      - text: '$|f(x)|\le\sum\sqrt{a_n^2+b_n^2}\le\left(\sum n^2(a_n^2+b_n^2)\right)^{1/2}\left(\sum\frac1{n^2}\right)^{1/2}$, ופרסבל ל-$f^{\prime}$'
+        correct: true
+        feedback: >-
+          בדיוק, אותו טיעון כמו בהוכחת ההתכנסות במידה שווה (שיעור 10.4), עם פרסבל במקום בסל:
+          $C=\frac{1}{\sqrt\pi}\cdot\frac{\pi}{\sqrt6}=\sqrt{\frac\pi6}$.
+      - text: 'לא נכון: נורמה ריבועית לעולם לא שולטת בנורמת המקסימום, כי הנורמות אינן שקולות'
+        feedback: >-
+          נכון ש-$\|f\|$ לבדה לא שולטת ב-$\max|f|$. אבל כאן הנורמה הריבועית היא של **הנגזרת**, וזה מידע על דעיכת
+          המקדמים: $\sum n^2(a_n^2+b_n^2)<\infty$ נותן $\sum(|a_n|+|b_n|)<\infty$.
+        misconception: MC-c10-decay-smoothness
+      - text: 'כן, כי לפי וירטינגר $\max|f|\le\|f\|\le\|f^{\prime}\|$'
+        feedback: >-
+          השלב הראשון שגוי: $\max|f|\le\|f\|$ אינו נכון באופן כללי (פונקציה עם שיא גבוה וצר). וירטינגר משווה שתי נורמות
+          ריבועיות.
+        misconception: MC-c9-L2-implies-uniform
+    hints:
+      - 'חזרו לשיעור 10.4: קושי-שוורץ בהוכחת ההתכנסות במידה שווה; ולשיעור 10.5: פרסבל ואי-שוויון וירטינגר.'

@@ -1,0 +1,465 @@
+# Lesson 7.6 — applications: potentials and flux through closed surfaces.
+# Objectives (src/course.ts):
+#   OBJ-7.6-1  prove that on a star-shaped region a curl-free field is a gradient and a divergence-free field is a curl
+#   OBJ-7.6-2  compute the flux of the inverse-square field through a closed surface that does / does not enclose the origin
+#   OBJ-7.6-3  choose between direct computation, Green, Stokes and Gauss by the form of the question
+chapter: 7
+questions:
+  - id: Q-7.6-star
+    type: multi
+    objectives: [OBJ-7.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      תחום $U\subset\mathbb R^3$ נקרא **כוכבי** אם יש נקודה $p\in U$ כך שלכל $\mathbf x\in U$ הקטע מ-$p$ ל-$\mathbf x$ כולו
+      ב-$U$. אילו מהתחומים הבאים כוכביים? סמנו את כולם.
+    choices:
+      - text: 'כדור פתוח'
+        correct: true
+        feedback: נכון. הוא קמור, וכל קבוצה קמורה כוכבית ביחס לכל אחת מנקודותיה.
+      - text: 'המרחב בלי חצי הישר $\{(0,0,z):z\le0\}$'
+        correct: true
+        feedback: >-
+          נכון, ביחס ל-$p=(0,0,1)$: קטע מ-$p$ ל-$\mathbf x$ פוגע בציר $z$ רק אם $\mathbf x$ עצמו על הציר, ואז הוא נשאר
+          בחלק החיובי. התחום כוכבי ואינו קמור.
+      - text: '$\mathbb R^3\setminus\{0\}$'
+        feedback: >-
+          לכל $p\ne0$ בתחום, הקטע מ-$p$ ל-$-p$ עובר דרך הראשית. לכן אין נקודה מתאימה.
+        misconception: MC-c7-star-shaped
+      - text: 'המרחב בלי ציר $z$'
+        feedback: >-
+          לכל $p$ מחוץ לציר, הנקודה $\mathbf x$ שהיא השיקוף של $p$ דרך הציר (באותו גובה) מחוברת ל-$p$ בקטע שחוצה את הציר.
+        misconception: MC-c7-star-shaped
+      - text: 'הקליפה $1<\|\mathbf x\|<2$'
+        feedback: >-
+          לכל $p$ בקליפה, הקטע מ-$p$ לנקודה הנגדית $-p$ עובר דרך הכדור הפנימי, שאינו בקליפה.
+        misconception: MC-c7-star-shaped
+
+  - id: Q-7.6-unique
+    type: twotier
+    objectives: [OBJ-7.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      שדה $\mathbf G$ עם $\nabla\times\mathbf G=\mathbf F$ נקרא **פוטנציאל וקטורי** של $\mathbf F$. שני סטודנטים חישבו
+      פוטנציאל וקטורי ל-$\mathbf F=(0,0,1)$ וקיבלו $\mathbf G_1=(0,\ x,\ 0)$ ו-$\mathbf G_2=(-y,\ 0,\ 0)$, ולשניהם
+      $\nabla\times\mathbf G=(0,0,1)$. האם אחד החישובים בהכרח שגוי?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. לשדה יכולים להיות הרבה פוטנציאלים וקטוריים.
+      - text: כן
+        feedback: >-
+          חשבו את שני הרוטורים: שניהם $(0,0,1)$. פוטנציאל וקטורי אינו יחיד.
+        misconception: MC-c7-vector-potential-unique
+    reasons:
+      - text: '$\mathbf G_1-\mathbf G_2=(y,x,0)=\nabla(xy)$, והרוטור של גרדיאנט אפס'
+        correct: true
+        feedback: >-
+          בדיוק: אפשר להוסיף לפוטנציאל וקטורי כל גרדיאנט, כמו שלפוטנציאל רגיל אפשר להוסיף קבוע.
+      - text: 'פוטנציאל וקטורי נקבע ביחידות עד כדי וקטור קבוע'
+        feedback: >-
+          החופש גדול יותר: כל גרדיאנט, לא רק קבוע. ההפרש כאן, $(y,x,0)$, אינו קבוע.
+        misconception: MC-c7-vector-potential-unique
+      - text: 'שני השדות שווים'
+        feedback: >-
+          הם שונים: ב-$(1,1,0)$ הראשון $(0,1,0)$ והשני $(-1,0,0)$. מה ששווה הוא הרוטורים.
+
+  - id: Q-7.6-sphere7
+    type: numeric
+    objectives: [OBJ-7.6-2]
+    level: basic
+    prompt: >-
+      חשבו את השטף החוצה של $\frac{\mathbf x}{\|\mathbf x\|^3}$ דרך הספרה ברדיוס 7 שמרכזה בראשית.
+    answer: 12.5663706
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $4\pi$. על הספרה $\mathbf F\cdot\hat{\mathbf N}=\frac{\mathbf x}{7^3}\cdot\frac{\mathbf x}{7}=\frac1{49}$, והשטח
+      $4\pi\cdot49$.
+    wrongFeedback: >-
+      חשבו את $\mathbf F\cdot\hat{\mathbf N}$ על הספרה (הוא קבוע) והכפילו בשטח.
+    commonWrong:
+      - value: 615.7521601
+        feedback: >-
+          $196\pi$: הכפלתם את השטח $4\pi\cdot49$ ב-$1$, כאילו $\|\mathbf F\|=1$. על הספרה $\|\mathbf F\|=\frac1{49}$.
+        misconception: MC-c7-inverse-square-scales
+      - value: 0.2564565
+        feedback: >-
+          $\frac{4\pi}{49}$: חילקתם ב-$R^2$ פעמיים. הגורם $\frac1{49}$ של השדה מתבטל מול השטח $49\cdot4\pi$.
+        misconception: MC-c7-inverse-square-scales
+      - value: 0
+        feedback: >-
+          הדיברגנץ אפס מחוץ לראשית, אבל הראשית בתוך הכדור, ושם השדה לא מוגדר; גאוס לא חל על הכדור.
+        misconception: MC-c7-gauss-singularity
+
+  - id: Q-7.6-choose-closed
+    type: mc
+    objectives: [OBJ-7.6-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      צריך לחשב את $\oiint_S(x^3+y,\ y^3+z^2,\ z^3+x)\cdot d\mathbf S$, כש-$S$ הספרה ברדיוס 2 עם הנורמל החיצוני. איזה
+      כלי מתאים ביותר?
+    choices:
+      - text: 'משפט גאוס: הדיברגנץ הוא $3(x^2+y^2+z^2)$, ואינטגרל משולש בכדוריות'
+        correct: true
+        feedback: >-
+          נכון. שטף דרך משטח סגור של שדה חלק בכל הכדור: $\iiint3\rho^2\,dV=3\cdot4\pi\cdot\frac{2^5}5=\frac{384\pi}5$.
+      - text: 'משפט סטוקס'
+        feedback: >-
+          סטוקס מחשב שטף של **רוטור**, ולספרה אין שפה. כאן לא נתון שהשדה רוטור (ולמעשה הדיברגנץ שלו אינו אפס, ולכן הוא
+          אינו רוטור).
+        misconception: MC-c7-tool-choice
+      - text: 'משפט גרין'
+        feedback: >-
+          גרין הוא משפט במישור, על מסילות סגורות. כאן משטח במרחב.
+        misconception: MC-c7-tool-choice
+      - text: 'חישוב ישיר בלבד, כי הספרה אינה גרף'
+        feedback: >-
+          חישוב ישיר אפשרי (בפרמטריזציה כדורית) אבל ארוך. גאוס לא דורש שהמשטח יהיה גרף, רק שיהיה שפה של תחום.
+        misconception: MC-c7-tool-choice
+
+  - id: Q-7.6-potential-formula
+    type: mc
+    objectives: [OBJ-7.6-1]
+    level: mid
+    prompt: >-
+      $U$ כוכבי ביחס לראשית ו-$\mathbf F\in C^1(U)$ עם $\nabla\times\mathbf F=0$. איזו נוסחה נותנת פוטנציאל $f$, כלומר
+      $\nabla f=\mathbf F$?
+    choices:
+      - text: '$f(\mathbf x)=\int_0^1\mathbf F(t\mathbf x)\cdot\mathbf x\,dt$'
+        correct: true
+        feedback: >-
+          נכון. זה האינטגרל הקווי של $\mathbf F$ לאורך הקטע $\gamma(t)=t\mathbf x$, $0\le t\le1$, שכולו ב-$U$ כי $U$ כוכבי; $\gamma'(t)=\mathbf x$.
+      - text: '$f(\mathbf x)=\int_0^1\mathbf F(\mathbf x)\cdot\mathbf x\,dt$'
+        feedback: >-
+          האינטגרנד לא תלוי ב-$t$, ולכן זה $\mathbf F(\mathbf x)\cdot\mathbf x$. עבור $\mathbf F=(1,0,0)=\nabla x$ זה נותן $x$,
+          במקרה נכון; אבל עבור $\mathbf F=\nabla(x^2)=(2x,0,0)$ מתקבל $2x^2$, שהגרדיאנט שלו $(4x,0,0)$.
+        misconception: MC-c7-potential-formula
+      - text: '$f(\mathbf x)=\int_0^1\mathbf F(t\mathbf x)\,dt$'
+        feedback: >-
+          זה וקטור, לא פונקציה סקלרית. פוטנציאל הוא סקלר, ולכן צריך מכפלה פנימית עם $\gamma'(t)=\mathbf x$.
+        misconception: MC-c7-operator-types
+      - text: '$f(\mathbf x)=\int_0^1t\,\mathbf F(t\mathbf x)\cdot\mathbf x\,dt$'
+        feedback: >-
+          הגורם $t$ שייך לנוסחת הפוטנציאל **הווקטורי**, $\mathbf G(\mathbf x)=\int_0^1t\,\mathbf F(t\mathbf x)\times\mathbf x\,dt$. כאן
+          הוא שגוי: עבור $\mathbf F=(1,0,0)$ מתקבל $\frac x2$.
+        misconception: MC-c7-potential-formula
+
+  - id: Q-7.6-potential-value
+    type: numeric
+    objectives: [OBJ-7.6-1]
+    level: mid
+    prompt: >-
+      $\mathbf F=(2xy+z,\ x^2,\ x)$ ב-$\mathbb R^3$. בדקו ש-$\nabla\times\mathbf F=0$, ומצאו את הערך בנקודה $(1,2,3)$ של
+      הפוטנציאל $f$ שמקיים $f(0)=0$.
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\nabla\times\mathbf F=(0-0,\ 1-1,\ 2x-2x)=0$, ו-$\mathbb R^3$ כוכבי. לפי הנוסחה עם $\mathbf x=(1,2,3)$:
+      $\mathbf F(t\mathbf x)\cdot\mathbf x=(4t^2+3t)+2t^2+3t=6t^2+6t$, והאינטגרל מ-$0$ עד $1$ הוא $2+3=5$. ואכן
+      $f=x^2y+xz$.
+    wrongFeedback: >-
+      השתמשו ב-$f(\mathbf x)=\int_0^1\mathbf F(t\mathbf x)\cdot\mathbf x\,dt$, או נחשו פוטנציאל ובדקו את כל שלושת הרכיבים.
+    commonWrong:
+      - value: 12
+        feedback: >-
+          $12=\mathbf F(1,2,3)\cdot(1,2,3)$: שכחתם את $t$ בתוך $\mathbf F$, ואז האינטגרנד קבוע.
+        misconception: MC-c7-potential-formula
+      - value: 8
+        feedback: >-
+          $8$ מתקבל מ-$f=x^2y+xz+xz$: חיברתם את הפונקציות הקדומות של הרכיבים, והמחובר $xz$ (שמופיע גם ב-$F_1$ וגם ב-$F_3$)
+          נספר פעמיים.
+        misconception: MC-c6-sum-antiderivatives
+
+  - id: Q-7.6-vector-potential
+    type: multi
+    objectives: [OBJ-7.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לאילו מהשדות הבאים $\nabla\times\mathbf G=(1,0,0)$? סמנו את כולם.
+    choices:
+      - text: '$\mathbf G=(0,\ 0,\ y)$'
+        correct: true
+        feedback: 'נכון: הרכיב הראשון $\partial_y G_3-\partial_z G_2=1-0=1$, והאחרים אפס.'
+      - text: '$\mathbf G=(0,\ -z,\ 0)$'
+        correct: true
+        feedback: 'נכון: $\partial_y G_3-\partial_z G_2=0-(-1)=1$, והאחרים אפס.'
+      - text: '$\mathbf G=\frac12(0,\ -z,\ y)$'
+        correct: true
+        feedback: >-
+          נכון: $\partial_y G_3-\partial_z G_2=\frac12+\frac12=1$. השדות הנכונים נבדלים בגרדיאנט:
+          $(0,0,y)-(0,-z,0)=(0,z,y)=\nabla(yz)$.
+      - text: '$\mathbf G=(0,\ z,\ 0)$'
+        feedback: >-
+          $\partial_y G_3-\partial_z G_2=0-1=-1$: זה נותן $(-1,0,0)$. כנראה חישבתם $\partial_z G_2-\partial_y G_3$.
+        misconception: MC-c7-curl-sign
+      - text: '$\mathbf G=(0,\ 0,\ -y)$'
+        feedback: >-
+          $\partial_y G_3-\partial_z G_2=-1-0=-1$: זה נותן $(-1,0,0)$. כנראה חישבתם $\partial_z G_2-\partial_y G_3$.
+        misconception: MC-c7-curl-sign
+    explanation: >-
+      פוטנציאל וקטורי, כשהוא קיים, אינו יחיד: אפשר להוסיף לו כל גרדיאנט, כי $\nabla\times\nabla h=0$.
+
+  - id: Q-7.6-vector-formula
+    type: mc
+    objectives: [OBJ-7.6-1]
+    level: mid
+    prompt: >-
+      בתחום כוכבי ביחס לראשית, לשדה $\mathbf F$ עם $\nabla\cdot\mathbf F=0$ יש פוטנציאל וקטורי
+      $\mathbf G(\mathbf x)=\int_0^1t\,\mathbf F(t\mathbf x)\times\mathbf x\,dt$. מה הנוסחה נותנת עבור $\mathbf F=(0,0,1)$?
+    choices:
+      - text: '$\frac12(-y,\ x,\ 0)$'
+        correct: true
+        feedback: >-
+          נכון. $(0,0,1)\times(x,y,z)=(-y,x,0)$, ו-$\int_0^1t\,dt=\frac12$. בדיקה: $\nabla\times\frac12(-y,x,0)=(0,0,\frac12+\frac12)$.
+      - text: '$(-y,\ x,\ 0)$'
+        feedback: >-
+          שכחתם את $t$ שבאינטגרנד. הרוטור של $(-y,x,0)$ הוא $(0,0,2)$, פעמיים מה שצריך.
+        misconception: MC-c7-potential-formula
+      - text: '$\frac12(y,\ -x,\ 0)$'
+        feedback: >-
+          זה $\frac12\,\mathbf x\times\mathbf F$, הסדר ההפוך של המכפלה הווקטורית. הרוטור שלו $(0,0,-1)$.
+        misconception: MC-c7-curl-sign
+      - text: '$(0,\ 0,\ \frac z2)$'
+        feedback: >-
+          הרוטור של $(0,0,\frac z2)$ אפס: הוא גרדיאנט של $\frac{z^2}4$. הנוסחה משתמשת במכפלה וקטורית, לא בכפל ברכיב.
+        misconception: MC-c7-operator-types
+
+  - id: Q-7.6-div0-not-curl
+    type: twotier
+    objectives: [OBJ-7.6-1, OBJ-7.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbf F=\frac{\mathbf x}{\|\mathbf x\|^3}$ ב-$\mathbb R^3\setminus\{0\}$, ו-$\nabla\cdot\mathbf F=0$ שם. האם יש
+      $\mathbf G$ מסדר $C^1$ ב-$\mathbb R^3\setminus\{0\}$ כך ש-$\nabla\times\mathbf G=\mathbf F$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. אילו היה, השטף של $\mathbf F$ דרך ספרת היחידה היה $0$, כמו כל שטף של רוטור דרך משטח סגור. אבל הוא $4\pi$.
+      - text: כן, כי הדיברגנץ אפס
+        feedback: >-
+          דיברגנץ אפס מבטיח פוטנציאל וקטורי רק בתחום כוכבי. $\mathbb R^3\setminus\{0\}$ אינו כוכבי, והשטף $4\pi$ מוכיח שאין
+          פוטנציאל וקטורי.
+        misconception: MC-c7-div-zero-is-curl
+    reasons:
+      - text: 'שטף של רוטור דרך ספרה הוא $0$ (סטוקס על שני החצאים), והשטף של $\mathbf F$ דרך ספרת היחידה הוא $4\pi$'
+        correct: true
+        feedback: >-
+          בדיוק. ספרת היחידה כולה בתחום, ולכן החישוב לגיטימי. זה "החור" של המרחב בלי נקודה, כמו שהמעגל היה החור של
+          המישור בלי נקודה.
+      - text: 'גאוס על כדור היחידה נותן שטף $0$, ולכן $\mathbf F$ הוא רוטור'
+        feedback: >-
+          גאוס לא חל על כדור היחידה: $\mathbf F$ לא מוגדר בראשית. והשטף הוא $4\pi$, לא $0$.
+        misconception: MC-c7-gauss-singularity
+      - text: '$\mathbf F$ הוא גרדיאנט, ולכן אינו רוטור'
+        feedback: >-
+          $\mathbf F=\nabla(-\frac1{\|\mathbf x\|})$ באמת גרדיאנט, אבל שדה יכול להיות גם גרדיאנט וגם רוטור: $(0,0,1)=\nabla z=\nabla\times(0,x,0)$.
+          מה שמכריע הוא השטף.
+        misconception: MC-c7-div-zero-is-curl
+
+  - id: Q-7.6-proof
+    type: rank
+    objectives: [OBJ-7.6-1]
+    level: mid
+    prompt: >-
+      $U$ כוכבי ביחס לראשית, $\mathbf F\in C^1(U)$ ו-$\nabla\times\mathbf F=0$. סדרו את שלבי ההוכחה ש-$f(\mathbf x)=\int_0^1\mathbf F(t\mathbf x)\cdot\mathbf x\,dt$
+      מקיימת $\partial_i f=F_i$.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'גזירה תחת סימן האינטגרל ($\mathbf F\in C^1$, הקטע $[0,1]$ קומפקטי): $\partial_i f(\mathbf x)=\int_0^1\left[F_i(t\mathbf x)+\sum_j t\,x_j\,(\partial_i F_j)(t\mathbf x)\right]dt$'
+      - id: b
+        label: 'רוטור אפס פירושו $\partial_i F_j=\partial_j F_i$, ולכן הסכום הוא $\sum_j t\,x_j(\partial_j F_i)(t\mathbf x)=t\,\frac{d}{dt}\left[F_i(t\mathbf x)\right]$'
+      - id: c
+        label: 'האינטגרנד הוא $F_i(t\mathbf x)+t\frac{d}{dt}F_i(t\mathbf x)=\frac{d}{dt}\left[t\,F_i(t\mathbf x)\right]$'
+      - id: d
+        label: 'לפי המשפט היסודי $\partial_i f(\mathbf x)=\left[t\,F_i(t\mathbf x)\right]_{t=0}^{t=1}=F_i(\mathbf x)$'
+    order: [a, b, c, d]
+    correctFeedback: >-
+      נכון. ההנחה על התחום נכנסה בהגדרה של $f$ (הקטע מהראשית ל-$\mathbf x$ ב-$U$), וההנחה על הרוטור בשלב השני. ההוכחה
+      לפוטנציאל הווקטורי בנויה באותה צורה.
+    wrongFeedback: >-
+      קודם גוזרים תחת סימן האינטגרל, אחר כך משתמשים ברוטור אפס כדי להחליף את סדר האינדקסים, מזהים נגזרת לפי $t$, ומסיימים
+      במשפט היסודי.
+
+  - id: Q-7.6-which-4pi
+    type: multi
+    objectives: [OBJ-7.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      דרך אילו מהמשטחים הסגורים הבאים, עם הנורמל החיצוני, השטף של $\frac{\mathbf x}{\|\mathbf x\|^3}$ הוא $4\pi$? סמנו את כולם.
+    choices:
+      - text: 'השפה של התיבה $[-1,3]\times[-2,2]\times[-2,2]$'
+        correct: true
+        feedback: >-
+          נכון. הראשית בתוך התיבה (לא במרכזה, וזה לא משנה). גאוס על התחום שבין התיבה לספרה קטנה סביב הראשית נותן אותו
+          שטף כמו לספרה.
+      - text: 'האליפסואיד $\frac{x^2}4+\frac{y^2}9+z^2=1$'
+        correct: true
+        feedback: נכון. הוא מקיף את הראשית, והצורה לא משנה.
+      - text: 'הספרה ברדיוס 1 שמרכזה $(\frac12,0,0)$'
+        correct: true
+        feedback: >-
+          נכון. המרחק של הראשית מהמרכז הוא $\frac12<1$, ולכן היא בתוך הכדור.
+      - text: 'הספרה ברדיוס 1 שמרכזה $(3,0,0)$'
+        feedback: >-
+          הראשית מחוץ לכדור הסגור, השדה מסדר $C^1$ עליו, ו-$\nabla\cdot\mathbf F=0$: לפי גאוס השטף $0$. מה שנכנס בצד הקרוב
+          יוצא בצד הרחוק.
+        misconception: MC-c7-inverse-square-always-4pi
+      - text: 'השפה של הקובייה $[1,2]\times[-1,1]\times[-1,1]$'
+        feedback: >-
+          הראשית מחוץ לקובייה הסגורה, ולכן השטף $0$.
+        misconception: MC-c7-inverse-square-always-4pi
+
+  - id: Q-7.6-why-not-gauss
+    type: twotier
+    objectives: [OBJ-7.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      "ל-$\frac{\mathbf x}{\|\mathbf x\|^3}$ הדיברגנץ אפס, ולכן לפי גאוס השטף דרך ספרת היחידה הוא $\iiint0=0$." איפה
+      הטעות, ומה השטף?
+    choices:
+      - text: 'השטף $4\pi$; גאוס לא חל על הכדור'
+        correct: true
+        feedback: >-
+          נכון. בחישוב ישיר $\mathbf F\cdot\hat{\mathbf N}=1$ על ספרת היחידה, והשטף $4\pi$.
+      - text: 'אין טעות; השטף $0$'
+        feedback: >-
+          בחישוב ישיר $\mathbf F\cdot\hat{\mathbf N}=1$ בכל נקודה של הספרה, ולכן השטף $4\pi\ne0$.
+        misconception: MC-c7-gauss-singularity
+    reasons:
+      - text: 'השדה לא מוגדר בראשית, שבתוך הכדור, וגאוס דורש שדה מסדר $C^1$ בכל התחום'
+        correct: true
+        feedback: >-
+          בדיוק. התיקון: גאוס על התחום שבין משטח כללי לספרה קטנה $S_\varepsilon$ סביב הראשית, ששם השדה מסדר $C^1$.
+      - text: 'הדיברגנץ של השדה אינו באמת אפס'
+        feedback: >-
+          הוא באמת אפס בכל נקודה שבה השדה מוגדר: $\nabla\cdot\frac{\mathbf x}{\|\mathbf x\|^p}=(3-p)\|\mathbf x\|^{-p}$, ו-$p=3$.
+        misconception: MC-c7-div-from-spread
+      - text: 'גאוס חל רק על שדות פולינומיים'
+        feedback: >-
+          גאוס חל על כל שדה מסדר $C^1$ על התחום. הבעיה כאן היא נקודה אחת בתחום שבה השדה לא מוגדר.
+        misconception: MC-c7-gauss-singularity
+
+  - id: Q-7.6-choose-curve
+    type: mc
+    objectives: [OBJ-7.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $C$ הוא החיתוך של הספרה $x^2+y^2+z^2=4$ עם המישור $x+z=1$ (מעגל במישור משופע), ו-$\mathbf F$ שדה פולינומי שהרוטור
+      שלו פשוט אך אינו אפס. איך כדאי לחשב את $\oint_C\mathbf F\cdot d\mathbf s$?
+    choices:
+      - text: 'סטוקס עם העיגול השטוח במישור $x+z=1$ ששפתו $C$, עם נורמל שמתואם עם כיוון $C$'
+        correct: true
+        feedback: >-
+          נכון. על העיגול הנורמל קבוע, $\pm\frac{(1,0,1)}{\sqrt2}$, ואינטגרל של רוטור פשוט נגמר בשטח העיגול כפול קבוע (או
+          אינטגרל פשוט).
+      - text: 'גרין במישור $xy$'
+        feedback: >-
+          $C$ אינה במישור $xy$, ו-$\mathbf F$ במרחב. אפשר לכתוב את $C$ כגרף ולהוריד למישור, אבל זו בדיוק ההוכחה של סטוקס; עדיף
+          להשתמש במשפט עצמו.
+        misconception: MC-c7-tool-choice
+      - text: 'גאוס על הכדור'
+        feedback: >-
+          גאוס מחשב שטף דרך משטח סגור, לא אינטגרל קווי על מסילה.
+        misconception: MC-c7-tool-choice
+      - text: 'פוטנציאל: $\oint_C\mathbf F\cdot d\mathbf s=0$'
+        feedback: >-
+          אינטגרל של שדה על מסילה סגורה אפס כשהשדה גרדיאנט. כאן הרוטור אינו אפס, ולכן השדה אינו גרדיאנט.
+        misconception: MC-c6-all-fields-path-independent
+
+  - id: Q-7.6-face
+    type: numeric
+    objectives: [OBJ-7.6-2, OBJ-7.6-3]
+    level: exam
+    prompt: >-
+      חשבו את השטף של $\frac{\mathbf x}{\|\mathbf x\|^3}$ דרך הפאה העליונה $\{z=1,\ |x|\le1,\ |y|\le1\}$ של הקובייה
+      $[-1,1]^3$, עם הנורמל $\mathbf e_3$, בלי לחשב אינטגרל.
+    answer: 2.0943951
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{2\pi}3$. השטף דרך כל שפת הקובייה $4\pi$ (היא מקיפה את הראשית), ומהסימטריה של הקובייה ושל השדה (סיבובים
+      שמחליפים פאות) כל שש הפאות תורמות אותו דבר: $\frac{4\pi}{6}$.
+    wrongFeedback: >-
+      חשבו קודם את השטף דרך כל שפת הקובייה, ואז השתמשו בסימטריה בין הפאות.
+    commonWrong:
+      - value: 12.5663706
+        feedback: >-
+          $4\pi$ הוא השטף דרך **כל** שפת הקובייה. פאה אחת היא שישית ממנו.
+        misconception: MC-c7-gauss-open-surface
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא השטף דרך כל המישור $z=1$ (חצי מהכיוונים מהראשית). הפאה היא רק ריבוע ממנו.
+      - value: 0
+        feedback: >-
+          הדיברגנץ אפס, אבל הפאה אינה משטח סגור, והקובייה כולה מכילה את הראשית. אין כאן מקום לגאוס עם $\iiint0$.
+        misconception: MC-c7-gauss-singularity
+
+  - id: Q-7.6-lateral
+    type: numeric
+    objectives: [OBJ-7.6-3]
+    level: exam
+    prompt: >-
+      $S$ היא המעטפת של הגליל $x^2+y^2=1$, $0\le z\le3$ (בלי המכסים), עם הנורמל החיצוני, ו-$\mathbf F=(x^3+\sin z,\ y^3+e^z,\ z)$.
+      חשבו את $\iint_S\mathbf F\cdot d\mathbf S$.
+    answer: 14.1371669
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{9\pi}2$. גאוס על הגליל המלא: $\nabla\cdot\mathbf F=3r^2+1$, ו-$\iiint=3\cdot2\pi\left(\frac34+\frac12\right)=\frac{15\pi}2$.
+      המכסה $z=3$ עם $\mathbf e_3$: $F_3=3$, שטף $3\pi$; התחתית $z=0$ עם $-\mathbf e_3$: $-F_3=0$. לכן המעטפת
+      $\frac{15\pi}2-3\pi=\frac{9\pi}2$. (בדיקה ישירה: על המעטפת $\mathbf F\cdot\hat{\mathbf N}=\cos^4\theta+\sin^4\theta+\dots$, והמחוברים
+      האחרים מתאפסים באינטגרל על $\theta$; $3\cdot\frac{3\pi}2=\frac{9\pi}2$.)
+    wrongFeedback: >-
+      המעטפת אינה משטח סגור. סגרו את הגליל בשני מכסים עם הנורמל החיצוני, הפעילו גאוס, והחסירו את המכסים.
+    commonWrong:
+      - value: 23.5619449
+        feedback: >-
+          $\frac{15\pi}2$ הוא השטף דרך כל שפת הגליל, כולל המכסים. החסירו את המכסה העליון, $3\pi$.
+        misconception: MC-c7-gauss-open-surface
+      - value: 32.9867229
+        feedback: >-
+          $\frac{21\pi}2=\frac{15\pi}2+3\pi$: לקחתם את המכסה העליון עם נורמל כלפי מטה. בגאוס כל מכסה עם הנורמל החיצוני; למכסה
+          העליון זה $\mathbf e_3$.
+        misconception: MC-c7-lid-normal
+      - value: 28.2743339
+        feedback: >-
+          $9\pi=12\pi-3\pi$: שכחתם את היעקוביאן $r$ באינטגרל המשולש, ושילבתם $\int_0^1(3r^2+1)\,dr=2$ במקום
+          $\int_0^1(3r^3+r)\,dr=\frac54$.
+        misconception: MC-c5-forgot-jacobian
+
+  - id: Q-7.6-hypotheses
+    type: multi
+    objectives: [OBJ-7.6-3, OBJ-7.6-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      אילו מהשימושים הבאים במשפטים **מוצדקים**? סמנו את כולם.
+    choices:
+      - text: 'גאוס ל-$\frac{\mathbf x}{\|\mathbf x\|^3}$ על הקליפה $1\le\|\mathbf x\|\le2$, כדי להסיק שהשטף החוצה דרך שתי הספרות שווה'
+        correct: true
+        feedback: >-
+          נכון. השדה מסדר $C^1$ על הקליפה, והשפה שלה היא הספרה החיצונית עם נורמל החוצה והפנימית עם נורמל לכיוון הראשית.
+          $0=\iiint0=\Phi_2-\Phi_1$.
+      - text: 'גרין לשדה הסיבוב על הטבעת $1\le x^2+y^2\le4$'
+        correct: true
+        feedback: >-
+          נכון. הראשית מחוץ לטבעת הסגורה. גרין נותן שהאינטגרלים על שני המעגלים (נגד כיוון השעון) שווים.
+      - text: 'סטוקס ל-$(-y,x,z)$ על הפרבולואיד $z=1-x^2-y^2$, $z\ge0$'
+        correct: true
+        feedback: נכון. שדה פולינומי, משטח חלק עם שפה, הכול בתנאים.
+      - text: 'גאוס ל-$\frac{\mathbf x}{\|\mathbf x\|^3}$ על כדור היחידה, כדי להסיק שהשטף אפס'
+        feedback: >-
+          השדה לא מוגדר בראשית, שבתוך הכדור. השטף $4\pi$.
+        misconception: MC-c7-gauss-singularity
+      - text: 'סטוקס ל-$\frac{(-y,\ x,\ 0)}{x^2+y^2}$ על חצי ספרת היחידה העליון, כדי להסיק שהאינטגרל על קו המשווה אפס'
+        feedback: >-
+          השדה לא מוגדר על ציר $z$, שחוצה את חצי הספרה בקוטב הצפוני. סטוקס לא חל, והאינטגרל על קו המשווה, נגד כיוון
+          השעון במבט מלמעלה, הוא $2\pi$.
+        misconception: MC-c7-green-singularity

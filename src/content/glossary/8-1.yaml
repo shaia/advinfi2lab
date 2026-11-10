@@ -1,0 +1,35 @@
+# Terms first defined in lesson 8.1.
+- id: differential-form
+  term: תבנית דיפרנציאלית
+  en: differential form
+  definition: >-
+    כלל שמתאים לכל נקודה $p$ בתחום פתוח פונקציה רב-לינארית ואנטי-סימטרית על וקטורים, שתלויה בצורה חלקה ב-$p$. תבנית
+    מסדר $k$ מקבלת $k$ וקטורים ומחזירה מספר; תבנית מסדר 0 היא פונקציה.
+  reject: [צורה דיפרנציאלית]
+  lesson: '8.1'
+- id: one-form
+  term: תבנית מסדר 1
+  en: 1-form
+  symbol: '\omega=P\,dx+Q\,dy+R\,dz'
+  definition: >-
+    כלל שמתאים לכל נקודה $p$ פונקציונל לינארי $\omega_p:\mathbb R^3\to\mathbb R$. בבסיס $dx,dy,dz$, שבו
+    $dx_p(v)=v_1$, $dy_p(v)=v_2$, $dz_p(v)=v_3$, כותבים $\omega=P\,dx+Q\,dy+R\,dz$, ואז
+    $\omega_p(v)=P(p)v_1+Q(p)v_2+R(p)v_3$.
+  lesson: '8.1'
+- id: integral-of-one-form
+  term: אינטגרל של תבנית על מסילה
+  en: integral of a 1-form along a curve
+  symbol: '\int_\gamma\omega'
+  definition: >-
+    $\int_\gamma\omega=\int_a^b\omega_{\gamma(t)}(\gamma'(t))\,dt$ למסילה $\gamma:[a,b]\to\mathbb R^3$. ל-$\omega=P\,dx+Q\,dy+R\,dz$
+    זה האינטגרל הקווי $\int_\gamma F\cdot d\mathbf s$ של השדה $F=(P,Q,R)$. אינו משתנה בפרמטריזציה ששומרת כיוון, ומחליף
+    סימן בהיפוך הכיוון.
+  lesson: '8.1'
+- id: differential-of-function-as-form
+  term: הדיפרנציאל של פונקציה כתבנית
+  en: the differential df as a 1-form
+  symbol: 'df=f_x\,dx+f_y\,dy+f_z\,dz'
+  definition: >-
+    לפונקציה גזירה $f$, התבנית מסדר 1 שבכל נקודה היא הדיפרנציאל $df_p(v)=\nabla f(p)\cdot v$. במילון לשדות היא מתאימה
+    לגרדיאנט, ו-$\int_\gamma df=f(\gamma(b))-f(\gamma(a))$.
+  lesson: '8.1'

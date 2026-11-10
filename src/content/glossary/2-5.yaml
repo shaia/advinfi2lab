@@ -1,0 +1,22 @@
+# Terms first defined in lesson 2.5 (enrichment: Lancret's theorem and spherical curves).
+- id: generalized-helix
+  term: סליל מוכלל
+  en: generalized helix (curve of constant slope)
+  definition: >-
+    מסילה עם $\kappa>0$ שהמשיק שלה יוצר זווית קבועה עם כיוון קבוע: יש וקטור יחידה קבוע $\mathbf u$ עם $\mathbf t\cdot\mathbf u$
+    קבוע. הסליל המעגלי הוא מקרה פרטי.
+  lesson: '2.5'
+- id: lancret-theorem
+  term: משפט לנקרה
+  en: Lancret's theorem
+  definition: >-
+    מסילה עם $\kappa>0$ היא סליל מוכלל אם ורק אם היחס $\frac\tau\kappa$ קבוע. אז $\frac\tau\kappa=\cot\theta$, כאשר $\theta$
+    הזווית בין המשיק לציר.
+  lesson: '2.5'
+- id: spherical-curve
+  term: מסילה כדורית
+  en: spherical curve
+  definition: >-
+    מסילה שמונחת על ספרה $\|\gamma-c\|=R$. היא מקיימת $\kappa\ge\frac1R$, וכש-$\tau\ne0$ גם
+    $R^2=\rho^2+\left(\frac{\rho'}{\tau}\right)^2$, כאשר $\rho=\frac1\kappa$ והנגזרת לפי אורך הקשת.
+  lesson: '2.5'

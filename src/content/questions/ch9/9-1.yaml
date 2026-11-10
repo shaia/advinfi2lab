@@ -1,0 +1,447 @@
+# Lesson 9.1 — inner product spaces: the axioms on ℓ² and C[a,b], Cauchy–Schwarz, the parallelogram law.
+# Objectives (src/course.ts):
+#   OBJ-9.1-1  define an inner product and check the axioms on ℓ² and on C[a,b] with ∫fg
+#   OBJ-9.1-2  prove Cauchy–Schwarz and deduce the triangle inequality for the induced norm
+#   OBJ-9.1-3  use the parallelogram law and polarization; the max-norm does not come from an inner product
+# Every number was recomputed with src/math/approx.ts (scratchpad ch9/check.ts).
+chapter: 9
+questions:
+  # ---------------------------------------------------------------- basic
+  - id: Q-9.1-which-ip
+    type: mc
+    objectives: [OBJ-9.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      **מכפלה פנימית** על מרחב וקטורי ממשי היא פונקציה $\langle\cdot,\cdot\rangle$ של שני וקטורים שהיא סימטרית, לינארית
+      במשתנה הראשון (ולכן גם בשני), וחיובית מוחלטת: $\langle x,x\rangle>0$ לכל $x\ne0$. איזו מהתבניות הבאות היא מכפלה
+      פנימית על $\mathbb R^2$? (כאן $x=(x_1,x_2)$ ו-$y=(y_1,y_2)$.)
+    choices:
+      - text: '$\langle x,y\rangle=x_1y_1+2x_2y_2$'
+        correct: true
+        feedback: >-
+          נכון. היא סימטרית ולינארית בכל משתנה, ו-$\langle x,x\rangle=x_1^2+2x_2^2\ge0$, עם שוויון רק כש-$x_1=x_2=0$.
+      - text: '$\langle x,y\rangle=x_1y_1-x_2y_2$'
+        feedback: >-
+          סימטרית ולינארית, אבל לא חיובית: $\langle(0,1),(0,1)\rangle=-1<0$.
+        misconception: MC-c9-ip-positivity
+      - text: '$\langle x,y\rangle=x_1y_2+x_2y_1$'
+        feedback: >-
+          סימטרית ולינארית, אבל $\langle(1,-1),(1,-1)\rangle=-2<0$, ו-$\langle(1,0),(1,0)\rangle=0$ אף ש-$(1,0)\neq0$.
+        misconception: MC-c9-ip-positivity
+      - text: '$\langle x,y\rangle=|x_1y_1|+|x_2y_2|$'
+        feedback: >-
+          סימטרית וחיובית, אבל לא לינארית: $\langle -x,y\rangle=\langle x,y\rangle$, ולא $-\langle x,y\rangle$.
+        misconception: MC-c9-ip-linearity
+    explanation: >-
+      שלוש האקסיומות: סימטריה, לינאריות במשתנה הראשון (ומהסימטריה גם בשני), וחיוביות מוחלטת:
+      $\langle x,x\rangle\ge0$ עם שוויון רק ב-$x=0$. בכל מסיח נכשלת בדיוק אחת מהן.
+
+  - id: Q-9.1-norm-poly
+    type: numeric
+    objectives: [OBJ-9.1-1]
+    level: basic
+    prompt: >-
+      במרחב $C[0,1]$ עם $\langle f,g\rangle=\int_0^1 fg$, חשבו את $\|f\|^2$ עבור $f(x)=1+x$.
+    answer: 2.3333333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\|f\|^2=\int_0^1(1+2x+x^2)\,dx=1+1+\frac13=\frac73$.
+    wrongFeedback: >-
+      $\|f\|^2=\langle f,f\rangle=\int_0^1 f(x)^2\,dx$. פתחו את הריבוע לפני שמבצעים אינטגרציה.
+    commonWrong:
+      - value: 2.25
+        feedback: >-
+          זה $\left(\int_0^1(1+x)\,dx\right)^2=\left(\frac32\right)^2$: ריבוע של האינטגרל במקום האינטגרל של הריבוע.
+        misconception: MC-c9-norm-without-square
+      - value: 1.3333333333
+        feedback: >-
+          $\int_0^1(1+x^2)\,dx=\frac43$: האיבר המעורב $2x$ נשכח בפתיחת $(1+x)^2$.
+        misconception: MC-c9-drop-cross-term
+      - value: 1.5275252317
+        feedback: >-
+          זה $\sqrt{7/3}$, הנורמה עצמה. השאלה מבקשת את ריבוע הנורמה.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.1-ell2-norm
+    type: numeric
+    objectives: [OBJ-9.1-1]
+    level: basic
+    prompt: >-
+      ב-$\ell^2$ עם $\langle x,y\rangle=\sum_{n=1}^\infty x_ny_n$, חשבו את $\|x\|^2$ עבור הסדרה $x_n=2^{-n}$, $n\in\mathbb N$.
+    answer: 0.3333333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\|x\|^2=\sum_{n\ge1}4^{-n}=\frac{1/4}{1-1/4}=\frac13$, טור הנדסי.
+    wrongFeedback: >-
+      $\|x\|^2=\sum x_n^2$. כאן $x_n^2=4^{-n}$; סכמו טור הנדסי שמתחיל ב-$n=1$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $\sum 2^{-n}=1$ הוא סכום האיברים בלי ריבוע. הנורמה בריבוע היא סכום הריבועים.
+        misconception: MC-c9-norm-without-square
+      - value: 0.5773502692
+        feedback: >-
+          זה $\frac1{\sqrt3}$, הנורמה עצמה. השאלה מבקשת את $\|x\|^2$.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.1-triangle-step
+    type: mc
+    objectives: [OBJ-9.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בהוכחה של $\|x+y\|\le\|x\|+\|y\|$ במרחב מכפלה פנימית פותחים
+      $\|x+y\|^2=\|x\|^2+2\langle x,y\rangle+\|y\|^2$. באיזה צעד משתמשים באי-שוויון קושי-שוורץ?
+    choices:
+      - text: 'בחסם $2\langle x,y\rangle\le2\|x\|\,\|y\|$, שנותן $\|x+y\|^2\le(\|x\|+\|y\|)^2$'
+        correct: true
+        feedback: >-
+          נכון. אחרי החסם מוציאים שורש משני האגפים, ששניהם אי-שליליים.
+      - text: 'בפתיחת הריבוע עצמה'
+        feedback: >-
+          פתיחת הריבוע משתמשת רק בלינאריות ובסימטריה. בלי קושי-שוורץ אי אפשר לחסום את האיבר המעורב.
+        misconception: MC-c9-triangle-from-axioms
+      - text: 'אין צורך בקושי-שוורץ: אי-שוויון המשולש הוא אחת האקסיומות של מכפלה פנימית'
+        feedback: >-
+          האקסיומות הן סימטריה, לינאריות וחיוביות מוחלטת. אי-שוויון המשולש לנורמה המושרית הוא משפט, וקושי-שוורץ הוא הלב
+          שלו.
+        misconception: MC-c9-triangle-from-axioms
+      - text: 'בחסם $2\langle x,y\rangle\le2\|x\|^2\|y\|^2$'
+        feedback: >-
+          קושי-שוורץ חוסם ב-$\|x\|\,\|y\|$, בלי ריבועים. עם החסם הזה גם לא מתקבל ריבוע שלם, ולכן ההוכחה לא נסגרת.
+        misconception: MC-c9-cs-squared-norms
+
+  - id: Q-9.1-parallelogram
+    type: mc
+    objectives: [OBJ-9.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהו חוק המקבילית במרחב מכפלה פנימית?
+    choices:
+      - text: '$\|x+y\|^2+\|x-y\|^2=2\|x\|^2+2\|y\|^2$'
+        correct: true
+        feedback: >-
+          נכון. מחברים את $\|x\pm y\|^2=\|x\|^2\pm2\langle x,y\rangle+\|y\|^2$ והאיברים המעורבים מתבטלים. במילים: סכום
+          ריבועי האלכסונים שווה לסכום ריבועי ארבע הצלעות.
+      - text: '$\|x+y\|^2+\|x-y\|^2=\|x\|^2+\|y\|^2$'
+        feedback: >-
+          חסר המקדם 2. בדקו בריבוע היחידה: $x=(1,0)$, $y=(0,1)$ נותנים $2+2=4$ באגף השמאלי ו-$2$ באגף הימני.
+        misconception: MC-c9-parallelogram-form
+      - text: '$\|x+y\|+\|x-y\|=2\|x\|+2\|y\|$'
+        feedback: >-
+          החוק הוא על ריבועים. בריבוע היחידה: $\sqrt2+\sqrt2\neq4$.
+        misconception: MC-c9-identity-no-squares
+      - text: '$\|x+y\|^2=\|x\|^2+\|y\|^2$'
+        feedback: >-
+          זה משפט פיתגורס, ונכון רק כש-$x\perp y$. חוק המקבילית נכון לכל זוג.
+        misconception: MC-c9-drop-cross-term
+
+  - id: Q-9.1-polarization
+    type: numeric
+    objectives: [OBJ-9.1-3]
+    level: basic
+    prompt: >-
+      במרחב מכפלה פנימית ממשי ידוע ש-$\|x+y\|=5$ ו-$\|x-y\|=3$. חשבו את $\langle x,y\rangle$.
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. זהות הפולריזציה: $\langle x,y\rangle=\frac14\left(\|x+y\|^2-\|x-y\|^2\right)=\frac{25-9}4=4$.
+    wrongFeedback: >-
+      חסרו את $\|x-y\|^2=\|x\|^2-2\langle x,y\rangle+\|y\|^2$ מ-$\|x+y\|^2=\|x\|^2+2\langle x,y\rangle+\|y\|^2$.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          $\frac{5-3}4$: הזהות היא על ריבועי הנורמות, לא על הנורמות.
+        misconception: MC-c9-identity-no-squares
+      - value: 8
+        feedback: >-
+          $\frac{25-9}2$: ההפרש $\|x+y\|^2-\|x-y\|^2$ הוא $4\langle x,y\rangle$, לא $2\langle x,y\rangle$.
+        misconception: MC-c9-parallelogram-form
+      - value: 16
+        feedback: >-
+          $25-9=16$ הוא $4\langle x,y\rangle$. נשאר לחלק ב-4.
+        misconception: MC-c9-parallelogram-form
+
+  # ---------------------------------------------------------------- mid
+  - id: Q-9.1-ell2-converges
+    type: twotier
+    objectives: [OBJ-9.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      יהיו $x,y\in\ell^2$, כלומר $\sum x_n^2<\infty$ ו-$\sum y_n^2<\infty$. האם הטור $\sum x_ny_n$ מתכנס תמיד?
+    choices:
+      - text: כן, ואפילו בהחלט
+        correct: true
+        feedback: >-
+          נכון. בגלל זה $\langle x,y\rangle=\sum x_ny_n$ מוגדרת לכל זוג ב-$\ell^2$.
+      - text: לא תמיד; צריך גם ש-$\sum x_n$ ו-$\sum y_n$ יתכנסו
+        feedback: >-
+          לא צריך. $x_n=y_n=\frac1n$ נמצאות ב-$\ell^2$, $\sum x_n$ מתבדר, ובכל זאת $\sum x_ny_n=\sum\frac1{n^2}$ מתכנס.
+        misconception: MC-c9-ell2-needs-l1
+    reasons:
+      - text: '$|x_ny_n|\le\frac12(x_n^2+y_n^2)$, וטור הסכום מימין מתכנס; לפי מבחן ההשוואה הטור מתכנס בהחלט'
+        correct: true
+        feedback: >-
+          בדיוק. אי-השוויון הוא $(|x_n|-|y_n|)^2\ge0$. אפשר גם לחסום את הסכומים החלקיים בקושי-שוורץ ב-$\mathbb R^N$.
+      - text: '$x_n\to0$ ו-$y_n\to0$, ולכן $x_ny_n\to0$ והטור מתכנס'
+        feedback: >-
+          איברים ששואפים לאפס הם תנאי הכרחי בלבד: איברי $\sum\frac1n$ שואפים לאפס והטור מתבדר.
+        misconception: MC-c9-terms-to-zero
+      - text: 'כל סדרה ב-$\ell^2$ מקיימת $\sum|x_n|<\infty$, ומכפלה של טורים מתכנסים בהחלט מתכנסת'
+        feedback: >-
+          ההנחה שגויה: $\frac1n\in\ell^2$ אבל $\sum\frac1n=\infty$. ב-$\ell^2$ מניחים רק התכנסות של סכום הריבועים.
+        misconception: MC-c9-ell2-needs-l1
+
+  - id: Q-9.1-C-definite
+    type: twotier
+    objectives: [OBJ-9.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      במרחב $C[0,1]$ עם $\langle f,g\rangle=\int_0^1 fg$: האם $\langle f,f\rangle=0$ גורר $f\equiv0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון, וזה החלק של האקסיומות שבו משתמשים ברציפות.
+      - text: לא
+        feedback: >-
+          לפונקציה אינטגרבילית כללית זה באמת נכשל, אבל כאן הפונקציות רציפות, והרציפות מצילה את החיוביות המוחלטת.
+        misconception: MC-c9-riemann-definite
+    reasons:
+      - text: 'אם $f(x_0)\neq0$, מהרציפות $f^2>\frac12f(x_0)^2$ על קטע באורך $\delta>0$ סביב $x_0$, ואז $\int_0^1f^2\ge\frac\delta2f(x_0)^2>0$'
+        correct: true
+        feedback: >-
+          בדיוק: פונקציה רציפה אי-שלילית שהאינטגרל שלה אפס היא אפס בכל נקודה.
+      - text: 'כי $\int_0^1 f=0$ רק כש-$f\equiv0$'
+        feedback: >-
+          זה לא נכון: $\int_0^1\left(x-\frac12\right)dx=0$. וחוץ מזה $\langle f,f\rangle$ הוא האינטגרל של $f^2$, לא של $f$.
+        misconception: MC-c9-norm-without-square
+      - text: 'כי זה נכון לכל פונקציה אינטגרבילית רימן על $[0,1]$'
+        feedback: >-
+          לא: הפונקציה ששווה 1 ב-$x=\frac12$ ו-0 בשאר הנקודות אינטגרבילית, $\int_0^1 f^2=0$, והיא אינה פונקציית האפס.
+          זו הסיבה ש-$H[a,b]$ (שיעור 9.4) הוא רק מרחב עם מכפלה פנימית למחצה.
+        misconception: MC-c9-riemann-definite
+
+  - id: Q-9.1-cs-proof
+    type: rank
+    objectives: [OBJ-9.1-2]
+    level: mid
+    prompt: >-
+      סדרו את צעדי ההוכחה של אי-שוויון קושי-שוורץ $|\langle x,y\rangle|\le\|x\|\,\|y\|$ במרחב מכפלה פנימית ממשי.
+    help: סדרו מהצעד הראשון של ההוכחה לאחרון.
+    items:
+      - id: b
+        label: 'לכל $t\in\mathbb R$ מתקיים $0\le\|x-ty\|^2$, מהחיוביות'
+      - id: c
+        label: 'פותחים בעזרת הלינאריות והסימטריה: $0\le\|x\|^2-2t\langle x,y\rangle+t^2\|y\|^2$'
+      - id: d
+        label: 'אם $y=0$ שני האגפים של קושי-שוורץ שווים ל-0. אחרת מציבים באי-השוויון הזה $t=\frac{\langle x,y\rangle}{\|y\|^2}$ ומקבלים $0\le\|x\|^2-\frac{\langle x,y\rangle^2}{\|y\|^2}$'
+      - id: e
+        label: 'כופלים ב-$\|y\|^2>0$ ומוציאים שורש'
+    order: [b, c, d, e]
+    correctFeedback: >-
+      נכון. הרעיון: פולינום ריבועי ב-$t$ שאינו שלילי לכל $t$, ומציבים את נקודת המינימום שלו. (אפשר גם לומר שהדיסקרימיננטה
+      שלו אינה חיובית.) המקרה $y=0$ נחוץ רק כדי שמותר לחלק ב-$\|y\|^2$.
+    wrongFeedback: >-
+      ההוכחה מתחילה באי-שוויון שנכון לכל $t$, פותחת אותו, בוחרת $t$ אחד (ושם, כדי לחלק ב-$\|y\|^2$, מטפלת במקרה
+      $y=0$), ורק בסוף מסדרת.
+    hints:
+      - 'השוו: גם ב-$\mathbb R^n$ (פרק 0) ההוכחה עוברת דרך $\|x-ty\|^2\ge0$.'
+
+  - id: Q-9.1-cs-max
+    type: numeric
+    objectives: [OBJ-9.1-2]
+    level: mid
+    prompt: >-
+      מבין כל הפונקציות הרציפות $f$ על $[0,1]$ שמקיימות $\int_0^1 f^2=12$, מהו הערך הגדול ביותר האפשרי של
+      $\int_0^1 x\,f(x)\,dx$?
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי קושי-שוורץ $\int_0^1xf\le\|x\|\,\|f\|=\frac1{\sqrt3}\cdot\sqrt{12}=2$, ושוויון מתקבל כש-$f$ כפולה חיובית
+      של $x$: $f(x)=6x$ מקיימת $\int_0^136x^2\,dx=12$ ו-$\int_0^16x^2\,dx=2$.
+    wrongFeedback: >-
+      זו מכפלה פנימית של $f$ עם הפונקציה $x$. חסמו בקושי-שוורץ, ובדקו שיש פונקציה שמשיגה את החסם.
+    commonWrong:
+      - value: 6.9282032303
+        feedback: >-
+          $12\cdot\frac1{\sqrt3}$: הצבתם $\|f\|^2=12$ במקום $\|f\|=\sqrt{12}$.
+        misconception: MC-c9-cs-squared-norms
+      - value: 1.1547005384
+        feedback: >-
+          $\sqrt{12}\cdot\frac13$: הצבתם $\|x\|^2=\frac13$ במקום $\|x\|=\frac1{\sqrt3}$.
+        misconception: MC-c9-cs-squared-norms
+      - value: 4
+        feedback: >-
+          $12\cdot\frac13=4$ הוא חסם ל-$\left(\int xf\right)^2$, לא ל-$\int xf$. נשאר להוציא שורש.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.1-cs-equality
+    type: twotier
+    objectives: [OBJ-9.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      במרחב $C[0,1]$ עם $\int fg$, נסמן $f(x)=x$ ו-$g(x)=x^2$. האם $\langle f,g\rangle=\|f\|\,\|g\|$?
+    choices:
+      - text: לא, אי-השוויון חזק
+        correct: true
+        feedback: >-
+          נכון: $\langle f,g\rangle=\frac14$ ו-$\|f\|\,\|g\|=\frac1{\sqrt3}\cdot\frac1{\sqrt5}=\frac1{\sqrt{15}}\approx0.258$.
+      - text: כן
+        feedback: >-
+          שוויון בקושי-שוורץ דורש תלות לינארית, ו-$x^2$ אינה $c\cdot x$. במספרים $\frac14<\frac1{\sqrt{15}}$.
+        misconception: MC-c9-cs-equality
+    reasons:
+      - text: 'שוויון מתקבל בדיוק כש-$f$ ו-$g$ תלויות לינארית, ו-$x^2$ אינה כפולה בקבוע של $x$'
+        correct: true
+        feedback: >-
+          בדיוק. בהוכחה: שוויון אומר ש-$\|f-tg\|=0$ ל-$t$ המתאים, כלומר $f=tg$.
+      - text: 'שתי הפונקציות חיוביות על $(0,1]$, ולכן הזווית ביניהן אפס'
+        feedback: >-
+          חיוביות רק מבטיחה ש-$\langle f,g\rangle>0$, כלומר זווית חדה. זווית אפס פירושה פרופורציה.
+        misconception: MC-c9-cs-equality
+      - text: 'שתי הפונקציות עולות, ולכן יש שוויון'
+        feedback: >-
+          מונוטוניות אינה רלוונטית לשוויון בקושי-שוורץ; רק תלות לינארית. החישוב נותן $\frac14<\frac1{\sqrt{15}}$.
+        misconception: MC-c9-cs-equality
+
+  - id: Q-9.1-max-norm
+    type: twotier
+    objectives: [OBJ-9.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם נורמת המקסימום $\|f\|_\infty=\max_{[0,1]}|f|$ על $C[0,1]$ באה ממכפלה פנימית, כלומר האם יש מכפלה פנימית עם
+      $\|f\|_\infty=\sqrt{\langle f,f\rangle}$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. נורמה שבאה ממכפלה פנימית מקיימת את חוק המקבילית, ונורמת המקסימום לא.
+      - text: כן
+        feedback: >-
+          זו נורמה, אבל לא כל נורמה באה ממכפלה פנימית: חוק המקבילית נכשל בה.
+        misconception: MC-c9-every-norm-inner
+    reasons:
+      - text: 'עם $f\equiv1$ ו-$g(x)=x$: $\|f+g\|_\infty^2+\|f-g\|_\infty^2=4+1=5$, ואילו $2\|f\|_\infty^2+2\|g\|_\infty^2=4$'
+        correct: true
+        feedback: >-
+          בדיוק: $\max(1+x)=2$, $\max|1-x|=1$, ו-$\|f\|_\infty=\|g\|_\infty=1$. דוגמה אחת מספיקה כדי להפריך זהות.
+      - text: 'היא מקיימת את כל תכונות הנורמה, ולכן היא באה ממכפלה פנימית'
+        feedback: >-
+          תכונות הנורמה (חיוביות, הומוגניות, אי-שוויון המשולש) חלשות יותר מחוק המקבילית. נורמת המקסימום היא נורמה ולא
+          באה ממכפלה פנימית.
+        misconception: MC-c9-every-norm-inner
+      - text: 'עם $f=g\equiv1$: $4+0=2+2$, ולכן חוק המקבילית מתקיים והנורמה באה ממכפלה פנימית'
+        feedback: >-
+          זוג אחד שמקיים את החוק אינו מוכיח אותו לכל זוג. הזוג $f\equiv1$, $g(x)=x$ מפר אותו.
+        misconception: MC-c9-one-example-proves
+
+  # ---------------------------------------------------------------- exam
+  - id: Q-9.1-C-candidates
+    type: multi
+    objectives: [OBJ-9.1-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      אילו מהתבניות הבאות הן מכפלות פנימיות על $C[0,1]$? סמנו את כולן.
+    choices:
+      - text: '$\int_0^1 x\,f(x)g(x)\,dx$'
+        correct: true
+        feedback: >-
+          נכון. סימטרית ולינארית. אם $\int_0^1xf^2=0$, אז הפונקציה הרציפה האי-שלילית $xf^2$ היא אפס, כלומר $f=0$ על
+          $(0,1]$, ומהרציפות גם $f(0)=0$. משקל שמתאפס בנקודה אחת לא מזיק.
+      - text: '$\int_0^{1/2} f(x)g(x)\,dx$'
+        feedback: >-
+          לא חיובית מוחלטת: $f(x)=\max\left(0,x-\frac12\right)$ רציפה, שונה מאפס, ו-$\langle f,f\rangle=0$.
+        misconception: MC-c9-ip-positivity
+      - text: '$\int_0^1 fg+f(1)g(1)$'
+        correct: true
+        feedback: >-
+          נכון: סכום של מכפלה פנימית ושל תבנית סימטרית לינארית אי-שלילית הוא שוב מכפלה פנימית.
+      - text: '$\left(\int_0^1 f\right)\left(\int_0^1 g\right)$'
+        feedback: >-
+          לא חיובית מוחלטת: $f(x)=x-\frac12$ שונה מאפס ו-$\langle f,f\rangle=\left(\int_0^1f\right)^2=0$.
+        misconception: MC-c9-ip-positivity
+      - text: '$\int_0^1\left(x-\tfrac12\right)f(x)g(x)\,dx$'
+        feedback: >-
+          המשקל שלילי על $[0,\frac12)$: עבור $f(x)=\max\left(0,\frac12-x\right)$ מתקבל
+          $\langle f,f\rangle=\int_0^{1/2}\left(x-\tfrac12\right)\left(\tfrac12-x\right)^2dx=-\frac1{64}<0$.
+        misconception: MC-c9-ip-positivity
+      - text: '$\int_0^1|f(x)g(x)|\,dx$'
+        feedback: >-
+          לא לינארית: $\langle -f,g\rangle=\langle f,g\rangle$ במקום $-\langle f,g\rangle$.
+        misconception: MC-c9-ip-linearity
+    explanation: >-
+      בכל מועמד בודקים את שלוש האקסיומות. החיוביות המוחלטת נכשלת כשהתבנית "לא רואה" חלק מהקטע (משקל אפס על קטע שלם)
+      או רואה אותו במשקל שלילי; בנקודה בודדת משקל אפס מותר, בזכות הרציפות.
+
+  - id: Q-9.1-cs-interval
+    type: twotier
+    objectives: [OBJ-9.1-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם לכל פונקציה רציפה $f$ על $[0,2]$ מתקיים $\left(\int_0^2 f\right)^2\le\int_0^2 f^2$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $f\equiv1$ נותנת $4$ באגף השמאלי ו-$2$ באגף הימני.
+      - text: כן
+        feedback: >-
+          קושי-שוורץ עם $g\equiv1$ מכניס את $\|1\|^2=2$, ו-$f\equiv1$ מראה שבלי הגורם הזה אי-השוויון נכשל: $4>2$.
+        misconception: MC-c9-cs-interval-length
+    reasons:
+      - text: 'קושי-שוורץ עם $g\equiv1$ נותן רק $\left(\int_0^2f\right)^2\le2\int_0^2f^2$, ו-$f\equiv1$ משיגה שוויון בו'
+        correct: true
+        feedback: >-
+          בדיוק: $\|1\|^2=\int_0^21=2$, והגורם 2 הכרחי. בקטע כללי: $\left(\int_a^bf\right)^2\le(b-a)\int_a^bf^2$, עם שוויון
+          רק לפונקציות קבועות.
+      - text: 'קושי-שוורץ עם $g\equiv1$ נותן בדיוק את אי-השוויון הזה, כי $\|1\|=1$'
+        feedback: >-
+          $\|1\|^2=\int_0^21^2\,dx=2$. הנורמה של הפונקציה הקבועה 1 היא שורש אורך הקטע.
+        misconception: MC-c9-cs-interval-length
+      - text: 'זה אי-שוויון של ממוצעים, ולכן נכון בכל קטע'
+        feedback: >-
+          אי-השוויון בין ממוצעים הוא
+          $\left(\frac1{b-a}\int_a^bf\right)^2\le\frac1{b-a}\int_a^bf^2$; בלי החלוקה באורך הוא נכון רק בקטעים שאורכם עד 1.
+        misconception: MC-c9-cs-interval-length
+
+  - id: Q-9.1-which-norms
+    type: multi
+    objectives: [OBJ-9.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      אילו מהנורמות הבאות על $\mathbb R^2$ באות ממכפלה פנימית? סמנו את כולן.
+    choices:
+      - text: '$\sqrt{x_1^2+x_2^2}$'
+        correct: true
+        feedback: >-
+          נכון: מהמכפלה הסקלרית הרגילה.
+      - text: '$|x_1|+|x_2|$'
+        feedback: >-
+          $\|x+y\|^2+\|x-y\|^2=4+4=8$, ואילו $2\|x\|^2+2\|y\|^2=4$. חוק המקבילית נכשל.
+        misconception: MC-c9-every-norm-inner
+      - text: '$\max(|x_1|,|x_2|)$'
+        feedback: >-
+          $\|x+y\|^2+\|x-y\|^2=1+1=2$, ואילו $2\|x\|^2+2\|y\|^2=4$. חוק המקבילית נכשל.
+        misconception: MC-c9-every-norm-inner
+      - text: '$\sqrt{x_1^2+4x_2^2}$'
+        correct: true
+        feedback: >-
+          נכון: היא באה מ-$\langle x,y\rangle=x_1y_1+4x_2y_2$.
+      - text: '$\sqrt{x_1^2+x_1x_2+x_2^2}$'
+        correct: true
+        feedback: >-
+          נכון: היא באה מ-$\langle x,y\rangle=x_1y_1+\frac12(x_1y_2+x_2y_1)+x_2y_2$, שחיובית מוחלטת כי
+          $x_1^2+x_1x_2+x_2^2=\left(x_1+\frac{x_2}2\right)^2+\frac34x_2^2$.
+    explanation: >-
+      נורמה שבאה ממכפלה פנימית מקיימת את חוק המקבילית, וזהות הפולריזציה משחזרת ממנה את המכפלה. לכן כדי להפריך מספיק
+      זוג אחד שמפר את החוק, וכדי לאשר מציגים את המכפלה במפורש.

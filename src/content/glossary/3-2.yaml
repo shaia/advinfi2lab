@@ -1,0 +1,17 @@
+# Terms first defined in lesson 3.2.
+- id: level-surface
+  term: משטח רמה
+  en: level surface
+  symbol: 'S=F^{-1}(c)'
+  definition: >-
+    הקבוצה $F^{-1}(c)=\{x\in\mathbb R^3:\ F(x)=c\}$ כש-$c$ ערך רגולרי של פונקציה חלקה $F$ ($\nabla F\ne0$ על הקבוצה).
+    לפי משפט הפונקציה הסתומה, ליד כל נקודה שלה היא גרף של פונקציה חלקה של שניים מהמשתנים, ולכן משטח חלק.
+  lesson: '3.2'
+- id: surface-reparametrization
+  term: החלפת פרמטרים של משטח
+  en: reparametrization of a surface
+  symbol: '\tilde\sigma=\sigma\circ\varphi'
+  definition: >-
+    $\tilde\sigma=\sigma\circ\varphi$, כש-$\varphi:\tilde D\to D$ חלקה, חד-חד-ערכית ועל, עם הופכית חלקה; אז
+    $\det(D\varphi)\ne0$ בכל נקודה, ו-$\tilde\sigma_s\times\tilde\sigma_t=\det(D\varphi)\,\sigma_u\times\sigma_v$.
+  lesson: '3.2'

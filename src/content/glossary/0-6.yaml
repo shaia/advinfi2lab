@@ -1,0 +1,19 @@
+# Terms first defined in lesson 0.6 (linear systems of differential equations).
+- id: linear-ode-system
+  term: מערכת לינארית של משוואות דיפרנציאליות
+  en: linear system of ODEs
+  symbol: 'X''=A(t)X+B(t)'
+  definition: >-
+    משוואה $X'(t)=A(t)X(t)+B(t)$ לפונקציה $X:I\to\mathbb R^n$, עם $A(t)$ מטריצה $n\times n$ ו-$B(t)$ וקטור. כשהם רציפים על $I$,
+    לכל תנאי התחלה $X(t_0)=X_0$ יש פתרון יחיד, והוא מוגדר על כל $I$. כש-$B=0$ המערכת הומוגנית, והפתרונות מרחב וקטורי
+    ממד $n$.
+  lesson: '0.6'
+- id: solution-matrix
+  term: מטריצת פתרון יסודית
+  en: fundamental solution matrix
+  symbol: '\Phi''=A(t)\Phi'
+  definition: >-
+    מטריצה $\Phi(t)$ שעמודותיה $n$ פתרונות בלתי תלויים של $X'=A(t)X$. כל פתרון הוא $X(t)=\Phi(t)\Phi(t_0)^{-1}X(t_0)$.
+    לזו עם $\Phi(t_0)=I$: כל פתרון הוא $X(t)=\Phi(t)X(t_0)$; כש-$A$ קבועה, $\Phi(t)=e^{(t-t_0)A}$; וכש-$A(t)$
+    אנטי-סימטרית, $\Phi(t)$ אורתוגונלית לכל $t$.
+  lesson: '0.6'

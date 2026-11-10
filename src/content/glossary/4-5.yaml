@@ -1,0 +1,49 @@
+# Terms first defined in lesson 4.5.
+- id: gauss-curvature
+  term: עקמומיות גאוס
+  en: Gaussian curvature
+  symbol: 'K=\kappa_1\kappa_2=\frac{LN-M^2}{EG-F^2}'
+  definition: >-
+    מכפלת העקמומיויות הראשיות, הדטרמיננטה של אופרטור הצורה. אינה משתנה כשהופכים את הנורמל.
+  reject: [עקמומיות גאוסית, עקמומיות גאוסיאנית]
+  lesson: '4.5'
+- id: mean-curvature
+  term: עקמומיות ממוצעת
+  en: mean curvature
+  symbol: 'H=\frac{\kappa_1+\kappa_2}{2}=\frac{EN-2FM+GL}{2(EG-F^2)}'
+  definition: >-
+    הממוצע של העקמומיויות הראשיות, חצי העקבה של אופרטור הצורה. מחליפה סימן כשהופכים את הנורמל.
+  lesson: '4.5'
+- id: elliptic-point
+  term: נקודה אליפטית
+  en: elliptic point
+  definition: >-
+    נקודה שבה $K>0$: $Q_2$ מוגדרת (חיובית או שלילית), והמשטח ליד הנקודה בצד אחד של המישור המשיק. כל נקודה של הספרה,
+    והמשווה החיצוני של הטורוס.
+  lesson: '4.5'
+- id: hyperbolic-point
+  term: נקודה היפרבולית
+  en: hyperbolic point
+  definition: >-
+    נקודה שבה $K<0$: $Q_2$ לא מוגדרת, והמשטח חוצה את המישור המשיק ליד הנקודה (אוכף). המשווה הפנימי של הטורוס.
+  lesson: '4.5'
+- id: parabolic-point
+  term: נקודה פרבולית
+  en: parabolic point
+  definition: >-
+    נקודה שבה $K=0$ אבל $Q_2\neq0$: בדיוק אחת העקמומיויות הראשיות אפס. כל נקודה של הגליל, והמעגל העליון של הטורוס.
+  lesson: '4.5'
+- id: planar-point
+  term: נקודה מישורית
+  en: planar point
+  definition: >-
+    נקודה שבה $Q_2=0$, כלומר $\kappa_1=\kappa_2=0$. כל נקודה של המישור, והראשית של $z=x^4+y^4$ ושל $z=x^3-3xy^2$.
+  lesson: '4.5'
+- id: umbilic-point
+  term: נקודה טבורית
+  en: umbilic point
+  definition: >-
+    נקודה שבה $\kappa_1=\kappa_2$, כלומר $Q_2=\lambda Q_1$ לאיזשהו $\lambda$, ובאופן שקול $H^2=K$. כל נקודה של הספרה ושל
+    המישור; נקודה מישורית היא טבורית.
+  reject: [נקודה אומבילית]
+  lesson: '4.5'

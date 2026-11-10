@@ -1,0 +1,32 @@
+# Terms first defined in lesson 4.2.
+- id: normal-curvature
+  term: עקמומיות נורמלית
+  en: normal curvature
+  symbol: '\kappa_n'
+  definition: >-
+    למסילה במשטח בפרמטר אורך קשת, $\kappa_n=\mathbf t'\cdot\hat{\mathbf N}$: הרכיב של וקטור העקמומיות בכיוון הנורמל
+    למשטח. בפרמטר כללי $\kappa_n=\frac{Q_2(\gamma')}{Q_1(\gamma')}$, ולכן היא תלויה רק בכיוון המשיק. מחליפה סימן
+    כשהופכים את $\hat{\mathbf N}$.
+  lesson: '4.2'
+- id: geodesic-curvature
+  term: עקמומיות גאודזית
+  en: geodesic curvature
+  symbol: '\kappa_g'
+  definition: >-
+    למסילה במשטח בפרמטר אורך קשת, $\kappa_g=\mathbf t'\cdot(\hat{\mathbf N}\times\mathbf t)$: הרכיב של וקטור העקמומיות
+    שמשיק למשטח וניצב למסילה. מתקיים $\kappa^2=\kappa_n^2+\kappa_g^2$.
+  lesson: '4.2'
+- id: normal-section
+  term: חתך נורמלי
+  en: normal section
+  definition: >-
+    החיתוך של המשטח עם מישור שעובר ב-$P$ ומכיל את הנורמל $\hat{\mathbf N}(P)$ וכיוון משיק $v$. העקמומיות שלו ב-$P$
+    שווה ל-$|\kappa_n(v)|$.
+  lesson: '4.2'
+- id: meusnier-theorem
+  term: משפט מנייה
+  en: Meusnier's theorem
+  definition: >-
+    כל המסילות במשטח שעוברות ב-$P$ עם אותו ישר משיק מקבלות שם אותה עקמומיות נורמלית. בצורה אחרת:
+    $\kappa_n=\kappa\cos\theta$, כש-$\theta$ הזווית בין הנורמל הראשי $\mathbf n$ של המסילה לבין $\hat{\mathbf N}$.
+  lesson: '4.2'

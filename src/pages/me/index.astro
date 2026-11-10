@@ -1,0 +1,50 @@
+---
+/**
+ * המסלול שלי: mastery map, misconceptions, stamp passport, what next, export / import. The map lists every
+ * planned lesson of a chapter that has questions, written or not: a student who learns from the
+ * question banks alone still sees mastery per objective.
+ */
+import { chaptersWithQuestions } from '~/assessment/bank';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { chapters } from '~/course';
+import { lessonHref, misconceptionLinks, writtenLessons } from '~/lib/links';
+import { url } from '~/lib/url';
+import MyPath from '~/ui/MyPath';
+import '~/styles/lesson.css';
+import '~/styles/platform.css';
+
+const written = await writtenLessons();
+const withQuestions = new Set(await chaptersWithQuestions());
+const course = chapters
+  .filter((c) => withQuestions.has(c.n) || c.lessons.some((l) => written.has(l.id)))
+  .map((c) => ({
+    n: c.n,
+    title: c.title,
+    lessons: c.lessons.map((l) => ({ id: l.id, title: l.title, href: lessonHref(l.id, written), objectives: l.objectives })),
+  }));
+
+const misconceptions = await misconceptionLinks(written);
+
+const practice = [...withQuestions].map((n) => ({
+  n,
+  title: chapters.find((c) => c.n === n)?.title ?? '',
+  practiceHref: url(`practice/ch${n}/`),
+  testHref: url(`test/ch${n}/`),
+}));
+---
+
+<BaseLayout title="המסלול שלי" description="מפת השליטה, החותמות והצעד הבא שלכם בקורס">
+  <div class="platform">
+    <section class="sheet sheet-narrow">
+      <p class="kicker">המסלול שלי</p>
+      <h1>איפה אתם עומדים</h1>
+      <p class="p-lede">כל מה שעשיתם בקורס מתועד כאן: מה כבר שלטתם בו, אילו טעויות חוזרות, ומה כדאי לעשות עכשיו.</p>
+      <p class="local-note" role="note">
+        ההתקדמות נשמרת רק בדפדפן הזה. אפשר לייצא אותה לקובץ ולייבא אותה במכשיר אחר, בהמשך הדף.
+      </p>
+    </section>
+    <section class="sheet sheet-narrow">
+      <MyPath client:load chapters={course} misconceptions={misconceptions} practice={practice} />
+    </section>
+  </div>
+</BaseLayout>

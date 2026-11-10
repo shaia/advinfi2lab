@@ -1,0 +1,340 @@
+# Lesson 1.4 — radius of curvature and the osculating circle.
+# Objectives (src/course.ts):
+#   OBJ-1.4-1  radius, centre of curvature and osculating circle, computed at a given point
+#   OBJ-1.4-2  why the osculating circle has second-order contact and the tangent line only first-order
+#   OBJ-1.4-3  curvature of a graph y = f(x), and the points of maximal curvature
+chapter: 1
+questions:
+  - id: Q-1.4-vertex
+    type: numeric
+    objectives: [OBJ-1.4-1]
+    level: basic
+    prompt: >-
+      בנקודה שבה $\kappa>0$, **רדיוס העקמומיות** הוא $\rho=\frac1\kappa$, ו**מרכז העקמומיות** הוא $\gamma+\rho\,\mathbf n$:
+      מרכז המעגל המנשק, המעגל ברדיוס $\rho$ שמשיק למסילה מהצד שאליו $\mathbf n$ מצביע. מצאו את מרכז העקמומיות של
+      הפרבולה $y=x^2$ בקודקוד $(0,0)$. מהו רכיב ה-$y$ שלו?
+    answer: 0.5
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. ב-$\gamma(x)=(x,x^2)$: $\gamma'(0)=(1,0)$ ו-$\gamma''(0)=(0,2)$, ולכן
+      $\kappa(0)=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}=\frac{2}{1}=2$, $\rho=\frac12$, $\mathbf n(0)=(0,1)$, והמרכז
+      $\gamma(0)+\rho\,\mathbf n=(0,\frac12)$.
+    wrongFeedback: >-
+      חשבו את $\kappa(0)$, עברו לרדיוס $\rho=\frac1\kappa$, ולכו מהקודקוד מרחק $\rho$ בכיוון הנורמל הראשי, אל הצד
+      הקעור.
+    commonWrong:
+      - value: 0.25
+        feedback: >-
+          $(0,\frac14)$ הוא המוקד של הפרבולה. מרכז העקמומיות בקודקוד רחוק פי שניים: $\rho=\frac12$.
+        misconception: MC-c1-focus-is-centre
+      - value: 2
+        feedback: >-
+          $2$ היא העקמומיות. הרדיוס הוא ההופכי שלה, $\frac12$.
+        misconception: MC-c1-curvature-radius
+      - value: -0.5
+        feedback: >-
+          המרכז נמצא בצד הקעור, שאליו הפרבולה פונה: מעליה. $\mathbf n(0)=(0,1)$, ולכן המרכז $(0,\frac12)$.
+        misconception: MC-c1-centre-wrong-side
+
+  - id: Q-1.4-order
+    type: mc
+    objectives: [OBJ-1.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma$ בפרמטר אורך הקשת ו-$\kappa(s_0)>0$. איזה מהעצמים הבאים מתלכד עם המסילה ב-$s_0$ עד סדר שני, כלומר
+      בערך, בנגזרת הראשונה ובנגזרת השנייה?
+    choices:
+      - text: 'המעגל שרדיוסו $\frac{1}{\kappa(s_0)}$ ומרכזו $\gamma(s_0)+\frac{1}{\kappa(s_0)}\mathbf n(s_0)$, בפרמטר אורך הקשת'
+        correct: true
+        feedback: >-
+          נכון: זה המעגל המנשק. הנגזרת השנייה שלו היא $\frac1\rho\mathbf n=\kappa\mathbf n=\gamma''(s_0)$.
+      - text: 'הישר המשיק $\gamma(s_0)+h\,\mathbf t(s_0)$'
+        feedback: >-
+          לישר נגזרת שנייה אפס, ולמסילה $\kappa\mathbf n\ne0$. הוא מתלכד רק עד סדר ראשון, והמרחק ממנו גדל כמו
+          $\frac\kappa2h^2$.
+        misconception: MC-c1-tangent-second-order
+      - text: 'כל מעגל שמשיק למסילה ב-$\gamma(s_0)$'
+        feedback: >-
+          מעגל משיק ברדיוס $R$ נותן נגזרת שנייה $\frac1R\mathbf n$; היא שווה ל-$\kappa\mathbf n$ רק כש-$R=\frac1\kappa$.
+        misconception: MC-c1-tangent-second-order
+      - text: 'המעגל שרדיוסו $\frac{1}{\kappa(s_0)}$ ומרכזו $\gamma(s_0)-\frac{1}{\kappa(s_0)}\mathbf n(s_0)$'
+        feedback: >-
+          זה המעגל בצד הקמור. הנגזרת השנייה שלו היא $c''(0)=-\kappa\mathbf n$, הפוכה לזו של המסילה.
+        misconception: MC-c1-centre-wrong-side
+
+  - id: Q-1.4-graph-formula
+    type: mc
+    objectives: [OBJ-1.4-3]
+    level: basic
+    prompt: >-
+      מהי העקמומיות של הגרף $y=f(x)$ בנקודה $(x,f(x))$, עבור $f$ מסדר $C^2$?
+    choices:
+      - text: '$\frac{|f''''(x)|}{(1+f''(x)^2)^{3/2}}$'
+        correct: true
+        feedback: >-
+          נכון. ב-$\gamma(x)=(x,f(x))$: $\gamma'=(1,f')$, $\gamma''=(0,f'')$, $x'y''-y'x''=f''$, ו-$\|\gamma'\|^3=(1+f'^2)^{3/2}$.
+      - text: '$|f''''(x)|$'
+        feedback: >-
+          זה נכון רק כש-$f'(x)=0$. ל-$y=x^2$ ב-$x=1$: $|f''|=2$, אבל $\kappa=\frac{2}{5^{3/2}}\approx0.18$.
+        misconception: MC-c1-graph-curvature-fpp
+      - text: '$\frac{|f''''(x)|}{1+f''(x)^2}$'
+        feedback: >-
+          זה $\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^2}$. החזקה היא $\frac32$ של $1+f'^2$, כלומר $\|\gamma'\|^3$.
+        misconception: MC-c1-curvature-power
+
+  - id: Q-1.4-cubic-graph
+    type: numeric
+    objectives: [OBJ-1.4-3]
+    level: basic
+    prompt: >-
+      חשבו את העקמומיות של $y=x^3$ בנקודה $(1,1)$.
+    answer: 0.18973666
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\kappa=\frac{6}{10^{3/2}}=\frac{6}{10\sqrt{10}}\approx0.1897$, עם $f'(1)=3$ ו-$f''(1)=6$.
+    wrongFeedback: >-
+      $\kappa=\frac{|f''|}{(1+f'^2)^{3/2}}$. הציבו $f'(1)$ ו-$f''(1)$.
+    commonWrong:
+      - value: 6
+        feedback: >-
+          $6=f''(1)$. כאן השיפוע $3$, והגרף "נמתח" בכיוון התנועה: מחלקים ב-$(1+9)^{3/2}$.
+        misconception: MC-c1-graph-curvature-fpp
+      - value: 0.6
+        feedback: >-
+          $\frac{6}{10}$: חסרה החזקה $\frac32$ במכנה.
+        misconception: MC-c1-curvature-power
+      - value: 0.06
+        feedback: >-
+          $\frac{6}{100}$: החזקה במכנה היא $\frac32$, לא $2$.
+        misconception: MC-c1-curvature-power
+
+  - id: Q-1.4-ellipse-centre
+    type: numeric
+    objectives: [OBJ-1.4-1]
+    level: mid
+    prompt: >-
+      מצאו את מרכז העקמומיות של האליפסה $\gamma(t)=(2\cos t,\ \sin t)$ בנקודה $(0,1)$. מהו רכיב ה-$y$ שלו?
+    answer: -3
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. ב-$t=\frac\pi2$: $\kappa=\frac{2}{(4\sin^2t+\cos^2t)^{3/2}}=\frac28=\frac14$, $\rho=4$, $\mathbf n=(0,-1)$,
+      והמרכז $(0,1)+4(0,-1)=(0,-3)$. המעגל המנשק גדול מהאליפסה כולה: בקצה הציר הקצר היא שטוחה מאוד.
+    wrongFeedback: >-
+      חשבו את $\kappa(\frac\pi2)$, את $\rho$, ואת כיוון הנורמל: בנקודה $(0,1)$ האליפסה פונה כלפי מטה.
+    commonWrong:
+      - value: 5
+        feedback: >-
+          זה הצד הלא נכון. האליפסה קעורה כלפי מטה ב-$(0,1)$, ולכן $\mathbf n=(0,-1)$ והמרכז $(0,1-4)$.
+        misconception: MC-c1-centre-wrong-side
+      - value: 0.75
+        feedback: >-
+          $1-\frac14$: הלכו מרחק $\kappa$ במקום $\rho=\frac1\kappa=4$.
+        misconception: MC-c1-curvature-radius
+      - value: 0
+        feedback: >-
+          $(0,0)$ הוא מרכז האליפסה, לא מרכז העקמומיות. מרכז העקמומיות משתנה מנקודה לנקודה: ב-$(2,0)$ הוא
+          $(\frac32,0)$, וב-$(0,1)$ הוא $(0,-3)$.
+        misconception: MC-c1-natural-circle
+
+  - id: Q-1.4-helix-radius
+    type: numeric
+    objectives: [OBJ-1.4-1]
+    level: basic
+    prompt: >-
+      מהו רדיוס העקמומיות של הסליל $(3\cos t,\ 3\sin t,\ 4t)$?
+    answer: 8.3333333
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\rho=\frac{a^2+b^2}{a}=\frac{25}{3}$. המעגל המנשק גדול בהרבה ממעגל החתך של הגליל, ברדיוס $3$, כי העלייה
+      מיישרת את הסליל.
+    wrongFeedback: >-
+      $\kappa=\frac{a}{a^2+b^2}$ לסליל $(a\cos t,a\sin t,bt)$; הרדיוס הוא ההופכי.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          $3$ הוא הרדיוס של הגליל. המעגל המנשק נוטה עם הסליל ומשיק לו עד סדר שני; הוא לא מעגל החתך.
+        misconception: MC-c1-natural-circle
+      - value: 0.12
+        feedback: >-
+          $0.12=\frac3{25}$ היא העקמומיות. הרדיוס הוא $\frac{25}{3}$.
+        misconception: MC-c1-curvature-radius
+
+  - id: Q-1.4-distance
+    type: numeric
+    objectives: [OBJ-1.4-2]
+    level: mid
+    prompt: >-
+      $\gamma$ הוא מעגל ברדיוס $4$ בפרמטר אורך הקשת, ו-$d(h)$ הוא המרחק מ-$\gamma(s_0+h)$ אל הישר המשיק
+      ב-$\gamma(s_0)$. חשבו את $\lim_{h\to0}\frac{d(h)}{h^2}$.
+    answer: 0.125
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\frac\kappa2=\frac18$. ישירות: $d(h)=4\big(1-\cos\frac h4\big)$, ו-$1-\cos u\approx\frac{u^2}2$. באופן
+      כללי טיילור נותן $\gamma(s_0+h)-\gamma(s_0)-h\mathbf t=\frac{h^2}{2}\kappa\mathbf n+o(h^2)$.
+    wrongFeedback: >-
+      כתבו את טיילור מסדר שני של $\gamma$ ב-$s_0$, והשתמשו ב-$\mathbf t'=\kappa\mathbf n$. שימו לב למקדם של $h^2$.
+    commonWrong:
+      - value: 0.25
+        feedback: >-
+          $0.25=\kappa$. המקדם של $h^2$ בטיילור הוא $\frac{\gamma''}{2}$, ולכן הגבול הוא $\frac\kappa2$.
+        misconception: MC-c1-taylor-half
+      - value: 2
+        feedback: >-
+          $2=\frac\rho2$. השתמשו בעקמומיות, $\frac14$, לא ברדיוס.
+        misconception: MC-c1-curvature-radius
+      - value: 0
+        feedback: >-
+          הגבול היה $0$ אילו הישר המשיק היה מתלכד עם המסילה עד סדר שני. הוא מתלכד רק עד סדר ראשון; המעגל המנשק
+          הוא שנותן $o(h^2)$.
+        misconception: MC-c1-tangent-second-order
+
+  - id: Q-1.4-contact-proof
+    type: rank
+    objectives: [OBJ-1.4-2]
+    level: mid
+    help: >-
+      סדרו את שלבי ההוכחה, מהראשון לאחרון.
+    prompt: >-
+      $\gamma$ בפרמטר אורך הקשת, מסדר $C^2$, $\kappa(s_0)>0$ ו-$\rho=\frac1{\kappa(s_0)}$. הוכיחו שהמעגל המנשק $c$
+      מקיים $\|\gamma(s_0+h)-c(h)\|=o(h^2)$.
+    items:
+      - id: circle
+        label: 'נסמן $p=\gamma(s_0)+\rho\,\mathbf n$ ונכתוב $c(h)=p+\rho\big(\sin\frac h\rho\,\mathbf t-\cos\frac h\rho\,\mathbf n\big)$, עם $\mathbf t,\mathbf n$ ב-$s_0$'
+      - id: derivs
+        label: 'גוזרים: $c(0)=\gamma(s_0)$, $c''(0)=\mathbf t$, $c''''(0)=\frac1\rho\mathbf n$'
+      - id: match
+        label: 'כי $\frac1\rho=\kappa$: $c''''(0)=\kappa\mathbf n=\mathbf t''(s_0)=\gamma''''(s_0)$'
+      - id: error
+        label: 'נגדיר $e(h)=\gamma(s_0+h)-c(h)$; אז $e(0)=e''(0)=e''''(0)=0$'
+      - id: taylor
+        label: 'לפי טיילור מסדר שני, $e(h)=o(h^2)$'
+    order: [circle, derivs, match, error, taylor]
+    correctFeedback: >-
+      נכון. אותו חשבון לישר המשיק נותן $e''(0)=\kappa\mathbf n\ne0$, ולכן שם $\|e(h)\|\approx\frac\kappa2h^2$:
+      רק מגע מסדר ראשון.
+    wrongFeedback: >-
+      קודם כותבים את המעגל במפורש, אחר כך גוזרים אותו, משווים לנגזרות של $\gamma$, ורק בסוף משתמשים בטיילור.
+
+  - id: Q-1.4-graph-flat
+    type: twotier
+    objectives: [OBJ-1.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ל-$f(x)=\frac32x^2$ ול-$g(x)=\frac32x^2+10x$ אותה נגזרת שנייה, $3$. האם לגרפים שלהן אותה עקמומיות ב-$x=0$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $\kappa_f(0)=3$, ו-$\kappa_g(0)=\frac{3}{(1+100)^{3/2}}\approx0.003$: הגרף של $g$ כמעט ישר שם.
+      - text: כן
+        feedback: >-
+          העקמומיות תלויה גם בשיפוע: $\kappa=\frac{|f''|}{(1+f'^2)^{3/2}}$, ו-$g'(0)=10$.
+        misconception: MC-c1-graph-curvature-fpp
+    reasons:
+      - text: '$\kappa=\frac{|f''''|}{(1+f''^2)^{3/2}}$, ו-$f''(0)=0$ אבל $g''(0)=10$'
+        correct: true
+        feedback: >-
+          בדיוק. כשהשיפוע גדול, אותו שינוי בשיפוע מתפרס על קשת ארוכה, והכיוון מסתובב לאט.
+      - text: 'העקמומיות של גרף היא $|f''''|$, ולכן שתיהן $3$'
+        feedback: >-
+          זה נכון רק בנקודה שבה $f'=0$. ל-$g$ ב-$0$ השיפוע $10$.
+        misconception: MC-c1-graph-curvature-fpp
+      - text: 'הוספת $10x$ רק מטה את הגרף, וסיבוב לא משנה עקמומיות'
+        feedback: >-
+          $(x,y)\mapsto(x,y+10x)$ אינה סיבוב: היא מותחת מרחקים (הקטע מ-$(0,0)$ ל-$(1,0)$ נשלח לקטע באורך $\sqrt{101}$).
+          תנועה קשיחה שומרת עקמומיות, אבל ההעתקה הזו אינה תנועה קשיחה, ואין סיבה שתשמור אותה.
+        misconception: MC-c1-shear-is-rotation
+
+  - id: Q-1.4-helix-centre
+    type: twotier
+    objectives: [OBJ-1.4-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם מרכז המעגל המנשק של הסליל $\gamma(t)=(a\cos t,\ a\sin t,\ bt)$, $a>0$, $b\ne0$, נמצא על ציר הגליל
+      ($x=y=0$)?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. המרכז נמצא במרחק $\frac{b^2}{a}$ מהציר, בצד השני שלו. מקום המרכזים הוא סליל אחר, ברדיוס
+          $\frac{b^2}a$.
+      - text: כן
+        feedback: >-
+          הנורמל אכן מצביע אל הציר, אבל הולכים לאורכו מרחק $\rho=\frac{a^2+b^2}{a}$, שגדול מ-$a$: עוברים את הציר.
+        misconception: MC-c1-natural-circle
+    reasons:
+      - text: 'המרכז הוא $$\gamma+\rho\mathbf n=\big((a-\rho)\cos t,\ (a-\rho)\sin t,\ bt\big)$$ עם $\rho=\frac{a^2+b^2}{a}$, ו-$a-\rho=-\frac{b^2}a\ne0$'
+        correct: true
+        feedback: >-
+          בדיוק. $\mathbf n=(-\cos t,-\sin t,0)$, ו-$\rho>a$. למשל ל-$a=3$, $b=4$: $\rho=\frac{25}3$, והמרכז במרחק
+          $\frac{16}{3}$ מהציר.
+      - text: 'כן: $\mathbf n$ מצביע אל הציר ורדיוס העקמומיות הוא $a$'
+        feedback: >-
+          $\frac1a$ היא העקמומיות של מעגל החתך, לא של הסליל. לסליל $\kappa=\frac{a}{a^2+b^2}<\frac1a$.
+        misconception: MC-c1-natural-circle
+      - text: 'לא: הסליל שטוח ממעגל החתך, ולכן המרכז מחוץ לגליל, באותו צד של הציר כמו $\gamma(t)$'
+        feedback: >-
+          הסליל אכן שטוח יותר ($\rho>a$), אבל המרכז נמצא בכיוון $+\mathbf n$, פנימה, ולא החוצה. ההליכה מ-$\gamma(t)$
+          מרחק $\rho>a$ פנימה עוברת את הציר.
+        misconception: MC-c1-centre-wrong-side
+
+  - id: Q-1.4-crossing
+    type: twotier
+    objectives: [OBJ-1.4-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\gamma$ מסילה מישורית בפרמטר אורך הקשת, מסדר $C^3$, עם $\kappa(s_0)>0$. האם נכון שהמעגל המנשק שלה ב-$s_0$ נשאר,
+      בסביבה של נקודת המגע, תמיד בצד אחד של המסילה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. בדרך כלל הוא דווקא **חוצה** את המסילה בנקודת המגע. על $y=x^2$ בנקודה $(1,1)$: מעט שמאלה המסילה בתוך
+          המעגל, ומעט ימינה מחוצה לו (בדקו ב-$x=0.95$ ו-$x=1.05$).
+      - text: כן
+        feedback: >-
+          מגע מסדר שני לא מונע חצייה. על $y=x^2$ ב-$(1,1)$ המעגל המנשק חוצה את הפרבולה.
+        misconception: MC-c1-osculating-one-side
+    reasons:
+      - text: 'ההפרש בין המסילה למעגל הוא מסדר $h^3$, חזקה אי-זוגית שמחליפה סימן; כש-$\kappa''(s_0)\ne0$ המקדם שלה לא אפס'
+        correct: true
+        feedback: >-
+          בדיוק. בקודקוד של הפרבולה $\kappa'=0$, איבר $h^3$ נעלם, והמעגל נשאר בפנים. בכל נקודה אחרת שלה הוא חוצה.
+      - text: 'המעגל מתלכד עם המסילה עד סדר שני, ולכן אינו יכול לחצות אותה'
+        feedback: >-
+          מגע מסדר שני אומר שההפרש הוא $o(h^2)$, לא שסימנו קבוע. ההפרש יכול להיות $ch^3$, שמחליף סימן ב-$h=0$.
+        misconception: MC-c1-osculating-one-side
+      - text: 'המעגל המנשק נמצא תמיד בצד הקעור, ולכן כולו בתוך העיקול'
+        feedback: >-
+          **המרכז** נמצא בצד הקעור. המעגל עצמו יכול לבלוט מעבר למסילה בצד אחד של נקודת המגע.
+        misconception: MC-c1-osculating-one-side
+
+  - id: Q-1.4-max-exp
+    type: numeric
+    objectives: [OBJ-1.4-3]
+    level: exam
+    prompt: >-
+      מצאו את העקמומיות **המקסימלית** של הגרף $y=x^3$, $x>0$ (הערך עצמו, לא הנקודה).
+    answer: 1.7622854391
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\approx1.762$. $\kappa(x)=\frac{6x}{(1+9x^4)^{3/2}}$, והנגזרת היא
+      $\frac{6\big((1+9x^4)-54x^4\big)}{(1+9x^4)^{5/2}}$, שמתאפסת כש-$45x^4=1$. שם $1+9x^4=\frac65$, ולכן
+      $\kappa=6x\left(\frac56\right)^{3/2}$ עם $x=45^{-1/4}\approx0.386$. ב-$0^+$ וב-$\infty$ העקמומיות שואפת לאפס, ולכן
+      זה המקסימום.
+    wrongFeedback: >-
+      כתבו $\kappa(x)=\frac{|f''|}{(1+f'^2)^{3/2}}$ עם $f'=3x^2$, $f''=6x$, גזרו, מצאו את הנקודה הקריטית והציבו.
+    commonWrong:
+      - value: 1.2247448714
+        feedback: >-
+          $\sqrt{\frac32}=\kappa\big(\frac1{\sqrt3}\big)$, העקמומיות ב"מרפק" שבו השיפוע $1$. הנקודה הכי מעוקמת קרובה יותר
+          לראשית, ב-$x\approx0.386$: מוצאים אותה בגזירה, לא לפי העין.
+        misconception: MC-c1-elbow-guess
+      - value: 1.9741110194
+        feedback: >-
+          זה המקסימום של $\frac{6x}{1+9x^4}$: חילקתם ב-$\|\gamma'\|^2=1+f'^2$. החזקה במכנה היא $\frac32$.
+        misconception: MC-c1-curvature-power

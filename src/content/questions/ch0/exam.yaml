@@ -1,0 +1,560 @@
+# Chapter 0 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (7 points): a verdict and a written justification. Long questions (20 points): state, compute, prove.
+# Every one has an open part graded against a model solution and a rubric.
+chapter: 0
+questions:
+  - id: Q-0-exam-1
+    type: exam
+    title: יעקוביאן הפיך בכל מקום
+    prompt: >-
+      האם ייתכן שהעתקה $F:\mathbb R^2\to\mathbb R^2$ גזירה ברציפות, שמקיימת $\det DF(x)\ne0$ בכל $x\in\mathbb R^2$, אינה
+      חד-חד-ערכית?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-0.4-1]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'כן, ייתכן'
+            correct: true
+            feedback: >-
+              נכון. משפט הפונקציה ההפוכה נותן הפכית מקומית בלבד, ויש העתקה שכזו שאינה חד-חד-ערכית.
+          - text: 'לא, משפט הפונקציה ההפוכה מבטיח ש-$F$ חד-חד-ערכית'
+            feedback: >-
+              המשפט מבטיח שכל נקודה היא בעלת **סביבה** שעליה $F$ חד-חד-ערכית, לא ש-$F$ חד-חד-ערכית על כל המישור.
+            misconception: MC-c0-ift-global
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-0.4-1]
+        prompt: >-
+          נמקו: תנו דוגמה והוכיחו שהיא מקיימת את הדרוש.
+        solution:
+          - kind: goal
+            text: 'למצוא $F$ גזירה ברציפות עם $\det DF\ne0$ בכל נקודה ושתי נקודות שונות עם אותה תמונה.'
+          - kind: idea
+            text: >-
+              הקואורדינטות הקוטביות הן "כמעט" דוגמה, אבל ב-$r=0$ היעקוביאן מתאפס. מחליפים את $r$ ב-$e^x$, שלעולם אינו
+              מתאפס, ומשאירים את המחזוריות בזווית.
+          - kind: step
+            text: '$F(x,y)=(e^x\cos y,\ e^x\sin y)$. הרכיבים חלקים, ולכן $F$ גזירה ברציפות.'
+          - kind: computation
+            text: >-
+              $DF=\begin{pmatrix}e^x\cos y&-e^x\sin y\\ e^x\sin y&e^x\cos y\end{pmatrix}$, ולכן
+              $\det DF=e^{2x}(\cos^2y+\sin^2y)=e^{2x}>0$ בכל נקודה.
+          - kind: check
+            text: '$F(0,0)=(1,0)$ ו-$F(0,2\pi)=(\cos2\pi,\ \sin2\pi)=(1,0)$, אף ש-$(0,0)\ne(0,2\pi)$.'
+          - kind: result
+            text: 'ייתכן: $F$ מקיימת $\det DF\ne0$ בכל מקום ואינה חד-חד-ערכית. משפט הפונקציה ההפוכה מקומי בלבד.'
+        rubric:
+          - text: 'דוגמה מפורשת ונכונה (למשל $(e^x\cos y,\ e^x\sin y)$)'
+            weight: 2
+          - text: 'חישוב של $DF$ ושל הדטרמיננטה, והראיה שהיא שונה מאפס **בכל** נקודה'
+            weight: 2
+          - text: 'שתי נקודות מפורשות שונות עם אותה תמונה'
+            weight: 2
+          - text: 'הסבר שזה לא סותר את משפט הפונקציה ההפוכה, כי הוא מקומי'
+            weight: 1
+
+  - id: Q-0-exam-2
+    type: exam
+    title: שיקוף ומכפלה וקטורית
+    prompt: >-
+      האם ייתכן שמטריצה אורתוגונלית $A$ מסדר $3\times3$ מקיימת $(Au)\times(Av)=-A(u\times v)$ לכל $u,v\in\mathbb R^3$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-0.2-2]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'כן, ייתכן'
+            correct: true
+            feedback: >-
+              נכון. כל מטריצה אורתוגונלית עם $\det A=-1$ מקיימת זאת.
+          - text: 'לא, מטריצה אורתוגונלית תמיד מקיימת $(Au)\times(Av)=A(u\times v)$'
+            feedback: >-
+              זה נכון רק לסיבובים ($\det A=1$). שיקוף משנה את היד של כלל יד ימין.
+            misconception: MC-c0-cross-rigid-invariant
+          - text: 'לא, כי מטריצה אורתוגונלית היא סיבוב'
+            feedback: >-
+              מטריצה אורתוגונלית יכולה להיות שיקוף: $-I$, או $\operatorname{diag}(-1,1,1)$, עם דטרמיננטה $-1$.
+            misconception: MC-c0-orthogonal-is-rotation
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-0.2-2, OBJ-0.2-1]
+        prompt: >-
+          נמקו: תנו מטריצה כזו והוכיחו שהיא מקיימת את השוויון לכל $u,v$.
+        solution:
+          - kind: idea
+            text: >-
+              המכפלה הווקטורית ביליניארית, ולכן כפל של שני הגורמים ב-$-1$ לא משנה אותה; ואילו $A=-I$ הופכת את התוצאה. כך
+              מתקבל הסימן ההפוך.
+          - kind: step
+            text: '$A=-I$. היא אורתוגונלית: $A^{T}A=(-I)(-I)=I$, ו-$\det A=(-1)^3=-1$.'
+          - kind: computation
+            text: >-
+              לכל $u,v$, לפי הביליניאריות: $(Au)\times(Av)=(-u)\times(-v)=(-1)(-1)\,(u\times v)=u\times v$.
+          - kind: computation
+            text: 'מצד שני $-A(u\times v)=-(-(u\times v))=u\times v$.'
+          - kind: check
+            text: >-
+              שני האגפים שווים ל-$u\times v$ לכל $u,v$. (באופן כללי לכל $A$ אורתוגונלית $(Au)\times(Av)=\det(A)\,A(u\times v)$, ולכן כל
+              $A$ אורתוגונלית עם $\det A=-1$ מתאימה.)
+          - kind: result
+            text: 'ייתכן: $A=-I$ אורתוגונלית ומקיימת $(Au)\times(Av)=-A(u\times v)$ לכל $u,v$.'
+        rubric:
+          - text: 'מטריצה מפורשת שהיא אורתוגונלית עם דטרמיננטה $-1$, ובדיקת האורתוגונליות'
+            weight: 2
+          - text: 'חישוב שני האגפים **לכל** $u,v$ (לא רק לזוג אחד), בעזרת הביליניאריות'
+            weight: 2
+          - text: 'מסקנה מפורשת שהשוויון מתקיים, ולכן התשובה "ייתכן"'
+            weight: 1
+
+  - id: Q-0-exam-3
+    type: exam
+    title: אורך של פתרון
+    prompt: >-
+      $A(t)$ מטריצה $n\times n$ רציפה על $[0,1]$ ואנטי-סימטרית לכל $t$. האם ייתכן שלמערכת $X'=A(t)X$ יש פתרון עם
+      $\|X(0)\|=1$ ו-$\|X(1)\|=2$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-0.6-3]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא, לא ייתכן'
+            correct: true
+            feedback: >-
+              נכון. האורך של כל פתרון קבוע.
+          - text: 'כן, אם $A(t)$ אינה קבועה'
+            feedback: >-
+              שמירת האורך משתמשת רק ב-$A(t)^{T}=-A(t)$ בכל רגע, לא בכך ש-$A$ קבועה.
+            misconception: MC-c0-antisym-needs-constant
+          - text: 'כן, פתרונות של מערכות לינאריות גדלים אקספוננציאלית'
+            feedback: >-
+              עם $A$ אנטי-סימטרית $X'$ ניצב ל-$X$ בכל רגע, ולכן הפתרון מסתובב ולא גדל.
+            misconception: MC-c0-antisym-growth
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-0.6-3]
+        prompt: >-
+          הוכיחו את התשובה.
+        solution:
+          - kind: given
+            text: '$X$ גזירה על $[0,1]$, $X''(t)=A(t)X(t)$ ו-$A(t)^{T}=-A(t)$ לכל $t$.'
+          - kind: goal
+            text: '$\|X(t)\|$ קבוע, ובפרט $\|X(1)\|=\|X(0)\|$.'
+          - kind: idea
+            text: 'גוזרים את $\|X\|^2=\langle X,X\rangle$ ומראים שהנגזרת אפס בעזרת האנטי-סימטריה.'
+          - kind: computation
+            text: >-
+              $\frac{d}{dt}\langle X,X\rangle=\langle X',X\rangle+\langle X,X'\rangle=2\langle A X,X\rangle$.
+          - kind: step
+            text: >-
+              $\langle AX,X\rangle=\langle X,A^{T}X\rangle=-\langle X,AX\rangle=-\langle AX,X\rangle$, ולכן $\langle AX,X\rangle=0$.
+          - kind: step
+            text: >-
+              פונקציה גזירה על קטע שנגזרתה אפס בכל נקודה קבועה (משפט הערך הממוצע). לכן $\|X(t)\|^2=\|X(0)\|^2=1$ לכל $t$.
+          - kind: result
+            text: '$\|X(1)\|=1\ne2$: לא ייתכן.'
+        rubric:
+          - text: 'גזירת $\|X\|^2$ בכלל המכפלה והצבת המשוואה'
+            weight: 2
+          - text: 'השימוש הנכון באנטי-סימטריה להראות $\langle AX,X\rangle=0$'
+            weight: 2
+          - text: 'המסקנה מנגזרת אפס לפונקציה קבועה, והמסקנה $\|X(1)\|=1$'
+            weight: 1
+
+  - id: Q-0-exam-4
+    type: exam
+    title: מסילה בתוך קבוצת רמה
+    prompt: >-
+      $f:\mathbb R^3\to\mathbb R$ דיפרנציאבילית, $c\in\mathbb R$, ו-$\gamma:(-1,1)\to\mathbb R^3$ מסילה גזירה כך ש-$f(\gamma(t))=c$ לכל
+      $t$. נסמן $p=\gamma(0)$. האם ייתכן ש-$\nabla f(p)\cdot\gamma'(0)\ne0$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-0.3-3]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא, לא ייתכן'
+            correct: true
+            feedback: >-
+              נכון. הגרדיאנט ניצב לכל וקטור מהירות של מסילה בתוך קבוצת הרמה.
+          - text: 'כן, אם $\gamma$ אינה רגולרית'
+            feedback: >-
+              אם $\gamma'(0)=0$, המכפלה $\nabla f(p)\cdot\gamma'(0)$ היא אפס בוודאי. ובכל מקרה ההוכחה לא משתמשת ברגולריות.
+            misconception: MC-c0-gradient-tangent-to-level
+          - text: 'כן, אם $c$ אינו ערך רגולרי'
+            feedback: >-
+              הניצבות נובעת מכלל השרשרת בלבד, ולא צריך שהערך יהיה רגולרי. אם $\nabla f(p)=0$, המכפלה אפס בכל מקרה. רגולריות
+              נחוצה למשפט הפונקציה הסתומה, לא לכאן.
+            misconception: MC-c0-implicit-converse
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-0.3-3, OBJ-0.3-2]
+        prompt: >-
+          הוכיחו את התשובה.
+        solution:
+          - kind: given
+            text: '$f(\gamma(t))=c$ לכל $t\in(-1,1)$; $f$ דיפרנציאבילית ו-$\gamma$ גזירה.'
+          - kind: goal
+            text: '$\nabla f(p)\cdot\gamma''(0)=0$.'
+          - kind: idea
+            text: 'הפונקציה $h(t)=f(\gamma(t))$ קבועה, ולכן נגזרתה אפס; את הנגזרת מחשבים בכלל השרשרת.'
+          - kind: theorem
+            text: >-
+              כלל השרשרת: $h$ גזירה ו-$h'(t)=Df(\gamma(t))\,\gamma'(t)=\nabla f(\gamma(t))\cdot\gamma'(t)$.
+          - kind: step
+            text: '$h\equiv c$ קבועה, ולכן $h''(0)=0$.'
+          - kind: result
+            text: '$\nabla f(p)\cdot\gamma''(0)=h''(0)=0$: לא ייתכן.'
+        rubric:
+          - text: 'הגדרת $h=f\circ\gamma$ וההבחנה ש-$h$ קבועה'
+            weight: 1
+          - text: 'הפעלה נכונה של כלל השרשרת, עם הגרדיאנט **בנקודה** $\gamma(t)$ ווקטור המהירות $\gamma''(t)$'
+            weight: 3
+          - text: 'הצבת $t=0$ והמסקנה'
+            weight: 1
+
+  - id: Q-0-exam-5
+    type: exam
+    title: ההיפרבולואיד כקבוצת רמה
+    prompt: >-
+      $F(x,y,z)=x^2+y^2-z^2$ ו-$S=\{(x,y,z):\ F(x,y,z)=1\}$ (היפרבולואיד חד-יריעתי).
+    parts:
+      - label: א
+        points: 5
+        type: open
+        objectives: [OBJ-0.4-2]
+        prompt: >-
+          נסחו את משפט הפונקציה הסתומה לפונקציה $G:\mathbb R^3\to\mathbb R$ ולחילוץ המשתנה $z$.
+        solution:
+          - kind: given
+            text: '$G:U\to\mathbb R$ גזירה ברציפות על קבוצה פתוחה $U\subseteq\mathbb R^3$, ו-$p=(x_0,y_0,z_0)\in U$ עם $G(p)=0$.'
+          - kind: theorem
+            text: >-
+              אם $\frac{\partial G}{\partial z}(p)\ne0$, אז יש סביבה פתוחה $V$ של $(x_0,y_0)$, סביבה פתוחה $W$ של $p$, ופונקציה
+              גזירה ברציפות $g:V\to\mathbb R$ עם $g(x_0,y_0)=z_0$, כך ש-$\{q\in W:\ G(q)=0\}=\{(x,y,g(x,y)):\ (x,y)\in V\}$.
+          - kind: step
+            text: 'בנוסף, $g_x=-\frac{G_x}{G_z}$ ו-$g_y=-\frac{G_y}{G_z}$, כשהנגזרות של $G$ מחושבות ב-$(x,y,g(x,y))$.'
+          - kind: result
+            text: 'ליד $p$, הקבוצה $\{G=0\}$ היא בדיוק הגרף של $g$.'
+        rubric:
+          - text: 'ההנחות: $G$ גזירה ברציפות, $G(p)=0$, ו-$\frac{\partial G}{\partial z}(p)\ne0$ (הנגזרת לפי המשתנה שמחלצים)'
+            weight: 2
+          - text: 'המסקנה מקומית: סביבות של $(x_0,y_0)$ ושל $p$, ו-$g$ גזירה ברציפות עם $g(x_0,y_0)=z_0$'
+            weight: 2
+          - text: 'השוויון בין הקבוצה $\{G=0\}$ בתוך הסביבה לבין הגרף של $g$ (לא רק "הגרף מוכל בקבוצה")'
+            weight: 1
+      - label: ב
+        points: 4
+        type: mc
+        objectives: [OBJ-0.4-2]
+        qualitative: true
+        prompt: >-
+          למה $1$ ערך רגולרי של $F$?
+        choices:
+          - text: '$\nabla F=(2x,\ 2y,\ -2z)$ מתאפס רק בראשית, והראשית אינה ב-$S$ כי $F(0,0,0)=0\ne1$'
+            correct: true
+            feedback: >-
+              נכון. ההגדרה בודקת רק נקודות של $S$, ובכל נקודה כזו הגרדיאנט שונה מאפס.
+          - text: '$\nabla F(1,0,0)=(2,0,0)\ne0$'
+            feedback: >-
+              זו נקודה אחת של $S$. ערך רגולרי דורש $\nabla F\ne0$ **בכל** נקודה של $S$.
+            misconception: MC-c0-regular-value-local
+          - text: '$\nabla F\ne0$ בכל $\mathbb R^3$'
+            feedback: >-
+              זה לא נכון ($\nabla F(0)=0$) וגם לא נחוץ: מספיק לבדוק את נקודות $S$.
+            misconception: MC-c0-regular-value-local
+      - label: ג
+        points: 4
+        type: numeric
+        objectives: [OBJ-0.4-3]
+        prompt: >-
+          הנקודה $p=(1,1,1)$ ב-$S$. לאיזה ערך של $a$ הווקטור $v=(1,\ a,\ 2)$ נמצא במרחב המשיק ל-$S$ ב-$p$?
+        answer: 1
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\nabla F(p)=(2,\ 2,\ -2)$, והמרחב המשיק הוא $\ker DF(p)$: $2\cdot1+2a-2\cdot2=0$, כלומר $a=1$.
+        wrongFeedback: >-
+          המרחב המשיק הוא $\{v:\ \nabla F(p)\cdot v=0\}$. חשבו את $\nabla F$ ב-$p$, שימו לב לסימן של הנגזרת לפי $z$.
+        commonWrong:
+          - value: -3
+            feedback: >-
+              זה מתקבל מ-$\nabla F=(2x,\ 2y,\ 2z)$. אבל $\frac{\partial}{\partial z}(-z^2)=-2z$, ולכן $\nabla F(p)=(2,2,-2)$.
+            misconception: MC-c0-graph-normal-sign
+      - label: ד
+        points: 7
+        type: open
+        objectives: [OBJ-0.4-2]
+        prompt: >-
+          מצאו את כל הנקודות של $S$ שבסביבתן $S$ היא גרף של פונקציה $z=g(x,y)$, והוכיחו.
+        solution:
+          - kind: goal
+            text: 'התשובה: בדיוק הנקודות של $S$ עם $z\ne0$.'
+          - kind: idea
+            text: >-
+              כש-$F_z\ne0$ משפט הפונקציה הסתומה נותן גרף. כש-$F_z=0$ המשפט לא אומר דבר, ולכן מראים ישירות שאין גרף: מעל
+              נקודות קרובות יש שני ערכים של $z$.
+          - kind: step
+            text: >-
+              אם $p=(x_0,y_0,z_0)\in S$ ו-$z_0\ne0$: $F_z(p)=-2z_0\ne0$. לפי סעיף א (עם $G=F-1$) יש סביבה של $p$ שבה $S$ היא גרף
+              $z=g(x,y)$; כאן $g=\sqrt{x^2+y^2-1}$ אם $z_0>0$, ו-$g=-\sqrt{x^2+y^2-1}$ אם $z_0<0$.
+          - kind: step
+            text: >-
+              אם $z_0=0$, אז $x_0^2+y_0^2=1$. נניח בשלילה שיש סביבה $W$ של $p$ שבה $S\cap W$ הוא גרף $z=g(x,y)$ על סביבה $V$ של
+              $(x_0,y_0)$.
+          - kind: computation
+            text: >-
+              לכל $\delta>0$ קטן, הנקודה $(x,y)=(1+\delta)(x_0,y_0)$ מקיימת $x^2+y^2=(1+\delta)^2>1$, ושתי הנקודות
+              $(x,y,\pm\sqrt{(1+\delta)^2-1})$ ב-$S$. כש-$\delta\to0$ שתיהן שואפות ל-$p$, ולכן עבור $\delta$ קטן מספיק שתיהן ב-$W$
+              ו-$(x,y)\in V$.
+          - kind: step
+            text: >-
+              אז מעל אותה נקודה $(x,y)$ יש ב-$S\cap W$ שתי נקודות עם ערכי $z$ שונים, בסתירה לכך ש-$S\cap W$ הוא גרף של פונקציה.
+          - kind: result
+            text: '$S$ היא גרף $z=g(x,y)$ ליד $p\in S$ בדיוק כש-$z_0\ne0$. על מעגל המותניים $z=0$ היא גרף לפי $x$ או לפי $y$, לא לפי $z$.'
+        rubric:
+          - text: 'התשובה הנכונה: הנקודות עם $z\ne0$'
+            weight: 1
+          - text: 'הכיוון הראשון: חישוב $F_z=-2z$ והפעלת משפט הפונקציה הסתומה'
+            weight: 2
+          - text: 'ההבנה שכש-$F_z=0$ המשפט אינו מוכיח שאין גרף, וצריך טיעון ישיר'
+            weight: 1
+          - text: 'הטיעון הישיר: שתי נקודות של $S$, קרובות כרצוננו ל-$p$, מעל אותה נקודה $(x,y)$'
+            weight: 3
+
+  - id: Q-0-exam-6
+    type: exam
+    title: מערכת עם מטריצה אנטי-סימטרית
+    prompt: >-
+      בשאלה זו $A(t)$ מטריצה $n\times n$ שהאיברים שלה פונקציות רציפות על קטע $I$, $t_0\in I$.
+    parts:
+      - label: א
+        points: 5
+        type: open
+        objectives: [OBJ-0.6-1]
+        prompt: >-
+          נסחו את משפט הקיום והיחידות לבעיה $X'=A(t)X+B(t)$, $X(t_0)=X_0$.
+        solution:
+          - kind: given
+            text: '$A(t)$ (מטריצה $n\times n$) ו-$B(t)$ (וקטור ב-$\mathbb R^n$) רציפות על קטע $I$; $t_0\in I$ ו-$X_0\in\mathbb R^n$.'
+          - kind: theorem
+            text: >-
+              יש פונקציה גזירה $X:I\to\mathbb R^n$ אחת ויחידה כך ש-$X'(t)=A(t)X(t)+B(t)$ לכל $t\in I$ ו-$X(t_0)=X_0$.
+          - kind: result
+            text: 'הפתרון קיים **על כל הקטע** $I$ (לא רק ליד $t_0$), והוא יחיד.'
+        rubric:
+          - text: 'ההנחות: רציפות של $A$ ו-$B$ על קטע, ותנאי התחלה $X(t_0)=X_0$'
+            weight: 2
+          - text: 'הקיום על כל הקטע $I$'
+            weight: 2
+          - text: 'היחידות'
+            weight: 1
+      - label: ב
+        points: 7
+        type: open
+        objectives: [OBJ-0.6-3]
+        prompt: >-
+          נניח ש-$A(t)^{T}=-A(t)$ לכל $t\in I$. הוכיחו שאם $X,Y$ פתרונות של $X'=A(t)X$, אז $\langle X(t),Y(t)\rangle$ קבוע על $I$.
+        solution:
+          - kind: goal
+            text: '$\frac{d}{dt}\langle X,Y\rangle=0$ על $I$.'
+          - kind: idea
+            text: 'גוזרים את המכפלה הפנימית, מציבים את המשוואה, ומעבירים את $A$ לצד השני של המכפלה.'
+          - kind: computation
+            text: >-
+              $\frac{d}{dt}\langle X,Y\rangle=\langle X',Y\rangle+\langle X,Y'\rangle=\langle AX,Y\rangle+\langle X,AY\rangle$.
+          - kind: computation
+            text: >-
+              $\langle X,AY\rangle=\langle A^{T}X,Y\rangle=-\langle AX,Y\rangle$. לכן הסכום הוא $0$.
+          - kind: step
+            text: 'פונקציה גזירה על קטע שנגזרתה אפס קבועה (משפט הערך הממוצע).'
+          - kind: result
+            text: '$\langle X(t),Y(t)\rangle=\langle X(t_0),Y(t_0)\rangle$ לכל $t\in I$. בפרט (עם $Y=X$) האורך נשמר.'
+        rubric:
+          - text: 'כלל המכפלה לנגזרת של מכפלה פנימית'
+            weight: 2
+          - text: 'הצבת המשוואה בשני המחוברים'
+            weight: 1
+          - text: 'המעבר $\langle X,AY\rangle=\langle A^{T}X,Y\rangle$ והשימוש ב-$A^{T}=-A$'
+            weight: 3
+          - text: 'המסקנה מנגזרת אפס על **קטע**'
+            weight: 1
+      - label: ג
+        points: 3
+        type: numeric
+        objectives: [OBJ-0.6-2]
+        prompt: >-
+          $X'=\begin{pmatrix}0&-2\\2&0\end{pmatrix}X$ עם $X(0)=(1,0)$. חשבו את $x_1\!\left(\frac\pi3\right)$.
+        answer: -0.5
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $X(t)=(\cos2t,\ \sin2t)$: בדיקה, $x_1'=-2\sin2t=-2x_2$ ו-$x_2'=2\cos2t=2x_1$. ב-$\frac\pi3$: $\cos\frac{2\pi}3=-\frac12$.
+        wrongFeedback: >-
+          זו מערכת סיבוב בקצב $2$. נחשו $X(t)=(\cos\omega t,\ \sin\omega t)$, מצאו את $\omega$ מתוך המשוואה ובדקו.
+        commonWrong:
+          - value: 0.5
+            feedback: >-
+              זה $\cos\frac\pi3$: הסיבוב הוא בקצב $2$, כלומר בזווית $2t$. בדקו: $x_2'=2x_1$, לא $x_1$.
+            misconception: MC-c0-param-coefficient-scale
+      - label: ד
+        points: 5
+        type: open
+        standalone: false
+        objectives: [OBJ-0.6-3, OBJ-0.2-2]
+        prompt: >-
+          $\kappa(s),\tau(s)$ רציפות על $I$, והווקטורים $e_1,e_2,e_3:I\to\mathbb R^3$ פותרים
+          $$e_1'=\kappa e_2,\qquad e_2'=-\kappa e_1+\tau e_3,\qquad e_3'=-\tau e_2.$$
+          הוכיחו בעזרת סעיף ב: אם $e_1(t_0),e_2(t_0),e_3(t_0)$ בסיס אורתונורמלי, אז $e_1(s),e_2(s),e_3(s)$ בסיס אורתונורמלי לכל
+          $s\in I$.
+        solution:
+          - kind: idea
+            text: >-
+              סעיף ב מדבר על פתרונות של $X'=KX$ ב-$\mathbb R^3$; לכן מסדרים את $e_1,e_2,e_3$ כשורות של מטריצה $M$, ואז כל **עמודה**
+              של $M$ היא פתרון כזה.
+          - kind: step
+            text: >-
+              תהי $M(s)$ המטריצה שהשורות שלה $e_1,e_2,e_3$, ו-$K=\begin{pmatrix}0&\kappa&0\\-\kappa&0&\tau\\0&-\tau&0\end{pmatrix}$. המשוואות
+              אומרות $M'=KM$, ולכן כל עמודה $M_k$ של $M$ מקיימת $M_k'=KM_k$. $K$ רציפה ואנטי-סימטרית.
+          - kind: step
+            text: >-
+              לפי סעיף ב, $\langle M_k(s),M_l(s)\rangle$ קבוע לכל $k,l$. אלה האיברים של $M^{T}M$, ולכן $M(s)^{T}M(s)=M(t_0)^{T}M(t_0)$.
+          - kind: step
+            text: >-
+              השורות של $M(t_0)$ אורתונורמליות, ולכן $M(t_0)$ אורתוגונלית ו-$M(t_0)^{T}M(t_0)=I$. מכאן $M(s)^{T}M(s)=I$ לכל $s$.
+          - kind: step
+            text: >-
+              למטריצה ריבועית, $M^{T}M=I$ גורר $M^{-1}=M^{T}$ ולכן גם $MM^{T}=I$: המכפלות הפנימיות בין **השורות** הן $\delta_{ij}$.
+          - kind: result
+            text: '$e_1(s),e_2(s),e_3(s)$ אורתונורמליים, ובפרט בסיס של $\mathbb R^3$, לכל $s\in I$.'
+        rubric:
+          - text: 'ניסוח המערכת כ-$M''=KM$ עם $K$ אנטי-סימטרית'
+            weight: 1
+          - text: 'ההבחנה שהעמודות של $M$ (לא השורות) הן פתרונות של $X''=KX$, ושימוש בסעיף ב'
+            weight: 2
+          - text: 'המעבר מ-$M^{T}M=I$ ל-$MM^{T}=I$, כלומר לשורות'
+            weight: 2
+
+  - id: Q-0-exam-7
+    type: exam
+    title: פוביני
+    prompt: >-
+      בשאלה זו כל התחומים סגורים וחסומים וכל הפונקציות רציפות, אלא אם נאמר אחרת.
+    parts:
+      - label: א
+        points: 4
+        type: open
+        objectives: [OBJ-0.5-2]
+        prompt: >-
+          נסחו את משפט פוביני לפונקציה רציפה על תחום פשוט $D=\{(x,y):\ a\le x\le b,\ \varphi_1(x)\le y\le\varphi_2(x)\}$.
+        solution:
+          - kind: given
+            text: '$\varphi_1\le\varphi_2$ רציפות על $[a,b]$, ו-$f$ רציפה על $D$.'
+          - kind: theorem
+            text: >-
+              $f$ אינטגרבילית על $D$, לכל $x\in[a,b]$ הפונקציה $y\mapsto f(x,y)$ אינטגרבילית על $[\varphi_1(x),\varphi_2(x)]$, הפונקציה
+              $x\mapsto\int_{\varphi_1(x)}^{\varphi_2(x)}f(x,y)\,dy$ אינטגרבילית על $[a,b]$, ו-
+              $$\iint_Df\,dA=\int_a^b\left(\int_{\varphi_1(x)}^{\varphi_2(x)}f(x,y)\,dy\right)dx.$$
+          - kind: result
+            text: 'האינטגרל הכפול שווה לאינטגרל החוזר; תחום פשוט ביחס ל-$y$ נותן באותו אופן את הסדר השני.'
+        rubric:
+          - text: 'ההנחות: $\varphi_1,\varphi_2$ רציפות ו-$f$ רציפה על $D$'
+            weight: 1
+          - text: 'השוויון בין האינטגרל הכפול לאינטגרל החוזר, עם הגבולות הנכונים'
+            weight: 2
+          - text: 'ציון שהאינטגרלים הפנימי והחיצוני קיימים'
+            weight: 1
+      - label: ב
+        points: 6
+        type: numeric
+        objectives: [OBJ-0.5-2]
+        prompt: >-
+          חשבו את $\displaystyle\int_0^1\int_{\sqrt x}^{1}e^{y^3}\,dy\,dx$.
+        answer: 0.5727606
+        tolerance: 0.0002
+        correctFeedback: >-
+          נכון: $\frac{e-1}3\approx0.5728$. התחום $0\le x\le1$, $\sqrt x\le y\le1$ הוא $0\le y\le1$, $0\le x\le y^2$. לכן
+          $\int_0^1y^2e^{y^3}dy=\frac13\left[e^{y^3}\right]_0^1=\frac{e-1}3$.
+        wrongFeedback: >-
+          ל-$e^{y^3}$ אין פונקציה קדומה אלמנטרית: החליפו סדר. שרטטו את התחום שבין $y=\sqrt x$ ל-$y=1$, ומצאו לכל $y$ את
+          הטווח של $x$.
+        commonWrong:
+          - value: 0.7691438
+            feedback: >-
+              זה $\int_0^1(1-y^2)e^{y^3}dy$, על התחום המשלים. $\sqrt x\le y$ שקול ל-$x\le y^2$, ולכן $x$ נע מ-$0$ עד $y^2$.
+            misconception: MC-c0-fubini-wrong-region
+          - value: 1.3419044
+            feedback: >-
+              זה $\int_0^1e^{y^3}dy$, כאילו האינטגרל הפנימי לפי $x$ שווה $1$. אורך הקטע $0\le x\le y^2$ הוא $y^2$.
+            misconception: MC-c0-fubini-wrong-region
+      - label: ג
+        points: 4
+        type: numeric
+        objectives: [OBJ-0.5-3, OBJ-0.5-2]
+        prompt: >-
+          חשבו את הנפח של הגוף $\{(x,y,z):\ 0\le x\le1,\ 0\le y\le x,\ 0\le z\le x^2+y^2\}$.
+        answer: 0.3333333
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון: $\frac13$. $V=\iint_D(x^2+y^2)\,dA$ על המשולש $0\le y\le x\le1$: $\int_0^1\left(x^3+\frac{x^3}3\right)dx=\frac43\cdot\frac14=\frac13$.
+        wrongFeedback: >-
+          לפי פוביני $V=\iiint1\,dV=\iint_D\left(\int_0^{x^2+y^2}dz\right)dA$. התחום $D$ הוא המשולש $0\le y\le x\le1$.
+        commonWrong:
+          - value: 0.6666667
+            feedback: >-
+              $\frac23$ הוא האינטגרל על כל הריבוע $[0,1]^2$. כאן $y$ נע רק מ-$0$ עד $x$.
+            misconception: MC-c0-fubini-wrong-region
+      - label: ד
+        points: 6
+        type: open
+        objectives: [OBJ-0.5-1]
+        prompt: >-
+          $Q$ תיבה סגורה ב-$\mathbb R^2$, ו-$f\ge0$ רציפה על $Q$ עם $\iint_Qf\,dA=0$. הוכיחו ש-$f\equiv0$ על $Q$, מתוך ההגדרה של
+          אינטגרל רימן בעזרת סכומים תחתונים.
+        solution:
+          - kind: goal
+            text: '$f(p)=0$ לכל $p\in Q$.'
+          - kind: idea
+            text: >-
+              אם $f(p)>0$, הרציפות נותנת תת-תיבה סביב $p$ שבה $f$ גדולה מקבוע חיובי. סכום תחתון של חלוקה שמכילה את תת-התיבה הזו
+              כבר חיובי, והאינטגרל גדול מכל סכום תחתון.
+          - kind: step
+            text: >-
+              נניח בשלילה ש-$f(p)=m>0$ ל-$p\in Q$. לפי הרציפות יש תיבה סגורה $B\subseteq Q$ עם $p\in B$ ו-$\operatorname{vol}(B)>0$ כך
+              ש-$f\ge\frac m2$ על $B$.
+          - kind: step
+            text: >-
+              נבחר חלוקה $P$ של $Q$ ש-$B$ היא אחת מתת-התיבות שלה (מוסיפים את הקצוות של $B$ לנקודות החלוקה בכל ציר).
+          - kind: computation
+            text: >-
+              על כל תת-תיבה $\inf f\ge0$, ועל $B$, $\inf_Bf\ge\frac m2$. לכן $L(f,P)\ge\frac m2\operatorname{vol}(B)>0$.
+          - kind: step
+            text: '$\iint_Qf\,dA=\sup_{P''}L(f,P'')\ge L(f,P)>0$, בסתירה להנחה.'
+          - kind: result
+            text: '$f\equiv0$ על $Q$.'
+        rubric:
+          - text: 'הנחה בשלילה ובחירת תת-תיבה בעלת נפח חיובי שבה $f\ge\frac m2$, בנימוק של רציפות'
+            weight: 2
+          - text: 'בניית חלוקה שתת-התיבה היא אחד מחלקיה'
+            weight: 1
+          - text: 'הערכה של הסכום התחתון, עם השימוש ב-$f\ge0$ בשאר התת-תיבות'
+            weight: 2
+          - text: 'הסתירה דרך $\iint f\ge L(f,P)$'
+            weight: 1

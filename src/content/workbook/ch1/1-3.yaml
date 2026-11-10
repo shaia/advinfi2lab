@@ -1,0 +1,397 @@
+# Workbook of lesson 1.3 — the unit tangent, curvature and the principal normal.
+# Objectives (src/course.ts):
+#   OBJ-1.3-1  curvature as ‖dt/ds‖; the circle and the line
+#   OBJ-1.3-2  the cross-product formula in a general parameter, and why the cube
+#   OBJ-1.3-3  the principal normal where κ > 0, and why it is perpendicular to t
+# Every number recomputed with src/math/geometry.ts (curvature, frenet, d1, d2) on 2026-11-09.
+lesson: '1.3'
+practice:
+  - id: W-1.3-01
+    level: basic
+    objectives: [OBJ-1.3-1]
+    prompt: >-
+      נתונה $\gamma(s)=\big(\tfrac35\cos s,\ \tfrac35\sin s,\ \tfrac45 s\big)$.
+
+      (א) הראו ש-$s$ הוא פרמטר אורך הקשת.
+
+      (ב) חשבו את העקמומיות **מההגדרה**, $\kappa=\|\frac{d\mathbf t}{ds}\|$.
+    answer: >-
+      (א) $\|\gamma'(s)\|^2=\frac{9}{25}+\frac{16}{25}=1$. (ב) $\kappa\equiv\frac35$.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $$\gamma'(s)=\big(-\tfrac35\sin s,\ \tfrac35\cos s,\ \tfrac45\big)$$, ו-$$\|\gamma'(s)\|^2=\frac{9}{25}(\sin^2s+\cos^2s)+\frac{16}{25}=1$$.
+      - kind: definition
+        text: >-
+          בפרמטר אורך הקשת $\mathbf t(s)=\gamma'(s)$ ו-$\kappa(s)=\|\mathbf t'(s)\|$.
+      - kind: computation
+        text: >-
+          (ב) $$\mathbf t'(s)=\big(-\tfrac35\cos s,\ -\tfrac35\sin s,\ 0\big)$$, ואורכו $\frac35$.
+      - kind: check
+        text: >-
+          זה סליל עם $a=\frac35$ ו-$b=\frac45$, ו-$\frac{a}{a^2+b^2}=\frac{3/5}{1}=\frac35$, כמו בנוסחה שבשיעור.
+      - kind: result
+        text: >-
+          $\kappa\equiv\frac35$.
+
+  - id: W-1.3-02
+    level: basic
+    objectives: [OBJ-1.3-2]
+    prompt: >-
+      חשבו את העקמומיות של המסילה $\gamma(t)=(t,\ \ln t)$, $t>0$, בנקודה $t=1$.
+    answer: >-
+      $\kappa(1)=\frac{1}{2\sqrt2}\approx0.3536$.
+    solution:
+      - kind: theorem
+        text: >-
+          במישור $\kappa=\frac{|x'y''-y'x''|}{(x'^2+y'^2)^{3/2}}$.
+      - kind: computation
+        text: >-
+          $x'=1$, $y'=\frac1t$, $x''=0$, $y''=-\frac{1}{t^2}$. לכן $x'y''-y'x''=-\frac{1}{t^2}$ ו-$x'^2+y'^2=1+\frac{1}{t^2}$.
+      - kind: computation
+        text: >-
+          $\kappa(t)=\frac{1/t^2}{(1+1/t^2)^{3/2}}=\frac{t}{(t^2+1)^{3/2}}$, וב-$t=1$: $\frac{1}{2^{3/2}}=\frac{1}{2\sqrt2}$.
+      - kind: check
+        text: >-
+          כש-$t\to\infty$ הגרף של $\ln$ כמעט ישר, ואכן $\kappa(t)\approx\frac{1}{t^2}\to0$.
+      - kind: result
+        text: >-
+          $\kappa(1)=\frac{1}{2\sqrt2}\approx0.3536$.
+
+  - id: W-1.3-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.3-3]
+    prompt: >-
+      $\gamma$ מסילה בפרמטר אורך הקשת ב-$\mathbb R^3$.
+
+      (א) בנקודה $s_0$ נתון $\mathbf t'(s_0)=(0,\ -3,\ 4)$. מצאו את $\kappa(s_0)$ ואת $\mathbf n(s_0)$.
+
+      (ב) בנקודה אחרת $s_1$ נתון $\mathbf t(s_1)=(1,0,0)$. האם ייתכן ש-$\mathbf t'(s_1)=(1,\ 1,\ 0)$?
+    answer: >-
+      (א) $\kappa=5$, $\mathbf n=(0,\ -\tfrac35,\ \tfrac45)$. (ב) לא: $\mathbf t'$ חייב להיות ניצב ל-$\mathbf t$.
+    solution:
+      - kind: definition
+        text: >-
+          $\kappa=\|\mathbf t'\|$, ו-$\mathbf n=\frac{\mathbf t'}{\kappa}$ כש-$\kappa>0$.
+      - kind: computation
+        text: >-
+          (א) $\|(0,-3,4)\|=5$, ולכן $\kappa(s_0)=5$ ו-$\mathbf n(s_0)=\frac15(0,-3,4)$.
+      - kind: theorem
+        text: >-
+          הלמה של השיעור: $\|\mathbf t\|\equiv1$, ולכן $\mathbf t\cdot\mathbf t'=0$ בכל נקודה.
+      - kind: step
+        text: >-
+          (ב) $(1,0,0)\cdot(1,1,0)=1\ne0$, ולכן זה לא ייתכן. (ובדיקה ל-(א): $\mathbf t(s_0)$ חייב להיות ניצב ל-$(0,-3,4)$.)
+      - kind: result
+        text: >-
+          (א) $\kappa(s_0)=5$, $\mathbf n(s_0)=(0,-\frac35,\frac45)$. (ב) לא ייתכן.
+
+  - id: W-1.3-04
+    level: mid
+    objectives: [OBJ-1.3-2]
+    prompt: >-
+      חשבו את העקמומיות של הספירלה על החרוט $\gamma(t)=(e^t\cos t,\ e^t\sin t,\ e^t)$ כפונקציה של $t$, ואת ערכה ב-$t=0$.
+    answer: >-
+      $\kappa(t)=\frac{\sqrt2}{3e^t}$; $\kappa(0)=\frac{\sqrt2}{3}\approx0.4714$.
+    solution:
+      - kind: computation
+        text: >-
+          $$\gamma'=e^t(\cos t-\sin t,\ \sin t+\cos t,\ 1)$$, ו-$$\|\gamma'\|^2=e^{2t}\big((\cos t-\sin t)^2+(\sin t+\cos t)^2+1\big)=3e^{2t}$$.
+      - kind: computation
+        text: >-
+          $\gamma''=e^t(-2\sin t,\ 2\cos t,\ 1)$ (גוזרים כל רכיב של $\gamma'$ בכלל המכפלה).
+      - kind: computation
+        text: >-
+          $$\gamma'\times\gamma''=e^{2t}\big(\sin t-\cos t,\ -\sin t-\cos t,\ 2\big)$$, ולכן
+          $$\|\gamma'\times\gamma''\|^2=e^{4t}\big((\sin t-\cos t)^2+(\sin t+\cos t)^2+4\big)=6e^{4t}$$.
+      - kind: step
+        text: >-
+          $\kappa=\frac{\sqrt6\,e^{2t}}{(\sqrt3\,e^t)^3}=\frac{\sqrt6}{3\sqrt3\,e^t}=\frac{\sqrt2}{3e^t}$.
+      - kind: check
+        text: >-
+          חישוב מספרי ב-$t=0$ וב-$t=1$ נותן $0.4714$ ו-$0.1734$, כמו הנוסחה. וההגדלה פי $e^t$ מתחלקת בעקמומיות, כמו ב-$c\gamma$.
+      - kind: result
+        text: >-
+          $\kappa(t)=\frac{\sqrt2}{3}e^{-t}$, ו-$\kappa(0)=\frac{\sqrt2}{3}$.
+
+  - id: W-1.3-05
+    level: mid
+    objectives: [OBJ-1.3-2, OBJ-1.3-1]
+    prompt: >-
+      האסטרואידה $\gamma(t)=(\cos^3t,\ \sin^3t)$, $0\le t\le2\pi$.
+
+      (א) באילו נקודות המסילה אינה רגולרית?
+
+      (ב) חשבו את $\kappa(t)$ בנקודות הרגולריות, ואת ערכה ב-$t=\frac\pi4$.
+
+      (ג) מה קורה ל-$\kappa$ כשמתקרבים לנקודה לא רגולרית?
+    answer: >-
+      (א) $t=0,\frac\pi2,\pi,\frac{3\pi}2,2\pi$. (ב) $\kappa(t)=\frac{2}{3|\sin2t|}$, ו-$\kappa(\frac\pi4)=\frac23$. (ג) $\kappa\to\infty$.
+    solution:
+      - kind: computation
+        text: >-
+          $x'=-3\cos^2t\sin t$, $y'=3\sin^2t\cos t$, ולכן $x'^2+y'^2=9\sin^2t\cos^2t$ ו-$\|\gamma'\|=3|\sin t\cos t|$.
+      - kind: step
+        text: >-
+          (א) $\gamma'=0$ בדיוק כש-$\sin t\cos t=0$, כלומר ב-$t=\frac{k\pi}2$: ארבעת החודים $(\pm1,0)$, $(0,\pm1)$.
+      - kind: computation
+        text: >-
+          $x''=6\cos t\sin^2t-3\cos^3t$, $y''=6\sin t\cos^2t-3\sin^3t$. מציבים ומקבצים:
+          $$x'y''-y'x''=-9\sin^2t\cos^2t(\cos^2t+\sin^2t)=-9\sin^2t\cos^2t$$.
+      - kind: step
+        text: >-
+          (ב) $$\kappa=\frac{9\sin^2t\cos^2t}{27|\sin t\cos t|^3}=\frac{1}{3|\sin t\cos t|}=\frac{2}{3|\sin2t|}$$. ב-$t=\frac\pi4$: $\frac23$.
+      - kind: step
+        text: >-
+          (ג) כש-$t\to\frac{k\pi}2$, $\sin2t\to0$ ו-$\kappa\to\infty$: המסילה מסתובבת בחדות סביב החוד.
+      - kind: check
+        text: >-
+          חישוב מספרי: $\kappa(0.3)\approx1.1807=\frac{2}{3\sin0.6}$. העקמומיות המינימלית $\frac23$ באמצע כל קשת, ב-$t=\frac\pi4$ ובסימטריות.
+      - kind: result
+        text: >-
+          (א) ארבעת החודים. (ב) $\kappa(t)=\frac{2}{3|\sin2t|}$, $\kappa(\frac\pi4)=\frac23$. (ג) $\kappa\to\infty$.
+
+  - id: W-1.3-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.3-3]
+    prompt: >-
+      $\gamma$ מסילה בפרמטר אורך הקשת עם $\kappa>0$ על קטע $J$. האם ייתכן שהנורמל הראשי $\mathbf n(s)$ קבוע על $J$? הוכיחו
+      את תשובתכם.
+    answer: >-
+      לא: אם $\mathbf n\equiv\mathbf n_0$ אז $\mathbf t\cdot\mathbf n_0\equiv0$, ובגזירה $\kappa=0$, סתירה.
+    solution:
+      - kind: idea
+        text: >-
+          $\mathbf n$ ניצב ל-$\mathbf t$ בכל נקודה. אם $\mathbf n$ קבוע, גוזרים את האנכיות ומקבלים מידע על $\mathbf t'$.
+      - kind: step
+        text: >-
+          נניח $\mathbf n(s)=\mathbf n_0$ לכל $s\in J$. לפי המשפט, $\mathbf t(s)\cdot\mathbf n_0=0$ לכל $s\in J$.
+      - kind: step
+        text: >-
+          גוזרים לפי $s$ ($\mathbf n_0$ קבוע): $\mathbf t'(s)\cdot\mathbf n_0=0$.
+      - kind: step
+        text: >-
+          אבל $\mathbf t'=\kappa\,\mathbf n=\kappa\,\mathbf n_0$, ולכן $\mathbf t'\cdot\mathbf n_0=\kappa\,\|\mathbf n_0\|^2=\kappa$. מכאן $\kappa=0$ על $J$, בסתירה ל-$\kappa>0$.
+      - kind: check
+        text: >-
+          המעגל, הסליל והפרבולה: בכולם $\mathbf n$ מסתובב. ובאמת, אם $\mathbf n$ היה קבוע, $\mathbf t$ היה מסתובב לכיוון קבוע, ואחרי סיבוב הוא כבר לא היה ניצב לו.
+      - kind: result
+        text: >-
+          לא ייתכן: לנורמל הראשי אין ערך קבוע על אף קטע שבו $\kappa>0$.
+
+  - id: W-1.3-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.3-1]
+    prompt: >-
+      נתונה $\gamma(t)=(2\cos t^3,\ 2\sin t^3)$, $0<t<2$.
+
+      (א) מצאו את פונקציית אורך הקשת $s(t)=\int_0^t\|\gamma'\|$, כתבו את $\gamma$ בפרמטר $s$, וחשבו את העקמומיות מההגדרה.
+
+      (ב) חשבו את $\|\gamma''(1)\|$. האם $\kappa(1)=\|\gamma''(1)\|$?
+    answer: >-
+      (א) $s=2t^3$, $\gamma=(2\cos\frac s2,\ 2\sin\frac s2)$, $\kappa=\frac12$. (ב) $\|\gamma''(1)\|=\sqrt{468}\approx21.63$; לא.
+    solution:
+      - kind: computation
+        text: >-
+          $\gamma'(t)=6t^2(-\sin t^3,\ \cos t^3)$, ולכן $\|\gamma'(t)\|=6t^2$ ו-$s(t)=\int_0^t6u^2\,du=2t^3$.
+      - kind: step
+        text: >-
+          (א) $t^3=\frac s2$, ולכן $\gamma=(2\cos\frac s2,\ 2\sin\frac s2)$, מעגל ברדיוס 2 בפרמטר אורך הקשת. כמו בשיעור, $\kappa=\frac12$.
+      - kind: computation
+        text: >-
+          (ב) $$\gamma''(t)=12t(-\sin t^3,\ \cos t^3)+18t^4(-\cos t^3,\ -\sin t^3)$$. שני הווקטורים ניצבים ובאורכים $12$ ו-$18$ ב-$t=1$, ולכן
+          $$\|\gamma''(1)\|=\sqrt{144+324}=\sqrt{468}$$.
+      - kind: step
+        text: >-
+          $\sqrt{468}\approx21.63\ne\frac12$. הרכיב $12t(\dots)$ הוא שינוי אורך המהירות ($v'=12t$) והרכיב $18t^4$ הוא $\kappa v^2=\frac12\cdot36t^4$, כמו בפירוק
+          $\gamma''=v'\mathbf t+\kappa v^2\mathbf n$.
+      - kind: result
+        text: >-
+          (א) $\kappa\equiv\frac12$. (ב) $\|\gamma''(1)\|=\sqrt{468}$, ולכן לא: בפרמטר $t$ הנגזרת השנייה אינה העקמומיות.
+
+  - id: W-1.3-08
+    level: exam
+    objectives: [OBJ-1.3-2]
+    prompt: >-
+      במרחב $\mathbb R^n$ אין מכפלה וקטורית, אבל יש נוסחה בלעדיה.
+
+      (א) תהי $\gamma:I\to\mathbb R^n$ רגולרית מסדר $C^2$ ו-$v=\|\gamma'\|$. הוכיחו:
+      $\kappa^2=\frac{\|\gamma'\|^2\|\gamma''\|^2-(\gamma'\cdot\gamma'')^2}{\|\gamma'\|^6}$.
+
+      (ב) חשבו את העקמומיות של $\gamma(t)=(\cos t,\ \sin t,\ \cos t,\ \sin t)$ ב-$\mathbb R^4$, ופרשו את התוצאה.
+    answer: >-
+      (א) מהפירוק $\gamma''=v'\mathbf t+\kappa v^2\mathbf n$. (ב) $\kappa\equiv\frac{1}{\sqrt2}$: מעגל ברדיוס $\sqrt2$.
+    solution:
+      - kind: idea
+        text: >-
+          הפירוק $\gamma''=v'\,\mathbf t+\kappa v^2\,\mathbf n$ נכון בכל $\mathbb R^n$ (ההוכחה בשיעור לא השתמשה במכפלה הווקטורית עד שלב 4).
+          $\mathbf t,\ \mathbf n$ אורתונורמליים, ולכן אפשר לחשב אורכים ומכפלות פנימיות כמו פיתגורס.
+      - kind: step
+        text: >-
+          (א) אם $\kappa=0$ אז $\gamma''=v'\mathbf t$ ו-$\gamma'=v\mathbf t$ מקבילים, והמונה אפס: הנוסחה נכונה. אחרת:
+          $\|\gamma''\|^2=v'^2+\kappa^2v^4$ ו-$$\gamma'\cdot\gamma''=v\mathbf t\cdot(v'\mathbf t+\kappa v^2\mathbf n)=vv'$$.
+      - kind: computation
+        text: >-
+          לכן $$\|\gamma'\|^2\|\gamma''\|^2-(\gamma'\cdot\gamma'')^2=v^2(v'^2+\kappa^2v^4)-v^2v'^2=\kappa^2v^6$$, ומחלקים ב-$v^6$.
+      - kind: check
+        text: >-
+          ב-$\mathbb R^3$ זו בדיוק הנוסחה עם המכפלה הווקטורית, לפי הזהות $$\|\mathbf a\times\mathbf b\|^2=\|\mathbf a\|^2\|\mathbf b\|^2-(\mathbf a\cdot\mathbf b)^2$$.
+      - kind: computation
+        text: >-
+          (ב) $$\gamma'=(-\sin t,\cos t,-\sin t,\cos t)$$, $\|\gamma'\|^2=2$; $$\gamma''=-(\cos t,\sin t,\cos t,\sin t)$$, $\|\gamma''\|^2=2$; $\gamma'\cdot\gamma''=0$.
+          לכן $\kappa^2=\frac{2\cdot2-0}{8}=\frac12$.
+      - kind: step
+        text: >-
+          פירוש: $$\gamma(t)=\sqrt2\big(\cos t\,\mathbf e_1+\sin t\,\mathbf e_2\big)$$ עם $\mathbf e_1=\frac{1}{\sqrt2}(1,0,1,0)$ ו-$\mathbf e_2=\frac{1}{\sqrt2}(0,1,0,1)$ אורתונורמליים:
+          מעגל ברדיוס $\sqrt2$ במישור שהם פורשים, ו-$\kappa=\frac{1}{\sqrt2}$ כמו בדוגמה 1 של השיעור.
+      - kind: result
+        text: >-
+          (א) הוכח. (ב) $\kappa\equiv\frac{1}{\sqrt2}$.
+
+  - id: W-1.3-09
+    level: exam
+    objectives: [OBJ-1.3-3]
+    prompt: >-
+      $\gamma$ מסילה ב-$\mathbb R^3$ בפרמטר אורך הקשת, מסדר $C^3$, עם $\kappa>0$.
+
+      (א) הוכיחו ש-$\mathbf n'(s)\cdot\mathbf t(s)=-\kappa(s)$ וש-$\mathbf n'(s)\cdot\mathbf n(s)=0$.
+
+      (ב) הסיקו ש-$\|\mathbf n'(s)\|\ge\kappa(s)$, עם שוויון אם ורק אם $\mathbf n'(s)=-\kappa(s)\,\mathbf t(s)$.
+
+      (ג) בדקו על הסליל $(2\cos t,\ 2\sin t,\ t)$.
+    answer: >-
+      (ג) $\|\frac{d\mathbf n}{ds}\|=\frac{1}{\sqrt5}\approx0.447>\kappa=\frac25$: אין שוויון.
+    solution:
+      - kind: step
+        text: >-
+          (א) $\mathbf n\cdot\mathbf t\equiv0$; גוזרים: $\mathbf n'\cdot\mathbf t+\mathbf n\cdot\mathbf t'=0$, ו-$\mathbf t'=\kappa\mathbf n$, ולכן $\mathbf n'\cdot\mathbf t=-\kappa\|\mathbf n\|^2=-\kappa$.
+          ו-$\|\mathbf n\|\equiv1$, ולכן לפי הלמה $\mathbf n'\cdot\mathbf n=0$.
+      - kind: step
+        text: >-
+          (ב) הרכיב של $\mathbf n'$ לאורך וקטור היחידה $\mathbf t$ הוא $-\kappa$. אורך של וקטור גדול או שווה לערך המוחלט של כל רכיב שלו
+          (קושי-שוורץ: $|\mathbf n'\cdot\mathbf t|\le\|\mathbf n'\|$), ולכן $\|\mathbf n'\|\ge\kappa$.
+      - kind: step
+        text: >-
+          שוויון ב-קושי-שוורץ מתקיים אם ורק אם $\mathbf n'$ מקביל ל-$\mathbf t$, כלומר $\mathbf n'=\lambda\mathbf t$, ואז $\lambda=\mathbf n'\cdot\mathbf t=-\kappa$.
+      - kind: computation
+        text: >-
+          (ג) $\mathbf n(t)=(-\cos t,-\sin t,0)$ ו-$\frac{ds}{dt}=\sqrt5$, ולכן $\frac{d\mathbf n}{ds}=\frac{1}{\sqrt5}(\sin t,-\cos t,0)$, באורך $\frac{1}{\sqrt5}$.
+          ו-$\kappa=\frac{a}{a^2+b^2}=\frac25$. אכן $\frac{1}{\sqrt5}\approx0.447>0.4$.
+      - kind: check
+        text: >-
+          במעגל ($b=0$) $\mathbf n'=-\kappa\mathbf t$ ויש שוויון. בסליל יש ל-$\mathbf n'$ עוד רכיב, ניצב ל-$\mathbf t$ ול-$\mathbf n$: שם נכנס
+          הפיתול של שיעור 2.2.
+      - kind: result
+        text: >-
+          $\|\mathbf n'\|\ge\kappa$; בסליל $(2\cos t,2\sin t,t)$: $\frac{1}{\sqrt5}>\frac25$.
+
+  - id: W-1.3-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.3-1]
+    prompt: >-
+      הוכיחו או הפריכו: אם לשתי מסילות $\gamma,\delta:[0,L]\to\mathbb R^3$ בפרמטר אורך הקשת יש אותה עקמומיות בכל $s$, אז
+      $\delta=A\gamma+\mathbf p$ לאיזו מטריצה אורתוגונלית $A$ ווקטור $\mathbf p$.
+    answer: >-
+      הפרכה: מעגל ברדיוס 2 והסליל $\big(\cos\frac{s}{\sqrt2},\ \sin\frac{s}{\sqrt2},\ \frac{s}{\sqrt2}\big)$ שניהם עם $\kappa\equiv\frac12$, והסליל אינו מישורי.
+    solution:
+      - kind: idea
+        text: >-
+          מחפשים שתי מסילות עם אותה עקמומיות קבועה, אחת מישורית ואחת לא. תנועה קשיחה מעבירה קבוצה מישורית לקבוצה מישורית.
+          כדי להפריך מספיקה דוגמה אחת: ניקח $L=\frac{3\pi}{\sqrt2}$.
+      - kind: computation
+        text: >-
+          על $[0,L]$: $\gamma(s)=(2\cos\frac s2,\ 2\sin\frac s2,\ 0)$: מעגל ברדיוס 2 בפרמטר אורך הקשת, $\kappa\equiv\frac12$.
+          $\delta(s)=\big(\cos\frac{s}{\sqrt2},\ \sin\frac{s}{\sqrt2},\ \frac{s}{\sqrt2}\big)$: $\|\delta'\|^2=\frac12+\frac12=1$, וזה סליל עם $a=b=1$ אחרי החלפת פרמטר, ולכן $\kappa=\frac{a}{a^2+b^2}=\frac12$.
+      - kind: step
+        text: >-
+          אם $\delta=A\gamma+\mathbf p$, אז התמונה של $\delta$ הייתה מוכלת במישור $A(\{z=0\})+\mathbf p$. אבל הנקודות
+          $\delta(0)=(1,0,0)$, $\delta(\frac{\pi}{\sqrt2})=(0,1,\frac\pi2)$, $\delta(\sqrt2\pi)=(-1,0,\pi)$, $\delta(\frac{3\pi}{\sqrt2})=(0,-1,\frac{3\pi}2)$
+          (כולן עם $s\in[0,L]$) אינן במישור אחד: שלוש הראשונות קובעות מישור, והרביעית לא עליו.
+      - kind: check
+        text: >-
+          את המישור דרך שלוש הנקודות הראשונות נותן הנורמל $(0,1,\frac\pi2)-(1,0,0)$ כפול וקטורית ב-$(-1,0,\pi)-(1,0,0)$, כלומר
+          $$(-1,1,\frac\pi2)\times(-2,0,\pi)=(\pi,\ 0,\ 2)$$: המישור $\pi x+2z=\pi$. ברביעית: $0+3\pi\ne\pi$.
+      - kind: result
+        text: >-
+          הטענה שגויה. עקמומיות לבדה לא קובעת מסילה במרחב; בשיעור 2.4 נראה שעקמומיות ופיתול יחד כן (ובמישור, בשיעור 1.6,
+          העקמומיות המסומנת לבדה).
+challenge:
+  - id: W-1.3-c1
+    stars: 1
+    objectives: [OBJ-1.3-1]
+    prompt: >-
+      תהי $\gamma:[0,1]\to\mathbb R^3$ מסילה רגולרית מסדר $C^2$ שנמצאת על ספרת היחידה: $\|\gamma(t)\|=1$ לכל $t$. הוכיחו
+      ש-$\kappa(t)\ge1$ בכל נקודה, גם כשהפרמטר אינו אורך הקשת. מתי יש שוויון בכל נקודה?
+    answer: >-
+      $\kappa\ge1$; שוויון בכל נקודה בדיוק כשהתמונה היא קשת של מעגל גדול (כש-$\mathbf n=-\gamma$).
+    solution:
+      - kind: idea
+        text: >-
+          העקמומיות לא תלויה בפרמטריזציה, ולכן עוברים לפרמטר אורך הקשת. גוזרים פעמיים את $\gamma\cdot\gamma=1$.
+      - kind: step
+        text: >-
+          בפרמטר אורך הקשת: $\gamma\cdot\gamma=1$, ובגזירה $2\gamma\cdot\mathbf t=0$.
+      - kind: step
+        text: >-
+          גוזרים שוב: $\mathbf t\cdot\mathbf t+\gamma\cdot\mathbf t'=0$, כלומר $\gamma\cdot\mathbf t'=-1$.
+      - kind: step
+        text: >-
+          לפי קושי-שוורץ: $$1=|\gamma\cdot\mathbf t'|\le\|\gamma\|\,\|\mathbf t'\|=1\cdot\kappa$$. לכן $\kappa\ge1$.
+      - kind: step
+        text: >-
+          שוויון בקושי-שוורץ פירושו $\mathbf t'\parallel\gamma$, ומ-$\gamma\cdot\mathbf t'=-1$: $\mathbf t'=-\gamma$, כלומר $\kappa=1$ ו-$\mathbf n=-\gamma$.
+          אז $\gamma''=-\gamma$, ו-$$\gamma(s)=\cos s\,\gamma(0)+\sin s\,\gamma'(0)$$ (הפתרון היחיד של המשוואה הלינארית $y''=-y$ בכל רכיב עם הערכים ההתחלתיים האלה, לפי משפט הקיום והיחידות של שיעור 0.6), עם $\gamma(0)\perp\gamma'(0)$ וקטורי יחידה: קשת של מעגל גדול.
+      - kind: check
+        text: >-
+          מעגל רוחב בגובה $z=h$ על הספרה הוא מעגל ברדיוס $\sqrt{1-h^2}\le1$, ועקמומיותו $\frac{1}{\sqrt{1-h^2}}\ge1$, עם שוויון רק בקו המשווה.
+      - kind: result
+        text: >-
+          $\kappa\ge1$ בכל נקודה; $\kappa\equiv1$ בדיוק כשהמסילה עוברת על קשת של מעגל גדול.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 1'
+      year: 2002
+      problem: 'תרגיל 4'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex01.html
+      verified: '2026-11-09'
+      adapted: true
+
+  - id: W-1.3-c2
+    stars: 1
+    objectives: [OBJ-1.3-3]
+    prompt: >-
+      $\gamma$ מסילה מישורית רגולרית מסדר $C^2$. הנורמל של $\gamma$ בנקודה $\gamma(s)$ הוא הישר שעובר דרכה בכיוון ניצב ל-$\mathbf t(s)$.
+      נניח שכל הנורמלים של $\gamma$ עוברים דרך נקודה קבועה $\mathbf p$. הוכיחו שהתמונה של $\gamma$ מוכלת במעגל שמרכזו $\mathbf p$.
+    answer: >-
+      $$\frac{d}{ds}\|\gamma-\mathbf p\|^2=2(\gamma-\mathbf p)\cdot\mathbf t=0$$, ולכן $\|\gamma-\mathbf p\|$ קבוע.
+    solution:
+      - kind: idea
+        text: >-
+          "הנורמל עובר דרך $\mathbf p$" פירושו ש-$\gamma(s)-\mathbf p$ ניצב למשיק. וקטור שתמיד ניצב לנגזרת שלו שומר על אורכו: הלמה של השיעור, הפוכה.
+      - kind: step
+        text: >-
+          נעבור לפרמטר אורך הקשת. $\mathbf p$ על הישר $\{\gamma(s)+\lambda\mathbf w\}$ עם $\mathbf w\perp\mathbf t(s)$, ולכן $\gamma(s)-\mathbf p=-\lambda\mathbf w$
+          ניצב ל-$\mathbf t(s)$, לכל $s$.
+      - kind: step
+        text: >-
+          $f(s)=\|\gamma(s)-\mathbf p\|^2$ מקיימת $$f'(s)=2(\gamma(s)-\mathbf p)\cdot\mathbf t(s)=0$$, ולכן $f\equiv r^2$ קבועה.
+      - kind: step
+        text: >-
+          $r>0$: אחרת $\gamma\equiv\mathbf p$ קבועה, בסתירה לרגולריות. לכן $\gamma(s)$ על המעגל ברדיוס $r$ סביב $\mathbf p$ לכל $s$.
+      - kind: check
+        text: >-
+          לא השתמשנו ב-$\kappa>0$: הנורמל מוגדר כישר גם כשהעקמומיות אפס. ההוכחה עובדת גם במרחב, עם "מישור נורמלי" במקום ישר, ואז
+          התמונה על ספרה סביב $\mathbf p$.
+      - kind: result
+        text: >-
+          $\|\gamma(s)-\mathbf p\|=r$ קבוע: התמונה מוכלת במעגל שמרכזו $\mathbf p$.
+    source:
+      name: 'do Carmo, Differential Geometry of Curves and Surfaces, §1-5 (as quoted in the Math 138A solutions, UC Riverside, 2019)'
+      year: 1976
+      problem: '1-5, exercise 4'
+      url: https://math.ucr.edu/~ryanta/teaching/math138a_winter2019/homework2.pdf
+      verified: '2026-11-09'
+      adapted: true

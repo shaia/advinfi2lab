@@ -1,0 +1,419 @@
+# Chapter 2 review questions: they mix the lessons of the chapter and reach back to chapters 0–1, never forward.
+# Lesson 2.5 is enrichment: one light question touches it, and no other question depends on it.
+# Every number below was recomputed with src/math/geometry.ts.
+chapter: 2
+questions:
+  - id: Q-2-review-01
+    type: mc
+    objectives: [OBJ-2.1-1]
+    level: basic
+    prompt: >-
+      בסליל $\gamma(t)=(2\cos t,\ 2\sin t,\ t)$, מהו הבינורמל בנקודה $t=\frac\pi2$?
+    hints:
+      - 'חזרו לשיעור 2.1: חשבו $\gamma''$ ו-$\gamma''''$ ב-$t=\frac\pi2$, ואז $\mathbf b=\frac{\gamma''\times\gamma''''}{\|\gamma''\times\gamma''''\|}$.'
+    choices:
+      - text: '$\frac{1}{\sqrt5}(1,0,2)$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma'(\frac\pi2)=(-2,0,1)$, $\gamma''(\frac\pi2)=(0,-2,0)$, ו-$\gamma'\times\gamma''=(2,0,4)$, שאורכו $2\sqrt5$.
+          רכיב ה-$z$, $\frac{2}{\sqrt5}=\frac{a}{\sqrt{a^2+b^2}}$, זהה בכל נקודה של הסליל.
+      - text: '$\frac{1}{\sqrt5}(-1,0,-2)$'
+        feedback: >-
+          זה $\gamma''\times\gamma'$, כלומר $-\mathbf b$. הסדר הוא $\gamma'\times\gamma''$.
+        misconception: MC-c2-binormal-order
+      - text: '$(0,0,1)$'
+        feedback: >-
+          הבינורמל של סליל אינו הציר: הוא נוטה ממנו ומסתובב סביבו. $(0,0,1)\cdot\gamma'(\frac\pi2)=1\ne0$, כך שהוא אפילו לא ניצב
+          למשיק.
+        misconception: MC-c2-helix-binormal-axis
+      - text: '$(2,0,4)$'
+        feedback: >-
+          זה $\gamma'\times\gamma''$ לפני החלוקה באורך. הבינורמל הוא וקטור יחידה.
+        misconception: MC-c2-frame-not-unit
+
+  - id: Q-2-review-02
+    type: numeric
+    objectives: [OBJ-2.1-1, OBJ-1.4-1]
+    level: basic
+    prompt: >-
+      במסילה המעוקבת $(t,t^2,t^3)$ בנקודה $t=0$: $\kappa=2$ ו-$\mathbf n=(0,1,0)$. מרכז המעגל המנשק הוא $(0,y_0,0)$. מצאו את
+      $y_0$.
+    hints:
+      - 'חזרו לשיעור 1.4 (מרכז העקמומיות הוא $\gamma+\frac1\kappa\mathbf n$) ולשיעור 2.1 (השלשה של המסילה המעוקבת בראשית).'
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. המרכז הוא $\gamma(0)+\frac{1}{\kappa}\mathbf n=(0,\frac12,0)$, והמעגל המנשק מונח במישור המנשק $z=0$.
+    wrongFeedback: >-
+      המרכז נמצא על הנורמל הראשי, במרחק רדיוס העקמומיות $\frac1\kappa$ מהנקודה.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          זה $\gamma+\kappa\mathbf n$. המרחק מהנקודה למרכז הוא הרדיוס $\frac1\kappa$, לא $\kappa$.
+        misconception: MC-c1-curvature-radius
+      - value: -0.5
+        feedback: >-
+          המרכז בכיוון של $\mathbf n$, הצד שאליו המסילה פונה: $\gamma''(0)=(0,2,0)$ מצביע ל-$y>0$.
+
+  - id: Q-2-review-03
+    type: mc
+    objectives: [OBJ-2.1-2]
+    level: basic
+    prompt: >-
+      מהו המישור המנשק של הסליל $(\cos t,\ \sin t,\ t)$ בנקודה $(1,0,0)$ ($t=0$)?
+    hints:
+      - 'חזרו לשיעור 2.1: המישור המנשק ניצב ל-$\gamma''\times\gamma''''$ ועובר דרך הנקודה.'
+    choices:
+      - text: '$z=y$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma'(0)=(0,1,1)$, $\gamma''(0)=(-1,0,0)$, $\gamma'\times\gamma''=(0,-1,1)$, והמישור דרך $(1,0,0)$ הוא
+          $-y+z=0$. הוא נוטה ב-$45^\circ$ לאופק, כמו המשיק.
+      - text: '$z=0$'
+        feedback: >-
+          זה המישור המנשק של המעגל $(\cos t,\sin t,0)$. הסליל עולה, והמישור המנשק שלו מכיל את המשיק הנטוי $(0,1,1)$.
+        misconception: MC-c2-helix-binormal-axis
+      - text: '$y+z=0$'
+        feedback: >-
+          זה המישור הנורמלי, הניצב למשיק $(0,1,1)$.
+        misconception: MC-c2-plane-mixup
+      - text: '$x=1$'
+        feedback: >-
+          זה המישור המיישר, הניצב לנורמל $\mathbf n=(-1,0,0)$. המישור המנשק מכיל את $\mathbf n$.
+        misconception: MC-c2-plane-mixup
+
+  - id: Q-2-review-07
+    type: numeric
+    objectives: [OBJ-2.3-2, OBJ-1.2-3]
+    level: basic
+    prompt: >-
+      $\gamma$ בפרמטר אורך הקשת, ובנקודה $s_0$ מתקיים $\kappa(s_0)=3$. חשבו את $\gamma'(s_0)\cdot\gamma'''(s_0)$.
+    hints:
+      - 'חזרו לשיעור 1.2 ($\|\gamma''\|\equiv1$ בפרמטר אורך הקשת) ולשיעור 2.3 (הפירוק של $\gamma''''''$).'
+    answer: -9
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\gamma'''=-\kappa^2\mathbf t+\kappa'\mathbf n+\kappa\tau\mathbf b$, ו-$\gamma'=\mathbf t$, ולכן המכפלה $-\kappa^2=-9$.
+      בלי פרנה-סרה: גזירת $\gamma'\cdot\gamma''=0$ נותנת $\gamma'\cdot\gamma'''=-\|\gamma''\|^2=-\kappa^2$.
+    wrongFeedback: >-
+      גזרו את $\gamma'\cdot\gamma''=0$ (שנובע מ-$\|\gamma'\|\equiv1$).
+    commonWrong:
+      - value: 9
+        feedback: >-
+          הסימן: $\mathbf n'\cdot\mathbf t=-\kappa$, ולכן הרכיב של $\gamma'''$ לאורך $\mathbf t$ שלילי.
+        misconception: MC-c2-fs-matrix-symmetric
+      - value: 0
+        feedback: >-
+          $\gamma''\perp\gamma'$, אבל $\gamma'''$ אינו ניצב ל-$\gamma'$: יש לו רכיב $-\kappa^2\mathbf t$.
+        misconception: MC-c2-fs-dropped-term
+      - value: -3
+        feedback: >-
+          זה $-\kappa$, המקדם ב-$\mathbf n'$. ב-$\gamma'''=\kappa\mathbf n'+\kappa'\mathbf n$ הוא מוכפל עוד ב-$\kappa$.
+        misconception: MC-c2-fs-dropped-term
+
+  - id: Q-2-review-04
+    type: multi
+    objectives: [OBJ-2.2-1, OBJ-2.2-2, OBJ-0.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהפעולות הבאות על מסילה $\gamma$ (עם $\kappa>0$) משאירות את הפיתול בכל נקודה ללא שינוי? סמנו את כולן.
+    hints:
+      - 'חזרו לשיעור 2.2 (הפיתול ושינוי כיוון, סליל ימני מול שמאלי) ולשיעור 0.2 (סיבוב מול שיקוף לפי הדטרמיננטה).'
+    choices:
+      - text: 'החלפת פרמטר $t\mapsto\varphi(t)$ עם $\varphi''>0$'
+        correct: true
+        feedback: נכון. הפיתול מוגדר בפרמטר אורך הקשת, ולכן אינו תלוי בקצב.
+      - text: 'היפוך כיוון, $\gamma(-t)$'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf b\mapsto-\mathbf b$ והגזירה לפי אורך הקשת מחליפה סימן: שני הסימנים מתבטלים.
+      - text: 'סיבוב $A\gamma$ עם $A^TA=I$, $\det A=1$, והזזה'
+        correct: true
+        feedback: >-
+          נכון. סיבוב שומר מכפלות וקטוריות, $A\mathbf u\times A\mathbf w=A(\mathbf u\times\mathbf w)$, ולכן השלשה מסתובבת כולה.
+      - text: 'שיקוף $A\gamma$ עם $A^TA=I$, $\det A=-1$'
+        feedback: >-
+          שיקוף הופך מכפלות וקטוריות, ולכן הבינורמל עובר ל-$-A\mathbf b$ והפיתול מחליף סימן: סליל ימני הופך לשמאלי.
+        misconception: MC-c2-torsion-mirror-invariant
+      - text: 'הגדלה $2\gamma$'
+        feedback: >-
+          הפיתול, כמו העקמומיות, נמדד ליחידת אורך: ב-$2\gamma$ הוא $\frac\tau2$.
+        misconception: MC-c2-torsion-scale
+
+  - id: Q-2-review-05
+    type: numeric
+    objectives: [OBJ-2.2-1, OBJ-2.3-3]
+    level: mid
+    prompt: >-
+      חשבו את הפיתול של הסליל $(3\cos t,\ 3\sin t,\ 4t)$. (השוו עם התשובה לשאלה "מה הרדיוס של המסילה עם $\kappa\equiv3$,
+      $\tau\equiv4$?".)
+    hints:
+      - 'חזרו לשיעור 2.2 (הפיתול של סליל) ולשיעור 2.3 (המעבר בין $a,b$ לבין $\kappa,\tau$).'
+    answer: 0.16
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\tau=\frac{4}{9+16}=\frac{4}{25}$, ו-$\kappa=\frac{3}{25}$. ולהפך, למסילה עם $\kappa=3$, $\tau=4$ יש $a=\frac{3}{25}$,
+      $b=\frac{4}{25}$. ההעתקה $(a,b)\mapsto\left(\frac{a}{a^2+b^2},\frac{b}{a^2+b^2}\right)$ היא ההיפוך במעגל היחידה, והיא
+      ההפכית של עצמה.
+    wrongFeedback: >-
+      לסליל $(a\cos t,a\sin t,bt)$: $\tau=\frac{b}{a^2+b^2}$.
+    commonWrong:
+      - value: 0.12
+        feedback: >-
+          זו העקמומיות $\frac{a}{a^2+b^2}$. בפיתול המונה הוא $b$.
+      - value: 4
+        feedback: >-
+          זה $b$, הגובה ליחידת $t$, לא הפיתול.
+      - value: -0.16
+        feedback: >-
+          הסליל ימני ($b>0$), ובקורס לסליל ימני יש $\tau>0$.
+        misconception: MC-c2-torsion-sign
+
+  - id: Q-2-review-06
+    type: twotier
+    objectives: [OBJ-2.1-2, OBJ-2.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma$ מסילה עם $\kappa>0$ בכל נקודה, וכל המישורים המנשקים שלה הם אותו מישור $P$. האם $\gamma$ מוכלת ב-$P$?
+    hints:
+      - 'חזרו לשיעור 2.1 (המישור המנשק ניצב ל-$\mathbf b$) ולשיעור 2.2 (פיתול אפס ומסילות מישוריות).'
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון, ואפילו בלי המשפט: כל נקודה $\gamma(s)$ שייכת למישור המנשק שלה, וזה $P$.
+      - text: 'לא בהכרח: אפשר רק להסיק ש-$\tau\equiv0$'
+        feedback: >-
+          $\tau\equiv0$ עם $\kappa>0$ כבר גורר מישוריות (שיעור 2.2), וכאן יש גם דרך ישירה: כל נקודה במישור המנשק של עצמה.
+        misconception: MC-c2-planar-without-kappa
+    reasons:
+      - text: '$\gamma(s)$ שייכת למישור המנשק בנקודה $s$, שהוא $P$; ובנוסף $\mathbf b=\pm\mathbf e$ קבוע ולכן $\tau\equiv0$'
+        correct: true
+        feedback: >-
+          בדיוק. ולהפך: מסילה מישורית עם $\kappa>0$ מקיימת $\mathbf b'=0$, ולכן מישור מנשק קבוע. "מישור מנשק קבוע", "$\mathbf b$ קבוע"
+          ו-"$\tau\equiv0$" הן שלוש דרכים לומר "מישורית".
+      - text: 'המישור המנשק מכיל את המשיק, ולכן המשיק תמיד ב-$P$'
+        feedback: >-
+          זה נכון, אבל לבדו לא מספיק: צריך גם נקודה של המסילה ב-$P$. במקרה הזה כל נקודה מקיימת זאת, כי המישור המנשק עובר
+          דרכה.
+        misconception: MC-c2-plane-mixup
+      - text: 'הנורמל הראשי $\mathbf n$ קבוע'
+        feedback: >-
+          $\mathbf n$ מסתובב בתוך $P$ (במעגל הוא מצביע תמיד למרכז). מה שקבוע הוא $\mathbf b$, הניצב ל-$P$.
+        misconception: MC-c2-binormal-any-perp
+
+  - id: Q-2-review-08
+    type: numeric
+    objectives: [OBJ-2.2-1, OBJ-2.3-3]
+    level: mid
+    prompt: >-
+      מסילה בפרמטר אורך הקשת מקיימת $\mathbf t'=3\mathbf n$ ו-$\mathbf b'=-2\mathbf n$ בכל נקודה. היא סליל מעגלי; מהו הרדיוס שלו?
+    hints:
+      - 'חזרו לשיעור 2.2 (קריאת $\tau$ מתוך $\mathbf b''$, עם הסימן) ולשיעור 2.3 (סלילים מ-$\kappa$ ו-$\tau$ קבועים).'
+    answer: 0.2307692
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $\kappa=3$ ו-$\tau=2$ (כי $\mathbf b'=-\tau\mathbf n$), ולכן $a=\frac{\kappa}{\kappa^2+\tau^2}=\frac{3}{13}$.
+    wrongFeedback: >-
+      קראו את $\kappa$ ואת $\tau$ מהמשוואות, ואז $a=\frac{\kappa}{\kappa^2+\tau^2}$.
+    commonWrong:
+      - value: 0.3333333
+        feedback: >-
+          $\frac1\kappa$ הוא רדיוס המעגל המנשק, לא רדיוס הגליל.
+        misconception: MC-c2-helix-radius-1-over-kappa
+      - value: 0.1538462
+        feedback: >-
+          זה $\frac{\tau}{\kappa^2+\tau^2}=b$, הגובה, לא הרדיוס.
+      - value: 0.8320503
+        feedback: >-
+          זה $\frac{\kappa}{\sqrt{\kappa^2+\tau^2}}$. המכנה הוא $\kappa^2+\tau^2$ בלי שורש.
+        misconception: MC-c2-helix-radius-1-over-kappa
+
+  - id: Q-2-review-09
+    type: mc
+    objectives: [OBJ-2.4-1, OBJ-2.2-3, OBJ-1.6-3]
+    level: mid
+    prompt: >-
+      מה המסילה $\gamma:\mathbb R\to\mathbb R^3$ בפרמטר אורך הקשת עם $\kappa\equiv1$ ו-$\tau\equiv0$?
+    hints:
+      - 'חזרו לשיעור 2.4 (הקיום והיחידות), לשיעור 2.2 ($\tau\equiv0$ גורר מישורית) ולשיעור 1.6 (עקמומיות קבועה במישור).'
+    choices:
+      - text: 'מעגל ברדיוס 1, שעוברים עליו שוב ושוב, עד כדי סיבוב והזזה'
+        correct: true
+        feedback: >-
+          נכון. המעגל $(\cos s,\sin s,0)$ מקיים את הנתונים, ולפי משפט היחידות כל מסילה אחרת כזו מתקבלת ממנו בסיבוב ובהזזה. בדרך
+          אחרת: $\tau\equiv0$ נותן מסילה מישורית, ובמישור עקמומיות קבועה $1$ היא מעגל ברדיוס 1.
+      - text: 'ישר'
+        feedback: >-
+          לישר $\kappa\equiv0$. כאן $\kappa\equiv1$: המשיק מסתובב בקצב 1 ליחידת אורך.
+        misconception: MC-c2-kappa-zero-singular
+      - text: 'סליל ברדיוס $\frac12$'
+        feedback: >-
+          סליל עם $\kappa=1$ ו-$\tau\ne0$ אכן ברדיוס קטן מ-1, אבל כאן $\tau=0$, ו-$a=\frac{\kappa}{\kappa^2+0}=1$: מעגל.
+        misconception: MC-c2-helix-radius-1-over-kappa
+      - text: 'המשפט לא חל, כי $\tau\equiv0$'
+        feedback: >-
+          המשפט דורש $\kappa>0$; לפיתול מותר כל ערך רציף, גם אפס.
+        misconception: MC-c2-theorem-allows-zero-kappa
+
+  - id: Q-2-review-13
+    type: numeric
+    objectives: [OBJ-2.3-2, OBJ-2.2-2]
+    level: mid
+    prompt: >-
+      במסילה המעוקבת $(t,t^2,t^3)$ בנקודה $t=0$: $\|\gamma'\|=1$, $\kappa=2$, $\mathbf b=(0,0,1)$ ו-$\gamma'''(0)=(0,0,6)$. השתמשו בכך
+      שהרכיב של $\gamma'''$ לאורך $\mathbf b$ הוא $\kappa\tau v^3$ כדי לחשב את $\tau(0)$.
+    hints:
+      - 'חזרו לשיעור 2.3 (הפירוק של $\gamma''''''$ בבסיס של פרנה) ולשיעור 2.2 (נוסחת המכפלה המשולשת, לבדיקה).'
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\gamma'''(0)\cdot\mathbf b=6=\kappa\tau\cdot1^3=2\tau$, ולכן $\tau(0)=3$. בדיקה בנוסחה:
+      $\frac{(0,0,2)\cdot(0,0,6)}{\|(0,0,2)\|^2}=\frac{12}{4}=3$.
+    wrongFeedback: >-
+      $\gamma'''\cdot\mathbf b=\kappa\tau v^3$. הציבו את הנתונים ופתרו עבור $\tau$.
+    commonWrong:
+      - value: 6
+        feedback: >-
+          זה $\gamma'''\cdot\mathbf b=\kappa\tau$. צריך לחלק ב-$\kappa v^3=2$.
+        misconception: MC-c2-fs-dropped-term
+      - value: 1.5
+        feedback: >-
+          זה $\frac{6}{\kappa^2}$. הרכיב לאורך $\mathbf b$ הוא $\kappa\tau v^3$, עם $\kappa$ בחזקה ראשונה; $\kappa^2$ מופיע במכנה
+          של נוסחת המכפלה המשולשת יחד עם $\kappa$ נוסף במונה.
+        misconception: MC-c2-torsion-denominator
+
+  - id: Q-2-review-10
+    type: twotier
+    objectives: [OBJ-2.4-1, OBJ-2.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\gamma_1,\gamma_2$ בפרמטר אורך הקשת על אותו קטע, עם $\kappa_1(s)=\kappa_2(s)>0$ ו-$\tau_2(s)=-\tau_1(s)$ לכל $s$, ו-$\tau_1$
+      אינה אפס זהותית. האם יש איזומטריה $M$ של המרחב (אולי עם שיקוף) כך ש-$M(\gamma_1(s))=\gamma_2(s)$ לכל $s$?
+    hints:
+      - 'חזרו לשיעור 2.2 (מה שיקוף עושה לפיתול) ולשיעור 2.4 (איזו תנועה מופיעה במשפט היחידות).'
+    choices:
+      - text: 'כן: יש שיקוף $R$ (ואחריו סיבוב והזזה) שמעביר את $\gamma_1$ ל-$\gamma_2$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma_2$ היא "תמונת המראה" של $\gamma_1$, וכי $\tau_1\not\equiv0$ אין סיבוב שמעביר את $\gamma_1(s)$ ל-$\gamma_2(s)$
+          לכל $s$.
+      - text: 'כן, ואפילו סיבוב והזזה מספיקים'
+        feedback: >-
+          סיבוב והזזה שומרים את הפיתול. אם $\tau_1(s)\ne0$ בנקודה כלשהי, $\tau_2(s)=-\tau_1(s)\ne\tau_1(s)$ שם, ואין תנועה כזו
+          שמתאימה $s$ ל-$s$.
+        misconception: MC-c2-mirror-is-rigid
+      - text: 'לא, כי הפיתולים שונים'
+        feedback: >-
+          פיתולים הפוכים הם בדיוק מה ששיקוף נותן. השיקוף שומר את $\kappa$, ומשם משפט היחידות משלים.
+        misconception: MC-c2-torsion-mirror-invariant
+    reasons:
+      - text: 'ל-$R\gamma_1$, עם $R$ שיקוף כלשהו, יש עקמומיות $\kappa_1=\kappa_2$ ופיתול $-\tau_1=\tau_2$; לפי משפט היחידות $\gamma_2=A(R\gamma_1)+c$ עם $A$ סיבוב'
+        correct: true
+        feedback: >-
+          בדיוק: מתאימים את הפיתול בשיקוף, ואז המשפט נותן את השאר. $AR$ היא איזומטריה עם $\det=-1$.
+      - text: 'כל שתי מסילות עם אותה עקמומיות שוות עד כדי איזומטריה'
+        feedback: >-
+          מעגל ברדיוס 2 וסליל $(\cos t,\sin t,t)$, שניהם עם $\kappa\equiv\frac12$, אינם נבדלים באיזומטריה: הפיתול של
+          אחד 0 ושל השני $\pm\frac12$.
+        misconception: MC-c2-kappa-alone-determines
+      - text: 'היפוך כיוון $\gamma_1(-s)$ הופך את סימן הפיתול'
+        feedback: >-
+          היפוך כיוון לא משנה את הפיתול. מה שהופך אותו הוא שיקוף.
+        misconception: MC-c2-torsion-flips-with-orientation
+
+  - id: Q-2-review-11
+    type: twotier
+    objectives: [OBJ-1.5-3, OBJ-2.4-1, OBJ-0.2-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      שתי מסילות במישור $z=0$, $\gamma_1(s)=(x(s),y(s),0)$ ו-$\gamma_2(s)=(x(s),-y(s),0)$, עם עקמומיות מסומנות $k$ ו-$-k$, $k\ne0$.
+      במישור הן לא נבדלות בסיבוב והזזה של המישור (בדרך כלל). האם הן נבדלות בסיבוב והזזה של $\mathbb R^3$?
+    hints:
+      - 'חזרו לשיעור 1.5 (שיקוף הופך את העקמומיות המסומנת), לשיעור 0.2 (סיבוב לפי הדטרמיננטה) ולשיעור 2.4 (משפט היחידות במרחב).'
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. הסיבוב ב-$180^\circ$ סביב ציר ה-$x$, $(x,y,z)\mapsto(x,-y,-z)$, מעביר את $\gamma_1$ ל-$\gamma_2$, ו-$\det=1$.
+      - text: 'לא, כי שיקוף אינו תנועה קשיחה ישרה'
+        feedback: >-
+          ההעתקה $(x,y)\mapsto(x,-y)$ היא שיקוף של המישור, אבל במרחב אפשר לממש אותה על המישור $z=0$ בסיבוב: "להפוך את הדף".
+        misconception: MC-c2-mirror-is-rigid
+    reasons:
+      - text: 'במרחב $\kappa=|k|$ ו-$\tau=0$ לשתיהן, ולפי משפט היחידות הן נבדלות בסיבוב והזזה; הסיבוב סביב ציר ה-$x$ ב-$180^\circ$ עושה זאת במפורש'
+        correct: true
+        feedback: >-
+          בדיוק. במרחב "השמאל" וה"ימין" של מסילה מישורית תלויים בצד שממנו מסתכלים על המישור, ולכן הסימן של $k$ לא נשמר. הפיתול,
+          שהוא אפס, לא רואה את ההבדל.
+      - text: 'העקמומיות המסומנת נשמרת בכל סיבוב של המרחב'
+        feedback: >-
+          העקמומיות המסומנת מוגדרת רק במישור מכוון. הסיבוב סביב ציר ה-$x$ הופך את הכיוון של המישור $z=0$, ואיתו את סימן $k$.
+        misconception: MC-c1-reflection-keeps-k
+      - text: 'סיבוב של $\mathbb R^3$ שמעביר את המישור $z=0$ לעצמו הוא בהכרח סיבוב סביב ציר ה-$z$, ולכן הוא שומר את $k$'
+        feedback: >-
+          גם הסיבוב ב-$180^\circ$ סביב ציר ה-$x$ מעביר את המישור $z=0$ לעצמו, והוא הופך את הצד שממנו מסתכלים על המישור. על
+          המישור הוא פועל כשיקוף $(x,y)\mapsto(x,-y)$.
+        misconception: MC-c2-mirror-is-rigid
+
+  - id: Q-2-review-12
+    type: numeric
+    objectives: [OBJ-2.3-1, OBJ-2.3-3]
+    level: exam
+    prompt: >-
+      $\gamma$ בפרמטר אורך הקשת עם $\kappa\equiv3$ ו-$\tau\equiv4$, ו-$c(s)=\gamma(s)+\frac{3}{25}\mathbf n(s)$ הנקודה על ציר
+      הסליל שמול $\gamma(s)$. מהי המהירות $\|c'(s)\|$?
+    hints:
+      - 'חזרו לשיעור 2.3: גזרו את $c$ עם $\mathbf n''=-\kappa\mathbf t+\tau\mathbf b$, ובטאו את התוצאה בעזרת $\tau\mathbf t+\kappa\mathbf b$.'
+    answer: 0.8
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $c'=(1-a\kappa)\mathbf t+a\tau\mathbf b=\frac{16}{25}\mathbf t+\frac{12}{25}\mathbf b$, שאורכו $\frac{20}{25}=\frac45$.
+      זה $\frac{\tau}{\sqrt{\kappa^2+\tau^2}}=\cos\theta$, כאשר $\theta$ הזווית בין המשיק לציר: הנקודה על הציר מתקדמת רק ברכיב
+      של התנועה לאורך הציר.
+    wrongFeedback: >-
+      $c'=\mathbf t+a\mathbf n'$ עם $a=\frac{3}{25}$. הציבו את $\mathbf n'$ וחשבו את האורך (הבסיס אורתונורמלי).
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $\|\gamma'\|=1$, אבל הנקודה על הציר זזה רק ברכיב לאורך הציר, ולא בתנועה הסיבובית סביבו.
+        misconception: MC-c2-fs-dropped-term
+      - value: 0.6
+        feedback: >-
+          זה $\frac{\kappa}{\sqrt{\kappa^2+\tau^2}}$, הסינוס של הזווית בין המשיק לציר, כלומר הרכיב של המהירות **סביב** הציר.
+      - value: 0.16
+        feedback: >-
+          זה $b$, הגובה ליחידת זווית, לא ליחידת אורך קשת.
+
+  - id: Q-2-review-14
+    type: mc
+    objectives: [OBJ-2.4-1, OBJ-0.6-3]
+    level: exam
+    prompt: >-
+      בהוכחת הקיום, $F(s)$ (שורותיו שלושה וקטורים) פותר את $F'=A(s)F$ עם $A$ אנטי-סימטרית ו-$F(s_0)$ אורתוגונלית. למה $F(s)$
+      אורתוגונלית לכל $s$?
+    hints:
+      - 'חזרו לשיעור 0.6 (מערכת עם מטריצה אנטי-סימטרית שומרת מכפלות פנימיות) ולשיעור 2.4 (הוכחת הקיום).'
+    choices:
+      - text: '$G=FF^T$ מקיימת $G''=AG-GA$, כמו גם $G\equiv I$; לשתיהן אותו ערך ב-$s_0$, ולפי יחידות הפתרון של מערכת לינארית $G\equiv I$'
+        correct: true
+        feedback: >-
+          נכון. $G'=F'F^T+F(F')^T=AFF^T+FF^TA^T=AG-GA$. זו מערכת לינארית ב-$G$, ו-$I$ פותר אותה; היחידות נותנת $G\equiv I$.
+      - text: '$(FF^T)''=A+A^T=0$, ולכן $FF^T$ קבועה'
+        feedback: >-
+          החישוב $(FF^T)'=A+A^T$ מניח כבר ש-$FF^T=I$, כלומר את מה שצריך להוכיח. בלי ההנחה מקבלים $AG-GA$, ומשם צריך
+          את טיעון היחידות.
+        misconception: MC-c2-uniqueness-termwise
+      - text: 'זה לא נכון אוטומטית; מתקנים את $F(s)$ בגרם-שמידט בכל $s$'
+        feedback: >-
+          זה נכון אוטומטית, וגרם-שמידט היה משנה את הפתרון כך שלא יפתור עוד את המשוואה.
+        misconception: MC-c2-orthonormality-imposed
+      - text: 'כי $\det F(s)=1$ לכל $s$'
+        feedback: >-
+          דטרמיננטה 1 לא גוררת אורתוגונליות ($\operatorname{diag}(2,\frac12,1)$). הסדר הפוך: קודם אורתוגונליות, ומרציפות
+          הדטרמיננטה (שהיא $\pm1$) נובע שהיא נשארת 1.
+        misconception: MC-c0-det-one-is-rotation

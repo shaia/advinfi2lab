@@ -1,0 +1,389 @@
+# Lesson 11.4 — Grönwall's inequality, uniqueness and continuous dependence, global existence.
+# Objectives (src/course.ts):
+#   OBJ-11.4-1  state and prove Grönwall's inequality
+#   OBJ-11.4-2  derive uniqueness and continuous dependence on the initial value, with an explicit estimate
+#   OBJ-11.4-3  prove global existence when the right-hand side is globally Lipschitz, e.g. for linear systems
+chapter: 11
+questions:
+  - id: Q-11.4-statement
+    type: mc
+    objectives: [OBJ-11.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $u$ רציפה ואי-שלילית ב-$[t_0,t_0+2]$, $C\ge0$, $L\ge0$, ו-$u(t)\le C+\int_{t_0}^t Lu(s)\,ds$ לכל $t$ בקטע. מה
+      נובע מאי-שוויון גרונוול?
+    choices:
+      - text: '$u(t)\le Ce^{L(t-t_0)}$ לכל $t\in[t_0,t_0+2]$'
+        correct: true
+        feedback: >-
+          נכון. וזה החסם הטוב ביותר מהסוג הזה: $u=Ce^{L(t-t_0)}$ מקיימת את ההנחה בשוויון.
+      - text: '$u(t)\le C$ לכל $t\in[t_0,t_0+2]$'
+        feedback: >-
+          האינטגרל מוסיף לחסם, ולא ניתן להיפטר ממנו. $u=Ce^{L(t-t_0)}$ מקיימת את ההנחה בשוויון וגדולה מ-$C$ לכל
+          $t>t_0$ (כש-$C,L>0$).
+        misconception: MC-c11-gronwall-no-growth
+      - text: '$u(t)\le C\big(1+L(t-t_0)\big)$ לכל $t\in[t_0,t_0+2]$'
+        feedback: >-
+          זה רק הסדר הראשון. אותה דוגמה, $u=Ce^{L(t-t_0)}$, מקיימת את ההנחה ונמצאת **מעל** הקו הזה לכל $t>t_0$,
+          כי $e^x>1+x$ עבור $x>0$.
+        misconception: MC-c11-gronwall-linear
+      - text: '$u(t)\le Ce^{L}$ לכל $t\in[t_0,t_0+2]$'
+        feedback: >-
+          המעריך הוא $L(t-t_0)$: הגדילה תלויה בזמן שעבר. כאן $t-t_0$ מגיע עד 2, ולכל $t>t_0+1$ (כש-$C,L>0$) הפונקציה $u=Ce^{L(t-t_0)}$ מקיימת את ההנחה וגדולה מ-$Ce^{L}$.
+        misconception: MC-c11-gronwall-exponent
+
+  - id: Q-11.4-numeric
+    type: numeric
+    objectives: [OBJ-11.4-1]
+    level: basic
+    prompt: >-
+      $u\ge0$ רציפה ב-$[0,1]$ ומקיימת $u(t)\le2+\int_0^t3u(s)\,ds$. מהו החסם שאי-שוויון גרונוול נותן ל-$u(1)$?
+    answer: 40.1710738464
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $u(1)\le2e^{3}\approx40.17$. כאן $C=2$, $L=3$ ו-$t-t_0=1$.
+    wrongFeedback: >-
+      זהו את $C$ ואת $L$ בהנחה, והציבו ב-$Ce^{L(t-t_0)}$.
+    commonWrong:
+      - value: 8
+        feedback: >-
+          $8=2(1+3)$ הוא הקירוב הלינארי $C(1+L(t-t_0))$, שאינו חסם נכון: הפונקציה $2e^{3t}$ מקיימת את ההנחה ו-$u(1)=2e^3$.
+        misconception: MC-c11-gronwall-linear
+      - value: 5.4365636569
+        feedback: >-
+          $2e$ שוכח את $L$ במעריך. המעריך הוא $L(t-t_0)=3$.
+        misconception: MC-c11-gronwall-exponent
+      - value: 2
+        feedback: >-
+          $C$ לבדו אינו חסם: האינטגרל מוסיף לחסם, והוא גדל עם הזמן.
+        misconception: MC-c11-gronwall-no-growth
+
+  - id: Q-11.4-dependence-numeric
+    type: numeric
+    objectives: [OBJ-11.4-2]
+    level: basic
+    prompt: >-
+      $y_1,y_2$ פותרות את $y'=\sin y+t$ עם $y_1(0)=1$ ו-$y_2(0)=1.01$. מהו החסם שגרונוול נותן ל-$|y_1(2)-y_2(2)|$, עם
+      קבוע ליפשיץ $L=1$?
+    answer: 0.0738905610
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $0.01\,e^{2}\approx0.0739$. $|\sin y_1-\sin y_2|\le|y_1-y_2|$ (נגזרת $\cos$, חסומה ב-1 על כל הישר), ולכן
+      $|y_1(t)-y_2(t)|\le|y_1(0)-y_2(0)|e^{L|t|}$.
+    wrongFeedback: >-
+      הנוסחה היא $|y_1(t)-y_2(t)|\le|y_1(t_0)-y_2(t_0)|\,e^{L|t-t_0|}$. מה ההפרש ההתחלתי, ומהו $t-t_0$?
+    commonWrong:
+      - value: 0.01
+        feedback: >-
+          ההפרש ההתחלתי לבדו אינו חסם: הפתרונות יכולים להתרחק, ולפי גרונוול לכל היותר פי $e^{L|t-t_0|}$.
+        misconception: MC-c11-gronwall-no-growth
+      - value: 0.0271828183
+        feedback: >-
+          $0.01e$ שם במעריך 1 במקום $L(t-t_0)=2$.
+        misconception: MC-c11-gronwall-exponent
+      - value: 0.03
+        feedback: >-
+          $0.01(1+2)$ הוא הקירוב הלינארי, לא החסם: המעריכית $e^2\approx7.39$ ולא $3$.
+        misconception: MC-c11-gronwall-linear
+
+  - id: Q-11.4-proof-rank
+    type: rank
+    objectives: [OBJ-11.4-1]
+    level: mid
+    prompt: >-
+      הוכיחו את אי-שוויון גרונוול: אם $u\ge0$ רציפה ב-$[t_0,t_1]$, $C,L\ge0$ ו-$u(t)\le C+\int_{t_0}^t Lu(s)\,ds$, אז
+      $u(t)\le Ce^{L(t-t_0)}$.
+    help: >-
+      סדרו את שלבי ההוכחה מהראשון לאחרון.
+    items:
+      - id: a
+        label: >-
+          מגדירים $U(t)=C+\int_{t_0}^t Lu(s)\,ds$. כי $u$ רציפה, $U$ גזירה ו-$U'=Lu$.
+      - id: b
+        label: >-
+          לפי ההנחה $u\le U$, ו-$L\ge0$, ולכן $U'=Lu\le LU$.
+      - id: c
+        label: >-
+          $\left(e^{-L(t-t_0)}U(t)\right)'=e^{-L(t-t_0)}\big(U'(t)-LU(t)\big)\le0$, כלומר הפונקציה הזו לא עולה.
+      - id: d
+        label: >-
+          לכן $e^{-L(t-t_0)}U(t)\le U(t_0)=C$.
+      - id: e
+        label: >-
+          מכאן $u(t)\le U(t)\le Ce^{L(t-t_0)}$.
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. הרעיון: אי-שוויון על $u$ לא ניתן לגזירה, אבל $U$, האגף הימני, גזירה; עליה מקבלים אי-שוויון דיפרנציאלי
+      $U'\le LU$, וגורם האינטגרציה $e^{-L(t-t_0)}$ פותר אותו.
+    wrongFeedback: >-
+      את $u$ עצמה אי אפשר לגזור (היא רק רציפה). התחילו מהפונקציה שבאגף ימין של ההנחה, שהיא כן גזירה.
+    explanation: >-
+      שימו לב שההוכחה לא מחלקת ב-$C$, ולכן היא עובדת גם עם $C=0$. היא משתמשת ב-$L\ge0$ בשלב ב, וברציפות של $u$ כדי
+      ש-$U$ תהיה גזירה (המשפט היסודי).
+
+  - id: Q-11.4-C-zero
+    type: twotier
+    objectives: [OBJ-11.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $u\ge0$ רציפה ב-$[t_0,t_1]$ ומקיימת $u(t)\le\int_{t_0}^t Lu(s)\,ds$ לכל $t$ בקטע, עם $L\ge0$. נכון או לא:
+      $u\equiv0$?
+    choices:
+      - text: נכון
+        correct: true
+        feedback: >-
+          נכון. זה גרונוול עם $C=0$, ובדיוק המקרה שמשמש להוכחת יחידות.
+      - text: לא נכון
+        feedback: >-
+          גרונוול עם $C=0$ נותן $0\le u(t)\le0\cdot e^{L(t-t_0)}=0$. אין בהוכחה חלוקה ב-$C$.
+        misconception: MC-c11-gronwall-needs-positive-C
+    reasons:
+      - text: >-
+          לפי גרונוול עם $C=0$: $u(t)\le0\cdot e^{L(t-t_0)}=0$, ו-$u\ge0$
+        correct: true
+        feedback: >-
+          בדיוק. ההוכחה עם $U=\int_{t_0}^tLu$ נותנת $e^{-L(t-t_0)}U(t)\le U(t_0)=0$.
+      - text: >-
+          גרונוול דורש $C>0$, ולכן אפשר להסיק רק ש-$u$ קטנה
+        feedback: >-
+          ההוכחה אינה מחלקת ב-$C$ ועובדת עם $C=0$. גם בלי זה: ההנחה נותנת $u\le\varepsilon+\int Lu$ לכל $\varepsilon>0$,
+          ולכן $u\le\varepsilon e^{L(t-t_0)}$ לכל $\varepsilon$, כלומר $u=0$.
+        misconception: MC-c11-gronwall-needs-positive-C
+      - text: >-
+          $u(t)\le L(t-t_0)\max u$, וזה רק מראה ש-$u$ קטנה ליד $t_0$
+        feedback: >-
+          זה הצעד הראשון של איטרציה. הצבה חוזרת נותנת $u(t)\le\frac{(L(t-t_0))^n}{n!}\max u$ לכל $n$, וזה שואף ל-0:
+          לא עוצרים בקירוב הלינארי.
+        misconception: MC-c11-gronwall-linear
+
+  - id: Q-11.4-uniq
+    type: mc
+    objectives: [OBJ-11.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ רציפה וליפשיצית ב-$y$ עם קבוע $L$. $y_1,y_2$ שני פתרונות של $y'=f(t,y)$, $y(t_0)=y_0$ בקטע $[t_0,t_1]$. על
+      איזו פונקציה ועם איזה קבוע מפעילים את גרונוול כדי להוכיח ש-$y_1=y_2$?
+    choices:
+      - text: '$u=|y_1-y_2|$, עם $C=0$: $u(t)\le\int_{t_0}^tLu(s)\,ds$'
+        correct: true
+        feedback: >-
+          נכון. מחסירים את שתי המשוואות האינטגרליות: $y_1(t)-y_2(t)=\int_{t_0}^t\big(f(s,y_1)-f(s,y_2)\big)ds$, ותנאי
+          ליפשיץ נותן את אי-השוויון. $C=0$ כי ההפרש ההתחלתי אפס, וגרונוול נותן $u\equiv0$. (עבור $t<t_0$ עושים אותו
+          דבר בזמן הפוך.)
+      - text: '$u=|y_1-y_2|$, עם $C=|y_0|$: $u(t)\le|y_0|+\int_{t_0}^tLu(s)\,ds$'
+        feedback: >-
+          $C$ הוא ההפרש בין הפתרונות ב-$t_0$, לא ערך ההתחלה. עם $C=|y_0|$ מקבלים חסם $|y_0|e^{L(t-t_0)}$, שלא מוכיח
+          שוויון.
+        misconception: MC-c11-gronwall-wrong-function
+      - text: '$u=|f(t,y_1)-f(t,y_2)|$, עם $C=0$: $u(t)\le\int_{t_0}^tLu(s)\,ds$'
+        feedback: >-
+          $u$ צריכה להיות הגודל שרוצים להראות שהוא אפס, ושעליו יש אי-שוויון אינטגרלי. ההפרש בין ערכי $f$ הוא רק
+          האינטגרנד, והוא חסום על ידי $L|y_1-y_2|$.
+        misconception: MC-c11-gronwall-wrong-function
+      - text: 'אי אפשר להפעיל את גרונוול, כי $C=0$'
+        feedback: >-
+          גרונוול חל גם עם $C=0$, ואז הוא נותן $u\equiv0$: זה בדיוק משפט היחידות.
+        misconception: MC-c11-gronwall-needs-positive-C
+
+  - id: Q-11.4-sharp
+    type: twotier
+    objectives: [OBJ-11.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ל-$y'=-y$ קבוע ליפשיץ $L=1$, וגרונוול נותן $|y_1(t)-y_2(t)|\le|y_1(0)-y_2(0)|e^{t}$ עבור $t\ge0$. נכון או לא: מזה
+      נובע ששני פתרונות שמתחילים קרובים **מתרחקים** זה מזה?
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. ההפרש בפועל הוא $(y_1(0)-y_2(0))e^{-t}$, והוא דועך. גרונוול נותן רק חסם עליון.
+      - text: נכון
+        feedback: >-
+          חסם עליון שגדל אינו אומר שהגודל גדל. כאן $y=ce^{-t}$, וההפרש $\delta e^{-t}\to0$.
+        misconception: MC-c11-bound-is-equality
+    reasons:
+      - text: >-
+          ההפרש בין שני פתרונות $ce^{-t}$ הוא $\delta e^{-t}$: החסם נכון, אבל רחוק מהדוק
+        correct: true
+        feedback: >-
+          בדיוק. גרונוול משתמש רק ב-$|f(y_1)-f(y_2)|\le L|y_1-y_2|$ ואינו "יודע" לאיזה כיוון $f$ דוחפת. עבור $y'=y$
+          החסם מדויק: ההפרש $\delta e^{t}$.
+      - text: >-
+          החסם של גרונוול תמיד מתקבל בשוויון, כי $u=Ce^{L(t-t_0)}$ מקיימת את ההנחה בשוויון
+        feedback: >-
+          הוא מתקבל בשוויון רק במקרים מיוחדים, כמו $y'=Ly$. עבור $y'=-y$ ההפרש קטן מהחסם פי $e^{2t}$.
+        misconception: MC-c11-bound-is-equality
+      - text: >-
+          כאן $\frac{\partial f}{\partial y}=-1$, כלומר $L=-1$, ולכן גרונוול נותן $\delta e^{-t}$
+        feedback: >-
+          קבוע ליפשיץ אינו שלילי: $|{-y_1}-(-y_2)|=|y_1-y_2|$, כלומר $L=1$. גרונוול נותן $\delta e^{t}$; הדעיכה באה
+          מהפתרון המפורש, לא מגרונוול.
+        misconception: MC-c11-gronwall-exponent
+
+  - id: Q-11.4-system-L
+    type: numeric
+    objectives: [OBJ-11.4-3]
+    level: mid
+    prompt: >-
+      $y''-y'+6y=0$ נכתבת כמערכת $Y'=AY$ עם $Y=(y,y')$ ו-$A=\begin{pmatrix}0&1\\-6&1\end{pmatrix}$. מהו קבוע ליפשיץ
+      הקטן ביותר של $Y\mapsto AY$ כשמודדים ב-$\mathbb{R}^2$ את **נורמת אינסוף**, $\|Y\|_\infty=\max(|y_1|,|y_2|)$?
+    answer: 7
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\|AY_1-AY_2\|_\infty\le\|A\|_{\mathrm{op}}\|Y_1-Y_2\|_\infty$, ובנורמת אינסוף נורמת האופרטור היא הסכום
+      המקסימלי של הערכים המוחלטים בשורה: $\max(0+1,\ 6+1)=7$, והוא מתקבל עבור $Y=(-1,1)$. הקבוע לא תלוי ב-$t$ ובגודל
+      של $Y$: ליפשיץ גלובלי, ולכן לכל בעיית התחלה יש פתרון על כל הישר.
+    wrongFeedback: >-
+      קבוע ליפשיץ של העתקה לינארית הוא נורמת האופרטור שלה (אינפי מתקדם 1). בנורמת אינסוף זה הסכום המקסימלי של
+      הערכים המוחלטים בשורה: חפשו $Y$ עם $\|Y\|_\infty=1$ שבו רכיב של $AY$ הכי גדול.
+    commonWrong:
+      - value: 6
+        feedback: >-
+          6 הוא האיבר הגדול ביותר בערכו המוחלט. אבל רכיבים שונים של $Y$ מצטברים בשורה: $|-6y_1+y_2|$ מגיע
+          ל-$7\|Y\|_\infty$ ב-$Y=(-1,1)$.
+        misconception: MC-c11-system-L-entry
+      - value: 8
+        feedback: >-
+          8 הוא סכום כל הערכים המוחלטים. בנורמת אינסוף מסתכלים על כל שורה בנפרד ולוקחים את המקסימום: 7.
+        misconception: MC-c11-system-L-entry
+      - value: 1
+        feedback: >-
+          1 הוא הסכום של השורה הראשונה בלבד. הקבוע צריך לחסום את שני הרכיבים, והשורה השנייה נותנת 7.
+        misconception: MC-c11-system-L-entry
+
+  - id: Q-11.4-global-multi
+    type: multi
+    objectives: [OBJ-11.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לאילו מבעיות ההתחלה הבאות יש פתרון בכל הקטע $[0,10]$? סמנו את כולן.
+    choices:
+      - text: '$y''=t\sin y$, $y(0)=1$'
+        correct: true
+        feedback: >-
+          נכון. ב-$[0,10]\times\mathbb{R}$: $|t\sin y_1-t\sin y_2|\le10|y_1-y_2|$. ליפשיצית גלובלית ברצועה, ולכן יש
+          פתרון בכל $[0,10]$.
+      - text: '$y''=e^ty+\cos t$, $y(0)=0$'
+        correct: true
+        feedback: >-
+          נכון. משוואה לינארית: ברצועה $[0,10]\times\mathbb{R}$ הקבוע הוא $\max e^t=e^{10}$. גדול, אבל קבוע אחד.
+      - text: '$y''=-y^3$, $y(0)=1$'
+        correct: true
+        feedback: >-
+          נכון, אף ש-$-y^3$ **אינה** ליפשיצית גלובלית: הפתרון המפורש $\frac1{\sqrt{1+2t}}$ קיים לכל $t\ge0$. ליפשיץ
+          גלובלי הוא תנאי מספיק לקיום גלובלי, לא הכרחי.
+      - text: '$y''=y^2$, $y(0)=1$'
+        feedback: >-
+          $\frac1{1-t}$ מתפוצץ ב-$t=1$. $y^2$ ליפשיצית רק מקומית, וזה לא מספיק.
+        misconception: MC-c11-smooth-implies-global
+      - text: '$y''=1+y^2$, $y(0)=0$'
+        feedback: >-
+          $\tan t$ מתפוצץ ב-$\frac\pi2<10$, אף ש-$f$ פולינום.
+        misconception: MC-c11-smooth-implies-global
+
+  - id: Q-11.4-global-claim
+    type: twotier
+    objectives: [OBJ-11.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נכון או לא: אם $f$ רציפה ב-$\mathbb{R}^2$ וליפשיצית **מקומית** ב-$y$, אז לכל בעיית התחלה יש פתרון על כל
+      $\mathbb{R}$.
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. $f=y^2$ ליפשיצית מקומית, והפתרון עם $y(0)=1$ מתפוצץ ב-$t=1$.
+      - text: נכון
+        feedback: >-
+          ליפשיץ מקומי נותן קיום ויחידות **מקומיים**. $y'=y^2$, $y(0)=1$ היא דוגמה נגדית.
+        misconception: MC-c11-smooth-implies-global
+    reasons:
+      - text: >-
+          $y^2$ ליפשיצית מקומית, והפתרון $\frac1{1-t}$ של $y'=y^2$, $y(0)=1$ מתפוצץ ב-$t=1$
+        correct: true
+        feedback: >-
+          בדיוק. אם ממשיכים את הפתרון צעד אחרי צעד, אורכי הצעדים $h=\min(a,\frac bM)$ קטנים כש-$y$ גדל, וסכומם יכול
+          להיות סופי.
+      - text: >-
+          אפשר להפעיל את המשפט המקומי שוב ושוב מקצה הקטע, ולכן הפתרון ממשיך לנצח
+        feedback: >-
+          ממשיכים, אבל כל צעד קצר מקודמו, וסכום אורכי הצעדים עשוי להתכנס. עבור $y^2$ הוא לא עובר את $t=1$.
+        misconception: MC-c11-smooth-implies-global
+      - text: >-
+          גם ליפשיץ גלובלי לא היה מספיק, כי $f$ לא חסומה
+        feedback: >-
+          ליפשיץ גלובלי כן מספיק, בלי חסימות: $f=y$ אינה חסומה, ו-$e^t$ קיים על כל הישר.
+        misconception: MC-c11-lipschitz-implies-bounded
+
+  - id: Q-11.4-dependence-time
+    type: numeric
+    objectives: [OBJ-11.4-2]
+    level: mid
+    prompt: >-
+      $f$ רציפה וליפשיצית ב-$y$ עם $L=2$ ברצועה $[0,3]\times\mathbb{R}$. כמה קרובים צריכים להיות ערכי ההתחלה
+      $y_1(0)$ ו-$y_2(0)$ כדי שגרונוול **יבטיח** $|y_1(t)-y_2(t)|\le10^{-3}$ לכל $t\in[0,3]$? תנו את הסף הגדול ביותר
+      $\delta$ ל-$|y_1(0)-y_2(0)|$.
+    answer: 0.0000024787522
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\delta=10^{-3}e^{-6}\approx2.48\cdot10^{-6}$. החסם $\delta e^{2t}$ עולה ב-$t$, ולכן הדרישה החמורה ביותר
+      היא ב-$t=3$: $\delta e^{6}\le10^{-3}$.
+    wrongFeedback: >-
+      הדרישה היא $\delta e^{L t}\le10^{-3}$ לכל $t\in[0,3]$. באיזה $t$ היא הכי קשה?
+    commonWrong:
+      - value: 0.0000497870684
+        feedback: >-
+          $10^{-3}e^{-3}$ שוכח את $L=2$ במעריך: $e^{Lt}=e^{6}$ ב-$t=3$.
+        misconception: MC-c11-gronwall-exponent
+      - value: 0.000142857143
+        feedback: >-
+          $\frac{10^{-3}}{7}$ בא מהקירוב הלינארי $\delta(1+Lt)=7\delta$. החסם הנכון מעריכי, והוא מחייב $\delta$ קטן
+          פי $\frac{e^6}{7}\approx58$.
+        misconception: MC-c11-gronwall-linear
+      - value: 0.001
+        feedback: >-
+          בלי גדילה הפתרונות היו נשארים במרחק ההתחלתי. גרונוול מרשה לפער לגדול פי $e^{6}\approx403$ עד $t=3$.
+        misconception: MC-c11-gronwall-no-growth
+
+  - id: Q-11.4-global-rank
+    type: rank
+    objectives: [OBJ-11.4-3]
+    level: exam
+    prompt: >-
+      $f$ רציפה ב-$[\alpha,\beta]\times\mathbb{R}$ ומקיימת $|f(t,y_1)-f(t,y_2)|\le L|y_1-y_2|$ לכל $t\in[\alpha,\beta]$
+      ולכל $y_1,y_2\in\mathbb{R}$. הוכיחו שלכל $t_0\in[\alpha,\beta]$ ו-$y_0$ יש לבעיית ההתחלה פתרון יחיד בכל
+      $[\alpha,\beta]$.
+    help: >-
+      סדרו את שלבי ההוכחה מהראשון לאחרון.
+    items:
+      - id: a
+        label: >-
+          כי $f$ מוגדרת וליפשיצית בכל הרצועה, אין מלבן ואין אילוץ $h\le\frac bM$: עובדים על כל $X=C[\alpha,\beta]$.
+      - id: b
+        label: >-
+          לכל $y\in X$, $Ty(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds$ מוגדרת ורציפה ב-$[\alpha,\beta]$, ולכן $T:X\to X$.
+      - id: c
+        label: >-
+          בנורמה $\|y\|_w=\max_{[\alpha,\beta]}e^{-2L|t-t_0|}|y(t)|$, השקולה לנורמת הסופרמום, $X$ שלם.
+      - id: d
+        label: >-
+          כמו בשיעור 11.3, $\|Ty-Tz\|_w\le\frac12\|y-z\|_w$: $T$ מכווצת.
+      - id: e
+        label: >-
+          לפי בנך ל-$T$ נקודת שבת יחידה ב-$X$, ולפי שיעור 11.1 היא הפתרון היחיד בכל $[\alpha,\beta]$.
+    order: [a, [b, c], d, e]
+    correctFeedback: >-
+      נכון. ההבדל מהמשפט המקומי הוא שלב א: ליפשיץ **גלובלי** מבטל את הצורך להישאר במלבן, ולכן אפשר לעבוד על כל
+      הקטע. את ב ואת ג אפשר לכתוב בכל סדר: אחד מגדיר את $T$, השני את הנורמה, ושניהם נחוצים רק בשלב ד.
+    wrongFeedback: >-
+      לפני שמגדירים את $T$ צריך לדעת על איזה מרחב: מה מאפשר לעבוד על כל $C[\alpha,\beta]$ במקום על כדור?
+    explanation: >-
+      דוגמה מרכזית: מערכת לינארית $Y'=A(t)Y+B(t)$ עם $A,B$ רציפות. ברצועה $[\alpha,\beta]\times\mathbb{R}^n$ הקבוע הוא
+      $\max_t\|A(t)\|_{\mathrm{op}}$, ולכן לכל מערכת לינארית יש פתרון על כל קטע שבו המקדמים רציפים, ובפרט אין
+      התפוצצות. זה משפט הקיום והיחידות שנוסח בשיעור 0.6, ועכשיו יש לו הוכחה.

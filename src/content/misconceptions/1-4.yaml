@@ -1,0 +1,73 @@
+# Misconceptions first detected in lesson 1.4 (radius of curvature and the osculating circle).
+- id: MC-c1-centre-wrong-side
+  title: שמים את מרכז העקמומיות בצד הקמור
+  belief: >-
+    מרכז העקמומיות הוא $\gamma-\rho\,\mathbf n$, או בצד שאליו המסילה "בורחת".
+  truth: >-
+    מרכז העקמומיות הוא $\gamma+\rho\,\mathbf n$, והנורמל הראשי מצביע אל הצד הקעור. בקודקוד של $y=x^2$ המרכז הוא
+    $(0,\frac12)$, מעל הקודקוד, בתוך הפרבולה.
+  remedy: { lesson: '1.4', anchor: centre-def, label: 'מרכז העקמומיות והמעגל המנשק' }
+
+- id: MC-c1-focus-is-centre
+  title: מבלבלים בין מרכז העקמומיות בקודקוד הפרבולה למוקד שלה
+  belief: >-
+    מרכז המעגל המנשק בקודקוד של $y=x^2$ הוא המוקד $(0,\frac14)$.
+  truth: >-
+    $\kappa(0)=2$, ולכן $\rho=\frac12$ והמרכז $(0,\frac12)$: פי שניים רחוק מהמוקד. המוקד מוגדר בתכונת ההחזרה של
+    הפרבולה, לא במגע מסדר שני.
+  remedy: { lesson: '1.4', anchor: parabola-vertex, label: 'הפרבולה בקודקוד' }
+
+- id: MC-c1-tangent-second-order
+  title: חושבים שהישר המשיק, או כל מעגל משיק, משיקים עד סדר שני
+  belief: >-
+    הישר המשיק מקרב את המסילה עד סדר שני, וכל מעגל שמשיק למסילה בנקודה הוא מעגל מנשק.
+  truth: >-
+    הישר המשיק מתלכד עם המסילה רק בערך ובנגזרת הראשונה: המרחק מהמסילה אליו הוא $\frac{\kappa}{2}s^2+o(s^2)$.
+    מכל המעגלים המשיקים בנקודה, רק המעגל ברדיוס $\frac1\kappa$ שמרכזו ב-$\gamma+\frac1\kappa\mathbf n$ מתלכד גם
+    בנגזרת השנייה, ולכן המרחק אליו $o(s^2)$.
+  remedy: { lesson: '1.4', anchor: contact, label: 'מגע מסדר שני' }
+
+- id: MC-c1-taylor-half
+  title: שוכחים את החצי בפיתוח טיילור מסדר שני
+  belief: >-
+    $\gamma(s_0+h)=\gamma(s_0)+h\mathbf t+h^2\kappa\mathbf n+o(h^2)$, ולכן המרחק מהישר המשיק הוא בערך $\kappa h^2$.
+  truth: >-
+    $\gamma(s_0+h)=\gamma(s_0)+h\mathbf t+\frac{h^2}{2}\kappa\mathbf n+o(h^2)$: המקדם של $h^2$ בטיילור הוא
+    $\frac{\gamma''}{2}$. במעגל ברדיוס $r$: $r(1-\cos\frac hr)\approx\frac{h^2}{2r}$.
+  remedy: { lesson: '1.4', anchor: tangent-line-distance, label: 'מגע מסדר שני' }
+
+- id: MC-c1-osculating-one-side
+  title: חושבים שהמעגל המנשק תמיד נשאר בצד אחד של המסילה
+  belief: >-
+    המעגל המנשק נוגע במסילה ולא חוצה אותה, כמו ישר משיק לגרף קמור.
+  truth: >-
+    ההפרש בין המסילה למעגל המנשק הוא מסדר $h^3$, חזקה אי-זוגית שמחליפה סימן. כש-$\kappa'(s_0)\ne0$ המעגל המנשק
+    **חוצה** את המסילה. ב-$y=x^2$ בנקודה $(1,1)$ הוא חוצה; בקודקוד, שם $\kappa'=0$, הוא נשאר בפנים.
+  remedy: { lesson: '1.4', anchor: ex-1-4-6, label: 'המעגל המנשק חוצה את המסילה' }
+
+- id: MC-c1-graph-curvature-fpp
+  title: חושבים שהעקמומיות של גרף היא הנגזרת השנייה
+  belief: >-
+    העקמומיות של $y=f(x)$ היא $|f''(x)|$, ולכן היא הכי גדולה במקום שבו $|f''|$ הכי גדול.
+  truth: >-
+    $\kappa=\frac{|f''|}{(1+f'^2)^{3/2}}$. רק כש-$f'(x_0)=0$ היא שווה ל-$|f''(x_0)|$. ל-$e^x$ הנגזרת השנייה עולה
+    ללא גבול, והעקמומיות דועכת לאפס ב-$\pm\infty$ ומקסימלית ב-$x=-\frac{\ln2}{2}$.
+  remedy: { lesson: '1.4', anchor: graph-formula, label: 'העקמומיות של גרף' }
+
+- id: MC-c1-elbow-guess
+  title: מנחשים את נקודת העקמומיות המקסימלית לפי העין
+  belief: >-
+    הנקודה הכי מעוקמת של $e^x$ היא "המרפק" $(0,1)$, שבה השיפוע $1$.
+  truth: >-
+    את המקסימום מוצאים בגזירה של $\kappa(x)$. ל-$e^x$ הוא ב-$x=-\frac{\ln2}2\approx-0.35$, עם
+    $\kappa=\frac{2}{3\sqrt3}\approx0.385$, לעומת $\kappa(0)=\frac{1}{2\sqrt2}\approx0.354$.
+  remedy: { lesson: '1.4', anchor: graph-max, label: 'נקודות העקמומיות המקסימלית של גרף' }
+
+- id: MC-c1-shear-is-rotation
+  title: חושבים שהוספת פונקציה לינארית לגרף רק מטה אותו
+  belief: >-
+    $y=f(x)+mx$ הוא הגרף של $f$ מסובב, ולכן יש לו אותה עקמומיות.
+  truth: >-
+    $(x,y)\mapsto(x,y+mx)$ היא **העתקת גזירה**, לא סיבוב: היא לא שומרת מרחקים, ולכן משנה עקמומיות. ל-$\frac32x^2$
+    ב-$0$: $\kappa=3$; ל-$\frac32x^2+10x$ ב-$0$: $\kappa=\frac{3}{101^{3/2}}\approx0.003$.
+  remedy: { lesson: '1.4', anchor: graph-shear, label: 'העקמומיות של גרף' }

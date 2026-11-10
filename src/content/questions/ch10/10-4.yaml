@@ -1,0 +1,624 @@
+# Lesson 10.4 — uniform convergence of Fourier series.
+# Objectives (src/course.ts):
+#   OBJ-10.4-1  prove that if Σ(|a_n| + |b_n|) < ∞ the series converges uniformly to a continuous function
+#   OBJ-10.4-2  show that a continuous, piecewise differentiable function on the circle satisfies the condition (Cauchy-Schwarz + Bessel for f′)
+#   OBJ-10.4-3  explain why the Fourier series of a function with a jump does not converge uniformly
+#   OBJ-10.4-4  relate the smoothness of f to the decay rate of its Fourier coefficients
+#   OBJ-10.4-5  differentiate and integrate a Fourier series term by term, and know when it is allowed
+# For continuous 2π-periodic piecewise C¹ f: a_n(f′) = n b_n(f), b_n(f′) = −n a_n(f).
+# OBJ-10.4-4/5 questions came from advinfilab's former Fourier chapter (lesson 5.4, handover 2026-11-06), recomputed
+# with src/math/multivar.ts (scratchpad merge-nums.ts).
+chapter: 10
+questions:
+  - id: Q-10.4-mtest
+    type: mc
+    objectives: [OBJ-10.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      ידוע ש-$\sum_{n\ge1}(|a_n|+|b_n|)<\infty$. איזה כלי נותן מיד שהטור
+      $\frac{a_0}2+\sum(a_n\cos nx+b_n\sin nx)$ מתכנס במידה שווה על $\mathbb R$?
+    choices:
+      - text: 'מבחן M של ויירשטראס, עם $|a_n\cos nx+b_n\sin nx|\le|a_n|+|b_n|$'
+        correct: true
+        feedback: >-
+          נכון. החסם לא תלוי ב-$x$ וסכומו סופי, ולכן הטור מתכנס במידה שווה (אינפי 2).
+      - text: 'אי-שוויון בסל'
+        feedback: >-
+          בסל מדבר על $\sum(a_n^2+b_n^2)$ ונותן חסם בנורמה של $H$, לא חסם בכל נקודה. כאן הנתון חזק ממנו.
+        misconception: MC-c10-squares-vs-abs
+      - text: 'למת רימן-לבג'
+        feedback: >-
+          רימן-לבג אומרת רק $a_n,b_n\to0$, וזה לא מספיק אפילו להתכנסות בנקודה אחת: $\sum\frac{\cos nx}{\sqrt n}$ מתבדר
+          ב-$x=0$, כי שם הוא $\sum\frac1{\sqrt n}$.
+        misconception: MC-c10-coeffs-to-zero-enough
+      - text: 'משפט ההתכנסות הנקודתית, כי התכנסות בכל נקודה היא התכנסות במידה שווה'
+        feedback: >-
+          התכנסות בכל נקודה אינה במידה שווה: טור הגל הריבועי מתכנס בכל נקודה ולא במידה שווה.
+        misconception: MC-c10-pointwise-everywhere-uniform
+
+  - id: Q-10.4-deriv
+    type: numeric
+    objectives: [OBJ-10.4-2]
+    level: basic
+    prompt: >-
+      $f$ רציפה, מחזורית ב-$2\pi$ וגזירה למקוטעין, והנגזרת שלה היא הגל הריבועי:
+      $b_n(f')=\frac{4}{\pi n}$ ל-$n$ אי-זוגי, ושאר המקדמים של $f'$ אפס. חשבו את $a_3(f)$.
+    answer: -0.1414711
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. אינטגרציה בחלקים בלי איברי שפה (המחזוריות והרציפות של $f$ מבטלות אותם) נותנת $b_n(f')=-n\,a_n(f)$,
+      ולכן $a_3(f)=-\frac{b_3(f')}{3}=-\frac{4}{9\pi}$. ואכן $f=|x|+c$, ו-$a_3(|x|)=-\frac4{9\pi}$.
+    wrongFeedback: >-
+      כתבו $b_n(f')=\frac1\pi\int f'\sin nx$ ועשו אינטגרציה בחלקים. איזה מקדם של $f$ מופיע, ועם איזה סימן?
+    commonWrong:
+      - value: 0.1414711
+        feedback: >-
+          הסימן הפוך: $\frac{d}{dx}\sin nx=n\cos nx$, ובאינטגרציה בחלקים יוצא $-\frac n\pi\int f\cos nx$.
+        misconception: MC-c10-derivative-coeffs-pairing
+      - value: -0.4244132
+        feedback: >-
+          לא חילקתם ב-$n=3$: הנגזרת מכפילה את המקדמים ב-$n$, ולכן המקדם של $f$ קטן פי 3.
+        misconception: MC-c10-derivative-coeffs-pairing
+      - value: 0
+        feedback: >-
+          הנגזרת מחליפה קוסינוס בסינוס: $a_n(f)$ קשור ל-$b_n(f')$, לא ל-$a_n(f')=0$.
+        misconception: MC-c10-derivative-coeffs-pairing
+
+  - id: Q-10.4-corner
+    type: twotier
+    objectives: [OBJ-10.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם טור פורייה של $f(x)=|x|$ על $[-\pi,\pi]$ מתכנס אליה במידה שווה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. $\sum|a_n|=\frac4\pi\sum\frac1{n^2}$ על $n$ אי-זוגיים, סופי (ובעצם שווה ל-$\frac\pi2$).'
+      - text: לא
+        feedback: >-
+          ל-$|x|$ יש פינה ב-0 (וגם ב-$\pm\pi$ בהמשכה), אבל פינה אינה קפיצה: הפונקציה רציפה על המעגל וגזירה למקוטעין.
+        misconception: MC-c10-corner-blocks-uniform
+    reasons:
+      - text: 'ההמשכה המחזורית רציפה ($|{-\pi}|=|\pi|$) וגזירה למקוטעין, ולכן $\sum(|a_n|+|b_n|)<\infty$'
+        correct: true
+        feedback: >-
+          בדיוק. המשפט צריך רציפות על המעגל ונגזרת ב-$H$; נקודות שבהן אין נגזרת מותרות.
+      - text: 'לא, כי $|x|$ אינה גזירה ב-0'
+        feedback: >-
+          המשפט דורש גזירות **למקוטעין**. מה שמונע התכנסות במידה שווה הוא קפיצה, לא פינה.
+        misconception: MC-c10-corner-blocks-uniform
+      - text: 'כן, כי $a_n\to0$'
+        feedback: >-
+          זה נכון לכל $f\in H$, גם לגל ריבועי, שהטור שלו לא מתכנס במידה שווה. צריך את קצב הדעיכה $\frac1{n^2}$.
+        misconception: MC-c10-coeffs-to-zero-enough
+
+  - id: Q-10.4-jump
+    type: twotier
+    objectives: [OBJ-10.4-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם טור פורייה של הגל הריבועי ($1$ על $(0,\pi)$, $-1$ על $(-\pi,0)$) מתכנס במידה שווה על $[-\pi,\pi]$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. גבול במידה שווה של הסכומים החלקיים הרציפים היה רציף, והגל קופץ.'
+      - text: כן
+        feedback: >-
+          כל $S_Nf$ רציף, וגבול במידה שווה של פונקציות רציפות הוא רציף. לגל ריבועי אין המשכה רציפה ב-0.
+        misconception: MC-c10-uniform-limit-can-jump
+    reasons:
+      - text: 'אילו $S_Nf\to g$ במידה שווה, $g$ הייתה רציפה; אבל $g=f$ מחוץ לקפיצות (התכנסות נקודתית), ו-$f$ קופצת ב-0'
+        correct: true
+        feedback: >-
+          בדיוק. $g(x)=1$ לכל $x>0$ קטן ו-$g(x)=-1$ לכל $x<0$ קטן, ואין ערך ב-0 שהופך את זה לרציף.
+      - text: 'כן, כי $\sum b_n^2<\infty$'
+        feedback: >-
+          סכום ריבועים סופי נותן התכנסות בנורמה של $H$, לא במידה שווה. כאן $\sum|b_n|=\infty$.
+        misconception: MC-c10-squares-vs-abs
+      - text: 'לא, כי ב-0 הטור לא מתכנס'
+        feedback: >-
+          ב-0 הטור כן מתכנס, ל-0, הממוצע של $\pm1$. הבעיה אינה בנקודה אחת אלא בסביבה שלה.
+        misconception: MC-c10-value-at-jump
+
+  - id: Q-10.4-kink
+    type: mc
+    objectives: [OBJ-10.4-4]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ רציפה ומחזורית ב-$2\pi$ וגזירה למקוטעין, ול-$f'$ יש קפיצה (ל-$f$ יש פינה, כמו ל-$|x|$ ב-0). איך דועכים מקדמי
+      פורייה של $f$, בדרך כלל?
+    choices:
+      - text: 'כמו $\frac{1}{n^2}$'
+        correct: true
+        feedback: >-
+          נכון. $a_n(f)=-\frac{b_n(f')}{n}$ ו-$b_n(f)=\frac{a_n(f')}{n}$, ול-$f'$, שיש לה קפיצה, המקדמים בסדר גודל $\frac1n$ (כמו
+          לגל הריבועי). ל-$|x|$: $a_n=-\frac{4}{\pi n^2}$ ל-$n$ אי-זוגי.
+      - text: 'כמו $\frac1n$'
+        feedback: >-
+          $\frac1n$ הוא הקצב של פונקציה שקופצת **בעצמה** (הגל הריבועי, או $x$ בהמשכה המחזורית). כאן $f$ רציפה על המעגל
+          והקפיצה רק בנגזרת, וזה קונה עוד גורם $\frac1n$.
+        misconception: MC-c10-decay-smoothness
+      - text: 'מהר יותר מכל חזקה של $\frac1n$'
+        feedback: >-
+          זה קורה לפונקציות חלקות לגמרי על המעגל (למשל לפולינום טריגונומטרי, שמקדמיו מתאפסים מ-$n$ מסוים). פינה אחת
+          עוצרת את הדעיכה ב-$\frac1{n^2}$.
+        misconception: MC-c10-decay-smoothness
+
+  - id: Q-10.4-limit-coeffs
+    type: twotier
+    objectives: [OBJ-10.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sum(|a_n|+|b_n|)<\infty$, והטור $\frac{a_0}2+\sum(a_n\cos nx+b_n\sin nx)$ מתכנס במידה שווה לפונקציה $g$. האם
+      מקדמי פורייה של $g$ הם בדיוק $a_n,b_n$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. מכפילים ב-$\cos kx$ (עדיין במידה שווה) ומבצעים אינטגרציה איבר-איבר; מהניצבות נשאר רק $\pi a_k$.
+      - text: לא בהכרח
+        feedback: >-
+          התכנסות במידה שווה מתירה להחליף אינטגרל וסכום, ומהניצבות המקדם של $g$ יוצא $a_k$ בדיוק.
+        misconception: MC-c10-convergent-series-is-fourier
+    reasons:
+      - text: 'התכנסות במידה שווה מתירה אינטגרציה איבר-איבר של $g(x)\cos kx$, ומהניצבות נשאר $\pi a_k$'
+        correct: true
+        feedback: >-
+          בדיוק. זה גם הצעד שחסר לטור שמתכנס רק נקודתית.
+      - text: 'כן, כי כל טור שמתכנס בכל נקודה הוא טור פורייה של סכומו'
+        feedback: >-
+          לא: $\sum\frac{\sin nx}{\sqrt n}$ מתכנס בכל נקודה ואינו טור פורייה של פונקציה ב-$H$. כאן הנימוק הוא ההתכנסות במידה שווה.
+        misconception: MC-c10-convergent-series-is-fourier
+      - text: 'לא בהכרח, כי $g$ עלולה לקפוץ ואז אין לה מקדמים'
+        feedback: >-
+          $g$ גבול במידה שווה של פונקציות רציפות, ולכן רציפה, ואין לה קפיצות.
+        misconception: MC-c10-uniform-limit-can-jump
+
+  - id: Q-10.4-rank
+    type: rank
+    objectives: [OBJ-10.4-1]
+    level: mid
+    prompt: >-
+      $f$ רציפה ומחזורית, גזירה למקוטעין, עם $\sum(|a_n|+|b_n|)<\infty$. סדרו את שלבי ההוכחה ש-$S_Nf\to f$ במידה שווה.
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: mtest
+        label: 'חוסמים כל איבר: $|a_n\cos nx+b_n\sin nx|\le|a_n|+|b_n|$ לכל $x$, ו-$\sum(|a_n|+|b_n|)<\infty$; לפי מבחן M הטור מתכנס במידה שווה לפונקציה $g$'
+      - id: point
+        label: 'משפט ההתכנסות הנקודתית: $S_Nf(x)\to f(x)$ לכל $x$, כי $f$ רציפה וגזירה למקוטעין'
+      - id: equal
+        label: 'לגבול יש ערך יחיד בכל נקודה, ולכן $g=f$, וההתכנסות היא ל-$f$ במידה שווה'
+    order: [[mtest, point], equal]
+    correctFeedback: >-
+      נכון. מבחן M נותן שיש גבול במידה שווה; משפט ההתכנסות הנקודתית מזהה אותו כ-$f$. שני אלה אינם תלויים זה בזה, ולכן כל
+      סדר ביניהם טוב. (אין צורך לדעת ש-$g$ רציפה: הזיהוי $g=f$ נקודתי.)
+    wrongFeedback: >-
+      הזיהוי $g=f$ צריך את שני הדברים: שיש גבול במידה שווה (חסם ומבחן M) ושהגבול הנקודתי הוא $f$. הם בלתי תלויים, ולכן
+      באים בכל סדר, והמסקנה אחרונה.
+
+  - id: Q-10.4-abs-sup
+    type: numeric
+    objectives: [OBJ-10.4-1, OBJ-10.4-2]
+    level: mid
+    prompt: >-
+      ל-$f(x)=|x|$: $a_0=\pi$, $a_n=-\frac{4}{\pi n^2}$ ל-$n$ אי-זוגי, ושאר המקדמים אפס; והטור מתכנס ל-$f$ בכל נקודה.
+      חשבו את $\max_{[-\pi,\pi]}\big|f(x)-S_1f(x)\big|$.
+    answer: 0.2975568
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $|f-S_1f|\le\sum_{n\ge3}|a_n|$ לכל $x$, ובנקודה $x=0$ יש שוויון, כי שם כל $\cos nx=1$ וכל $a_n$ שליליים.
+      מ-$f(0)=0=\frac\pi2+\sum a_n$ נובע $\sum|a_n|=\frac\pi2$, ולכן המקסימום הוא $\frac\pi2-\frac4\pi\approx0.2976$.
+    wrongFeedback: >-
+      חסמו את $|f-S_1f|$ בזנב $\sum_{n\ge3}|a_n|$ ומצאו נקודה שבה החסם מושג. את $\sum|a_n|$ קל לקבל מהטור ב-$x=0$.
+    commonWrong:
+      - value: 1.8683531
+        feedback: >-
+          זה $\pi-\frac4\pi$: לקחתם את $a_0=\pi$ כאיבר הקבוע של $S_1f$ במקום $\frac{a_0}2$.
+        misconception: MC-c10-a0-not-halved
+
+  - id: Q-10.4-pointwise-not-abs
+    type: twotier
+    objectives: [OBJ-10.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לטור $\sum\frac{\sin nx}{n}$ של $\frac{\pi-x}2$ על $(0,2\pi)$ מתקיים $\sum|b_n|=\sum\frac1n=\infty$, ובכל זאת הוא מתכנס
+      בכל נקודה. האם זה סותר את המשפט על $\sum(|a_n|+|b_n|)$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. המשפט נותן תנאי מספיק להתכנסות במידה שווה, לא תנאי הכרחי להתכנסות.'
+      - text: כן
+        feedback: >-
+          המשפט אומר "אם $\sum(|a_n|+|b_n|)<\infty$ אז...", ולא אומר דבר כשהסכום אינסופי.
+        misconception: MC-c10-abs-sum-necessary
+    reasons:
+      - text: 'המשפט הוא "אם... אז", ולא נובע ממנו שבלי התנאי אין התכנסות; כאן ההתכנסות באה ממשפט ההתכנסות הנקודתית'
+        correct: true
+        feedback: >-
+          בדיוק. ואכן ההתכנסות כאן אינה במידה שווה: יש קפיצה ב-0.
+      - text: 'יש סתירה: בלי $\sum|b_n|<\infty$ טור לא יכול להתכנס'
+        feedback: >-
+          $\sum\frac{(-1)^n}n$ מתכנס אף ש-$\sum\frac1n=\infty$. התכנסות בהחלט אינה תנאי להתכנסות.
+        misconception: MC-c10-abs-sum-necessary
+      - text: 'אין סתירה, כי $\sum b_n^2<\infty$, ובסל גורר התכנסות בכל נקודה'
+        feedback: >-
+          בסל הוא טענה על נורמה, ולא אומר דבר על ערך הטור בנקודה מסוימת. ההתכנסות כאן באה ממשפט ההתכנסות הנקודתית
+          (שיעור 10.3).
+        misconception: MC-c10-squares-vs-abs
+
+  - id: Q-10.4-cs
+    type: mc
+    objectives: [OBJ-10.4-2]
+    level: mid
+    prompt: >-
+      $f$ רציפה ומחזורית, גזירה למקוטעין, ו-$\alpha_n,\beta_n$ מקדמי $f'$. אז $|a_n|+|b_n|=\frac{|\beta_n|+|\alpha_n|}{n}$.
+      איזה טיעון מראה ש-$\sum(|a_n|+|b_n|)<\infty$?
+    choices:
+      - text: 'קושי-שוורץ: $\sum\frac{|\alpha_n|+|\beta_n|}n\le\left(\sum\frac2{n^2}\right)^{1/2}\left(\sum(\alpha_n^2+\beta_n^2)\right)^{1/2}$, והגורם השני סופי מבסל ל-$f''$'
+        correct: true
+        feedback: >-
+          נכון. $(|\alpha|+|\beta|)^2\le2(\alpha^2+\beta^2)$, וקושי-שוורץ ב-$\ell^2$ (שיעור 9.1) מפריד את הסכום לשני גורמים
+          סופיים.
+      - text: 'רימן-לבג ל-$f''$: $\alpha_n,\beta_n\to0$, ולכן $\frac{|\alpha_n|+|\beta_n|}n$ קטן מ-$\frac1n$ וסכומו סופי'
+        feedback: >-
+          קטן מ-$\frac1n$ לא מספיק: $\sum\frac1n=\infty$, וגם $\sum\frac1{n\ln n}=\infty$. צריך את המידע החזק של בסל, לא רק
+          שהמקדמים שואפים לאפס.
+        misconception: MC-c10-coeffs-to-zero-enough
+      - text: 'בסל ל-$f$: $\sum(a_n^2+b_n^2)<\infty$, ולכן גם $\sum(|a_n|+|b_n|)<\infty$'
+        feedback: >-
+          סכום ריבועים סופי לא גורר סכום ערכים מוחלטים סופי ($b_n=\frac1n$). כאן צריך דווקא את בסל ל-$f'$.
+        misconception: MC-c10-squares-vs-abs
+
+  - id: Q-10.4-x
+    type: twotier
+    objectives: [OBJ-10.4-2, OBJ-10.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=x$ גזירה ברציפות על $[-\pi,\pi]$. האם טור פורייה שלה מתכנס אליה במידה שווה על $[-\pi,\pi]$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. ב-$x=\pi$ כל האיברים $\frac{2(-1)^{n+1}}{n}\sin n\pi$ מתאפסים, ולכן $S_Nf(\pi)=0$ לכל $N$, רחוק מ-$f(\pi)=\pi$.
+      - text: כן
+        feedback: >-
+          המשפט דורש רציפות **על המעגל**: $f(-\pi)=-\pi\ne\pi=f(\pi)$, ולהמשכה המחזורית יש קפיצה של $2\pi$.
+        misconception: MC-c10-smooth-on-interval-uniform
+    reasons:
+      - text: 'להמשכה המחזורית יש קפיצה ב-$\pm\pi$, וטור של פונקציות רציפות לא מתכנס במידה שווה לפונקציה עם קפיצה'
+        correct: true
+        feedback: >-
+          בדיוק. בקצוות הטור רואה את ההמשכה, ושם הוא מתכנס לממוצע 0.
+      - text: 'כן: $f$ גזירה ברציפות על הקטע, ולכן היא מקיימת את תנאי המשפט'
+        feedback: >-
+          חסר תנאי השפה $f(-\pi)=f(\pi)$. בלעדיו אינטגרציה בחלקים משאירה איבר שפה, ו-$b_n=\frac{2(-1)^{n+1}}n$ עם $\sum|b_n|=\infty$.
+        misconception: MC-c10-smooth-on-interval-uniform
+      - text: 'כן, כי $b_n\to0$'
+        feedback: >-
+          זה נכון לכל $f\in H$, ולא נותן התכנסות במידה שווה.
+        misconception: MC-c10-coeffs-to-zero-enough
+
+  - id: Q-10.4-which
+    type: multi
+    objectives: [OBJ-10.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      כל פונקציה כאן נתונה על $[-\pi,\pi]$ ומומשכת למחזורית ב-$2\pi$. לאילו מהן המשפט על פונקציות רציפות וגזירות למקוטעין
+      על המעגל מבטיח שטור פורייה מתכנס במידה שווה? סמנו את כולן.
+    choices:
+      - text: '$x^2$'
+        correct: true
+        feedback: 'נכון: $(-\pi)^2=\pi^2$, ולכן ההמשכה רציפה, ויש לה פינה בלבד ב-$\pm\pi$.'
+      - text: '$|\sin x|$'
+        correct: true
+        feedback: 'נכון: רציפה, ופינות ב-$0,\pm\pi$ בלבד.'
+      - text: '$\cos\frac x2$'
+        correct: true
+        feedback: 'נכון: $\cos(\pm\frac\pi2)=0$ בשני הקצוות, ולכן ההמשכה רציפה (עם פינה ב-$\pm\pi$).'
+      - text: '$x^3$'
+        feedback: >-
+          $x^3$ חלקה על הקטע, אבל $(-\pi)^3=-\pi^3\ne\pi^3$: להמשכה יש קפיצה ב-$\pm\pi$.
+        misconception: MC-c10-smooth-on-interval-uniform
+      - text: '$e^x$'
+        feedback: >-
+          $e^{-\pi}\ne e^\pi$: קפיצה ב-$\pm\pi$, ושם הטור מתכנס ל-$\cosh\pi$ ולא במידה שווה.
+        misconception: MC-c10-smooth-on-interval-uniform
+      - text: '$\sin\frac x2$'
+        feedback: >-
+          $\sin(\pm\frac\pi2)=\pm1$: קפיצה של 2 בקצוות, אף שהפונקציה חלקה בתוך הקטע.
+        misconception: MC-c10-smooth-on-interval-uniform
+
+  - id: Q-10.4-jump-sup
+    type: twotier
+    objectives: [OBJ-10.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ הגל הריבועי $\pm1$. האם $\sup_{0<x<\pi}|f(x)-S_Nf(x)|\ge1$ לכל $N$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. גם בלי לחשב את חריגת גיבס, השגיאה המקסימלית לא קטנה מ-1.'
+      - text: לא
+        feedback: >-
+          $S_Nf$ רציף ו-$S_Nf(0)=0$, ולכן $S_Nf(x)\to0$ כש-$x\to0^+$, בזמן ש-$f(x)=1$. השגיאה מתקרבת ל-1 לכל $N$.
+        misconception: MC-c10-pointwise-everywhere-uniform
+    reasons:
+      - text: 'מרציפות $S_Nf$ ב-0: $\lim_{x\to0^+}|1-S_Nf(x)|=|1-S_Nf(0)|=1$'
+        correct: true
+        feedback: >-
+          בדיוק. הסופרמום של השגיאה הוא לפחות 1 לכל $N$, ולכן אין התכנסות במידה שווה על $(0,\pi)$.
+      - text: 'לא, כי $S_Nf(x)\to f(x)$ לכל $x\in(0,\pi)$, ולכן השגיאה המקסימלית שואפת לאפס'
+        feedback: >-
+          התכנסות בכל נקודה אינה התכנסות במידה שווה: לכל $N$ יש $x$ קרוב מספיק ל-0 שבו השגיאה כמעט 1.
+        misconception: MC-c10-pointwise-everywhere-uniform
+      - text: 'כן, כי חריגת גיבס היא בגובה 1'
+        feedback: >-
+          חריגת גיבס היא כ-$0.18$ מעל 1 (כ-$9\%$ מהקפיצה 2). השגיאה שקרובה ל-1 היא בצד השני: ליד 0, שם $S_Nf\approx0$.
+        misconception: MC-c10-gibbs-fixed-size
+
+  - id: Q-10.4-c2
+    type: twotier
+    objectives: [OBJ-10.4-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      טענה: אם $f$ מחזורית ב-$2\pi$ וגזירה ברציפות פעמיים על $\mathbb{R}$, אז $n^2a_n\to0$ ו-$n^2b_n\to0$. נכון או לא?
+    choices:
+      - text: נכון
+        correct: true
+        feedback: >-
+          נכון. $a_n(f'')=-n^2a_n(f)$ ו-$b_n(f'')=-n^2b_n(f)$, ומקדמי $f''$ שואפים ל-0.
+      - text: לא נכון
+        feedback: >-
+          שתי אינטגרציות בחלקים (שבהן כל איברי השפה מתבטלים, כי $f$ ו-$f'$ מחזוריות) נותנות $n^2a_n=-a_n(f'')$,
+          ולמת רימן-לבג על $f''$ סוגרת.
+        misconception: MC-c10-decay-smoothness
+    reasons:
+      - text: '$n^2a_n=-a_n(f^{\prime\prime})$, ולפי רימן-לבג על $f^{\prime\prime}$ הרציפה זה שואף ל-0'
+        correct: true
+        feedback: >-
+          בדיוק. כל נגזרת רציפה ומחזורית קונה גורם $n$ (הקשר בין מקדמי $f$ ו-$f'$ מהשיעור הזה), ורימן-לבג נותנת את
+          השאיפה לאפס בסוף.
+      - text: 'כי $f\in C^2$, המקדמים דועכים מהר יותר מכל חזקה של $\frac1n$'
+        feedback: >-
+          $C^2$ לא נותן יותר מ-$n^2a_n\to0$. למשל $\sum\frac{\cos nx}{n^4}$ גזירה ברציפות פעמיים (טור הנגזרות השניות
+          $-\sum\frac{\cos nx}{n^2}$ מתכנס במידה שווה), ו-$n^5a_n=n\to\infty$.
+        misconception: MC-c10-decay-smoothness
+      - text: 'כי הטור מתכנס במידה שווה, וטור שמתכנס במידה שווה מקיים $|a_n|,|b_n|\le\frac{C}{n^2}$'
+        feedback: >-
+          התכנסות במידה שווה לא נותנת קצב כזה: $\sum\frac{\cos nx}{n^{3/2}}$ מתכנס במידה שווה (מבחן M) ו-$n^2a_n=\sqrt n\to\infty$.
+          הקצב בא מהגזירה.
+        misconception: MC-c10-decay-smoothness
+
+  - id: Q-10.4-diff-x
+    type: twotier
+    objectives: [OBJ-10.4-5]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על $(-\pi,\pi)$: $x=2\sum_{n\ge1}\frac{(-1)^{n+1}}{n}\sin nx$. גוזרים איבר איבר ומקבלים
+      "$1=2\sum_{n\ge1}(-1)^{n+1}\cos nx$". האם השוויון הזה נכון על $(-\pi,\pi)$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. הטור בצד ימין מתבדר בכל נקודה: האיברים $2(-1)^{n+1}\cos nx$ אינם שואפים ל-0 (ב-$x=0$ הם $\pm2$).
+      - text: כן
+        feedback: >-
+          ב-$x=0$ צד ימין הוא $2-2+2-2+\cdots$, שאינו מתכנס. הטור הנגזר הוא טור פורייה של $f'$ רק כשההמשכה המחזורית
+          של $f$ רציפה וגזירה למקוטעין.
+        misconception: MC-c10-termwise-always
+    reasons:
+      - text: 'איברי הטור הנגזר אינם שואפים ל-0; הגזירה נכשלת כי ההמשכה המחזורית של $x$ קופצת ב-$\pm\pi$'
+        correct: true
+        feedback: >-
+          בדיוק. הקשר $a_n(f')=n\,b_n(f)$ דורש $f(-\pi)=f(\pi)$. כאן $a_n(1)=0$, אבל $n\,b_n(x)=2(-1)^{n+1}$: ההפרש הוא איבר
+          השפה $\frac1\pi\left[x\cos nx\right]_{-\pi}^{\pi}=2(-1)^n$, שאינו מתאפס כי ההמשכה קופצת.
+      - text: 'הטור מתכנס ל-$x$ ו-$x$ גזירה, ולכן מותר לגזור איבר איבר'
+        feedback: >-
+          התכנסות לפונקציה גזירה לא מתירה גזירה איבר איבר. גם $f_n(x)=\frac{\sin(n^2x)}{n}$ שואפת במידה שווה ל-0, שהיא
+          גזירה, ובכל זאת $f_n'(0)=n\to\infty$. הדוגמה כאן עצמה מראה זאת.
+        misconception: MC-c10-termwise-always
+      - text: 'על $(-\pi,\pi)$ אין קפיצה, ולכן הקפיצה בקצוות לא משפיעה על הטור הנגזר בפנים'
+        feedback: >-
+          המקדמים הם אינטגרלים על כל הקטע, והקפיצה ב-$\pm\pi$ היא שקובעת את הדעיכה $\frac2n$. הטור הנגזר מתבדר גם
+          ב-$x=0$.
+        misconception: MC-c10-termwise-always
+
+  - id: Q-10.4-int-allowed
+    type: twotier
+    objectives: [OBJ-10.4-5]
+    qualitative: true
+    level: mid
+    prompt: >-
+      טענה: מותר לבצע אינטגרציה איבר איבר מ-0 עד $x$ לטור של $x$, $2\sum\frac{(-1)^{n+1}}{n}\sin nx$, אף שהוא אינו
+      מתכנס במידה שווה, ולקבל $\frac{x^2}{2}=2\sum\frac{(-1)^{n+1}}{n^2}(1-\cos nx)$ לכל $x\in[-\pi,\pi]$. נכון או לא?
+    choices:
+      - text: נכון
+        correct: true
+        feedback: >-
+          נכון. אינטגרציה איבר איבר של טור פורייה מותרת תמיד (ל-$f$ רציפה למקוטעין), והטור המתקבל מתכנס במידה שווה.
+      - text: לא נכון
+        feedback: >-
+          כאן לא צריך התכנסות במידה שווה של הטור המקורי. $F(x)=\int_0^x\left(f-\frac{a_0}{2}\right)$ רציפה על המעגל וגזירה
+          למקוטעין, ולכן הטור שלה מתכנס אליה במידה שווה, ומקדמיו הם מקדמי $f$ חלקי $n$.
+        misconception: MC-c10-termwise-int-needs-uniform
+    reasons:
+      - text: '$F(x)=\frac{x^2}{2}$ רציפה על המעגל וגזירה למקוטעין, ומקדמיה מתקבלים ממקדמי $F^{\prime}=x$ לפי $a_n(F^{\prime})=n\,b_n(F)$, $b_n(F^{\prime})=-n\,a_n(F)$'
+        correct: true
+        feedback: >-
+          בדיוק. האינטגרל של $f$ חלק יותר מ-$f$ בדרגה אחת, ולכן הוא נכנס למשפט ההתכנסות במידה שווה. האיבר הקבוע של $F$
+          נקבע מ-$F(0)=0$.
+      - text: 'אינטגרציה איבר איבר דורשת התכנסות במידה שווה, ולכן היא אסורה כאן'
+        feedback: >-
+          זה תנאי מספיק כללי לטורי פונקציות (אינפי 2), אבל לטורי פורייה יש משפט חזק יותר: האינטגרציה מותרת תמיד, כי היא
+          מחליקה.
+        misconception: MC-c10-termwise-int-needs-uniform
+      - text: 'הטור מתכנס בכל נקודה, ולכן מותר לבצע אינטגרציה איבר איבר'
+        feedback: >-
+          התכנסות נקודתית לבדה לא מתירה החלפת סכום ואינטגרל (אינפי 2). הנימוק הנכון עובר דרך הפונקציה $F$.
+        misconception: MC-c10-pointwise-everywhere-uniform
+
+  - id: Q-10.4-int-series
+    type: numeric
+    objectives: [OBJ-10.4-5]
+    level: mid
+    prompt: >-
+      אינטגרציה איבר איבר מ-0 עד $x$ של הטור של $x$ נותנת
+      $$\frac{x^2}{2}=2\sum_{n\ge1}\frac{(-1)^{n+1}}{n^2}(1-\cos nx)\qquad(x\in[-\pi,\pi]),$$
+      וידוע (שיעור 10.3) ש-$\sum_{n\ge1}\frac{(-1)^{n+1}}{n^2}=\frac{\pi^2}{12}$. חשבו את
+      $$\sum_{n=1}^\infty\frac{(-1)^{n+1}\cos\frac{n\pi}3}{n^2}.$$
+    answer: 0.5483114
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\frac{\pi^2}{18}$. ב-$x=\frac\pi3$: $\frac{\pi^2}{18}=2\left(\frac{\pi^2}{12}-T\right)$, ולכן
+      $T=\frac{\pi^2}{12}-\frac{\pi^2}{36}=\frac{\pi^2}{18}$. ההצבה מותרת בכל $x$, כי הטור מתכנס במידה שווה ל-$\frac{x^2}2$.
+    wrongFeedback: >-
+      הציבו $x=\frac\pi3$, פרקו את הסכום לשני סכומים (עם $1$ ועם $\cos nx$), והשתמשו בסכום הנתון.
+    commonWrong:
+      - value: 0.2741557
+        feedback: >-
+          זה $\frac{\pi^2}{36}$: הוא יוצא אם שוכחים את הגורם 2 שלפני הסכום, או את החצי ב-$\frac{x^2}2$. באגף שמאל
+          $\frac{(\pi/3)^2}{2}=\frac{\pi^2}{18}$, והגורם 2 מכפיל את שני הסכומים.
+      - value: -0.2741557
+        feedback: >-
+          זה יוצא אם כותבים $\frac{x^2}2=-2\sum\frac{(-1)^{n+1}}{n^2}\cos nx$, בלי ה-1. אבל
+          $\int_0^x\sin nt\,dt=\frac{1-\cos nx}n$: הגבול התחתון תורם קבוע, ובלעדיו האגף הימני אינו מתאפס ב-$x=0$.
+        misconception: MC-c10-integrate-constant-term
+
+  - id: Q-10.4-jump-exam
+    type: twotier
+    objectives: [OBJ-10.4-1, OBJ-10.4-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן ש-$f$ גזירה למקוטעין עם קפיצה ($f(x_0^+)\ne f(x_0^-)$ בנקודה $x_0$), ובכל זאת מקדמי פורייה שלה מקיימים
+      $\sum(|a_n|+|b_n|)<\infty$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. התנאי היה מכריח את הטור להתכנס במידה שווה לפונקציה רציפה, ושם הוא מתכנס ל-$f$.'
+      - text: כן
+        feedback: >-
+          אילו התנאי התקיים, $S_Nf\to g$ במידה שווה עם $g$ רציפה. אבל $S_Nf(x)\to f(x)$ בכל נקודת רציפות, ולכן
+          $g=f$ ליד $x_0$ משני הצדדים, ו-$g$ הייתה קופצת.
+        misconception: MC-c10-uniform-limit-can-jump
+    reasons:
+      - text: 'מבחן M נותן גבול רציף $g$; ההתכנסות הנקודתית נותנת $g=f$ בנקודות הרציפות סביב $x_0$; אז $g(x_0^+)\ne g(x_0^-)$, סתירה'
+        correct: true
+        feedback: >-
+          בדיוק. זה מראה גם מה עולה הקפיצה במקדמים: לפחות אחד מ-$\sum|a_n|$, $\sum|b_n|$ מתבדר.
+      - text: 'כן, למשל הגל הריבועי, שמקדמיו $\frac4{\pi n}$ שואפים לאפס'
+        feedback: >-
+          מקדמים ששואפים לאפס אינם מקדמים שסכומם סופי: $\frac4\pi\sum\frac1n$ על האי-זוגיים מתבדר.
+        misconception: MC-c10-squares-vs-abs
+      - text: 'כן, כי התנאי מדבר רק על המקדמים, ומקדמים לא "רואים" קפיצות'
+        feedback: >-
+          הם רואים: הגבול במידה שווה של הטור רציף, ובנקודות הרציפות הוא חייב להיות $f$.
+        misconception: MC-c10-uniform-limit-can-jump
+
+  - id: Q-10.4-to-smooth
+    type: twotier
+    objectives: [OBJ-10.4-4, OBJ-10.4-5]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $(a_n),(b_n)$ סדרות עם $|a_n|+|b_n|\le\frac{C}{n^3}$, ו-$g(x)=\frac{a_0}{2}+\sum_{n\ge1}(a_n\cos nx+b_n\sin nx)$. האם
+      $g$ גזירה ברציפות על $\mathbb{R}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. גם טור הנגזרות $\sum n(-a_n\sin nx+b_n\cos nx)$ חסום איבר איבר על ידי $\frac{C}{n^2}$, וסכומם סופי.
+      - text: לא בהכרח
+        feedback: >-
+          טור הנגזרות מתכנס במידה שווה לפי מבחן M, והמשפט על גזירה איבר איבר של טור פונקציות (אינפי 2) נותן
+          ש-$g$ גזירה ו-$g'$ רציפה.
+        misconception: MC-c10-decay-smoothness
+    reasons:
+      - text: 'טור הנגזרות חסום על ידי $\sum\frac{C}{n^2}$, מתכנס במידה שווה, ולכן מותר לגזור איבר איבר ו-$g^{\prime}$ רציפה'
+        correct: true
+        feedback: >-
+          בדיוק. זה הכיוון ההפוך של "חלקות נותנת דעיכה": דעיכה מהירה מספיק נותנת חלקות.
+      - text: 'קצב הדעיכה של המקדמים לא אומר כלום על החלקות של הסכום'
+        feedback: >-
+          הוא אומר הרבה: $\sum n(|a_n|+|b_n|)<\infty$ מבטיח שאפשר לגזור פעם אחת. החלקות והדעיכה הן שני צדדים של אותה
+          תמונה.
+        misconception: MC-c10-decay-smoothness
+      - text: 'יותר מזה: הדעיכה $\frac{1}{n^3}$ נותנת ש-$g$ גזירה ברציפות שלוש פעמים'
+        feedback: >-
+          חזק מדי. $g=\sum\frac{\cos nx}{n^3}$ מקיימת את ההנחה. אילו $g$ הייתה גזירה ברציפות שלוש פעמים, שלוש
+          אינטגרציות בחלקים (בלי איברי שפה, בזכות המחזוריות) היו נותנות $n^3a_n=b_n(g''')\to0$ לפי רימן-לבג; אבל כאן
+          $n^3a_n=1$. (שימו לב: טור נגזרות מתבדר לבדו אינו מוכיח שאין נגזרת.)
+        misconception: MC-c10-decay-smoothness
+
+  - id: Q-10.4-rl-rate
+    type: twotier
+    objectives: [OBJ-10.4-4]
+    qualitative: true
+    level: exam
+    prompt: >-
+      טענה: לכל $f$ רציפה ומחזורית ב-$2\pi$ קיים $C$ כך ש-$|a_n|+|b_n|\le\frac Cn$ לכל $n\ge1$. נכון או לא?
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. למת רימן-לבג נותנת שאיפה לאפס בלי קצב. הקצב $\frac1n$ דורש חלקות, למשל $f$ גזירה למקוטעין.
+      - text: נכון
+        feedback: >-
+          הפונקציה $f(x)=\sum_{k\ge0}2^{-k/2}\sin(2^kx)$ רציפה (מבחן M) ו-$b_{2^k}=2^{-k/2}$, כך ש-$n\,b_n=\sqrt n$
+          ב-$n=2^k$: לא חסום.
+        misconception: MC-c10-decay-smoothness
+    reasons:
+      - text: 'עבור $f=\sum_{k\ge0}2^{-k/2}\sin(2^kx)$, שרציפה לפי מבחן M, $b_{2^k}=2^{-k/2}$ ולכן $n\,b_n=\sqrt n$ ב-$n=2^k$'
+        correct: true
+        feedback: >-
+          בדיוק. את המקדמים מחשבים באינטגרציה איבר איבר, שמותרת כי הטור מתכנס במידה שווה, ובניצבות המערכת: רק
+          האיבר עם $2^k=n$ תורם ל-$b_n$, ולשאר ה-$n$ המקדם הוא 0.
+      - text: 'אינטגרציה בחלקים נותנת תמיד חסם $\frac Cn$, לכל פונקציה רציפה'
+        feedback: >-
+          אינטגרציה בחלקים צריכה את $f'$ בתוך האינטגרל. לפונקציה רציפה בלי נגזרת אין מה לגזור, ולמת רימן-לבג שלה
+          נובעת מבסל, בלי קצב.
+        misconception: MC-c10-decay-smoothness
+      - text: 'למת רימן-לבג אומרת בדיוק שהמקדמים קטנים מ-$\frac Cn$'
+        feedback: >-
+          רימן-לבג אומרת רק $a_n,b_n\to0$. אין בה קצב, והדוגמה עם $2^{-k/2}$ מראה שאין קצב אוניברסלי $\frac1n$.
+        misconception: MC-c10-decay-smoothness
+
+  - id: Q-10.4-diff-which
+    type: multi
+    objectives: [OBJ-10.4-5]
+    qualitative: true
+    level: exam
+    prompt: >-
+      לאילו מהפונקציות הבאות (על $[-\pi,\pi]$, מומשכות למחזוריות ב-$2\pi$) גזירת טור פורייה איבר איבר נותנת את טור
+      פורייה של $f'$, שמתכנס ל-$f'(x)$ בכל נקודה שבה $f'$ רציפה? סמנו את כולן.
+    choices:
+      - text: '$x^2$'
+        correct: true
+        feedback: >-
+          נכון. ההמשכה רציפה וגזירה למקוטעין, ולכן $a_n(f')=n\,b_n$, $b_n(f')=-n\,a_n$: הטור הנגזר הוא טור פורייה של
+          $2x$, ולפי משפט ההתכנסות הנקודתית הוא מתכנס ל-$2x$ על $(-\pi,\pi)$.
+      - text: '$|x|$'
+        correct: true
+        feedback: >-
+          נכון. ההמשכה רציפה, והטור הנגזר $\frac4\pi\sum_{n\ \mathrm{odd}}\frac{\sin nx}{n}$ הוא טור פורייה של הגל הריבועי,
+          הנגזרת של $|x|$ מחוץ ל-$0,\pm\pi$.
+      - text: '$x$'
+        feedback: >-
+          ההמשכה קופצת ב-$\pm\pi$, והטור הנגזר $2\sum(-1)^{n+1}\cos nx$ מתבדר בכל נקודה.
+        misconception: MC-c10-termwise-always
+      - text: 'הגל הריבועי $\pm1$'
+        feedback: >-
+          $f'=0$ פרט לקפיצות, אבל הטור הנגזר $\frac4\pi\sum_{n\ \mathrm{odd}}\cos nx$ מתבדר (האיברים לא שואפים ל-0).
+          לפונקציה עם קפיצה הקשר בין מקדמי $f$ ומקדמי $f'$ נכשל.
+        misconception: MC-c10-termwise-always

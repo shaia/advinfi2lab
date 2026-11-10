@@ -1,0 +1,590 @@
+# Chapter 5 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (part א of the final) are worth 7 points: a verdict and a written justification.
+# Long questions (parts ב, ג) are worth 20 points in 2–4 parts. Every one has an open part with a model
+# solution and a rubric.
+chapter: 5
+questions:
+  - id: Q-5-exam-1
+    type: exam
+    title: היעקוביאן עם סימן
+    prompt: >-
+      $\varphi:D^*\to D$ העתקה חד-חד-ערכית ועל, גזירה ברציפות, כש-$D^*$ תחום קשיר ו-$\det D\varphi\neq0$ בכל
+      נקודה. האם ייתכן ש-
+      $$\iint_D1\,dx\,dy=-\iint_{D^*}\det D\varphi(u,v)\,du\,dv\ ?$$
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-5.1-1]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: ייתכן
+            correct: true
+            feedback: >-
+              נכון: זה קורה בדיוק כשההעתקה הופכת כיוון. הנימוק בסעיף ב.
+          - text: לא ייתכן, כי האינטגרל של $\det D\varphi$ הוא תמיד השטח של $D$
+            feedback: >-
+              השטח הוא האינטגרל של $|\det D\varphi|$. כשהדטרמיננטה שלילית, $|\det D\varphi|=-\det D\varphi$.
+            misconception: MC-c5-signed-jacobian
+          - text: ייתכן רק אם $D^*$ אינו קשיר
+            feedback: >-
+              על תחום קשיר הסימן קבוע, וזה בדיוק מה שמאפשר את השוויון: אם $\det D\varphi<0$ בכל נקודה, השוויון
+              מתקיים. דוגמה בסעיף ב.
+            misconception: MC-c5-jacobian-sign-flip
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-5.1-1, OBJ-5.1-3]
+        prompt: >-
+          נמקו: תנו דוגמה או הוכיחו שאין, ותארו בדיוק מתי השוויון מתקיים.
+        solution:
+          - kind: idea
+            text: >-
+              לפי נוסחת החלפת המשתנים עם $f=1$, השטח של $D$ הוא $\iint_{D^*}|\det D\varphi|$. השוויון המבוקש
+              אומר ש-$|\det D\varphi|$ אפשר להחליף ב-$-\det D\varphi$, וזה נכון כשהדטרמיננטה שלילית.
+          - kind: step
+            text: >-
+              דוגמה: $\varphi(u,v)=(v,u)$ על $D^*=[0,1]\times[0,2]$, שולחת על $D=[0,2]\times[0,1]$, חד-חד-ערכית
+              וגזירה ברציפות.
+          - kind: computation
+            text: >-
+              $D\varphi=\begin{pmatrix}0&1\\1&0\end{pmatrix}$, $\det D\varphi=-1$, ולכן
+              $-\iint_{D^*}\det D\varphi=-(-1)\cdot2=2$, וזה שטח $D$.
+          - kind: theorem
+            text: >-
+              $\det D\varphi$ רציפה (פולינום בנגזרות החלקיות) ואינה מתאפסת על $D^*$ הקשיר, ולכן לפי משפט ערך
+              הביניים (לאורך מסילה בין שתי נקודות) הסימן שלה קבוע.
+          - kind: step
+            text: >-
+              אם $\det D\varphi<0$ בכל נקודה, $|\det D\varphi|=-\det D\varphi$ והשוויון מתקיים. אם $\det D\varphi>0$
+              בכל נקודה, אגף ימין הוא מינוס השטח, שלילי, והשוויון נכשל.
+          - kind: result
+            text: >-
+              ייתכן: השוויון מתקיים בדיוק כש-$\varphi$ הופכת כיוון ($\det D\varphi<0$ על כל $D^*$), למשל השיקוף
+              $(u,v)\mapsto(v,u)$.
+        rubric:
+          - text: 'שימוש בנוסחת החלפת המשתנים עם $f=1$: השטח הוא האינטגרל של $|\det D\varphi|$'
+            weight: 1
+          - text: 'דוגמה מפורשת שמקיימת את כל התנאים, עם חישוב הדטרמיננטה ושני האגפים'
+            weight: 2
+          - text: 'הנימוק שהסימן קבוע על תחום קשיר (רציפות וערך הביניים)'
+            weight: 1
+          - text: 'התנאי המדויק: השוויון מתקיים אם ורק אם הדטרמיננטה שלילית על כל התחום'
+            weight: 1
+
+  - id: Q-5-exam-2
+    type: exam
+    title: שטח בשתי פרמטריזציות
+    prompt: >-
+      $\sigma:D\to\mathbb R^3$ ו-$\tau:\tilde D\to\mathbb R^3$ שתי פרמטריזציות רגולריות וחד-חד-ערכיות של אותו
+      משטח $S$, ו-$\tau=\sigma\circ\psi$ כש-$\psi:\tilde D\to D$ חד-חד-ערכית ועל, גזירה ברציפות, עם
+      $\det D\psi\neq0$. האם ייתכן ש-$\sigma$ ו-$\tau$ נותנות ל-$S$ שטחים שונים?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-5.3-2]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: לא ייתכן
+            correct: true
+            feedback: נכון. ההוכחה בסעיף ב.
+          - text: ייתכן, אם הנגזרות של $\tau$ ארוכות מאלה של $\sigma$
+            feedback: >-
+              נגזרות ארוכות יותר באות עם תחום קטן יותר, באותו יחס בדיוק: $|\det D\psi|$.
+            misconception: MC-c5-area-depends-on-param
+          - text: ייתכן, אם $\psi$ הופכת כיוון
+            feedback: >-
+              היפוך כיוון הופך את סימן $\tau_s\times\tau_t$, אבל לא את אורכו, ובנוסחת החלפת המשתנים מופיע
+              $|\det D\psi|$.
+            misconception: MC-c5-scalar-orientation
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-5.3-2, OBJ-5.3-1]
+        prompt: >-
+          הוכיחו.
+        solution:
+          - kind: goal
+            text: '$\iint_{\tilde D}\|\tau_s\times\tau_t\|\,ds\,dt=\iint_D\|\sigma_u\times\sigma_v\|\,du\,dv$.'
+          - kind: idea
+            text: >-
+              המכפלה הווקטורית של $\tau$ היא זו של $\sigma$ כפול היעקוביאן של $\psi$, ונוסחת החלפת המשתנים מחזירה
+              בדיוק את הגורם הזה.
+          - kind: computation
+            text: >-
+              נכתוב $\psi(s,t)=(u(s,t),v(s,t))$. לפי כלל השרשרת $\tau_s=u_s\,\sigma_u+v_s\,\sigma_v$ ו-$\tau_t=u_t\,\sigma_u+v_t\,\sigma_v$,
+              כש-$\sigma_u,\sigma_v$ מחושבות ב-$\psi(s,t)$.
+          - kind: computation
+            text: >-
+              מביליניאריות ואנטי-סימטריה ($\sigma_u\times\sigma_u=0$, $\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$):
+              $$\tau_s\times\tau_t=(u_sv_t-v_su_t)\,\sigma_u\times\sigma_v=\det D\psi\cdot(\sigma_u\times\sigma_v)\circ\psi.$$
+          - kind: step
+            text: 'לכן $\|\tau_s\times\tau_t\|=|\det D\psi|\cdot\|\sigma_u\times\sigma_v\|\circ\psi$.'
+          - kind: theorem
+            text: >-
+              נוסחת החלפת המשתנים עם $g=\|\sigma_u\times\sigma_v\|$, שרציפה על $D$:
+              $\iint_{\tilde D}g(\psi(s,t))\,|\det D\psi|\,ds\,dt=\iint_Dg\,du\,dv$. התנאים מתקיימים כי $\psi$
+              חד-חד-ערכית, גזירה ברציפות ועם יעקוביאן שונה מאפס.
+          - kind: result
+            text: 'השטחים שווים: השטח אינו תלוי בפרמטריזציה, ולכן לא ייתכן שיהיו שונים.'
+        rubric:
+          - text: 'כלל השרשרת לנגזרות החלקיות של $\tau$'
+            weight: 1
+          - text: 'החישוב $\tau_s\times\tau_t=\det D\psi\cdot(\sigma_u\times\sigma_v)\circ\psi$, עם הנימוק (ביליניאריות, אנטי-סימטריה)'
+            weight: 2
+          - text: 'מעבר לאורך עם ערך מוחלט, והפעלת נוסחת החלפת המשתנים עם בדיקת תנאיה'
+            weight: 1.5
+          - text: 'מסקנה מפורשת: השטחים שווים'
+            weight: 0.5
+
+  - id: Q-5-exam-3
+    type: exam
+    title: קוטביות בלי יעקוביאן
+    prompt: >-
+      סטודנט שוכח את היעקוביאן וכותב
+      $$\iint_{x^2+y^2\le1}f(x,y)\,dx\,dy=\int_0^{2\pi}\int_0^1f(r\cos\theta,r\sin\theta)\,dr\,d\theta.$$
+      האם ייתכן שהשוויון הזה נכון עבור פונקציה רציפה $f$ שאינה זהותית אפס?
+    parts:
+      - label: א
+        points: 2
+        type: numeric
+        objectives: [OBJ-5.2-2, OBJ-5.2-1]
+        prompt: >-
+          עבור $f_a(x,y)=1-a\sqrt{x^2+y^2}$, מצאו את הערך של $a$ שבו שני האגפים שווים.
+        answer: 3
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. אגף שמאל: $2\pi\int_0^1(1-ar)\,r\,dr=2\pi\left(\frac12-\frac a3\right)$. אגף ימין:
+          $2\pi\int_0^1(1-ar)\,dr=2\pi\left(1-\frac a2\right)$. שוויון כש-$\frac a6=\frac12$, כלומר $a=3$, ואז שני
+          האגפים שווים ל-$-\pi$.
+        wrongFeedback: >-
+          חשבו את שני האגפים כפונקציות של $a$: באגף שמאל, בקוטביות, עם היעקוביאן $r$; באגף ימין בלעדיו.
+        commonWrong:
+          - value: 2
+            feedback: >-
+              עם $a=2$ אגף ימין מתאפס, אבל אגף שמאל הוא $2\pi\left(\frac12-\frac23\right)=-\frac\pi3$. חשבו את אגף שמאל
+              עם היעקוביאן $r$.
+            misconception: MC-c5-forgot-jacobian
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-5.2-1, OBJ-5.1-1]
+        qualitative: true
+        prompt: >-
+          ענו על השאלה ונמקו. הסבירו גם למה זה אינו מראה שהנוסחה של הסטודנט נכונה.
+        solution:
+          - kind: idea
+            text: >-
+              "ייתכן" צריך דוגמה אחת. נוסחה שגויה יכולה לתת את התוצאה הנכונה במקרה עבור $f$ מסוימת; כדי להפריך
+              אותה מספיקה $f$ אחת שעבורה היא נכשלת.
+          - kind: step
+            text: >-
+              $f(x,y)=1-3\sqrt{x^2+y^2}$ רציפה על העיגול ואינה זהותית אפס (למשל $f(0,0)=1$).
+          - kind: computation
+            text: >-
+              בקוטביות, לפי נוסחת החלפת המשתנים: $\iint f\,dx\,dy=\int_0^{2\pi}\int_0^1(1-3r)\,r\,dr\,d\theta=2\pi\left(\frac12-1\right)=-\pi$.
+              אגף ימין של הסטודנט: $\int_0^{2\pi}\int_0^1(1-3r)\,dr\,d\theta=2\pi\left(1-\frac32\right)=-\pi$.
+          - kind: check
+            text: >-
+              עם $f=1$ אגף שמאל הוא $\pi$ (שטח העיגול) ואגף ימין $2\pi$: הנוסחה של הסטודנט נכשלת. הנכונה כוללת את
+              היעקוביאן $r$, כי מלבן $dr\times d\theta$ במרחק $r$ מהראשית הופך לקשת ששטחה $r\,dr\,d\theta$.
+          - kind: result
+            text: >-
+              ייתכן: עבור $f=1-3\sqrt{x^2+y^2}$ שני האגפים שווים ל-$-\pi$. זה צירוף מקרים של $f$ אחת; עבור $f=1$ השוויון
+              נכשל, ולכן הנוסחה בלי $r$ שגויה.
+        rubric:
+          - text: 'תשובה "ייתכן" עם דוגמה מפורשת של פונקציה רציפה שאינה זהותית אפס'
+            weight: 1
+          - text: 'חישוב נכון של שני האגפים, אגף שמאל עם היעקוביאן $r$'
+            weight: 2
+          - text: 'דוגמה נגדית לנוסחה של הסטודנט (למשל $f=1$), עם שני הערכים'
+            weight: 1
+          - text: 'ההבחנה בין "נכון עבור $f$ אחת" לבין "נוסחה נכונה לכל $f$"'
+            weight: 1
+
+  - id: Q-5-exam-4
+    type: exam
+    title: החלפת משתנים לא לינארית
+    prompt: >-
+      $D=\{(x,y):\ 2\le x+y\le4,\ 0\le x^2-y^2\le4\}$. נגדיר $\Phi(x,y)=(u,v)=(x+y,\ x^2-y^2)$.
+    parts:
+      - label: א
+        points: 3
+        type: numeric
+        objectives: [OBJ-5.1-1, OBJ-5.1-2]
+        prompt: >-
+          חשבו את $\left|\frac{\partial(x,y)}{\partial(u,v)}\right|$ בנקודה $(x,y)=(2,1)$ של $D$.
+        answer: 0.166667
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\frac16$. $\frac{\partial(u,v)}{\partial(x,y)}=\det\begin{pmatrix}1&1\\2x&-2y\end{pmatrix}=-2(x+y)=-6$
+          בנקודה, ולפי כלל השרשרת היעקוביאן ההפוך הוא $-\frac16$; בערך מוחלט $\frac16$.
+        wrongFeedback: >-
+          חשבו את היעקוביאן של $\Phi$, שנתונה מ-$(x,y)$ ל-$(u,v)$, ואז הפכו אותו.
+        commonWrong:
+          - value: 6
+            feedback: >-
+              זה $\left|\frac{\partial(u,v)}{\partial(x,y)}\right|$, היעקוביאן של $\Phi$ עצמה. המבוקש הוא של ההעתקה ההפוכה.
+            misconception: MC-c5-inverse-jacobian
+          - value: -0.166667
+            feedback: >-
+              ביקשנו ערך מוחלט, וזה גם מה שנכנס לנוסחה.
+            misconception: MC-c5-signed-jacobian
+      - label: ב
+        points: 6
+        type: open
+        objectives: [OBJ-5.1-2, OBJ-5.1-3]
+        prompt: >-
+          הוכיחו ש-$\Phi$ חד-חד-ערכית על $D$, מצאו את התמונה $D^*=\Phi(D)$ ואת ההעתקה ההפוכה, ובדקו שמתקיימים תנאי
+          נוסחת החלפת המשתנים.
+        solution:
+          - kind: idea
+            text: >-
+              $x^2-y^2=(x+y)(x-y)$, ולכן $(u,v)$ קובעים את $x+y=u$ ואת $x-y=\frac vu$ (כי $u\ge2>0$), ומהם את $x,y$.
+          - kind: step
+            text: >-
+              אם $\Phi(x,y)=\Phi(x',y')$ עם שתי הנקודות ב-$D$, אז $x+y=x'+y'=u\ge2$ ו-$u(x-y)=u(x'-y')$, ולכן
+              $x-y=x'-y'$. משני השוויונות $x=x'$, $y=y'$.
+          - kind: computation
+            text: >-
+              ההפוכה: $x=\frac12\left(u+\frac vu\right)=\frac{u^2+v}{2u}$, $y=\frac12\left(u-\frac vu\right)=\frac{u^2-v}{2u}$.
+              אפשר לבדוק: $x+y=u$ ו-$x^2-y^2=(x+y)(x-y)=u\cdot\frac vu=v$.
+          - kind: step
+            text: >-
+              התמונה: התנאים $2\le x+y\le4$ ו-$0\le x^2-y^2\le4$ הם בדיוק $2\le u\le4$, $0\le v\le4$, ולכל $(u,v)$
+              במלבן הנקודה $(x,y)$ שלמעלה נמצאת ב-$D$. לכן $D^*=[2,4]\times[0,4]$.
+          - kind: check
+            text: >-
+              ההפוכה $(u,v)\mapsto(x,y)$ גזירה ברציפות על $D^*$ (כי $u\ge2$), חד-חד-ערכית, ויעקוביאן שלה
+              $\frac{1}{-2u}\neq0$. כל התנאים מתקיימים, בלי אפילו קבוצה חריגה.
+          - kind: result
+            text: >-
+              $\Phi$ חד-חד-ערכית על $D$, $D^*=[2,4]\times[0,4]$, ההפוכה $\left(\frac{u^2+v}{2u},\frac{u^2-v}{2u}\right)$, ו-
+              $\left|\frac{\partial(x,y)}{\partial(u,v)}\right|=\frac{1}{2u}$.
+        rubric:
+          - text: 'הוכחת חד-חד-ערכיות דרך $x+y$ ו-$x-y=\frac vu$, עם השימוש ב-$u>0$'
+            weight: 2
+          - text: 'נוסחה מפורשת להעתקה ההפוכה, עם בדיקה'
+            weight: 1
+          - text: 'התמונה $D^*=[2,4]\times[0,4]$, כולל הכיוון שכל נקודה במלבן מתקבלת'
+            weight: 2
+          - text: 'בדיקת התנאים: גזירות ברציפות ויעקוביאן שונה מאפס על כל התחום'
+            weight: 1
+      - label: ג
+        points: 5
+        type: numeric
+        standalone: false
+        objectives: [OBJ-5.1-2]
+        prompt: >-
+          חשבו את $\iint_D(x^2-y^2)(x+y)\,dx\,dy$.
+        answer: 8
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. האינטגרנד הוא $vu$, ומקדם השטח $\frac{1}{2u}$:
+          $$\int_2^4\int_0^4vu\cdot\frac{1}{2u}\,dv\,du=\int_2^4\int_0^4\frac v2\,dv\,du=2\cdot4=8.$$
+        wrongFeedback: >-
+          כתבו את האינטגרנד ב-$u,v$, כפלו ב-$\left|\frac{\partial(x,y)}{\partial(u,v)}\right|=\frac1{2u}$, וחשבו את האינטגרל על $D^*$.
+        commonWrong:
+          - value: 48
+            feedback: >-
+              זה $\int_2^4\int_0^4uv\,dv\,du$, בלי מקדם השטח.
+            misconception: MC-c5-forgot-jacobian
+          - value: 298.666667
+            feedback: >-
+              כפלתם ב-$2u$, היעקוביאן של $\Phi$. צריך את ההופכי שלו, $\frac{1}{2u}$.
+            misconception: MC-c5-inverse-jacobian
+          - value: -8
+            feedback: >-
+              לקחתם את היעקוביאן $-\frac{1}{2u}$ עם הסימן. האינטגרנד אי-שלילי על $D$, והאינטגרל לא יכול להיות שלילי.
+            misconception: MC-c5-signed-jacobian
+      - label: ד
+        points: 6
+        type: open
+        standalone: false
+        objectives: [OBJ-5.1-2, OBJ-5.1-1]
+        prompt: >-
+          חשבו את השטח של $D$ בעזרת $\Phi$, ובדקו את התוצאה בדרך שנייה: בהחלפה הלינארית $s=x+y$, $t=x-y$.
+        solution:
+          - kind: computation
+            text: >-
+              בעזרת $\Phi$: $|D|=\iint_{D^*}\frac{1}{2u}\,du\,dv=\int_2^4\frac{4}{2u}\,du=2\ln\frac42=2\ln2$.
+          - kind: idea
+            text: >-
+              בדרך השנייה התחום הוא $2\le s\le4$, $0\le st\le4$, כלומר $0\le t\le\frac4s$: תחום פשוט מעל קטע, ומקדם
+              השטח קבוע.
+          - kind: computation
+            text: >-
+              $\frac{\partial(s,t)}{\partial(x,y)}=\det\begin{pmatrix}1&1\\1&-1\end{pmatrix}=-2$, ולכן $dx\,dy=\frac12\,ds\,dt$, ו-
+              $$|D|=\frac12\int_2^4\int_0^{4/s}dt\,ds=\frac12\int_2^4\frac4s\,ds=2\ln2.$$
+          - kind: check
+            text: >-
+              שתי הדרכים נותנות $2\ln2\approx1.386$. גם הסדר מתאים: $D$ מוכל במלבן $2\le s\le4$, $0\le t\le2$ של
+              ה-$(s,t)$, ששטחו ב-$(x,y)$ הוא $\frac12\cdot4=2>1.386$.
+          - kind: result
+            text: '$|D|=2\ln2$.'
+        rubric:
+          - text: 'אינטגרל נכון ב-$(u,v)$ עם מקדם השטח $\frac1{2u}$ על $D^*$'
+            weight: 2
+          - text: 'תיאור נכון של $D$ במשתנים $s,t$ ($0\le t\le\frac4s$) ומקדם השטח $\frac12$'
+            weight: 2
+          - text: 'חישוב שתי הדרכים עד $2\ln2$'
+            weight: 1.5
+          - text: 'השוואה מפורשת בין שתי התוצאות'
+            weight: 0.5
+
+  - id: Q-5-exam-5
+    type: exam
+    title: שטח של גרף
+    prompt: >-
+      $D\subseteq\mathbb R^2$ תחום בעל שטח ו-$f$ גזירה ברציפות על $\bar D$. הגרף של $f$ מעל $D$ הוא המשטח
+      $\sigma(x,y)=(x,y,f(x,y))$, $(x,y)\in D$.
+    parts:
+      - label: א
+        points: 5
+        type: open
+        objectives: [OBJ-5.3-1, OBJ-5.3-3]
+        prompt: >-
+          הוכיחו מהגדרת השטח שהשטח של הגרף הוא $\iint_D\sqrt{1+f_x^2+f_y^2}\,dx\,dy$.
+        solution:
+          - kind: definition
+            text: >-
+              לפרמטריזציה רגולרית וחד-חד-ערכית $\sigma:D\to\mathbb R^3$ השטח הוא $\iint_D\|\sigma_x\times\sigma_y\|\,dx\,dy$.
+          - kind: step
+            text: >-
+              $\sigma$ חד-חד-ערכית (שתי הקואורדינטות הראשונות של $\sigma(x,y)$ הן $x,y$), גזירה ברציפות, ורגולרית:
+              $\sigma_x=(1,0,f_x)$ ו-$\sigma_y=(0,1,f_y)$ בלתי תלויים לינארית, כי שני הרכיבים הראשונים שלהם הם
+              $e_1$ ו-$e_2$.
+          - kind: computation
+            text: >-
+              $$\sigma_x\times\sigma_y=\det\begin{pmatrix}e_1&e_2&e_3\\1&0&f_x\\0&1&f_y\end{pmatrix}=(-f_x,\ -f_y,\ 1).$$
+          - kind: computation
+            text: '$\|\sigma_x\times\sigma_y\|=\sqrt{f_x^2+f_y^2+1}$.'
+          - kind: check
+            text: >-
+              בדרך התבנית הראשונה: $E=1+f_x^2$, $F=f_xf_y$, $G=1+f_y^2$, ו-$EG-F^2=1+f_x^2+f_y^2$. ולפונקציה קבועה
+              מתקבל שטח $D$, כמצופה.
+          - kind: result
+            text: 'שטח הגרף הוא $\iint_D\sqrt{1+f_x^2+f_y^2}\,dx\,dy$.'
+        rubric:
+          - text: 'ניסוח הגדרת השטח, ובדיקה ש-$\sigma$ פרמטריזציה רגולרית וחד-חד-ערכית'
+            weight: 1.5
+          - text: 'חישוב $\sigma_x$, $\sigma_y$ ו-$\sigma_x\times\sigma_y=(-f_x,-f_y,1)$'
+            weight: 2
+          - text: 'האורך $\sqrt{1+f_x^2+f_y^2}$ והצבה בהגדרה'
+            weight: 1.5
+      - label: ב
+        points: 5
+        type: numeric
+        objectives: [OBJ-5.3-3]
+        prompt: >-
+          חשבו את השטח של הגרף של $f(x,y)=\frac23\left(x^{3/2}+y^{3/2}\right)$ מעל $[0,1]^2$.
+        answer: 1.4066
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\frac4{15}\left(9\sqrt3-8\sqrt2+1\right)\approx1.4066$. $f_x=\sqrt x$, $f_y=\sqrt y$, ולכן
+          $$A=\int_0^1\int_0^1\sqrt{1+x+y}\,dx\,dy=\int_0^1\frac23\left[(2+y)^{3/2}-(1+y)^{3/2}\right]dy=\frac4{15}\left[(3^{5/2}-2^{5/2})-(2^{5/2}-1)\right].$$
+        wrongFeedback: >-
+          $f_x^2+f_y^2=x+y$. חשבו את האינטגרל של $\sqrt{1+x+y}$ קודם לפי $x$ ואחר כך לפי $y$ (פוביני).
+        commonWrong:
+          - value: 2
+            feedback: >-
+              זה $\iint(1+x+y)=2$, בלי השורש.
+            misconception: MC-c5-area-no-root
+          - value: 0.975161
+            feedback: >-
+              זה $\iint\sqrt{x+y}$, בלי ה-1 שמגיע מהרכיב השלישי של $\sigma_x\times\sigma_y$.
+            misconception: MC-c5-graph-forget-one
+      - label: ג
+        points: 6
+        type: open
+        objectives: [OBJ-5.3-3, OBJ-5.3-1]
+        qualitative: true
+        prompt: >-
+          הוכיחו: אם $f,g\in C^1$ ו-$f_x^2+f_y^2=g_x^2+g_y^2$ בכל נקודה של $D$, לגרפים שלהן מעל $D$ אותו שטח.
+          הסיקו שלגרפים של $f(x,y)=e^x\cos y$ ושל $g(x,y)=e^x\sin y$ מעל $D=[0,1]\times[0,\pi]$ אותו שטח.
+        solution:
+          - kind: idea
+            text: >-
+              לפי סעיף א, השטח של גרף תלוי ב-$f$ רק דרך $f_x^2+f_y^2$: אם האינטגרנדים שווים בכל נקודה, האינטגרלים
+              שווים.
+          - kind: step
+            text: >-
+              לפי סעיף א, $A(f)=\iint_D\sqrt{1+f_x^2+f_y^2}$ ו-$A(g)=\iint_D\sqrt{1+g_x^2+g_y^2}$. לפי ההנחה האינטגרנדים
+              שווים בכל נקודה של $D$, ולכן $A(f)=A(g)$.
+          - kind: computation
+            text: >-
+              $f_x=e^x\cos y$, $f_y=-e^x\sin y$, ולכן $f_x^2+f_y^2=e^{2x}$. $g_x=e^x\sin y$, $g_y=e^x\cos y$, ולכן
+              גם $g_x^2+g_y^2=e^{2x}$.
+          - kind: check
+            text: >-
+              זה אינו נובע מחפיפה פשוטה של המשטחים מעל אותו תחום: $f$ ו-$g$ שונות ב-$D$ (למשל $f(0,0)=1$, $g(0,0)=0$).
+              המשפט צריך רק את אורך הגרדיאנט.
+          - kind: result
+            text: >-
+              $A(f)=A(g)=\iint_D\sqrt{1+e^{2x}}\,dx\,dy$: לשני הגרפים אותו שטח.
+        rubric:
+          - text: 'שימוש בנוסחה מסעיף א ובהשוואה נקודתית של האינטגרנדים'
+            weight: 2
+          - text: 'חישוב הנגזרות החלקיות של $f$ ושל $g$'
+            weight: 2
+          - text: 'המסקנה $f_x^2+f_y^2=g_x^2+g_y^2=e^{2x}$ ומכאן שוויון השטחים'
+            weight: 2
+      - label: ד
+        points: 4
+        type: numeric
+        standalone: false
+        objectives: [OBJ-5.3-3]
+        prompt: >-
+          חשבו את השטח המשותף מסעיף ג. (רמז: ההצבה $w=\sqrt{1+e^{2x}}$ נותנת
+          $\int\sqrt{1+e^{2x}}\,dx=w+\frac12\ln\frac{w-1}{w+1}+C$.)
+        answer: 6.294172
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $A=\pi\int_0^1\sqrt{1+e^{2x}}\,dx=\pi\left[w+\frac12\ln\frac{w-1}{w+1}\right]_{\sqrt2}^{\sqrt{1+e^2}}\approx6.2942$.
+        wrongFeedback: >-
+          האינטגרנד אינו תלוי ב-$y$, ולכן $A=\pi\int_0^1\sqrt{1+e^{2x}}\,dx$. הציבו את הגבולות $w(0)=\sqrt2$ ו-$w(1)=\sqrt{1+e^2}$.
+        commonWrong:
+          - value: 13.177499
+            feedback: >-
+              זה $\pi\int_0^1(1+e^{2x})\,dx$, בלי השורש.
+            misconception: MC-c5-area-no-root
+          - value: 5.398142
+            feedback: >-
+              זה $\pi\int_0^1e^x\,dx=\pi(e-1)$, כלומר $\sqrt{f_x^2+f_y^2}$ בלי ה-1.
+            misconception: MC-c5-graph-forget-one
+
+  - id: Q-5-exam-6
+    type: exam
+    title: משפט ארכימדס על הספרה
+    prompt: >-
+      $S_a$ היא הספרה $x^2+y^2+z^2=a^2$, $a>0$, בפרמטריזציה
+      $\sigma(\varphi,\theta)=(a\sin\varphi\cos\theta,\ a\sin\varphi\sin\theta,\ a\cos\varphi)$, $0\le\varphi\le\pi$,
+      $0\le\theta\le2\pi$.
+    parts:
+      - label: א
+        points: 6
+        type: open
+        objectives: [OBJ-5.3-3, OBJ-5.3-1]
+        prompt: >-
+          הוכיחו: לכל $-a\le h_1<h_2\le a$, השטח של החלק של $S_a$ שבו $h_1\le z\le h_2$ הוא $2\pi a(h_2-h_1)$.
+        solution:
+          - kind: computation
+            text: >-
+              $\sigma_\varphi=a(\cos\varphi\cos\theta,\cos\varphi\sin\theta,-\sin\varphi)$,
+              $\sigma_\theta=a(-\sin\varphi\sin\theta,\sin\varphi\cos\theta,0)$. לכן $E=a^2$, $F=0$, $G=a^2\sin^2\varphi$,
+              ו-$\sqrt{EG-F^2}=a^2\sin\varphi$ (כי $\sin\varphi\ge0$).
+          - kind: idea
+            text: >-
+              התנאי על $z=a\cos\varphi$ הוא תנאי על $\varphi$ בלבד, ולכן האזור הוא מלבן בפרמטרים, ו-$\sin\varphi\,d\varphi$
+              הוא בדיוק $-d(\cos\varphi)$.
+          - kind: step
+            text: >-
+              $\cos$ יורד על $[0,\pi]$, ולכן $h_1\le a\cos\varphi\le h_2$ אם ורק אם $\varphi_2\le\varphi\le\varphi_1$, כש-
+              $\varphi_i=\arccos\frac{h_i}{a}$. (הפרמטריזציה חד-חד-ערכית פרט לקבוצה בעלת שטח אפס: הקטבים והתפר $\theta=0,2\pi$.)
+          - kind: computation
+            text: >-
+              $$A=\int_0^{2\pi}\int_{\varphi_2}^{\varphi_1}a^2\sin\varphi\,d\varphi\,d\theta=2\pi a^2\left(\cos\varphi_2-\cos\varphi_1\right)=2\pi a^2\cdot\frac{h_2-h_1}{a}.$$
+          - kind: check
+            text: 'עם $h_1=-a$, $h_2=a$ מתקבל $4\pi a^2$, שטח הספרה כולה.'
+          - kind: result
+            text: 'השטח הוא $2\pi a(h_2-h_1)$: הוא תלוי רק ברוחב הרצועה, לא במיקומה.'
+        rubric:
+          - text: 'חישוב אלמנט השטח $a^2\sin\varphi$ (דרך $E,F,G$ או המכפלה הווקטורית)'
+            weight: 2
+          - text: 'תרגום התנאי $h_1\le z\le h_2$ לטווח של $\varphi$, עם כיוון אי-השוויונות הנכון'
+            weight: 2
+          - text: 'חישוב האינטגרל עד $2\pi a(h_2-h_1)$'
+            weight: 1.5
+          - text: 'בדיקה במקרה פרטי (הספרה כולה) או הערה על חד-חד-ערכיות הפרמטריזציה'
+            weight: 0.5
+      - label: ב
+        points: 4
+        type: numeric
+        objectives: [OBJ-5.4-3, OBJ-5.4-2]
+        prompt: >-
+          מעטפת הומוגנית בצורת חצי הספרה העליונה של $S_1$ ($z\ge0$). מהו $\bar z$?
+        answer: 0.5
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. לפי סעיף א, כל רצועה $[z,z+dz]$ שטחה $2\pi\,dz$: המסה מפוזרת **אחיד** בגובה, ולכן $\bar z$ הוא אמצע
+          הקטע $[0,1]$. בחישוב ישיר: $\iint z\,dS=\pi$ והשטח $2\pi$.
+        wrongFeedback: >-
+          $\bar z=\frac{\iint_Sz\,dS}{\iint_SdS}$. סעיף א אומר שהשטח מתפלג אחיד לפי $z$.
+        commonWrong:
+          - value: 0.375
+            feedback: >-
+              $\frac38$ שייך לחצי כדור **מלא**. כאן יש רק מעטפת.
+            misconception: MC-c5-shell-vs-solid
+          - value: 3.141593
+            feedback: >-
+              זה $\iint_Sz\,dS$, בלי לחלק בשטח.
+            misconception: MC-c5-centroid-no-normalize
+      - label: ג
+        points: 5
+        type: numeric
+        objectives: [OBJ-5.2-2, OBJ-5.4-3]
+        prompt: >-
+          ועכשיו חצי הכדור **המלא** וההומוגני $x^2+y^2+z^2\le1$, $z\ge0$. מהו $\bar z$?
+        answer: 0.375
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\frac38$. בכדוריות: $\iiint z\,dV=\int_0^{2\pi}\int_0^{\pi/2}\int_0^1\rho\cos\varphi\cdot\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta=\frac14\cdot\frac12\cdot2\pi=\frac\pi4$,
+          והנפח $\frac{2\pi}3$.
+        wrongFeedback: >-
+          $\bar z=\frac{\iiint z\,dV}{V}$, עם $dV=\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta$ ו-$0\le\varphi\le\frac\pi2$.
+        commonWrong:
+          - value: 0.5
+            feedback: >-
+              זה $\bar z$ של המעטפת מסעיף ב. בגוף המלא חלק מהמסה קרוב למרכז, ולכן $\bar z$ נמוך יותר.
+            misconception: MC-c5-shell-vs-solid
+          - value: 0.785398
+            feedback: >-
+              זה $\frac\pi4=\iiint z\,dV$, בלי לחלק בנפח $\frac{2\pi}3$.
+            misconception: MC-c5-centroid-no-normalize
+          - value: 0.333333
+            feedback: >-
+              זה יוצא עם היעקוביאן $\rho\sin\varphi$ (במונה ובמכנה). היעקוביאן הכדורי הוא $\rho^2\sin\varphi$.
+            misconception: MC-c5-spherical-jacobian
+      - label: ד
+        points: 5
+        type: open
+        objectives: [OBJ-5.4-2, OBJ-5.1-2]
+        prompt: >-
+          הוכיחו שלכל $g$ רציפה על $[-a,a]$ מתקיים $\iint_{S_a}g(z)\,dS=2\pi a\int_{-a}^ag(z)\,dz$, והסיקו
+          ש-$\iint_{S_a}z^2\,dS=\frac{4\pi a^4}{3}$.
+        solution:
+          - kind: idea
+            text: >-
+              זו גרסה רציפה של סעיף א: האינטגרל בפרמטרים תלוי רק ב-$\varphi$, וההצבה $z=a\cos\varphi$ הופכת את
+              $a^2\sin\varphi\,d\varphi$ ל-$a\,dz$.
+          - kind: computation
+            text: >-
+              $$\iint_{S_a}g(z)\,dS=\int_0^{2\pi}\int_0^\pi g(a\cos\varphi)\,a^2\sin\varphi\,d\varphi\,d\theta=2\pi a^2\int_0^\pi g(a\cos\varphi)\sin\varphi\,d\varphi.$$
+          - kind: step
+            text: >-
+              בהצבה $z=a\cos\varphi$, $dz=-a\sin\varphi\,d\varphi$, כש-$\varphi$ רץ מ-0 ל-$\pi$ ו-$z$ מ-$a$ ל-$-a$:
+              $\int_0^\pi g(a\cos\varphi)\sin\varphi\,d\varphi=\frac1a\int_{-a}^ag(z)\,dz$.
+          - kind: step
+            text: 'לכן $\iint_{S_a}g(z)\,dS=2\pi a\int_{-a}^ag(z)\,dz$.'
+          - kind: computation
+            text: 'עם $g(z)=z^2$: $2\pi a\cdot\frac{2a^3}{3}=\frac{4\pi a^4}{3}$.'
+          - kind: check
+            text: >-
+              עם $g=1$ מתקבל $4\pi a^2$, השטח. ומסימטריה $\iint x^2=\iint y^2=\iint z^2$, וסכומם $a^2\cdot4\pi a^2$: שוב
+              $\frac{4\pi a^4}{3}$.
+          - kind: result
+            text: '$\iint_{S_a}g(z)\,dS=2\pi a\int_{-a}^ag(z)\,dz$, ובפרט $\iint_{S_a}z^2\,dS=\frac{4\pi a^4}{3}$.'
+        rubric:
+          - text: 'כתיבת האינטגרל בפרמטריזציה עם אלמנט השטח $a^2\sin\varphi$'
+            weight: 1.5
+          - text: 'ההצבה $z=a\cos\varphi$ עם טיפול נכון בכיוון הגבולות ובסימן'
+            weight: 2
+          - text: 'המסקנה הכללית והצבת $g(z)=z^2$'
+            weight: 1
+          - text: 'בדיקה ($g=1$ נותן את השטח, או טיעון הסימטריה)'
+            weight: 0.5

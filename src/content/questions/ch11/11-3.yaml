@@ -1,0 +1,369 @@
+# Lesson 11.3 — the Picard–Lindelöf theorem.
+# Objectives (src/course.ts):
+#   OBJ-11.3-1  state the local existence and uniqueness theorem and compute the guaranteed interval h = min(a, b/M)
+#   OBJ-11.3-2  prove it with Banach's fixed point theorem on a suitable space of continuous functions
+#   OBJ-11.3-3  compute Picard iterates for simple problems and identify their limit
+# Unless a question says otherwise, the guaranteed interval is |t − t0| ≤ h with h = min(a, b/M) (the weighted-norm proof).
+chapter: 11
+questions:
+  - id: Q-11.3-statement
+    type: mc
+    objectives: [OBJ-11.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      לבעיה $y'=f(t,y)$, $y(t_0)=y_0$ נסמן $R=\{|t-t_0|\le a,\ |y-y_0|\le b\}$, $M=\max_R|f|$ ו-$h=\min(a,\frac bM)$.
+      בכל הפרק, "הקטע של המשפט" הוא $|t-t_0|\le h$ עם $h$ הזה: זה הקטע שנותנת ההוכחה בנורמה ממושקלת (שאלה מאוחרת
+      בשיעור עוסקת בהוכחה פשוטה יותר, שנותנת קטע קצר יותר). מה אומר משפט פיקאר-לינדלוף?
+    choices:
+      - text: >-
+          אם $f$ רציפה ב-$R$ ומקיימת בו תנאי ליפשיץ ב-$y$ באופן אחיד ב-$t$, אז לבעיית ההתחלה יש פתרון יחיד בקטע
+          $|t-t_0|\le h$
+        correct: true
+        feedback: >-
+          נכון. רציפות וחסם $M$ נותנים את הקטע, תנאי ליפשיץ נותן את הכיווץ, ומשפט נקודת השבת של בנך נותן קיום
+          ויחידות יחד.
+      - text: >-
+          אם $f$ רציפה ב-$R$, אז לבעיית ההתחלה יש פתרון יחיד בקטע $|t-t_0|\le h$
+        feedback: >-
+          רציפות לבדה אינה נותנת יחידות: $3y^{2/3}$ רציפה, ול-$y'=3y^{2/3}$, $y(0)=0$ יש אינסוף פתרונות (שיעור 11.2).
+        misconception: MC-c11-continuity-gives-uniqueness
+      - text: >-
+          אם $f$ רציפה וליפשיצית ב-$y$ ב-$R$, אז לבעיית ההתחלה יש פתרון יחיד בקטע $|t-t_0|\le a$
+        feedback: >-
+          הפתרון עלול לצאת מהמלבן לפני הזמן $a$. עבור $y'=y^2$, $y(0)=1$ עם $a=2$, $b=1$ הפתרון $\frac1{1-t}$ מגיע
+          לגובה $y=2$ (קצה המלבן) ב-$t=\frac12$, ומתפוצץ ב-$t=1<a$.
+        misconception: MC-c11-interval-is-a
+      - text: >-
+          אם $f$ רציפה וליפשיצית ב-$y$ ב-$R$, אז לבעיית ההתחלה יש פתרון יחיד המוגדר על כל $\mathbb{R}$
+        feedback: >-
+          זה משפט **מקומי**. $f=y^2$ חלקה וליפשיצית בכל מלבן, והפתרון עם $y(0)=1$ מתפוצץ ב-$t=1$.
+        misconception: MC-c11-smooth-implies-global
+
+  - id: Q-11.3-h-basic
+    type: numeric
+    objectives: [OBJ-11.3-1]
+    level: basic
+    prompt: >-
+      $y'=t+y^2$, $y(0)=0$, והמלבן $R=\{|t|\le1,\ |y|\le1\}$. מהו $h=\min(a,\frac bM)$, חצי האורך של הקטע שמשפט
+      פיקאר-לינדלוף מבטיח?
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $M=\max_R|t+y^2|=2$, ב-$t=1$, $y=\pm1$. לכן $h=\min(1,\frac12)=\frac12$.
+    wrongFeedback: >-
+      קודם מצאו את $M$, המקסימום של $|t+y^2|$ על כל המלבן, ואז השוו בין $a$ ל-$\frac bM$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $1=a$, רוחב המלבן. אבל הפתרון זז בקצב עד $M=2$, ולכן מובטח שיישאר בגובה $b=1$ רק עד הזמן $\frac12$.
+        misconception: MC-c11-interval-is-a
+
+  - id: Q-11.3-iter-exp
+    type: mc
+    objectives: [OBJ-11.3-3]
+    level: basic
+    prompt: >-
+      איטרציות פיקאר של $y'=y$, $y(0)=1$: $y_0\equiv1$ ו-$y_{k+1}(t)=1+\int_0^t y_k(s)\,ds$. מהי $y_2$?
+    choices:
+      - text: '$y_2(t)=1+t+\frac{t^2}{2}$'
+        correct: true
+        feedback: >-
+          נכון. $y_1=1+\int_0^t1\,ds=1+t$, ו-$y_2=1+\int_0^t(1+s)\,ds=1+t+\frac{t^2}2$. האיטרציה ה-$k$ היא הסכום החלקי
+          של $e^t$ עד $t^k$.
+      - text: '$y_2(t)=1+t$'
+        feedback: >-
+          זו $y_1$: האיטרציה הראשונה אחרי הקבועה $y_0\equiv1$. צריך להפעיל את $T$ פעם נוספת.
+        misconception: MC-c11-picard-index
+      - text: '$y_2(t)=1+t+\frac{t^2}{2}+\frac{t^3}{6}$'
+        feedback: >-
+          זו $y_3$. כל הפעלה של $T$ מוסיפה איבר אחד, ו-$y_0$ כבר האיבר הראשון.
+        misconception: MC-c11-picard-index
+      - text: '$y_2(t)=e^t$'
+        feedback: >-
+          $e^t$ הוא הגבול של האיטרציות, הפתרון. כל איטרציה סופית היא פולינום.
+        misconception: MC-c11-iterate-is-solution
+
+  - id: Q-11.3-why-b-over-M
+    type: twotier
+    objectives: [OBJ-11.3-1, OBJ-11.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      משפט נקודת השבת של בנך (אינפי מתקדם 1): להעתקה $T$ של מרחב מטרי שלם **לתוך עצמו** שהיא מכווצת, כלומר
+      $d(Tx,Tz)\le q\,d(x,z)$ עם $q<1$ קבוע, יש נקודת שבת יחידה. בהוכחת פיקאר-לינדלוף בוחרים $h\le\frac bM$. האם
+      התנאי הזה נועד לכך שהעתקת פיקאר $Ty(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds$ תהיה **מכווצת**?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $h\le\frac bM$ מבטיח ש-$T$ מעבירה את הכדור הסגור $\{\|y-y_0\|_\infty\le b\}$ לתוך עצמו. את הכיווץ נותן
+          תנאי ליפשיץ.
+      - text: כן
+        feedback: >-
+          בחישוב של $|Ty-Tz|$ משתמשים ב-$L$, לא ב-$M$ וב-$b$. התנאי $h\le\frac bM$ משמש בשלב אחר: כדי ש-$Ty$ תישאר
+          במלבן.
+        misconception: MC-c11-h-conditions-mixed
+    reasons:
+      - text: >-
+          $|Ty(t)-y_0|\le M|t-t_0|\le Mh\le b$, ולכן $T$ מעבירה את הכדור $\|y-y_0\|_\infty\le b$ לתוכו
+        correct: true
+        feedback: >-
+          בדיוק. בלי זה $Ty$ יכולה לצאת מהמלבן, ושם $f$ אולי לא מוגדרת, או שהחסמים $M$ ו-$L$ לא חלים.
+      - text: >-
+          $\|Ty-Tz\|_\infty\le hM\|y-z\|_\infty$, ולכן כדי ש-$T$ תכווץ צריך $hM\le b$ עם $b<1$
+        feedback: >-
+          במנת ההפרשים נכנס קבוע ליפשיץ: $\|Ty-Tz\|_\infty\le hL\|y-z\|_\infty$. $M$ חוסם את ערכי $f$, לא את מנות
+          ההפרשים.
+        misconception: MC-c11-M-vs-L
+      - text: >-
+          כיווץ דורש $h\le\frac bM$, ועם $h$ כזה תמיד $hL<1$
+        feedback: >-
+          אין קשר כזה: עבור $y'=y^2$, $y(0)=1$, $a=1$, $b=3$ מקבלים $M=16$, $h=\frac3{16}$ ו-$L=\max_{|y-1|\le3}|2y|=8$,
+          כלומר $hL=\frac32>1$. התנאים עצמאיים.
+        misconception: MC-c11-h-conditions-mixed
+
+  - id: Q-11.3-space
+    type: mc
+    objectives: [OBJ-11.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על איזה מרחב מפעילים את משפט נקודת השבת של בנך בהוכחת פיקאר-לינדלוף, ולמה הוא שלם? ($I=[t_0-h,t_0+h]$.)
+    choices:
+      - text: >-
+          $X=\{y\in C(I):\ \|y-y_0\|_\infty\le b\}$, כדור סגור במרחב השלם $(C(I),\|\cdot\|_\infty)$, ולכן שלם
+        correct: true
+        feedback: >-
+          נכון. $C(I)$ עם נורמת הסופרמום שלם (אינפי מתקדם 1: השלמות של $C[a,b]$), ותת-קבוצה סגורה של מרחב שלם שלמה. הכדור מבטיח שהגרף של כל
+          $y\in X$ במלבן, שם $f$ מוגדרת, חסומה ב-$M$ וליפשיצית.
+      - text: >-
+          כל $C(I)$ עם נורמת הסופרמום: הוא שלם, ו-$Ty$ מוגדרת לכל פונקציה רציפה $y$ על $I$
+        feedback: >-
+          הוא שלם, אבל $f$ נתונה רק במלבן. עבור $y\in C(I)$ שהגרף שלה יוצא מהמלבן, $Ty$ אולי לא מוגדרת, ולכן $T$
+          אינה העתקה של $C(I)$ לעצמו.
+        misconception: MC-c11-T-on-whole-space
+      - text: >-
+          הפונקציות הגזירות ברציפות ב-$I$ עם נורמת הסופרמום, כי מחפשים פתרון גזיר
+        feedback: >-
+          המרחב הזה אינו שלם בנורמת הסופרמום: $\sqrt{t^2+\frac1n}$ גזירות ברציפות ומתכנסות במידה שווה ל-$|t|$. את
+          הגזירות של נקודת השבת נותנת השקילות של שיעור 11.1.
+        misconception: MC-c11-C1-space
+
+  - id: Q-11.3-hL
+    type: numeric
+    objectives: [OBJ-11.3-2]
+    level: mid
+    prompt: >-
+      $y'=y^2$, $y(0)=1$, עם $a=b=1$. אז $h=\min(1,\frac b M)=\frac14$. חשבו את $hL$, כש-$L$ קבוע ליפשיץ הקטן ביותר
+      של $f=y^2$ ב-$y$ במלבן $R$.
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. במלבן $0\le y\le2$, ולכן $L=\max|2y|=4$ ו-$hL=1$. בנורמת הסופרמום הרגילה מקבלים רק
+      $\|Ty-Tz\|_\infty\le hL\|y-z\|_\infty=\|y-z\|_\infty$: אין כיווץ. צריך לקצר את הקטע ל-$h<\frac14$, או לעבור
+      לנורמה הממושקלת, שבה $T$ מכווצת עם קבוע $\frac12$ על כל הקטע $|t|\le\frac14$.
+    wrongFeedback: >-
+      $L$ הוא הסופרמום של $\left|\frac{\partial f}{\partial y}\right|=|2y|$ על **כל** המלבן $|y-1|\le1$, לא בנקודה
+      אחת.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          זה מתקבל מ-$L=2$, הנגזרת בנקודת ההתחלה $y_0=1$. קבוע ליפשיץ צריך לחסום את מנות ההפרשים בכל המלבן, ובקצה
+          $y=2$ הנגזרת היא 4.
+        misconception: MC-c11-L-not-sup
+    explanation: >-
+      המסקנה: ההוכחה עם $hL<1$ נותנת כאן קטע קצר מ-$\frac14$. הנורמה הממושקלת $\|y\|_w=\max e^{-2L|t-t_0|}|y(t)|$
+      מסירה את הדרישה $hL<1$, ולכן היא נותנת את כל $h=\min(a,\frac bM)$.
+
+  - id: Q-11.3-iter-t-plus-y
+    type: numeric
+    objectives: [OBJ-11.3-3]
+    level: mid
+    prompt: >-
+      חשבו את איטרציות פיקאר של $y'=t+y$, $y(0)=0$, החל מ-$y_0\equiv0$, עד $y_3$. מהו $y_3(1)$?
+    answer: 0.7083333333
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון, $y_3(1)=\frac{17}{24}$. $y_1=\int_0^t s\,ds=\frac{t^2}2$, $y_2=\int_0^t\left(s+\frac{s^2}2\right)ds=\frac{t^2}2+\frac{t^3}6$,
+      $y_3=\frac{t^2}2+\frac{t^3}6+\frac{t^4}{24}$. באינדוקציה $y_k=\sum_{j=2}^{k+1}\frac{t^j}{j!}$, והגבול
+      $e^t-1-t$.
+    wrongFeedback: >-
+      $y_{k+1}(t)=\int_0^t\big(s+y_k(s)\big)\,ds$. התחילו מ-$y_0\equiv0$ וחשבו שלוש פעמים.
+    commonWrong:
+      - value: 0.7182818285
+        feedback: >-
+          $e-2$ הוא ערך הפתרון $e^t-1-t$ ב-1, הגבול של האיטרציות. $y_3$ היא קירוב: חסרים האיברים מ-$\frac{t^5}{120}$
+          והלאה.
+        misconception: MC-c11-iterate-is-solution
+      - value: 0.6666666667
+        feedback: >-
+          $\frac23=y_2(1)$. $y_0\equiv0$ היא האיטרציה האפסית, ולכן $y_3$ מתקבלת אחרי שלוש הפעלות של $T$.
+        misconception: MC-c11-picard-index
+
+  - id: Q-11.3-iter-2ty
+    type: mc
+    objectives: [OBJ-11.3-3]
+    level: mid
+    prompt: >-
+      איטרציות פיקאר של $y'=2ty$, $y(0)=1$, החל מ-$y_0\equiv1$. מהי $y_2$, ומהו הגבול של האיטרציות?
+    choices:
+      - text: '$y_2(t)=1+t^2+\frac{t^4}{2}$, והגבול $e^{t^2}$ לכל $t$'
+        correct: true
+        feedback: >-
+          נכון. $y_1=1+\int_0^t2s\,ds=1+t^2$, $y_2=1+\int_0^t2s(1+s^2)\,ds=1+t^2+\frac{t^4}2$, ובאינדוקציה
+          $y_k=\sum_{j=0}^k\frac{t^{2j}}{j!}$: הסכום החלקי של הטור של $e^{t^2}$, שמתכנס לכל $t$.
+      - text: '$y_2(t)=1+t^2$, והגבול $e^{t^2}$ לכל $t$'
+        feedback: >-
+          $1+t^2$ היא $y_1$, האיטרציה הראשונה אחרי $y_0\equiv1$.
+        misconception: MC-c11-picard-index
+      - text: '$y_2(t)=e^{t^2}$, כי האיטרציות כבר מגיעות לפתרון'
+        feedback: >-
+          כל איטרציה היא פולינום (אינטגרל של פולינום), ולכן אף אחת מהן אינה $e^{t^2}$. הפתרון הוא רק הגבול.
+        misconception: MC-c11-iterate-is-solution
+      - text: '$y_2(t)=1+t^2+\frac{t^4}{2}$, והגבול $e^{t^2}$ רק בקטע $|t|\le h$ של המשפט'
+        feedback: >-
+          המשפט **מבטיח** התכנסות ב-$|t|\le h$, אבל לא אומר שמחוץ לו אין. כאן הטור $\sum\frac{t^{2j}}{j!}$ מתכנס
+          לכל $t$.
+        misconception: MC-c11-h-is-exact-interval
+
+  - id: Q-11.3-h-optimize
+    type: numeric
+    objectives: [OBJ-11.3-1]
+    level: exam
+    prompt: >-
+      $y'=y^2$, $y(0)=2$. קובעים $a=1$, ומותר לבחור כל $b>0$. מהו ה-$h=\min(a,\frac bM)$ **הגדול ביותר** שמשפט
+      פיקאר-לינדלוף יכול לתת?
+    answer: 0.125
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $h=\frac18$. במלבן $|y-2|\le b$ מתקיים $M=(2+b)^2$, ולכן $h(b)=\min\left(1,\frac{b}{(2+b)^2}\right)$.
+      הנגזרת של $\frac{b}{(2+b)^2}$ היא $\frac{2-b}{(2+b)^3}$, והמקסימום ב-$b=2$: $\frac{2}{16}=\frac18$.
+    wrongFeedback: >-
+      כתבו את $M$ כפונקציה של $b$: מה הערך הגדול ביותר של $y^2$ כש-$|y-2|\le b$? אחר כך מקסמו את $\frac bM$.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          הפתרון $\frac{2}{1-2t}$ באמת קיים עד $t=\frac12$, אבל המשפט אינו יודע את זה: הוא נותן רק
+          $\frac{b}{(2+b)^2}\le\frac18$. הקטע המובטח הוא חסם מלמטה, לא הקטע האמיתי.
+        misconception: MC-c11-h-is-exact-interval
+      - value: 1
+        feedback: >-
+          $1=a$, רוחב המלבן. אבל עם $b$ קטן הפתרון יוצא מהמלבן מהר, ועם $b$ גדול $M$ גדל כמו $b^2$: $\frac bM$ קטן
+          מ-1 לכל $b$.
+        misconception: MC-c11-interval-is-a
+    explanation: >-
+      הגדלת $b$ מגדילה את המלבן אבל גם את $M$, ו-$\frac bM$ מגיע למקסימום ואז קטן. הפתרון האמיתי קיים
+      ב-$(-\infty,\frac12)$: ההבטחה של המשפט חלשה בהרבה מהאמת, וזה צפוי ממשפט שמשתמש רק בחסמים על $f$.
+
+  - id: Q-11.3-rank-proof
+    type: rank
+    objectives: [OBJ-11.3-2]
+    level: exam
+    prompt: >-
+      הוכיחו את משפט פיקאר-לינדלוף בגרסה עם הנחה נוספת: $f$ רציפה ב-$R$, ליפשיצית ב-$y$ עם קבוע $L$, ו-$h\le\min(a,\frac bM)$
+      עם $hL<1$. אז יש פתרון יחיד בקטע $I=[t_0-h,t_0+h]$ שהגרף שלו ב-$R$.
+    help: >-
+      סדרו את שלבי ההוכחה מהראשון לאחרון.
+    items:
+      - id: a
+        label: >-
+          $X=\{y\in C(I):\ \|y-y_0\|_\infty\le b\}$ סגורה במרחב השלם $(C(I),\|\cdot\|_\infty)$, ולכן שלמה.
+      - id: b
+        label: >-
+          לכל $y\in X$ מגדירים $Ty(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds$; זו פונקציה רציפה (אפילו גזירה) ב-$I$.
+      - id: c
+        label: >-
+          $|Ty(t)-y_0|\le M|t-t_0|\le Mh\le b$, ולכן $T$ מעבירה את $X$ לתוך $X$.
+      - id: d
+        label: >-
+          $|Ty(t)-Tz(t)|\le L\left|\int_{t_0}^t|y-z|\right|\le hL\|y-z\|_\infty$, ועם $hL<1$ ההעתקה $T$ מכווצת.
+      - id: e
+        label: >-
+          לפי משפט נקודת השבת של בנך יש ל-$T$ נקודת שבת יחידה $y\in X$.
+      - id: f
+        label: >-
+          לפי שיעור 11.1, נקודות השבת של $T$ ב-$X$ הן בדיוק הפתרונות ב-$I$ שהגרף שלהם ב-$R$.
+    order: [a, b, [c, d], e, f]
+    correctFeedback: >-
+      נכון. התנאים של בנך: מרחב שלם (א), העתקה מוגדרת עליו (ב), שמעבירה אותו לתוכו (ג) ומכווצת (ד); את ג ואת ד אפשר
+      לבדוק בכל סדר, כי כל אחד מהם משתמש רק בהגדרה של $T$. רק אז משפט נקודת השבת (ה), והתרגום חזרה לבעיית ההתחלה (ו).
+    wrongFeedback: >-
+      משפט בנך דורש מרחב מטרי שלם והעתקה **שלו לתוך עצמו** שהיא מכווצת. סדרו לפי הדרישות האלה, ורק בסוף פרשו את נקודת
+      השבת.
+    explanation: >-
+      בשלב ו צריך עוד הערה קטנה ליחידות מלאה: כל פתרון $z$ ב-$I$ נשאר ב-$R$. אילו $z$ יצא (נניח קדימה בזמן), היה
+      $t_1=\inf\{t>t_0:\ |z(t)-y_0|>b\}<t_0+h$; ב-$[t_0,t_1]$ הגרף ב-$R$, ולכן
+      $b=|z(t_1)-y_0|\le M(t_1-t_0)<Mh\le b$, סתירה. לכן $z\in X$, והוא שווה לנקודת השבת.
+
+  - id: Q-11.3-weighted
+    type: twotier
+    objectives: [OBJ-11.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      ב-$C(I)$, $I=[t_0-h,t_0+h]$, מגדירים $\|y\|_w=\max_{t\in I}e^{-2L|t-t_0|}|y(t)|$. נכון או לא: בנורמה הזו העתקת פיקאר
+      מכווצת עם קבוע $\frac12$ **לכל** $h\le\min(a,\frac bM)$, בלי דרישה $hL<1$?
+    choices:
+      - text: נכון
+        correct: true
+        feedback: >-
+          נכון. לכן ההוכחה בנורמה הממושקלת נותנת את כל הקטע $h=\min(a,\frac bM)$.
+      - text: לא נכון
+        feedback: >-
+          המשקל $e^{-2L|t-t_0|}$ "מנחה" את ההפרשים הרחוקים מ-$t_0$, שבהם האינטגרל צובר הכי הרבה, וזה מבטל את הצורך
+          ב-$hL<1$.
+        misconception: MC-c11-h-conditions-mixed
+    reasons:
+      - text: >-
+          עבור $t\ge t_0$: $|Ty(t)-Tz(t)|\le L\|y-z\|_w\int_{t_0}^t e^{2L(s-t_0)}ds\le\frac12e^{2L(t-t_0)}\|y-z\|_w$
+        correct: true
+        feedback: >-
+          בדיוק. $L\int_{t_0}^te^{2L(s-t_0)}ds=\frac{e^{2L(t-t_0)}-1}{2}<\frac12e^{2L(t-t_0)}$, ובאותו אופן עבור $t<t_0$.
+      - text: >-
+          הנורמה הממושקלת אינה שקולה לנורמת הסופרמום, ולכן המרחב אינו שלם בה ואי אפשר להפעיל את בנך
+        feedback: >-
+          $e^{-2Lh}\|y\|_\infty\le\|y\|_w\le\|y\|_\infty$: הנורמות שקולות, ולכן אותן סדרות קושי ואותם גבולות. המרחב
+          שלם, והכדור הסגור סגור גם בה.
+        misconception: MC-c11-weighted-norm-incomplete
+      - text: >-
+          כל כיווץ של העתקת פיקאר דורש $hL<1$, בכל נורמה, כי החסם $|Ty(t)-Tz(t)|\le hL\|y-z\|_\infty$ אינו תלוי בנורמה
+        feedback: >-
+          $hL<1$ הוא מה שמקבלים מנורמת הסופרמום **הרגילה**. החשבון בנורמה הממושקלת נותן קבוע $\frac12$ בלי קשר ל-$h$.
+        misconception: MC-c11-h-conditions-mixed
+
+  - id: Q-11.3-uniform-R
+    type: twotier
+    objectives: [OBJ-11.3-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      איטרציות פיקאר של $y'=y$, $y(0)=1$ הן $y_k(t)=\sum_{j=0}^k\frac{t^j}{j!}$, והפתרון $e^t$ קיים על כל הישר. נכון או
+      לא: $y_k\to e^t$ **במידה שווה על $\mathbb{R}$**?
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. ההתכנסות במידה שווה היא על כל קטע חסום $[-A,A]$, לא על כל הישר.
+      - text: נכון
+        feedback: >-
+          לכל $k$ קבוע, $e^t-y_k(t)\ge\frac{t^{k+1}}{(k+1)!}$ עבור $t>0$, וזה שואף לאינסוף כש-$t\to\infty$. לכן
+          $\sup_{\mathbb{R}}|e^t-y_k|=\infty$ לכל $k$.
+        misconception: MC-c11-uniform-on-R
+    reasons:
+      - text: >-
+          לכל $k$, $e^t-y_k(t)\to\infty$ כש-$t\to\infty$, ולכן $\sup_{\mathbb{R}}|e^t-y_k|=\infty$
+        correct: true
+        feedback: >-
+          בדיוק: חסם שאינו תלוי ב-$t$ קיים רק כש-$t$ בקטע חסום (מבחן ה-M של ויירשטראס עם $\frac{A^j}{j!}$).
+      - text: >-
+          המשפט מבטיח התכנסות במידה שווה בכל קטע שבו הפתרון קיים, והפתרון $e^t$ קיים על כל הישר
+        feedback: >-
+          המשפט מבטיח התכנסות במידה שווה בקטע **חסום** $|t|\le h$. קיום הפתרון על כל הישר אינו אומר דבר על קצב
+          ההתכנסות בקצוות הרחוקים.
+        misconception: MC-c11-uniform-on-R
+      - text: >-
+          מחוץ לקטע $|t|\le h$ של המשפט האיטרציות אינן מתכנסות כלל
+        feedback: >-
+          הן מתכנסות לכל $t$ (זה טור החזקות של $e^t$). מה שנכשל על $\mathbb{R}$ הוא רק האחידות.
+        misconception: MC-c11-h-is-exact-interval

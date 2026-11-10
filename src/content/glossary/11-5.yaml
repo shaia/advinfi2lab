@@ -1,0 +1,26 @@
+# Terms first defined in lesson 11.5.
+- id: euler-polygon
+  term: מצולע אוילר
+  en: Euler polygon
+  definition: >-
+    קירוב לפתרון של $y'=f(t,y)$, $y(t_0)=y_0$: מחלקים את הקטע לצעדים $t_k=t_0+k\Delta$, ובכל צעד ממשיכים בקו ישר
+    בשיפוע $f(t_k,y_k)$, כלומר $y_{k+1}=y_k+\Delta\,f(t_k,y_k)$. כשהגרף במלבן שבו $|f|\le M$, המצולע ליפשיצי עם
+    קבוע $M$.
+  lesson: '11.5'
+- id: peano-theorem
+  term: משפט פאנו
+  en: Peano existence theorem
+  definition: >-
+    אם $f$ רציפה במלבן $R=\{|t-t_0|\le a,\ |y-y_0|\le b\}$, אז לבעיית ההתחלה $y'=f(t,y)$, $y(t_0)=y_0$ יש פתרון
+    (לפחות אחד) בקטע $|t-t_0|\le h$, $h=\min(a,\frac bM)$. היחידות אינה מובטחת.
+  reject: [פיאנו]
+  lesson: '11.5'
+- id: arzela-ascoli-theorem
+  term: משפט ארצלה-אסקולי
+  en: Arzelà–Ascoli theorem
+  definition: >-
+    משפט מאינפי מתקדם 1. משפחה $\mathcal F\subseteq C[a,b]$ רציפה במידה אחידה אם לכל $\varepsilon>0$ יש $\delta>0$ אחד
+    כך ש-$|g(t)-g(s)|<\varepsilon$ לכל $g\in\mathcal F$ ולכל $|t-s|<\delta$. לכל סדרה חסומה ורציפה במידה אחידה
+    ב-$C[a,b]$ יש **תת-סדרה** שמתכנסת במידה שווה.
+  reject: [ארזלה-אסקולי]
+  lesson: '11.5'

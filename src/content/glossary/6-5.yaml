@@ -1,0 +1,16 @@
+# Terms first defined in lesson 6.5 (total curvature).
+- id: total-curvature
+  term: עקמומיות כוללת
+  en: total (Gaussian) curvature
+  symbol: '\iint_S K\,dS'
+  definition: >-
+    האינטגרל $\iint_S K\,dS$ של עקמומיות גאוס על משטח. הוא השטח המסומן של התמונה של העתקת גאוס בספרת היחידה: נספר בחיוב
+    היכן ש-$K>0$ ובשלילה היכן ש-$K<0$. לספרה בכל רדיוס $4\pi$, לטורוס $0$. אינו תלוי בבחירת הנורמל.
+  lesson: '6.5'
+- id: gauss-bonnet
+  term: משפט גאוס-בונה
+  en: Gauss–Bonnet theorem
+  definition: >-
+    בניסוח האיכותי של הקורס: העקמומיות הכוללת של משטח סגור תלויה רק בצורה הטופולוגית שלו, ולכן אינה משתנה בעיוות חלק: $4\pi$
+    לכל משטח שאפשר לעוות לספרה, $0$ לכל משטח שאפשר לעוות לטורוס.
+  lesson: '6.5'

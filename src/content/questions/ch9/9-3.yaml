@@ -1,0 +1,494 @@
+# Lesson 9.3 — orthogonal projection onto a finite-dimensional subspace: the best approximation, least squares.
+# Objectives (src/course.ts):
+#   OBJ-9.3-1  define the orthogonal projection onto a finite-dimensional subspace and compute it with an orthonormal basis
+#   OBJ-9.3-2  prove that the projection is the best approximation from the subspace and the error is orthogonal to it
+#   OBJ-9.3-3  compute the best polynomial of a given degree in the least-squares sense and its distance
+# The lesson's example: the best line to x² on [0, 1] is x − 1/6, at distance 1/√180.
+# Every number was recomputed with src/math/approx.ts (scratchpad ch9/check.ts, check2.ts; the 2026-11-06 pedagogy
+# pass's x⁴ basis check, √x constant, x⁴ Legendre projection and x − 1/8 errors in scratchpad c9.ts).
+chapter: 9
+questions:
+  # ---------------------------------------------------------------- basic
+  - id: Q-9.3-formula
+    type: mc
+    objectives: [OBJ-9.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $V$ מרחב מכפלה פנימית ו-$Y\subseteq V$ תת-מרחב סוף-ממדי עם בסיס אורתונורמלי $e_1,\dots,e_n$. **ההטלה
+      האורתוגונלית** של $v\in V$ על $Y$ היא הווקטור $P_Yv\in Y$ שעבורו $v-P_Yv$ ניצב לכל וקטור של $Y$. איזו נוסחה
+      נותנת אותה?
+    choices:
+      - text: '$P_Yv=\sum_{k=1}^n\langle v,e_k\rangle e_k$'
+        correct: true
+        feedback: >-
+          נכון. זה וקטור ב-$Y$, וההפרש $v-P_Yv$ ניצב לכל $e_j$: $\langle v-P_Yv,e_j\rangle=\langle v,e_j\rangle-\langle v,e_j\rangle=0$,
+          ומהלינאריות לכל $Y$.
+      - text: '$P_Yv=\sum_{k=1}^n\langle v,y_k\rangle y_k$ לכל בסיס $y_1,\dots,y_n$ של $Y$'
+        feedback: >-
+          הנוסחה דורשת בסיס אורתונורמלי. עם הבסיס $1,t$ של הישרים ב-$C[0,1]$ היא נותנת לפונקציה $t^2$ את
+          $\frac13+\frac t4$, שאינו ההטלה.
+        misconception: MC-c9-projection-any-basis
+      - text: '$P_Yv=v-\sum_{k=1}^n\langle v,e_k\rangle e_k$'
+        feedback: >-
+          זה ההפרש $v-P_Yv$, הרכיב של $v$ שניצב ל-$Y$. ההטלה עצמה שייכת ל-$Y$.
+        misconception: MC-c9-projection-keeps-outside
+      - text: '$P_Yv=\sum_{k=1}^n\langle v,e_k\rangle^2e_k$'
+        feedback: >-
+          המקדם הוא $\langle v,e_k\rangle$ עצמו. הריבועים מופיעים בפיתגורס: $\|P_Yv\|^2=\sum\langle v,e_k\rangle^2$.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.3-sample
+    type: mc
+    objectives: [OBJ-9.3-1]
+    level: basic
+    prompt: >-
+      ב-$C[-\pi,\pi]$ עם $\int fg$, יהי $Y$ תת-המרחב שנפרש על ידי $\sin x,\sin2x$, ו-
+      $$f(x)=2\sin x-\sin2x+4\sin5x+\cos x.$$
+      מהי $P_Yf$?
+    choices:
+      - text: '$2\sin x-\sin2x$'
+        correct: true
+        feedback: >-
+          נכון. $\sin5x$ ו-$\cos x$ ניצבות ל-$\sin x$ ול-$\sin2x$ על $[-\pi,\pi]$, ולכן הן נעלמות; הרכיבים בתוך $Y$ נשארים.
+      - text: '$2\sin x-\sin2x+\cos x$'
+        feedback: >-
+          $\cos x\notin Y$, וגם $\langle\cos x,\sin x\rangle=\langle\cos x,\sin2x\rangle=0$. כל רכיב שניצב ל-$Y$ נעלם בהטלה.
+        misconception: MC-c9-projection-keeps-outside
+      - text: '$\frac{2\sin x-\sin2x}{\sqrt\pi}$'
+        feedback: >-
+          $\sin x$ ו-$\sin2x$ אינן מנורמלות, אבל ההטלה לא תלויה בנרמול: עם $e_k=\frac{\sin kx}{\sqrt\pi}$,
+          $\langle f,e_k\rangle e_k=\frac{\langle f,\sin kx\rangle}{\pi}\sin kx$, וזה מחזיר בדיוק את $2\sin x-\sin2x$.
+        misconception: MC-c9-orthogonal-normalized
+      - text: '$2\pi\sin x-\pi\sin2x$'
+        feedback: >-
+          $\langle f,\sin x\rangle=2\pi$, אבל $\|\sin x\|^2=\pi$, ולכן המקדם הוא $\frac{2\pi}\pi=2$.
+        misconception: MC-c9-coef-no-divide
+
+  - id: Q-9.3-orth-check
+    type: multi
+    objectives: [OBJ-9.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $Y$ נפרש על ידי $y_1,\dots,y_n$ (לא בהכרח אורתוגונליים), ו-$v$ וקטור במרחב. אילו מהתנאים הבאים, כל אחד לבדו,
+      מבטיחים ש-$y=P_Yv$? סמנו את כולם. (נשתמש בעובדה שההטלה היא גם הנקודה היחידה של $Y$ הקרובה ביותר ל-$v$; ההוכחה
+      בהמשך השיעור.)
+    choices:
+      - text: '$y\in Y$, ו-$\langle v-y,y_k\rangle=0$ לכל $k$'
+        correct: true
+        feedback: >-
+          נכון. מהלינאריות $v-y$ ניצב לכל צירוף של $y_k$, כלומר ל-$Y$. ניצבות לאיברי בסיס, אפילו לא אורתוגונליים, מספיקה.
+      - text: '$y\in Y$, ו-$\langle v-y,z\rangle=0$ לכל $z\in Y$'
+        correct: true
+        feedback: >-
+          נכון: זו ההגדרה של ההטלה.
+      - text: '$y\in Y$, ו-$\|v-y\|\le\|v-z\|$ לכל $z\in Y$'
+        correct: true
+        feedback: >-
+          נכון: ההטלה היא הנקודה היחידה של $Y$ הקרובה ביותר ל-$v$, ולכן התנאי קובע אותה.
+      - text: '$\langle v-y,y_k\rangle=0$ לכל $k$, בלי דרישה ש-$y\in Y$'
+        feedback: >-
+          $y=v$ מקיים את זה תמיד. בלי $y\in Y$ אין שום הטלה: ההטלה היא נקודה של $Y$.
+        misconception: MC-c9-projection-keeps-outside
+
+  - id: Q-9.3-basis-check
+    type: twotier
+    objectives: [OBJ-9.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      ב-$C[0,1]$ עם $\int fg$ מישהו טוען שהישר $\frac45x-\frac15$ הוא ההטלה של $x^4$ על הישרים. כדי לוודא שהשגיאה
+      $r(x)=x^4-\frac45x+\frac15$ ניצבת לכל הישרים, הוא בודק רק ש-$\langle r,1\rangle=0$ ו-$\langle r,x\rangle=0$ (שתי
+      הבדיקות אכן מתקיימות). האם זה מספיק?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. שתי הבדיקות מספיקות לכל ישר $ax+b$.
+      - text: לא, צריך לבדוק כל ישר בנפרד
+        feedback: >-
+          אין צורך: כל ישר הוא צירוף לינארי של $1$ ו-$x$, והמכפלה הפנימית לינארית.
+        misconception: MC-c9-orthogonal-to-basis-insufficient
+    reasons:
+      - text: '$\langle r,ax+b\rangle=a\langle r,x\rangle+b\langle r,1\rangle=0$ לכל $a,b$'
+        correct: true
+        feedback: >-
+          בדיוק: ניצבות לאיברי בסיס, אפילו לא אורתוגונלי, היא ניצבות לכל תת-המרחב.
+      - text: 'זה מספיק רק כי $1$ ו-$x$ ניצבים זה לזה'
+        feedback: >-
+          על $[0,1]$ הם בכלל לא ניצבים: $\langle1,x\rangle=\frac12$. הלינאריות עובדת עם כל בסיס.
+        misconception: MC-c9-orthogonal-to-basis-insufficient
+      - text: 'זה מספיק רק אם בודקים גם את $\langle r,x^2\rangle$'
+        feedback: >-
+          $x^2$ אינו ישר, והשגיאה בכלל אינה ניצבת לו: $\langle r,x^2\rangle=\frac17-\frac15+\frac1{15}=\frac1{105}\neq0$.
+          הבדיקה הזו שייכת להטלה על הפולינומים ממעלה עד 2.
+        misconception: MC-c9-orthogonal-to-basis-insufficient
+
+  - id: Q-9.3-const
+    type: numeric
+    objectives: [OBJ-9.3-3]
+    level: basic
+    prompt: >-
+      מהו הקבוע $c$ שממזער את $\int_0^1(\sqrt x-c)^2\,dx$, כלומר ההטלה של $\sqrt x$ על הפונקציות הקבועות ב-$C[0,1]$?
+    answer: 0.6666666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $c=\frac{\langle\sqrt x,1\rangle}{\|1\|^2}=\int_0^1\sqrt x\,dx=\frac23$, הממוצע האינטגרלי של $\sqrt x$.
+    wrongFeedback: >-
+      ההטלה על הקבועים: $\frac{\langle f,1\rangle}{\langle1,1\rangle}$. אפשר גם לגזור לפי $c$ ולהשוות לאפס.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          $\frac12$ הוא ממוצע הערכים בקצוות, $\frac{0+1}2$. הקירוב תלוי בכל הערכים, דרך האינטגרל.
+        misconception: MC-c9-ls-pointwise
+      - value: 0.7071067812
+        feedback: >-
+          $\frac1{\sqrt2}$ הוא הערך באמצע הקטע. הקבוע הטוב ביותר הוא הממוצע האינטגרלי, $\int_0^1\sqrt x\,dx$.
+        misconception: MC-c9-ls-pointwise
+
+  # ---------------------------------------------------------------- mid
+  - id: Q-9.3-cos-sq
+    type: numeric
+    objectives: [OBJ-9.3-1]
+    level: mid
+    prompt: >-
+      ב-$C[-\pi,\pi]$ עם $\int fg$, יהי $Y$ תת-המרחב שנפרש על ידי $1$ ו-$\cos2x$, ו-$f(x)=(1+\cos x)^2$. כתבו
+      $P_Yf=\alpha+\beta\cos2x$. מהו $\alpha$?
+    answer: 1.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f=1+2\cos x+\cos^2x=\frac32+2\cos x+\frac12\cos2x$. הרכיב $2\cos x$ ניצב ל-$Y$, ולכן
+      $P_Yf=\frac32+\frac12\cos2x$. ישירות: $\alpha=\frac{\langle f,1\rangle}{\|1\|^2}=\frac{3\pi}{2\pi}$.
+    wrongFeedback: >-
+      כתבו את $\cos^2x$ בעזרת $\cos2x$, או חשבו $\alpha=\frac{\langle f,1\rangle}{\|1\|^2}$ עם $\|1\|^2=2\pi$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          1 הוא הקבוע שרואים ב-$1+2\cos x+\cos^2x$, אבל גם $\cos^2x=\frac12+\frac12\cos2x$ תורם $\frac12$ לקבוע.
+        misconception: MC-c9-projection-drop-hidden
+      - value: 9.4247779608
+        feedback: >-
+          $3\pi=\langle f,1\rangle$. המקדם הוא $\frac{\langle f,1\rangle}{\|1\|^2}$, ו-$\|1\|^2=2\pi$.
+        misconception: MC-c9-coef-no-divide
+
+  - id: Q-9.3-basis-indep
+    type: twotier
+    objectives: [OBJ-9.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שני סטודנטים מחשבים את $P_Yv=\sum_k\langle v,e_k\rangle e_k$ בעזרת שני בסיסים אורתונורמליים שונים של אותו $Y$.
+      האם הם בהכרח מקבלים אותו וקטור?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ההטלה היא תכונה של $Y$ ושל $v$, לא של הבסיס.
+      - text: לא, כל בסיס נותן הטלה משלו
+        feedback: >-
+          המקדמים אכן שונים, אבל הסכומים שווים: שניהם הווקטור היחיד ב-$Y$ שההפרש ממנו ל-$v$ ניצב ל-$Y$.
+        misconception: MC-c9-projection-basis-dependent
+    reasons:
+      - text: 'בשני המקרים $P_Yv\in Y$ ו-$v-P_Yv\perp Y$; אם $u,w$ שני וקטורים כאלה, אז $u-w\in Y$ ניצב לעצמו, ולכן $u=w$'
+        correct: true
+        feedback: >-
+          בדיוק: $u-w=(v-w)-(v-u)\perp Y$ ו-$u-w\in Y$, ולכן $\|u-w\|^2=0$.
+      - text: 'המקדמים $\langle v,e_k\rangle$ זהים בשני הבסיסים, כי $v$ ו-$Y$ זהים'
+        feedback: >-
+          המקדמים תלויים בבסיס. ב-$\mathbb R^2$ עם $Y=\mathbb R^2$ ו-$v=(1,0)$: בבסיס הסטנדרטי המקדמים $1,0$, ובבסיס
+          $\frac1{\sqrt2}(1,1),\frac1{\sqrt2}(1,-1)$ הם $\frac1{\sqrt2},\frac1{\sqrt2}$; הווקטור זהה.
+        misconception: MC-c9-projection-basis-dependent
+      - text: 'כל שני בסיסים אורתונורמליים של $Y$ שווים עד כדי סדר וסימנים, ולכן הסכום זהה'
+        feedback: >-
+          לא: לתת-מרחב מממד לפחות 2 יש אינסוף בסיסים אורתונורמליים (סיבובים). אי-התלות בבסיס באה מהאפיון בניצבות.
+        misconception: MC-c9-projection-basis-dependent
+
+  - id: Q-9.3-nonortho
+    type: twotier
+    objectives: [OBJ-9.3-1, OBJ-9.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      כדי להטיל את $x^2$ על הישרים ב-$C[0,1]$ מישהו מחשב
+      $\langle x^2,1\rangle\cdot1+\langle x^2,x\rangle\cdot x=\frac13+\frac x4$.
+      האם זו ההטלה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. השגיאה של המועמד אינה ניצבת לישרים, ולכן הוא אינו ההטלה.
+      - text: כן
+        feedback: >-
+          הנוסחה $\sum\langle f,e_k\rangle e_k$ דורשת בסיס אורתונורמלי, ו-$1,x$ אינם ניצבים על $[0,1]$: $\langle1,x\rangle=\frac12$.
+        misconception: MC-c9-projection-any-basis
+    reasons:
+      - text: 'השגיאה אינה ניצבת ל-1: $\int_0^1\left(x^2-\frac x4-\frac13\right)dx=-\frac18\neq0$'
+        correct: true
+        feedback: >-
+          בדיוק. הבדיקה של ניצבות השגיאה היא הדרך המהירה לתפוס הטלה שגויה. התיקון: קודם גרם-שמידט, $1$ ו-$\sqrt{12}\left(x-\frac12\right)$.
+      - text: 'הנוסחה נכונה לכל בסיס, ולכן זו ההטלה'
+        feedback: >-
+          הנוסחה נשענת על $\langle e_j,e_k\rangle=\delta_{jk}$. בלי זה $\langle x-\sum\langle x,y_k\rangle y_k,y_j\rangle$ אינו
+          אפס.
+        misconception: MC-c9-projection-any-basis
+      - text: 'זו לא ההטלה, כי ההטלה של $x^2$ צריכה לעבור דרך הנקודות $(0,0)$ ו-$(1,1)$'
+        feedback: >-
+          ההטלה אינה אינטרפולציה: היא נקבעת מאינטגרלים על כל הקטע, לא מערכים בנקודות. (בהמשך, כשתחשבו את הישר הקרוב ביותר, תראו
+          שהוא לא עובר באף אחת משתי הנקודות האלה.)
+        misconception: MC-c9-ls-pointwise
+
+  - id: Q-9.3-proof
+    type: rank
+    objectives: [OBJ-9.3-2]
+    level: mid
+    prompt: >-
+      $Y$ סוף-ממדי עם בסיס אורתונורמלי $e_1,\dots,e_n$ ו-$P_Yv=\sum\langle v,e_k\rangle e_k$. סדרו את צעדי ההוכחה ש-$P_Yv$
+      הוא הווקטור היחיד ב-$Y$ הקרוב ביותר ל-$v$.
+    help: סדרו מהצעד הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'לכל $j$: $\langle v-P_Yv,e_j\rangle=\langle v,e_j\rangle-\langle v,e_j\rangle=0$'
+      - id: b
+        label: 'מהלינאריות, $v-P_Yv$ ניצב לכל וקטור של $Y$'
+      - id: c
+        label: 'יהי $y\in Y$. כותבים $v-y=(v-P_Yv)+(P_Yv-y)$; המחובר השני שייך ל-$Y$, ולכן, כי $v-P_Yv\perp Y$, הוא ניצב לראשון'
+      - id: d
+        label: 'לפי פיתגורס $\|v-y\|^2=\|v-P_Yv\|^2+\|P_Yv-y\|^2$'
+      - id: e
+        label: 'לכן $\|v-y\|\ge\|v-P_Yv\|$, עם שוויון רק כש-$y=P_Yv$'
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. הרעיון: השגיאה ניצבת ל-$Y$, ולכן כל סטייה בתוך $Y$ רק מוסיפה ריבוע חיובי. ההוכחה משתמשת בבסיס הסופי
+      בלבד, ולכן עובדת לכל תת-מרחב סוף-ממדי (בשיעור 9.5 נראה מתי צריך שלמות: כשתת-המרחב אינסוף-ממדי).
+    wrongFeedback: >-
+      קודם מוכיחים שהשגיאה ניצבת (לאיברי הבסיס ואז לכל $Y$), אחר כך מפרקים את $x-y$, ורק אז פיתגורס.
+
+  - id: Q-9.3-dist-trig
+    type: numeric
+    objectives: [OBJ-9.3-2]
+    level: mid
+    prompt: >-
+      ב-$C[-\pi,\pi]$ עם $\int fg$, יהי $Y$ תת-המרחב שנפרש על ידי $1$ ו-$\cos x$, ו-$f(x)=2+\cos x-3\sin2x$. מהו
+      המרחק $\|f-P_Yf\|$?
+    answer: 5.3173615527
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $P_Yf=2+\cos x$, השגיאה היא $-3\sin2x$, והמרחק $3\|\sin2x\|=3\sqrt\pi\approx5.317$.
+    wrongFeedback: >-
+      מצאו את $P_Yf$ (איזה חלק של $f$ שייך ל-$Y$, ואיזה ניצב לו), ואז חשבו את הנורמה של השגיאה עם $\|\sin2x\|^2=\pi$.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          $3$ הוא המקדם של $\sin2x$; המרחק הוא $3\|\sin2x\|=3\sqrt\pi$, כי $\sin2x$ אינה מנורמלת.
+        misconception: MC-c9-orthogonal-normalized
+      - value: 28.2743338823
+        feedback: >-
+          $9\pi$ הוא ריבוע המרחק. נשאר להוציא שורש.
+        misconception: MC-c9-norm-vs-square
+      - value: 7.5198848239
+        feedback: >-
+          $3\sqrt{2\pi}$: $\|\sin2x\|^2=\pi$, לא $2\pi$.
+        misconception: MC-c9-trig-norm-2pi
+
+  - id: Q-9.3-line
+    type: mc
+    objectives: [OBJ-9.3-3]
+    level: mid
+    prompt: >-
+      מהו הישר $p(x)=ax+b$ שממזער את $\int_0^1\left(x^2-p(x)\right)^2dx$?
+    choices:
+      - text: '$x-\frac16$'
+        correct: true
+        feedback: >-
+          נכון. עם הבסיס האורתוגונלי $1,\ x-\frac12$ (ניצבים על $[0,1]$; מנרמלים אותו ל-$1,\ \sqrt{12}\left(x-\frac12\right)$,
+          אבל בנוסחה עם המכנים $\|u_k\|^2$ אין צורך):
+          $$P_Y(x^2)=\frac{\langle x^2,1\rangle}{\|1\|^2}+\frac{\langle x^2,x-\frac12\rangle}{\|x-\frac12\|^2}\left(x-\frac12\right)=\frac13+\frac{1/12}{1/12}\left(x-\frac12\right)=x-\frac16.$$
+          בדיקה: $\int_0^1\left(x^2-x+\frac16\right)dx=0$ ו-$\int_0^1x\left(x^2-x+\frac16\right)dx=0$.
+      - text: '$x-\frac18$'
+        feedback: >-
+          השגיאה של הישר הזה, $x^2-x+\frac18$, מקבלת את הערכים $\frac18,-\frac18,\frac18$ ב-$x=0,\frac12,1$, ולכן
+          המקסימום שלה קטן מזה של $x-\frac16$. אבל בממוצע ריבועי הוא לא הטוב ביותר:
+          $\int_0^1\left(x^2-x+\frac18\right)dx=-\frac1{24}\neq0$, והשגיאה אינה ניצבת ל-1.
+        misconception: MC-c9-ls-is-uniform
+      - text: '$\frac x4+\frac13$'
+        feedback: >-
+          זו נוסחת המקדמים עם הבסיס $1,x$, שאינו אורתונורמלי על $[0,1]$.
+        misconception: MC-c9-projection-any-basis
+      - text: '$x$'
+        feedback: >-
+          $x$ עובר דרך $(0,0)$ ו-$(1,1)$, אבל הקירוב אינו אינטרפולציה: $\int_0^1(x^2-x)\,dx=-\frac16\neq0$.
+        misconception: MC-c9-ls-pointwise
+
+  - id: Q-9.3-dist
+    type: numeric
+    objectives: [OBJ-9.3-3]
+    level: mid
+    prompt: >-
+      מהו המרחק של $x^2$ מהישר הקרוב ביותר אליו ב-$C[0,1]$, כלומר $\left\|x^2-\left(x-\frac16\right)\right\|$?
+    answer: 0.0745355992
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\|x^2\|^2-\|P_Y(x^2)\|^2=\frac15-\left(\frac19+\frac1{12}\right)=\frac1{180}$, ולכן המרחק $\frac1{\sqrt{180}}$.
+      (כאן $\|P_Y(x^2)\|^2=\left(\frac13\right)^2+\left(\frac1{\sqrt{12}}\right)^2$, מפיתגורס בבסיס האורתונורמלי
+      $1,\ \sqrt{12}\left(x-\frac12\right)$.)
+    wrongFeedback: >-
+      חשבו $\int_0^1\left(x^2-x+\frac16\right)^2dx$, או $\|x^2\|^2-\|P_Y(x^2)\|^2$ מפיתגורס, והוציאו שורש.
+    commonWrong:
+      - value: 0.0055555556
+        feedback: >-
+          $\frac1{180}$ הוא ריבוע המרחק.
+        misconception: MC-c9-norm-vs-square
+      - value: 0.1666666667
+        feedback: >-
+          $\frac16$ היא השגיאה המקסימלית, ב-$x=0$ וב-$x=1$. המרחק בנורמה של $\int fg$ הוא שורש של אינטגרל.
+        misconception: MC-c9-ls-is-uniform
+
+  - id: Q-9.3-degree
+    type: twotier
+    objectives: [OBJ-9.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      עבור פונקציה $f\in C[0,1]$, נסמן ב-$d_1$ את מרחקה מהישרים וב-$d_2$ את מרחקה מהפולינומים ממעלה עד 2. האם ייתכן
+      ש-$d_2>d_1$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון: תמיד $d_2\le d_1$.
+      - text: כן
+        feedback: >-
+          הישרים הם חלק מהפולינומים ממעלה עד 2, ולכן הפולינום הטוב ביותר ממעלה 2 טוב לפחות כמו הישר הטוב ביותר.
+        misconception: MC-c9-higher-degree-worse
+    reasons:
+      - text: 'תת-המרחב של הישרים מוכל בתת-המרחב של הפולינומים ממעלה עד 2, ומינימום של מרחק על קבוצה גדולה יותר אינו גדול יותר'
+        correct: true
+        feedback: >-
+          בדיוק. ל-$x^2$ על $[0,1]$: $d_1=\frac1{\sqrt{180}}$ ו-$d_2=0$.
+      - text: 'פולינומים ממעלה גבוהה מתנדנדים, ולכן הם יכולים להתרחק מ-$f$'
+        feedback: >-
+          תנודות פוגעות באינטרפולציה בנקודות, לא בהטלה: ההטלה בוחרת את הטוב ביותר, ובאפשרויות שלה כלול גם הישר הטוב
+          ביותר (עם מקדם 0 ל-$x^2$).
+        misconception: MC-c9-higher-degree-worse
+      - text: 'תמיד $d_2=d_1$, כי הרכיב בכיוון $x^2$ ניצב לישרים'
+        feedback: >-
+          הרכיב החדש בבסיס האורתונורמלי ניצב לישרים, ולכן $d_2^2=d_1^2-\langle f,e_2\rangle^2$: שוויון רק כש-$\langle f,e_2\rangle=0$.
+        misconception: MC-c9-higher-degree-worse
+
+  - id: Q-9.3-x-sin2
+    type: numeric
+    objectives: [OBJ-9.3-1]
+    level: mid
+    prompt: >-
+      ב-$C[-\pi,\pi]$ עם $\int fg$, יהי $Y$ תת-המרחב שנפרש על ידי $\sin x$ ו-$\sin2x$, ו-$f(x)=x$. כתבו
+      $P_Yf=\alpha\sin x+\beta\sin2x$. מהו $\beta$?
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. באינטגרציה בחלקים $\int_{-\pi}^{\pi}x\sin2x\,dx=\left[-\frac{x\cos2x}2\right]_{-\pi}^{\pi}+\int_{-\pi}^{\pi}\frac{\cos2x}2\,dx=-\pi$,
+      ולכן $\beta=\frac{-\pi}{\pi}=-1$. באותו אופן $\alpha=2$: $P_Yf=2\sin x-\sin2x$.
+    wrongFeedback: >-
+      $\beta=\frac{\langle x,\sin2x\rangle}{\|\sin2x\|^2}$, עם $\|\sin2x\|^2=\pi$. חשבו את המונה באינטגרציה בחלקים.
+    commonWrong:
+      - value: -3.1415926536
+        feedback: >-
+          זה $\langle x,\sin2x\rangle=-\pi$, בלי לחלק ב-$\|\sin2x\|^2=\pi$.
+        misconception: MC-c9-coef-no-divide
+      - value: -0.5
+        feedback: >-
+          $\frac{-\pi}{2\pi}$: $\|\sin2x\|^2=\pi$, לא $2\pi$.
+        misconception: MC-c9-trig-norm-2pi
+
+  # ---------------------------------------------------------------- exam
+  - id: Q-9.3-ls-uniform
+    type: twotier
+    objectives: [OBJ-9.3-2, OBJ-9.3-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $x-\frac16$ היא ההטלה של $x^2$ על הישרים ב-$C[0,1]$ עם $\int fg$. האם היא גם הישר $q$ שממזער את
+      $\max_{[0,1]}|x^2-q(x)|$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. "הקירוב הטוב ביותר" תלוי בנורמה, וההטלה מתייחסת לנורמה של המכפלה הפנימית בלבד.
+      - text: כן
+        feedback: >-
+          ההטלה ממזערת את $\int_0^1(x^2-q)^2$, לא את המקסימום. הישר $x-\frac18$ טוב ממנה במקסימום.
+        misconception: MC-c9-ls-is-uniform
+    reasons:
+      - text: 'השגיאה המקסימלית של $x-\frac16$ היא $\frac16$ (ב-0 וב-1), ושל $x-\frac18$ היא $\frac18$'
+        correct: true
+        feedback: >-
+          בדיוק: $x^2-x+\frac18$ שווה $\frac18$ ב-0 וב-1 ו-$-\frac18$ ב-$\frac12$. ובכיוון ההפוך, $x-\frac18$ רחוק יותר
+          בממוצע ריבועי, כי שגיאתו אינה ניצבת ל-1.
+      - text: 'ההטלה היא הקירוב הטוב ביותר, ולכן היא ממזערת כל מדד של שגיאה'
+        feedback: >-
+          משפט הקירוב הטוב ביותר מדבר על הנורמה $\|f\|=\sqrt{\langle f,f\rangle}$ בלבד. לכל נורמה יש מינימום משלה.
+        misconception: MC-c9-ls-is-uniform
+      - text: 'השגיאה ניצבת לכל הישרים, ולכן אף ישר אינו מקטין את המקסימום שלה'
+        feedback: >-
+          ניצבות היא תכונה של המכפלה הפנימית ואינה אומרת דבר על המקסימום. $x-\frac18$ מקטין אותו מ-$\frac16$ ל-$\frac18$.
+        misconception: MC-c9-ls-is-uniform
+
+  - id: Q-9.3-odd
+    type: numeric
+    objectives: [OBJ-9.3-3]
+    level: exam
+    prompt: >-
+      ב-$C[-1,1]$ עם $\int fg$, יהי $p$ הישר הקרוב ביותר ל-$x^3$. חשבו את $\|x^3-p\|^2$.
+    answer: 0.0457142857
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\langle x^3,1\rangle=0$ ו-$\frac{\langle x^3,x\rangle}{\|x\|^2}=\frac{2/5}{2/3}=\frac35$, ולכן $p=\frac35x$, ו-
+      $$\|x^3-p\|^2=\|x^3\|^2-\left(\frac35\right)^2\|x\|^2=\frac27-\frac9{25}\cdot\frac23=\frac8{175}.$$
+    wrongFeedback: >-
+      מצאו את $p$ עם הבסיס האורתוגונלי $1,x$ (ניצבים על $[-1,1]$), ואז השתמשו בפיתגורס:
+      $\|x^3-p\|^2=\|x^3\|^2-\|p\|^2$.
+    commonWrong:
+      - value: 0.2857142857
+        feedback: >-
+          $\frac27=\|x^3\|^2$, כלומר $p=0$. אי-הזוגיות מאפסת רק את הרכיב בכיוון 1; הרכיב בכיוון $x$ הוא $\frac35x$.
+        misconception: MC-c9-odd-best-line-zero
+      - value: 0.2138089935
+        feedback: >-
+          זה $\sqrt{8/175}$, המרחק עצמו. השאלה מבקשת את ריבועו.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.3-legendre
+    type: numeric
+    objectives: [OBJ-9.3-3, OBJ-9.3-1]
+    level: exam
+    prompt: >-
+      ב-$C[-1,1]$ עם $\int fg$, יהי $p$ הפולינום ממעלה עד 2 הקרוב ביותר ל-$f(x)=x^4$. היעזרו בפולינומי לז׳נדר
+      (שיעור 9.2) $P_0=1$, $P_1=x$, $P_2=\frac{3x^2-1}2$, שהם בסיס אורתוגונלי של הפולינומים ממעלה עד 2 עם
+      $\|P_n\|^2=\frac2{2n+1}$. חשבו $p(0)$.
+    answer: -0.0857142857
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $p(0)=-\frac3{35}$. $\langle x^4,P_0\rangle=\frac25$ ו-$\|P_0\|^2=2$, ולכן המקדם $\frac15$; $\langle x^4,P_1\rangle=0$
+      כי $x^5$ אי-זוגית; $\langle x^4,P_2\rangle=\frac12\int_{-1}^1(3x^6-x^4)\,dx=\frac12\left(\frac67-\frac25\right)=\frac8{35}$, ועם
+      $\|P_2\|^2=\frac25$ המקדם $\frac47$. לכן
+      $$p=\frac15+\frac47\cdot\frac{3x^2-1}2=-\frac3{35}+\frac67x^2.$$
+      ערך שלילי ב-0, אף ש-$x^4\ge0$: הקירוב בממוצע ריבועי אינו שומר על סימן בנקודה. ומפיתגורס
+      $\|x^4-p\|^2=\frac29-\left(\frac1{25}\cdot2+\frac{16}{49}\cdot\frac25\right)=\frac{128}{11025}$.
+    wrongFeedback: >-
+      $p=\sum_{n=0}^2\frac{\langle f,P_n\rangle}{\|P_n\|^2}P_n$. נצלו זוגיות ($\langle x^4,P_1\rangle=0$), וחלקו כל מקדם
+      ב-$\|P_n\|^2$. בסוף הציבו $P_2(0)=-\frac12$.
+    commonWrong:
+      - value: 0.0857142857
+        feedback: >-
+          $\frac3{35}$ מתקבל כשהמקדם של $P_2$ נלקח $\langle x^4,P_2\rangle=\frac8{35}$ בלי לחלק ב-$\|P_2\|^2=\frac25$. פולינומי
+          לז׳נדר אורתוגונליים, לא אורתונורמליים.
+        misconception: MC-c9-legendre-unit
+      - value: 0.2
+        feedback: >-
+          $\frac15$ הוא הקבוע הטוב ביותר (וגם הישר הטוב ביותר), בלי הרכיב בכיוון $P_2$. הוספת $P_2$ משנה גם את הערך ב-0,
+          כי $P_2(0)=-\frac12$.
+      - value: 0.4
+        feedback: >-
+          $\frac25$ הוא $p(0)$ של $\langle f,1\rangle\cdot1+\langle f,x\rangle x+\langle f,x^2\rangle x^2=\frac25+\frac27x^2$: נוסחת
+          המקדמים עם הבסיס $1,x,x^2$, שאינו אורתוגונלי.
+        misconception: MC-c9-projection-any-basis

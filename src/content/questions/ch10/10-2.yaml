@@ -1,0 +1,338 @@
+# Lesson 10.2 — Bessel's inequality and the Riemann-Lebesgue lemma.
+# Objectives (src/course.ts):
+#   OBJ-10.2-1  prove Bessel's inequality from Pythagoras for the projection
+#   OBJ-10.2-2  deduce the Riemann-Lebesgue lemma: Fourier coefficients tend to zero
+#   OBJ-10.2-3  use Bessel to rule out a trigonometric series as the Fourier series of a square-integrable function
+# Bessel: a_0²/2 + Σ_{n≤N}(a_n² + b_n²) ≤ (1/π)∫_{−π}^{π} f².
+chapter: 10
+questions:
+  - id: Q-10.2-statement
+    type: mc
+    objectives: [OBJ-10.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אי-שוויון בסל הוא משפט פיתגורס להטלה: $S_Nf$ היא ההטלה של $f$ על $T_N$ (שיעור 10.1), ולכן $\|S_Nf\|^2\le\|f\|^2$.
+      כותבים את $\|S_Nf\|^2$ במקדמי פורייה בעזרת $\|1\|^2=2\pi$ ו-$\|\cos nx\|^2=\|\sin nx\|^2=\pi$, ומעבירים לגבול
+      $N\to\infty$. איזה מהבאים מתקבל **בדיוק** (זה הניסוח של בסל בקורס)? (ייתכן שאחד האחרים הוא אי-שוויון נכון, אבל
+      לא זה שמתקבל.)
+    choices:
+      - text: '$\frac{a_0^2}2+\sum_{n=1}^{\infty}(a_n^2+b_n^2)\le\frac1\pi\int_{-\pi}^{\pi}f^2$'
+        correct: true
+        feedback: >-
+          נכון. האגף השמאלי הוא $\frac1\pi\|S_Nf\|^2$ בגבול, והאגף הימני $\frac1\pi\|f\|^2$: ההטלה לא ארוכה מהווקטור.
+      - text: '$a_0^2+\sum_{n=1}^{\infty}(a_n^2+b_n^2)\le\frac1\pi\int_{-\pi}^{\pi}f^2$'
+        feedback: >-
+          $\|\frac{a_0}2\|^2=\frac{a_0^2}4\cdot2\pi=\frac{\pi a_0^2}{2}$, ולכן באגף השמאלי מופיע $\frac{a_0^2}2$. עבור
+          $f\equiv1$: $a_0=2$, והגרסה הזו נותנת $4\le2$, שקר.
+        misconception: MC-c10-a0-not-halved
+      - text: '$\frac{a_0^2}2+\sum_{n=1}^{\infty}(a_n^2+b_n^2)\le\int_{-\pi}^{\pi}f^2$'
+        feedback: >-
+          זה אי-שוויון נכון (הוא נובע מבסל), אבל זה לא אי-שוויון בסל: הוא חלש ממנו פי $\pi$. $\|a_n\cos nx\|^2=\pi a_n^2$,
+          ולכן ההשוואה המדויקת היא ל-$\frac1\pi\int f^2$, וזה מה שהופך לשוויון בפרסבל.
+        misconception: MC-c10-bessel-missing-pi
+      - text: '$\frac{a_0^2}2+\sum_{n=1}^{\infty}(a_n^2+b_n^2)\ge\frac1\pi\int_{-\pi}^{\pi}f^2$'
+        feedback: >-
+          הכיוון הפוך. ההטלה קצרה מהווקטור: $\|f\|^2=\|S_Nf\|^2+\|f-S_Nf\|^2\ge\|S_Nf\|^2$.
+        misconception: MC-c10-bessel-reversed
+
+  - id: Q-10.2-square-sum
+    type: numeric
+    objectives: [OBJ-10.2-1]
+    level: basic
+    prompt: >-
+      לגל הריבועי ($f=1$ על $(0,\pi)$ ו-$f=-1$ על $(-\pi,0)$) המקדמים הם $b_n=\frac4{\pi n}$ ל-$n$ אי-זוגי, וכל השאר
+      אפס. חשבו את $\frac{a_0^2}2+\sum_{n\le3}(a_n^2+b_n^2)$, האגף השמאלי של בסל עם $N=3$.
+    answer: 1.8012655
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $b_1^2+b_3^2=\frac{16}{\pi^2}+\frac{16}{9\pi^2}=\frac{160}{9\pi^2}\approx1.801$, וזה אכן קטן
+      מ-$\frac1\pi\int_{-\pi}^{\pi}1\,dx=2$.
+    wrongFeedback: >-
+      סכמו את ריבועי המקדמים עד $n=3$: רק $b_1$ ו-$b_3$ שונים מאפס.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          2 הוא $\frac1\pi\int f^2$, האגף הימני. עבור $N$ סופי יש כאן אי-שוויון ממש: $f\notin T_3$.
+        misconception: MC-c10-bessel-reversed
+      - value: 1.6976527
+        feedback: >-
+          זה $b_1+b_3$ בלי לרבע. בבסל מופיעים ריבועי המקדמים.
+        misconception: MC-c10-squares-vs-abs
+
+  - id: Q-10.2-rl
+    type: twotier
+    objectives: [OBJ-10.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ פונקציית מדרגות על $[-\pi,\pi]$ עם עשר קפיצות. האם בהכרח $b_n\to0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. פונקציית מדרגות שייכת ל-$H$, ולמת רימן-לבג חלה על כל פונקציה ב-$H$.'
+      - text: לא, עם קפיצות המקדמים לא בהכרח שואפים לאפס
+        feedback: >-
+          קפיצות מאטות את הדעיכה (לגל ריבועי $b_n=\frac4{\pi n}$) אבל לא עוצרות אותה. רימן-לבג לא דורשת רציפות.
+        misconception: MC-c10-rl-needs-smooth
+    reasons:
+      - text: 'מבסל $\sum b_n^2\le\frac1\pi\int f^2<\infty$, ואיברי טור מתכנס שואפים לאפס'
+        correct: true
+        feedback: >-
+          בדיוק. זו כל ההוכחה של רימן-לבג: היא נובעת מבסל, ובסל נובע מפיתגורס.
+      - text: 'רק פונקציה גזירה מקיימת $|b_n|\le\frac Cn$, ולכן רק לה $b_n\to0$'
+        feedback: >-
+          אינטגרציה בחלקים נותנת קצב לפונקציה גזירה, אבל קצב אינו התנאי. בסל נותן $b_n\to0$ לכל $f\in H$.
+        misconception: MC-c10-rl-needs-smooth
+
+  - id: Q-10.2-pyth
+    type: numeric
+    objectives: [OBJ-10.2-1]
+    level: mid
+    prompt: >-
+      עבור $f(x)=x$ על $[-\pi,\pi]$ ($b_n=\frac{2(-1)^{n+1}}n$, $a_n=0$) חשבו את
+      $$\frac1\pi\int_{-\pi}^{\pi}\big(f-S_2f\big)^2dx.$$
+    answer: 1.5797363
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. מפיתגורס $\|f-S_2f\|^2=\|f\|^2-\|S_2f\|^2$. כאן $\frac1\pi\|f\|^2=\frac{2\pi^2}3$ ו-$\frac1\pi\|S_2f\|^2=b_1^2+b_2^2=4+1=5$,
+      ולכן התשובה $\frac{2\pi^2}3-5\approx1.580$.
+    wrongFeedback: >-
+      אל תחשבו את האינטגרל ישירות: $f-S_2f\perp S_2f$, ולכן $\|f-S_2f\|^2=\|f\|^2-\|S_2f\|^2$.
+    commonWrong:
+      - value: 5.3297363
+        feedback: >-
+          הפחתתם $1+\frac14$, כלומר לקחתם $b_n=\frac1n$. המקדמים של $x$ הם $\frac2n$ בערך מוחלט, ובריבוע $\frac4{n^2}$.
+        misconception: MC-c10-parseval-coeff-squared
+      - value: 15.6709
+        feedback: >-
+          הפחתתם $5$ מ-$\int x^2=\frac{2\pi^3}3$. הסכום $b_1^2+b_2^2$ שווה ל-$\frac1\pi\|S_2f\|^2$, לא ל-$\|S_2f\|^2$.
+        misconception: MC-c10-bessel-missing-pi
+
+  - id: Q-10.2-rank
+    type: rank
+    objectives: [OBJ-10.2-1]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה של אי-שוויון בסל לפונקציה $f\in H[-\pi,\pi]$.
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: perp
+        label: '$S_Nf$ היא ההטלה על $T_N$ (שיעור 10.1), ולכן $f-S_Nf\perp S_Nf$'
+      - id: pyth
+        label: 'פיתגורס: $\|f\|^2=\|S_Nf\|^2+\|f-S_Nf\|^2\ge\|S_Nf\|^2$'
+      - id: norm
+        label: 'מניצבות המערכת $\|S_Nf\|^2=\pi\left(\frac{a_0^2}2+\sum_{n\le N}(a_n^2+b_n^2)\right)$; מציבים באי-השוויון הקודם ומקבלים $\pi\left(\frac{a_0^2}2+\sum_{n\le N}(a_n^2+b_n^2)\right)\le\int f^2$'
+      - id: divide
+        label: 'מחלקים ב-$\pi$: $\frac{a_0^2}2+\sum_{n\le N}(a_n^2+b_n^2)\le\frac1\pi\int f^2$ לכל $N$'
+      - id: limit
+        label: 'הסכומים החלקיים של טור אי-שלילי חסומים, ולכן הטור מתכנס ומקיים את אותו חסם'
+    order: [perp, pyth, norm, divide, limit]
+    correctFeedback: >-
+      נכון. בסל הוא פיתגורס להטלה, ועוד מעבר לגבול בטור של מספרים אי-שליליים.
+    wrongFeedback: >-
+      התחילו מהניצבות של ההפרש להטלה; פיתגורס בא אחריה, וחישוב הנורמה של $S_Nf$ אחריו.
+
+  - id: Q-10.2-equality
+    type: twotier
+    objectives: [OBJ-10.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם ייתכן שוויון באי-שוויון בסל עבור $N$ **סופי**, כלומר
+      $\frac{a_0^2}2+\sum_{n\le N}(a_n^2+b_n^2)=\frac1\pi\int f^2$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. למשל $f=\sin^3x$ ו-$N=3$: $b_1^2+b_3^2=\frac9{16}+\frac1{16}=\frac58=\frac1\pi\int\sin^6x$.
+      - text: לא
+        feedback: >-
+          ההפרש בין האגפים הוא $\frac1\pi\|f-S_Nf\|^2$, והוא מתאפס בדיוק כש-$f=S_Nf$, כלומר כש-$f$ היא (ב-$H$)
+          פולינום טריגונומטרי ממעלה $N$ לכל היותר.
+        misconception: MC-c10-projection-not-identity
+    reasons:
+      - text: 'ההפרש בין האגפים הוא $\frac1\pi\|f-S_Nf\|^2$, והוא אפס כש-$f\in T_N$ (עד כדי פונקציה שמרחקה מאפס הוא אפס)'
+        correct: true
+        feedback: >-
+          בדיוק. פיתגורס נותן את ההפרש במפורש, ולא רק את סימנו.
+      - text: 'בסל הוא תמיד שוויון, כבר לכל $N$'
+        feedback: >-
+          לגל ריבועי עם $N=3$ האגף השמאלי $\approx1.80$ והימני 2. שוויון לכל $N$ פירושו $f-S_Nf=0$ לכל $N$.
+        misconception: MC-c10-bessel-reversed
+      - text: 'שוויון קורה רק בגבול $N\to\infty$, וזה שוויון פרסבל'
+        feedback: >-
+          פרסבל הוא שוויון בגבול לכל $f\in H$ (שיעור 10.5); השאלה כאן היא על $N$ סופי, ושם יש שוויון בדיוק כש-$f\in T_N$.
+        misconception: MC-c10-projection-not-identity
+
+  - id: Q-10.2-rlint
+    type: numeric
+    objectives: [OBJ-10.2-2]
+    level: mid
+    prompt: >-
+      חשבו את
+      $$\lim_{n\to\infty}\int_{-\pi}^{\pi}|x|\cos^2(nx)\,dx.$$
+    answer: 4.9348022
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\cos^2nx=\frac12+\frac12\cos2nx$, ולכן האינטגרל הוא $\frac12\int|x|+\frac12\int|x|\cos2nx$. האיבר השני הוא
+      $\frac\pi2a_{2n}$ של $|x|$, ושואף לאפס לפי רימן-לבג. נשאר $\frac12\pi^2\approx4.935$.
+    wrongFeedback: >-
+      $\cos^2nx$ אינו מתנודד סביב אפס. כתבו אותו בעזרת $\cos2nx$ והפעילו את רימן-לבג רק על החלק המתנודד.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          רימן-לבג חלה על $\cos nx$, שהממוצע שלו אפס. ל-$\cos^2nx$ ממוצע $\frac12$, והוא נשאר בגבול.
+        misconception: MC-c10-rl-any-oscillation
+
+  - id: Q-10.2-rl-multi
+    type: multi
+    objectives: [OBJ-10.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f\in H[-\pi,\pi]$ כלשהי. אילו מהטענות הבאות נכונות **בוודאות**? סמנו את כולן.
+    choices:
+      - text: '$a_n\to0$ ו-$b_n\to0$'
+        correct: true
+        feedback: 'נכון: רימן-לבג.'
+      - text: '$\sum(a_n^2+b_n^2)<\infty$'
+        correct: true
+        feedback: 'נכון: בסל.'
+      - text: '$\int_{-\pi}^{\pi}f(x)\sin(nx+1)\,dx\to0$'
+        correct: true
+        feedback: >-
+          נכון: $\sin(nx+1)=\cos1\,\sin nx+\sin1\,\cos nx$, והאינטגרל הוא $\pi(b_n\cos1+a_n\sin1)\to0$.
+      - text: '$\sum(|a_n|+|b_n|)<\infty$'
+        feedback: >-
+          לא. לגל ריבועי $\sum|b_n|=\frac4\pi\sum\frac1n$ על $n$ אי-זוגיים, וזה אינסוף, אף ש-$\sum b_n^2<\infty$.
+        misconception: MC-c10-squares-vs-abs
+      - text: '$\int_{-\pi}^{\pi}f(x)|\sin nx|\,dx\to0$'
+        feedback: >-
+          לא. עבור $f\equiv1$: $\int_{-\pi}^{\pi}|\sin nx|\,dx=4$ לכל $n$. ל-$|\sin nx|$ ממוצע חיובי, $\frac2\pi$, ורימן-לבג
+          לא חלה עליו.
+        misconception: MC-c10-rl-any-oscillation
+
+  - id: Q-10.2-rl-proof
+    type: rank
+    objectives: [OBJ-10.2-2]
+    level: mid
+    prompt: >-
+      בשיעור הזה למת רימן-לבג נובעת מבסל. ל-$f$ **גזירה ברציפות** על $[-\pi,\pi]$ יש גם הוכחה ישירה, שנותנת בנוסף קצב.
+      סדרו את שלבי ההוכחה ש-$\int_{-\pi}^{\pi}f(x)\sin nx\,dx\to0$.
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: parts
+        label: 'אינטגרציה בחלקים: $\int_{-\pi}^{\pi}f\sin nx\,dx=\left[-\frac{f(x)\cos nx}{n}\right]_{-\pi}^{\pi}+\frac1n\int_{-\pi}^{\pi}f^{\prime}(x)\cos nx\,dx$'
+      - id: bound1
+        label: 'איבר השפה בזהות שהתקבלה: $\left|\left[-\frac{f(x)\cos nx}{n}\right]_{-\pi}^{\pi}\right|\le\frac{2\max|f|}{n}$'
+      - id: bound2
+        label: 'האינטגרל בזהות שהתקבלה: $\left|\frac1n\int f^{\prime}\cos nx\right|\le\frac1n\int_{-\pi}^{\pi}|f^{\prime}|$, וזה סופי כי $f^{\prime}$ רציפה בקטע סגור'
+      - id: conclude
+        label: 'שני החסמים הם קבוע חלקי $n$, ולכן $\left|\int f\sin nx\right|\le\frac Cn\to0$'
+    order: [parts, [bound1, bound2], conclude]
+    correctFeedback: >-
+      נכון. שני החסמים אינם תלויים זה בזה, ולכן כל סדר ביניהם טוב. ההוכחה הזו נותנת קצב $\frac Cn$, אבל רק בזכות
+      הנגזרת; לפונקציה כללית ב-$H$ ההוכחה עוברת דרך בסל, ואין קצב (נראה בשיעור 10.4 פונקציה רציפה שמקדמיה אינם
+      $O(\frac1n)$).
+    wrongFeedback: >-
+      קודם הזהות (אינטגרציה בחלקים), אחר כך חוסמים כל אחד משני האיברים שלה, ורק אז המסקנה.
+
+  - id: Q-10.2-sqrtn
+    type: twotier
+    objectives: [OBJ-10.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע (מבחן דיריכלה לטורים) שהטור $\sum_{n=1}^\infty\frac{\sin nx}{\sqrt n}$ מתכנס לכל $x$. האם הוא טור פורייה של
+      פונקציה כלשהי $f\in H[-\pi,\pi]$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. אם היה, המקדמים שלו היו $b_n=\frac1{\sqrt n}$, ובסל היה נותן $\sum\frac1n<\infty$.'
+      - text: כן
+        feedback: >-
+          התכנסות בכל נקודה לא הופכת טור לטור פורייה. בסל דורש $\sum b_n^2<\infty$, וכאן $\sum b_n^2=\sum\frac1n=\infty$.
+        misconception: MC-c10-convergent-series-is-fourier
+    reasons:
+      - text: 'בסל: $\sum b_n^2\le\frac1\pi\int f^2<\infty$, אבל $\sum\frac1n=\infty$'
+        correct: true
+        feedback: >-
+          בדיוק. בסל הוא תנאי הכרחי על המקדמים, ודי בו כדי לפסול.
+      - text: 'כן, כי $b_n=\frac1{\sqrt n}\to0$, כפי שרימן-לבג דורשת'
+        feedback: >-
+          רימן-לבג היא תנאי הכרחי חלש. בסל חזק ממנה: גם $\sum b_n^2$ צריך להתכנס.
+        misconception: MC-c10-coeffs-to-zero-enough
+      - text: 'כן, כי הטור מתכנס בכל נקודה, ולכן הוא טור פורייה של סכומו'
+        feedback: >-
+          כדי שהמקדמים של הסכום יהיו $\frac1{\sqrt n}$ צריך לעשות אינטגרציה איבר-איבר, וזה דורש יותר מהתכנסות נקודתית.
+        misconception: MC-c10-convergent-series-is-fourier
+      - text: 'לא, כי $\sum\frac1{\sqrt n}=\infty$'
+        feedback: >-
+          סכום הערכים המוחלטים של המקדמים לא קובע. ל-$\frac{\pi-x}2$ על $(0,2\pi)$ $b_n=\frac1n$, עם $\sum\frac1n=\infty$,
+          והוא כן טור פורייה. מה שקובע הוא סכום הריבועים.
+        misconception: MC-c10-squares-vs-abs
+
+  - id: Q-10.2-which
+    type: multi
+    objectives: [OBJ-10.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      טור $\sum_{n\ge1}b_n\sin nx$. עבור אילו מהסדרות הבאות אי-שוויון בסל **פוסל** את האפשרות שזה טור פורייה של פונקציה
+      ב-$H[-\pi,\pi]$? סמנו את כולן.
+    choices:
+      - text: '$b_n=1$'
+        correct: true
+        feedback: 'נכון: $\sum1=\infty$. כאן אפילו רימן-לבג פוסלת.'
+      - text: '$b_n=\frac1{\sqrt n}$'
+        correct: true
+        feedback: 'נכון: $\sum\frac1n=\infty$.'
+      - text: '$b_n=\frac1{\ln(n+1)}$'
+        correct: true
+        feedback: >-
+          נכון: $\ln(n+1)\le\sqrt n$ לכל $n$ (בדקו: ב-$n=1$, $\ln2<1$, ומשם הנגזרת של $\sqrt n$ גדולה יותר), ולכן
+          $b_n^2\ge\frac1n$ וסכום הריבועים מתבדר.
+      - text: '$b_n=\frac1n$'
+        feedback: >-
+          $\sum\frac1{n^2}<\infty$, ולכן בסל לא פוסל. ואכן זה טור פורייה של $\frac{\pi-x}2$ על $(0,2\pi)$. ש-$\sum\frac1n=\infty$
+          לא משנה: בסל מדבר על ריבועים.
+        misconception: MC-c10-squares-vs-abs
+      - text: '$b_n=\frac{(-1)^n}{n^2}$'
+        feedback: >-
+          $\sum\frac1{n^4}<\infty$: בסל לא פוסל. הסימנים המתחלפים לא משנים דבר, כי בריבוע הם נעלמים.
+        misconception: MC-c10-squares-vs-abs
+
+  - id: Q-10.2-bessel-exam
+    type: twotier
+    objectives: [OBJ-10.2-3, OBJ-10.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם קיימת $f\in H[-\pi,\pi]$ כך ש-$\frac1\pi\int_{-\pi}^{\pi}f^2=1.6$, ו-$b_n=\frac1n$ לכל $n\ge1$ (על $a_n$ אין
+      נתון)?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. ל-$N$ קטן בסל אינו נשבר ($b_1^2+b_2^2=1.25<1.6$), אבל בגבול הוא נשבר:
+          $\sum\frac1{n^2}=\frac{\pi^2}6\approx1.645>1.6$.
+      - text: כן
+        feedback: >-
+          $\frac{a_0^2}2+\sum(a_n^2+b_n^2)\ge\sum\frac1{n^2}=\frac{\pi^2}6\approx1.645>1.6=\frac1\pi\int f^2$, בניגוד לבסל.
+          (המקדמים $a_n$ רק מוסיפים איברים אי-שליליים.)
+        misconception: MC-c10-bessel-missing-pi
+    reasons:
+      - text: 'בסל נותן $\sum b_n^2\le1.6$, אבל $\sum\frac1{n^2}=\frac{\pi^2}6\approx1.645$'
+        correct: true
+        feedback: >-
+          בדיוק. כל סכום חלקי מקיים את בסל, ולכן צריך את הטור כולו (או חסם תחתון על הזנב): הסכום החלקי עובר את 1.6 רק
+          בסביבות $N=22$.
+      - text: '$\sum\frac1{n^2}$ מתכנס, ובסל דורש רק שסכום ריבועי המקדמים יהיה סופי'
+        feedback: >-
+          בסל דורש שהסכום יהיה **חסום על ידי** $\frac1\pi\int f^2$, לא רק סופי. כאן הנורמה נתונה, והיא קטנה מדי.
+        misconception: MC-c10-coeffs-to-zero-enough
+      - text: '$b_1^2+b_2^2=1.25<1.6$, ולכן בסל מתקיים ואין סתירה'
+        feedback: >-
+          בסל צריך להתקיים לכל $N$ ובגבול, לא ל-$N$ אחד. בגבול $\sum\frac1{n^2}=\frac{\pi^2}6>1.6$.
+        misconception: MC-c9-one-example-proves

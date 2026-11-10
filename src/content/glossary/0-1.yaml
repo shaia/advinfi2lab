@@ -1,0 +1,25 @@
+# Terms first defined in lesson 0.1 (how the course is studied: parametrization, definition, test objects).
+- id: curve
+  term: מסילה
+  en: (parametrized) curve
+  symbol: '\gamma:I\to\mathbb R^n'
+  definition: >-
+    פונקציה רציפה $\gamma:I\to\mathbb R^n$ מקטע $I$, שכותבים $\gamma(t)$. המסילה היא הפונקציה עצמה, לא רק קבוצת הנקודות
+    שהיא מציירת: ל-$(\cos t,\sin t)$ ול-$(\cos 2t,\sin 2t)$ על $[0,2\pi]$ אותה תמונה, אבל הן מסילות שונות. (בספרים
+    אחרים: עקומה.)
+  lesson: '0.1'
+- id: parametrization
+  term: פרמטריזציה
+  en: parametrization
+  definition: >-
+    תיאור של קבוצה (עקום, משטח) כתמונה של פונקציה של פרמטרים: מסילה $\gamma(t)$ לעקום, $\sigma(u,v)$ על תחום $D$ למשטח.
+    לאותה קבוצה יש פרמטריזציות רבות, ולכן כל גודל גאומטרי שמוגדר בעזרת פרמטריזציה נבדק: האם הוא תלוי בבחירה שלה.
+  lesson: '0.1'
+- id: test-objects
+  term: אובייקטי המבחן
+  en: test objects
+  definition: >-
+    הדוגמאות הקבועות שעליהן בודקים כל הגדרה ומשפט בקורס, ומהן באות רוב הדוגמאות הנגדיות: מסילות — מעגל, סליל
+    $(a\cos t,\ a\sin t,\ bt)$, ישר, והמסילה עם החוד $(t^2,\ t^3)$; משטחים — מישור, גליל, ספרה, אוכף $z=xy$ וטורוס; מרחבים
+    — $\mathbb R^n$, $\ell^2$ ו-$C[a,b]$ עם $\int fg$.
+  lesson: '0.1'

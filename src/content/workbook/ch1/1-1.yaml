@@ -1,0 +1,381 @@
+# Workbook of lesson 1.1 — smooth and regular curves, the image, the tangent.
+# Objectives (src/course.ts):
+#   OBJ-1.1-1  curve (the function) vs its image; two different curves with the same image
+#   OBJ-1.1-2  smooth vs regular; a smooth curve can make a cusp where the derivative vanishes
+#   OBJ-1.1-3  tangent vector and tangent line at a regular point
+# Every number recomputed with src/math/geometry.ts (d1) and planecurves.ts on 2026-11-09.
+lesson: '1.1'
+practice:
+  - id: W-1.1-01
+    level: basic
+    objectives: [OBJ-1.1-1]
+    prompt: >-
+      $\gamma(t)=(3\cos t,\ 3\sin t)$ על שלושה קטעים: $I_1=[0,\frac{3\pi}2]$, $I_2=[0,2\pi]$, $I_3=[0,4\pi]$.
+
+      (א) מהי התמונה בכל אחד מהמקרים?
+
+      (ב) לאילו מהמסילות אותה תמונה? האם הן אותה מסילה?
+    answer: >-
+      (א) $I_1$: שלושה רבעים של המעגל ברדיוס 3; $I_2$, $I_3$: כל המעגל. (ב) ל-$I_2$ ול-$I_3$ אותה תמונה, אבל אלה מסילות
+      שונות: על $I_3$ המעגל מוקף פעמיים.
+    solution:
+      - kind: definition
+        text: >-
+          התמונה היא $\gamma(I)=\{\gamma(t): t\in I\}$. הנקודה $(3\cos\alpha,\ 3\sin\alpha)$ מתקבלת בדיוק כש-$t\equiv\alpha$ (מודולו $2\pi$) נמצא ב-$I$.
+      - kind: step
+        text: >-
+          (א) על $I_1$ הזווית עוברת מ-$0$ עד $\frac{3\pi}2$: שלושה רבעים של המעגל, מ-$(3,0)$ נגד כיוון השעון עד $(0,-3)$.
+          על $I_2$ ועל $I_3$ כל זווית מתקבלת: כל המעגל ברדיוס 3.
+      - kind: step
+        text: >-
+          (ב) לשתי האחרונות אותה תמונה. אבל מסילה היא פונקציה, ושתי הפונקציות מוגדרות על קטעים שונים; גם מספר הפעמים שונה:
+          על $I_3$ כל נקודה מתקבלת פעמיים (או שלוש), ועל $I_2$ פעם אחת (פרט לנקודת ההתחלה).
+      - kind: result
+        text: >-
+          (א) שלושה רבעי מעגל, מעגל, מעגל. (ב) $I_2$ ו-$I_3$: אותה תמונה, מסילות שונות.
+
+  - id: W-1.1-02
+    level: basic
+    objectives: [OBJ-1.1-2]
+    prompt: >-
+      קבעו לכל מסילה (על כל $\mathbb R$) אם היא רגולרית, ואם לא, באילו נקודות.
+
+      (א) $(\cos t,\ \sin t,\ t^2)$.
+
+      (ב) $(t^2,\ t^2+t^3)$.
+
+      (ג) $(2t+1,\ t^2-3)$.
+    answer: >-
+      (א) רגולרית. (ב) לא רגולרית ב-$t=0$ בלבד. (ג) רגולרית.
+    solution:
+      - kind: definition
+        text: >-
+          רגולרית: $\gamma'(t)\ne0$ לכל $t$. מספיק רכיב אחד שאינו אפס.
+      - kind: computation
+        text: >-
+          (א) $\gamma'=(-\sin t,\ \cos t,\ 2t)$. הרכיבים הראשונים לא מתאפסים יחד, כי $\sin^2t+\cos^2t=1$. רגולרית.
+      - kind: computation
+        text: >-
+          (ב) $\gamma'=(2t,\ 2t+3t^2)$. הרכיב הראשון מתאפס רק ב-$t=0$, ושם גם השני אפס. לא רגולרית ב-$t=0$ בלבד.
+      - kind: computation
+        text: >-
+          (ג) $\gamma'=(2,\ 2t)$, והרכיב הראשון תמיד $2$. רגולרית.
+      - kind: result
+        text: >-
+          (א) ו-(ג) רגולריות; (ב) נכשלת רק ב-$t=0$.
+
+  - id: W-1.1-03
+    level: basic
+    objectives: [OBJ-1.1-3]
+    prompt: >-
+      מצאו את הישר המשיק ל-$\gamma(t)=(e^t,\ e^{-t})$ בנקודה $t=0$, וכתבו את משוואתו בצורה $y=mx+c$.
+    answer: >-
+      $y=2-x$.
+    solution:
+      - kind: computation
+        text: >-
+          $\gamma(0)=(1,1)$ ו-$\gamma'(t)=(e^t,\ -e^{-t})$, ולכן $\gamma'(0)=(1,-1)\ne0$: הנקודה רגולרית.
+      - kind: step
+        text: >-
+          הישר הוא $(1+\lambda,\ 1-\lambda)$, ושיפועו $\frac{y'(0)}{x'(0)}=\frac{-1}{1}=-1$. דרך $(1,1)$: $y=-x+2$.
+      - kind: check
+        text: >-
+          התמונה היא הענף $xy=1$, $x>0$, כלומר הגרף של $\frac1x$, ששיפועו ב-$x=1$ הוא $-\frac{1}{x^2}=-1$.
+      - kind: result
+        text: >-
+          $y=2-x$.
+
+  - id: W-1.1-04
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.1-1]
+    prompt: >-
+      הוכיחו שהתמונה של המסילה הבאה היא מעגל היחידה בלי נקודה אחת, ומצאו את הנקודה:
+      $$\gamma(t)=\Big(\frac{t^2-1}{t^2+1},\ \frac{2t}{t^2+1}\Big),\qquad t\in\mathbb R.$$
+    answer: >-
+      התמונה היא מעגל היחידה בלי $(1,0)$.
+    solution:
+      - kind: idea
+        text: >-
+          שתי הכלות: הצבה במשוואה $x^2+y^2=1$, ואחר כך פתרון $t$ לכל נקודה של המעגל.
+      - kind: computation
+        text: >-
+          ($\subseteq$)
+          $$x^2+y^2=\frac{(t^2-1)^2+4t^2}{(t^2+1)^2}=\frac{(t^2+1)^2}{(t^2+1)^2}=1.$$
+      - kind: step
+        text: >-
+          $(1,0)$ אינה מתקבלת: $x=1$ פירושו $t^2-1=t^2+1$, סתירה.
+      - kind: step
+        text: >-
+          ($\supseteq$) תהי $(x,y)$ על המעגל עם $x\ne1$, ונבחר $t=\frac{y}{1-x}$. מ-$y^2=1-x^2$:
+          $$t^2=\frac{1-x^2}{(1-x)^2}=\frac{1+x}{1-x},$$
+          ולכן $t^2+1=\frac{2}{1-x}$ ו-$t^2-1=\frac{2x}{1-x}$. מציבים: $\frac{t^2-1}{t^2+1}=x$, ו-$\frac{2t}{t^2+1}=\frac{2y}{1-x}\cdot\frac{1-x}{2}=y$.
+      - kind: check
+        text: >-
+          מספרית: $t=2.7$ נותן נקודה במרחק $1$ מהראשית, ו-$\frac{y}{1-x}$ שלה הוא שוב $2.7$.
+      - kind: result
+        text: >-
+          מעגל היחידה בלי הנקודה $(1,0)$, שאליה המסילה מתקרבת כש-$t\to\pm\infty$.
+
+  - id: W-1.1-05
+    level: mid
+    objectives: [OBJ-1.1-2]
+    prompt: >-
+      לכל $a\in\mathbb R$ תהי $\gamma_a(t)=(t^3-at,\ t^2)$, $t\in\mathbb R$.
+
+      (א) לאילו ערכי $a$ המסילה רגולרית?
+
+      (ב) לאילו $a$ היא חותכת את עצמה? באיזו נקודה, ומה וקטורי המהירות שם?
+
+      (ג) מה קורה ב-$a=0$?
+    answer: >-
+      (א) $a\ne0$. (ב) $a>0$: ב-$(0,a)$, ב-$t=\pm\sqrt a$, עם $(2a,\ \pm2\sqrt a)$. (ג) המסילה עם החוד, שוכבת על הצד.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $\gamma_a'=(3t^2-a,\ 2t)$. הרכיב השני מתאפס רק ב-$t=0$, ושם הראשון הוא $-a$. לכן רגולרית בדיוק כש-$a\ne0$.
+      - kind: step
+        text: >-
+          (ב) $\gamma_a(t)=\gamma_a(s)$ עם $t\ne s$ דורש $t^2=s^2$, כלומר $s=-t\ne0$, ואז $x(-t)=-x(t)$, ולכן $x(t)=0$:
+          $t(t^2-a)=0$. עם $t\ne0$ זה $t^2=a$, אפשרי רק כש-$a>0$. הנקודה: $(0,\ a)$.
+      - kind: computation
+        text: >-
+          שם
+          $$\gamma_a'(\pm\sqrt a)=(3a-a,\ \pm2\sqrt a)=(2a,\ \pm2\sqrt a):$$
+          שני ישרים משיקים שונים. ל-$a=4$: $(8,\pm4)$ ב-$(0,4)$.
+      - kind: step
+        text: >-
+          ל-$a<0$, $x(t)=t^3+|a|t$ עולה ממש, ולכן המסילה חד-חד-ערכית. (ג) $\gamma_0=(t^3,\ t^2)$: החוד של $(t^2,t^3)$ עם הצירים מוחלפים.
+      - kind: result
+        text: >-
+          (א) $a\ne0$. (ב) $a>0$, בנקודה $(0,a)$. (ג) לא רגולרית ב-$0$, עם חוד.
+
+  - id: W-1.1-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.1-3, OBJ-1.1-2]
+    prompt: >-
+      $\gamma(t)=(t,\ t^3)$ ו-$\delta(u)=(u^3,\ u^9)$, שתיהן על $\mathbb R$.
+
+      (א) הראו שלשתיהן אותה תמונה.
+
+      (ב) חשבו את $\delta'(1)$ ואת $\gamma'(1)$. מה הקשר, ומה עם הישרים המשיקים ב-$(1,1)$?
+
+      (ג) האם $\delta$ רגולרית? האם $\delta$ היא החלפת פרמטר של $\gamma$ לפי ההגדרה?
+    answer: >-
+      (א) $\delta=\gamma\circ\varphi$ עם $\varphi(u)=u^3$ על. (ב) $\delta'(1)=(3,9)=3\gamma'(1)$, אותו ישר $y=3x-2$. (ג) לא ולא:
+      $\varphi'(0)=0$.
+    solution:
+      - kind: step
+        text: >-
+          (א) $\delta(u)=\gamma(u^3)$, ו-$u\mapsto u^3$ מעבירה את $\mathbb R$ על $\mathbb R$. לכן התמונות שוות: הגרף של $x^3$.
+      - kind: computation
+        text: >-
+          (ב) $\gamma'(t)=(1,\ 3t^2)$, $\gamma'(1)=(1,3)$. $\delta'(u)=(3u^2,\ 9u^8)$, $\delta'(1)=(3,9)=3\gamma'(1)$, כמו בכלל השרשרת עם
+          $\varphi'(1)=3$. שני הישרים עוברים ב-$(1,1)$ בכיוון $(1,3)$: $y=3x-2$.
+      - kind: step
+        text: >-
+          (ג) $\delta'(0)=(0,0)$, ולכן $\delta$ אינה רגולרית, אף ש-$\gamma$ רגולרית ושתיהן מציירות את אותו גרף חלק. ו-$\varphi'(0)=0$,
+          ולכן $\varphi$ אינה החלפת פרמטר לפי ההגדרה, שדורשת $\varphi'\ne0$. וגם אין החלפת פרמטר אחרת שעושה זאת: החלפת
+          פרמטר של מסילה רגולרית היא רגולרית, כי $\delta'=\varphi'\cdot\gamma'\circ\varphi\ne0$, ואילו $\delta'(0)=0$.
+      - kind: result
+        text: >-
+          רגולריות היא תכונה של הפרמטריזציה: אותה תמונה, אחת רגולרית והשנייה לא.
+
+  - id: W-1.1-07
+    level: mid
+    objectives: [OBJ-1.1-1, OBJ-1.1-3]
+    prompt: >-
+      $E$ היא החיתוך של הגליל $x^2+y^2=1$ עם המישור $x+z=1$.
+
+      (א) הראו שהתמונה של $\gamma(t)=(\cos t,\ \sin t,\ 1-\cos t)$, $t\in[0,2\pi]$, היא בדיוק $E$.
+
+      (ב) מצאו את הישר המשיק ב-$t=\frac\pi2$.
+    answer: >-
+      (א) שתי הכלות. (ב) $(-\lambda,\ 1,\ 1+\lambda)$.
+    solution:
+      - kind: step
+        text: >-
+          ($\subseteq$) $\cos^2t+\sin^2t=1$ ו-$\cos t+(1-\cos t)=1$.
+      - kind: step
+        text: >-
+          ($\supseteq$) אם $x^2+y^2=1$ ו-$x+z=1$, יש $t\in[0,2\pi]$ עם $(x,y)=(\cos t,\sin t)$, ואז $z=1-x=1-\cos t$.
+      - kind: computation
+        text: >-
+          (ב) $\gamma(\frac\pi2)=(0,1,1)$ ו-$\gamma'(t)=(-\sin t,\ \cos t,\ \sin t)$, כלומר $\gamma'(\frac\pi2)=(-1,0,1)\ne0$. הישר:
+          $(-\lambda,\ 1,\ 1+\lambda)$.
+      - kind: check
+        text: >-
+          כל נקודה של הישר מקיימת $x+z=1$: הישר נמצא במישור, כמו שמשיק למסילה שבמישור צריך.
+      - kind: result
+        text: >-
+          (א) $\gamma([0,2\pi])=E$. (ב) $(-\lambda,\ 1,\ 1+\lambda)$.
+
+  - id: W-1.1-08
+    level: exam
+    objectives: [OBJ-1.1-2]
+    prompt: >-
+      (א) תהי $\gamma:I\to\mathbb R^n$ גזירה ברציפות ו-$\gamma'(t_0)\ne0$ בנקודה פנימית $t_0$. הוכיחו שיש $\varepsilon>0$ כך ש-$\gamma$
+      חד-חד-ערכית על $(t_0-\varepsilon,\ t_0+\varepsilon)$.
+
+      (ב) הראו בדוגמה שמסילה רגולרית על כל $\mathbb R$ אינה בהכרח חד-חד-ערכית.
+    answer: >-
+      (א) רכיב אחד עם נגזרת שאינה אפס מונוטוני ממש ליד $t_0$. (ב) $(t^3-t,\ t^2)$: $\gamma(-1)=\gamma(1)$.
+    solution:
+      - kind: idea
+        text: >-
+          מספיק רכיב אחד חד-חד-ערכי: אם $x_k(t)\ne x_k(s)$ אז $\gamma(t)\ne\gamma(s)$. רכיב עם נגזרת שאינה אפס הוא מונוטוני ממש ליד הנקודה.
+      - kind: step
+        text: >-
+          $\gamma'(t_0)\ne0$, ולכן יש רכיב $k$ עם $x_k'(t_0)\ne0$. $x_k'$ רציפה, ולכן יש $\varepsilon>0$ שבו $x_k'\ne0$ על כל
+          $J=(t_0-\varepsilon,\ t_0+\varepsilon)$, ולפי ערך הביניים היא שומרת שם על סימן.
+      - kind: step
+        text: >-
+          לכן $x_k$ מונוטונית ממש על $J$. אם $t\ne s$ ב-$J$, אז $x_k(t)\ne x_k(s)$, ולכן $\gamma(t)\ne\gamma(s)$.
+      - kind: step
+        text: >-
+          (ב) $\gamma(t)=(t^3-t,\ t^2)$ רגולרית ($\gamma'=(3t^2-1,\ 2t)$ לא מתאפס), ו-$\gamma(-1)=\gamma(1)=(0,1)$.
+      - kind: check
+        text: >-
+          (ב) לא סותרת את (א): (א) נותנת חד-חד-ערכיות רק על קטע קטן סביב כל נקודה, ו-$-1$, $1$ אינן באותו קטע כזה.
+      - kind: result
+        text: >-
+          רגולריות נותנת חד-חד-ערכיות מקומית, לא גלובלית.
+
+  - id: W-1.1-09
+    level: exam
+    objectives: [OBJ-1.1-3]
+    prompt: >-
+      $\gamma(t)=(t^2,\ t^3)$. הוכיחו שלכל $t\ne0$ הישר המשיק ב-$\gamma(t)$ פוגש את התמונה בדיוק בעוד נקודה אחת, ומצאו אותה.
+    answer: >-
+      בנקודה $\gamma(-\frac t2)=\big(\frac{t^2}4,\ -\frac{t^3}8\big)$.
+    solution:
+      - kind: idea
+        text: >-
+          נקודה $\gamma(s)$, $s\ne t$, על הישר המשיק אם ורק אם הווקטור $\gamma(s)-\gamma(t)$ מקביל ל-$\gamma'(t)=(2t,\ 3t^2)$. במישור: הדטרמיננטה של שניהם אפס.
+      - kind: computation
+        text: >-
+          התנאי:
+          $$(s^2-t^2)\cdot3t^2-(s^3-t^3)\cdot2t=0.$$
+          מחלקים ב-$t(s-t)\ne0$:
+          $$3t(s+t)-2(s^2+st+t^2)=0.$$
+      - kind: computation
+        text: >-
+          מפשטים: $-2s^2+ts+t^2=0$, כלומר $(2s+t)(s-t)=0$. כש-$s\ne t$: $s=-\frac t2$.
+      - kind: check
+        text: >-
+          ב-$t=2$: הישר המשיק הוא $y=3x-4$, והנקודה השנייה היא $\gamma(-1)=(1,-1)$. אכן $3\cdot1-4=-1$.
+      - kind: result
+        text: >-
+          הנקודה היחידה הנוספת היא $\gamma(-\frac t2)=\big(\frac{t^2}{4},\ -\frac{t^3}{8}\big)$, על הענף השני של החוד.
+
+  - id: W-1.1-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.1-1]
+    prompt: >-
+      (א) הוכיחו: אם $\delta=\gamma\circ\varphi$ החלפת פרמטר, אז לכל נקודה $P$ מספר ערכי $u$ עם $\delta(u)=P$ שווה למספר ערכי $t$ עם
+      $\gamma(t)=P$.
+
+      (ב) הסיקו ש-$(\cos 2t,\ \sin 2t)$ על $[0,2\pi]$ אינה החלפת פרמטר של $(\cos t,\ \sin t)$ על $[0,2\pi]$, אף שלשתיהן אותה תמונה.
+
+      (ג) הראו ש-$(\cos t,\ -\sin t)$ על $[0,2\pi]$ כן החלפת פרמטר שלה.
+    answer: >-
+      (א) $\varphi$ חד-חד-ערכית ועל. (ב) $(0,1)$ מתקבלת פעמיים מול פעם אחת. (ג) $\varphi(u)=2\pi-u$.
+    solution:
+      - kind: step
+        text: >-
+          (א) $\varphi:J\to I$ על, ו-$\varphi'\ne0$ גורר מונוטוניות ממש, ולכן היא חד-חד-ערכית. לכן $u\mapsto\varphi(u)$ היא התאמה חד-חד-ערכית ועל בין
+          $\{u: \delta(u)=P\}$ לבין $\{t: \gamma(t)=P\}$, כי $\delta(u)=P$ אם ורק אם $\gamma(\varphi(u))=P$.
+      - kind: computation
+        text: >-
+          (ב) $(\cos2t,\ \sin2t)=(0,1)$ כש-$2t\in\{\frac\pi2,\ \frac{5\pi}2\}$, כלומר ב-$t=\frac\pi4$ וב-$t=\frac{5\pi}4$: פעמיים.
+          ו-$(\cos t,\ \sin t)=(0,1)$ רק ב-$t=\frac\pi2$. לפי (א) אין החלפת פרמטר.
+      - kind: step
+        text: >-
+          (ג) $\varphi(u)=2\pi-u$ מעבירה את $[0,2\pi]$ על עצמו, עם $\varphi'=-1\ne0$, ו-$$(\cos(2\pi-u),\ \sin(2\pi-u))=(\cos u,\ -\sin u)$$.
+      - kind: result
+        text: >-
+          מספר המעברים בכל נקודה נשמר בהחלפת פרמטר, ולכן "אותה תמונה" לא מספיק כדי להיות החלפת פרמטר.
+challenge:
+  - id: W-1.1-c1
+    stars: 1
+    objectives: [OBJ-1.1-3]
+    prompt: >-
+      תהי $\gamma:I\to\mathbb R^3$ מסילה רגולרית על קטע $I$. **המישור הנורמלי** ב-$\gamma(t)$ הוא המישור שעובר ב-$\gamma(t)$ וניצב
+      לוקטור המשיק $\gamma'(t)$. הוכיחו: אם כל המישורים הנורמליים של $\gamma$ עוברים דרך נקודה קבועה $\mathbf p$, אז התמונה של
+      $\gamma$ מוכלת בספרה שמרכזה $\mathbf p$.
+    answer: >-
+      $\frac{d}{dt}\|\gamma-\mathbf p\|^2=2(\gamma-\mathbf p)\cdot\gamma'=0$, ולכן המרחק מ-$\mathbf p$ קבוע וחיובי.
+    solution:
+      - kind: idea
+        text: >-
+          "המישור הנורמלי עובר ב-$\mathbf p$" פירושו ש-$\mathbf p-\gamma(t)$ ניצב ל-$\gamma'(t)$. אז הנגזרת של ריבוע המרחק מ-$\mathbf p$ היא אפס.
+      - kind: step
+        text: >-
+          $\mathbf p$ במישור $\{\mathbf x: (\mathbf x-\gamma(t))\cdot\gamma'(t)=0\}$, ולכן $(\mathbf p-\gamma(t))\cdot\gamma'(t)=0$ לכל $t\in I$.
+      - kind: step
+        text: >-
+          $f(t)=\|\gamma(t)-\mathbf p\|^2$ מקיימת $f'(t)=2(\gamma(t)-\mathbf p)\cdot\gamma'(t)=0$. $I$ קטע, ולכן $f\equiv r^2$ קבועה.
+      - kind: step
+        text: >-
+          $r>0$: אחרת $\gamma\equiv\mathbf p$ קבועה ו-$\gamma'\equiv0$, בסתירה לרגולריות. לכן $\gamma(I)$ מוכלת בספרה ברדיוס $r$ סביב $\mathbf p$.
+      - kind: check
+        text: >-
+          סליל אינו מקיים את התנאי, וגם אינו על ספרה. מעגל במרחב, ומעגל על ספרה בכלל, מקיים אותו עם $\mathbf p$ מרכז הספרה. היכן השתמשנו בכך ש-$I$ קטע?
+          בקביעות של $f$: על איחוד של שני קטעים זרים המרחק יכול להיות קבוע אחר בכל חלק.
+      - kind: result
+        text: >-
+          $\|\gamma(t)-\mathbf p\|=r>0$ לכל $t$: התמונה על ספרה שמרכזה $\mathbf p$.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 3'
+      year: 2002
+      problem: 'תרגיל 4, סעיף א'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex03.html
+      verified: '2026-11-09'
+      adapted: true
+
+  - id: W-1.1-c2
+    stars: 1
+    objectives: [OBJ-1.1-2, OBJ-1.1-3]
+    prompt: >-
+      **הטרקטריקס** היא התמונה של
+      $$\alpha(t)=\Big(\sin t,\ \cos t+\ln\tan\frac t2\Big),\qquad 0<t<\pi.$$
+
+      (א) הוכיחו ש-$\alpha$ גזירה אינסוף פעמים ורגולרית בכל נקודה פרט ל-$t=\frac\pi2$.
+
+      (ב) הוכיחו שבכל נקודה רגולרית, אורך הקטע של הישר המשיק בין נקודת ההשקה לבין ציר ה-$y$ הוא $1$.
+    answer: >-
+      (א) $\alpha'(t)=\cos t\,\big(1,\ \frac{\cos t}{\sin t}\big)$, אפס רק ב-$\frac\pi2$. (ב) הקטע הוא $-\tan t\cdot\alpha'(t)=(-\sin t,\ -\cos t)$, באורך $1$.
+    solution:
+      - kind: computation
+        text: >-
+          (א) על $(0,\pi)$, $\tan\frac t2>0$, ולכן $\ln\tan\frac t2$ מוגדרת וגזירה אינסוף פעמים. הנגזרת שלה היא
+          $$\frac{1}{\tan\frac t2}\cdot\frac{1}{2\cos^2\frac t2}=\frac{1}{2\sin\frac t2\cos\frac t2}=\frac{1}{\sin t}.$$
+      - kind: computation
+        text: >-
+          כי $-\sin t+\frac{1}{\sin t}=\frac{1-\sin^2t}{\sin t}$:
+          $$\alpha'(t)=\Big(\cos t,\ \frac{\cos^2t}{\sin t}\Big)=\cos t\,\Big(1,\ \frac{\cos t}{\sin t}\Big).$$
+          הווקטור בסוגריים אינו אפס (רכיבו הראשון $1$), ולכן $\alpha'(t)=0$ בדיוק כש-$\cos t=0$: $t=\frac\pi2$.
+      - kind: step
+        text: >-
+          (ב) בנקודה רגולרית הישר המשיק הוא $\alpha(t)+\lambda\alpha'(t)$. הוא פוגש את ציר ה-$y$ כש-$\sin t+\lambda\cos t=0$, כלומר
+          $\lambda=-\tan t$.
+      - kind: computation
+        text: >-
+          הקטע מנקודת ההשקה עד הציר הוא
+          $$\lambda\,\alpha'(t)=-\tan t\cdot\cos t\,\Big(1,\ \frac{\cos t}{\sin t}\Big)=(-\sin t,\ -\cos t),$$
+          שאורכו $1$.
+      - kind: check
+        text: >-
+          מספרית, ב-$t=0.4,\ 1.1,\ 2.5$ האורך יוצא $1$. ב-$t=\frac\pi2$ הנקודה $(1,0)$ היא חוד של הטרקטריקס, ושם אין ישר משיק.
+      - kind: result
+        text: >-
+          (א) רגולרית פרט ל-$t=\frac\pi2$. (ב) קטע המשיק עד ציר ה-$y$ תמיד באורך $1$.
+    source:
+      name: 'do Carmo, Differential Geometry of Curves and Surfaces, §1-3 (as quoted in "Solutions to Exercises in Do Carmo", Introduction to Geometry, Fall 2025)'
+      year: 1976
+      problem: '1-3, exercise 4'
+      url: https://jonathan-huang.github.io/files/geometry/chap1.pdf
+      verified: '2026-11-09'
+      adapted: true

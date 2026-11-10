@@ -1,0 +1,349 @@
+# Lesson 3.1 — a smooth parametrized surface. Understanding questions, basic → mid → exam.
+# Objectives (src/course.ts):
+#   OBJ-3.1-1  define a smooth parametrized surface and check regularity: the partials are linearly independent
+#   OBJ-3.1-2  parametrize the sphere, cylinder, cone, torus and a surface of revolution, and find their non-regular points
+#   OBJ-3.1-3  tell a singular point of the surface from a non-regular point of the parametrization (the sphere's pole)
+chapter: 3
+questions:
+  - id: Q-3.1-regular-def
+    type: mc
+    objectives: [OBJ-3.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\sigma:D\to\mathbb R^3$ חלקה, $D\subset\mathbb R^2$ פתוחה. מהו התנאי לכך ש-$\sigma$ **רגולרית** בנקודה $(u_0,v_0)$?
+    choices:
+      - text: '$\sigma_u(u_0,v_0)\times\sigma_v(u_0,v_0)\ne0$'
+        correct: true
+        feedback: >-
+          נכון. המכפלה הווקטורית שונה מאפס בדיוק כששני הווקטורים בלתי תלויים לינארית, כלומר כשמטריצת יעקובי
+          $D\sigma$, מסדר $3\times2$, היא מדרגה 2. אז $\sigma_u,\sigma_v$ פורשים מישור.
+      - text: '$\sigma_u(u_0,v_0)\ne0$ וגם $\sigma_v(u_0,v_0)\ne0$'
+        feedback: >-
+          לא מספיק: שני וקטורים שונים מאפס יכולים להיות מקבילים. ב-$\sigma(u,v)=(u+v,\,(u+v)^2,\,0)$ מתקבל
+          $\sigma_u=\sigma_v=(1,\,2(u+v),\,0)$, והתמונה היא פרבולה, לא משטח.
+        misconception: MC-c3-nonzero-partials-enough
+      - text: '$\sigma_u(u_0,v_0)\cdot\sigma_v(u_0,v_0)=0$'
+        feedback: >-
+          ניצבות אינה נדרשת. $\sigma(u,v)=(u+v,\,v,\,0)$ רגולרית בכל מקום (התמונה היא המישור $z=0$), ובה
+          $\sigma_u\cdot\sigma_v=(1,0,0)\cdot(1,1,0)=1$.
+        misconception: MC-c3-regular-means-orthogonal
+      - text: '$\sigma$ חד-חד-ערכית בסביבה של $(u_0,v_0)$'
+        feedback: >-
+          חד-חד-ערכיות היא תנאי אחר. $\sigma(u,v)=(u^3,v,0)$ חד-חד-ערכית על כל המישור, ובכל זאת
+          $\sigma_u=(3u^2,0,0)$ מתאפס ב-$u=0$, ולכן היא אינה רגולרית שם.
+        misconception: MC-c3-regular-means-injective
+    explanation: >-
+      שלוש דרכים לומר אותו דבר: $\sigma_u,\sigma_v$ בלתי תלויים; $\sigma_u\times\sigma_v\ne0$; אחד המינורים $2\times2$
+      של $D\sigma$ שונה מאפס (הרכיבים של $\sigma_u\times\sigma_v$ הם בדיוק המינורים האלה).
+
+  - id: Q-3.1-cross
+    type: numeric
+    objectives: [OBJ-3.1-1]
+    level: basic
+    prompt: >-
+      $\sigma(u,v)=(u+v,\ u-v,\ uv)$. חשבו את $\|\sigma_u\times\sigma_v\|^2$ בנקודה $(u,v)=(1,2)$.
+    answer: 14
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sigma_u=(1,1,v)=(1,1,2)$ ו-$\sigma_v=(1,-1,u)=(1,-1,1)$, ולכן
+      $\sigma_u\times\sigma_v=(1\cdot1-2\cdot(-1),\ 2\cdot1-1\cdot1,\ 1\cdot(-1)-1\cdot1)=(3,1,-2)$ ואורכו בריבוע
+      $9+1+4=14$. באופן כללי $\sigma_u\times\sigma_v=(u+v,\,v-u,\,-2)$, שאינו מתאפס לעולם: $\sigma$ רגולרית בכל מקום.
+    wrongFeedback: >-
+      חשבו את $\sigma_u$ ואת $\sigma_v$ בנקודה, ואחר כך כל רכיב של המכפלה הווקטורית כהפרש של שתי מכפלות.
+    commonWrong:
+      - value: 10
+        feedback: >-
+          זה מה שמתקבל כשמחברים את שתי המכפלות בכל רכיב במקום לחסר: $(-1,3,0)$. כל רכיב הוא הפרש, למשל
+          $(\sigma_u\times\sigma_v)_3=1\cdot(-1)-1\cdot1=-2$. בדיקה: $(3,1,-2)$ ניצב גם ל-$(1,1,2)$ וגם ל-$(1,-1,1)$.
+        misconception: MC-c3-cross-minor-sign
+
+  - id: Q-3.1-sphere-singular
+    type: mc
+    objectives: [OBJ-3.1-2]
+    level: basic
+    prompt: >-
+      $\sigma(u,v)=(r\cos u\cos v,\ r\sin u\cos v,\ r\sin v)$ על $\mathbb R\times[-\frac\pi2,\frac\pi2]$ ($u$ זווית האורך, $v$
+      זווית הרוחב). חישוב נותן $\|\sigma_u\times\sigma_v\|=r^2|\cos v|$. איפה $\sigma$ **אינה** רגולרית?
+    choices:
+      - text: 'ב-$v=\pm\frac\pi2$, כלומר בקטבים'
+        correct: true
+        feedback: >-
+          נכון. ב-$v=\pm\frac\pi2$ מתקבל $\sigma_u=(-r\sin u\cos v,\ r\cos u\cos v,\ 0)=0$: כל קו הרוחב מתכווץ לנקודה אחת,
+          הקוטב.
+      - text: בשום מקום, כי הספרה היא משטח חלק
+        feedback: >-
+          הספרה אכן משטח חלק, אבל הפרמטריזציה הזו אינה רגולרית בקטבים: הגורם $|\cos v|$ מתאפס שם. רגולריות בודקים
+          לפרמטריזציה, בנוסחה, בכל הנקודות.
+        misconception: MC-c3-param-singular-is-surface-singular
+      - text: 'בקו המשווה $v=0$, כי שם $\sin v=0$'
+        feedback: >-
+          ב-$v=0$ מתקבל $\|\sigma_u\times\sigma_v\|=r^2|\cos0|=r^2>0$. הגורם שקובע הוא $\cos v$, לא $\sin v$: בדקו מתי כל
+          גורם בנוסחה מתאפס.
+        misconception: MC-c3-regularity-only-generic-point
+      - text: 'בקו $u=0$, שבו הפרמטריזציה "נסגרת" ($\sigma(0,v)=\sigma(2\pi,v)$)'
+        feedback: >-
+          זה כשל של חד-חד-ערכיות, לא של רגולריות: ב-$u=0$ הנגזרות בלתי תלויות כרגיל (כל עוד $v\ne\pm\frac\pi2$).
+        misconception: MC-c3-regular-means-injective
+
+  - id: Q-3.1-revolution
+    type: mc
+    objectives: [OBJ-3.1-2]
+    level: basic
+    prompt: >-
+      מסובבים את מסילת הפרופיל $v\mapsto(f(v),\,0,\,g(v))$ במישור $xz$, עם $f>0$, סביב ציר $z$. איזו פרמטריזציה נותנת את
+      משטח הסיבוב?
+    choices:
+      - text: '$\sigma(u,v)=(f(v)\cos u,\ f(v)\sin u,\ g(v))$'
+        correct: true
+        feedback: >-
+          נכון. נקודת הפרופיל בגובה $g(v)$ ובמרחק $f(v)$ מהציר מסתובבת על מעגל ברדיוס $f(v)$ בגובה קבוע. ב-$u=0$ חוזרים
+          לפרופיל עצמו.
+      - text: '$\sigma(u,v)=(f(v),\ g(v)\cos u,\ g(v)\sin u)$'
+        feedback: >-
+          זה סיבוב סביב ציר $x$: כאן $x=f(v)$ נשמר והרכיב $g$ מסתובב. בסיבוב סביב ציר $z$ הגובה נשמר.
+        misconception: MC-c3-revolution-axis
+      - text: '$\sigma(u,v)=(\cos u,\ \sin u,\ g(v))$'
+        feedback: >-
+          זה גליל היחידה (אם $g$ מונוטונית): הרדיוס של מעגל הסיבוב צריך להיות המרחק $f(v)$ של נקודת הפרופיל מהציר, לא 1.
+        misconception: MC-c3-revolution-axis
+
+  - id: Q-3.1-rev-regular
+    type: mc
+    objectives: [OBJ-3.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      למשטח הסיבוב $\sigma(u,v)=(f(v)\cos u,\ f(v)\sin u,\ g(v))$ מתקבל $\|\sigma_u\times\sigma_v\|=|f(v)|\sqrt{f'(v)^2+g'(v)^2}$.
+      מתי $\sigma$ רגולרית ב-$(u,v)$?
+    choices:
+      - text: 'כש-$f(v)\ne0$ וגם $(f''(v),g''(v))\ne(0,0)$'
+        correct: true
+        feedback: >-
+          נכון. התנאי השני הוא רגולריות של הפרופיל, והראשון אומר שהפרופיל אינו נמצא על ציר הסיבוב. כש-$f(v)=0$ מעגל
+          הסיבוב הוא נקודה ו-$\sigma_u=(-f\sin u,\,f\cos u,\,0)=0$.
+      - text: 'כשמסילת הפרופיל רגולרית, $(f'',g'')\ne(0,0)$; זה מספיק'
+        feedback: >-
+          הגורם $|f(v)|$ חסר. הפרופיל $(v^2-1,\,0,\,v)$ רגולרי בכל מקום, אבל ב-$v=\pm1$ הוא חוצה את הציר, ושם
+          $\|\sigma_u\times\sigma_v\|=0$: מתקבלים שני קודקודים של חרוט.
+        misconception: MC-c3-revolution-axis-point
+      - text: 'תמיד, כי משטח סיבוב סימטרי ולכן חלק'
+        feedback: >-
+          סימטריה אינה חלקות. החרוט $(v\cos u,\,v\sin u,\,v)$ הוא משטח סיבוב של הישר $(v,0,v)$, ואינו רגולרי בקודקוד
+          $v=0$.
+        misconception: MC-c3-regularity-only-generic-point
+
+  - id: Q-3.1-torus
+    type: mc
+    objectives: [OBJ-3.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma(u,v)=((R+r\cos v)\cos u,\ (R+r\cos v)\sin u,\ r\sin v)$ עם $R,r>0$. חישוב נותן
+      $\|\sigma_u\times\sigma_v\|=r\,|R+r\cos v|$. לאילו ערכים של $R,r$ הפרמטריזציה רגולרית **בכל** נקודה?
+    choices:
+      - text: 'בדיוק כש-$r<R$'
+        correct: true
+        feedback: >-
+          נכון. $R+r\cos v\ge R-r$, וכש-$r<R$ זה חיובי לכל $v$. כש-$r\ge R$ יש $v$ עם $\cos v=-\frac Rr$, ושם המעגל
+          הפנימי פוגע בציר ומתכווץ לנקודה.
+      - text: 'לכל $R,r>0$: זה טורוס'
+        feedback: >-
+          ב-$R=r=1$ (טורוס "צופר") ובנקודה $v=\pi$ מתקבל $R+r\cos v=0$: כל המעגל $v=\pi$ נשלח לראשית ו-$\sigma_u=0$. בדקו
+          את כל האפסים של הנוסחה.
+        misconception: MC-c3-regularity-only-generic-point
+      - text: 'בדיוק כש-$r\le R$'
+        feedback: >-
+          המקרה $r=R$ נכשל: ב-$v=\pi$ מתקבל $R+r\cos\pi=R-r=0$. אי-השוויון צריך להיות חזק.
+        misconception: MC-c3-revolution-axis-point
+
+  - id: Q-3.1-rev-points
+    type: numeric
+    objectives: [OBJ-3.1-2]
+    level: mid
+    prompt: >-
+      $\sigma(u,v)=((v^2-1)\cos u,\ (v^2-1)\sin u,\ v)$ על $\mathbb R^2$. בכמה **נקודות של התמונה** ב-$\mathbb R^3$
+      נמצאות הנקודות $(u,v)$ שבהן $\sigma$ אינה רגולרית?
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\|\sigma_u\times\sigma_v\|=|v^2-1|\sqrt{4v^2+1}$, שמתאפס בדיוק ב-$v=\pm1$. שני הישרים $v=1$ ו-$v=-1$ במישור
+      הפרמטרים נשלחים לשתי נקודות: $(0,0,1)$ ו-$(0,0,-1)$. ליד כל אחת מהן הפרופיל חוצה את הציר בשיפוע, והתמונה נראית
+      כמו קודקוד של חרוט.
+    wrongFeedback: >-
+      חשבו $\|\sigma_u\times\sigma_v\|=|f(v)|\sqrt{f'(v)^2+g'(v)^2}$ עם $f(v)=v^2-1$ ו-$g(v)=v$, מצאו את האפסים, ובדקו לאן
+      נשלח כל ישר של אפסים.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          הפרופיל $(v^2-1,\,0,\,v)$ רגולרי בכל מקום ($g'=1$), אבל משטח הסיבוב אינו רגולרי איפה שהפרופיל פוגע בציר:
+          $f(v)=0$ ב-$v=\pm1$.
+        misconception: MC-c3-revolution-axis-point
+      - value: 1
+        feedback: >-
+          $v^2-1=0$ גם ב-$v=-1$, לא רק ב-$v=1$. מצאו את כל האפסים של הגורם.
+        misconception: MC-c3-regularity-only-generic-point
+
+  - id: Q-3.1-parallel
+    type: twotier
+    objectives: [OBJ-3.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma:\mathbb R^2\to\mathbb R^3$ חלקה, ובכל נקודה $\sigma_u\ne0$ וגם $\sigma_v\ne0$. האם בהכרח $\sigma$ רגולרית?
+    choices:
+      - text: לא בהכרח
+        correct: true
+        feedback: נכון. רגולריות דורשת אי-תלות של שני הווקטורים, לא רק ששניהם שונים מאפס.
+      - text: כן
+        feedback: >-
+          שני וקטורים שונים מאפס יכולים להיות מקבילים, ואז הם פורשים ישר ולא מישור. ראו את הדוגמה בנימוק הנכון.
+        misconception: MC-c3-nonzero-partials-enough
+    reasons:
+      - text: '$\sigma(u,v)=(u+v,\ (u+v)^2,\ u+v)$: $\sigma_u=\sigma_v=(1,\,2(u+v),\,1)\ne0$, ו-$\sigma_u\times\sigma_v=0$ בכל נקודה'
+        correct: true
+        feedback: >-
+          בדיוק. $\sigma$ תלויה רק ב-$u+v$, ולכן התמונה היא מסילה. שתי הנגזרות שוות, לא אפס, ואינן פורשות מישור.
+      - text: 'כי $u$ ו-$v$ משתנים בלתי תלויים, ולכן גם $\sigma_u$ ו-$\sigma_v$ בלתי תלויים'
+        feedback: >-
+          אי-תלות של המשתנים אינה אומרת דבר על הנגזרות: בדוגמה של הנימוק הנכון $\sigma_u=\sigma_v$ בכל נקודה.
+        misconception: MC-c3-independent-variables
+      - text: 'כי נגזרת שונה מאפס פירושה שהקווים הפרמטריים מסילות רגולריות, וזה מה שרגולריות של משטח דורשת'
+        feedback: >-
+          הקווים הפרמטריים אכן רגולריים, אבל זה תנאי חלש יותר: שני הקווים יכולים להיות משיקים זה לזה בכל נקודה.
+        misconception: MC-c3-nonzero-partials-enough
+
+  - id: Q-3.1-pole
+    type: twotier
+    objectives: [OBJ-3.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הפרמטריזציה של ספרת היחידה בקואורדינטות כדוריות, $(\cos u\cos v,\ \sin u\cos v,\ \sin v)$, אינה רגולרית בקוטב
+      הצפוני $(0,0,1)$. נקודה של קבוצה ב-$\mathbb R^3$ נקראת **סינגולרית** אם אין לה **אף** פרמטריזציה רגולרית (חד-חד-ערכית
+      ורציפה בהפיכה) של סביבה שלה בקבוצה. האם הקוטב הצפוני הוא נקודה סינגולרית של הספרה?
+    choices:
+      - text: לא, הקוטב הוא נקודה חלקה של הספרה
+        correct: true
+        feedback: >-
+          נכון. הכשל שייך לפרמטריזציה: כל קו הרוחב $v=\frac\pi2$ נשלח לנקודה אחת. פרמטריזציה אחרת מתנהגת יפה שם.
+      - text: כן, הקוטב הוא נקודה סינגולרית של הספרה
+        feedback: >-
+          ספרה נראית אותו דבר בכל נקודה: סיבוב של המרחב מעביר את הקוטב לנקודה על קו המשווה, שבה הפרמטריזציה רגולרית.
+          רגולריות היא תכונה של פרמטריזציה, ולכל נקודה מחפשים פרמטריזציה **כלשהי** שרגולרית בה.
+        misconception: MC-c3-param-singular-is-surface-singular
+    reasons:
+      - text: 'הגרף $(x,y)\mapsto(x,\,y,\,\sqrt{1-x^2-y^2})$ על $x^2+y^2<1$ הוא פרמטריזציה רגולרית של חצי הספרה העליון, והקוטב בתוכה'
+        correct: true
+        feedback: >-
+          בדיוק. לגרף $\sigma_x\times\sigma_y=(-f_x,-f_y,1)\ne0$ תמיד, ולכן הוא רגולרי בכל נקודה, ובפרט ב-$(0,0)$, הקוטב.
+      - text: 'ב-$v=\frac\pi2$ מתקבל $\sigma_u=0$, ולכן אין מישור משיק בקוטב'
+        feedback: >-
+          $\sigma_u=0$ שם, אבל זה אומר רק שהפרמטריזציה הזו לא מגיעה למישור המשיק. בגרף של הנימוק הנכון המישור המשיק בקוטב
+          הוא $z=1$.
+        misconception: MC-c3-param-singular-is-surface-singular
+      - text: 'כל קו הרוחב $v=\frac\pi2$ נשלח לנקודה אחת, ולכן הפרמטריזציה אינה חד-חד-ערכית שם'
+        feedback: >-
+          זה נכון, אבל זה לא עונה על השאלה: אי חד-חד-ערכיות של פרמטריזציה אחת אינה אומרת דבר על המשטח. השאלה היא אם יש
+          **פרמטריזציה אחרת** רגולרית בקוטב.
+        misconception: MC-c3-regular-means-injective
+
+  - id: Q-3.1-cone
+    type: twotier
+    objectives: [OBJ-3.1-3, OBJ-3.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      החרוט הכפול $\sigma(u,v)=(v\cos u,\ v\sin u,\ v)$, $v\in\mathbb R$, אינו רגולרי ב-$v=0$, כלומר בקודקוד $(0,0,0)$. האם
+      הקודקוד, כמו קוטב הספרה, הוא רק בעיה של הפרמטריזציה?
+    choices:
+      - text: לא, הקודקוד הוא נקודה סינגולרית של החרוט הכפול עצמו
+        correct: true
+        feedback: >-
+          נכון. כאן אין פרמטריזציה אחרת שתציל: הקבוצה $x^2+y^2=z^2$ עצמה אינה משטח חלק ליד הקודקוד.
+      - text: כן, פרמטריזציה טובה יותר תהיה רגולרית בקודקוד
+        feedback: >-
+          בקוטב הספרה הקבוצה נראית כמו דיסק, ורק הפרמטריזציה הכדורית קורסת. בקודקוד הקבוצה עצמה שונה מדיסק: ראו את הנימוק
+          הנכון.
+        misconception: MC-c3-vertex-removable
+    reasons:
+      - text: 'כל סביבה קטנה של הקודקוד בחרוט, בלי הקודקוד, מתפרקת לשני חלקים ($z>0$ ו-$z<0$), ואילו דיסק בלי נקודה נשאר קשיר'
+        correct: true
+        feedback: >-
+          בדיוק. פרמטריזציה רגולרית חד-חד-ערכית ורציפה בהפיכה הייתה מעבירה דיסק קטן בלי מרכזו (קבוצה קשירה) לסביבה של
+          הקודקוד בלי הקודקוד (שאינה קשירה), וזה בלתי אפשרי, כי תמונה רציפה של קבוצה קשירה קשירה.
+      - text: 'כי $\|\sigma_u\times\sigma_v\|=\sqrt2\,|v|$ מתאפס ב-$v=0$'
+        feedback: >-
+          זה מראה רק שהפרמטריזציה **הזו** אינה רגולרית שם, בדיוק כמו בקוטב הספרה. כדי להראות שהנקודה סינגולרית צריך טיעון
+          על הקבוצה, שלא תלוי בפרמטריזציה.
+        misconception: MC-c3-param-singular-is-surface-singular
+      - text: 'כי בקודקוד $\sigma_u=0$, ולכן הנגזרת לא יכולה לפרוש מישור'
+        feedback: >-
+          גם בקוטב הספרה $\sigma_u=0$, והקוטב נקודה חלקה. נגזרת של פרמטריזציה אחת אינה טיעון על המשטח.
+        misconception: MC-c3-param-singular-is-surface-singular
+
+  - id: Q-3.1-which-singular
+    type: multi
+    objectives: [OBJ-3.1-3, OBJ-3.1-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      בכל סעיף, הפרמטריזציה אינה רגולרית בנקודה המסומנת. סמנו את כל הסעיפים שבהם הנקודה של **התמונה** היא נקודה
+      סינגולרית של הקבוצה (אין לה אף פרמטריזציה רגולרית בסביבתה).
+    choices:
+      - text: 'ספרת היחידה, $(\cos u\cos v,\ \sin u\cos v,\ \sin v)$, בנקודה $v=\frac\pi2$'
+        feedback: >-
+          זה הקוטב הצפוני, נקודה חלקה: הגרף $z=\sqrt{1-x^2-y^2}$ רגולרי שם. רק הפרמטריזציה הכדורית אשמה.
+        misconception: MC-c3-param-singular-is-surface-singular
+      - text: 'החרוט הכפול $(v\cos u,\ v\sin u,\ v)$, $v\in\mathbb R$, בנקודה $v=0$'
+        correct: true
+        feedback: >-
+          נכון. סביבה קטנה של הקודקוד בלי הקודקוד מתפרקת לשני חלקים, ודיסק בלי נקודה לא: אין פרמטריזציה רגולרית.
+      - text: 'קואורדינטות קוטביות במישור, $(u\cos v,\ u\sin v,\ 0)$, בנקודה $u=0$'
+        feedback: >-
+          התמונה היא המישור $z=0$, והראשית נקודה חלקה שלו: $(x,y)\mapsto(x,y,0)$ רגולרית בכל מקום. הקואורדינטות
+          הקוטביות קורסות בראשית כמו הכדוריות בקוטב.
+        misconception: MC-c3-param-singular-is-surface-singular
+      - text: '$(u^2,\ v,\ u^3)$ בנקודות $u=0$, כלומר לאורך ציר $y$'
+        correct: true
+        feedback: >-
+          נכון. התמונה היא $\{z^2=x^3\}$, מסילה עם חוד כפול בישר. ליד הראשית היא אינה גרף חלק מעל אף מישור קואורדינטות:
+          מעל $xy$ יש שני ערכים $z=\pm x^{3/2}$; מעל $yz$ הפונקציה $x=z^{2/3}$ אינה גזירה ב-$z=0$; ומעל $xz$ הקבוצה אינה
+          גרף בכלל, כי $y$ חופשי. (זה רמז, לא הוכחה מלאה: הוכחה מלאה בודקת גם מישורים לא קואורדינטיים.)
+    explanation: >-
+      הלקח: אי-רגולריות של פרמטריזציה היא רק **סימן אזהרה**. כדי להכריע שהנקודה חלקה מספיקה פרמטריזציה אחת שרגולרית
+      בה; כדי להכריע שהיא סינגולרית צריך טיעון על הקבוצה עצמה.
+
+  - id: Q-3.1-injective-not-regular
+    type: twotier
+    objectives: [OBJ-3.1-1, OBJ-3.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן ש-$\sigma:\mathbb R^2\to\mathbb R^3$ חלקה וחד-חד-ערכית, התמונה שלה היא כל המישור $z=0$, ובכל זאת $\sigma$
+      אינה רגולרית בנקודה $(0,0)$?
+    choices:
+      - text: כן, ייתכן
+        correct: true
+        feedback: >-
+          נכון. התמונה חלקה, ההעתקה חד-חד-ערכית, והכשל הוא רק של הנגזרת בנקודה אחת.
+      - text: לא, זה לא ייתכן
+        feedback: >-
+          חד-חד-ערכיות וחלקות התמונה אינן מבטיחות שהנגזרת מדרגה 2. ראו את הדוגמה בנימוק הנכון.
+        misconception: MC-c3-regular-means-injective
+    reasons:
+      - text: '$\sigma(u,v)=(u^3,v,0)$: חד-חד-ערכית ועל המישור, ו-$\sigma_u=(3u^2,0,0)$ מתאפס ב-$u=0$'
+        correct: true
+        feedback: >-
+          בדיוק. $u\mapsto u^3$ הפיכה, אבל ההופכית $x\mapsto x^{1/3}$ אינה גזירה ב-0. זו גם הסיבה שבהחלפת פרמטרים דורשים
+          הופכית חלקה (שיעור 3.2).
+      - text: 'כי המישור $z=0$ הוא משטח חלק, ולכן כל פרמטריזציה חלקה וחד-חד-ערכית שלו רגולרית'
+        feedback: >-
+          זה מה שצריך לבדוק, והוא לא נכון: הדוגמה $(u^3,v,0)$ סותרת אותו. חלקות של הקבוצה אומרת שיש **איזושהי**
+          פרמטריזציה רגולרית, לא שכל פרמטריזציה רגולרית.
+        misconception: MC-c3-param-singular-is-surface-singular
+      - text: 'רגולריות וחד-חד-ערכיות הן אותו תנאי, ולכן התשובה תלויה רק בחד-חד-ערכיות'
+        feedback: >-
+          אלה תנאים שונים: הגליל $(\cos u,\sin u,v)$ רגולרי בכל מקום ואינו חד-חד-ערכי, ו-$(u^3,v,0)$ חד-חד-ערכית ואינה
+          רגולרית.
+        misconception: MC-c3-regular-means-injective

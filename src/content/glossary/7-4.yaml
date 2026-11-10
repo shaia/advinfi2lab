@@ -1,0 +1,17 @@
+# Terms first defined in lesson 7.4 (Stokes' theorem). The general Stokes theorem for forms belongs to lesson 8.5.
+- id: stokes-theorem
+  term: משפט סטוקס
+  en: Stokes' theorem
+  symbol: '\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S=\oint_{\partial S}\mathbf F\cdot d\mathbf s'
+  definition: >-
+    למשטח מכוון $S$ עם שפה חלקה למקוטעין, ולשדה $\mathbf F$ מסדר $C^1$ בקבוצה פתוחה שמכילה את $S$: השטף של
+    $\nabla\times\mathbf F$ דרך $S$ שווה לאינטגרל הקווי של $\mathbf F$ על $\partial S$, כשהכיוון של $\partial S$ מתואם עם $\hat{\mathbf N}$
+    לפי כלל יד ימין.
+  lesson: '7.4'
+- id: right-hand-rule
+  term: כלל יד ימין
+  en: right-hand rule
+  definition: >-
+    הקשר בין הנורמל של משטח מכוון לכיוון של שפתו: כשאגודל יד ימין בכיוון $\hat{\mathbf N}$, האצבעות מראות את כיוון השפה. באופן
+    שקול: מי שהולך על השפה כשראשו בכיוון $\hat{\mathbf N}$ רואה את המשטח משמאלו.
+  lesson: '7.4'

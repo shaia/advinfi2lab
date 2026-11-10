@@ -1,0 +1,351 @@
+# Lesson 7.1 — grad, curl, div.
+# Objectives (src/course.ts):
+#   OBJ-7.1-1  compute grad, curl and div, and say what each operator takes and returns
+#   OBJ-7.1-2  prove curl grad = 0 and div curl = 0, and use the product rules
+#   OBJ-7.1-3  read div as flux density and curl as circulation density
+chapter: 7
+questions:
+  - id: Q-7.1-types
+    type: multi
+    objectives: [OBJ-7.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      תהי $f:\mathbb R^3\to\mathbb R$ פונקציה מסדר $C^2$ ויהי $\mathbf F=(F_1,F_2,F_3):\mathbb R^3\to\mathbb R^3$ שדה וקטורי
+      מסדר $C^2$. נזכיר את ההגדרות: הגרדיאנט $\nabla f=(f_x,f_y,f_z)$, הדיברגנץ
+      $\nabla\cdot\mathbf F=\partial_xF_1+\partial_yF_2+\partial_zF_3$, והרוטור
+      $$\nabla\times\mathbf F=(\partial_yF_3-\partial_zF_2,\ \partial_zF_1-\partial_xF_3,\ \partial_xF_2-\partial_yF_1).$$
+      אילו מהביטויים הבאים **מוגדרים**? סמנו את כולם.
+    choices:
+      - text: '$\nabla\cdot(\nabla f)$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla f$ הוא שדה וקטורי, והדיברגנץ שלו פונקציה סקלרית:
+          $\partial_{xx}f+\partial_{yy}f+\partial_{zz}f$.
+      - text: '$\nabla(\nabla\cdot\mathbf F)$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla\cdot\mathbf F$ היא פונקציה סקלרית, ולפונקציה סקלרית יש גרדיאנט, שהוא שדה וקטורי.
+      - text: '$\nabla\times(\nabla\cdot\mathbf F)$'
+        feedback: >-
+          $\nabla\cdot\mathbf F$ היא פונקציה סקלרית, והרוטור מקבל רק שדה וקטורי. הביטוי אינו מוגדר.
+        misconception: MC-c7-operator-types
+      - text: '$\nabla\cdot(\nabla\times\mathbf F)$'
+        correct: true
+        feedback: >-
+          נכון. הרוטור של $\mathbf F$ הוא שדה וקטורי, ולכן יש לו דיברגנץ (ובהמשך השיעור נראה שהוא תמיד אפס).
+      - text: '$\nabla\times f$'
+        feedback: >-
+          הרוטור מוגדר על שדה וקטורי ב-$\mathbb R^3$. לפונקציה סקלרית אין רוטור; אולי התכוונתם ל-$\nabla f$.
+        misconception: MC-c7-operator-types
+      - text: '$\nabla f\times\mathbf F$'
+        correct: true
+        feedback: >-
+          נכון. זו מכפלה וקטורית של שני שדות וקטוריים, וזה שדה וקטורי. היא מופיעה בכלל המכפלה של הרוטור.
+    explanation: >-
+      כדאי לזכור בטבלה: גרדיאנט מסקלר לווקטור, רוטור מווקטור לווקטור (ב-$\mathbb R^3$), דיברגנץ מווקטור לסקלר.
+      לפני שמחשבים, בודקים שהסוגים מתאימים.
+
+  - id: Q-7.1-div
+    type: numeric
+    objectives: [OBJ-7.1-1]
+    level: basic
+    prompt: >-
+      יהי $\mathbf F(x,y,z)=(x^2y,\ yz,\ xz^2)$. חשבו את $\nabla\cdot\mathbf F$ בנקודה $(1,2,3)$.
+    answer: 13
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\nabla\cdot\mathbf F=\partial_x(x^2y)+\partial_y(yz)+\partial_z(xz^2)=2xy+z+2xz$, ובנקודה $(1,2,3)$
+      מקבלים $4+3+6=13$.
+    wrongFeedback: >-
+      גזרו כל רכיב לפי המשתנה שלו: את הראשון לפי $x$, את השני לפי $y$, את השלישי לפי $z$, וחברו.
+    commonWrong:
+      - value: 12
+        feedback: >-
+          זה $\partial_y F_1+\partial_z F_2+\partial_x F_3=x^2+y+z^2=1+2+9$: גזרתם כל רכיב לפי המשתנה הבא. בדיברגנץ
+          כל רכיב נגזר לפי המשתנה שלו.
+        misconception: MC-c7-div-mixed-partials
+      - value: 10
+        feedback: >-
+          זה $2xy+2xz=4+6$: חסר המחובר האמצעי, $\partial_y(yz)=z=3$. חברו את שלושת המחוברים: $4+3+6$.
+
+  - id: Q-7.1-curl
+    type: numeric
+    objectives: [OBJ-7.1-1]
+    level: basic
+    prompt: >-
+      יהי $\mathbf F(x,y,z)=(xy^2,\ x^2z,\ yz)$. חשבו את **הרכיב השלישי** של $\nabla\times\mathbf F$ בנקודה $(2,1,3)$.
+    answer: 8
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הרכיב השלישי הוא $\partial_x F_2-\partial_y F_1=2xz-2xy$, ובנקודה $(2,1,3)$ מקבלים $12-4=8$.
+      (הרוטור כולו: $\nabla\times\mathbf F=(z-x^2,\ 0,\ 2xz-2xy)$, כאן $(-1,0,8)$.)
+    wrongFeedback: >-
+      כתבו את הרוטור כדטרמיננטה פורמלית, עם $\mathbf e_1,\mathbf e_2,\mathbf e_3$ בשורה הראשונה, $\partial_x,\partial_y,\partial_z$
+      בשנייה ו-$F_1,F_2,F_3$ בשלישית. הרכיב השלישי הוא $\partial_x F_2-\partial_y F_1$.
+    commonWrong:
+      - value: -8
+        feedback: >-
+          זה $\partial_y F_1-\partial_x F_2$, הסדר ההפוך, שנותן את מינוס הרכיב.
+        misconception: MC-c7-curl-sign
+      - value: -1
+        feedback: >-
+          זה הרכיב **הראשון**, $\partial_y F_3-\partial_z F_2=z-x^2=3-4$. השאלה על הרכיב השלישי.
+
+  - id: Q-7.1-product
+    type: mc
+    objectives: [OBJ-7.1-2]
+    level: basic
+    prompt: >-
+      יהיו $f$ פונקציה סקלרית ו-$\mathbf F$ שדה וקטורי, שניהם מסדר $C^1$ ב-$\mathbb R^3$. למה שווה $\nabla\cdot(f\mathbf F)$?
+    choices:
+      - text: '$\nabla f\cdot\mathbf F+f\,\nabla\cdot\mathbf F$'
+        correct: true
+        feedback: >-
+          נכון. ברכיבים: $\partial_i(fF_i)=(\partial_i f)F_i+f\,\partial_i F_i$, ומסכמים על $i$.
+      - text: '$f\,\nabla\cdot\mathbf F$'
+        feedback: >-
+          זה נכון רק כש-$f$ קבוע. למשל $f=x$, $\mathbf F=(1,0,0)$: $\nabla\cdot(x,0,0)=1$, אבל $f\,\nabla\cdot\mathbf F=0$.
+        misconception: MC-c7-product-rule-missing
+      - text: '$\nabla f\times\mathbf F+f\,\nabla\cdot\mathbf F$'
+        feedback: >-
+          הדיברגנץ הוא סקלר, ו-$\nabla f\times\mathbf F$ הוא וקטור: אי אפשר לחבר ביניהם. המכפלה הווקטורית מופיעה בכלל
+          של **הרוטור**, $\nabla\times(f\mathbf F)=\nabla f\times\mathbf F+f\,\nabla\times\mathbf F$.
+        misconception: MC-c7-operator-types
+      - text: '$\nabla f\cdot\mathbf F-f\,\nabla\cdot\mathbf F$'
+        feedback: >-
+          בכלל המכפלה שני המחוברים באים עם סימן פלוס, כמו $(uv)'=u'v+uv'$.
+        misconception: MC-c7-product-rule-missing
+
+  - id: Q-7.1-div-density
+    type: mc
+    objectives: [OBJ-7.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      יהי $\mathbf F$ שדה מסדר $C^1$, ויהי $S_r$ הספרה ברדיוס $r$ סביב הנקודה $p$, עם הנורמל החיצוני, ו-$B_r$ הכדור
+      שהיא חוסמת. מה מתאר הגבול הבא?
+      $$\lim_{r\to0}\frac{1}{\operatorname{vol}(B_r)}\oiint_{S_r}\mathbf F\cdot d\mathbf S$$
+    choices:
+      - text: 'את $\nabla\cdot\mathbf F(p)$'
+        correct: true
+        feedback: >-
+          נכון. הדיברגנץ הוא צפיפות השטף: השטף החוצה דרך משטח סגור קטן לחלק לנפח. (בשיעור 7.5 זה ינבע ממשפט גאוס.)
+      - text: 'את $\|\nabla\times\mathbf F(p)\|$'
+        feedback: >-
+          הרוטור קשור לסירקולציה סביב לולאות קטנות לחלק לשטח, לא לשטף דרך משטח סגור לחלק לנפח.
+        misconception: MC-c7-density-confusion
+      - text: 'את $\|\mathbf F(p)\|$'
+        feedback: >-
+          שדה קבוע $\mathbf F=(1,0,0)$ נותן שטף אפס דרך כל ספרה (מה שנכנס בצד אחד יוצא בצד השני), אף ש-$\|\mathbf F\|=1$.
+          השטף לחלק לנפח מודד יצירה של שדה, לא את גודלו.
+        misconception: MC-c7-div-from-spread
+      - text: 'את $\nabla\cdot\mathbf F(p)$ כפול $4\pi$'
+        feedback: >-
+          הגורם $4\pi$ כבר נמצא בנפח $\frac43\pi r^3$ שבמכנה. לדוגמה $\mathbf F=\mathbf x$: השטף $4\pi r^3$, הנפח
+          $\frac43\pi r^3$, המנה $3=\nabla\cdot\mathbf x$.
+
+  - id: Q-7.1-powers
+    type: numeric
+    objectives: [OBJ-7.1-1, OBJ-7.1-2]
+    level: mid
+    prompt: >-
+      לכל $p$ ממשי נגדיר ב-$\mathbb R^3\setminus\{0\}$ את השדה $\mathbf F_p(\mathbf x)=\frac{\mathbf x}{\|\mathbf x\|^p}$.
+      לאיזה $p$ מתקיים $\nabla\cdot\mathbf F_p=0$ בכל $\mathbb R^3\setminus\{0\}$?
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי כלל המכפלה עם $g=\|\mathbf x\|^{-p}$: $\nabla g=-p\|\mathbf x\|^{-p-2}\mathbf x$ ו-$\nabla\cdot\mathbf x=3$,
+      ולכן $\nabla\cdot\mathbf F_p=\nabla g\cdot\mathbf x+g\cdot3=(3-p)\|\mathbf x\|^{-p}$. זה אפס בדיוק כש-$p=3$:
+      השדה $\frac{\mathbf x}{\|\mathbf x\|^3}$, שגודלו $\frac{1}{\|\mathbf x\|^2}$. (נחזור אליו בשיעור 7.6.)
+    wrongFeedback: >-
+      כתבו $\mathbf F_p=g\,\mathbf x$ עם $g=\|\mathbf x\|^{-p}$, והשתמשו ב-$\nabla\cdot(g\mathbf x)=\nabla g\cdot\mathbf x+g\,\nabla\cdot\mathbf x$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          לשדה $\frac{\mathbf x}{\|\mathbf x\|^2}$ גודל $\frac1{\|\mathbf x\|}$, והדיברגנץ שלו $\frac{1}{\|\mathbf x\|^2}\ne0$.
+          החזקה במכנה היא אחת יותר מחזקת הדעיכה של הגודל, כי במונה יש $\mathbf x$, שגודלו $\|\mathbf x\|$.
+      - value: 0
+        feedback: >-
+          עם $p=0$ השדה הוא $\mathbf x$ עצמו, והדיברגנץ שלו $3$. נראה שהשמטתם את המחובר $\nabla g\cdot\mathbf x$ מכלל המכפלה.
+        misconception: MC-c7-product-rule-missing
+
+  - id: Q-7.1-curlgrad-proof
+    type: rank
+    objectives: [OBJ-7.1-2]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה של $\nabla\times(\nabla f)=0$ לכל $f:\mathbb R^3\to\mathbb R$ מסדר $C^2$.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'נכתוב $\nabla f=(f_x,f_y,f_z)$; הרכיבים הם פונקציות מסדר $C^1$ כי $f\in C^2$'
+      - id: b
+        label: 'הרכיב הראשון של הרוטור הוא $\partial_y(f_z)-\partial_z(f_y)=f_{zy}-f_{yz}$'
+      - id: c
+        label: 'כי $f\in C^2$, לפי משפט שוורץ הנגזרות המעורבות שוות: $f_{zy}=f_{yz}$, והרכיב הראשון אפס'
+      - id: d
+        label: 'אותו חישוב, עם החלפה מחזורית של $x,y,z$, מאפס את שני הרכיבים האחרים'
+      - id: e
+        label: 'לכן $\nabla\times(\nabla f)=0$ בכל נקודה'
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. כל ההוכחה היא שוויון הנגזרות המעורבות; שם בדיוק נכנסת ההנחה $f\in C^2$.
+    wrongFeedback: >-
+      התחילו בכתיבת $\nabla f$, חשבו רכיב אחד של הרוטור, השתמשו בשוויון הנגזרות המעורבות, ורק אז הכלילו לשאר
+      הרכיבים.
+
+  - id: Q-7.1-is-curl
+    type: twotier
+    objectives: [OBJ-7.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם קיים שדה $\mathbf G:\mathbb R^3\to\mathbb R^3$ מסדר $C^2$ כך ש-$\nabla\times\mathbf G=(x,\ y,\ z)$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. לכל $\mathbf G\in C^2$ מתקיים $\nabla\cdot(\nabla\times\mathbf G)=0$, אבל $\nabla\cdot(x,y,z)=3$.
+      - text: כן
+        feedback: >-
+          אם היה $\mathbf G$ כזה, היה $\nabla\cdot(\nabla\times\mathbf G)=\nabla\cdot(x,y,z)=3$. אבל הדיברגנץ של רוטור
+          של שדה מסדר $C^2$ הוא תמיד אפס.
+        misconception: MC-c7-curl-preimage-unchecked
+    reasons:
+      - text: 'הדיברגנץ של רוטור של שדה מסדר $C^2$ הוא אפס, ו-$\nabla\cdot(x,y,z)=3\ne0$'
+        correct: true
+        feedback: >-
+          בדיוק. $\nabla\cdot\mathbf F=0$ הוא תנאי **הכרחי** כדי ש-$\mathbf F$ יהיה רוטור. (בשיעור 7.6 נראה שבתחום
+          כוכבי הוא גם מספיק.)
+      - text: 'הרוטור של $(x,y,z)$ הוא אפס'
+        feedback: >-
+          נכון ש-$\nabla\times(x,y,z)=0$, אבל זה לא קשור לשאלה: שואלים אם $(x,y,z)$ **הוא** רוטור של משהו, לא מה הרוטור
+          שלו. את זה קובע הדיברגנץ.
+        misconception: MC-c7-operator-types
+      - text: 'אפשר לבחור $\mathbf G=(yz,\ xz,\ xy)$'
+        feedback: >-
+          $(yz,xz,xy)=\nabla(xyz)$ הוא גרדיאנט, ולכן הרוטור שלו אפס, לא $(x,y,z)$. ולמעשה אין שום $\mathbf G$ מתאים.
+        misconception: MC-c7-curl-preimage-unchecked
+
+  - id: Q-7.1-paddle
+    type: numeric
+    objectives: [OBJ-7.1-3]
+    level: mid
+    prompt: >-
+      יהי $\mathbf F(x,y,z)=(x-2y,\ 3x+y^2,\ 0)$, ויהי $C_\varepsilon$ המעגל ברדיוס $\varepsilon$ סביב הראשית במישור $xy$,
+      בכיוון נגד כיוון השעון כשמסתכלים מלמעלה (מ-$z$ חיובי). חשבו את
+      $$\lim_{\varepsilon\to0}\frac{1}{\pi\varepsilon^2}\oint_{C_\varepsilon}\mathbf F\cdot d\mathbf s.$$
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. עם $\gamma(t)=(\varepsilon\cos t,\varepsilon\sin t,0)$, המחוברים $x\,dx$ ו-$y^2\,dy$ נותנים אפס על מסילה סגורה
+      (הם דיפרנציאלים של $\frac{x^2}2$ ו-$\frac{y^3}3$), ונשאר $\oint(-2y\,dx+3x\,dy)=2\varepsilon^2\pi+3\varepsilon^2\pi=5\pi\varepsilon^2$.
+      המנה היא 5 לכל $\varepsilon$, וזה בדיוק הרכיב השלישי של הרוטור: $\partial_x F_2-\partial_y F_1=3-(-2)$.
+    wrongFeedback: >-
+      הציבו $\gamma(t)=(\varepsilon\cos t,\varepsilon\sin t,0)$ וחשבו את האינטגרל הקווי. השוו לרכיב השלישי של הרוטור.
+    commonWrong:
+      - value: -5
+        feedback: >-
+          הסימן הפוך: נגד כיוון השעון מלמעלה, הכיוון של כלל יד ימין עם $\mathbf e_3$, נותן $+5$. ייתכן שחישבתם
+          $\partial_y F_1-\partial_x F_2$.
+        misconception: MC-c7-curl-sign
+      - value: 1
+        feedback: >-
+          זה $3-2$. המקדם של $y$ ב-$F_1$ הוא $-2$, ולכן $\partial_x F_2-\partial_y F_1=3-(-2)=5$.
+      - value: 10
+        feedback: >-
+          חילקתם בשטח של חצי עיגול, או הכפלתם ב-2. הסירקולציה היא $5\pi\varepsilon^2$ ושטח העיגול $\pi\varepsilon^2$.
+
+  - id: Q-7.1-shear
+    type: twotier
+    objectives: [OBJ-7.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לשדה $\mathbf F(x,y,z)=(y,0,0)$ כל קווי השדה הם ישרים מקבילים לציר $x$. האם $\nabla\times\mathbf F=0$?
+    choices:
+      - text: 'לא, $\nabla\times\mathbf F=(0,0,-1)$'
+        correct: true
+        feedback: >-
+          נכון. $\partial_x F_2-\partial_y F_1=0-1=-1$. גלגל הנעה קטן במישור $xy$ מסתובב עם כיוון השעון: למעלה השדה
+          חזק יותר מלמטה.
+      - text: כן, כי הקווים ישרים
+        feedback: >-
+          ישרות הקווים אינה מה שהרוטור מודד. כאן השדה חזק יותר ככל ש-$y$ גדל, ולכן על לולאה קטנה הצלע העליונה תורמת
+          יותר מהתחתונה, והסירקולציה אינה אפס.
+        misconception: MC-c7-curl-from-shape
+    reasons:
+      - text: 'הסירקולציה סביב ריבוע קטן בצלע $h$ (נגד כיוון השעון) היא $-h^2$: הצלע העליונה, נגד הזרם, מפסידה יותר ממה שהתחתונה מרוויחה'
+        correct: true
+        feedback: >-
+          בדיוק. בריבוע $[0,h]^2$: הצלע התחתונה ($y=0$) תורמת $0$ והעליונה ($y=h$, מימין לשמאל) תורמת $-h\cdot h$.
+          לחלק לשטח $h^2$ מקבלים $-1$, הרכיב השלישי של הרוטור.
+      - text: 'רוטור שונה מאפס רק כשהקווים סוגרים מעגלים'
+        feedback: >-
+          לא. לשדה $\frac{(-y,x,0)}{x^2+y^2}$ (נפגוש אותו שוב בשיעור 7.3) הקווים מעגלים, וחישוב ישיר נותן לו רוטור אפס
+          מחוץ לציר $z$; לשדה כאן הקווים ישרים והרוטור שונה מאפס.
+        misconception: MC-c7-curl-from-shape
+      - text: 'כי $\nabla\cdot\mathbf F=0$'
+        feedback: >-
+          נכון ש-$\nabla\cdot\mathbf F=0$, אבל הדיברגנץ והרוטור מודדים דברים שונים, ואחד לא קובע את השני.
+        misconception: MC-c7-density-confusion
+
+  - id: Q-7.1-saddle-flow
+    type: mc
+    objectives: [OBJ-7.1-3, OBJ-7.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בשדה $\mathbf F(x,y,z)=(x,-y,0)$ החצים נכנסים לראשית לאורך ציר $y$ ויוצאים ממנה לאורך ציר $x$. מה נכון בראשית?
+    choices:
+      - text: '$\nabla\cdot\mathbf F=0$ ו-$\nabla\times\mathbf F=0$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla\cdot\mathbf F=1-1+0=0$: מה שנכנס לאורך $y$ יוצא לאורך $x$. ו-$\nabla\times\mathbf F=(0,0,\partial_x(-y)-\partial_y x)=0$.
+          זה הגרדיאנט של $\frac{x^2-y^2}{2}$.
+      - text: '$\nabla\cdot\mathbf F>0$, כי יש חצים שיוצאים מהראשית'
+        feedback: >-
+          יש גם חצים שנכנסים, באותו קצב בדיוק. צפיפות השטף היא מה שיוצא פחות מה שנכנס: $1+(-1)=0$.
+        misconception: MC-c7-div-from-spread
+      - text: '$\nabla\times\mathbf F\ne0$, כי החצים משנים כיוון סביב הראשית'
+        feedback: >-
+          שינוי כיוון אינו סיבוב מקומי. השדה הוא גרדיאנט, ולכן הרוטור שלו אפס.
+        misconception: MC-c7-curl-from-shape
+      - text: 'הדיברגנץ והרוטור לא מוגדרים, כי $\mathbf F(0)=0$'
+        feedback: >-
+          ערך אפס של השדה בנקודה לא מפריע לגזירה. הרכיבים פולינומים, ולכן כל הנגזרות קיימות בכל מקום.
+
+  - id: Q-7.1-gradcross
+    type: twotier
+    objectives: [OBJ-7.1-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      יהיו $f,g:\mathbb R^3\to\mathbb R$ מסדר $C^2$. האם בהכרח $\nabla\cdot(\nabla f\times\nabla g)=0$ בכל נקודה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. $\nabla f$ ו-$\nabla g$ שדות מסדר $C^1$ שהרוטור של כל אחד מהם אפס, וכלל המכפלה לדיברגנץ של מכפלה וקטורית
+          נותן אפס.
+      - text: לא, רק אם $f$ או $g$ קבועה
+        feedback: >-
+          נסו $f=x$, $g=y$: $\nabla f\times\nabla g=(0,0,1)$, והדיברגנץ שלו אפס, אף שאף אחת מהן אינה קבועה. הזהות
+          נכונה תמיד.
+        misconception: MC-c7-identity-no-hypothesis
+    reasons:
+      - text: 'לפי כלל המכפלה $\nabla\cdot(\mathbf A\times\mathbf B)=\mathbf B\cdot(\nabla\times\mathbf A)-\mathbf A\cdot(\nabla\times\mathbf B)$ עם $\mathbf A=\nabla f$, $\mathbf B=\nabla g$, ושני הרוטורים אפס כי רוטור של גרדיאנט אפס'
+        correct: true
+        feedback: >-
+          בדיוק: כלל מכפלה ועוד רוטור של גרדיאנט. הכלל דורש $\mathbf A,\mathbf B\in C^1$, ו-$\nabla f,\nabla g\in C^1$ כי
+          $f,g\in C^2$. (הדרך $\nabla f\times\nabla g=\nabla\times(f\nabla g)$ ואז "דיברגנץ של רוטור אפס" אינה מספיקה כאן:
+          $f\nabla g$ רק מסדר $C^1$, והזהות $\nabla\cdot(\nabla\times\mathbf G)=0$ הוכחה ל-$\mathbf G\in C^2$.)
+      - text: 'כי $\nabla f$ ו-$\nabla g$ ניצבים זה לזה בכל נקודה, ולכן $\nabla f\times\nabla g$ הוא שדה בעל גודל קבוע שהדיברגנץ שלו אפס'
+        feedback: >-
+          אין סיבה ששני גרדיאנטים יהיו ניצבים ($f=g=x$ נותנים שני וקטורים שווים). וגם אם היו, זה לא אומר דבר על
+          הדיברגנץ של המכפלה הווקטורית שלהם: לשדה בעל גודל קבוע יכול להיות דיברגנץ שונה מאפס.
+      - text: 'כי הרוטור של גרדיאנט הוא אפס, ולכן גם המכפלה הווקטורית $\nabla f\times\nabla g$ של שני גרדיאנטים היא אפס בכל נקודה'
+        feedback: >-
+          $\nabla\times\nabla f=0$ מדבר על הרוטור של גרדיאנט, לא על מכפלה וקטורית של שני גרדיאנטים. $\nabla x\times\nabla y=(0,0,1)\ne0$.
+        misconception: MC-c7-operator-types

@@ -1,0 +1,32 @@
+# Terms first defined in lesson 11.1.
+- id: initial-value-problem
+  term: בעיית התחלה
+  en: initial value problem
+  symbol: "y'=f(t,y),\ y(t_0)=y_0"
+  definition: >-
+    משוואה דיפרנציאלית $y'=f(t,y)$ יחד עם תנאי התחלה $y(t_0)=y_0$. פתרון שלה הוא פונקציה גזירה בקטע שמכיל את
+    $t_0$, שהגרף שלה בתחום של $f$, שמקיימת את המשוואה בכל נקודה של הקטע ואת $y(t_0)=y_0$.
+  reject: [בעיית ערך התחלתי]
+  lesson: '11.1'
+- id: integral-equation
+  term: משוואה אינטגרלית
+  en: integral equation
+  symbol: 'y(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds'
+  definition: >-
+    משוואה שהנעלם בה הוא פונקציה שמופיעה בתוך אינטגרל. בעיית ההתחלה $y'=f(t,y)$, $y(t_0)=y_0$ עם $f$ רציפה
+    שקולה למשוואה $y(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds$ לפונקציה רציפה $y$.
+  lesson: '11.1'
+- id: solution-on-an-interval
+  term: פתרון בקטע
+  en: solution on an interval
+  definition: >-
+    פונקציה $y$ גזירה בקטע $I$, כך ש-$(t,y(t))$ בתחום של $f$ ו-$y'(t)=f(t,y(t))$ לכל $t\in I$. פתרון של בעיית
+    התחלה מוגדר בקטע שמכיל את $t_0$; איחוד של קטעים זרים אינו קטע.
+  lesson: '11.1'
+- id: blow-up
+  term: התפוצצות בזמן סופי
+  en: blow-up in finite time
+  definition: >-
+    הפתרון מוגדר רק עד זמן סופי $T$, ו-$|y(t)|\to\infty$ כש-$t\to T$. למשל $y'=y^2$, $y(0)=1$ נפתרת ב-$y=\frac1{1-t}$,
+    שמתפוצצת ב-$T=1$.
+  lesson: '11.1'

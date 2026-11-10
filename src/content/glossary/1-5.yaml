@@ -1,0 +1,34 @@
+# Terms first defined in lesson 1.5 (signed curvature of a plane curve).
+- id: rotated-normal
+  term: הנורמל המסובב
+  en: signed (rotated) unit normal
+  symbol: '\mathbf n_s'
+  definition: >-
+    במסילה מישורית: $\mathbf t$ מסובב ברבע סיבוב נגד כיוון השעון. אם $\mathbf t=(\cos\theta,\sin\theta)$ אז
+    $\mathbf n_s=(-\sin\theta,\cos\theta)$. מוגדר בכל נקודה רגולרית, גם כש-$\kappa=0$, ושווה ל-$\pm\mathbf n$.
+  lesson: '1.5'
+- id: signed-curvature
+  term: עקמומיות מסומנת
+  en: signed curvature
+  symbol: 'k'
+  definition: >-
+    הסקלר $k$ שמקיים $\frac{d\mathbf t}{ds}=k\,\mathbf n_s$. $|k|=\kappa$, ו-$k>0$ כשהמסילה פונה שמאלה. בפרמטר כללי
+    $k=\frac{x'y''-y'x''}{(x'^2+y'^2)^{3/2}}$. מתהפכת בהיפוך כיוון ובשיקוף, נשמרת בהזזה ובסיבוב.
+  reject: [עקמומיות חתומה]
+  lesson: '1.5'
+- id: tangent-angle
+  term: זווית המשיק
+  en: tangent angle (turning angle)
+  symbol: '\theta(s)'
+  definition: >-
+    פונקציה גזירה $\theta(s)$ שמקיימת $\mathbf t(s)=(\cos\theta(s),\sin\theta(s))$; היא נקבעת עד כדי קבוע $2\pi m$,
+    ו-$\theta'=k$.
+  lesson: '1.5'
+- id: total-turning
+  term: הפנייה הכוללת
+  en: total turning (total signed curvature) of a plane curve
+  symbol: '\int k\,ds'
+  definition: >-
+    $\int_0^Lk\,ds=\theta(L)-\theta(0)$, הזווית שהמשיק הסתובב, עם סימן: פנייה שמאלה בחיוב, ימינה בשלילה. במסילה סגורה
+    שהמשיק בה חוזר לכיוונו זו כפולה של $2\pi$.
+  lesson: '1.5'

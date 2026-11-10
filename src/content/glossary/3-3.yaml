@@ -1,0 +1,33 @@
+# Terms first defined in lesson 3.3.
+- id: tangent-plane
+  term: מישור משיק
+  en: tangent plane
+  symbol: 'T_pS'
+  definition: >-
+    $T_pS=\operatorname{span}\{\sigma_u,\sigma_v\}$, אוסף וקטורי המהירות $\gamma'(0)$ של מסילות במשטח עם $\gamma(0)=p$.
+    המישור המשיק הגאומטרי הוא $p+T_pS$. במשטח רמה $T_pS=\nabla F(p)^{\perp}$.
+  lesson: '3.3'
+- id: unit-normal
+  term: נורמל יחידה
+  en: unit normal
+  symbol: '\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}'
+  definition: >-
+    וקטור היחידה שניצב למישור המשיק, לפי סדר הפרמטרים. הוא נכתב תמיד עם כובע, כדי לא להתבלבל עם המקדם $N$ של התבנית
+    השנייה (פרק 4). החלפת פרמטרים עם $\det(D\varphi)<0$ הופכת אותו; במשטח רמה $\hat{\mathbf N}=\pm\frac{\nabla F}{\|\nabla F\|}$.
+  lesson: '3.3'
+- id: orientable-surface
+  term: משטח מכוון
+  en: orientable surface
+  definition: >-
+    משטח חלק שיש עליו בחירה **רציפה** של נורמל יחידה $\hat{\mathbf N}(p)$ בכל נקודה $p$. בחירה כזו נקראת כיוון של המשטח.
+    גרפים, משטחי רמה והספרה מכוונים; רצועת מביוס אינה מכוונת.
+  lesson: '3.3'
+- id: mobius-band
+  term: רצועת מביוס
+  en: Möbius band
+  symbol: '((2+v\cos\tfrac u2)\cos u,\ (2+v\cos\tfrac u2)\sin u,\ v\sin\tfrac u2)'
+  definition: >-
+    המשטח שמתקבל מסיבוב קטע סביב מעגל תוך כדי חצי סיבוב שלו, $|v|<1$. הפרמטריזציה רגולרית ומקיימת
+    $\sigma(u+2\pi,-v)=\sigma(u,v)$, והנורמל הרציף לאורך המעגל האמצעי חוזר לנקודת ההתחלה הפוך: המשטח אינו מכוון.
+  reject: [רצועת מוביוס]
+  lesson: '3.3'

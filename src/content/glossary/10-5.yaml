@@ -1,0 +1,24 @@
+# Terms first defined in lesson 10.5 (mean-square convergence and Parseval's identity).
+# "התכנסות בממוצע ריבועי" is defined in lesson 9.4.
+- id: parseval-identity
+  term: שוויון פרסבל
+  en: Parseval's identity
+  definition: >-
+    לכל $f\in H[-\pi,\pi]$: $\frac1\pi\int_{-\pi}^{\pi}f^2=\frac{a_0^2}2+\sum_{n\ge1}(a_n^2+b_n^2)$. הוא שקול ל-$\|f-S_Nf\|\to0$,
+    כי ההפרש בין האגפים עד $N$ הוא $\frac1\pi\|f-S_Nf\|^2$. מ-$f(x)=x$: $\sum\frac1{n^2}=\frac{\pi^2}6$.
+  lesson: '10.5'
+- id: complete-orthonormal-system
+  term: מערכת אורתונורמלית שלמה
+  en: complete orthonormal system
+  definition: >-
+    מערכת אורתונורמלית $e_1,e_2,\dots$ שעבורה $\|f\|^2=\sum\langle f,e_k\rangle^2$ לכל $f$, כלומר הצירופים הלינאריים
+    שלה צפופים. המערכת הטריגונומטרית המנורמלת שלמה ב-$H[-\pi,\pi]$, ופולינומי לז׳נדר המנורמלים שלמים ב-$H[-1,1]$.
+  lesson: '10.5'
+- id: wirtinger-inequality
+  term: אי-שוויון וירטינגר
+  en: Wirtinger's inequality
+  symbol: '\int_{-\pi}^{\pi}f^2\le\int_{-\pi}^{\pi}(f^{\prime})^2'
+  definition: >-
+    אם $f$ מחזורית ב-$2\pi$, גזירה ברציפות, ו-$\int_{-\pi}^{\pi}f=0$, אז $\int_{-\pi}^{\pi}f^2\le\int_{-\pi}^{\pi}(f^{\prime})^2$, עם
+    שוויון אם ורק אם $f=a\cos x+b\sin x$. ההוכחה: פרסבל ל-$f$ ול-$f^{\prime}$, ו-$a_n(f')=n\,b_n$, $b_n(f')=-n\,a_n$.
+  lesson: '10.5'

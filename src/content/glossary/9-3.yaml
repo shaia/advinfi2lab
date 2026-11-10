@@ -1,0 +1,23 @@
+# Terms first defined in lesson 9.3 (projection onto a finite-dimensional subspace).
+- id: orthogonal-projection
+  term: הטלה אורתוגונלית
+  en: orthogonal projection
+  symbol: 'P_Y'
+  definition: >-
+    ההטלה של $x$ על תת-מרחב $Y$ היא הווקטור היחיד $P_Yx\in Y$ שעבורו $x-P_Yx\perp Y$. כש-$e_1,\dots,e_n$ בסיס אורתונורמלי
+    של $Y$: $P_Yx=\sum\langle x,e_k\rangle e_k$.
+  lesson: '9.3'
+- id: best-approximation
+  term: הקירוב הטוב ביותר
+  en: best approximation
+  definition: >-
+    הנקודה של תת-מרחב (או קבוצה) הקרובה ביותר ל-$x$ בנורמה של המרחב. בתת-מרחב סוף-ממדי היא $P_Yx$, והיא תלויה בנורמה:
+    הקירוב הטוב ביותר בממוצע ריבועי אינו בהכרח הטוב ביותר בנורמת המקסימום.
+  lesson: '9.3'
+- id: least-squares
+  term: קירוב בריבועים פחותים
+  en: least-squares approximation
+  definition: >-
+    הפולינום $p$ ממעלה נתונה שממזער את $\int_a^b(f-p)^2$, כלומר ההטלה של $f$ על הפולינומים ממעלה זו ב-$C[a,b]$ עם $\int fg$.
+    למשל הישר הקרוב ביותר ל-$x^2$ על $[0,1]$ הוא $x-\frac16$.
+  lesson: '9.3'

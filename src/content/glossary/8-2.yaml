@@ -1,0 +1,20 @@
+# Terms first defined in lesson 8.2.
+- id: wedge-product
+  term: מכפלת יתד
+  en: wedge product
+  symbol: '\alpha\wedge\beta'
+  definition: >-
+    לשתי תבניות מסדר 1, $(\alpha\wedge\beta)(v,w)=\alpha(v)\beta(w)-\alpha(w)\beta(v)$, הדטרמיננטה של ערכיהן על $v,w$.
+    היא אנטי-סימטרית, $\alpha\wedge\beta=-\beta\wedge\alpha$, ולכן $\alpha\wedge\alpha=0$; היא לינארית בכל גורם
+    ואסוציאטיבית, וכך מוגדרות גם מכפלות של שלושה גורמים.
+  reject: [מכפלת טריז]
+  lesson: '8.2'
+- id: k-form
+  term: תבנית מסדר 2 ותבנית מסדר 3
+  en: 2-form, 3-form
+  symbol: '\eta=A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy'
+  definition: >-
+    ב-$\mathbb R^3$, תבנית מסדר 2 היא $A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy$ ומתאימה לשדה $(A,B,C)$, כך
+    ש-$\eta(v,w)=(A,B,C)\cdot(v\times w)$. תבנית מסדר 3 היא $f\,dx\wedge dy\wedge dz$ ומתאימה לפונקציה $f$, כש-$dx\wedge
+    dy\wedge dz(u,v,w)=\det(u,v,w)$.
+  lesson: '8.2'

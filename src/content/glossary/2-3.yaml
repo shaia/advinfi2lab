@@ -1,0 +1,16 @@
+# Terms first defined in lesson 2.3 (the Frenet–Serret equations).
+- id: frenet-serret-equations
+  term: משוואות פרנה-סרה
+  en: Frenet–Serret equations
+  definition: >-
+    $\mathbf t'=\kappa\mathbf n$, $\mathbf n'=-\kappa\mathbf t+\tau\mathbf b$, $\mathbf b'=-\tau\mathbf n$ (נגזרות לפי אורך הקשת):
+    הנגזרות של השלשה של פרנה בשלשה עצמה, עם מטריצת מקדמים אנטי-סימטרית.
+  lesson: '2.3'
+- id: darboux-vector
+  term: וקטור דרבו
+  en: Darboux vector
+  symbol: '\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b'
+  definition: >-
+    הווקטור $\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$, שהשלשה של פרנה מסתובבת סביבו: כל וקטור $\mathbf u$ בשלשה מקיים
+    $\mathbf u'=\boldsymbol\omega\times\mathbf u$. בסליל מעגלי הוא קבוע ומקביל לציר.
+  lesson: '2.3'

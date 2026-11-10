@@ -1,0 +1,395 @@
+# Chapter 8 review — differential forms (lessons 8.1–8.6), easy to hard.
+# Every lesson is touched (8.6, enrichment, only lightly); most questions combine two lessons or reach back to
+# chapters 5–7. Each hint names the lesson to go back to.
+chapter: 8
+questions:
+  - id: Q-8-review-01
+    type: multi
+    objectives: [OBJ-8.2-1, OBJ-8.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהביטויים הבאים הם תבניות מסדר 2 על $\mathbb R^3$? סמנו את כולם.
+    choices:
+      - text: '$xy\,dx\wedge dz$'
+        correct: true
+        feedback: נכון. מקדם חלק כפול מכפלת יתד של שני דיפרנציאלים.
+      - text: '$e^z\,dy\wedge dx$'
+        correct: true
+        feedback: >-
+          נכון. זו $-e^z\,dx\wedge dy$; הסדר משנה סימן, לא סדר של תבנית.
+      - text: '$x\,dx+y\,dy$'
+        feedback: >-
+          זו תבנית מסדר 1: בכל נקודה היא פונקציונל על וקטור **אחד**.
+        misconception: MC-c8-form-is-number
+      - text: '$dx\wedge dy+dz$'
+        feedback: >-
+          סכום של תבנית מסדר 2 ותבנית מסדר 1 אינו תבנית מסדר אחד מוגדר. כל המחוברים צריכים להיות מאותו סדר.
+        misconception: MC-c8-stokes-degree
+      - text: '$dx\wedge dy\wedge dz$'
+        feedback: >-
+          זו תבנית מסדר 3 (שלושה דיפרנציאלים): היא מקבלת שלושה וקטורים ומחזירה את הדטרמיננטה שלהם.
+        misconception: MC-c8-stokes-degree
+    hints:
+      - 'חזרו לשיעור 8.2: תבניות מסדר 2 ו-3, ולשיעור 8.1: מה זה תבנית מסדר 1.'
+
+  - id: Q-8-review-02
+    type: numeric
+    objectives: [OBJ-8.1-2, OBJ-6.1-1]
+    level: basic
+    prompt: >-
+      חשבו $\int_\gamma x\,dy$ כש-$\gamma$ היא קשת הפרבולה $y=x^2$ מ-$(0,0)$ ל-$(1,1)$.
+    answer: 0.6666667
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $\gamma(t)=(t,t^2)$, $dy=2t\,dt$, ו-$\int_0^1t\cdot2t\,dt=\frac23$. זה האינטגרל הקווי של השדה $(0,x)$ (שיעור 6.1).
+    wrongFeedback: >-
+      הציבו $x=t$ במקדם ו-$dy=y'(t)\,dt$ בדיפרנציאל.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          $\frac12=\int_0^1t\,dt$: הוחלף $dy$ ב-$dt$ בלי הנגזרת $y'(t)=2t$.
+        misconception: MC-c8-forget-velocity
+      - value: -0.6666667
+        feedback: >-
+          זה האינטגרל מ-$(1,1)$ ל-$(0,0)$. הכיוון קובע את הסימן.
+        misconception: MC-c8-form-integral-unoriented
+    hints:
+      - 'חזרו לשיעור 8.1: אינטגרל של תבנית על מסילה.'
+
+  - id: Q-8-review-03
+    type: mc
+    objectives: [OBJ-8.2-2, OBJ-8.3-2, OBJ-7.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      במילון בין תבניות לשדות ב-$\mathbb R^3$, למה מתאימה הנגזרת החיצונית $d$ על פונקציות, על תבניות מסדר 1 ועל תבניות
+      מסדר 2, בהתאמה?
+    choices:
+      - text: גרדיאנט, רוטור, דיברגנץ
+        correct: true
+        feedback: >-
+          נכון. ולכן $d^2=0$ אומר גם $\nabla\times\nabla f=0$ וגם $\nabla\cdot(\nabla\times F)=0$: שתי הזהויות של שיעור 7.1
+          הן זהות אחת.
+      - text: גרדיאנט, דיברגנץ, רוטור
+        feedback: >-
+          $d$ על תבנית מסדר 1 נותן תבנית מסדר 2, כלומר שדה, ולכן אינו יכול להיות הדיברגנץ (פונקציה). הדיברגנץ בא אחרון.
+        misconception: MC-c8-dict-degree
+      - text: דיברגנץ, רוטור, גרדיאנט
+        feedback: >-
+          $d$ על פונקציה נותן תבנית מסדר 1, $df$, שמתאימה לשדה $\nabla f$. הסדר הפוך.
+        misconception: MC-c8-dict-degree
+    hints:
+      - 'חזרו לשיעור 8.3: הנגזרת החיצונית במילון של השדות, ולשיעור 8.2: המילון עצמו.'
+
+  - id: Q-8-review-04
+    type: twotier
+    objectives: [OBJ-8.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f\in C^2(\mathbb R^3)$ ו-$\omega=df$. האם $\omega$ סגורה, כלומר $d\omega=0$?
+    choices:
+      - text: כן, תמיד
+        correct: true
+        feedback: >-
+          נכון: כל תבנית מדויקת היא סגורה.
+      - text: 'רק אם $f$ לינארית'
+        feedback: >-
+          $f=x^2y$: $df=2xy\,dx+x^2\,dy$, ו-$d(df)=2x\,dy\wedge dx+2x\,dx\wedge dy=0$. אין צורך בלינאריות.
+        misconception: MC-c8-dd-trivial
+    reasons:
+      - text: '$d(df)=0$ לכל $f\in C^2$, בגלל שוויון הנגזרות המעורבות והאנטי-סימטריה של מכפלת היתד'
+        correct: true
+        feedback: >-
+          בדיוק, זו הזהות $d^2=0$ של שיעור 8.3. ההפך, "אם $d\omega=0$ אז $\omega=df$", אינו נכון בכל תחום.
+      - text: 'סגורה פירושו $\omega=df$, וזה נתון'
+        feedback: >-
+          לפי השאלה, סגורה פירושו $d\omega=0$, וזה מה שצריך להראות. העובדה ש-$\omega=df$ היא הנתון, והשאלה היא למה $d$ שלו
+          מתאפס: שוויון הנגזרות המעורבות והאנטי-סימטריה של מכפלת היתד.
+        misconception: MC-c8-dd-trivial
+    hints:
+      - 'חזרו לשיעור 8.3: הנגזרת החיצונית והוכחת d בריבוע שווה אפס.'
+
+  - id: Q-8-review-05
+    type: numeric
+    objectives: [OBJ-8.3-1, OBJ-8.2-2]
+    level: mid
+    prompt: >-
+      $\eta=xy\,dy\wedge dz+y^2\,dx\wedge dz+z^3\,dx\wedge dy$, ו-$d\eta=g\,dx\wedge dy\wedge dz$. חשבו $g(1,2,1)$.
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $d(xy\,dy\wedge dz)=y\,dx\wedge dy\wedge dz$, $d(y^2\,dx\wedge dz)=2y\,dy\wedge dx\wedge dz=-2y\,dx\wedge dy\wedge dz$,
+      $d(z^3\,dx\wedge dy)=3z^2\,dx\wedge dy\wedge dz$. לכן $g=-y+3z^2$, ובנקודה $-2+3=1$. במילון: הדיברגנץ של
+      $(xy,-y^2,z^3)$.
+    wrongFeedback: >-
+      בכל איבר נשארת רק הנגזרת לפי המשתנה החסר. סדרו כל מכפלה לפי $dx\wedge dy\wedge dz$ עם הסימן הנכון.
+    commonWrong:
+      - value: 9
+        feedback: >-
+          $9=y+2y+3z^2$: האיבר $y^2\,dx\wedge dz$ טופל כאילו היה $y^2\,dz\wedge dx$. ההחלפה מוסיפה מינוס, והשדה הוא
+          $(xy,-y^2,z^3)$.
+        misconception: MC-c8-dict-sign
+    hints:
+      - 'חזרו לשיעור 8.3: הנגזרת החיצונית של תבנית מסדר 2, ולשיעור 8.2: המילון ואנטי-הסימטריה.'
+
+  - id: Q-8-review-06
+    type: mc
+    objectives: [OBJ-8.3-1, OBJ-8.2-1]
+    level: mid
+    prompt: >-
+      חשבו את $d\big(e^{xz}\,dx\wedge dy\big)$ ב-$\mathbb R^3$.
+    choices:
+      - text: '$xe^{xz}\,dx\wedge dy\wedge dz$'
+        correct: true
+        feedback: >-
+          נכון. $d(e^{xz})=ze^{xz}\,dx+xe^{xz}\,dz$; האיבר עם $dx$ נותן $dx\wedge dx\wedge dy=0$, ו-$dz\wedge dx\wedge dy=dx\wedge
+          dy\wedge dz$ (תמורה מעגלית).
+      - text: '$ze^{xz}\,dx\wedge dy\wedge dz$'
+        feedback: >-
+          זו הנגזרת לפי $x$, משתנה ש-$dx$ שלו כבר מופיע; האיבר הזה מתאפס. שורדת רק הנגזרת לפי $z$.
+        misconception: MC-c8-d-present-variable
+      - text: '$-xe^{xz}\,dx\wedge dy\wedge dz$'
+        feedback: >-
+          $dz\wedge dx\wedge dy$ היא תמורה מעגלית של $dx\wedge dy\wedge dz$, זוגית, ולכן בלי מינוס.
+        misconception: MC-c8-permutation-sign
+      - text: '$(z+x)e^{xz}\,dx\wedge dy\wedge dz$'
+        feedback: >-
+          לקחו את כל הנגזרות. אבל $ze^{xz}\,dx\wedge dx\wedge dy=0$, כי $dx$ מופיע פעמיים.
+        misconception: MC-c8-wedge-self-nonzero
+    hints:
+      - 'חזרו לשיעור 8.3: ההגדרה $d(f\,dx\wedge dy)=df\wedge dx\wedge dy$, ולשיעור 8.2: סימן התמורה.'
+
+  - id: Q-8-review-07
+    type: numeric
+    objectives: [OBJ-8.4-1, OBJ-5.1-1]
+    level: mid
+    prompt: >-
+      $\varphi(u,v)=(2u+v,\ u-3v)$. כתבו $\varphi^*(dx\wedge dy)=c\,du\wedge dv$. מהו $c$?
+    answer: -7
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\varphi^*dx=2\,du+dv$, $\varphi^*dy=du-3\,dv$, והמכפלה $-6\,du\wedge dv+dv\wedge du=-7\,du\wedge dv$. זה
+      $\det J_\varphi$ עם סימנו; היעקוביאן של שיעור 5.1 הוא $|c|=7$.
+    wrongFeedback: >-
+      משכו את $dx$ ואת $dy$ ופתחו את מכפלת היתד. $dv\wedge du=-du\wedge dv$.
+    commonWrong:
+      - value: 7
+        feedback: >-
+          $7=|\det J|$, מקדם השטח של שיעור 5.1. במשיכה לאחור הדטרמיננטה מופיעה עם הסימן: ההעתקה הזו הופכת כיוון.
+        misconception: MC-c8-orientation-abs-det
+      - value: -5
+        feedback: >-
+          $-5=2\cdot(-3)+1\cdot1$: סכום במקום הפרש, כאילו $dv\wedge du=du\wedge dv$.
+        misconception: MC-c8-wedge-commutes
+    hints:
+      - 'חזרו לשיעור 8.4: משיכה לאחור של dx יתד dy, ולשיעור 5.1: היעקוביאן.'
+
+  - id: Q-8-review-08
+    type: twotier
+    objectives: [OBJ-8.4-3, OBJ-5.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\psi(\theta,r)=(r\cos\theta,\ r\sin\theta)$ על $[0,2\pi]\times[0,1]$ (שימו לב לסדר: $\theta$ ראשון). האם
+      $\int\psi^*(dx\wedge dy)$ שווה לשטח של עיגול היחידה, $\pi$?
+    choices:
+      - text: 'לא, הוא $-\pi$'
+        correct: true
+        feedback: >-
+          נכון. אותו עיגול, אותן קוטביות, אבל הסדר $(\theta,r)$ הופך כיוון.
+      - text: 'כן, האינטגרל של $dx\wedge dy$ הוא תמיד השטח'
+        feedback: >-
+          הוא השטח רק כשהפרמטריזציה שומרת כיוון. כאן $\psi^*(dx\wedge dy)=-r\,d\theta\wedge dr$.
+        misconception: MC-c8-orientation-abs-det
+    reasons:
+      - text: '$\psi^*(dx\wedge dy)=(x_\theta y_r-x_ry_\theta)\,d\theta\wedge dr=(-r\sin^2\theta-r\cos^2\theta)\,d\theta\wedge dr=-r\,d\theta\wedge dr$, ו-$\int_0^{2\pi}\int_0^1(-r)=-\pi$'
+        correct: true
+        feedback: >-
+          בדיוק. בנוסחת החלפת המשתנים (שיעור 5.2) מופיע $|{-r}|=r$ ומתקבל השטח; בתבנית מופיע $-r$.
+      - text: 'היעקוביאן של הקוטביות הוא $r$, ולכן מתקבל $\pi$'
+        feedback: >-
+          $r$ הוא היעקוביאן בסדר $(r,\theta)$. החלפת סדר המשתנים מחליפה שתי עמודות במטריצה, והדטרמיננטה מחליפה סימן.
+        misconception: MC-c8-wedge-commutes
+      - text: '$d\theta\wedge dr=dr\wedge d\theta$, ולכן הסדר לא משנה'
+        feedback: >-
+          $d\theta\wedge dr=-dr\wedge d\theta$. בגלל זה בדיוק הסדר משנה.
+        misconception: MC-c8-wedge-commutes
+    hints:
+      - 'חזרו לשיעור 8.4: החלפת משתנים בתוך המשיכה לאחור, עם סימן, ולשיעור 5.2: היעקוביאן של הקוטביות.'
+
+  - id: Q-8-review-09
+    type: numeric
+    objectives: [OBJ-8.5-2, OBJ-7.3-1]
+    level: mid
+    prompt: >-
+      חשבו $\oint_{\partial E}(x\,dy-y\,dx)$ כש-$E$ התחום $\frac{x^2}9+\frac{y^2}4\le1$ והשפה בכיוון החיובי.
+    answer: 37.6991118
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $d(x\,dy-y\,dx)=dx\wedge dy-dy\wedge dx=2\,dx\wedge dy$, ולפי סטוקס (כאן: גרין) האינטגרל הוא פעמיים השטח,
+      $2\cdot6\pi=12\pi\approx37.70$. (השטח עצמו הוא חצי מהאינטגרל, כמו בשיעור 7.3.)
+    wrongFeedback: >-
+      חשבו $d(x\,dy-y\,dx)$, והשתמשו בכך שהשטח של אליפסה עם חצאי צירים $a,b$ הוא $\pi ab$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          כאן נכתב $d(-y\,dx)=-dx\wedge dy$, וכך שני האיברים התבטלו. אבל $d(-y\,dx)=-dy\wedge dx=+dx\wedge dy$.
+        misconception: MC-c8-d-order-sign
+      - value: -37.6991118
+        feedback: >-
+          זה האינטגרל בכיוון השעון. הכיוון החיובי משאיר את התחום משמאל.
+        misconception: MC-c8-boundary-orientation
+    hints:
+      - 'חזרו לשיעור 8.5: גרין כמקרה פרטי, ולשיעור 7.3: שטח בעזרת אינטגרל קווי.'
+
+  - id: Q-8-review-10
+    type: mc
+    objectives: [OBJ-8.5-1, OBJ-8.3-2, OBJ-7.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $S=\partial B$ משטח סגור (השפה של תחום חסום $B$), ו-$F$ שדה חלק. למה $\oiint_S(\nabla\times F)\cdot d\mathbf S=0$?
+    choices:
+      - text: 'כי $\oiint_S(\nabla\times F)\cdot d\mathbf S=\int_S d\omega_F=\int_{\partial S}\omega_F$, ול-$S$ אין שפה'
+        correct: true
+        feedback: >-
+          נכון. דרך שנייה: גאוס על $B$ נותן $\iiint_B\nabla\cdot(\nabla\times F)$, וזה אפס כי $d(d\omega_F)=0$. שתי הדרכים
+          הן סטוקס הכללי, על $S$ או על $B$.
+      - text: 'כי $\nabla\times F=0$ לכל שדה חלק'
+        feedback: >-
+          $\nabla\times(-y,x,0)=(0,0,2)$. מה שתמיד אפס הוא $\nabla\cdot(\nabla\times F)$, כלומר $d(d\omega)$, לא $d\omega$.
+        misconception: MC-c8-dict-degree
+      - text: 'כי משפט סטוקס הכללי אומר ש-$\int_R d\omega=\int_{\partial R}d\omega$ לכל תחום $R$ ותבנית $\omega$, ובפרט $\int_S d\omega_F=\int_{\partial S}d\omega_F$'
+        feedback: >-
+          זה לא משפט סטוקס, והשוויון הכללי הזה שגוי: ל-$R$ ריבוע היחידה ו-$\omega=x\,dy$ אגף שמאל הוא
+          $\iint_R dx\wedge dy=1$, ואגף ימין הוא אינטגרל של תבנית מסדר 2 על מסילה, שאינו מוגדר בכלל. בסטוקס הנגזרת יושבת
+          על התחום והתבנית על השפה: $\int_S d\omega_F=\int_{\partial S}\omega_F$. (המסקנה במקרה הזה נכונה, אבל הנימוק נשען
+          על משפט שגוי.)
+        misconception: MC-c8-stokes-swapped
+    hints:
+      - 'חזרו לשיעור 8.5: משפט סטוקס הכללי, ולשיעור 8.3: הנגזרת החיצונית פעמיים היא אפס.'
+
+  - id: Q-8-review-11
+    type: multi
+    objectives: [OBJ-8.1-3, OBJ-6.2-2]
+    level: mid
+    prompt: >-
+      לאילו מהתבניות הבאות על $\mathbb R^3$ האינטגרל על **כל** מסילה סגורה הוא אפס? סמנו את כולן.
+    choices:
+      - text: '$2xy\,dx+x^2\,dy+dz$'
+        correct: true
+        feedback: >-
+          נכון: זו $d(x^2y+z)$, ואינטגרל של $df$ על מסילה סגורה $\gamma:[a,b]\to\mathbb R^3$ הוא
+          $f(\gamma(b))-f(\gamma(a))$, הפרש של ערכי $f$ בנקודה אחת, כלומר אפס.
+      - text: '$\cos y\,dx-x\sin y\,dy$'
+        correct: true
+        feedback: 'נכון: זו $d(x\cos y)$.'
+      - text: '$-y\,dx+x\,dy$'
+        feedback: >-
+          על מעגל היחידה במישור $xy$, נגד כיוון השעון במבט מלמעלה, האינטגרל הוא $2\pi$. היא אינה $df$: $d(-y\,dx+x\,dy)=2\,dx\wedge dy\ne0$.
+        misconception: MC-c8-every-form-exact
+      - text: '$x\,dy$'
+        feedback: >-
+          על מעגל היחידה האינטגרל הוא $\pi$ (חצי מהקודם). $d(x\,dy)=dx\wedge dy\ne0$.
+        misconception: MC-c8-every-form-exact
+    hints:
+      - 'חזרו לשיעור 8.1: הדיפרנציאל של פונקציה כתבנית, ולשיעור 6.2: שדות משמרים.'
+
+  - id: Q-8-review-12
+    type: numeric
+    objectives: [OBJ-8.5-3, OBJ-8.4-2]
+    level: exam
+    prompt: >-
+      $\varphi(u,v)=(u\cos v,\ u\sin v,\ v)$ על $D=[0,1]\times[0,\frac\pi2]$ (רבע סיבוב של הליקואיד), $M=\varphi(D)$
+      בכיוון של $\varphi$, ו-$\partial M$ התמונה של השפה החיובית של $D$. חשבו $\oint_{\partial M}x\,dz$.
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $d(x\,dz)=dx\wedge dz$, ו-$\varphi^*(dx\wedge dz)=(x_uz_v-x_vz_u)\,du\wedge dv=\cos v\,du\wedge dv$, ולכן
+      $\int_D\cos v\,du\,dv=1$. בדיקה ישירה: מארבע הצלעות של $\partial M$ תורמת רק הקשת $u=1$, $(\cos v,\sin v,v)$, עם
+      $\int_0^{\pi/2}\cos v\,dv=1$; בשלוש האחרות $x=0$ או $z$ קבוע.
+    wrongFeedback: >-
+      משכו את $dx\wedge dz$ דרך $\varphi$, או חשבו את ארבע הצלעות של השפה. בשתי הדרכים שימו לב לכיוון.
+    commonWrong:
+      - value: -1
+        feedback: >-
+          הסימן הפוך: $x_vz_u-x_uz_v$ במקום $x_uz_v-x_vz_u$, או מעבר על השפה בכיוון ההפוך.
+        misconception: MC-c8-boundary-orientation
+      - value: 1.5707963
+        feedback: >-
+          $\frac\pi2$ הוא השטח של $D$, כאילו $\varphi^*(dx\wedge dz)=du\wedge dv$. המקדם הוא $\cos v$.
+        misconception: MC-c8-pullback-no-jacobian
+    hints:
+      - 'חזרו לשיעור 8.5: חישוב על שפה של משטח בפרמטריזציה, ולשיעור 8.4: משיכה לאחור.'
+
+  - id: Q-8-review-13
+    type: twotier
+    objectives: [OBJ-8.5-1, OBJ-8.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן ש-$\eta$ תבנית חלקה מסדר 2 על **כל** $\mathbb R^3$, עם $d\eta=0$, ו-$\int_{S^2}\eta=5$, כש-$S^2$ ספרת היחידה
+      עם הנורמל החיצוני?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. האינטגרל חייב להיות אפס.
+      - text: 'כן, כי $\eta$ אינה בהכרח $d$ של משהו'
+        feedback: >-
+          לא צריך לדעת אם $\eta$ מדויקת: מספיק ש-$d\eta=0$ על כדור היחידה. (ב-$\mathbb R^3\setminus\{0\}$ זה כן
+          אפשרי, לתבנית של השדה הריבוע-הפוך: שם הכדור אינו בתחום.)
+        misconception: MC-c8-closed-implies-exact
+    reasons:
+      - text: '$S^2=\partial B$ לכדור היחידה $B\subseteq\mathbb R^3$, ולפי סטוקס $\int_{S^2}\eta=\int_B d\eta=0$'
+        correct: true
+        feedback: >-
+          בדיוק. ההנחה ש-$\eta$ מוגדרת וחלקה על **כל** הכדור היא העיקר; עם חור בראשית (שיעור 7.6) הטיעון נשבר.
+      - text: 'כי לספרה אין שפה, ולכן כל אינטגרל עליה אפס'
+        feedback: >-
+          זה מבלבל בין שני השימושים של "אין שפה". אינטגרל של **נגזרת** $d\omega$ על הספרה הוא אפס; אינטגרל של $\eta$
+          כללית לא: $\int_{S^2}x\,dy\wedge dz=\frac{4\pi}3$.
+        misconception: MC-c8-stokes-swapped
+      - text: 'כי $d\eta=0$ גורר $\eta=0$'
+        feedback: >-
+          $\eta=dx\wedge dy$ מקיימת $d\eta=0$ ואינה אפס. מה שנובע מ-$d\eta=0$ הוא רק שהאינטגרל על שפה של תחום מתאפס.
+        misconception: MC-c8-dd-trivial
+    hints:
+      - 'חזרו לשיעור 8.5: משפט סטוקס הכללי על תחום ב-ℝ³ (גאוס), ולשיעור 7.6: מה משתנה כשיש חור.'
+
+  - id: Q-8-review-14
+    type: numeric
+    objectives: [OBJ-8.5-2, OBJ-8.2-2, OBJ-7.5-3]
+    level: exam
+    prompt: >-
+      $C$ הגליל המלא $x^2+y^2\le1$, $0\le z\le2$, ו-$L$ **הדופן** שלו ($x^2+y^2=1$, $0\le z\le2$, בלי המכסים), עם הנורמל
+      החיצוני. חשבו $\int_L\big(z^2\,dx\wedge dy+x\,dy\wedge dz\big)$ בעזרת משפט סטוקס הכללי על $C$.
+    answer: 6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi$. $d\omega=(2z+1)\,dx\wedge dy\wedge dz$ (כי $dz\wedge dx\wedge dy=dx\wedge dy\wedge dz$), ולכן על כל
+      השפה $\int_{\partial C}\omega=\iiint_C(2z+1)\,dV=\pi\int_0^2(2z+1)\,dz=6\pi$. אבל $L$ אינה כל השפה: מחסירים את
+      המכסים. במכסה העליון ($z=2$, נורמל למעלה) $dz=0$ ונשאר $\iint4\,dx\,dy=4\pi$; בתחתון ($z=0$) אפס. לכן
+      $\int_L\omega=6\pi-4\pi=2\pi$. בדיקה ישירה: על הדופן $dx\wedge dy=0$ (הנורמל אופקי), ו-$x\,dy\wedge dz$ הוא השטף של
+      $(x,0,0)$, $\int_0^2\int_0^{2\pi}\cos^2\theta\,d\theta\,dz=2\pi$.
+    wrongFeedback: >-
+      $L$ אינה משטח סגור. השלימו אותה לשפה של $C$ בעזרת שני המכסים (עם הנורמל החיצוני), השתמשו בסטוקס על $C$, והחסירו את
+      מה שהמכסים תורמים.
+    commonWrong:
+      - value: 18.8495559
+        feedback: >-
+          $6\pi$ הוא האינטגרל על **כל** השפה של $C$, כולל המכסים. $L$ היא הדופן בלבד: מחסירים את התרומה $4\pi$ של המכסה
+          העליון.
+        misconception: MC-c7-gauss-open-surface
+      - value: -6.2831853
+        feedback: >-
+          זה עם הנורמל הפנימי. הכיוון המושרה על השפה של תחום מרחבי הוא החיצוני, וכך גם הנורמל הנתון.
+        misconception: MC-c8-boundary-orientation
+      - value: 0
+        feedback: >-
+          נכון שעל הדופן $dx\wedge dy=0$, אבל האיבר $x\,dy\wedge dz$ אינו אפס שם: הוא השטף של $(x,0,0)$ דרך הדופן, $2\pi$.
+        misconception: MC-c6-piece-forgotten
+    hints:
+      - 'חזרו לשיעור 8.5: גאוס כמקרה פרטי, ולשיעור 7.5: שטף דרך משטח סגור, ודרך משטח פתוח בעזרת מכסים.'

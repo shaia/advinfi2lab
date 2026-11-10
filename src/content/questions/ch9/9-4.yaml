@@ -1,0 +1,424 @@
+# Lesson 9.4 — completeness: Hilbert spaces, ℓ² is complete, C[a,b] with the L² norm is not, the course's space H[a,b].
+# Objectives (src/course.ts):
+#   OBJ-9.4-1  define a Hilbert space and show that ℓ² is complete
+#   OBJ-9.4-2  show that C[a,b] with the L² norm is not complete, with a sequence tending to a step
+#   OBJ-9.4-3  describe the course's H[a,b] and relate uniform convergence to mean-square convergence
+# The ramps: fₙ(x) = 0 for x ≤ 0, nx on [0, 1/n], 1 for x ≥ 1/n, on [−1, 1]; H is the step (0 for x ≤ 0, 1 for x > 0).
+# ‖fₙ − H‖² = 1/(3n), ‖fₙ − f₂ₙ‖² = 1/(12n), max|fₙ − f₂ₙ| = 1/2. Recomputed in scratchpad ch9/check.ts, check2.ts.
+chapter: 9
+questions:
+  # ---------------------------------------------------------------- basic
+  - id: Q-9.4-def
+    type: mc
+    objectives: [OBJ-9.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      **מרחב הילברט** הוא מרחב מכפלה פנימית **שלם**: כל סדרת קושי בו (לפי הנורמה המושרית $\|x\|=\sqrt{\langle x,x\rangle}$)
+      מתכנסת לאיבר של המרחב. איזה מהמרחבים הבאים הוא מרחב הילברט?
+    choices:
+      - text: '$\ell^2$ עם $\langle x,y\rangle=\sum x_ny_n$'
+        correct: true
+        feedback: >-
+          נכון: $\ell^2$ שלם (נוכיח זאת בהמשך השיעור), וכך גם $\mathbb R^n$. $C[a,b]$ עם $\int fg$ אינו שלם.
+      - text: '$C[-1,1]$ עם $\langle f,g\rangle=\int_{-1}^1fg$'
+        feedback: >-
+          זה מרחב מכפלה פנימית, אבל השלמות היא דרישה נוספת: סדרת הרמפות (בהמשך השיעור) היא סדרת קושי בנורמה הזו שאין לה
+          גבול רציף.
+        misconception: MC-c9-cauchy-implies-limit
+      - text: '$C[0,1]$ עם נורמת המקסימום $\max|f|$'
+        feedback: >-
+          המרחב הזה שלם (גבול במידה שווה של רציפות רציף), אבל הנורמה שלו אינה באה ממכפלה פנימית (חוק המקבילית נכשל,
+          שיעור 9.1). מרחב נורמי שלם כזה נקרא מרחב בנך, ואינו מרחב הילברט.
+        misconception: MC-c9-every-norm-inner
+      - text: 'הפולינומים על $[0,1]$ עם $\langle f,g\rangle=\int_0^1fg$'
+        feedback: >-
+          לא שלם: פולינומי טיילור $\sum_{k\le n}\frac{x^k}{k!}$ מתכנסים במידה שווה, ולכן גם בנורמה של האינטגרל, ל-$e^x$,
+          והם סדרת קושי שגבולה אינו פולינום.
+        misconception: MC-c9-cauchy-implies-limit
+
+  - id: Q-9.4-unit-dist
+    type: numeric
+    objectives: [OBJ-9.4-1]
+    level: basic
+    prompt: >-
+      ב-$\ell^2$ נסמן ב-$e_k$ את הסדרה שבמקום ה-$k$ שלה 1 ובשאר המקומות 0. חשבו את $\|e_3-e_7\|$.
+    answer: 1.4142135624
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $e_3\perp e_7$, ולכן $\|e_3-e_7\|^2=1+1=2$. כל שני וקטורי יחידה שונים נמצאים במרחק $\sqrt2$.
+    wrongFeedback: >-
+      ל-$e_3-e_7$ יש שתי קואורדינטות שאינן אפס, $1$ ו-$-1$. סכמו ריבועים והוציאו שורש.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $2=\|e_3\|+\|e_7\|$ או $\|e_3-e_7\|^2$. לווקטורים ניצבים מחברים ריבועים ומוציאים שורש.
+        misconception: MC-c9-pythagoras-add-norms
+      - value: 0
+        feedback: >-
+          אף שכל קואורדינטה של $e_k$ שואפת ל-0, שני וקטורי יחידה שונים לעולם אינם קרובים.
+        misconception: MC-c9-coordinatewise-enough
+
+  - id: Q-9.4-ramp-dist
+    type: numeric
+    objectives: [OBJ-9.4-2]
+    level: basic
+    prompt: >-
+      על $[-1,1]$ תהי $f_4$ הרמפה: $f_4(x)=0$ ל-$x\le0$, $f_4(x)=4x$ ל-$0\le x\le\frac14$, ו-$f_4(x)=1$ ל-$x\ge\frac14$. תהי
+      $H$ המדרגה ($H=0$ ל-$x\le0$, $H=1$ ל-$x>0$). חשבו את $\int_{-1}^1(f_4-H)^2\,dx$.
+    answer: 0.0833333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: ההפרש שונה מאפס רק על $(0,\frac14)$, שם הוא $4x-1$, ו-$\int_0^{1/4}(1-4x)^2\,dx=\frac13\cdot\frac14=\frac1{12}$.
+      באופן כללי $\|f_n-H\|^2=\frac1{3n}\to0$.
+    wrongFeedback: >-
+      ההפרש מתאפס מחוץ ל-$(0,\frac14)$. הציבו $u=1-4x$.
+    commonWrong:
+      - value: 0.125
+        feedback: >-
+          $\frac18=\int_0^{1/4}(1-4x)\,dx$, השטח של המשולש, בלי ריבוע.
+        misconception: MC-c9-norm-without-square
+      - value: 0.2886751346
+        feedback: >-
+          $\frac1{\sqrt{12}}$ הוא המרחק עצמו. השאלה מבקשת את האינטגרל של הריבוע.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.4-H-def
+    type: mc
+    objectives: [OBJ-9.4-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $H[a,b]$ הוא מרחב הפונקציות האינטגרביליות רימן על $[a,b]$ עם $\langle f,g\rangle=\int_a^bfg$. למה זו רק מכפלה
+      פנימית למחצה?
+    choices:
+      - text: 'יש $f\neq0$ עם $\langle f,f\rangle=0$, למשל 1 בנקודה אחת ו-0 בשאר'
+        correct: true
+        feedback: >-
+          נכון. כל האקסיומות מתקיימות פרט לחלק "$\langle f,f\rangle=0$ רק ל-$f=0$". לכן מזהים פונקציות שמרחקן אפס, ואחרי
+          הזיהוי מתקבלת מכפלה פנימית.
+      - text: 'כי $H[a,b]$ אינו שלם: יש בו סדרות קושי בלי גבול'
+        feedback: >-
+          זו בעיה אחרת. "למחצה" נוגע לאקסיומת החיוביות המוחלטת, ואי-השלמות נשארת גם אחרי שמזהים פונקציות במרחק 0.
+        misconception: MC-c9-semi-vs-complete
+      - text: 'כי לפונקציה לא רציפה $\langle f,f\rangle$ יכול להיות שלילי'
+        feedback: >-
+          $f^2\ge0$, ולכן $\int f^2\ge0$ תמיד. החיוביות נשמרת; מה שנכשל הוא שאפס מתקבל גם בפונקציה שאינה אפס.
+        misconception: MC-c9-ip-positivity
+      - text: 'כי הסימטריה נכשלת לפונקציות שאינן רציפות'
+        feedback: >-
+          $\int fg=\int gf$ לכל זוג. גם הלינאריות נשמרת. האקסיומה היחידה שנפגעת היא החיוביות המוחלטת.
+        misconception: MC-c9-ip-positivity
+
+  - id: Q-9.4-sup-bound
+    type: numeric
+    objectives: [OBJ-9.4-3]
+    level: basic
+    prompt: >-
+      ידוע ש-$|f_n(x)-f(x)|\le0.1$ לכל $x\in[0,4]$. מהו החסם הטוב ביותר שאפשר להסיק מזה על
+      $\|f_n-f\|=\sqrt{\int_0^4(f_n-f)^2}$?
+    answer: 0.2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\int_0^4(f_n-f)^2\le4\cdot0.01$, ולכן $\|f_n-f\|\le\sqrt4\cdot0.1=0.2$. החסם מושג כש-$|f_n-f|\equiv0.1$.
+      זו הסיבה שהתכנסות במידה שווה גוררת התכנסות בממוצע ריבועי.
+    wrongFeedback: >-
+      חסמו את האינטגרנד: $(f_n-f)^2\le0.01$, כפלו באורך הקטע, והוציאו שורש.
+    commonWrong:
+      - value: 0.4
+        feedback: >-
+          $4\cdot0.1$: את אורך הקטע מכפילים בתוך השורש, $\|g\|\le\sqrt{b-a}\max|g|$.
+        misconception: MC-c9-sup-bound-length
+      - value: 0.1
+        feedback: >-
+          בלי אורך הקטע. על קטע באורך 4 הנורמה של הקבוע $0.1$ היא $0.1\sqrt4$.
+        misconception: MC-c9-sup-bound-length
+      - value: 0.04
+        feedback: >-
+          $0.04$ הוא החסם על $\|f_n-f\|^2$. נשאר להוציא שורש.
+        misconception: MC-c9-norm-vs-square
+
+  # ---------------------------------------------------------------- mid
+  - id: Q-9.4-unit-vectors
+    type: twotier
+    objectives: [OBJ-9.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם הסדרה $e_1,e_2,e_3,\dots$ של וקטורי היחידה מתכנסת ב-$\ell^2$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון, אף שהיא חסומה ואף שכל קואורדינטה שלה שואפת ל-0.
+      - text: כן, ל-0
+        feedback: >-
+          כל קואורדינטה שואפת ל-0, אבל $\|e_k-0\|=1$ לכל $k$. התכנסות ב-$\ell^2$ היא בנורמה.
+        misconception: MC-c9-coordinatewise-enough
+    reasons:
+      - text: 'היא אינה סדרת קושי: $\|e_k-e_m\|=\sqrt2$ לכל $k\neq m$'
+        correct: true
+        feedback: >-
+          בדיוק. סדרה מתכנסת היא סדרת קושי, ולכן זו לא מתכנסת. וגם המועמד היחיד, הגבול הקואורדינטי 0, נמצא במרחק 1.
+      - text: 'היא מתכנסת ל-0, כי בכל מקום קבוע $n$ האיבר $e_k(n)$ הוא 0 מ-$k=n+1$ והלאה'
+        feedback: >-
+          זו התכנסות קואורדינטית בלבד. בנורמה $\|e_k\|=1$ לא שואף ל-0.
+        misconception: MC-c9-coordinatewise-enough
+      - text: '$\ell^2$ שלם, ולכן לכל סדרה חסומה בו יש גבול'
+        feedback: >-
+          שלמות פירושה שסדרות **קושי** מתכנסות. סדרה חסומה ב-$\ell^2$ לא חייבת להתכנס, ואפילו לא חייבת תת-סדרה מתכנסת.
+        misconception: MC-c9-closed-enough
+
+  - id: Q-9.4-proof
+    type: rank
+    objectives: [OBJ-9.4-1]
+    level: mid
+    prompt: >-
+      סדרו את צעדי ההוכחה ש-$\ell^2$ שלם.
+    help: סדרו מהצעד הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'תהי $x^{(k)}$ סדרת קושי ב-$\ell^2$. לכל $n$: $|x^{(k)}_n-x^{(m)}_n|\le\|x^{(k)}-x^{(m)}\|$, ולכן כל קואורדינטה היא סדרת קושי ב-$\mathbb R$ ומתכנסת למספר $y_n$'
+      - id: b
+        label: 'יהי $\varepsilon>0$ ו-$K$ כך ש-$\|x^{(k)}-x^{(m)}\|<\varepsilon$ לכל $k,m>K$. לכל $N$: $\sum_{n\le N}(x^{(k)}_n-x^{(m)}_n)^2<\varepsilon^2$'
+      - id: c
+        label: 'משאיפים $m\to\infty$ בסכום הסופי: $\sum_{n\le N}(x^{(k)}_n-y_n)^2\le\varepsilon^2$ לכל $k>K$ ולכל $N$'
+      - id: d
+        label: 'משאיפים $N\to\infty$: $\|x^{(k)}-y\|\le\varepsilon$; בפרט $x^{(k)}-y\in\ell^2$, ולכן $y\in\ell^2$'
+      - id: e
+        label: 'מכאן $\|x^{(k)}-y\|\to0$, כלומר $x^{(k)}\to y$ ב-$\ell^2$'
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. הרעיון: המועמד לגבול הוא הגבול הקואורדינטי, וכדי לא להעביר גבול בתוך טור אינסופי עובדים קודם עם סכום סופי
+      ($N$ קבוע) ורק אחר כך משחררים את $N$.
+    wrongFeedback: >-
+      קודם בונים את המועמד $y$ מהקואורדינטות, אחר כך אי-השוויון בסכום סופי, גבול ב-$m$, גבול ב-$N$, ורק אז המסקנה ש-$y\in\ell^2$
+      והתכנסות.
+
+  - id: Q-9.4-ramp-sup
+    type: twotier
+    objectives: [OBJ-9.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סדרת הרמפות $f_n$ על $[-1,1]$ ($0$ ל-$x\le0$, $nx$ על $[0,\frac1n]$, $1$ ל-$x\ge\frac1n$) היא סדרת קושי בנורמה
+      $\sqrt{\int f^2}$. האם היא סדרת קושי גם בנורמת המקסימום?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. ולכן אין כאן סתירה לשלמות של $C[-1,1]$ בנורמת המקסימום.
+      - text: כן
+        feedback: >-
+          ההשוואה בין הנורמות הולכת בכיוון אחד בלבד: $\|g\|_2\le\sqrt2\,\|g\|_\infty$. מקושי ב-$\|\cdot\|_2$ לא נובע קושי
+          ב-$\|\cdot\|_\infty$.
+        misconception: MC-c9-L2-implies-uniform
+    reasons:
+      - text: 'בנקודה $x=\frac1{2n}$: $f_{2n}=1$ ו-$f_n=\frac12$, ולכן $\max|f_n-f_{2n}|\ge\frac12$ לכל $n$'
+        correct: true
+        feedback: >-
+          בדיוק (ולמעשה $\max|f_n-f_{2n}|=\frac12$), ובנורמה של האינטגרל $\|f_n-f_{2n}\|^2=\frac1{12n}\to0$.
+      - text: 'לכל $x$ הסדרה $f_n(x)$ מתכנסת, ולכן הסדרה קושי במידה שווה'
+        feedback: >-
+          התכנסות נקודתית לא גוררת קושי במידה שווה. כאן הגבול הנקודתי הוא המדרגה, ואילו גבול במידה שווה של רציפות
+          היה רציף.
+        misconception: MC-c9-coordinatewise-enough
+      - text: 'כי $\|g\|_\infty\le\sqrt2\,\|g\|_2$ לכל $g\in C[-1,1]$'
+        feedback: >-
+          אי-השוויון הפוך: $\|g\|_2\le\sqrt2\,\|g\|_\infty$. אוהל צר וגבוה 1 הוא בעל נורמת מקסימום 1 ונורמת אינטגרל
+          קטנה כרצוננו.
+        misconception: MC-c9-L2-implies-uniform
+
+  - id: Q-9.4-cauchy-rate
+    type: numeric
+    objectives: [OBJ-9.4-2]
+    level: mid
+    prompt: >-
+      עבור הרמפות $f_n$ על $[-1,1]$ (כמו בשאלה הקודמת), חשבו את $\int_{-1}^1(f_5-f_{10})^2\,dx$.
+    answer: 0.0166666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. על $[0,\frac1{10}]$ ההפרש הוא $5x$, ועל $[\frac1{10},\frac15]$ הוא $1-5x$; כל חלק תורם $\frac1{120}$, ויחד
+      $\frac1{60}$. באופן כללי $\|f_n-f_{2n}\|^2=\frac1{12n}$.
+    wrongFeedback: >-
+      פצלו את הקטע $[0,\frac15]$ בנקודה $\frac1{10}$, שבה $f_{10}$ מגיעה ל-1, וחשבו כל חלק בנפרד.
+    commonWrong:
+      - value: 0.1
+        feedback: >-
+          $\frac1{15}+\frac1{30}=\|f_5-H\|^2+\|f_{10}-H\|^2$: זה ריבוע של סכום בלי האיבר המעורב. $f_5-H$ ו-$f_{10}-H$ אינן
+          ניצבות.
+        misconception: MC-c9-drop-cross-term
+      - value: 0.1290994449
+        feedback: >-
+          $\frac1{\sqrt{60}}$ הוא המרחק עצמו. השאלה מבקשת את האינטגרל של הריבוע.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.4-xn
+    type: twotier
+    objectives: [OBJ-9.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f_n(x)=x^n$ על $[0,1]$. האם $f_n\to0$ בממוצע ריבועי (בנורמה $\sqrt{\int_0^1f^2}$)? והאם במידה שווה?
+    choices:
+      - text: בממוצע ריבועי כן, במידה שווה לא
+        correct: true
+        feedback: >-
+          נכון. זו הדוגמה לכך שהכיוון "ממוצע ריבועי ⇒ במידה שווה" נכשל.
+      - text: בשני המובנים
+        feedback: >-
+          $\max_{[0,1]}x^n=1$ לכל $n$, ולכן אין התכנסות במידה שווה ל-0.
+        misconception: MC-c9-L2-implies-uniform
+      - text: באף מובן, כי $f_n(1)=1$
+        feedback: >-
+          ערך בנקודה אחת לא משפיע על האינטגרל: $\|x^n\|^2=\frac1{2n+1}\to0$. התכנסות בממוצע ריבועי לא דורשת התכנסות בכל
+          נקודה.
+        misconception: MC-c9-L2-implies-uniform
+    reasons:
+      - text: '$\|x^n\|^2=\int_0^1x^{2n}dx=\frac1{2n+1}\to0$, ואילו $\max_{[0,1]}|x^n|=1$'
+        correct: true
+        feedback: >-
+          בדיוק. הכיוון שכן נכון: $\|g\|_2\le\sqrt{b-a}\,\max|g|$.
+      - text: '$\|x^n\|\to0$, ולכן גם המקסימום שואף ל-0'
+        feedback: >-
+          הנורמה של האינטגרל קטנה בגלל שהשטח מתחת ל-$x^{2n}$ מצטמצם, אבל ליד 1 הפונקציה עדיין קרובה ל-1.
+        misconception: MC-c9-L2-implies-uniform
+      - text: 'הסדרה שואפת ל-0 בכל נקודה של $[0,1)$, ולכן במידה שווה'
+        feedback: >-
+          התכנסות נקודתית אינה במידה שווה: לכל $n$ יש $x$ קרוב ל-1 עם $x^n>\frac12$.
+        misconception: MC-c9-coordinatewise-enough
+
+  # ---------------------------------------------------------------- exam
+  - id: Q-9.4-c00
+    type: twotier
+    objectives: [OBJ-9.4-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $c_{00}$ הוא מרחב הסדרות שרק מספר סופי מאיבריהן שונה מאפס, עם המכפלה $\sum x_ny_n$ של $\ell^2$. האם $c_{00}$ מרחב
+      הילברט?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון: הוא מרחב מכפלה פנימית שאינו שלם.
+      - text: כן
+        feedback: >-
+          תת-מרחב של מרחב שלם הוא שלם רק אם הוא סגור, ו-$c_{00}$ אינו סגור ב-$\ell^2$.
+        misconception: MC-c9-cauchy-implies-limit
+    reasons:
+      - text: '$x^{(k)}=(1,\frac12,\dots,\frac1k,0,\dots)$ היא סדרת קושי שגבולה ב-$\ell^2$, $(\frac1n)$, אינו ב-$c_{00}$'
+        correct: true
+        feedback: >-
+          בדיוק. היא סדרת קושי כי $\|x^{(m)}-x^{(k)}\|^2=\sum_{k<n\le m}\frac1{n^2}\to0$. אם היה לה גבול $z\in c_{00}$, הוא היה
+          גם גבול ב-$\ell^2$, ומיחידות הגבול $z=(\frac1n)$, שאינה סופית.
+      - text: 'תת-מרחב של מרחב הילברט הוא תמיד מרחב הילברט'
+        feedback: >-
+          רק תת-מרחב סגור. $c_{00}$ צפוף ב-$\ell^2$ ושונה ממנו, ולכן אינו סגור.
+        misconception: MC-c9-cauchy-implies-limit
+      - text: 'לכל איבר של $c_{00}$ יש מספר סופי של איברים, ולכן כל סדרת קושי בו קבועה מנקודה מסוימת'
+        feedback: >-
+          המספר הסופי תלוי באיבר: האורך של $x^{(k)}$ גדל עם $k$. הדוגמה $x^{(k)}$ למעלה היא סדרת קושי שאינה קבועה.
+        misconception: MC-c9-cauchy-implies-limit
+
+  - id: Q-9.4-no-cont-limit
+    type: twotier
+    objectives: [OBJ-9.4-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      ב-$C[-1,1]$ עם $\int fg$, הרמפות $f_n$ הן סדרת קושי. האם יש $g\in C[-1,1]$ עם $\|f_n-g\|\to0$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון, ולכן $C[-1,1]$ עם $\int fg$ אינו שלם.
+      - text: כן, הגבול הוא המדרגה $H$
+        feedback: >-
+          $\|f_n-H\|\to0$ אכן, אבל $H$ אינה רציפה, ולכן אינה איבר של $C[-1,1]$.
+        misconception: MC-c9-L2-limit-continuous
+      - text: כן, כי $C[-1,1]$ שלם
+        feedback: >-
+          $C[-1,1]$ שלם בנורמת המקסימום. בנורמה של $\int fg$ הוא אינו שלם, והרמפות הן הדוגמה.
+        misconception: MC-c9-L2-limit-continuous
+    reasons:
+      - text: 'אז $\|g-H\|\le\|g-f_n\|+\|f_n-H\|\to0$, ולכן $g=H$ מחוץ ל-0, ו-$g$ אינה רציפה ב-0'
+        correct: true
+        feedback: >-
+          בדיוק. אי-שוויון המשולש עובד כאן ב-$H[-1,1]$, שבו גם המדרגה איבר. מ-$\int(g-H)^2=0$ ומהרציפות של $g-H$ על
+          $[-1,0]$ ועל כל קטע $[\delta,1]$ נובע $g=0$ על $[-1,0]$ ו-$g=1$ על $(0,1]$, בסתירה לרציפות ב-0.
+      - text: 'כי $f_n$ אינה סדרת קושי בנורמה הזו'
+        feedback: >-
+          היא כן: $\|f_n-f_m\|\le\|f_n-H\|+\|H-f_m\|=\frac1{\sqrt{3n}}+\frac1{\sqrt{3m}}$. בדיוק בגלל זה היא מוכיחה אי-שלמות.
+        misconception: MC-c9-cauchy-implies-limit
+      - text: 'כי הגבול הנקודתי של $f_n$ אינו רציף'
+        feedback: >-
+          זה לא מספיק לבדו: גבול בממוצע ריבועי אינו בהכרח הגבול הנקודתי. צריך להראות שאף פונקציה רציפה אינה במרחק 0
+          מהמדרגה.
+        misconception: MC-c9-L2-implies-uniform
+
+  - id: Q-9.4-tent
+    type: multi
+    objectives: [OBJ-9.4-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $g_n(x)=\max(0,1-nx)$ על $[0,1]$: אוהל בגובה 1 ב-0 וברוחב $\frac1n$. אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: '$\int_0^1g_n^2\to0$'
+        correct: true
+        feedback: >-
+          נכון: $\int_0^1g_n^2=\int_0^{1/n}(1-nx)^2dx=\frac1{3n}$.
+      - text: '$g_n(x)\to0$ לכל $x\in(0,1]$'
+        correct: true
+        feedback: >-
+          נכון: ל-$x>0$, ברגע ש-$\frac1n<x$ מתקבל $g_n(x)=0$.
+      - text: '$g_n(0)\to0$'
+        feedback: >-
+          $g_n(0)=1$ לכל $n$. התכנסות בממוצע ריבועי לא אומרת דבר על נקודה בודדת.
+        misconception: MC-c9-L2-implies-uniform
+      - text: '$g_n\to0$ במידה שווה על $[0,1]$'
+        feedback: >-
+          $\max g_n=1$ לכל $n$.
+        misconception: MC-c9-L2-implies-uniform
+      - text: 'ב-$H[0,1]$ הסדרה $g_n$ מתכנסת גם לפונקציה $\chi$ ששווה 1 ב-0 ו-0 בשאר הנקודות'
+        correct: true
+        feedback: >-
+          נכון: $\|g_n-\chi\|^2=\int_0^1g_n^2\to0$, כי $\chi$ ו-0 במרחק 0. ב-$H[0,1]$ הגבול יחיד רק אחרי שמזהים פונקציות
+          במרחק 0.
+    explanation: >-
+      התכנסות במידה שווה גוררת התכנסות בממוצע ריבועי ($\|g\|_2\le\sqrt{b-a}\max|g|$), אבל לא להפך: אוהל צר שומר על הגובה
+      שלו ומאבד שטח.
+
+  - id: Q-9.4-H-hilbert
+    type: twotier
+    objectives: [OBJ-9.4-3, OBJ-9.4-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      אחרי שמזהים פונקציות שמרחקן אפס, האם $H[0,1]$ עם $\int fg$ הוא מרחב הילברט?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. אחרי הזיהוי זו מכפלה פנימית, אבל המרחב אינו שלם. ההשלמה שלו, $L^2[0,1]$, דורשת את אינטגרל לבג של תורת המידה.
+      - text: כן, הזיהוי פותר את הבעיה היחידה
+        feedback: >-
+          הזיהוי פותר את בעיית ה"למחצה" בלבד. נשארת בעיית השלמות.
+        misconception: MC-c9-H-is-hilbert
+    reasons:
+      - text: '$f_n=\min(x^{-1/4},n)$ היא סדרת קושי, ואף פונקציה חסומה (כמו כל אינטגרבילית רימן) אינה גבול שלה'
+        correct: true
+        feedback: >-
+          בדיוק. קושי: $\|f_n-f_m\|^2\le\int_0^{n^{-4}}x^{-1/2}dx=\frac2{n^2}$ ל-$m>n$. אין גבול: אם $|g|\le M$, אז ל-$n\ge M+1$
+          על $(0,(M+1)^{-4})$ מתקיים $f_n-g\ge1$, ו-$\|f_n-g\|^2\ge(M+1)^{-4}$. הגבול ה"טבעי" $x^{-1/4}$ אינו חסום ולכן
+          אינו אינטגרבילי רימן.
+      - text: 'לא, כי המכפלה עדיין רק מכפלה פנימית למחצה'
+        feedback: >-
+          אחרי הזיהוי $\langle f,f\rangle=0$ רק למחלקה של 0. הבעיה שנשארת היא אחרת: סדרות קושי בלי גבול.
+        misconception: MC-c9-semi-vs-complete
+      - text: 'כן, כי $H[0,1]$ מכיל את $C[0,1]$ ואת כל הגבולות של הרמפות'
+        feedback: >-
+          $H[0,1]$ אכן "מתקן" את הרמפות (המדרגה אינטגרבילית), אבל יש סדרות קושי אחרות, כמו $\min(x^{-1/4},n)$, שהגבול שלהן אינו
+          חסום.
+        misconception: MC-c9-H-is-hilbert

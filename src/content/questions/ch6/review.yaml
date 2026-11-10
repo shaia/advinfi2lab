@@ -1,0 +1,396 @@
+# Chapter 6 review — integrals of vector fields (lessons 6.1–6.5), easy to hard.
+# Every lesson is touched; most questions combine two lessons, some reach back to chapters 4–5. Each hint names the lesson
+# to go back to. No Green, Stokes or Gauss (chapter 7): every value is computed directly.
+chapter: 6
+questions:
+  - id: Q-6-review-01
+    type: numeric
+    objectives: [OBJ-6.1-1, OBJ-6.1-3, OBJ-5.4-1]
+    level: basic
+    prompt: >-
+      על הסליל $\gamma(t)=(\cos t,\ \sin t,\ t)$, $t\in[0,2\pi]$, פועל השדה $\mathbf F(x,y,z)=(0,\ 0,\ z)$. חשבו את העבודה
+      $\int_\gamma\mathbf F\cdot d\mathbf s$ בכיוון של $t$ העולה.
+    answer: 19.739209
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi^2$. $\mathbf F(\gamma)\cdot\gamma'=(0,0,t)\cdot(-\sin t,\cos t,1)=t$, ו-$\int_0^{2\pi}t\,dt=2\pi^2$.
+    wrongFeedback: >-
+      הציבו את הסליל בשדה וכפלו סקלרית ב-$\gamma'(t)$. רק הרכיב השלישי של $\gamma'$ משנה כאן.
+    commonWrong:
+      - value: 27.915457
+        feedback: >-
+          זה $2\sqrt2\,\pi^2=\int_\gamma z\,ds$, אינטגרל של הפונקציה $z$ לפי אורך קשת (שיעור 5.4), עם $\|\gamma'\|=\sqrt2$.
+          בעבודה נכנס רק הרכיב המשיק: $\mathbf F\cdot\gamma'=t\cdot1$.
+        misconception: MC-c6-field-vs-scalar
+      - value: -19.739209
+        feedback: >-
+          הסימן הפוך. בכיוון של $t$ העולה הסליל עולה, והשדה מצביע כלפי מעלה: העבודה חיובית.
+        misconception: MC-c6-orientation-irrelevant
+    hints:
+      - 'חזרו לשיעור 6.1 (ההגדרה של אינטגרל קווי של שדה) ולשיעור 5.4 (אינטגרל לפי אורך קשת).'
+
+  - id: Q-6-review-02
+    type: numeric
+    objectives: [OBJ-6.2-1, OBJ-6.2-3]
+    level: basic
+    prompt: >-
+      חשבו את $\int_\gamma\mathbf F\cdot d\mathbf s$ עבור $\mathbf F(x,y,z)=(yz,\ xz,\ xy)$ לאורך
+      $\gamma(t)=\left(t^2,\ 2\sin\frac{\pi t}2,\ 3t\right)$, $t\in[0,1]$.
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\mathbf F=\nabla(xyz)$, והמסילה הולכת מ-$(0,0,0)$ ל-$(1,2,3)$, ולכן האינטגרל הוא $1\cdot2\cdot3-0=6$.
+    wrongFeedback: >-
+      חפשו פוטנציאל: איזו פונקציה נותנת $yz$ כשגוזרים לפי $x$, $xz$ לפי $y$, ו-$xy$ לפי $z$? אחר כך הציבו את נקודות הקצה.
+    commonWrong:
+      - value: -6
+        feedback: >-
+          זה ההתחלה פחות הסוף. המשפט היסודי: $\varphi(\gamma(1))-\varphi(\gamma(0))$.
+        misconception: MC-c6-potential-order
+      - value: 18
+        feedback: >-
+          18 הוא $3\cdot6$: סכום שלוש הפונקציות הקדומות $xyz+xyz+xyz$, מוצב בנקודת הסוף. הפוטנציאל הוא $xyz$ אחד.
+        misconception: MC-c6-sum-antiderivatives
+    hints:
+      - 'חזרו לשיעור 6.2: המשפט היסודי לאינטגרלים קוויים ומציאת פוטנציאל.'
+
+  - id: Q-6-review-03
+    type: twotier
+    objectives: [OBJ-6.2-2, OBJ-6.4-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\mathbf F$ משמר על קבוצה פתוחה $U\subseteq\mathbb{R}^2$, ו-$R\subset U$ תחום חסום שהשפה שלו בנויה מכמה מסילות סגורות (למשל
+      טבעת). האם בהכרח $\oint_{\partial R}\mathbf F\cdot d\mathbf s=0$, כאשר $\partial R$ בכיוון החיובי?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון, בלי קשר לכיוון של כל רכיב.
+      - text: 'רק אם ל-$R$ אין חורים'
+        feedback: >-
+          החורים של $R$ לא משנים כאן: $\mathbf F$ הוא גרדיאנט על $U$, וכל מסילה סגורה ב-$U$ נותנת אפס, גם שפת חור.
+        misconception: MC-c6-singularity-means-nonconservative
+    reasons:
+      - text: 'כל רכיב של $\partial R$ הוא מסילה סגורה ב-$U$, ועל כל אחד מהם האינטגרל של גרדיאנט אפס; הסכום אפס'
+        correct: true
+        feedback: >-
+          בדיוק. הכיוון של כל רכיב משנה רק את הסימן של אפס. שימו לב שהשאלה מניחה ש-$\mathbf F$ משמר על $U$ כולה, לא רק על $R$.
+      - text: 'הרכיבים מכוונים בכיוונים מנוגדים, ולכן האינטגרלים שלהם מתקזזים'
+        feedback: >-
+          הם מתקזזים רק כשכל אחד מהם אפס. לשדה הסיבוב על הטבעת $1\le r\le2$ התרומות $2\pi$ ומינוס $2\pi$ מתקזזות, אבל לשדה
+          $(-y,x)$ הן $8\pi$ ומינוס $2\pi$.
+        misconception: MC-c6-opposite-boundaries-cancel
+      - text: 'כל אינטגרל של שדה על מסילה סגורה הוא אפס, כי ההליכה חוזרת לנקודת ההתחלה'
+        feedback: >-
+          לא: שדה הסיבוב נותן $2\pi$ על מעגל היחידה. כאן האפס בא מהנתון שהשדה משמר.
+        misconception: MC-c6-closed-means-zero
+    hints:
+      - 'חזרו לשיעור 6.2 (אפס על כל מסילה סגורה) ולשיעור 6.4 (שפה שבנויה מכמה מסילות).'
+
+  - id: Q-6-review-04
+    type: multi
+    objectives: [OBJ-6.1-2, OBJ-6.3-3, OBJ-6.5-1, OBJ-5.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מחליפים את הכיוון: את כיוון ההליכה על מסילה $\gamma$, ואת הנורמל של משטח $S$, $\hat{\mathbf N}\mapsto-\hat{\mathbf N}$.
+      אילו מהגדלים הבאים **מחליפים סימן**? סמנו את כולם. ($\rho$ פונקציה ו-$\mathbf F$ שדה, קבועים מראש.)
+    choices:
+      - text: '$\int_\gamma\mathbf F\cdot d\mathbf s$'
+        correct: true
+        feedback: נכון. $\mathbf t$ מתהפך.
+      - text: '$\iint_S\mathbf F\cdot d\mathbf S$'
+        correct: true
+        feedback: נכון. $\hat{\mathbf N}$ מתהפך, ואיתו $\mathbf F\cdot\hat{\mathbf N}$.
+      - text: '$\iint_S H\,dS$'
+        correct: true
+        feedback: >-
+          נכון. $\kappa_1$ ו-$\kappa_2$ מחליפות סימן עם הנורמל, ולכן גם $H$, הממוצע שלהן.
+      - text: '$\int_\gamma\rho\,ds$ ו-$\iint_S\rho\,dS$'
+        feedback: >-
+          לא. $ds$ ו-$dS$ הם אורך ושטח, ואינם תלויים בכיוון (שיעור 5.4).
+        misconception: MC-c6-scalar-changes-sign
+      - text: '$\iint_S K\,dS$'
+        feedback: >-
+          לא. $K=\kappa_1\kappa_2$, מכפלה של שני גורמים שמחליפים סימן. העקמומיות הכוללת אינה תלויה בכיוון.
+        misconception: MC-c6-K-sign-flips
+    hints:
+      - 'חזרו לשיעורים 6.1 ו-6.3 (מה מחליף סימן), 5.4 (אינטגרלים לפי אורך ושטח) ו-6.5 (העקמומיות הכוללת).'
+
+  - id: Q-6-review-05
+    type: numeric
+    objectives: [OBJ-6.2-3, OBJ-6.1-1]
+    level: mid
+    prompt: >-
+      חשבו ישירות את $\oint_C\mathbf W\cdot d\mathbf s$ עבור שדה הסיבוב $\mathbf W=\frac{(-y,\ x)}{x^2+y^2}$, כאשר $C$ האליפסה
+      $\frac{x^2}{4}+y^2=1$, פעם אחת נגד כיוון השעון. (נתון: $\int_0^{2\pi}\frac{dt}{a^2\cos^2t+b^2\sin^2t}=\frac{2\pi}{ab}$
+      עבור $a,b>0$.)
+    answer: 6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi$. עם $\gamma(t)=(2\cos t,\sin t)$: $\mathbf W\cdot\gamma'=\frac{(-\sin t)(-2\sin t)+(2\cos t)(\cos t)}{4\cos^2t+\sin^2t}=\frac{2}{4\cos^2t+\sin^2t}$,
+      והאינטגרל $2\cdot\frac{2\pi}{2\cdot1}=2\pi$: אותו ערך כמו על כל מעגל סביב הראשית.
+    wrongFeedback: >-
+      הציבו $\gamma(t)=(2\cos t,\sin t)$, חשבו את המונה $x\,y'-y\,x'$ ואת המכנה $x^2+y^2$, והשתמשו בנוסחה הנתונה עם $a=2$, $b=1$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          אפס היה נכון לשדה משמר. $\mathbf W$ מקיים את שוויון הנגזרות המעורבות, אבל אינו משמר ב-$\mathbb{R}^2\setminus\{0\}$,
+          והאליפסה מקיפה את הראשית.
+        misconception: MC-c6-mixed-partials-suffice
+      - value: 3.1415927
+        feedback: >-
+          $\pi$ הוא $\int_0^{2\pi}\frac{dt}{4\cos^2t+\sin^2t}$ לבדו. במונה יש גורם 2: $(-\sin t)(-2\sin t)+2\cos^2t=2$.
+        misconception: MC-c6-ds-is-dt
+    hints:
+      - 'חזרו לשיעור 6.2: שדה הסיבוב, ולשיעור 6.1: חישוב אינטגרל קווי בפרמטריזציה.'
+
+  - id: Q-6-review-06
+    type: numeric
+    objectives: [OBJ-6.2-1, OBJ-6.2-3, OBJ-6.1-1]
+    level: exam
+    prompt: >-
+      $\mathbf F(x,y)=(2x,\ 2y)+\mathbf W(x,y)$, כאשר $\mathbf W=\frac{(-y,\ x)}{x^2+y^2}$ שדה הסיבוב. חשבו את
+      $\int_\gamma\mathbf F\cdot d\mathbf s$ לאורך חצי מעגל היחידה העליון מ-$(1,0)$ ל-$(-1,0)$.
+    answer: 3.1415927
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi$. החלק $(2x,2y)=\nabla(x^2+y^2)$ תורם $1-1=0$, כי שתי נקודות הקצה על מעגל היחידה. החלק $\mathbf W$ תורם
+      בחישוב ישיר $\int_0^\pi1\,dt=\pi$. אינטגרל קווי לינארי בשדה, ולכן מחברים.
+    wrongFeedback: >-
+      פצלו את השדה לשניים. לחלק הראשון יש פוטנציאל; את השני חשבו עם $\gamma(t)=(\cos t,\sin t)$, $t\in[0,\pi]$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          רק החלק $(2x,2y)$ הוא גרדיאנט. $\mathbf W$ אינו משמר על $\mathbb{R}^2\setminus\{0\}$, ועל חצי המעגל הוא תורם $\pi$.
+        misconception: MC-c6-mixed-partials-suffice
+      - value: -3.1415927
+        feedback: >-
+          מינוס $\pi$ הוא חצי המעגל התחתון, או ההליכה ההפוכה. מ-$(1,0)$ ל-$(-1,0)$ דרך החצי העליון הולכים נגד כיוון השעון.
+        misconception: MC-c6-orientation-irrelevant
+    hints:
+      - 'חזרו לשיעור 6.2: פוטנציאל לחלק המשמר, וחישוב ישיר לשדה הסיבוב.'
+
+  - id: Q-6-review-07
+    type: numeric
+    objectives: [OBJ-6.3-1, OBJ-6.4-1]
+    level: mid
+    prompt: >-
+      חשבו את $\oiint_S\mathbf F\cdot d\mathbf S$ עבור $\mathbf F=\frac{(x,\ y,\ z)}{(x^2+y^2+z^2)^{3/2}}$, כאשר $S$ הספרה שרדיוסה 2
+      סביב הראשית, עם הנורמל החיצוני.
+    answer: 12.566371
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $4\pi$. על הספרה $\hat{\mathbf N}=\frac p2$ ו-$\mathbf F\cdot\hat{\mathbf N}=\frac{\|p\|^2}{2\cdot8}=\frac14$, והשטח
+      $16\pi$. לכל רדיוס $R$: $\frac{1}{R^2}\cdot4\pi R^2=4\pi$.
+    wrongFeedback: >-
+      על ספרה סביב הראשית השדה ניצב למשטח, ו-$\|\mathbf F\|=\frac{1}{R^2}$. כפלו בשטח הספרה.
+    commonWrong:
+      - value: -12.566371
+        feedback: >-
+          מינוס $4\pi$ הוא השטף עם הנורמל הפנימי. הכתיב $\oiint$ על ספרה מתכוון לנורמל החיצוני, והשדה יוצא מהספרה.
+        misconception: MC-c6-param-normal-trusted
+      - value: 4.9348022
+        feedback: >-
+          זה $\frac{\pi^2}{2}=\iint\frac14\,du\,dv$: בפרמטריזציה $(2\cos u\cos v,2\sin u\cos v,2\sin v)$ הכפילו בנורמל היחידה
+          ושכחו את אלמנט השטח $4\cos v$. עם $\sigma_u\times\sigma_v$: $\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)=\frac14\cdot4\cos v=\cos v$.
+        misconception: MC-c6-unit-normal-no-area
+    hints:
+      - 'חזרו לשיעור 6.3 (חישוב שטף בעזרת נורמל היחידה) ולשיעור 6.4 (הנורמל החיצוני של משטח סגור).'
+
+  - id: Q-6-review-08
+    type: twotier
+    objectives: [OBJ-6.3-3, OBJ-6.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbf F=(0,0,z)$. מחשבים את השטף דרך חצי ספרת היחידה העליון ודרך חצי ספרת היחידה התחתון, כל אחד עם הנורמל החיצוני
+      של כדור היחידה. מישהו אומר: "הנורמלים בשני החצאים מצביעים לכיוונים מנוגדים, ולכן שני השטפים נגדיים, והשטף דרך כל
+      הספרה אפס". האם זה נכון?
+    choices:
+      - text: 'לא: שני השטפים שווים, $\frac{2\pi}{3}$ כל אחד, וסך הכול $\frac{4\pi}{3}$'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf F\cdot\hat{\mathbf N}=z\cdot z=z^2\ge0$ בכל הספרה: בחצי התחתון גם השדה וגם הנורמל מצביעים כלפי מטה.
+      - text: 'כן: השטפים דרך שני החצאים נגדיים, ולכן השטף דרך כל הספרה אפס'
+        feedback: >-
+          הסימטריה $z\mapsto-z$ מחליפה את הסימן של השדה **וגם** של הנורמל, ולכן $\mathbf F\cdot\hat{\mathbf N}=z^2$ זוגית ולא
+          אי-זוגית. השטף חיובי.
+        misconception: MC-c6-symmetry-of-field
+    reasons:
+      - text: 'בשני החצאים $\mathbf F\cdot\hat{\mathbf N}=z^2$, ובגלל הסימטריה $z\mapsto-z$ האינטגרלים שווים; $\iint_{S^2}z^2\,dS=\frac{4\pi}3$'
+        correct: true
+        feedback: >-
+          בדיוק. ו-$\frac{4\pi}{3}$ הוא שליש מ-$\iint(x^2+y^2+z^2)\,dS=4\pi$, לפי הסימטריה בין הצירים.
+      - text: 'שטף דרך משטח סגור הוא תמיד אפס, כי מה שנכנס בחצי אחד יוצא בחצי השני'
+        feedback: >-
+          לא: גם $(x,y,z)$ נותן $4\pi$. כאן התוצאה $\frac{4\pi}{3}$, לא אפס.
+        misconception: MC-c6-closed-means-zero
+      - text: 'השדה מצביע כלפי מעלה בחצי העליון וכלפי מטה בתחתון, ולכן השטפים נגדיים'
+        feedback: >-
+          השדה מתהפך, אבל גם הנורמל החיצוני מתהפך; מה שקובע הוא המכפלה $\mathbf F\cdot\hat{\mathbf N}$, ולא אחד מהם לבד.
+        misconception: MC-c6-symmetry-of-field
+    hints:
+      - 'חזרו לשיעור 6.3 (סימטריה) ולשיעור 6.4 (משטח סגור מכמה חלקים, כל אחד עם הנורמל החיצוני שלו).'
+
+  - id: Q-6-review-09
+    type: numeric
+    objectives: [OBJ-6.4-3, OBJ-6.1-1]
+    level: mid
+    prompt: >-
+      $D$ חצי עיגול היחידה העליון, $x^2+y^2\le1$, $y\ge0$. חשבו את $\oint_{\partial D}\mathbf F\cdot d\mathbf s$ עבור
+      $\mathbf F(x,y)=(-y,\ x)$, כאשר $\partial D$ בכיוון החיובי.
+    answer: 3.1415927
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi$. השפה: הקטע מ-$(-1,0)$ ל-$(1,0)$, ואחריו חצי המעגל מ-$(1,0)$ חזרה ל-$(-1,0)$ נגד כיוון השעון. על הקטע
+      $y=0$, $\mathbf F=(0,x)$ ו-$\gamma'=(1,0)$, תרומה 0. על חצי המעגל $\mathbf F\cdot\gamma'=1$, תרומה $\pi$.
+    wrongFeedback: >-
+      השפה בנויה משתי מסילות: קטע וחצי מעגל. כוונו כל אחת כך ש-$D$ משמאל, וחברו.
+    commonWrong:
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא מעגל היחידה השלם. השפה של חצי העיגול היא חצי מעגל וקטע, ועל הקטע $\mathbf F\cdot\gamma'=0$.
+        misconception: MC-c6-piece-forgotten
+      - value: -3.1415927
+        feedback: >-
+          זה הכיוון השלילי, עם כיוון השעון. בכיוון החיובי הולכים על הקטע ימינה ועל הקשת נגד כיוון השעון.
+        misconception: MC-c6-orientation-irrelevant
+    hints:
+      - 'חזרו לשיעור 6.4: שפה מכוונת שבנויה מכמה מסילות.'
+
+  - id: Q-6-review-10
+    type: numeric
+    objectives: [OBJ-6.4-2, OBJ-6.3-1]
+    level: mid
+    prompt: >-
+      $S$ השפה של הגליל המלא $x^2+y^2\le1$, $0\le z\le1$, עם הנורמל החיצוני. חשבו את $\oiint_S\mathbf F\cdot d\mathbf S$ עבור
+      $\mathbf F(x,y,z)=(x,\ y,\ z^2)$.
+    answer: 9.424778
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $3\pi$. דופן: $\mathbf F\cdot(x,y,0)=1$, שטח $2\pi$, תרומה $2\pi$. מכסה עליון: $z^2=1$, שטח $\pi$, תרומה $\pi$.
+      מכסה תחתון: $\mathbf F\cdot(0,0,-1)=-z^2=0$.
+    wrongFeedback: >-
+      שלושה חלקים, כל אחד עם הנורמל החיצוני שלו. חשבו את $\mathbf F\cdot\hat{\mathbf N}$ על כל חלק.
+    commonWrong:
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא הדופן בלבד. המכסה העליון תורם $\pi$.
+        misconception: MC-c6-piece-forgotten
+    hints:
+      - 'חזרו לשיעור 6.4: גליל עם מכסים, ולשיעור 6.3: חישוב שטף.'
+
+  - id: Q-6-review-11
+    type: mc
+    objectives: [OBJ-6.5-1, OBJ-5.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לספרה $S_r$ שרדיוסה $r$ שטח $4\pi r^2$ (שיעור 5.3). איזה משפט נכון?
+    choices:
+      - text: '$\iint_{S_r}K\,dS=4\pi$ לכל $r$, כי $K=\frac1{r^2}$ מבטל בדיוק את $r^2$ שבשטח'
+        correct: true
+        feedback: >-
+          נכון. השטח גדל עם $r$, העקמומיות קטנה, והמכפלה קבועה. זה המקרה הראשון של גאוס-בונה.
+      - text: '$\iint_{S_r}K\,dS=4\pi r^2$, כמו השטח, כי על כל ספרה $K=1$'
+        feedback: >-
+          זה $\iint1\,dS$. העקמומיות של ספרה ברדיוס $r\ne1$ אינה 1.
+        misconception: MC-c6-total-is-area
+      - text: '$\iint_{S_r}K\,dS=4\pi r$, כי $K=\frac1r$ והשטח $4\pi r^2$'
+        feedback: >-
+          זה מתקבל מ-$K=\frac1r$. אבל $K=\kappa_1\kappa_2=\frac{1}{r^2}$.
+        misconception: MC-c6-K-one-over-r
+      - text: '$\iint_{S_r}K\,dS$ קטן כש-$r$ גדל, כי ספרה גדולה שטוחה יותר'
+        feedback: >-
+          $K$ קטן, אבל השטח גדל באותו קצב. העקמומיות הכוללת אינה רואה גודל.
+        misconception: MC-c6-total-depends-on-size
+    hints:
+      - 'חזרו לשיעור 6.5 (העקמומיות הכוללת של ספרה) ולשיעור 5.3 (שטח ספרה).'
+
+  - id: Q-6-review-12
+    type: mc
+    objectives: [OBJ-6.5-2, OBJ-4.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מהי התמונה של העתקת גאוס של הגליל $x^2+y^2=1$ (עם הנורמל כלפי חוץ), ואיך היא מתיישבת עם עקמומיות גאוס שלו?
+    choices:
+      - text: 'קו המשווה של ספרת היחידה, קבוצה בעלת שטח אפס; זה מתאים ל-$K=0$ בכל נקודה'
+        correct: true
+        feedback: >-
+          נכון. $\hat{\mathbf N}(x,y,z)=(x,y,0)$ אינו תלוי ב-$z$. $K$ הוא היחס המקומי בין שטח התמונה לשטח במשטח (שיעור 4.6),
+          וכאן התמונה "שטוחה": אין לה שטח.
+      - text: 'חצי ספרה, כי הנורמל מסתובב סביב ציר $z$'
+        feedback: >-
+          הנורמל מסתובב סביב הציר אבל נשאר אופקי: רכיב ה-$z$ שלו תמיד אפס. התמונה היא מעגל, לא חצי ספרה.
+        misconception: MC-c6-gauss-image-guess
+      - text: 'כל ספרת היחידה, ולכן לגליל אינסופי עקמומיות כוללת $4\pi$'
+        feedback: >-
+          לנורמל של הגליל אין רכיב $z$, ולכן הוא לעולם לא מגיע לקטבים. התמונה היא קו המשווה בלבד.
+        misconception: MC-c6-total-always-4pi
+      - text: 'מעגל, ולכן $K=\frac{1}{r}=1$ על הגליל'
+        feedback: >-
+          על הגליל $\kappa_1=1$ ו-$\kappa_2=0$, ולכן $K=0$. מעגל כתמונה אומר שהשטח המסומן אפס.
+        misconception: MC-c6-K-one-over-r
+    hints:
+      - 'חזרו לשיעור 6.5 (שטח מסומן של תמונת העתקת גאוס) ולשיעור 4.6 (העתקת גאוס).'
+
+  - id: Q-6-review-13
+    type: twotier
+    objectives: [OBJ-6.5-3, OBJ-4.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן משטח סגור, שאפשר לעוות ברציפות לספרה, שאין בו אף נקודה אליפטית?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. חייבת להיות בו נקודה עם $K>0$.
+      - text: כן
+        feedback: >-
+          אז $K\le0$ בכל נקודה, ו-$\iint K\,dS\le0$. אבל לפי גאוס-בונה העקמומיות הכוללת שלו $4\pi>0$.
+        misconception: MC-c6-dent-changes-total
+    reasons:
+      - text: 'לפי גאוס-בונה $\iint K\,dS=4\pi>0$, ואם $K\le0$ בכל נקודה, האינטגרל אינו חיובי'
+        correct: true
+        feedback: >-
+          בדיוק. נקודה אליפטית היא נקודה עם $K>0$ (שיעור 4.5), וכאן אינטגרל חיובי מחייב שתהיה כזו.
+      - text: 'בספרה $K>0$ בכל נקודה, ועיוות לא משנה את $K$'
+        feedback: >-
+          עיוות משנה את $K$ נקודתית (בשקע בספרה יש נקודות עם $K<0$); נשמר רק האינטגרל. המסקנה נכונה, הנימוק לא.
+        misconception: MC-c6-K-pointwise-invariant
+      - text: 'כל משטח סגור הוא בעל עקמומיות כוללת $4\pi$, ולכן יש בו נקודה אליפטית'
+        feedback: >-
+          לא כל משטח סגור: לטורוס עקמומיות כוללת 0. הנימוק צריך את הצורה הטופולוגית, כאן ספרה.
+        misconception: MC-c6-total-always-4pi
+    hints:
+      - 'חזרו לשיעור 6.5 (גאוס-בונה בניסוח איכותי) ולשיעור 4.5 (סיווג נקודות לפי סימן K).'
+
+  - id: Q-6-review-14
+    type: rank
+    objectives: [OBJ-6.3-2, OBJ-5.1-1]
+    level: exam
+    prompt: >-
+      הוכחה: תהי $\tau=\sigma\circ\psi$, כאשר $\psi:D'\to D$ חד-חד-ערכית ועל, גזירה ברציפות, ו-$\det D\psi<0$ בכל $D'$. אז
+      $\iint_{D'}\mathbf F(\tau)\cdot(\tau_s\times\tau_t)\,ds\,dt=-\iint_D\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)\,du\,dv$.
+    help: סדרו את שלבי ההוכחה, מהראשון לאחרון.
+    items:
+      - id: chain
+        label: 'לפי כלל השרשרת $\tau_s=\sigma_u\,\partial_s\psi_1+\sigma_v\,\partial_s\psi_2$ ו-$\tau_t=\sigma_u\,\partial_t\psi_1+\sigma_v\,\partial_t\psi_2$.'
+      - id: cross
+        label: 'לכן $\tau_s\times\tau_t=\det D\psi\cdot(\sigma_u\times\sigma_v)\circ\psi$, כי $\sigma_u\times\sigma_u=\sigma_v\times\sigma_v=0$ ו-$\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$.'
+      - id: rewrite
+        label: 'האינטגרל על $D''$ הוא $\iint_{D''}g(\psi(s,t))\,\det D\psi\,ds\,dt$, עם $g=\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)$.'
+      - id: sign
+        label: 'כי $\det D\psi<0$, מתקיים $\det D\psi=-|\det D\psi|$, ולכן האינטגרל הזה הוא $-\iint_{D''}g(\psi)\,|\det D\psi|\,ds\,dt$.'
+      - id: cov
+        label: 'לפי נוסחת החלפת המשתנים $\iint_{D''}g(\psi)\,|\det D\psi|\,ds\,dt=\iint_D g\,du\,dv$, ולכן התוצאה היא $-\iint_D g\,du\,dv$.'
+    order: [chain, cross, rewrite, sign, cov]
+    correctFeedback: >-
+      נכון. הרעיון: המכפלה הווקטורית מוכפלת ב-$\det D\psi$ **עם סימן**, ואילו נוסחת החלפת המשתנים צורכת $|\det D\psi|$. ההפרש
+      ביניהם הוא כל הסימן. כש-$\det D\psi>0$ אותה הוכחה נותנת אי-תלות; ושטח, עם $\|\tau_s\times\tau_t\|$, אינו תלוי באף אחד מהם.
+    wrongFeedback: >-
+      קודם כלל השרשרת והמכפלה הווקטורית (שם מופיע $\det D\psi$), אחר כך הסימן שלו, ובסוף החלפת המשתנים, שדורשת ערך מוחלט.
+    hints:
+      - 'חזרו לשיעור 6.3 (כיוון הנורמל מהפרמטריזציה) ולשיעור 5.1 (נוסחת החלפת המשתנים עם הערך המוחלט של היעקוביאן).'

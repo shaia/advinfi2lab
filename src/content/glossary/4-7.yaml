@@ -1,0 +1,10 @@
+# Terms first defined in lesson 4.7.
+- id: theorema-egregium
+  term: המשפט המופלא של גאוס
+  en: Theorema Egregium
+  definition: >-
+    עקמומיות גאוס של משטח נקבעת על ידי מקדמי התבנית הראשונה $E,F,G$ ונגזרותיהם עד סדר שני. לכן איזומטריה מקומית
+    שומרת על $K$. כש-$F=0$:
+    $K=-\frac{1}{2\sqrt{EG}}\left[\left(\frac{E_v}{\sqrt{EG}}\right)_v+\left(\frac{G_u}{\sqrt{EG}}\right)_u\right]$.
+  reject: [המשפט הנהדר]
+  lesson: '4.7'

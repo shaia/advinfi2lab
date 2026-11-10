@@ -1,0 +1,500 @@
+# Lesson 5.3 — surface area.
+# Objectives (src/course.ts):
+#   OBJ-5.3-1  area as ∬‖σ_u × σ_v‖, and in terms of the first fundamental form, √(EG − F²)
+#   OBJ-5.3-2  prove the area does not depend on the parametrization
+#   OBJ-5.3-3  areas of the sphere, the torus, a graph and a surface of revolution
+# The sphere in latitude coordinates, as in src/math/geometry.ts: σ(u,v) = (r cos u cos v, r sin u cos v, r sin v).
+chapter: 5
+questions:
+  - id: Q-5.3-definition
+    type: mc
+    objectives: [OBJ-5.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\sigma:D\to\mathbb R^3$ פרמטריזציה רגולרית וחד-חד-ערכית של משטח $S$, פרט לקבוצה בעלת שטח אפס (כמו הקטבים
+      והתפר של הספרה), עם מקדמי התבנית הראשונה $E=\sigma_u\cdot\sigma_u$, $F=\sigma_u\cdot\sigma_v$,
+      $G=\sigma_v\cdot\sigma_v$. מהו השטח של $S$?
+    choices:
+      - text: '$\iint_D\|\sigma_u\times\sigma_v\|\,du\,dv=\iint_D\sqrt{EG-F^2}\,du\,dv$'
+        correct: true
+        feedback: >-
+          נכון. מלבן קטן $du\times dv$ עובר בקירוב למקבילית שנפרשת על ידי $\sigma_u\,du$ ו-$\sigma_v\,dv$ במישור
+          המשיק, ושטחה $\|\sigma_u\times\sigma_v\|\,du\,dv$.
+      - text: '$\iint_D(EG-F^2)\,du\,dv$'
+        feedback: >-
+          חסר שורש. $EG-F^2$ הוא **ריבוע** שטח המקבילית. בדיקה: על הספרה ברדיוס $r$ זה נותן משהו פרופורציוני
+          ל-$r^4$, ושטח גדל כמו $r^2$.
+        misconception: MC-c5-area-no-root
+      - text: '$\iint_D\|\sigma_u\|\,\|\sigma_v\|\,du\,dv=\iint_D\sqrt{EG}\,du\,dv$'
+        feedback: >-
+          זה נכון רק כש-$\sigma_u\perp\sigma_v$, כלומר $F=0$. שטח מקבילית הוא $\|a\|\|b\|\sin\alpha$, ולא
+          $\|a\|\|b\|$.
+        misconception: MC-c5-area-ignore-F
+      - text: '$\iint_D du\,dv$, השטח של תחום הפרמטרים'
+        feedback: >-
+          הפרמטריזציה מותחת שטחים, בדיוק כמו העתקה בהחלפת משתנים, ולכן צריך מקדם שינוי שטח. ספרת היחידה
+          בקואורדינטות רוחב ואורך נפרשת על מלבן ששטחו $2\pi^2$, ושטחה $4\pi$.
+        misconception: MC-c5-forgot-jacobian
+
+  - id: Q-5.3-from-EFG
+    type: numeric
+    objectives: [OBJ-5.3-1]
+    level: basic
+    prompt: >-
+      למשטח שנפרש על ידי $\sigma$ מעל $D=[0,1]^2$ מקדמי התבנית הראשונה קבועים: $E=4$, $F=2$, $G=5$. מהו השטח
+      שלו?
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sqrt{EG-F^2}=\sqrt{20-4}=4$, והשטח הוא $4\cdot|D|=4$. שימו לב שלא היה צריך לדעת איך המשטח יושב
+      במרחב: מקדמים קבועים יש גם לחתיכה של מישור וגם לחתיכה של גליל, והשטח נקבע מ-$E,F,G$ בלבד.
+    wrongFeedback: >-
+      אלמנט השטח הוא $\sqrt{EG-F^2}\,du\,dv$. הציבו את המקדמים.
+    commonWrong:
+      - value: 16
+        feedback: >-
+          זה $EG-F^2$ בלי השורש: ריבוע השטח.
+        misconception: MC-c5-area-no-root
+      - value: 4.472136
+        feedback: >-
+          זה $\sqrt{EG}=\sqrt{20}$, בלי $F$. כאן $F=2\neq0$, כלומר $\sigma_u$ ו-$\sigma_v$ אינם ניצבים, והמקבילית
+          "שטוחה" יותר ממלבן.
+        misconception: MC-c5-area-ignore-F
+
+  - id: Q-5.3-graph-formula
+    type: mc
+    objectives: [OBJ-5.3-1, OBJ-5.3-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      לגרף של $f\in C^1(D)$ בפרמטריזציה $\sigma(x,y)=(x,y,f(x,y))$, מהו $\|\sigma_x\times\sigma_y\|$?
+    choices:
+      - text: '$\sqrt{1+f_x^2+f_y^2}$'
+        correct: true
+        feedback: >-
+          נכון. $\sigma_x=(1,0,f_x)$, $\sigma_y=(0,1,f_y)$, ו-$\sigma_x\times\sigma_y=(-f_x,-f_y,1)$.
+      - text: '$\sqrt{f_x^2+f_y^2}$'
+        feedback: >-
+          הרכיב השלישי של $\sigma_x\times\sigma_y$ הוא 1. בלעדיו גרף של פונקציה קבועה היה מקבל שטח אפס, אף שהוא
+          עותק של $D$.
+        misconception: MC-c5-graph-forget-one
+      - text: '$1+f_x^2+f_y^2$'
+        feedback: >-
+          זה **ריבוע** האורך. בדיקה: למישור $z=x$ מעל ריבוע היחידה השטח הוא $\sqrt2$ (מלבן $1\times\sqrt2$), לא 2.
+        misconception: MC-c5-area-no-root
+      - text: '$\sqrt{1+f^2}$'
+        feedback: >-
+          השטח לא יכול להיות תלוי בגובה $f$ עצמו: הזזה של הגרף למעלה ב-$c$ לא משנה אותו. הוא תלוי רק בשיפועים.
+        misconception: MC-c5-area-vs-volume
+
+  - id: Q-5.3-normal-flip
+    type: mc
+    objectives: [OBJ-5.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מחליפים את סדר הפרמטרים: $\tau(s,t)=\sigma(t,s)$. הנורמל $\frac{\tau_s\times\tau_t}{\|\tau_s\times\tau_t\|}$
+      מתהפך. מה קורה לשטח?
+    choices:
+      - text: 'לא משתנה, כי $\|\tau_s\times\tau_t\|=\|\sigma_v\times\sigma_u\|=\|\sigma_u\times\sigma_v\|$'
+        correct: true
+        feedback: >-
+          נכון. השטח הוא אינטגרל של **אורך** המכפלה הווקטורית, ואורך אינו מרגיש בסימן; וההחלפה $(s,t)\mapsto(t,s)$
+          שומרת על שטח התחום. זה מקרה פרטי של אי-התלות בפרמטריזציה, עם $|\det D\psi|=1$.
+      - text: 'מחליף סימן, כי $\tau_s\times\tau_t=-\sigma_u\times\sigma_v$'
+        feedback: >-
+          שטח אינו שלילי. הנורמל מתהפך כי $\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$, אבל לשני הווקטורים אותו
+          אורך, ורק האורך נכנס לשטח.
+        misconception: MC-c5-scalar-orientation
+      - text: 'לא משתנה, אבל רק כשהמשטח מכוון'
+        feedback: >-
+          הכיווניות לא נכנסת לחישוב השטח: באלמנט השטח יש רק אורך. גם לרצועת מביוס יש שטח.
+        misconception: MC-c5-scalar-orientation
+
+  - id: Q-5.3-cone
+    type: numeric
+    objectives: [OBJ-5.3-3]
+    level: basic
+    prompt: >-
+      מסובבים את הגרף של $f(x)=x$, $0\le x\le1$, סביב ציר $x$ ומקבלים מעטפת של חרוט. זה משטח סיבוב (ראו
+      במילון), כאן סביב ציר $x$:
+      $\sigma(x,\theta)=\big(x,\ f(x)\cos\theta,\ f(x)\sin\theta\big)$, $0\le\theta\le2\pi$, ואז
+      $\|\sigma_x\times\sigma_\theta\|=f(x)\sqrt{1+f'(x)^2}$. מהו השטח של המעטפת?
+    answer: 4.442883
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi\sqrt2$: $\int_0^{2\pi}\int_0^1x\sqrt{1+1^2}\,dx\,d\theta=\pi\sqrt2$. זה מתאים לנוסחה הגאומטרית
+      $\pi r\ell$ עם $r=1$ ואורך הצלע $\ell=\sqrt2$. באופן כללי, שטח משטח סיבוב סביב ציר $x$ הוא
+      $2\pi\int_a^bf(x)\sqrt{1+f'(x)^2}\,dx$.
+    wrongFeedback: >-
+      השטח הוא $\iint\|\sigma_x\times\sigma_\theta\|\,dx\,d\theta=2\pi\int_0^1f(x)\sqrt{1+f'(x)^2}\,dx$.
+    commonWrong:
+      - value: 3.141593
+        feedback: >-
+          זה $2\pi\int_0^1x\,dx=\pi$, בלי $\sqrt{1+f'^2}$. הרצועה ברוחב אורך הקשת, $\sqrt2\,dx$, ולא $dx$.
+        misconception: MC-c5-revolution-no-arclength
+      - value: 1.047198
+        feedback: >-
+          זה $\frac\pi3$, **הנפח** של החרוט המלא, $\pi\int_0^1x^2\,dx$.
+        misconception: MC-c5-area-vs-volume
+
+  - id: Q-5.3-lagrange
+    type: mc
+    objectives: [OBJ-5.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      למה $\|\sigma_u\times\sigma_v\|=\sqrt{EG-F^2}$?
+    choices:
+      - text: 'לפי זהות לגרנז׳ $\|a\times b\|^2=\|a\|^2\|b\|^2-(a\cdot b)^2$, עם $E=\sigma_u\cdot\sigma_u$, $F=\sigma_u\cdot\sigma_v$, $G=\sigma_v\cdot\sigma_v$'
+        correct: true
+        feedback: >-
+          נכון. בצורה גאומטרית: $\|a\|^2\|b\|^2-(a\cdot b)^2=\|a\|^2\|b\|^2(1-\cos^2\alpha)=(\|a\|\|b\|\sin\alpha)^2$.
+          לכן אלמנט השטח נקבע מהתבנית הראשונה בלבד.
+      - text: 'כי תמיד $\sigma_u\perp\sigma_v$, ולכן $F=0$ וזה פשוט $\sqrt{EG}$'
+        feedback: >-
+          $F$ אינו אפס בדרך כלל. למשל $\sigma(u,v)=(u+v,v,0)$ נותנת $F=1$. כשהקווים הפרמטריים אינם ניצבים
+          המקבילית צרה יותר ממלבן, ו-$F^2$ מפחית בדיוק את זה.
+        misconception: MC-c5-area-ignore-F
+      - text: 'כי $EG-F^2$ הוא הדטרמיננטה של מטריצת התבנית הראשונה, ודטרמיננטה היא שטח'
+        feedback: >-
+          $EG-F^2$ הוא אכן הדטרמיננטה של $\begin{pmatrix}E&F\\F&G\end{pmatrix}$, אבל זו מטריצת המכפלות הפנימיות
+          (מטריצת גרם), והיא שווה ל**ריבוע** השטח. לכן השורש.
+        misconception: MC-c5-area-no-root
+
+  - id: Q-5.3-F-matters
+    type: twotier
+    objectives: [OBJ-5.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma(u,v)=(u+v,\ v,\ 0)$ על $[0,1]^2$. סטודנט מחשב $E=1$, $G=2$ ומסיק שהשטח הוא
+      $\iint\sqrt{EG}=\sqrt2$. האם הוא צודק?
+    choices:
+      - text: לא, השטח הוא 1
+        correct: true
+        feedback: >-
+          נכון. $F=\sigma_u\cdot\sigma_v=(1,0,0)\cdot(1,1,0)=1$, ו-$\sqrt{EG-F^2}=\sqrt{2-1}=1$.
+      - text: כן, השטח הוא $\sqrt2$
+        feedback: >-
+          התמונה היא המקבילית $(0,0),(1,0),(2,1),(1,1)$ במישור $z=0$: בסיס 1 וגובה 1, שטח 1.
+        misconception: MC-c5-area-ignore-F
+    reasons:
+      - text: '$F=1\neq0$; השטח הוא $\iint\sqrt{EG-F^2}=1$, כמו שטח המקבילית שהיא התמונה'
+        correct: true
+        feedback: >-
+          בדיוק. בדיקה גאומטרית פשוטה מאשרת את הנוסחה.
+      - text: '$\sqrt{EG}$ הוא אלמנט השטח בכל פרמטריזציה'
+        feedback: >-
+          רק כש-$F=0$ (קווים פרמטריים ניצבים), כמו בספרה, בגליל ובטורוס בפרמטריזציות הרגילות.
+        misconception: MC-c5-area-ignore-F
+      - text: 'השטח הוא $EG-F^2=1$'
+        feedback: >-
+          המספר יצא נכון במקרה, כי $1=\sqrt1$. הנוסחה היא $\sqrt{EG-F^2}$; עם $E=4$, $F=2$, $G=5$ היה יוצא 16 במקום 4.
+        misconception: MC-c5-area-no-root
+
+  - id: Q-5.3-indep-steps
+    type: rank
+    objectives: [OBJ-5.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma:D\to S$ ו-$\tau:\tilde D\to S$ שתי פרמטריזציות רגולריות וחד-חד-ערכיות של אותו משטח. אז
+      $\psi=\sigma^{-1}\circ\tau$ חד-חד-ערכית ועל מ-$\tilde D$ ל-$D$, ולפי משפט הפונקציה ההפוכה היא גזירה ברציפות
+      עם יעקוביאן שונה מאפס (שיעור 3.2, החלפת פרמטרים). סדרו את שלבי ההוכחה שהשטח אינו תלוי בפרמטריזציה.
+    help: סדרו מהשלב הראשון לאחרון.
+    items:
+      - id: setup
+        label: 'כותבים $\tau=\sigma\circ\psi$ עם $\psi(s,t)=(u(s,t),v(s,t))$'
+      - id: chain
+        label: 'כלל השרשרת: $\tau_s=u_s\,\sigma_u+v_s\,\sigma_v$ ו-$\tau_t=u_t\,\sigma_u+v_t\,\sigma_v$'
+      - id: cross
+        label: 'מכפלה וקטורית ביליניארית ואנטי-סימטרית: $\tau_s\times\tau_t=(u_sv_t-u_tv_s)\,\sigma_u\times\sigma_v=\det D\psi\cdot(\sigma_u\times\sigma_v)\circ\psi$'
+      - id: norm
+        label: 'לוקחים אורך: $\|\tau_s\times\tau_t\|=|\det D\psi|\cdot\|\sigma_u\times\sigma_v\|\circ\psi$'
+      - id: cov
+        label: 'לכן השטח לפי $\tau$ הוא $\iint_{\tilde D}\|\sigma_u\times\sigma_v\|(\psi(s,t))\,|\det D\psi|\,ds\,dt$, ולפי נוסחת החלפת המשתנים זה $\iint_D\|\sigma_u\times\sigma_v\|\,du\,dv$, השטח לפי $\sigma$'
+    order: [setup, chain, cross, norm, cov]
+    correctFeedback: >-
+      נכון. הרעיון: המכפלה הווקטורית מוכפלת ביעקוביאן של החלפת הפרמטרים, ונוסחת החלפת המשתנים מחזירה בדיוק את
+      הגורם הזה. הערך המוחלט מופיע בשני המקומות, ולכן גם כיוון לא משנה.
+    wrongFeedback: >-
+      ההוכחה מתחילה בכלל השרשרת, עוברת דרך המכפלה הווקטורית ואורכה, ורק בסוף מפעילה את נוסחת החלפת המשתנים.
+
+  - id: Q-5.3-stretch
+    type: twotier
+    objectives: [OBJ-5.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma(u,v)=(r\cos u\cos v,\ r\sin u\cos v,\ r\sin v)$ על $[0,2\pi]\times[-\frac\pi2,\frac\pi2]$ היא
+      הפרמטריזציה של הספרה ברדיוס $r$ בקואורדינטות רוחב ואורך. נגדיר
+      $\tilde\sigma(s,t)=\sigma(2s,t)$ על $[0,\pi]\times[-\frac\pi2,\frac\pi2]$. אז
+      $\|\tilde\sigma_s\times\tilde\sigma_t\|=2\|\sigma_u\times\sigma_v\|$. האם $\tilde\sigma$ נותנת שטח $8\pi r^2$?
+    choices:
+      - text: לא, היא נותנת $4\pi r^2$
+        correct: true
+        feedback: >-
+          נכון. אלמנט השטח גדל פי 2 והתחום קטן פי 2.
+      - text: כן
+        feedback: >-
+          $\tilde\sigma$ היא החלפת פרמטרים חוקית ($\psi(s,t)=(2s,t)$ חד-חד-ערכית ועל), ולכן השטח לא משתנה.
+          הגורם 2 מתקזז עם התחום הקטן.
+        misconception: MC-c5-area-depends-on-param
+    reasons:
+      - text: '$\psi(s,t)=(2s,t)$ היא החלפת פרמטרים עם $|\det D\psi|=2$, והתחום $[0,\pi]$ באורך חצי; לפי המשפט השטח זהה'
+        correct: true
+        feedback: >-
+          בדיוק. $\int_0^\pi\int_{-\pi/2}^{\pi/2}2r^2\cos t\,dt\,ds=2r^2\cdot2\cdot\pi=4\pi r^2$.
+      - text: 'אלמנט השטח הוכפל, ולכן גם השטח'
+        feedback: >-
+          זה מתעלם מהתחום. מה שנשמר הוא האינטגרל, לא האינטגרנד.
+        misconception: MC-c5-area-depends-on-param
+      - text: 'השטח תלוי בפרמטריזציה, ולכן כל פרמטריזציה נותנת תשובה אחרת'
+        feedback: >-
+          המשפט אומר בדיוק את ההפך: כל שתי פרמטריזציות שמתקבלות זו מזו בהחלפת פרמטרים נותנות אותו שטח.
+        misconception: MC-c5-area-depends-on-param
+
+  - id: Q-5.3-double-cover
+    type: twotier
+    objectives: [OBJ-5.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אותה נוסחה $\sigma(u,v)$ של הספרה ברדיוס $r$, אבל על $[0,4\pi]\times[-\frac\pi2,\frac\pi2]$, נותנת
+      $\iint\|\sigma_u\times\sigma_v\|=8\pi r^2$. האם זו סתירה למשפט שהשטח אינו תלוי בפרמטריזציה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. המשפט מדבר על פרמטריזציות חד-חד-ערכיות, וזו אינה כזו.
+      - text: כן
+        feedback: >-
+          המשפט משווה בין שתי פרמטריזציות שמתקבלות זו מזו בהחלפת פרמטרים, שהיא חד-חד-ערכית. הנוסחה על
+          $[0,4\pi]$ עוברת על הספרה פעמיים.
+        misconception: MC-c5-area-depends-on-param
+    reasons:
+      - text: 'ההעתקה אינה חד-חד-ערכית: $u$ ו-$u+2\pi$ נותנות אותה נקודה, ולכן כל נקודה נספרת פעמיים'
+        correct: true
+        feedback: >-
+          בדיוק. האינטגרל של אלמנט השטח סופר נקודות כמה פעמים שהן מכוסות. זה אותו כשל כמו $\theta\in[0,4\pi]$
+          בקוטביות.
+      - text: 'ההעתקה לא רגולרית בקטבים, ולכן השטח לא מוגדר שם'
+        feedback: >-
+          הקטבים הם קבוצה בעלת שטח אפס, והם בעייתיים גם בפרמטריזציה על $[0,2\pi]$ שנותנת $4\pi r^2$. הבעיה היא
+          הכיסוי הכפול.
+        misconception: MC-c5-hypotheses-everywhere
+      - text: 'בנוסחת השטח לא צריך חד-חד-ערכיות, ולכן לספרה פשוט אין שטח מוגדר היטב'
+        feedback: >-
+          שטח של משטח מוגדר דרך פרמטריזציה חד-חד-ערכית (פרט לקבוצה בעלת שטח אפס), ועם התנאי הזה הוא מוגדר היטב:
+          $4\pi r^2$.
+        misconception: MC-c5-non-injective-ok
+
+  - id: Q-5.3-zone
+    type: numeric
+    objectives: [OBJ-5.3-3]
+    level: mid
+    prompt: >-
+      בפרמטריזציה $\sigma(u,v)=(\cos u\cos v,\ \sin u\cos v,\ \sin v)$ של ספרת היחידה, חשבו את השטח של החלק
+      של הספרה שבו $0\le z\le\frac12$.
+    answer: 3.141593
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi$. כאן $\|\sigma_u\times\sigma_v\|=\cos v$, והתנאי $0\le\sin v\le\frac12$ הוא $0\le v\le\frac\pi6$:
+      $2\pi\int_0^{\pi/6}\cos v\,dv=2\pi\cdot\frac12=\pi$. (ארכימדס: רצועה ברוחב $h$ על ספרה ברדיוס $r$ שטחה $2\pi rh$.)
+    wrongFeedback: >-
+      חשבו $E=\cos^2v$, $F=0$, $G=1$, ומצאו את טווח $v$ שמתאים ל-$0\le z\le\frac12$.
+    commonWrong:
+      - value: 0.841787
+        feedback: >-
+          זה $2\pi\int_0^{\pi/6}\sin v\,dv$. כאן $v$ היא זווית **רוחב**, מקו המשווה, ואלמנט השטח הוא $\cos v$;
+          $\sin$ מתאים לזווית שנמדדת מציר $z$.
+        misconception: MC-c5-spherical-jacobian
+      - value: 3.005284
+        feedback: >-
+          זה $2\pi\int_0^{\pi/6}\cos^2v\,dv$, כלומר $EG-F^2$ בלי השורש.
+        misconception: MC-c5-area-no-root
+
+  - id: Q-5.3-torus
+    type: numeric
+    objectives: [OBJ-5.3-3]
+    level: mid
+    prompt: >-
+      חשבו את שטח הטורוס $\sigma(u,v)=\big((3+\cos v)\cos u,\ (3+\cos v)\sin u,\ \sin v\big)$,
+      $0\le u,v\le2\pi$.
+    answer: 118.435253
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $12\pi^2$. $E=(3+\cos v)^2$, $F=0$, $G=1$, ולכן
+      $A=\int_0^{2\pi}\int_0^{2\pi}(3+\cos v)\,dv\,du=4\pi^2\cdot3$. באופן כללי $4\pi^2Rr$: אורך המעגל של המרכז
+      כפול היקף החתך.
+    wrongFeedback: >-
+      חשבו $\sigma_u$, $\sigma_v$ ואת $E,F,G$. האינטגרל של $\cos v$ על מחזור שלם מתאפס.
+    commonWrong:
+      - value: 375.044967
+        feedback: >-
+          זה $38\pi^2=\iint(3+\cos v)^2$, כלומר $EG-F^2$ בלי השורש.
+        misconception: MC-c5-area-no-root
+      - value: 59.217626
+        feedback: >-
+          זה $6\pi^2=2\pi^2Rr^2$, **הנפח** של הטורוס המלא. השטח הוא $4\pi^2Rr$.
+        misconception: MC-c5-area-vs-volume
+
+  - id: Q-5.3-paraboloid
+    type: numeric
+    objectives: [OBJ-5.3-3]
+    level: mid
+    prompt: >-
+      חשבו את השטח של הגרף של $f(x,y)=x^2+y^2$ מעל עיגול היחידה $x^2+y^2\le1$.
+    answer: 5.330414
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac\pi6\left(5\sqrt5-1\right)\approx5.3304$. בקוטביות $1+f_x^2+f_y^2=1+4r^2$, ו-
+      $$A=\int_0^{2\pi}\int_0^1\sqrt{1+4r^2}\,r\,dr\,d\theta=2\pi\cdot\frac{(1+4r^2)^{3/2}}{12}\Big|_0^1.$$
+    wrongFeedback: >-
+      הנוסחה לגרף היא $\iint_D\sqrt{1+f_x^2+f_y^2}\,dx\,dy$; התחום עיגול, אז עברו לקוטביות וזכרו את היעקוביאן.
+    commonWrong:
+      - value: 9.292472
+        feedback: >-
+          זה $2\pi\int_0^1\sqrt{1+4r^2}\,dr$, בלי היעקוביאן $r$ של הקוטביות.
+        misconception: MC-c5-forgot-jacobian
+      - value: 9.424778
+        feedback: >-
+          זה $3\pi=\iint(1+4r^2)\,r\,dr\,d\theta$, בלי השורש.
+        misconception: MC-c5-area-no-root
+      - value: 1.570796
+        feedback: >-
+          זה $\frac\pi2=\iint_D(x^2+y^2)$, הנפח מתחת לגרף ולא שטח הגרף.
+        misconception: MC-c5-area-vs-volume
+
+  - id: Q-5.3-helicoid
+    type: numeric
+    objectives: [OBJ-5.3-1, OBJ-5.3-3]
+    level: mid
+    prompt: >-
+      חשבו את השטח של חתיכת ההליקואיד $\sigma(u,v)=(v\cos u,\ v\sin u,\ u)$, $0\le u\le2\pi$, $0\le v\le1$. (נתון
+      $\int_0^1\sqrt{1+v^2}\,dv=\frac12\left(\sqrt2+\ln(1+\sqrt2)\right)$.)
+    answer: 7.2118
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi\left(\sqrt2+\ln(1+\sqrt2)\right)\approx7.2118$. $\sigma_u=(-v\sin u,v\cos u,1)$,
+      $\sigma_v=(\cos u,\sin u,0)$, ולכן $E=1+v^2$, $F=0$, $G=1$ ו-$A=2\pi\int_0^1\sqrt{1+v^2}\,dv$.
+    wrongFeedback: >-
+      חשבו את $E,F,G$. הרכיב השלישי של $\sigma_u$ הוא 1, והוא נכנס ל-$E$.
+    commonWrong:
+      - value: 8.37758
+        feedback: >-
+          זה $\frac{8\pi}{3}=2\pi\int_0^1(1+v^2)\,dv$, בלי השורש.
+        misconception: MC-c5-area-no-root
+      - value: 3.141593
+        feedback: >-
+          זה $2\pi\int_0^1v\,dv=\pi$, שטח עיגול היחידה: שכחתם את הרכיב $1$ של $\sigma_u$, כלומר את העלייה של
+          המשטח. ההטלה של ההליקואיד על המישור קטנה ממנו.
+        misconception: MC-c5-graph-forget-one
+
+  - id: Q-5.3-catenoid
+    type: numeric
+    objectives: [OBJ-5.3-3]
+    level: mid
+    prompt: >-
+      הקטנואיד מתקבל מסיבוב הגרף של $f(x)=\cosh x$, $-1\le x\le1$, סביב ציר $x$. חשבו את שטחו.
+    answer: 17.677303
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi(2+\sinh2)\approx17.677$. $\sqrt{1+\sinh^2x}=\cosh x$, ולכן
+      $$A=2\pi\int_{-1}^1\cosh^2x\,dx=\pi\int_{-1}^1(1+\cosh2x)\,dx=\pi(2+\sinh2).$$
+    wrongFeedback: >-
+      הנוסחה היא $2\pi\int f\sqrt{1+f'^2}\,dx$, ו-$1+\sinh^2x=\cosh^2x$.
+    commonWrong:
+      - value: 14.768014
+        feedback: >-
+          זה $2\pi\int_{-1}^1\cosh x\,dx=4\pi\sinh1$, בלי אורך הקשת $\sqrt{1+f'^2}=\cosh x$.
+        misconception: MC-c5-revolution-no-arclength
+      - value: 8.838652
+        feedback: >-
+          זה $\pi\int_{-1}^1\cosh^2x\,dx$, **הנפח** של גוף הסיבוב.
+        misconception: MC-c5-area-vs-volume
+
+  - id: Q-5.3-equal-areas
+    type: twotier
+    objectives: [OBJ-5.3-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $A(c)$ הוא השטח של הגרף של $f_c(x,y)=x^2+cy^2$ מעל עיגול היחידה, $c\in\mathbb R$. מצאו את כל הערכים של $c$
+      שבהם $A(c)=A(1)$, כלומר שבהם לגרף אותו שטח כמו לפרבולואיד $x^2+y^2$.
+    choices:
+      - text: 'בדיוק $c=1$ ו-$c=-1$'
+        correct: true
+        feedback: >-
+          נכון. $c=-1$ הוא האוכף $x^2-y^2$: צורה שונה לגמרי, ואותו שטח $\frac\pi6(5\sqrt5-1)$.
+      - text: 'רק $c=1$, כי רק הפרבולואיד עצמו חופף לפרבולואיד'
+        feedback: >-
+          שטח שווה אינו מחייב חפיפה. עם $c=-1$ האינטגרנד $\sqrt{1+4x^2+4y^2}$ זהה לזה של הפרבולואיד בכל נקודה,
+          אף שהאוכף אינו חופף לו ($K=4$ מול $K=-4$ בראשית).
+        misconception: MC-c5-equal-area-congruent
+      - text: 'כל $c\ge0$, כי כל הגרפים האלה נפרשים מעל אותו עיגול ושטחם שטח העיגול'
+        feedback: >-
+          שטח של גרף אינו שטח התחום: הפרמטריזציה $(x,y,f_c)$ מותחת שטחים בגורם $\sqrt{1+4x^2+4c^2y^2}$, שתלוי
+          ב-$c$. למשל $A(0)\approx4.318$ ו-$A(1)\approx5.330$.
+        misconception: MC-c5-forgot-jacobian
+    reasons:
+      - text: '$\|\nabla f_c\|^2=4x^2+4c^2y^2$, ולכן $A(c)$ תלוי ב-$c^2$ בלבד ועולה ממש ב-$c^2$: כש-$c^2<c''^2$ האינטגרנד קטן ממש בכל נקודה שבה $y\neq0$'
+        correct: true
+        feedback: >-
+          בדיוק. לכן $A(c)=A(1)$ אם ורק אם $c^2=1$. אי-שוויון ממש בין האינטגרנדים על קבוצה בעלת שטח חיובי, עם
+          רציפות, נותן אי-שוויון ממש בין האינטגרלים.
+      - text: 'שני אינטגרלים שווים רק כשהאינטגרנדים שווים בכל נקודה, ו-$4x^2+4c^2y^2=4x^2+4y^2$ בכל נקודה רק כש-$c=\pm1$'
+        feedback: >-
+          המסקנה נכונה, אבל הנימוק שגוי: אינטגרלים שווים אינם מחייבים אינטגרנדים שווים ($\int_0^1x\,dx=\int_0^1\frac12\,dx$).
+          כדי לשלול $c^2\neq1$ צריך את המונוטוניות של $A$ ב-$c^2$.
+        misconception: MC-c5-equal-integrals-pointwise
+      - text: 'האוכף $x^2-y^2$ הוא הפרבולואיד מסובב, ולכן $c=-1$ נותן את אותו משטח עד כדי תנועה קשיחה'
+        feedback: >-
+          סיבוב של $x^2+y^2$ נותן שוב $x^2+y^2$. בראשית $K=4>0$ לפרבולואיד ו-$K=-4<0$ לאוכף, ועקמומיות גאוס
+          נשמרת בתנועה קשיחה: הם אינם חופפים, ובכל זאת שטחיהם שווים.
+        misconception: MC-c5-equal-area-congruent
+
+  - id: Q-5.3-proof-error
+    type: twotier
+    objectives: [OBJ-5.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\tau=\sigma\circ\psi$, כש-$\psi:\tilde D\to D$ חד-חד-ערכית ועל, גזירה ברציפות, עם $\det D\psi\neq0$. סטודנט
+      מוכיח שהשטח אינו תלוי בפרמטריזציה כך: "לפי כלל השרשרת והביליניאריות
+      $\tau_s\times\tau_t=\det D\psi\cdot(\sigma_u\times\sigma_v)\circ\psi$, ולכן
+      $\|\tau_s\times\tau_t\|=\det D\psi\cdot\|\sigma_u\times\sigma_v\|\circ\psi$. לפי נוסחת החלפת המשתנים
+      $\iint_{\tilde D}g(\psi(s,t))\det D\psi\,ds\,dt=\iint_Dg\,du\,dv$, ועם $g=\|\sigma_u\times\sigma_v\|$ השטחים
+      שווים." מה נכון לגבי ההוכחה?
+    choices:
+      - text: 'יש בה שגיאה שאפשר לתקן, והמשפט נכון'
+        correct: true
+        feedback: >-
+          נכון. השוויון הראשון נכון, והשגיאה בשני השלבים שאחריו. עם $|\det D\psi|$ בשניהם ההוכחה תקינה.
+      - text: 'היא נכונה כפי שהיא, כי כל שלב בה נובע מקודמו'
+        feedback: >-
+          נסו את $\psi(s,t)=(t,s)$: $\det D\psi=-1$, והשלב השני נותן $\|\tau_s\times\tau_t\|=-\|\sigma_u\times\sigma_v\|<0$,
+          אורך שלילי. השלב הזה שגוי.
+        misconception: MC-c5-signed-jacobian
+      - text: 'יש בה שגיאה, והמשפט עצמו נכשל כש-$\psi$ הופכת כיוון'
+        feedback: >-
+          המשפט נכון לכל החלפת פרמטרים, גם כשהיא הופכת כיוון: באלמנט השטח יש רק אורך, ובנוסחת החלפת המשתנים
+          $|\det D\psi|$. רק ההוכחה צריכה תיקון.
+        misconception: MC-c5-scalar-orientation
+    reasons:
+      - text: 'אורך אינו שלילי, ולכן $\|\tau_s\times\tau_t\|=|\det D\psi|\cdot\|\sigma_u\times\sigma_v\|\circ\psi$; ובנוסחת החלפת המשתנים מופיע $|\det D\psi|$'
+        correct: true
+        feedback: >-
+          בדיוק. כש-$\det D\psi>0$ על התחום (הסימן קבוע על תחום קשיר) ההוכחה כפי שנכתבה עובדת במקרה, וכשהוא שלילי
+          שני השלבים שגויים. הערך המוחלט מתקן את שניהם יחד.
+      - text: 'שתי השגיאות, בשלב האורך ובנוסחת החלפת המשתנים, מבטלות זו את זו, ולכן ההוכחה תקפה גם כש-$\det D\psi<0$'
+        feedback: >-
+          הוכחה שיש בה שלבים שגויים אינה הוכחה, גם אם המסקנה נכונה. כש-$\det D\psi<0$ השלב השני טוען שאורך שלילי,
+          והשלישי שהאינטגרל של $g\ge0$ שלילי.
+        misconception: MC-c5-signed-jacobian
+      - text: 'השגיאה בנוסחת החלפת המשתנים: צריך לחלק ב-$\det D\psi$, כי $\psi$ שולחת את $\tilde D$ אל $D$'
+        feedback: >-
+          כופלים ביעקוביאן של ההעתקה שמציבים, $\psi:\tilde D\to D$, בערך מוחלט. חלוקה בו היא מקדם השטח של $\psi^{-1}$.
+        misconception: MC-c5-inverse-jacobian

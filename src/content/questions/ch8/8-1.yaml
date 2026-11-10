@@ -1,0 +1,342 @@
+# Lesson 8.1 — 1-forms: pointwise linear functionals, their integral along a curve, df.
+# Objectives (src/course.ts):
+#   OBJ-8.1-1  define a 1-form as a linear functional at each point and write it in the basis dx, dy, dz
+#   OBJ-8.1-2  integrate a 1-form along a curve and identify it with the line integral of a field
+#   OBJ-8.1-3  compute the differential of a function as a 1-form
+chapter: 8
+questions:
+  - id: Q-8.1-what
+    type: mc
+    objectives: [OBJ-8.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהי תבנית מסדר 1 על תחום פתוח $U\subseteq\mathbb R^3$?
+    choices:
+      - text: כלל שמתאים לכל נקודה $p\in U$ פונקציונל לינארי $\omega_p:\mathbb R^3\to\mathbb R$, שתלוי בצורה חלקה ב-$p$
+        correct: true
+        feedback: >-
+          נכון. בכל נקודה התבנית "מחכה" לווקטור: $\omega_p(v)$ הוא מספר, והתלות ב-$v$ לינארית. בבסיס $dx,dy,dz$ כותבים
+          $\omega=P\,dx+Q\,dy+R\,dz$.
+      - text: פונקציה $U\to\mathbb R$ שגזירה ברציפות
+        feedback: >-
+          זו תבנית מסדר 0, כלומר פונקציה. תבנית מסדר 1 נותנת בכל נקודה לא מספר אלא כלל לינארי שמקבל וקטור ומחזיר
+          מספר.
+        misconception: MC-c8-form-is-number
+      - text: כלל שמתאים לכל מסילה ב-$U$ מספר, באופן לינארי
+        feedback: >-
+          זה מה ש**האינטגרל** של תבנית עושה, אחרי שיש תבנית. התבנית עצמה מוגדרת נקודה-נקודה, על וקטורים משיקים, לפני
+          כל אינטגרל.
+        misconception: MC-c8-form-is-number
+      - text: כלל שמתאים לכל נקודה $p$ ולכל וקטור $v$ מספר כלשהו, למשל $\|v\|$
+        feedback: >-
+          חסרה הדרישה העיקרית: לינאריות ב-$v$. הכלל $v\mapsto\|v\|$ אינו לינארי ($\|{-v}\|=\|v\|$ ולא $-\|v\|$), ולכן
+          אינו תבנית מסדר 1.
+        misconception: MC-c8-form-nonlinear
+
+  - id: Q-8.1-dy
+    type: mc
+    objectives: [OBJ-8.1-1]
+    level: basic
+    prompt: >-
+      $dy$ הוא הדיפרנציאל של פונקציית הקואורדינטה $y$, כלומר התבנית $dy_p(v)=\nabla y(p)\cdot v$. יהיו
+      $p=(p_1,p_2,p_3)$ נקודה ו-$v=(v_1,v_2,v_3)$ וקטור. מהו $dy_p(v)$?
+    choices:
+      - text: '$v_2$, באותו אופן בכל נקודה $p$'
+        correct: true
+        feedback: >-
+          נכון. $dy$ הוא הפונקציונל "הרכיב השני של הווקטור", ואינו תלוי בנקודה. $dx,dy,dz$ הם הבסיס הדואלי של
+          $e_1,e_2,e_3$.
+      - text: '$p_2$'
+        feedback: >-
+          זו הקואורדינטה של הנקודה, הפונקציה $y$ עצמה. $dy$ הוא הדיפרנציאל שלה: $dy_p(v)=\nabla y\cdot v=(0,1,0)\cdot v=v_2$.
+        misconception: MC-c8-dx-is-increment
+      - text: '$p_2v_2$'
+        feedback: >-
+          אין סיבה לכפול ב-$p_2$: המקדם של $dy$ בתבנית $dy$ הוא 1 בכל נקודה. ($p_2v_2$ הוא הערך של התבנית $y\,dy$.)
+        misconception: MC-c8-dx-is-increment
+      - text: מספר קטן מאוד, השינוי ב-$y$ כשזזים מ-$p$
+        feedback: >-
+          זו האינטואיציה מאינפי 1, אבל כאן $dy$ הוא פונקציונל מוגדר היטב, לא מספר קטן. הוא מחזיר את $v_2$ לכל וקטור $v$,
+          גדול או קטן.
+        misconception: MC-c8-dx-is-increment
+
+  - id: Q-8.1-eval
+    type: numeric
+    objectives: [OBJ-8.1-1]
+    level: basic
+    prompt: >-
+      $\omega=x^2\,dx+xy\,dy+z\,dz$. חשבו את $\omega_p(v)$ עבור הנקודה $p=(2,-1,3)$ והווקטור $v=(1,4,-2)$.
+    answer: -10
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. בנקודה $p$: $\omega_p=4\,dx-2\,dy+3\,dz$. מפעילים על $v$: $4\cdot1-2\cdot4+3\cdot(-2)=4-8-6=-10$.
+    wrongFeedback: >-
+      קודם מציבים את הנקודה $p$ במקדמים ומקבלים פונקציונל קבוע $a\,dx+b\,dy+c\,dz$; אחר כך מפעילים אותו על $v$:
+      $av_1+bv_2+cv_3$.
+    commonWrong:
+      - value: -8
+        feedback: >-
+          זה מתקבל כשמציבים את $v$ במקדמים ומפעילים על $p$ (שם $1\cdot2-4\cdot1-2\cdot3=-8$), וגם מהמכפלה הסקלרית
+          $p\cdot v$. לנקודה ולווקטור תפקידים שונים: המקדמים נקבעים בנקודה.
+        misconception: MC-c8-point-vector-swap
+      - value: 5
+        feedback: >-
+          $5=4-2+3$ הוא סכום המקדמים בנקודה, בלי הווקטור. תבנית בנקודה אינה מספר: צריך להפעיל אותה על $v$.
+        misconception: MC-c8-form-is-number
+
+  - id: Q-8.1-circle
+    type: numeric
+    objectives: [OBJ-8.1-2]
+    level: basic
+    prompt: >-
+      האינטגרל של תבנית מסדר 1 לאורך מסילה $\gamma:[a,b]\to U$ מוגדר כ-$\int_\gamma\omega=\int_a^b\omega_{\gamma(t)}\big(\gamma'(t)\big)\,dt$:
+      בכל רגע מפעילים את התבנית בנקודה $\gamma(t)$ על וקטור המהירות. חשבו $\int_\gamma(y\,dx-x\,dy)$ כש-$\gamma$ הוא המעגל
+      במישור $xy$ שמרכזו בראשית ורדיוסו 2, פעם אחת נגד כיוון השעון (במבט מלמעלה).
+    answer: -25.132741
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $\gamma(t)=(2\cos t,2\sin t)$, $t\in[0,2\pi]$, ו-$dx=-2\sin t\,dt$, $dy=2\cos t\,dt$. לכן
+      $y\,dx-x\,dy=(-4\sin^2t-4\cos^2t)\,dt=-4\,dt$, והאינטגרל הוא $-8\pi\approx-25.1327$.
+    wrongFeedback: >-
+      הציבו את הפרמטריזציה: במקדמים את $x(t),y(t)$, ובמקום $dx,dy$ את $x'(t)\,dt,\ y'(t)\,dt$. שימו לב לסימן: התבנית
+      היא $y\,dx-x\,dy$ ולא $x\,dy-y\,dx$.
+    commonWrong:
+      - value: 25.132741
+        feedback: >-
+          זה $\int(x\,dy-y\,dx)$, או האינטגרל בכיוון השעון. האינטגרל של תבנית רגיש לכיוון ולסימן של כל מקדם.
+        misconception: MC-c8-form-integral-unoriented
+      - value: -12.566371
+        feedback: >-
+          $-4\pi$ מתקבל כשמשתמשים ברדיוס פעם אחת בלבד. גם המקדם ($y=2\sin t$) וגם הדיפרנציאל ($dx=-2\sin t\,dt$) תורמים
+          גורם 2.
+        misconception: MC-c8-forget-velocity
+      - value: 0
+        feedback: >-
+          המקדמים מתאפסים בממוצע על המעגל, אבל הצבה של $dx=x'(t)\,dt$ נותנת $-4\,dt$ קבוע. אין סיבה שהאינטגרל
+          יתאפס: התבנית אינה דיפרנציאל של פונקציה.
+        misconception: MC-c8-forget-velocity
+
+  - id: Q-8.1-df
+    type: mc
+    objectives: [OBJ-8.1-3]
+    level: basic
+    prompt: >-
+      הדיפרנציאל של פונקציה גזירה $f$ הוא התבנית מסדר 1 $df_p(v)=\nabla f(p)\cdot v$. עבור $f(x,y,z)=x^2y+yz^3$, איך
+      כותבים את $df$ בבסיס $dx,dy,dz$?
+    choices:
+      - text: '$2xy\,dx+(x^2+z^3)\,dy+3yz^2\,dz$'
+        correct: true
+        feedback: >-
+          נכון. $df=f_x\,dx+f_y\,dy+f_z\,dz$ עם $f_x=2xy$, $f_y=x^2+z^3$, $f_z=3yz^2$.
+      - text: '$2xy+x^2+z^3+3yz^2$'
+        feedback: >-
+          זה מספר בכל נקודה, סכום הנגזרות החלקיות. $df$ היא תבנית: כל נגזרת חלקית היא מקדם של דיפרנציאל אחר, וביחד הם
+          פועלים על וקטור.
+        misconception: MC-c8-form-is-number
+      - text: '$f(x+dx,\,y+dy,\,z+dz)-f(x,y,z)$'
+        feedback: >-
+          זה ההפרש של ערכי $f$, והוא אינו לינארי ב-$(dx,dy,dz)$. $df$ הוא החלק הלינארי שלו בלבד:
+          $df_p(v)=\nabla f(p)\cdot v$.
+        misconception: MC-c8-df-finite-difference
+      - text: '$2x\,dx+z^3\,dy+3z^2\,dz$'
+        feedback: >-
+          כאן גזרו כל מחובר רק לפי "המשתנה הראשי" שלו. $f_x=2xy$ (ה-$y$ נשאר), ו-$f_y=x^2+z^3$ (שני המחוברים תלויים
+          ב-$y$). המקדם של $dx$ הוא הנגזרת החלקית **המלאה** לפי $x$.
+        misconception: MC-c8-partial-one-term
+
+  - id: Q-8.1-dfv
+    type: numeric
+    objectives: [OBJ-8.1-3]
+    level: basic
+    prompt: >-
+      $f(x,y,z)=xe^y+z^2$. חשבו את $df_p(v)$ עבור $p=(1,0,2)$ ו-$v=(2,3,1)$.
+    answer: 9
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $df=e^y\,dx+xe^y\,dy+2z\,dz$, ובנקודה $p$: $df_p=dx+dy+4\,dz$. לכן $df_p(v)=2+3+4=9$.
+    wrongFeedback: >-
+      חשבו את שלוש הנגזרות החלקיות בנקודה $p$, והפעילו את $df_p=f_x(p)\,dx+f_y(p)\,dy+f_z(p)\,dz$ על $v$.
+    commonWrong:
+      - value: 64.256611
+        feedback: >-
+          זה $f(p+v)-f(p)=3e^3+4$, ההפרש של ערכי $f$. $df_p(v)$ הוא הקירוב הלינארי שלו, $\nabla f(p)\cdot v$, ושני
+          המספרים קרובים רק כש-$v$ קטן.
+        misconception: MC-c8-df-finite-difference
+      - value: 6
+        feedback: >-
+          $6=1+1+4$ הוא סכום המקדמים של $df_p$, בלי הווקטור $v$.
+        misconception: MC-c8-form-is-number
+
+  - id: Q-8.1-linear
+    type: multi
+    objectives: [OBJ-8.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לכל אחד מהכללים הבאים, $p=(x,y,z)$ היא נקודה ו-$v$ וקטור. אילו מהם הם תבניות מסדר 1 (כלומר $\varphi_p$ לינארי
+      ב-$v$ בכל נקודה)? סמנו את כולם.
+    choices:
+      - text: '$\varphi_p(v)=x\,v_1+y^2v_2$'
+        correct: true
+        feedback: >-
+          נכון. בכל נקודה זה צירוף לינארי של $v_1,v_2$: התבנית $x\,dx+y^2\,dy$. המקדמים יכולים להיות כל פונקציה חלקה
+          של הנקודה.
+      - text: '$\varphi_p(v)=e^z(v_1-v_3)$'
+        correct: true
+        feedback: >-
+          נכון: $e^z\,dx-e^z\,dz$. אי-הלינאריות בנקודה ($e^z$) מותרת; הלינאריות נדרשת רק בווקטור.
+      - text: '$\varphi_p(v)=\|v\|$'
+        feedback: >-
+          לא לינארי: $\varphi_p(-v)=\varphi_p(v)$, ולא $-\varphi_p(v)$. זה אלמנט אורך הקשת $ds$ של $\int\rho\,ds$, ולכן
+          אינטגרל של פונקציה לפי אורך קשת אינו אינטגרל של תבנית.
+        misconception: MC-c8-form-nonlinear
+      - text: '$\varphi_p(v)=v_1v_2$'
+        feedback: >-
+          ריבועי, לא לינארי: $\varphi_p(2v)=4\varphi_p(v)$.
+        misconception: MC-c8-form-nonlinear
+      - text: '$\varphi_p(v)=v_1+1$'
+        feedback: >-
+          אפיני, לא לינארי: $\varphi_p(0)=1\ne0$. פונקציונל לינארי שולח את וקטור האפס לאפס.
+        misconception: MC-c8-form-nonlinear
+
+  - id: Q-8.1-segment
+    type: numeric
+    objectives: [OBJ-8.1-2]
+    level: mid
+    prompt: >-
+      חשבו $\int_\gamma(xy\,dx+z\,dy+x\,dz)$ כש-$\gamma$ הוא הקטע מ-$(0,0,0)$ ל-$(1,2,3)$.
+    answer: 5.1666667
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $\gamma(t)=(t,2t,3t)$, $\gamma'(t)=(1,2,3)$, ולכן
+      $\int_0^1\big(2t^2\cdot1+3t\cdot2+t\cdot3\big)\,dt=\frac23+3+\frac32=\frac{31}6\approx5.1667$.
+    wrongFeedback: >-
+      הציבו $\gamma(t)=(t,2t,3t)$ במקדמים, ו-$dx=dt$, $dy=2\,dt$, $dz=3\,dt$ בדיפרנציאלים.
+    commonWrong:
+      - value: 2.6666667
+        feedback: >-
+          $\frac83$ מתקבל כשמחליפים כל אחד מ-$dx,dy,dz$ ב-$dt$ ושוכחים את הרכיבים של $\gamma'=(1,2,3)$.
+        misconception: MC-c8-forget-velocity
+      - value: -5.1666667
+        feedback: >-
+          זה האינטגרל מ-$(1,2,3)$ ל-$(0,0,0)$. הכיוון של המסילה הוא מהראשית החוצה.
+        misconception: MC-c8-form-integral-unoriented
+
+  - id: Q-8.1-reparam
+    type: twotier
+    objectives: [OBJ-8.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma:[0,1]\to\mathbb R^3$ מסילה חלקה ו-$\omega$ תבנית מסדר 1. מגדירים $\delta(s)=\gamma(1-s)$, $s\in[0,1]$:
+      אותה תמונה, בכיוון ההפוך. מה הקשר בין $\int_\delta\omega$ לבין $\int_\gamma\omega$?
+    choices:
+      - text: '$\int_\delta\omega=-\int_\gamma\omega$'
+        correct: true
+        feedback: >-
+          נכון. היפוך הכיוון הופך את הסימן, כמו באינטגרל קווי של שדה (שיעור 6.1).
+      - text: '$\int_\delta\omega=\int_\gamma\omega$'
+        feedback: >-
+          זה נכון לאינטגרל לפי אורך קשת, $\int\rho\,ds$, שמשתמש ב-$\|\gamma'\|$. כאן $\omega$ פועלת על $\gamma'$ עצמו,
+          והסימן שלו נשמר.
+        misconception: MC-c8-form-integral-unoriented
+      - text: אין קשר כללי; זה תלוי ב-$\omega$
+        feedback: >-
+          יש קשר כללי, לכל $\omega$: מינוס. הוא נובע מהחלפת משתנה באינטגרל החד-ממדי.
+        misconception: MC-c8-form-integral-unoriented
+    reasons:
+      - text: '$\delta''(s)=-\gamma''(1-s)$ ו-$\omega$ לינארית, ולכן $\omega_{\delta(s)}(\delta''(s))=-\omega_{\gamma(1-s)}(\gamma''(1-s))$; ההצבה $t=1-s$ מחזירה את גבולות האינטגרל'
+        correct: true
+        feedback: >-
+          בדיוק. הלינאריות מוציאה את הסימן של $\delta'$, וההצבה $t=1-s$ הופכת את הקטע $[0,1]$ ומחליפה $ds$ ב-$-dt$; יחד
+          עם החלפת הגבולות נשאר מינוס אחד.
+      - text: 'התמונה של $\delta$ שווה לתמונה של $\gamma$, והאינטגרל תלוי רק בתמונה'
+        feedback: >-
+          האינטגרל של תבנית תלוי בתמונה **ובכיוון** שלה. כש-$\omega=dx$ והמסילה הולכת מ-$x=0$ ל-$x=1$ מקבלים 1, ובכיוון
+          ההפוך $-1$.
+        misconception: MC-c8-form-integral-unoriented
+      - text: '$\|\delta''(s)\|=\|\gamma''(1-s)\|$, ולכן האינטגרנד זהה'
+        feedback: >-
+          ב-$\int_\gamma\omega$ לא מופיע $\|\gamma'\|$ אלא $\gamma'$ עצמו. זו בדיוק ההבחנה בין אינטגרל של תבנית לבין
+          אינטגרל לפי אורך קשת.
+        misconception: MC-c8-form-integral-unoriented
+
+  - id: Q-8.1-exactint
+    type: numeric
+    objectives: [OBJ-8.1-3, OBJ-8.1-2]
+    level: mid
+    prompt: >-
+      $f(x,y,z)=xyz+x^2$ ו-$\gamma(t)=(1,t^2,2t^3)$, $t\in[0,1]$. חשבו את $\int_\gamma df$.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\int_\gamma df=f(\gamma(1))-f(\gamma(0))=f(1,1,2)-f(1,0,0)=3-1=2$. בלי לחשב את
+      $df=(yz+2x)\,dx+xz\,dy+xy\,dz$ לאורך המסילה (שיעור 6.2: אינטגרל של גרדיאנט).
+    wrongFeedback: >-
+      $df$ מתאים לשדה $\nabla f$. מה אומר שיעור 6.2 על אינטגרל קווי של גרדיאנט?
+    commonWrong:
+      - value: -2
+        feedback: >-
+          כאן חישבו $f(\gamma(0))-f(\gamma(1))$ במקום $f(\gamma(1))-f(\gamma(0))$. המסילה מתחילה ב-$(1,0,0)$.
+        misconception: MC-c8-form-integral-unoriented
+      - value: 3
+        feedback: >-
+          3 הוא $f$ בנקודת הסיום בלבד. צריך להחסיר את הערך בנקודת ההתחלה, $f(1,0,0)=1$.
+        misconception: MC-c8-df-finite-difference
+
+  - id: Q-8.1-notdf
+    type: twotier
+    objectives: [OBJ-8.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם קיימת פונקציה $f\in C^2(\mathbb R^2)$ כך ש-$df=x\,dy$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. התבנית $x\,dy$ אינה דיפרנציאל של שום פונקציה גזירה פעמיים ברציפות.
+      - text: 'כן, $f=xy$'
+        feedback: >-
+          $d(xy)=y\,dx+x\,dy$, ויש בו גם איבר עם $dx$. "לעשות אינטגרל למקדם" לפי $y$ נותן $f=xy+c(x)$, אבל אז
+          $f_x=y+c'(x)$, ואין $c$ שמאפסת את זה לכל $y$.
+        misconception: MC-c8-every-form-exact
+    reasons:
+      - text: 'אילו $df=x\,dy$, אז $f_x=0$ ו-$f_y=x$, ולכן $f_{xy}=0$ ואילו $f_{yx}=1$, בסתירה לשוויון הנגזרות המעורבות'
+        correct: true
+        feedback: >-
+          בדיוק: משפט שוורץ (אינפי 2). זו הבדיקה שבשיעור 8.3 תיכתב בקיצור $d(df)=0$, ואילו $d(x\,dy)=dx\wedge dy\ne0$.
+      - text: 'כל תבנית היא $df$: מוצאים את $f$ באינטגרציה של כל מקדם לפי המשתנה שלו'
+        feedback: >-
+          זה עובד רק כשהתוצאות מתאימות זו לזו. כאן אינטגרציה של $x$ לפי $y$ נותנת $xy+c(x)$, ו-$f_x=y+c'(x)$ אינו 0.
+        misconception: MC-c8-every-form-exact
+      - text: 'כי המקדם של $dx$ הוא אפס, ותבנית עם מקדם אפס אינה דיפרנציאל'
+        feedback: >-
+          מקדם אפס לא מונע: $dy=d(y)$ היא דיפרנציאל עם מקדם אפס ל-$dx$. מה שמונע כאן הוא אי-ההתאמה של הנגזרות המעורבות.
+        misconception: MC-c8-every-form-exact
+
+  - id: Q-8.1-helix
+    type: numeric
+    objectives: [OBJ-8.1-2, OBJ-8.1-3]
+    level: exam
+    prompt: >-
+      $\omega=2xy\,dx+(x^2+z)\,dy+y\,dz$, ו-$\gamma(t)=(\cos t,\sin t,t)$, $t\in[0,\frac\pi2]$. חשבו את
+      $\int_\gamma\omega$ בדרך הקצרה ביותר שאתם יכולים להצדיק.
+    answer: 1.5707963
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $\omega=d(x^2y+yz)$: $f_x=2xy$, $f_y=x^2+z$, $f_z=y$. לכן $\int_\gamma\omega=f(0,1,\tfrac\pi2)-f(1,0,0)=\frac\pi2-0=\frac\pi2\approx1.5708$.
+    wrongFeedback: >-
+      חפשו $f$ עם $f_x=2xy$, $f_y=x^2+z$, $f_z=y$. אם יש כזו, האינטגרל הוא הפרש הערכים בקצוות: $\gamma(0)=(1,0,0)$,
+      $\gamma(\frac\pi2)=(0,1,\frac\pi2)$.
+    commonWrong:
+      - value: -1.5707963
+        feedback: >-
+          זה $f(\gamma(0))-f(\gamma(\frac\pi2))$: הכיוון הפוך. הסליל מתחיל ב-$(1,0,0)$.
+        misconception: MC-c8-form-integral-unoriented
+      - value: 0.5707963
+        feedback: >-
+          $\frac\pi2-1$ מתקבל כשמשמיטים את האיבר $y\,dz$, שתורם $\int_0^{\pi/2}\sin t\cdot1\,dt=1$. לאורך הסליל גם
+          $z$ משתנה, $dz=z'(t)\,dt=dt$, ואותו איבר הוא שהופך את $\omega$ ל-$d(x^2y+yz)$.
+        misconception: MC-c8-forget-velocity

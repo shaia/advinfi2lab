@@ -1,0 +1,24 @@
+# Terms first defined in lesson 9.5 (projection onto a closed convex set).
+- id: convex-set
+  term: קבוצה קמורה
+  en: convex set
+  definition: >-
+    קבוצה $K$ שמכילה, יחד עם כל שתי נקודות $a,b$ שלה, את כל הקטע ביניהן: $ta+(1-t)b\in K$ לכל $t\in[0,1]$. כדורים, חצאי
+    מרחב ותתי-מרחבים קמורים; מעגל אינו קמור.
+  lesson: '9.5'
+- id: projection-convex
+  term: הטלה על קבוצה קמורה
+  en: projection onto a convex set
+  symbol: 'P_K'
+  definition: >-
+    במרחב הילברט, לכל קבוצה לא ריקה, סגורה וקמורה $K$ ולכל $x$ יש נקודה יחידה $P_Kx\in K$ הקרובה ביותר ל-$x$. היא מאופיינת
+    בתנאי הזווית הלא חדה $\langle x-P_Kx,k-P_Kx\rangle\le0$ לכל $k\in K$; כש-$K$ תת-מרחב, התנאי הופך לניצבות.
+  lesson: '9.5'
+- id: distance-to-set
+  term: מרחק מקבוצה
+  en: distance to a set
+  symbol: 'd(x,K)'
+  definition: >-
+    $d(x,K)=\inf_{k\in K}\|x-k\|$. האינפימום לא תמיד מתקבל: כשהקבוצה אינה סגורה, אינה קמורה (בממד אינסופי) או שהמרחב אינו
+    שלם, ייתכן שאין נקודה קרובה ביותר.
+  lesson: '9.5'

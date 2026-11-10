@@ -1,0 +1,91 @@
+# Misconceptions first detected in lesson 1.5 (signed curvature of a plane curve).
+- id: MC-c1-signed-sign-convention
+  title: הופכים את מוסכמת הסימן של העקמומיות המסומנת
+  belief: >-
+    $\mathbf n_s$ הוא $\mathbf t$ מסובב ברבע סיבוב **עם** כיוון השעון, ו-$k>0$ כשהמסילה פונה ימינה.
+  truth: >-
+    $\mathbf n_s$ הוא $\mathbf t$ מסובב ב-$+90^\circ$, נגד כיוון השעון: אם $\mathbf t=(\cos\theta,\sin\theta)$ אז
+    $\mathbf n_s=(-\sin\theta,\cos\theta)$. $k>0$ כשהמסילה פונה **שמאלה**, ומעגל שמקיפים נגד כיוון השעון
+    מקיים $k=\frac1r$.
+  remedy: { lesson: '1.5', anchor: ns-def, label: 'הגדרת העקמומיות המסומנת' }
+
+- id: MC-c1-ns-is-n
+  title: מזהים את הנורמל המסובב עם הנורמל הראשי
+  belief: >-
+    $\mathbf n_s=\mathbf n$, ולכן $k=\kappa\ge0$; לעקמומיות המסומנת אין סימן אמיתי.
+  truth: >-
+    $\mathbf n_s=\mathbf n$ רק כשהמסילה פונה שמאלה. כשהיא פונה ימינה $\mathbf n_s=-\mathbf n$ ו-$k=-\kappa<0$.
+    תמיד $|k|=\kappa$. היתרון של $\mathbf n_s$: הוא מוגדר ורציף גם במקום שבו $\kappa=0$.
+  remedy: { lesson: '1.5', anchor: ns-vs-n, label: 'הנורמל המסובב מול הנורמל הראשי' }
+
+- id: MC-c1-theta-is-slope
+  title: מבלבלים בין זווית המשיק לשיפוע
+  belief: >-
+    $\int k\,ds$ לאורך הגרף $y=f(x)$ הוא השינוי בשיפוע, $f'(b)-f'(a)$.
+  truth: >-
+    $\int k\,ds=\theta(b)-\theta(a)$, השינוי ב**זווית** המשיק, ו-$\theta=\arctan f'$. ל-$y=x^2$ מ-$0$ עד $1$:
+    $\arctan2\approx1.107$, לא $2$.
+  remedy: { lesson: '1.5', anchor: ex-1-5-2, label: 'העקמומיות כקצב שינוי הזווית' }
+
+- id: MC-c1-total-turning-zero-straight
+  title: חושבים שפנייה כוללת אפס פירושה מסילה ישרה
+  belief: >-
+    אם $\int k\,ds=0$, המשיק לא הסתובב, והמסילה היא קטע ישר.
+  truth: >-
+    $\int k\,ds$ סופר פניות שמאלה בחיוב וימינה בשלילה, והן יכולות להתקזז. $(t,t^3)$ על $[-1,1]$ פונה ימינה ואחר כך
+    שמאלה: $\int k\,ds=0$ אבל $\int|k|\,ds=2\arctan3$. רק $k\equiv0$ נותן קטע ישר.
+  remedy: { lesson: '1.5', anchor: total-turning, label: 'העקמומיות כקצב שינוי הזווית' }
+
+- id: MC-c1-theta-mod-2pi
+  title: חושבים שהפנייה הכוללת של מסילה סגורה היא אפס כי הזווית מוגדרת עד כדי 2π
+  belief: >-
+    במסילה סגורה המשיק חוזר לכיוונו ההתחלתי, ולכן $\theta(L)=\theta(0)$ ו-$\int_0^L k\,ds=0$.
+  truth: >-
+    $\theta$ היא פונקציה **רציפה** של $s$ שמקיימת $\mathbf t=(\cos\theta,\sin\theta)$; היא לא מצומצמת ל-$[0,2\pi)$.
+    כשהמשיק חוזר, $\theta(L)-\theta(0)$ הוא כפולה של $2\pi$, לאו דווקא אפס: לאליפסה נגד כיוון השעון $2\pi$.
+  remedy: { lesson: '1.5', anchor: lift, label: 'זווית המשיק כפונקציה רציפה' }
+
+- id: MC-c1-closed-turns-once
+  title: חושבים שכל מסילה סגורה מסתובבת בדיוק פעם אחת
+  belief: >-
+    לכל מסילה מישורית סגורה $\int k\,ds=2\pi$.
+  truth: >-
+    $\int k\,ds$ הוא $2\pi$ כפול מספר הסיבובים של המשיק, עם סימן. מעגל בכיוון השעון: $\int k\,ds=-2\pi$; מעגל שמקיפים פעמיים:
+    $4\pi$; צורת שמונה $(\sin t,\sin2t)$: $0$, כי באונה אחת $k<0$ ובשנייה $k>0$.
+  remedy: { lesson: '1.5', anchor: total-turning, label: 'העקמומיות כקצב שינוי הזווית' }
+
+- id: MC-c1-ds-is-dt
+  title: מבצעים אינטגרציה של העקמומיות לפי הפרמטר במקום לפי אורך הקשת
+  belief: >-
+    $\int k\,ds=\int k(t)\,dt$ גם כשהפרמטר $t$ אינו אורך הקשת.
+  truth: >-
+    $ds=\|\gamma'(t)\|\,dt$, ולכן $\int k\,ds=\int k(t)\|\gamma'(t)\|\,dt$. למעגל $(2\cos t,2\sin t)$ על $[0,2\pi]$:
+    $\int\frac12\cdot2\,dt=2\pi$, ולא $\int\frac12\,dt=\pi$.
+  remedy: { lesson: '1.5', anchor: total-turning, label: 'העקמומיות כקצב שינוי הזווית' }
+
+- id: MC-c1-signed-reversal-invariant
+  title: חושבים שהיפוך כיוון לא משנה את העקמומיות המסומנת
+  belief: >-
+    $k$ הוא תכונה של התמונה, ולכן $\gamma(-s)$ ו-$\gamma(s)$ נותנות אותו $k$ באותה נקודה.
+  truth: >-
+    בהיפוך כיוון $\mathbf t$ מתהפך וגם $\mathbf n_s$, אבל $\frac{d\mathbf t}{ds}$ לא, ולכן $k$ מחליף סימן:
+    $k_\delta(s)=-k_\gamma(-s)$ עבור $\delta(s)=\gamma(-s)$. מה שפונה שמאלה בכיוון אחד פונה ימינה בכיוון השני.
+  remedy: { lesson: '1.5', anchor: reversal, label: 'עקמומיות מסומנת והיפוך כיוון' }
+
+- id: MC-c1-reflection-keeps-k
+  title: חושבים ששיקוף, כמו כל איזומטריה, שומר על העקמומיות המסומנת
+  belief: >-
+    שיקוף שומר מרחקים, ולכן שומר את $k$.
+  truth: >-
+    שיקוף שומר את $\kappa$ אבל הופך את $k$: הוא הופך שמאל לימין. אם $\sigma$ שיקוף, $k_{\sigma\circ\gamma}=-k_\gamma$;
+    לתנועה קשיחה $x\mapsto Qx+c$ באופן כללי $k_{A\circ\gamma}=(\det Q)\,k_\gamma$.
+  remedy: { lesson: '1.5', anchor: rigid, label: 'עקמומיות מסומנת, סיבוב ושיקוף' }
+
+- id: MC-c1-curvature-depends-orientation
+  title: חושבים שהעקמומיות הלא-מסומנת מחליפה סימן בהיפוך כיוון או בשיקוף
+  belief: >-
+    בהיפוך כיוון או בשיקוף $\kappa$ מחליפה סימן.
+  truth: >-
+    $\kappa=\|\frac{d\mathbf t}{ds}\|\ge0$ תמיד, ואינה משתנה בהיפוך כיוון ובכל תנועה קשיחה, כולל שיקוף. רק $k$ מרגישה
+    בכיוון ובאוריינטציה.
+  remedy: { lesson: '1.5', anchor: reversal, label: 'עקמומיות מסומנת והיפוך כיוון' }

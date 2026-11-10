@@ -1,0 +1,442 @@
+# Lesson 4.1 — the second fundamental form.
+# Objectives (src/course.ts):
+#   OBJ-4.1-1  compute L, M, N as dot products of the second derivatives with the normal
+#   OBJ-4.1-2  the meaning: the signed distance from the tangent plane is about half of Q₂
+#   OBJ-4.1-3  how Q₂ changes when the normal is flipped
+# Convention: N̂ = σ_u × σ_v / ‖σ_u × σ_v‖ unless a question says otherwise. The coefficient N is a number; the
+# normal N̂ always carries its hat.
+chapter: 4
+questions:
+  - id: Q-4.1-def
+    type: mc
+    objectives: [OBJ-4.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\sigma(u,v)$ משטח חלק עם נורמל יחידה $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$.
+      מהו המקדם $L$ של התבנית היסודית השנייה $Q_2=L\,du^2+2M\,du\,dv+N\,dv^2$?
+    choices:
+      - text: '$L=\sigma_{uu}\cdot\hat{\mathbf N}$'
+        correct: true
+        feedback: >-
+          נכון. התבנית השנייה לוקחת את הנגזרות השניות ומשאירה רק את הרכיב שלהן בכיוון הנורמל: זה החלק של התאוצה שמוציא
+          את המשטח מהמישור המשיק.
+      - text: '$L=\sigma_u\cdot\sigma_u$'
+        feedback: >-
+          זה $E$, מקדם של התבנית **הראשונה**. התבנית הראשונה מודדת אורכים במישור המשיק ובנויה מנגזרות ראשונות; השנייה
+          בנויה מנגזרות שניות.
+        misconception: MC-c4-Q1-Q2-mixup
+      - text: '$L=\|\sigma_{uu}\|$'
+        feedback: >-
+          לגודל של $\sigma_{uu}$ יש גם רכיב משיק, שתלוי בפרמטריזציה ולא בצורת המשטח. במישור עם
+          $\sigma(u,v)=(e^u,v,0)$ מתקיים $\|\sigma_{uu}\|=e^u\neq0$, אבל המישור לא מתעקם: $L=\sigma_{uu}\cdot\hat{\mathbf N}=0$.
+        misconception: MC-c4-Q1-Q2-mixup
+      - text: '$L=\sigma_{uu}\cdot\sigma_u$'
+        feedback: >-
+          המכפלה עם $\sigma_u$ מודדת את הרכיב **המשיק** של $\sigma_{uu}$, שמשתנה כשמשנים את קצב הפרמטר. העקמומיות של
+          המשטח נמצאת ברכיב הנורמלי.
+        misconception: MC-c4-Q1-Q2-mixup
+    explanation: >-
+      שימו לב לאות: המקדם $N=\sigma_{vv}\cdot\hat{\mathbf N}$ הוא **מספר**, והנורמל $\hat{\mathbf N}$ הוא **וקטור**.
+      בקורס הנורמל נכתב תמיד עם כובע כדי לא לבלבל ביניהם.
+
+  - id: Q-4.1-graphL
+    type: numeric
+    objectives: [OBJ-4.1-1]
+    level: basic
+    prompt: >-
+      המשטח הוא הגרף $\sigma(x,y)=(x,\,y,\,x^2+3xy-y^2)$. בראשית $\sigma_x=(1,0,0)$, $\sigma_y=(0,1,0)$, ולכן
+      $\hat{\mathbf N}=(0,0,1)$. חשבו את $L$ בראשית.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sigma_{xx}=(0,0,2)$, ולכן $L=\sigma_{xx}\cdot\hat{\mathbf N}=2$. לגרף בנקודה עם מישור משיק אופקי
+      $L=f_{xx}$, $M=f_{xy}$, $N=f_{yy}$.
+    wrongFeedback: >-
+      גזרו את $\sigma$ פעמיים לפי $x$ וכפלו ב-$\hat{\mathbf N}=(0,0,1)$: נשאר הרכיב השלישי של $\sigma_{xx}$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          1 הוא המקדם של $x^2$ בפולינום, לא הנגזרת השנייה. $\frac{\partial^2}{\partial x^2}x^2=2$: המקדם בפולינום הוא חצי
+          מהנגזרת, וזה החצי שבקירוב $\frac12Q_2$.
+        misconception: MC-c4-taylor-coefficient
+      - value: 0
+        feedback: >-
+          $\sigma_{xx}=(0,0,2)$ אינו אפס. ייתכן שכפלתם ב-$\sigma_x=(1,0,0)$ במקום בנורמל: זה הרכיב המשיק, והוא אכן אפס
+          כאן.
+        misconception: MC-c4-Q1-Q2-mixup
+
+  - id: Q-4.1-flip
+    type: mc
+    objectives: [OBJ-4.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      במשטח מכוון מחליפים את הנורמל $\hat{\mathbf N}$ בנורמל ההפוך $-\hat{\mathbf N}$ (באותה פרמטריזציה). מה קורה
+      לתבניות היסודיות?
+    choices:
+      - text: '$Q_1$ לא משתנה, ו-$L$, $M$, $N$ כולם מחליפים סימן: $Q_2\mapsto-Q_2$'
+        correct: true
+        feedback: >-
+          נכון. $E,F,G$ הם מכפלות של $\sigma_u,\sigma_v$ ביניהם, בלי נורמל. כל אחד מ-$L,M,N$ הוא מכפלה של נגזרת שנייה
+          ב-$\hat{\mathbf N}$, ולכן הוא מתהפך יחד איתו.
+      - text: 'שום דבר לא משתנה: התבניות מתארות את צורת המשטח, וזו לא תלויה בבחירת הנורמל'
+        feedback: >-
+          הצורה לא משתנה, אבל $Q_2$ מודדת אותה **ביחס לצד שנבחר**: המרחק החתום מהמישור המשיק מתהפך כשהופכים את הצד.
+          בספרה עם הנורמל החוצה $Q_2=-Q_1$, ועם הנורמל פנימה $Q_2=Q_1$.
+        misconception: MC-c4-Q2-orientation-free
+      - text: 'רק $L$ ו-$N$ מחליפים סימן; $M$ נשאר, כי הוא נגזרת מעורבת'
+        feedback: >-
+          גם $M=\sigma_{uv}\cdot\hat{\mathbf N}$ הוא מכפלה ב-$\hat{\mathbf N}$, ולכן גם הוא מחליף סימן. אין כאן הבדל
+          בין נגזרת מעורבת לנגזרת רגילה.
+        misconception: MC-c4-Q2-orientation-free
+      - text: 'שתי התבניות מחליפות סימן'
+        feedback: >-
+          $Q_1(v)=\|v\|^2$ לא יכולה להחליף סימן: היא ריבוע אורך, ובכלל לא מופיע בה הנורמל.
+        misconception: MC-c4-Q1-Q2-mixup
+
+  - id: Q-4.1-dist
+    type: mc
+    objectives: [OBJ-4.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $P=\sigma(u_0,v_0)$ ו-$\hat{\mathbf N}$ הנורמל ב-$P$. מהו, עד כדי $o(h^2+k^2)$, המרחק החתום
+      $\big(\sigma(u_0+h,v_0+k)-P\big)\cdot\hat{\mathbf N}$ של נקודה קרובה מהמישור המשיק ב-$P$?
+    choices:
+      - text: '$\frac12\left(Lh^2+2Mhk+Nk^2\right)$'
+        correct: true
+        feedback: >-
+          נכון: $\frac12Q_2(h,k)$. האיבר הלינארי בטיילור משיק למשטח ונעלם במכפלה עם $\hat{\mathbf N}$, ונשאר חצי מהאיבר
+          הריבועי.
+      - text: '$Lh^2+2Mhk+Nk^2$'
+        feedback: >-
+          חסר החצי של טיילור: $f(x)\approx f(0)+f'(0)x+\frac12f''(0)x^2$. בגרף $z=x^2$ בראשית $L=2$, והמרחק של
+          $(h,0,h^2)$ מהמישור $z=0$ הוא $h^2=\frac12Lh^2$.
+        misconception: MC-c4-distance-no-half
+      - text: '$(h\sigma_u+k\sigma_v)\cdot\hat{\mathbf N}$'
+        feedback: >-
+          זה אפס תמיד: $\sigma_u$ ו-$\sigma_v$ שוכבים במישור המשיק. בגלל זה צריך את הסדר השני.
+        misconception: MC-c4-first-order-distance
+      - text: '$\frac12\left(Eh^2+2Fhk+Gk^2\right)$'
+        feedback: >-
+          זו חצי מהתבנית **הראשונה**, ריבוע האורך של הצעד במישור המשיק. היא חיובית תמיד, גם במישור, שבו המרחק מהמישור
+          המשיק הוא אפס.
+        misconception: MC-c4-Q1-Q2-mixup
+
+  - id: Q-4.1-approx
+    type: numeric
+    objectives: [OBJ-4.1-2]
+    level: basic
+    prompt: >-
+      בנקודה $P=\sigma(u_0,v_0)$ של משטח $L=2$, $M=-1$, $N=4$. מהו הקירוב מסדר שני של המרחק החתום מהמישור המשיק
+      ב-$P$ של הנקודה $\sigma(u_0+0.1,\,v_0+0.2)$?
+    answer: 0.07
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac12\left(2\cdot0.01+2\cdot(-1)\cdot0.02+4\cdot0.04\right)=\frac12\cdot0.14=0.07$, בצד של
+      $\hat{\mathbf N}$.
+    wrongFeedback: >-
+      הציבו $h=0.1$, $k=0.2$ ב-$\frac12(Lh^2+2Mhk+Nk^2)$.
+    commonWrong:
+      - value: 0.14
+        feedback: >-
+          זה $Q_2(h,k)$ בלי החצי. המרחק הוא $\frac12Q_2$: החצי של איבר טיילור מסדר שני.
+        misconception: MC-c4-distance-no-half
+      - value: 0.08
+        feedback: >-
+          הצבתם $Mhk$ במקום $2Mhk$. המקדם של $hk$ ב-$Q_2$ הוא $2M$.
+        misconception: MC-c4-2M-vs-M
+
+  - id: Q-4.1-graphM
+    type: numeric
+    objectives: [OBJ-4.1-1]
+    level: mid
+    prompt: >-
+      אותו גרף $\sigma(x,y)=(x,\,y,\,x^2+3xy-y^2)$, הפעם בנקודה $\sigma(1,0)=(1,0,1)$, שבה המישור המשיק **אינו** אופקי,
+      עם $\hat{\mathbf N}=\frac{\sigma_x\times\sigma_y}{\|\sigma_x\times\sigma_y\|}$. חשבו את המקדם $M$ בנקודה הזו.
+    answer: 0.8017837
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sigma_x=(1,0,2)$, $\sigma_y=(0,1,3)$, ולכן $\sigma_x\times\sigma_y=(-2,-3,1)$ ו-$\hat{\mathbf N}=\frac{(-2,-3,1)}{\sqrt{14}}$.
+      $\sigma_{xy}=(0,0,3)$, ולכן $M=\frac{3}{\sqrt{14}}\approx0.8018$. בגרף כללי $M=\frac{f_{xy}}{\sqrt{1+f_x^2+f_y^2}}$: רק כשהמישור
+      המשיק אופקי זה $f_{xy}$ עצמו.
+    wrongFeedback: >-
+      שני שלבים: קודם הנורמל בנקודה (מכפלה וקטורית של $\sigma_x,\sigma_y$, ואז נרמול), ואז $M=\sigma_{xy}\cdot\hat{\mathbf N}$.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          זה $f_{xy}$, כלומר המכפלה עם $(0,0,1)$. אבל כאן המישור המשיק נוטה, והנורמל הוא $\frac{(-2,-3,1)}{\sqrt{14}}$:
+          הרכיב השלישי שלו $\frac1{\sqrt{14}}$, לא 1.
+        misconception: MC-c4-graph-unnormalized
+      - value: 0.4008919
+        feedback: >-
+          חילקתם את המקדם של $xy$ בפולינום ב-2, וקיבלתם $\frac{1.5}{\sqrt{14}}$. אבל $f_{xy}=\frac{\partial^2}{\partial x\partial y}(3xy)=3$.
+        misconception: MC-c4-taylor-coefficient
+      - value: 1.6035675
+        feedback: >-
+          $\frac{6}{\sqrt{14}}$ הוא המקדם של $dx\,dy$ בתבנית $Q_2$, כלומר $2M$. המקדם $M$ עצמו הוא $\frac{3}{\sqrt{14}}$.
+        misconception: MC-c4-2M-vs-M
+
+  - id: Q-4.1-cyl
+    type: numeric
+    objectives: [OBJ-4.1-1, OBJ-4.1-3]
+    level: mid
+    prompt: >-
+      הגליל ברדיוס 2: $\sigma(u,v)=(2\cos u,\,2\sin u,\,v)$, עם $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$
+      (בדקו לאן הוא מצביע). חשבו את $L$.
+    answer: -2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sigma_u\times\sigma_v=(2\cos u,2\sin u,0)$, ולכן $\hat{\mathbf N}=(\cos u,\sin u,0)$ מצביע **החוצה**.
+      $\sigma_{uu}=(-2\cos u,-2\sin u,0)$ מצביע פנימה, ולכן $L=-2$. גם $M=N=0$: $Q_2=-2\,du^2$.
+    wrongFeedback: >-
+      חשבו קודם את $\sigma_u\times\sigma_v$ כדי לדעת לאיזה צד הנורמל, ורק אחר כך את $\sigma_{uu}\cdot\hat{\mathbf N}$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          זה $\|\sigma_{uu}\|$, או המכפלה עם הנורמל **פנימה**. כאן הנורמל שנבחר מצביע החוצה ו-$\sigma_{uu}$ פנימה, ולכן
+          הסימן שלילי. עם הנורמל ההפוך באמת היה יוצא $L=2$.
+        misconception: MC-c4-Q2-orientation-free
+      - value: 4
+        feedback: >-
+          4 הוא $E=\sigma_u\cdot\sigma_u$, מקדם של התבנית הראשונה.
+        misconception: MC-c4-Q1-Q2-mixup
+
+  - id: Q-4.1-Ncoef
+    type: numeric
+    objectives: [OBJ-4.1-1, OBJ-4.1-3]
+    level: mid
+    prompt: >-
+      הגליל ברדיוס 2 בפרמטריזציה $\sigma(u,v)=(2\cos v,\,2\sin v,\,u)$ (הזווית היא עכשיו $v$), עם
+      $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$. חשבו את **המקדם** $N$ של התבנית השנייה
+      (לא את הנורמל $\hat{\mathbf N}$).
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sigma_u=(0,0,1)$, $\sigma_v=(-2\sin v,2\cos v,0)$, ו-$\sigma_u\times\sigma_v=(-2\cos v,-2\sin v,0)$: הנורמל
+      מצביע **פנימה**. $\sigma_{vv}=(-2\cos v,-2\sin v,0)$, ולכן $N=\sigma_{vv}\cdot\hat{\mathbf N}=2$. זה המספר $N$; הנורמל
+      $\hat{\mathbf N}=(-\cos v,-\sin v,0)$ הוא וקטור.
+    wrongFeedback: >-
+      $N=\sigma_{vv}\cdot\hat{\mathbf N}$ הוא מספר. חשבו את $\sigma_u\times\sigma_v$ בסדר הזה כדי לדעת לאן מצביע הנורמל.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          1 הוא אורך הנורמל $\hat{\mathbf N}$, לא המקדם $N$. האות משותפת, ולכן בקורס הנורמל נכתב תמיד עם כובע.
+        misconception: MC-c4-coefficient-N-vs-normal
+      - value: -2
+        feedback: >-
+          הנחתם שהנורמל מצביע החוצה, כמו בפרמטריזציה $(2\cos u,2\sin u,v)$. כאן סדר הפרמטרים הפוך, ו-$\sigma_u\times\sigma_v$
+          מצביע פנימה.
+        misconception: MC-c4-reparam-keeps-normal
+
+  - id: Q-4.1-sphere
+    type: mc
+    objectives: [OBJ-4.1-1, OBJ-4.1-3]
+    level: mid
+    prompt: >-
+      ספרת היחידה $\sigma(u,v)=(\cos u\cos v,\,\sin u\cos v,\,\sin v)$, עם $|v|<\frac\pi2$ והנורמל
+      $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$. התבנית הראשונה היא
+      $Q_1=\cos^2v\,du^2+dv^2$. מהי $Q_2$?
+    choices:
+      - text: '$Q_2=-\cos^2v\,du^2-dv^2=-Q_1$'
+        correct: true
+        feedback: >-
+          נכון. $\sigma_u\times\sigma_v=\cos v\,\sigma$, ולכן $\hat{\mathbf N}=\sigma$ מצביע החוצה. $\sigma_{vv}=-\sigma$
+          נותן $N=-1$, $\sigma_{uu}=(-\cos u\cos v,-\sin u\cos v,0)$ נותן $L=-\cos^2v$, ו-$M=0$.
+      - text: '$Q_2=\cos^2v\,du^2+dv^2=Q_1$'
+        feedback: >-
+          זו התבנית השנייה עם הנורמל **פנימה**. כאן $\hat{\mathbf N}=\sigma$ מצביע החוצה, והנגזרות השניות מצביעות לכיוון
+          המרכז, ולכן כל המקדמים שליליים.
+        misconception: MC-c4-Q2-orientation-free
+      - text: '$Q_2=-\cos v\,du^2-dv^2$'
+        feedback: >-
+          $\cos v$ הוא האורך של $\sigma_{uu}$, לא הרכיב הנורמלי שלו. $\sigma_{uu}$ מצביע לציר $z$ (מרכז מקביל הרוחב),
+          לא למרכז הספרה, ולכן רק חלק ממנו בכיוון $\hat{\mathbf N}$: $\sigma_{uu}\cdot\hat{\mathbf N}=-\cos^2v$.
+        misconception: MC-c4-Q1-Q2-mixup
+
+  - id: Q-4.1-side
+    type: twotier
+    objectives: [OBJ-4.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בנקודה $P$ של משטח, ביחס לנורמל $\hat{\mathbf N}$, התבנית $Q_2$ מוגדרת חיובית. איפה נמצא המשטח ליד $P$ ביחס
+      למישור המשיק ב-$P$?
+    choices:
+      - text: 'בצד שאליו מצביע $\hat{\mathbf N}$ (פרט ל-$P$ עצמה)'
+        correct: true
+        feedback: >-
+          נכון. ליד $P$ המרחק החתום הוא $\frac12Q_2(h,k)+o(h^2+k^2)$, והאיבר הראשי חיובי.
+      - text: 'בצד ההפוך ל-$\hat{\mathbf N}$'
+        feedback: >-
+          המרחק החתום נמדד **בכיוון** $\hat{\mathbf N}$: ערך חיובי פירושו הצד של $\hat{\mathbf N}$.
+        misconception: MC-c4-side-depends-on-normal
+      - text: 'משני צדי המישור המשיק, כי השארית $o(h^2+k^2)$ יכולה להיות שלילית'
+        feedback: >-
+          השארית קטנה מכל $c(h^2+k^2)$ קרוב מספיק ל-$P$, ותבנית מוגדרת חיובית גדולה מ-$c(h^2+k^2)$ עם $c>0$ קבוע. חציית
+          המישור המשיק קורית כש-$Q_2$ מקבלת ערכים חיוביים ושליליים, כמו באוכף.
+        misconception: MC-c4-definite-crosses
+    reasons:
+      - text: 'המרחק החתום הוא $\frac12Q_2(h,k)+o(h^2+k^2)$, ו-$Q_2(h,k)\ge c(h^2+k^2)$ עם $c>0$ גובר על השארית'
+        correct: true
+        feedback: >-
+          בדיוק. בלי החסם $c(h^2+k^2)$ אי אפשר לבלוע את השארית: זו הסיבה שצריך **מוגדרת**, ולא רק "אי-שלילית".
+      - text: 'המרחק החתום הוא בקירוב האיבר הלינארי $(h\sigma_u+k\sigma_v)\cdot\hat{\mathbf N}$, וזה חיובי'
+        feedback: >-
+          הביטוי הזה אפס: $\sigma_u$ ו-$\sigma_v$ ניצבים ל-$\hat{\mathbf N}$. האיבר הקובע הוא הריבועי.
+        misconception: MC-c4-first-order-distance
+      - text: '$Q_1$ מוגדרת חיובית, ו-$Q_1(h,k)$ הוא בקירוב ריבוע המרחק מ-$P$, ולכן הנקודות הקרובות רחוקות מהמישור המשיק'
+        feedback: >-
+          $Q_1$ מוגדרת חיובית בכל משטח, גם במישור, שכולו בתוך המישור המשיק. $Q_1$ מודדת אורכים **בתוך** המישור המשיק,
+          לא מרחק ממנו.
+        misconception: MC-c4-Q1-Q2-mixup
+
+  - id: Q-4.1-flipside
+    type: twotier
+    objectives: [OBJ-4.1-3, OBJ-4.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בנקודה $P$, ביחס לנורמל $\hat{\mathbf N}$, $Q_2$ מוגדרת שלילית. עכשיו בוחרים את הנורמל ההפוך. האם המשטח ליד
+      $P$ עדיין כולו בצד אחד של המישור המשיק?
+    choices:
+      - text: 'כן'
+        correct: true
+        feedback: >-
+          נכון. השאלה אם המשטח בצד אחד היא שאלה על המשטח והמישור, לא על הנורמל. מה שמשתנה הוא רק התיאור: קודם "הצד ההפוך
+          ל-$\hat{\mathbf N}$", עכשיו "הצד של הנורמל החדש".
+      - text: 'לא, עכשיו הוא חוצה את המישור המשיק'
+        feedback: >-
+          היפוך הנורמל לא מזיז את המשטח. הוא הופך את $Q_2$ ל-$-Q_2$: מוגדרת שלילית נעשית מוגדרת חיובית, לא לא-מוגדרת.
+        misconception: MC-c4-side-depends-on-normal
+    reasons:
+      - text: 'עם הנורמל החדש $Q_2$ מתחלפת ב-$-Q_2$, שהיא מוגדרת חיובית, ולכן המשטח בצד של הנורמל החדש'
+        correct: true
+        feedback: >-
+          בדיוק. היפוך סימן הופך תבנית מוגדרת שלילית למוגדרת חיובית: היא נשארת מוגדרת, ורק הסימן שלה מתחלף.
+      - text: '$Q_2$ לא תלויה בבחירת הנורמל, ולכן שום דבר לא השתנה'
+        feedback: >-
+          המסקנה נכונה, הנימוק לא: $Q_2$ **כן** מחליפה סימן. מה שלא תלוי בנורמל הוא רק אם היא מוגדרת.
+        misconception: MC-c4-Q2-orientation-free
+      - text: 'אחרי היפוך $Q_2$ מוגדרת חיובית, ולכן המשטח בצד ההפוך לנורמל החדש'
+        feedback: >-
+          $Q_2$ חיובית אומרת שהמרחק החתום **בכיוון הנורמל** חיובי: המשטח בצד של הנורמל החדש, שהוא הצד שבו הוא היה מקודם.
+        misconception: MC-c4-side-depends-on-normal
+
+  - id: Q-4.1-alt
+    type: mc
+    objectives: [OBJ-4.1-1]
+    level: mid
+    prompt: >-
+      גוזרים לפי $u$ את הזהות $\sigma_u\cdot\hat{\mathbf N}=0$. איזו נוסחה ל-$L$ מתקבלת?
+    choices:
+      - text: '$L=-\sigma_u\cdot\hat{\mathbf N}_u$'
+        correct: true
+        feedback: >-
+          נכון. $0=(\sigma_u\cdot\hat{\mathbf N})_u=\sigma_{uu}\cdot\hat{\mathbf N}+\sigma_u\cdot\hat{\mathbf N}_u$. כך $L$
+          נקבע מהשינוי של הנורמל, וזה הבסיס להעתקת גאוס (שיעור 4.6).
+      - text: '$L=\sigma_u\cdot\hat{\mathbf N}_u$'
+        feedback: >-
+          כלל המכפלה נותן סכום ששווה ל-0, ולכן שני המחוברים בסימנים הפוכים. בספרת היחידה עם הנורמל החוצה
+          $\hat{\mathbf N}=\sigma$, ואז $\sigma_u\cdot\hat{\mathbf N}_u=E>0$, בעוד ש-$L=-E$.
+        misconception: MC-c4-dN-equals-S
+      - text: '$L=\hat{\mathbf N}_u\cdot\hat{\mathbf N}_u$'
+        feedback: >-
+          זה ביטוי ריבועי בנגזרת הנורמל, תמיד אי-שלילי, ולכן לא יכול להיות $L$, שמחליף סימן עם הנורמל.
+        misconception: MC-c4-Q1-Q2-mixup
+      - text: '$L=\sigma_{uu}\cdot\sigma_u$'
+        feedback: >-
+          זה הרכיב המשיק של $\sigma_{uu}$; הגזירה של $\sigma_u\cdot\hat{\mathbf N}=0$ לא מייצרת אותו.
+        misconception: MC-c4-Q1-Q2-mixup
+
+  - id: Q-4.1-saddle
+    type: twotier
+    objectives: [OBJ-4.1-2, OBJ-4.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האוכף $\sigma(x,y)=(x,\,y,\,xy)$ בראשית, עם $\hat{\mathbf N}=(0,0,1)$. האם ליד הראשית המשטח נמצא כולו בצד אחד
+      של המישור המשיק $z=0$?
+    choices:
+      - text: 'לא, הוא חוצה את המישור המשיק'
+        correct: true
+        feedback: >-
+          נכון. הנקודות $(t,t,t^2)$ מעל המישור והנקודות $(t,-t,-t^2)$ מתחתיו, לכל $t\neq0$ קטן כרצוננו.
+      - text: 'כן, כי עד סדר שני הוא צמוד למישור המשיק'
+        feedback: >-
+          הוא לא צמוד: $Q_2=2\,dx\,dy\neq0$. אמנם $L=N=0$, אבל $M=1$.
+        misconception: MC-c4-diagonal-only
+    reasons:
+      - text: '$L=N=0$ ו-$M=1$, ולכן $\frac12Q_2(h,k)=hk$, שמקבל ערכים חיוביים ושליליים'
+        correct: true
+        feedback: >-
+          בדיוק: התבנית לא מוגדרת (indefinite). כאן המרחק החתום הוא בדיוק $hk$, בלי שארית, ולכן הקירוב הוא כל הסיפור.
+      - text: '$L=N=0$, ולכן $Q_2=0$ והמשטח צמוד למישור המשיק עד סדר שני'
+        feedback: >-
+          שכחתם את האיבר $2M\,du\,dv$. התבנית היא $Lh^2+2Mhk+Nk^2$, ו-$M=\sigma_{xy}\cdot\hat{\mathbf N}=1$.
+        misconception: MC-c4-diagonal-only
+      - text: 'האיבר הלינארי $(h\sigma_x+k\sigma_y)\cdot\hat{\mathbf N}$ מקבל ערכים חיוביים ושליליים'
+        feedback: >-
+          האיבר הלינארי הוא $(h,k,0)\cdot(0,0,1)=0$ לכל $h,k$. אילו הוא היה מקבל את שני הסימנים, המישור $z=0$ לא היה
+          משיק.
+        misconception: MC-c4-first-order-distance
+
+  - id: Q-4.1-swap
+    type: numeric
+    objectives: [OBJ-4.1-3, OBJ-4.1-1]
+    level: exam
+    prompt: >-
+      בנקודה של המשטח $\sigma(u,v)$, עם $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$,
+      ידוע ש-$L=2$, $M=1$, $N=5$. מגדירים פרמטריזציה חדשה של אותו משטח, $\tilde\sigma(u,v)=\sigma(v,u)$, עם הנורמל
+      $\hat{\tilde{\mathbf N}}=\frac{\tilde\sigma_u\times\tilde\sigma_v}{\|\tilde\sigma_u\times\tilde\sigma_v\|}$. מהו
+      המקדם $\tilde L$ בנקודה המתאימה?
+    answer: -5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\tilde\sigma_u=\sigma_v$ ו-$\tilde\sigma_v=\sigma_u$, ולכן $\tilde\sigma_u\times\tilde\sigma_v=-\sigma_u\times\sigma_v$:
+      הנורמל מתהפך. $\tilde L=\tilde\sigma_{uu}\cdot\hat{\tilde{\mathbf N}}=\sigma_{vv}\cdot(-\hat{\mathbf N})=-N=-5$.
+    wrongFeedback: >-
+      שני דברים קורים יחד: התפקידים של $u$ ו-$v$ מתחלפים, והנורמל מתהפך. חשבו את $\tilde\sigma_{uu}$ ואת
+      $\tilde\sigma_u\times\tilde\sigma_v$.
+    commonWrong:
+      - value: 5
+        feedback: >-
+          את החלפת התפקידים עשיתם ($\tilde\sigma_{uu}=\sigma_{vv}$), אבל לא את היפוך הנורמל:
+          $\tilde\sigma_u\times\tilde\sigma_v=\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$.
+        misconception: MC-c4-reparam-keeps-normal
+      - value: 2
+        feedback: >-
+          $\tilde L$ מחושב מ-$\tilde\sigma_{uu}=\sigma_{vv}$, לא מ-$\sigma_{uu}$; וגם הנורמל התהפך.
+        misconception: MC-c4-reparam-keeps-normal
+      - value: -2
+        feedback: >-
+          את היפוך הנורמל זכרתם, אבל $\tilde\sigma_{uu}=\sigma_{vv}$, ולכן $\tilde L$ הוא $-N$, לא $-L$.
+        misconception: MC-c4-reparam-keeps-normal
+
+  - id: Q-4.1-proof
+    type: rank
+    objectives: [OBJ-4.1-2]
+    level: exam
+    prompt: >-
+      סדרו את שלבי ההוכחה של הטענה: המרחק החתום של $\sigma(u_0+h,v_0+k)$ מהמישור המשיק ב-$P=\sigma(u_0,v_0)$ הוא
+      $\frac12Q_2(h,k)+o(h^2+k^2)$.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון. שני שלבים שאפשר לכתוב בכל סדר מסומנים כשקולים.
+    items:
+      - id: distance
+        label: 'המרחק החתום מהמישור המשיק הוא $d(h,k)=\big(\sigma(u_0+h,v_0+k)-P\big)\cdot\hat{\mathbf N}$'
+      - id: taylor
+        label: 'פיתוח טיילור מסדר שני: $\sigma(u_0+h,v_0+k)-P=h\sigma_u+k\sigma_v+\frac12(h^2\sigma_{uu}+2hk\sigma_{uv}+k^2\sigma_{vv})+o(h^2+k^2)$'
+      - id: linear
+        label: 'האיבר הלינארי נעלם במכפלה, כי $\sigma_u\cdot\hat{\mathbf N}=\sigma_v\cdot\hat{\mathbf N}=0$'
+      - id: quadratic
+        label: 'מכפלת האיבר הריבועי ב-$\hat{\mathbf N}$ היא $\frac12(Lh^2+2Mhk+Nk^2)$, לפי ההגדרה של $L,M,N$'
+      - id: result
+        label: 'לכן $d(h,k)=\frac12Q_2(h,k)+o(h^2+k^2)$ (מכפלה של שארית $o(h^2+k^2)$ בווקטור יחידה היא עדיין $o(h^2+k^2)$)'
+    order: [[distance, taylor], [linear, quadratic], result]
+    correctFeedback: >-
+      נכון. רעיון ההוכחה: המישור המשיק מכיל את האיבר הלינארי של טיילור, ולכן המרחק ממנו מתחיל בסדר שני, ושם יושבת
+      $Q_2$. את שני האיברים אפשר לטפל בכל סדר.
+    wrongFeedback: >-
+      קודם מגדירים מה מודדים (המרחק) ומפתחים (טיילור), ורק אז מכפילים ב-$\hat{\mathbf N}$ כל איבר (הלינארי והריבועי, בכל
+      סדר). המסקנה באה אחרי שניהם.

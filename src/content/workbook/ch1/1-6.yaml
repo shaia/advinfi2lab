@@ -1,0 +1,377 @@
+# Workbook of lesson 1.6 — the plane curve is determined by its signed curvature.
+# Objectives (src/course.ts):
+#   OBJ-1.6-1  recover a plane curve from k(s) by two integrations
+#   OBJ-1.6-2  k determines the curve up to translation and rotation (proof)
+#   OBJ-1.6-3  constant curvature gives circles and lines; the spiral k(s) = s
+# Every number recomputed on 2026-11-09 by RK4 (src/math/geometry.ts rk4System) and rebuildFromK
+# (src/math/planecurves.ts) against the closed forms below.
+lesson: '1.6'
+practice:
+  - id: W-1.6-01
+    level: basic
+    objectives: [OBJ-1.6-1, OBJ-1.6-3]
+    prompt: >-
+      מצאו את המסילה בפרמטר אורך הקשת עם $k\equiv2$, $\gamma(0)=(0,0)$ ו-$\theta(0)=\pi$ (יוצאת שמאלה). מה המרכז, מה הרדיוס,
+      ומהו $\gamma(\frac\pi2)$?
+    answer: >-
+      $$\gamma(s)=\Big(-\tfrac12\sin2s,\ \tfrac12(\cos2s-1)\Big)$$ מעגל ברדיוס $\frac12$ סביב $(0,-\frac12)$; $\gamma(\frac\pi2)=(0,-1)$.
+    solution:
+      - kind: computation
+        text: >-
+          $\theta(s)=\pi+2s$, ולכן $\cos\theta=-\cos2s$ ו-$\sin\theta=-\sin2s$.
+      - kind: computation
+        text: >-
+          $$x(s)=-\int_0^s\cos2u\,du=-\tfrac12\sin2s,$$ $$y(s)=-\int_0^s\sin2u\,du=\tfrac12(\cos2s-1).$$
+      - kind: step
+        text: >-
+          $\big(x,\ y+\frac12\big)=\frac12(-\sin2s,\ \cos2s)$, באורך $\frac12$: מעגל ברדיוס $\frac12$ סביב $(0,-\frac12)$. ב-$s=\frac\pi2$:
+          $\gamma=(0,\ -1)$, הנקודה הנגדית לראשית.
+      - kind: check
+        text: >-
+          הרדיוס $\frac1{|k|}=\frac12$ וההיקף $\pi$, ולכן ב-$s=\frac\pi2$ עברנו חצי מעגל: נקודה נגדית, כמו שיצא. $k>0$ ויוצאים שמאלה, ולכן
+          פונים שמאלה ביחס לנהג, כלומר מטה: המרכז מתחת לראשית.
+      - kind: result
+        text: >-
+          מעגל ברדיוס $\frac12$ סביב $(0,-\frac12)$, נגד כיוון השעון; $\gamma(\frac\pi2)=(0,-1)$.
+
+  - id: W-1.6-02
+    level: basic
+    objectives: [OBJ-1.6-1]
+    prompt: >-
+      המסילה עם $k(s)=s^2$, $s\ge0$, ו-$\theta(0)=0$. מצאו את $\theta(s)$, ואת ה-$s>0$ הראשון שבו המשיק מצביע ישר למטה, $\mathbf t=(0,-1)$.
+    answer: >-
+      $\theta(s)=\frac{s^3}3$; $s=\sqrt[3]{9\pi/2}\approx2.418$.
+    solution:
+      - kind: computation
+        text: >-
+          $\theta(s)=0+\int_0^su^2\,du=\frac{s^3}{3}$.
+      - kind: step
+        text: >-
+          $\mathbf t=(0,-1)$ פירושו $\theta=\frac{3\pi}2+2\pi m$. $\theta$ עולה מ-$0$, ולכן הערך הראשון שהיא מגיעה אליו הוא $\frac{3\pi}2$.
+      - kind: computation
+        text: >-
+          $\frac{s^3}3=\frac{3\pi}2$, כלומר $s^3=\frac{9\pi}2$ ו-$s=\sqrt[3]{9\pi/2}\approx2.418$.
+      - kind: check
+        text: >-
+          $\theta(2.418)\approx4.7124=\frac{3\pi}2$. טעות נפוצה: $\theta=k=s^2$, שנותנת $s=\sqrt{3\pi/2}$; $k$ היא קצב הזווית, לא הזווית.
+      - kind: result
+        text: >-
+          $s=\sqrt[3]{9\pi/2}\approx2.418$.
+
+  - id: W-1.6-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.6-2]
+    prompt: >-
+      ל-$\gamma_1$ ול-$\gamma_2$ אותה עקמומיות מסומנת $k(s)=e^s$ על $[0,1]$. נתון $\gamma_1(0)=(0,0)$, $\mathbf t_1(0)=(1,0)$, ו-$\gamma_2(0)=(3,4)$,
+      $\mathbf t_2(0)=(0,-1)$. מצאו סיבוב $R$ ווקטור $\mathbf c$ כך ש-$\gamma_2=R\gamma_1+\mathbf c$, בלי לחשב אינטגרלים.
+    answer: >-
+      $R(x,y)=(y,\ -x)$, סיבוב ברבע סיבוב בכיוון השעון, ו-$\mathbf c=(3,4)$.
+    solution:
+      - kind: idea
+        text: >-
+          כמו בהוכחת משפט היחידות: הסיבוב משווה את המשיק ההתחלתי, ההזזה את נקודת ההתחלה.
+      - kind: step
+        text: >-
+          $\theta_1(0)=0$ ו-$\theta_2(0)=-\frac\pi2$, ולכן $R$ הסיבוב בזווית $-\frac\pi2$: $R(x,y)=(y,\ -x)$. בדיקה: $R(1,0)=(0,-1)$.
+      - kind: step
+        text: >-
+          $\mathbf c=\gamma_2(0)-R\gamma_1(0)=(3,4)$.
+      - kind: theorem
+        text: >-
+          ל-$R\gamma_1+\mathbf c$ אותה $k$ (סיבוב והזזה), אותה נקודה ואותו משיק ב-$s=0$ כמו ל-$\gamma_2$, ולכן לפי הלמה של השיעור היא $\gamma_2$.
+      - kind: result
+        text: >-
+          $\gamma_2(s)=(3+y_1(s),\ 4-x_1(s))$.
+
+  - id: W-1.6-04
+    level: mid
+    objectives: [OBJ-1.6-1]
+    prompt: >-
+      מצאו במפורש את המסילה עם $k(s)=\frac{1}{\sqrt{1-s^2}}$, $-1<s<1$, $\gamma(0)=(0,0)$ ו-$\theta(0)=0$.
+    answer: >-
+      $$\gamma(s)=\Big(\tfrac12\big(s\sqrt{1-s^2}+\arcsin s\big),\ \tfrac{s^2}2\Big)$$
+    solution:
+      - kind: computation
+        text: >-
+          $\theta(s)=\int_0^s\frac{du}{\sqrt{1-u^2}}=\arcsin s$, ולכן $\cos\theta=\sqrt{1-s^2}$ (כי $|\theta|<\frac\pi2$) ו-$\sin\theta=s$.
+      - kind: computation
+        text: >-
+          $y(s)=\int_0^su\,du=\frac{s^2}2$.
+      - kind: computation
+        text: >-
+          $x(s)=\int_0^s\sqrt{1-u^2}\,du$. בהצבה $u=\sin\varphi$ (או לפי השטח מתחת לחצי מעגל):
+          $$x(s)=\tfrac12\big(s\sqrt{1-s^2}+\arcsin s\big).$$
+      - kind: check
+        text: >-
+          אינטגרציה מספרית ב-$s=\frac12$ נותנת $(0.4783,\ 0.125)$, כמו הנוסחה. ו-$k$ זוגית עם $\mathbf t(0)=(1,0)$: לפי דוגמה 5 של השיעור
+          המסילה סימטרית לציר $y$, ואכן $x$ אי-זוגית ו-$y$ זוגית.
+      - kind: result
+        text: >-
+          $$\gamma(s)=\Big(\tfrac12\big(s\sqrt{1-s^2}+\arcsin s\big),\ \tfrac{s^2}2\Big)$$
+
+  - id: W-1.6-05
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.6-2]
+    prompt: >-
+      $\gamma_1,\gamma_2:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת, מסדר $C^2$, ו-$k_2(s)=k_1(L-s)$ לכל $s$.
+
+      (א) הוכיחו שיש מטריצה אורתוגונלית $Q$ ווקטור $\mathbf c$ כך ש-$\gamma_2(s)=Q\gamma_1(L-s)+\mathbf c$ לכל $s$: $\gamma_2$ היא $\gamma_1$ בכיוון
+      ההפוך, אחרי תנועה קשיחה.
+
+      (ב) האם תמיד אפשר לבחור בנוסחה הזו $Q$ שהוא סיבוב?
+    answer: >-
+      (א) כן, עם $Q=R\sigma$: שיקוף ואחריו סיבוב. (ב) לא: עם $Q$ סיבוב זה אפשרי רק כש-$k_1\equiv0$; למשל ל-$k_1(s)=s$ על $[0,1]$ לא.
+    solution:
+      - kind: idea
+        text: >-
+          היפוך כיוון לבדו הופך את הסימן של $k$ ומחליף $s$ ב-$L-s$; שיקוף מחזיר את הסימן. ביחד מקבלים בדיוק $k_1(L-s)$.
+      - kind: step
+        text: >-
+          (א) יהי $\sigma$ שיקוף ו-$\delta(s)=\sigma\gamma_1(L-s)$, מסילה בפרמטר אורך הקשת. היפוך הכיוון נותן עקמומיות $-k_1(L-s)$, והשיקוף הופך שוב:
+          $k_\delta(s)=k_1(L-s)=k_2(s)$.
+      - kind: theorem
+        text: >-
+          לפי משפט היחידות $\gamma_2=R\delta+\mathbf c$ עם $R$ סיבוב, כלומר $\gamma_2(s)=R\sigma\gamma_1(L-s)+\mathbf c$ לכל $s$, עם $Q=R\sigma$
+          אורתוגונלית.
+      - kind: step
+        text: >-
+          (ב) נניח $\gamma_2(s)=R\gamma_1(L-s)+\mathbf c$ לכל $s$, עם $R$ סיבוב. הצד הימני הוא $\gamma_1$ בכיוון ההפוך (עקמומיות $-k_1(L-s)$) אחרי
+          סיבוב והזזה (שאינם משנים אותה). לכן $k_2(s)=-k_1(L-s)$. יחד עם הנתון $k_2(s)=k_1(L-s)$ מקבלים $k_1(L-s)=0$ לכל $s$, כלומר $k_1\equiv0$.
+      - kind: check
+        text: >-
+          ל-$k_1(s)=s$ על $[0,1]$, $k_2(s)=1-s\not\equiv0$, ולכן אין סיבוב כזה. וכש-$k_1\equiv0$ שתי המסילות קטעים באורך $L$, $\gamma_1=\mathbf p+s\mathbf v$ ו-$\gamma_2=\mathbf q+s\mathbf w$,
+          ואז אכן מספיק סיבוב: בוחרים $R$ עם $R\mathbf v=-\mathbf w$, ו-$\mathbf c$ מתאים.
+      - kind: result
+        text: >-
+          (א) $\gamma_2(s)=R\sigma\gamma_1(L-s)+\mathbf c$. (ב) סיבוב מספיק רק כש-$k_1\equiv0$.
+
+  - id: W-1.6-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.6-3]
+    prompt: >-
+      $\gamma$ מסילה מישורית בפרמטר אורך הקשת, מסדר $C^3$, עם $k(s)\ne0$ לכל $s$ בקטע. מרכז העקמומיות שלה הוא
+      $$\mathbf m(s)=\gamma(s)+\tfrac{1}{k(s)}\,\mathbf n_s(s).$$
+      הוכיחו: $\mathbf m$ קבועה על הקטע אם ורק אם $k$ קבועה.
+    answer: >-
+      $\mathbf m'=-\frac{k'}{k^2}\,\mathbf n_s$, ולכן $\mathbf m'\equiv0$ אם ורק אם $k'\equiv0$.
+    solution:
+      - kind: computation
+        text: >-
+          $\mathbf n_s'=-k\,\mathbf t$ (מהשיעור: $\mathbf n_s=(-\sin\theta,\cos\theta)$ ו-$\theta'=k$). $k$ גזירה, כי $\gamma$ מסדר $C^3$.
+      - kind: computation
+        text: >-
+          $$\mathbf m'=\mathbf t-\tfrac{k'}{k^2}\mathbf n_s+\tfrac1k(-k\,\mathbf t)=-\tfrac{k'}{k^2}\,\mathbf n_s.$$
+      - kind: step
+        text: >-
+          $\|\mathbf n_s\|=1$, ולכן $\mathbf m'(s)=0$ אם ורק אם $k'(s)=0$. על קטע: $\mathbf m$ קבועה אם ורק אם $k$ קבועה.
+      - kind: check
+        text: >-
+          כיוון אחד הוא המשפט של השיעור על עקמומיות קבועה. הכיוון השני: אם $k$ משתנה, מרכז העקמומיות זז, ובכיוון הנורמל
+          (במקביל ל-$\mathbf n_s$), לא לאורך המשיק.
+      - kind: result
+        text: >-
+          $\mathbf m$ קבועה $\Longleftrightarrow$ $k$ קבועה: המעגלים הם המסילות היחידות שמרכז העקמומיות שלהן לא זז.
+
+  - id: W-1.6-07
+    level: mid
+    objectives: [OBJ-1.6-3]
+    prompt: >-
+      ספירלת קורנו, $k(s)=s$, $\theta(0)=0$, $s\ge0$.
+
+      (א) מהו ה-$s>0$ הראשון שבו המשיק מצביע שמאלה, $\mathbf t=(-1,0)$?
+
+      (ב) בין $\theta=2\pi m$ ל-$\theta=2\pi(m+1)$ המשיק מסתובב סיבוב שלם. מה אורך הקטע הזה של המסילה, ומה קורה לו כש-$m\to\infty$?
+    answer: >-
+      (א) $s=\sqrt{2\pi}\approx2.507$. (ב) $\sqrt{4\pi}\big(\sqrt{m+1}-\sqrt m\big)\to0$.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $\theta=\frac{s^2}2$, ו-$\mathbf t=(-1,0)$ לראשונה כש-$\theta=\pi$: $s=\sqrt{2\pi}\approx2.507$.
+      - kind: computation
+        text: >-
+          (ב) $\theta=2\pi m$ כש-$s=\sqrt{4\pi m}$. לכן אורך הקטע הוא
+          $$\sqrt{4\pi(m+1)}-\sqrt{4\pi m}=\frac{\sqrt{4\pi}}{\sqrt{m+1}+\sqrt m}\to0.$$
+      - kind: check
+        text: >-
+          ב-$m=1,\ 2,\ 10$ האורכים בערך $1.468$, $1.127$, $0.547$. רדיוס העקמומיות בקטע הוא בערך $\frac1s\approx\frac1{\sqrt{4\pi m}}$, וסיבוב שלם
+          במעגל כזה הוא באורך $\frac{2\pi}{\sqrt{4\pi m}}=\frac{\sqrt\pi}{\sqrt m}$, בערך מה שקיבלנו.
+      - kind: result
+        text: >-
+          (א) $\sqrt{2\pi}$. (ב) כל סיבוב קצר מקודמו, והאורכים שואפים לאפס, אף שסכומם אינסופי.
+
+  - id: W-1.6-08
+    level: exam
+    objectives: [OBJ-1.6-2]
+    prompt: >-
+      הוכחה של הלמה (יחידות עם נתוני התחלה) בלי זווית משיק, בדרך שתעבוד גם במרחב (פרק 2). ל-$\gamma_1,\gamma_2$ בפרמטר אורך הקשת
+      אותה $k$, ו-$\mathbf t_1(0)=\mathbf t_2(0)$. נגדיר
+      $$f(s)=\mathbf t_1\cdot\mathbf t_2+\mathbf n_{s,1}\cdot\mathbf n_{s,2}.$$
+
+      (א) הוכיחו ש-$f'\equiv0$.
+
+      (ב) הסיקו ש-$\mathbf t_1\equiv\mathbf t_2$, ומכאן ש-$\gamma_1-\gamma_2$ קבועה.
+    answer: >-
+      (א) ארבעת המחוברים של $f'$ מתבטלים בזוגות. (ב) $f\equiv2$ ושני המחוברים לכל היותר $1$, ולכן $\mathbf t_1\cdot\mathbf t_2\equiv1$.
+    solution:
+      - kind: idea
+        text: >-
+          $f$ מודדת כמה שתי המסגרות $\{\mathbf t,\mathbf n_s\}$ מתלכדות. משוואות התנועה של שתיהן זהות, ולכן ה"מרחק" ביניהן לא משתנה.
+      - kind: computation
+        text: >-
+          (א) $\mathbf t_i'=k\,\mathbf n_{s,i}$ ו-$\mathbf n_{s,i}'=-k\,\mathbf t_i$. לפי כלל המכפלה:
+          $$f'=k\,\mathbf n_{s,1}\cdot\mathbf t_2+k\,\mathbf t_1\cdot\mathbf n_{s,2}-k\,\mathbf t_1\cdot\mathbf n_{s,2}-k\,\mathbf n_{s,1}\cdot\mathbf t_2=0.$$
+      - kind: step
+        text: >-
+          (ב) $\mathbf t_1(0)=\mathbf t_2(0)$ גורר $\mathbf n_{s,1}(0)=\mathbf n_{s,2}(0)$ (אותו סיבוב ברבע), ולכן $f(0)=2$, ו-$f\equiv2$.
+      - kind: step
+        text: >-
+          לפי קושי-שוורץ כל מחובר של $f$ לכל היותר $1$, וסכומם $2$, ולכן $\mathbf t_1\cdot\mathbf t_2\equiv1$. לשני וקטורי יחידה זה אומר
+          $\|\mathbf t_1-\mathbf t_2\|^2=2-2\,\mathbf t_1\cdot\mathbf t_2=0$, כלומר $\mathbf t_1\equiv\mathbf t_2$.
+      - kind: step
+        text: >-
+          $(\gamma_1-\gamma_2)'=\mathbf t_1-\mathbf t_2=0$, ולכן $\gamma_1-\gamma_2$ קבועה, ואם $\gamma_1(0)=\gamma_2(0)$ היא אפס.
+      - kind: result
+        text: >-
+          הלמה מוכחת בלי זווית משיק. בפרק 2 אותו רעיון, עם שלושה וקטורים, יוכיח את משפט היחידות במרחב.
+
+  - id: W-1.6-09
+    level: exam
+    objectives: [OBJ-1.6-3, OBJ-1.6-2]
+    prompt: >-
+      יהי $\lambda>0$, ותהי $\gamma_\lambda$ המסילה עם $k(s)=2\lambda s$, $\gamma_\lambda(0)=(0,0)$, $\theta(0)=0$. נסמן ב-$C$ את ספירלת קורנו של השיעור
+      ($k=s$ עם אותם נתוני התחלה).
+
+      (א) הוכיחו: אם $\mu>0$ ו-$\delta(s)=\mu\,\gamma(\frac s\mu)$, אז $k_\delta(s)=\frac1\mu k_\gamma(\frac s\mu)$.
+
+      (ב) הסיקו ש-$\gamma_\lambda(s)=\mu\,C(\frac s\mu)$ עם $\mu=\frac{1}{\sqrt{2\lambda}}$, ומצאו את הנקודה שאליה $\gamma_\lambda$ מתלפפת.
+    answer: >-
+      (ב) $\gamma_\lambda(s)\to\frac{\sqrt\pi}{2\sqrt{2\lambda}}(1,1)$.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $\delta'(s)=\gamma'(\frac s\mu)$, באורך 1: $\delta$ בפרמטר אורך הקשת, עם אותה זווית משיק $\theta_\delta(s)=\theta_\gamma(\frac s\mu)$. לכן, לפי כלל השרשרת,
+          $$k_\delta(s)=\theta_\delta'(s)=\tfrac1\mu\,k_\gamma\big(\tfrac s\mu\big).$$
+      - kind: step
+        text: >-
+          (ב) עם $\gamma=C$: $k_\delta(s)=\frac1\mu\cdot\frac s\mu=\frac{s}{\mu^2}=2\lambda s$ כש-$\mu^2=\frac{1}{2\lambda}$.
+      - kind: theorem
+        text: >-
+          ל-$\delta=\mu C(\frac{\cdot}{\mu})$ ול-$\gamma_\lambda$ אותה $k$, ו-$\delta(0)=(0,0)$, $\mathbf t_\delta(0)=(1,0)$: לפי הלמה $\gamma_\lambda=\delta$.
+      - kind: computation
+        text: >-
+          $C(s)\to\frac{\sqrt\pi}2(1,1)$, ולכן
+          $$\gamma_\lambda(s)=\mu\,C\big(\tfrac s\mu\big)\to\frac{\sqrt\pi}{2\sqrt{2\lambda}}(1,1).$$
+      - kind: check
+        text: >-
+          $\lambda=2$, $\mu=\frac12$: אינטגרציה מספרית של $k=4s$ ב-$s=1.1$ נותנת $(0.6086,\ 0.5787)$, ו-$\frac12C(2.2)$ נותן אותו
+          דבר. הגבול $(0.4431,\ 0.4431)$. הגדלה פי $\mu$ מחלקת את $k$ ב-$\mu$, כמו במעגלים (שיעור 1.3).
+      - kind: result
+        text: >-
+          $\gamma_\lambda=\frac{1}{\sqrt{2\lambda}}C(\sqrt{2\lambda}\,s)$; כל הספירלות עם $k$ לינארית הן קורנו מוקטנת.
+
+  - id: W-1.6-10
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.6-3, OBJ-1.6-1]
+    prompt: >-
+      מסילה $\gamma:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת היא **סגורה** אם $\gamma(L)=\gamma(0)$ ו-$\mathbf t(L)=\mathbf t(0)$. הוכיחו או הפריכו:
+
+      (א) יש מסילה סגורה עם $k>0$ בכל נקודה ופנייה כוללת $\int_0^Lk=4\pi$.
+
+      (ב) יש מסילה סגורה עם $k>0$ בכל נקודה ופנייה כוללת $0$.
+    answer: >-
+      (א) נכון: מעגל שמקיפים פעמיים. (ב) לא נכון: $\int_0^Lk>0$.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $k\equiv1$ על $[0,4\pi]$ עם $\theta_0=0$, $\mathbf p=(0,0)$: לפי המתכון $\gamma(s)=(\sin s,\ 1-\cos s)$. אז $\gamma(4\pi)=\gamma(0)$,
+          $\mathbf t(4\pi)=\mathbf t(0)$ ו-$\int_0^{4\pi}1=4\pi$.
+      - kind: step
+        text: >-
+          (ב) אם $k>0$ ורציפה על $[0,L]$, אז $\int_0^Lk>0$ (יש לה מינימום חיובי). לכן הפנייה הכוללת אינה $0$.
+      - kind: check
+        text: >-
+          במסילה סגורה הפנייה הכוללת היא כפולה של $2\pi$ (שיעור 1.5): $4\pi$ ב-(א) מותר. המסילה של (א) אינה חח״ע; מסילה סגורה
+          **פשוטה** עם $k>0$ יכולה להגיע רק ל-$2\pi$, אבל את זה לא נוכיח בקורס.
+      - kind: result
+        text: >-
+          (א) נכון. (ב) לא נכון.
+challenge:
+  - id: W-1.6-c1
+    stars: 1
+    objectives: [OBJ-1.6-1, OBJ-1.6-3]
+    prompt: >-
+      יהי $a>0$. מצאו במפורש את המסילה המישורית בפרמטר אורך הקשת, $s\ge0$, עם $k(s)=\frac{1}{s+a}$, $\gamma(0)=(0,0)$ ו-$\theta(0)=0$,
+      והראו שהיא ספירלה לוגריתמית: המרחק מנקודה קבועה גדל אקספוננציאלית בזווית סביבה.
+    answer: >-
+      עם $w=\frac{s+a}a$:
+      $$\gamma(s)=\tfrac{a}{2}\big(w(\cos\ln w+\sin\ln w)-1,\ w(\sin\ln w-\cos\ln w)+1\big)$$
+      המרחק מ-$(-\frac a2,\frac a2)$ הוא $\frac{s+a}{\sqrt2}=\frac{a}{\sqrt2}e^{\varphi+\pi/4}$, כאשר $\varphi$ הזווית סביב הנקודה.
+    solution:
+      - kind: computation
+        text: >-
+          $\theta(s)=\int_0^s\frac{du}{u+a}=\ln\frac{s+a}{a}$. בהצבה $w=\frac{u+a}a$, $du=a\,dw$:
+          $$\gamma(s)=a\int_1^{w}\big(\cos\ln v,\ \sin\ln v\big)\,dv.$$
+      - kind: computation
+        text: >-
+          נגדיר
+          $$F(v)=\tfrac v2\big(\cos\ln v+\sin\ln v,\ \sin\ln v-\cos\ln v\big).$$
+          בגזירה (כלל המכפלה וכלל השרשרת, $(\ln v)'=\frac1v$) בודקים ש-$F'(v)=(\cos\ln v,\ \sin\ln v)$. לכן $\gamma(s)=a\big(F(w)-F(1)\big)$, עם $F(1)=(\frac12,-\frac12)$.
+      - kind: step
+        text: >-
+          לפי נוסחאות הסכום, עם $x=\ln v$:
+          $$F(v)=\tfrac{v}{\sqrt2}\big(\cos(x-\tfrac\pi4),\ \sin(x-\tfrac\pi4)\big).$$
+          הנקודה $\gamma(s)$ שווה ל-$aF(w)-aF(1)$, ו-$-aF(1)=(-\frac a2,\frac a2)$. לכן היא נמצאת במרחק $r=\frac{aw}{\sqrt2}=\frac{s+a}{\sqrt2}$ מהנקודה $(-\frac a2,\frac a2)$, בזווית $\varphi=\ln w-\frac\pi4$.
+      - kind: step
+        text: >-
+          $w=e^{\varphi+\pi/4}$, ולכן $r=\frac{a}{\sqrt2}e^{\varphi+\pi/4}$: ספירלה לוגריתמית סביב $(-\frac a2,\frac a2)$.
+      - kind: check
+        text: >-
+          $a=2$, $s=3$: הנוסחה נותנת $(2.5053,\ 1.4615)$, וגם האינטגרציה המספרית; המרחק מ-$(-1,1)$ הוא $3.5355=\frac{5}{\sqrt2}$. ו-$k=\frac{1}{s+a}$
+          הוא $\frac1{\sqrt2\,r}$: ככל שמתרחקים, הספירלה פחות מעוקמת.
+      - kind: result
+        text: >-
+          ספירלה לוגריתמית שמתרחקת מ-$(-\frac a2,\frac a2)$, במרחק $\frac{s+a}{\sqrt2}$ אחרי אורך קשת $s$.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 3'
+      year: 2002
+      problem: 'תרגיל 3, סעיף א (problem 3(a))'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex03.html
+      verified: '2026-11-09'
+      adapted: true
+
+  - id: W-1.6-c2
+    stars: 1
+    objectives: [OBJ-1.6-1]
+    prompt: >-
+      מצאו במפורש את המסילה המישורית בפרמטר אורך הקשת עם $k(s)=\frac{1}{1+s^2}$, $s\in\mathbb R$, $\gamma(0)=(0,0)$ ו-$\theta(0)=0$, וזהו את
+      התמונה שלה כגרף של פונקציה מוכרת.
+    answer: >-
+      $$\gamma(s)=\big(\operatorname{arsinh}s,\ \sqrt{1+s^2}-1\big)$$ השרשרת $y=\cosh x-1$.
+    solution:
+      - kind: computation
+        text: >-
+          $\theta(s)=\arctan s$, ו-$|\theta|<\frac\pi2$, ולכן $\cos\theta=\frac{1}{\sqrt{1+s^2}}$ ו-$\sin\theta=\frac{s}{\sqrt{1+s^2}}$.
+      - kind: computation
+        text: >-
+          $$x(s)=\int_0^s\frac{du}{\sqrt{1+u^2}}=\operatorname{arsinh}s,$$ $$y(s)=\int_0^s\frac{u\,du}{\sqrt{1+u^2}}=\sqrt{1+s^2}-1.$$
+      - kind: step
+        text: >-
+          $s=\sinh x$, ולכן $$y=\sqrt{1+\sinh^2x}-1=\cosh x-1$$: השרשרת, הצורה של שרשרת תלויה, מוזזת כך שתעבור בראשית.
+      - kind: check
+        text: >-
+          ב-$s=2$ האינטגרציה המספרית נותנת $(1.4436,\ 1.2361)$, ו-$(\operatorname{arsinh}2,\ \sqrt5-1)$ אותו דבר. ובכיוון ההפוך: אורך הקשת של
+          $y=\cosh x-1$ מ-$0$ עד $x$ הוא $\int_0^x\cosh=\sinh x=s$, ועקמומיותו $\frac{\cosh x}{\cosh^3x}=\frac{1}{1+s^2}$.
+      - kind: result
+        text: >-
+          השרשרת $y=\cosh x-1$, עם $s=\sinh x$.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 3'
+      year: 2002
+      problem: 'תרגיל 3, סעיף ב (problem 3(b))'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex03.html
+      verified: '2026-11-09'
+      adapted: true

@@ -1,0 +1,303 @@
+# Lesson 1.2 — arc length and the arc-length parameter.
+# Objectives (src/course.ts):
+#   OBJ-1.2-1  length as the sup of inscribed polygons; the formula L = ∫‖γ′‖
+#   OBJ-1.2-2  length does not depend on the parametrization (monotone change of parameter)
+#   OBJ-1.2-3  pass to the arc-length parameter of a regular curve; there ‖γ′‖ = 1
+chapter: 1
+questions:
+  - id: Q-1.2-sup
+    type: mc
+    objectives: [OBJ-1.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma:[a,b]\to\mathbb R^n$ רציפה. לכל חלוקה $P:\ a=t_0<t_1<\dots<t_m=b$ נסמן
+      $\ell(P)=\sum_{i=1}^m\|\gamma(t_i)-\gamma(t_{i-1})\|$, אורך הקו השבור החסום. איך מוגדר האורך של $\gamma$?
+    choices:
+      - text: '$L(\gamma)=\sup_P \ell(P)$, הסופרמום על כל החלוקות'
+        correct: true
+        feedback: >-
+          נכון. כל קו שבור חסום קצר מהמסילה (או שווה לה), ועידון החלוקה רק מאריך אותו. האורך הוא החסם העליון הקטן
+          ביותר. כשהוא סופי אומרים שלמסילה יש אורך.
+      - text: '$L(\gamma)=\inf_P \ell(P)$, האינפימום על כל החלוקות'
+        feedback: >-
+          האינפימום מתקבל כבר בחלוקה הגסה $\{a,b\}$: הוא אורך המיתר $\|\gamma(b)-\gamma(a)\|$, ולמעגל שלם הוא $0$.
+          הוספת נקודה רק מאריכה את הקו השבור (אי-שוויון המשולש), ולכן לוקחים סופרמום.
+        misconception: MC-c1-length-inf-polygons
+      - text: 'הסופרמום של $$\sum_i\big(|x(t_i)-x(t_{i-1})|+|y(t_i)-y(t_{i-1})|\big)$$ (במישור)'
+        feedback: >-
+          זה מודד כל צעד במרחק "מנהטן", לא במרחק האוקלידי. לישר $(t,t)$ על $[0,1]$ זה נותן $2$ במקום $\sqrt2$.
+        misconception: MC-c1-speed-norm
+
+  - id: Q-1.2-helix
+    type: numeric
+    objectives: [OBJ-1.2-1]
+    level: basic
+    prompt: >-
+      חשבו את האורך של הסליל $\gamma(t)=(3\cos t,\ 3\sin t,\ 4t)$, $t\in[0,2\pi]$ (סיבוב אחד).
+    answer: 31.415927
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $10\pi$. $\gamma'(t)=(-3\sin t,3\cos t,4)$, $\|\gamma'(t)\|=\sqrt{9+16}=5$, ולכן
+      $L=\int_0^{2\pi}5\,dt=10\pi$.
+    wrongFeedback: >-
+      חשבו את $\|\gamma'(t)\|$ עם כל שלושת הרכיבים, ושימו לב שהוא קבוע.
+    commonWrong:
+      - value: 18.849556
+        feedback: >-
+          $6\pi$ הוא היקף מעגל ברדיוס $3$, אורך ההיטל של הסליל על המישור $xy$. הסליל גם עולה, ורכיב ה-$z$ של
+          המהירות נכנס לאורך: $\|\gamma'\|=5$, לא $3$.
+        misconception: MC-c1-speed-norm
+      - value: 43.982297
+        feedback: >-
+          $14\pi$ מתקבל מ-$\|\gamma'\|=3+4$. האורך של וקטור הוא שורש סכום הריבועים: $\sqrt{3^2+4^2}=5$.
+        misconception: MC-c1-speed-norm
+
+  - id: Q-1.2-reverse
+    type: twotier
+    objectives: [OBJ-1.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma:[a,b]\to\mathbb R^n$ גזירה ברציפות, ו-$\delta(u)=\gamma(a+b-u)$ על $[a,b]$: אותה מסילה בכיוון
+      ההפוך. מה הקשר בין $L(\delta)$ ל-$L(\gamma)$?
+    choices:
+      - text: '$L(\delta)=L(\gamma)$'
+        correct: true
+        feedback: נכון. אורך לא מרגיש בכיוון ההליכה.
+      - text: '$L(\delta)=-L(\gamma)$'
+        feedback: >-
+          אורך הוא סופרמום של סכומי מרחקים, ולכן אינו שלילי לעולם. השלילי מופיע רק אם שוכחים ערך מוחלט.
+        misconception: MC-c1-reversal-negative-length
+    reasons:
+      - text: '$\|\delta''(u)\|=|{-1}|\cdot\|\gamma''(a+b-u)\|$, ובהצבה $t=a+b-u$ היפוך הגבולות מתקזז עם $dt=-du$'
+        correct: true
+        feedback: >-
+          בדיוק: $\int_a^b\|\gamma'(a+b-u)\|\,du=\int_b^a\|\gamma'(t)\|(-dt)=\int_a^b\|\gamma'(t)\|\,dt$.
+      - text: '$\varphi''(u)=-1$, ולכן $\delta''(u)=-\gamma''(a+b-u)$ והאינטגרל מחליף סימן'
+        feedback: >-
+          $\delta'$ אכן מחליף סימן, אבל לאורך נכנס $\|\delta'\|$, שהוא אי-שלילי. הסימן של $\varphi'$ נבלע בערך המוחלט.
+        misconception: MC-c1-reversal-negative-length
+      - text: 'לשתי המסילות אותה תמונה, ולכן אותו אורך'
+        feedback: >-
+          המסקנה נכונה כאן, הנימוק לא: ל-$(\cos t,\sin t)$ ול-$(\cos 2t,\sin 2t)$ על $[0,2\pi]$ אותה תמונה ואורכים
+          $2\pi$ ו-$4\pi$. אורך הוא תכונה של המסילה, ונשמר רק בהחלפת פרמטר מונוטונית.
+        misconception: MC-c0-curve-is-image
+
+  - id: Q-1.2-which-arclength
+    type: multi
+    objectives: [OBJ-1.2-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהמסילות הבאות נתונות **בפרמטר אורך הקשת** $s$? סמנו את כולן.
+    choices:
+      - text: '$(2\cos\frac s2,\ 2\sin\frac s2)$'
+        correct: true
+        feedback: >-
+          נכון. הנגזרת היא $(-\sin\frac s2,\cos\frac s2)$, באורך 1. במעגל ברדיוס $r$ הפרמטר הוא $\frac sr$.
+      - text: '$\big(\cos\frac{s}{\sqrt2},\ \sin\frac{s}{\sqrt2},\ \frac{s}{\sqrt2}\big)$'
+        correct: true
+        feedback: >-
+          נכון. $\|\gamma'(s)\|^2=\frac12\sin^2\frac{s}{\sqrt2}+\frac12\cos^2\frac{s}{\sqrt2}+\frac12=1$.
+      - text: '$\big(\frac{3s}{5},\ \frac{4s}{5}\big)$'
+        correct: true
+        feedback: נכון. ישר במהירות $\sqrt{\frac{9}{25}+\frac{16}{25}}=1$.
+      - text: '$(2\cos s,\ 2\sin s)$'
+        feedback: >-
+          המהירות היא $2$. אחרי זמן $s$ עברנו אורך $2s$, לא $s$. המסילה בפרמטר אורך הקשת היא $(2\cos\frac s2,\ 2\sin\frac s2)$.
+        misconception: MC-c1-unit-speed-scaling
+      - text: '$(\cos s,\ \sin s,\ s)$'
+        feedback: >-
+          $\gamma'(s)=(-\sin s,\cos s,1)$, באורך $\sqrt2$. הסליל עולה בזמן שהוא מקיף, ושתי התנועות נכנסות למהירות.
+        misconception: MC-c1-unit-speed-scaling
+
+  - id: Q-1.2-chord
+    type: mc
+    objectives: [OBJ-1.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma:[a,b]\to\mathbb R^n$ רציפה, $P$ חלוקה של $[a,b]$, ו-$P'$ מתקבלת מ-$P$ על ידי הוספת נקודה אחת. מה אפשר
+      לומר על אורכי הקווים השבורים, ולמה?
+    choices:
+      - text: '$\ell(P'')\ge\ell(P)$, לפי אי-שוויון המשולש'
+        correct: true
+        feedback: >-
+          נכון. אם $c$ נוספה בין $t_{i-1}$ ל-$t_i$, הקטע האחד מוחלף בשניים, ו-
+          $\|\gamma(t_i)-\gamma(t_{i-1})\|\le\|\gamma(c)-\gamma(t_{i-1})\|+\|\gamma(t_i)-\gamma(c)\|$. לכן עידון רק
+          מאריך, והאורך הוא סופרמום.
+      - text: '$\ell(P'')\le\ell(P)$: הקו השבור המעודן "חותך פחות פינות" ומתקרב לאורך מלמעלה'
+        feedback: >-
+          הכיוון הפוך. קו שבור חסום מקצר את המסילה, לא מאריך אותה: המיתר בין שתי נקודות קצר מכל דרך אחרת ביניהן.
+          עידון מוסיף לו אורך, ומתקרב לאורך המסילה מלמטה.
+        misconception: MC-c1-length-inf-polygons
+      - text: 'אי אפשר לומר דבר בלי לדעת את $\gamma$'
+        feedback: >-
+          אי-שוויון המשולש מתקיים לכל שלוש נקודות במרחב, ולכן ההשוואה נכונה לכל מסילה רציפה.
+        misconception: MC-c1-length-inf-polygons
+
+  - id: Q-1.2-cycloid
+    type: numeric
+    objectives: [OBJ-1.2-1]
+    level: mid
+    prompt: >-
+      גלגל ברדיוס $3$ מתגלגל על ציר $x$, ונקודה על השפה שלו מציירת את הציקלואידה
+      $\gamma(t)=(3(t-\sin t),\ 3(1-\cos t))$. חשבו את האורך של קשת אחת, $t\in[0,2\pi]$.
+    answer: 24
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $8r=24$. $\|\gamma'(t)\|=3\sqrt{(1-\cos t)^2+\sin^2t}=3\sqrt{2-2\cos t}=6\sin\frac t2$ (חיובי על
+      $[0,2\pi]$), ו-$\int_0^{2\pi}6\sin\frac t2\,dt=\big[-12\cos\frac t2\big]_0^{2\pi}=24$.
+    wrongFeedback: >-
+      פשטו את $\|\gamma'(t)\|$ בעזרת $1-\cos t=2\sin^2\frac t2$, ושימו לב לגורם הפנימי באינטגרל של $\sin\frac t2$.
+    commonWrong:
+      - value: 18.849556
+        feedback: >-
+          $6\pi$ הוא המרחק שהגלגל התגלגל, היקף הגלגל. הנקודה על השפה גם עולה ויורדת, ולכן עוברת יותר: $8r>2\pi r$.
+        misconception: MC-c1-cycloid-base
+      - value: 12
+        feedback: >-
+          $12$ מתקבל מ-$\int\sin\frac t2\,dt=-\cos\frac t2$. הפונקציה הקדומה היא $F(t)=-2\cos\frac t2$: גזרו ובדקו.
+        misconception: MC-c1-substitution-factor
+
+  - id: Q-1.2-semicubical
+    type: numeric
+    objectives: [OBJ-1.2-1]
+    level: mid
+    prompt: >-
+      חשבו את האורך של $\gamma(t)=(t^2,t^3)$ על $[0,1]$, מהחוד שבראשית עד $(1,1)$.
+    answer: 1.4397099
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $\frac{13\sqrt{13}-8}{27}\approx1.4397$. $\|\gamma'(t)\|=\sqrt{4t^2+9t^4}=t\sqrt{4+9t^2}$ (כי $t\ge0$),
+      ובהצבה $w=4+9t^2$:
+      $$\int_0^1 t\sqrt{4+9t^2}\,dt=\frac1{18}\cdot\frac23\Big[w^{3/2}\Big]_4^{13}=\frac{13^{3/2}-8}{27}.$$
+      הנוסחה עובדת גם כשהמסילה אינה רגולרית בקצה: האינטגרנד רציף.
+    wrongFeedback: >-
+      הוציאו את $t$ מהשורש ($t\ge0$ בקטע) והציבו $w=4+9t^2$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $2=\int_0^1(2t+3t^2)\,dt$: חיברו את הרכיבים של $\gamma'$ במקום לקחת את האורך שלו. האורך הוא
+          $\sqrt{(2t)^2+(3t^2)^2}$.
+        misconception: MC-c1-speed-norm
+      - value: 1.4142136
+        feedback: >-
+          $\sqrt2$ הוא אורך המיתר מ-$(0,0)$ ל-$(1,1)$, הקו השבור עם חלוקה $\{0,1\}$. המסילה מתעקלת, ולכן ארוכה ממנו,
+          אם כי רק בקצת: $1.4397$.
+        misconception: MC-c1-length-inf-polygons
+
+  - id: Q-1.2-proof
+    type: rank
+    objectives: [OBJ-1.2-2]
+    level: mid
+    help: >-
+      סדרו את שלבי ההוכחה שאורך המסילה לא תלוי בפרמטריזציה, מהשלב הראשון לאחרון.
+    prompt: >-
+      $\gamma:[a,b]\to\mathbb R^n$ גזירה ברציפות, $\varphi:[c,d]\to[a,b]$ גזירה ברציפות, על, עם $\varphi'>0$,
+      ו-$\delta=\gamma\circ\varphi$. הוכיחו ש-$L(\delta)=L(\gamma)$.
+    items:
+      - id: chain
+        label: 'כלל השרשרת: $\delta''(u)=\varphi''(u)\,\gamma''(\varphi(u))$'
+      - id: norm
+        label: 'כי $\varphi''>0$: $\|\delta''(u)\|=\varphi''(u)\,\|\gamma''(\varphi(u))\|$'
+      - id: integral
+        label: '$L(\delta)=\int_c^d\|\gamma''(\varphi(u))\|\,\varphi''(u)\,du$'
+      - id: subst
+        label: 'באינטגרל הזה מציבים $t=\varphi(u)$, $dt=\varphi''(u)\,du$, והגבולות $c\mapsto a$, $d\mapsto b$'
+      - id: done
+        label: 'מתקבל $\int_a^b\|\gamma''(t)\|\,dt=L(\gamma)$'
+    order: [chain, norm, integral, subst, done]
+    correctFeedback: >-
+      נכון. הגורם $\varphi'$ שכלל השרשרת הכניס הוא בדיוק ה-$dt$ של ההצבה. אם $\varphi'<0$, אותה הוכחה עובדת עם
+      $|\varphi'|$, והגבולות מתהפכים.
+    wrongFeedback: >-
+      קודם גוזרים את $\delta$ (כלל השרשרת), אחר כך לוקחים נורמה ומשתמשים בסימן של $\varphi'$, ורק אז מציבים
+      באינטגרל.
+
+  - id: Q-1.2-backforth
+    type: numeric
+    objectives: [OBJ-1.2-2]
+    level: mid
+    prompt: >-
+      נתונה $\delta(u)=\big(\cos\varphi(u),\ \sin\varphi(u)\big)$ על $[0,2]$, עם $\varphi(u)=\pi u(2-u)$. חשבו את
+      $L(\delta)=\int_0^2\|\delta'(u)\|\,du$.
+    answer: 6.2831853
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $2\pi$. $\|\delta'(u)\|=|\varphi'(u)|=\pi|2-2u|$, ו-$\int_0^2\pi|2-2u|\,du=\pi+\pi$. $\varphi$ עולה
+      מ-$0$ ל-$\pi$ ויורדת חזרה: $\delta$ עוברת על חצי המעגל העליון הלוך ושוב, ולכן אורכה פעמיים $\pi$.
+    wrongFeedback: >-
+      $\varphi$ אינה מונוטונית על $[0,2]$. חשבו את $\|\delta'\|$ עם ערך מוחלט, ופצלו את האינטגרל ב-$u=1$.
+    commonWrong:
+      - value: 3.1415927
+        feedback: >-
+          $\pi$ הוא אורך חצי המעגל, התמונה. אבל $\varphi$ הולכת וחוזרת, ו-$\delta$ עוברת על כל נקודה פעמיים. אי-התלות
+          בפרמטריזציה דורשת החלפת פרמטר **מונוטונית**.
+        misconception: MC-c1-reparam-any
+      - value: 0
+        feedback: >-
+          $0$ מתקבל מ-$\int_0^2\varphi'(u)\,du=\varphi(2)-\varphi(0)$, בלי ערך מוחלט. באורך נכנס $\|\delta'\|\ge0$, כך
+          שהחלקים לא מתקזזים.
+        misconception: MC-c1-reversal-negative-length
+
+  - id: Q-1.2-logspiral
+    type: numeric
+    objectives: [OBJ-1.2-3]
+    level: mid
+    prompt: >-
+      $\gamma(t)=(e^t\cos t,\ e^t\sin t)$, ו-$s(t)=\int_0^t\|\gamma'(\tau)\|\,d\tau$ הוא אורך הקשת מ-$t=0$. באיזה
+      $t$ מתקיים $s(t)=\sqrt2$?
+    answer: 0.69314718
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $t=\ln2$. $\gamma'(t)=e^t(\cos t-\sin t,\ \sin t+\cos t)$, ו-$\|\gamma'(t)\|^2=2e^{2t}$, ולכן
+      $s(t)=\sqrt2(e^t-1)$. $\sqrt2(e^t-1)=\sqrt2$ נותן $e^t=2$. ההפכית היא $t(s)=\ln\big(1+\frac{s}{\sqrt2}\big)$.
+    wrongFeedback: >-
+      חשבו קודם את $\|\gamma'(t)\|$ (כדאי לפתוח את הריבועים), אחר כך את $s(t)$, ורק אז פתרו את המשוואה.
+    commonWrong:
+      - value: 0.88137359
+        feedback: >-
+          $\ln(1+\sqrt2)$ מתקבל מ-$\|\gamma'\|=e^t$. אבל $(\cos t-\sin t)^2+(\sin t+\cos t)^2=2$, ולכן המהירות היא
+          $\sqrt2\,e^t$.
+        misconception: MC-c1-speed-norm
+      - value: 1.4142136
+        feedback: >-
+          זה מניח ש-$t$ הוא כבר אורך הקשת. המהירות כאן היא $\sqrt2e^t\ne1$, ולכן $t$ ו-$s$ שונים.
+        misconception: MC-c1-unit-speed-scaling
+
+  - id: Q-1.2-cusp-arclength
+    type: twotier
+    objectives: [OBJ-1.2-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם נכון שכל מסילה **חלקה** $\gamma:I\to\mathbb R^2$ אפשר לפרמטר מחדש לפי אורך הקשת, כך שהמסילה החדשה
+      $\tilde\gamma(s)=\gamma(t(s))$ גזירה בכל נקודה ומקיימת $\|\tilde\gamma'(s)\|=1$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. בשביל זה צריך רגולריות. עם $\gamma'\ne0$, $s'(t)=\|\gamma'(t)\|>0$, ולפי משפט הפונקציה ההפוכה במשתנה
+          אחד $t(s)$ גזירה עם $t'(s)=\frac{1}{\|\gamma'(t)\|}$.
+      - text: כן
+        feedback: >-
+          ב-$(t^2,t^3)$ ליד $t=0$ זה נכשל: הפרמטריזציה לפי אורך הקשת קיימת כפונקציה רציפה, אבל אינה גזירה ב-$s=0$.
+        misconception: MC-c1-arc-length-any-curve
+    reasons:
+      - text: 'ב-$(t^2,t^3)$, ליד $0$, $s\approx t|t|$; לכן $t\approx\operatorname{sgn}(s)\sqrt{|s|}$ ו-$\tilde x(s)=t^2\approx|s|$, שאינה גזירה ב-$s=0$'
+        correct: true
+        feedback: >-
+          בדיוק. $s(t)=\int_0^t|\tau|\sqrt{4+9\tau^2}\,d\tau\approx t|t|$. המסילה החדשה מגיעה לראשית בכיוון $(-1,0)$
+          ויוצאת בכיוון $(1,0)$ במהירות 1: וקטור המשיק היחידה קופץ, וזה החוד.
+      - text: '$s(t)$ עולה ממש לכל מסילה חלקה, ולכן הפיכה, וההפכית שלה גזירה'
+        feedback: >-
+          עולה ממש: לא לכל מסילה חלקה (מסילה חלקה יכולה לעמוד במקום לאורך קטע שלם של $t$), אבל ב-$(t^2,t^3)$ כן, כי
+          $\|\gamma'\|$ מתאפס שם רק ב-$t=0$. הפיכה: כן. אבל ההפכית גזירה רק במקום שבו $s'\ne0$: ב-$s=0$ של $(t^2,t^3)$
+          הנגזרת של $t(s)$ אינסופית.
+        misconception: MC-c1-arc-length-any-curve
+      - text: 'ב-$(t^2,t^3)$ הפונקציה $s(t)$ לא עולה ממש, כי המהירות מתאפסת ב-$t=0$'
+        feedback: >-
+          פונקציה עם נגזרת אי-שלילית שמתאפסת רק בנקודה אחת עולה ממש. הבעיה אינה ההפיכות של $s$ אלא הגזירות של ההפכית.
+        misconception: MC-c1-arc-length-any-curve

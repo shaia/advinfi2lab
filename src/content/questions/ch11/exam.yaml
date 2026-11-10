@@ -1,0 +1,482 @@
+# Chapter 11 exam questions — original, in the style of an 80316 final (not taken from a real exam). Chapter 11 is
+# beyond the 2002 syllabus; the format is the course's all the same.
+# Short questions (part א of the final): 7 points, a verdict plus an open justification.
+# Long questions (parts ב, ג of the final): 20 points in 2–4 parts, each with at least one open part graded against a
+# model solution and a rubric.
+# Sources: Q-11-exam-1 is the incoming (advinfilab) 25-point question on y′ = 2√|y| cut to its proof part; exam-2 and
+# exam-3 are new; exam-4 and exam-5 are the incoming Picard and Grönwall questions re-weighted from 25 to 20 points.
+# None depends on the enrichment lesson 11.5 (Peano). Every number was recomputed (scratchpad ch11/nums.ts).
+chapter: 11
+questions:
+  - id: Q-11-exam-1
+    type: exam
+    title: אינסוף פתרונות לאגף ימין רציף
+    prompt: >-
+      הפונקציה $f(t,y)=2\sqrt{|y|}$ רציפה בכל המישור. האם ייתכן שלבעיית ההתחלה $y'=2\sqrt{|y|}$, $y(0)=0$ יש יותר
+      מפתרון אחד על $\mathbb{R}$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-11.2-2]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'כן: יש לה אינסוף פתרונות, ואין בזה סתירה למשפט פיקאר-לינדלוף'
+            correct: true
+            feedback: >-
+              נכון. $f$ רציפה אבל אינה מקיימת תנאי ליפשיץ ב-$y$ ליד $y=0$, ולכן המשפט אינו מבטיח כאן יחידות.
+          - text: 'לא: $f$ רציפה, ולכן לפי משפט פיקאר-לינדלוף הפתרון יחיד'
+            feedback: >-
+              המשפט דורש גם תנאי ליפשיץ ב-$y$, ו-$2\sqrt{|y|}$ אינה מקיימת אותו ליד 0:
+              $\frac{2\sqrt\eta}{\eta}=\frac{2}{\sqrt\eta}\to\infty$ כש-$\eta\to0^+$.
+            misconception: MC-c11-continuity-gives-uniqueness
+          - text: 'לא: $y\equiv0$ הוא הפתרון היחיד, כי פתרון שמתחיל ב-0 עם נגזרת 0 נשאר ב-0'
+            feedback: >-
+              $y=t^2$ עבור $t\ge0$ (ו-0 לפני) מתחיל ב-0 עם נגזרת 0, ובכל זאת עוזב את 0. נגזרת אפס ברגע אחד אינה מחייבת
+              להישאר במקום.
+            misconception: MC-c11-only-zero-solution
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-11.2-2, OBJ-11.2-3]
+        prompt: >-
+          נמקו את התשובה: הציגו את הפתרונות והוכיחו שהם פתרונות על כל $\mathbb{R}$, והסבירו למה אין בזה סתירה למשפט
+          פיקאר-לינדלוף.
+        solution:
+          - kind: given
+            text: '$f(t,y)=2\sqrt{|y|}$, רציפה במישור; בעיית ההתחלה $y''=2\sqrt{|y|}$, $y(0)=0$.'
+          - kind: goal
+            text: 'אינסוף פתרונות שונים על $\mathbb{R}$, והסבר למה המשפט אינו נפגע.'
+          - kind: idea
+            text: >-
+              הפתרון יכול "לחכות" ב-0 כמה זמן שרוצים ואז לצאת לאורך פרבולה. בודקים כל חלק בנפרד, ואת נקודת ההדבקה בעזרת
+              נגזרות חד-צדדיות. זה אפשרי כי הנחת ליפשיץ נכשלת ליד $y=0$.
+          - kind: definition
+            text: 'לכל $c\ge0$: $y_c(t)=0$ עבור $t\le c$, ו-$y_c(t)=(t-c)^2$ עבור $t>c$.'
+          - kind: computation
+            text: >-
+              עבור $t<c$: $y_c'(t)=0=2\sqrt0$. עבור $t>c$: $y_c'(t)=2(t-c)=2|t-c|=2\sqrt{(t-c)^2}=2\sqrt{|y_c(t)|}$, כי
+              $t-c>0$.
+          - kind: step
+            text: >-
+              ב-$t=c$: הנגזרת משמאל 0 (הפונקציה קבועה שם), והנגזרת מימין $\lim_{\eta\to0^+}\frac{\eta^2-0}{\eta}=0$. לכן
+              $y_c$ גזירה ב-$c$ עם $y_c'(c)=0=2\sqrt{|y_c(c)|}$.
+          - kind: step
+            text: >-
+              $0\le c$, ולכן $y_c(0)=0$. אם $0\le c<c'$ אז $y_c(c')=(c'-c)^2>0=y_{c'}(c')$: הפתרונות שונים, ויחד עם
+              $y\equiv0$ יש אינסוף פתרונות.
+          - kind: check
+            text: >-
+              אין סתירה: פיקאר-לינדלוף מניח תנאי ליפשיץ ב-$y$ במלבן סביב $(0,0)$, והוא נכשל: עבור $y_1=\eta>0$, $y_2=0$
+              מנת ההפרשים $\frac{2}{\sqrt\eta}$ גדולה מכל $L$ כש-$\eta<\frac{4}{L^2}$.
+          - kind: result
+            text: >-
+              כן: כל $y_c$, $c\ge0$, היא פתרון על $\mathbb{R}$, ולכן לבעיה אינסוף פתרונות. אין סתירה, כי $f$ אינה ליפשיצית
+              ליד $y=0$.
+        rubric:
+          - text: 'בדיקת המשוואה בכל אחד משני החלקים, כולל $\sqrt{(t-c)^2}=t-c$ עבור $t>c$'
+            weight: 1
+          - text: 'גזירות בנקודת ההדבקה בעזרת שתי נגזרות חד-צדדיות, ובדיקת המשוואה בה'
+            weight: 2
+          - text: 'תנאי ההתחלה מתקיים, והפתרונות עבור $c$ שונים שונים זה מזה'
+            weight: 1
+          - text: 'הסבר שאין סתירה: מנות ההפרשים ליד $y=0$ אינן חסומות, ולכן הנחת ליפשיץ נכשלת'
+            weight: 1
+
+  - id: Q-11-exam-2
+    type: exam
+    title: איפה נשברת היחידות
+    prompt: >-
+      נתונה בעיית ההתחלה $y'=3y^{2/3}$, $y(0)=1$, כאן $y^{2/3}=(\sqrt[3]{y})^2\ge0$. הפונקציה $(t+1)^3$ פותרת אותה על
+      כל $\mathbb{R}$. האם ייתכן שלבעיה יש פתרון נוסף על $\mathbb{R}$, שונה מ-$(t+1)^3$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-11.4-2, OBJ-11.2-3]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'כן, אבל כל פתרון כזה שווה ל-$(t+1)^3$ בכל $[-1,\infty)$ ונבדל ממנו רק עבור $t<-1$'
+            correct: true
+            feedback: >-
+              נכון. כל עוד $y>0$ אגף ימין ליפשיצי סביב הפתרון, ולכן הפתרון נקבע. אחורה בזמן $(t+1)^3$ מגיע ל-$y=0$
+              ב-$t=-1$, ושם אפשר "לחכות" ב-0.
+          - text: 'לא: $f$ ליפשיצית ליד ערך ההתחלה $y=1$, ולכן הפתרון יחיד על כל $\mathbb{R}$'
+            feedback: >-
+              ליפשיץ ליד ערך ההתחלה נותן יחידות רק כל עוד הפתרון נשאר באזור שבו $f$ ליפשיצית. אחורה בזמן הפתרון מגיע
+              ל-$y=0$ ב-$t=-1$, ושם $3y^{2/3}$ אינה ליפשיצית.
+            misconception: MC-c11-local-vs-global-uniqueness
+          - text: 'כן, ושני פתרונות כאלה יכולים להיבדל כבר ליד $t=0$, כי $f$ אינה ליפשיצית ב-$y=0$'
+            feedback: >-
+              נקודה רעה של $f$ מקלקלת רק פתרונות שמגיעים אליה. ליד $t=0$ הפתרון קרוב ל-1, ושם $f$ ליפשיצית.
+            misconception: MC-c11-local-vs-global-uniqueness
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-11.4-2, OBJ-11.2-2]
+        prompt: >-
+          נמקו: הציגו פתרון נוסף על $\mathbb{R}$, והוכיחו שכל פתרון $z$ על $\mathbb{R}$ עם $z(0)=1$ שווה ל-$(t+1)^3$
+          בכל $[-1,\infty)$.
+        solution:
+          - kind: given
+            text: >-
+              $f(t,y)=3y^{2/3}\ge0$ רציפה; $\big((t+1)^3\big)'=3(t+1)^2=3\big((t+1)^3\big)^{2/3}$, ולכן $y(t)=(t+1)^3$
+              פתרון עם $y(0)=1$.
+          - kind: idea
+            text: >-
+              רחוק מ-$y=0$ הפונקציה $f$ ליפשיצית, ולכן היחידות נמשכת כל עוד הפתרון חיובי. ב-$y=0$ אפשר לחכות, וזה נותן
+              פתרונות נוספים, אבל רק אחרי שהפתרון (אחורה בזמן) הגיע ל-0.
+          - kind: computation
+            text: >-
+              פתרון נוסף: $z(t)=(t+1)^3$ עבור $t\ge-1$, $z(t)=0$ עבור $-2\le t\le-1$, ו-$z(t)=(t+2)^3$ עבור $t<-2$. עבור
+              $t<-2$: $z'=3(t+2)^2=3\big((t+2)^3\big)^{2/3}$. בנקודות ההדבקה $-2$ ו-$-1$ שתי הנגזרות החד-צדדיות 0
+              ו-$z=0$, ולכן המשוואה מתקיימת גם שם. $z(-\frac32)=0\ne(-\frac12)^3$.
+          - kind: step
+            text: >-
+              קדימה: $z'=f\ge0$, ולכן $z\ge z(0)=1$ ב-$[0,\infty)$, וכך גם $y$. ברצועה $y\ge1$ (חתך קמור בכל $t$)
+              $\left|\frac{\partial f}{\partial y}\right|=2y^{-1/3}\le2$, ולכן $f$ ליפשיצית שם עם $L=2$. גרונוול עם $C=0$
+              על $u=|z-y|$ נותן $z=y$ בכל $[0,T]$, לכל $T$.
+          - kind: step
+            text: >-
+              אחורה: יהי $t^*$ האינפימום של כל ה-$s\in[-1,0]$ שעבורם $z=y$ על $[s,0]$, ונניח $t^*>-1$. מרציפות $z(t^*)=y(t^*)=(t^*+1)^3=\delta>0$,
+              ויש $\varepsilon>0$ כך ש-$z,y\ge\frac\delta8$ ב-$[t^*-\varepsilon,t^*]$. ברצועה $y\ge\frac\delta8$ הפונקציה $f$
+              ליפשיצית עם $L=2(\frac\delta8)^{-1/3}$, וגרונוול בזמן הפוך מ-$t^*$ נותן $z=y$ ב-$[t^*-\varepsilon,t^*]$: סתירה
+              להגדרת $t^*$. לכן $t^*=-1$, ומרציפות $z=y$ גם ב-$-1$.
+          - kind: result
+            text: >-
+              כן, יש פתרונות נוספים (למשל $z$), אבל כל פתרון שווה ל-$(t+1)^3$ בכל $[-1,\infty)$: היחידות נשברת רק אחרי
+              שהפתרון, אחורה בזמן, מגיע ל-$y=0$.
+        rubric:
+          - text: 'פתרון נוסף מפורש, עם בדיקת המשוואה בכל חלק ובנקודות ההדבקה'
+            weight: 1
+          - text: 'קדימה בזמן: הפתרון לא יורד ונשאר ב-$y\ge1$, שם $f$ ליפשיצית, ויחידות מגרונוול או מפיקאר-לינדלוף'
+            weight: 1
+          - text: 'אחורה עד $-1$: טיעון האינפימום (או הקבוצה הפתוחה והסגורה) עם ליפשיץ מקומי סביב ערך חיובי'
+            weight: 2
+          - text: 'המסקנה: הפתרונות נבדלים רק עבור $t<-1$'
+            weight: 1
+
+  - id: Q-11-exam-3
+    type: exam
+    title: גרפים של שני פתרונות אינם נחתכים
+    prompt: >-
+      $f$ רציפה ב-$\mathbb{R}^2$ וליפשיצית מקומית ב-$y$: לכל נקודה יש מלבן סביבה שבו $f$ מקיימת תנאי ליפשיץ ב-$y$.
+      $y_1,y_2$ פתרונות של $y'=f(t,y)$ על קטע פתוח $J$, ו-$y_1(t_1)=y_2(t_1)$ לאיזה $t_1\in J$. האם ייתכן
+      ש-$y_1(t)\ne y_2(t)$ לאיזה $t\in J$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-11.4-2]
+        qualitative: true
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: 'לא: $y_1=y_2$ בכל $J$'
+            correct: true
+            feedback: >-
+              נכון. הקבוצה שבה הפתרונות שווים אינה ריקה, היא סגורה והיא פתוחה, ולכן היא כל הקטע $J$.
+          - text: 'כן: ליפשיץ מקומי מבטיח שוויון רק בקטע $|t-t_1|\le h$ של משפט פיקאר-לינדלוף, ומחוצה לו הפתרונות יכולים להיפרד'
+            feedback: >-
+              את המשפט המקומי אפשר להפעיל שוב בכל נקודה שבה הפתרונות עדיין שווים, עם מלבן חדש סביבה. לכן אין נקודה
+              ראשונה שבה הם נפרדים.
+            misconception: MC-c11-uniqueness-only-near-t0
+          - text: 'כן: רק ליפשיץ גלובלי ב-$y$ מבטיח שפתרונות שנפגשים מתלכדים, ו-$y^2$ למשל ליפשיצית רק מקומית'
+            feedback: >-
+              ליפשיץ גלובלי נחוץ לקיום על קטע נתון, לא ליחידות. ליחידות מספיק מלבן קטן סביב כל נקודה של הגרף.
+            misconception: MC-c11-local-is-global-lipschitz
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-11.4-2, OBJ-11.3-1]
+        prompt: >-
+          הוכיחו את התשובה.
+        solution:
+          - kind: given
+            text: '$f$ רציפה וליפשיצית מקומית ב-$y$; $y_1,y_2$ פתרונות על הקטע הפתוח $J$, ו-$y_1(t_1)=y_2(t_1)$.'
+          - kind: goal
+            text: '$y_1=y_2$ בכל $J$.'
+          - kind: idea
+            text: >-
+              נגדיר $S=\{t\in J:\ y_1(t)=y_2(t)\}$. נראה ש-$S$ לא ריקה, סגורה ב-$J$ ופתוחה. קבוצה כזו בקטע היא כל הקטע.
+          - kind: step
+            text: '$t_1\in S$, ו-$S$ סגורה ב-$J$ כי היא קבוצת האפסים של הפונקציה הרציפה $y_1-y_2$.'
+          - kind: step
+            text: >-
+              $S$ פתוחה: יהי $s\in S$, ו-$R_s=\{|t-s|\le\alpha,\ |y-y_1(s)|\le\beta\}$ מלבן שבו $f$ ליפשיצית ב-$y$ עם קבוע
+              $L$. מרציפות יש $\varepsilon\le\alpha$ עם $[s-\varepsilon,s+\varepsilon]\subseteq J$ ו-$|y_i(t)-y_1(s)|\le\beta$
+              שם, $i=1,2$. עבור $t\in[s,s+\varepsilon]$, חיסור המשוואות האינטגרליות מ-$s$ נותן
+              $u(t)=|y_1(t)-y_2(t)|\le\int_s^tLu(\tau)\,d\tau$, וגרונוול עם $C=0$ נותן $u=0$. באותו אופן בזמן הפוך
+              ב-$[s-\varepsilon,s]$.
+          - kind: step
+            text: >-
+              $S=J$: אילו היה $t>t_1$ ב-$J$ מחוץ ל-$S$, אז $\tau=\inf\{t>t_1:\ t\notin S\}$ היה ב-$S$ (כי $S$ סגורה), ולכן
+              סביבה של $\tau$ ב-$S$ (כי $S$ פתוחה), בסתירה להגדרת $\tau$. כך גם עבור $t<t_1$.
+          - kind: result
+            text: 'לא ייתכן: $y_1=y_2$ בכל $J$. גרפים של שני פתרונות שונים אינם נחתכים.'
+        rubric:
+          - text: '$S$ לא ריקה וסגורה ב-$J$'
+            weight: 1
+          - text: '$S$ פתוחה: מלבן סביב $(s,y_1(s))$, שני הגרפים בתוכו ליד $s$, וגרונוול עם $C=0$ (או היחידות המקומית)'
+            weight: 2
+          - text: 'מעבר מ"פתוחה וסגורה" ל-$S=J$, למשל בטיעון האינפימום'
+            weight: 1
+          - text: 'ניסוח המסקנה: אין שני פתרונות שונים שנפגשים'
+            weight: 1
+
+  - id: Q-11-exam-4
+    type: exam
+    title: איטרציות פיקאר ותלות בתנאי ההתחלה
+    prompt: >-
+      נתונה בעיית ההתחלה $y'=2t(1+y)$, $y(0)=0$. איטרציות פיקאר מתחילות מ-$y_0\equiv0$ ומוגדרות על ידי
+      $y_{k+1}(t)=\int_0^t2s\big(1+y_k(s)\big)\,ds$.
+    parts:
+      - label: א
+        points: 9
+        type: open
+        objectives: [OBJ-11.3-3, OBJ-11.1-1]
+        prompt: >-
+          הוכיחו באינדוקציה ש-$y_k(t)=\sum_{j=1}^{k}\frac{t^{2j}}{j!}$ לכל $k\ge1$, מצאו את הגבול $y(t)=\lim_k y_k(t)$,
+          ובדקו שהוא פותר את בעיית ההתחלה.
+        solution:
+          - kind: given
+            text: '$y_0\equiv0$ ו-$y_{k+1}(t)=\int_0^t2s\big(1+y_k(s)\big)\,ds$.'
+          - kind: goal
+            text: '$y_k(t)=\sum_{j=1}^{k}\frac{t^{2j}}{j!}$ לכל $k\ge1$; הגבול; בדיקה שהגבול פותר.'
+          - kind: idea
+            text: >-
+              כל הפעלה של האינטגרל הופכת $\frac{t^{2j}}{j!}$ ל-$\frac{t^{2(j+1)}}{(j+1)!}$, כלומר מזיזה את האינדקס באחד, ועוד
+              מוסיפה את $t^2$ מהאיבר $2s\cdot1$.
+          - kind: step
+            text: 'בסיס: $y_1(t)=\int_0^t2s\,ds=t^2=\frac{t^{2}}{1!}$.'
+          - kind: computation
+            text: >-
+              צעד: נניח את הנוסחה ל-$y_k$. אז
+              $y_{k+1}(t)=\int_0^t2s\,ds+\sum_{j=1}^{k}\int_0^t\frac{2s^{2j+1}}{j!}\,ds=t^2+\sum_{j=1}^{k}\frac{t^{2j+2}}{(j+1)\,j!}=t^2+\sum_{j=2}^{k+1}\frac{t^{2j}}{j!}=\sum_{j=1}^{k+1}\frac{t^{2j}}{j!}$.
+          - kind: step
+            text: >-
+              הגבול: $y_k(t)$ הוא הסכום החלקי של $\sum_{j\ge1}\frac{(t^2)^j}{j!}$, הטור של $e^{t^2}-1$, שמתכנס לכל $t$. לכן
+              $y(t)=e^{t^2}-1$.
+          - kind: check
+            text: '$y''(t)=2te^{t^2}=2t\big(1+y(t)\big)$ ו-$y(0)=e^0-1=0$.'
+          - kind: result
+            text: '$y_k(t)=\sum_{j=1}^{k}\frac{t^{2j}}{j!}$, והגבול $y(t)=e^{t^2}-1$ הוא הפתרון של בעיית ההתחלה.'
+        rubric:
+          - text: 'בסיס האינדוקציה, $y_1=t^2$'
+            weight: 1
+          - text: 'צעד האינדוקציה: חישוב האינטגרל איבר איבר והזזת האינדקס, כולל האיבר $t^2$ שבא מ-$2s\cdot1$'
+            weight: 3
+          - text: 'זיהוי הגבול כטור המעריכי, $e^{t^2}-1$'
+            weight: 3
+          - text: 'בדיקה שהגבול מקיים גם את המשוואה וגם את תנאי ההתחלה'
+            weight: 2
+
+      - label: ב
+        points: 3
+        type: numeric
+        objectives: [OBJ-11.3-3]
+        prompt: >-
+          מהו $y_3(1)$?
+        answer: 1.6666666667
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $y_3(1)=1+\frac12+\frac16=\frac53$. הפתרון נותן $y(1)=e-1\approx1.718$.
+        wrongFeedback: >-
+          $y_3(t)=t^2+\frac{t^4}{2}+\frac{t^6}{6}$. הציבו $t=1$.
+        commonWrong:
+          - value: 1.7182818285
+            feedback: >-
+              $e-1$ הוא ערך הפתרון ב-1, הגבול של האיטרציות; $y_3$ היא קירוב בלבד.
+            misconception: MC-c11-iterate-is-solution
+          - value: 1.5
+            feedback: >-
+              $\frac32=y_2(1)$. $y_3$ מכילה שלושה איברים: $t^2$, $\frac{t^4}2$ ו-$\frac{t^6}6$.
+            misconception: MC-c11-picard-index
+
+      - label: ג
+        points: 4
+        type: twotier
+        objectives: [OBJ-11.3-3]
+        qualitative: true
+        standalone: false
+        prompt: >-
+          נכון או לא: $y_k\to y$ במידה שווה על כל $\mathbb{R}$?
+        choices:
+          - text: לא נכון
+            correct: true
+            feedback: >-
+              נכון. ההתכנסות במידה שווה מתקיימת על כל קטע חסום, לא על כל הישר.
+          - text: נכון
+            feedback: >-
+              לכל $k$ קבוע, $y(t)-y_k(t)\ge\frac{t^{2(k+1)}}{(k+1)!}$, וזה לא חסום על $\mathbb{R}$.
+            misconception: MC-c11-uniform-on-R
+        reasons:
+          - text: >-
+              $\sup_{\mathbb{R}}|y-y_k|=\infty$ לכל $k$; רק על קטע חסום $[-A,A]$ ההפרש שואף ל-0 במידה שווה
+            correct: true
+            feedback: >-
+              בדיוק. זה מבחן ה-M של ויירשטראס על קטע חסום, וזה מה שאי אפשר לעשות על כל הישר.
+          - text: >-
+              הפתרון קיים על כל הישר, ולכן האיטרציות מתכנסות אליו במידה שווה על כל הישר
+            feedback: >-
+              קיום הפתרון על $\mathbb{R}$ אינו אומר דבר על אחידות ההתכנסות; ההפרש $y-y_k$ גדל ללא חסם כש-$|t|\to\infty$.
+            misconception: MC-c11-uniform-on-R
+          - text: >-
+              האיטרציות מתכנסות רק בקטע $|t|\le h$ של משפט פיקאר-לינדלוף, ומחוצה לו אין להן גבול
+            feedback: >-
+              הן מתכנסות לכל $t$ (הטור המעריכי). המשפט רק **מבטיח** התכנסות בקטע הקצר.
+            misconception: MC-c11-h-is-exact-interval
+
+      - label: ד
+        points: 4
+        type: numeric
+        objectives: [OBJ-11.4-2]
+        prompt: >-
+          $z$ פותרת את אותה משוואה עם $z(0)=0.01$. $f(t,y)=2t(1+y)$ ליפשיצית ב-$y$ ברצועה $[0,1]\times\mathbb{R}$, וקבוע
+          ליפשיץ הקטן ביותר שם הוא $L$. מהו החסם שגרונוול נותן ל-$|z(1)-y(1)|$?
+        answer: 0.0738905610
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $|2t(1+y_1)-2t(1+y_2)|=2t|y_1-y_2|\le2|y_1-y_2|$, כלומר $L=2$, והחסם $0.01e^{2}\approx0.0739$. בפועל
+          ההפרש $w=z-y$ מקיים $w'=2tw$, ולכן $w(1)=0.01e^{1}\approx0.0272$: החסם נכון ולא הדוק.
+        wrongFeedback: >-
+          מצאו את $L$ (הסופרמום של $|2t|$ ב-$[0,1]$) והציבו בחסם $|z(0)-y(0)|\,e^{L(t-t_0)}$.
+        commonWrong:
+          - value: 0.0271828183
+            feedback: >-
+              $0.01e$ הוא ההפרש **המדויק** (מ-$w'=2tw$), לא החסם של גרונוול. גרונוול משתמש בקבוע אחד $L=2$ לכל הקטע ולכן
+              נותן מספר גדול יותר.
+            misconception: MC-c11-bound-is-equality
+          - value: 0.03
+            feedback: >-
+              $0.01(1+2)$ הוא הקירוב הלינארי, לא החסם; החסם מעריכי.
+            misconception: MC-c11-gronwall-linear
+
+  - id: Q-11-exam-5
+    type: exam
+    title: אי-שוויון גרונוול ומשוואה לינארית
+    prompt: >-
+      בסעיף א מוכיחים את אי-שוויון גרונוול, ובשאר הסעיפים מפעילים אותו על המשוואה הלינארית $y'=(\cos t)\,y+t$.
+    parts:
+      - label: א
+        points: 8
+        type: open
+        objectives: [OBJ-11.4-1]
+        prompt: >-
+          תהי $u$ רציפה ואי-שלילית ב-$[t_0,t_1]$, ויהיו $C\ge0$, $L\ge0$ כך ש-$u(t)\le C+\int_{t_0}^tLu(s)\,ds$ לכל
+          $t\in[t_0,t_1]$. הוכיחו ש-$u(t)\le Ce^{L(t-t_0)}$ לכל $t\in[t_0,t_1]$.
+        solution:
+          - kind: given
+            text: '$u\ge0$ רציפה, $C,L\ge0$, $u(t)\le C+\int_{t_0}^tLu(s)\,ds$.'
+          - kind: goal
+            text: '$u(t)\le Ce^{L(t-t_0)}$ לכל $t\in[t_0,t_1]$.'
+          - kind: idea
+            text: >-
+              את $u$ אי אפשר לגזור, אבל את אגף ימין כן. מקבלים עליו אי-שוויון דיפרנציאלי $U'\le LU$, ופותרים אותו בגורם
+              אינטגרציה.
+          - kind: definition
+            text: '$U(t)=C+\int_{t_0}^tLu(s)\,ds$. כי $u$ רציפה, לפי המשפט היסודי $U$ גזירה ו-$U''=Lu$.'
+          - kind: step
+            text: 'לפי ההנחה $u\le U$, ו-$L\ge0$, ולכן $U''(t)=Lu(t)\le LU(t)$.'
+          - kind: computation
+            text: >-
+              $\frac{d}{dt}\left(e^{-L(t-t_0)}U(t)\right)=e^{-L(t-t_0)}\big(U'(t)-LU(t)\big)\le0$, ולכן
+              $e^{-L(t-t_0)}U(t)$ לא עולה, ו-$e^{-L(t-t_0)}U(t)\le U(t_0)=C$.
+          - kind: check
+            text: 'ההוכחה לא חילקה ב-$C$, ולכן היא נכונה גם עבור $C=0$ (וזה המקרה של משפט היחידות).'
+          - kind: result
+            text: '$u(t)\le U(t)\le Ce^{L(t-t_0)}$ לכל $t\in[t_0,t_1]$.'
+        rubric:
+          - text: 'הגדרת $U$ ונימוק לגזירותה מהרציפות של $u$ (המשפט היסודי)'
+            weight: 2
+          - text: 'המעבר $U''=Lu\le LU$, עם שימוש מפורש ב-$u\le U$ וב-$L\ge0$'
+            weight: 2
+          - text: 'גורם האינטגרציה: הנגזרת של $e^{-L(t-t_0)}U$ אי-חיובית, ולכן הפונקציה חסומה על ידי ערכה ב-$t_0$'
+            weight: 2
+          - text: 'המסקנה $u\le U\le Ce^{L(t-t_0)}$'
+            weight: 2
+
+      - label: ב
+        points: 4
+        type: twotier
+        objectives: [OBJ-11.4-3]
+        qualitative: true
+        prompt: >-
+          האם לכל $t_0$ ו-$y_0$ יש לבעיית ההתחלה $y'=(\cos t)\,y+t$, $y(t_0)=y_0$ פתרון המוגדר על כל $\mathbb{R}$?
+        choices:
+          - text: כן
+            correct: true
+            feedback: >-
+              נכון. המשוואה לינארית עם מקדמים רציפים, ואגף ימין ליפשיצי ב-$y$ עם $L=1$ בכל המישור. (זה גם המשפט על
+              מערכות לינאריות משיעור 0.6.)
+          - text: לא, רק בקטע $|t-t_0|\le h$
+            feedback: >-
+              זה מה שהמשפט **המקומי** מבטיח. כאן ליפשיץ גלובלי, ולכן יש פתרון בכל קטע, כלומר על כל $\mathbb{R}$.
+            misconception: MC-c11-h-is-exact-interval
+        reasons:
+          - text: >-
+              ליפשיץ גלובלי עם $L=1$, ולכן יש פתרון בכל קטע $[t_0-n,t_0+n]$, והפתרונות האלה מתלכדים
+            correct: true
+            feedback: >-
+              בדיוק. הפתרונות על הקטעים $[t_0-n,t_0+n]$ מתלכדים בחיתוכים (יחידות), ולכן מגדירים פתרון אחד על כל הישר.
+          - text: >-
+              $f(t,y)=(\cos t)y+t$ אינה חסומה במישור, ולכן הפתרון עלול להתפוצץ כמו ב-$y'=y^2$
+            feedback: >-
+              ליפשיץ גלובלי אינו דורש חסימות; $f=y$ אינה חסומה ו-$e^t$ קיים לכל $t$.
+            misconception: MC-c11-lipschitz-implies-bounded
+          - text: >-
+              משפט פיקאר-לינדלוף נותן רק קטע מקומי $|t-t_0|\le h$, ולכן אין דרך לדעת אם הפתרון ממשיך
+            feedback: >-
+              יש דרך: משפט הקיום הגלובלי של שיעור 11.4, שעובד על כל $C[\alpha,\beta]$ כשהקבוע גלובלי.
+            misconception: MC-c11-h-is-exact-interval
+
+      - label: ג
+        points: 4
+        type: numeric
+        objectives: [OBJ-11.4-2]
+        prompt: >-
+          $y_1,y_2$ פתרונות של $y'=(\cos t)\,y+t$ עם $|y_1(0)-y_2(0)|=0.002$. מהו החסם שגרונוול (עם $L=1$) נותן
+          ל-$|y_1(2)-y_2(2)|$?
+        answer: 0.0147781122
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $0.002\,e^{2}\approx0.0148$.
+        wrongFeedback: >-
+          $|y_1(t)-y_2(t)|\le|y_1(0)-y_2(0)|\,e^{L|t|}$, עם $L=1$ ו-$t=2$.
+        commonWrong:
+          - value: 0.006
+            feedback: >-
+              $0.002(1+2)$ הוא הקירוב הלינארי; החסם הוא $0.002e^{2}$.
+            misconception: MC-c11-gronwall-linear
+          - value: 0.002
+            feedback: >-
+              הפער ההתחלתי לבדו אינו חסם; לפי גרונוול הוא יכול לגדול פי $e^{2}$ עד $t=2$.
+            misconception: MC-c11-gronwall-no-growth
+          - value: 0.0049651555
+            feedback: >-
+              זה הפער **המדויק** (סעיף ד), לא החסם של גרונוול.
+            misconception: MC-c11-bound-is-equality
+
+      - label: ד
+        points: 4
+        type: numeric
+        objectives: [OBJ-11.4-2]
+        prompt: >-
+          חשבו את הפער המדויק $|y_1(2)-y_2(2)|$ עבור אותם שני פתרונות. (רמז: לאיזו משוואה מקיים ההפרש $w=y_1-y_2$?)
+        answer: 0.0049651555
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $w'=(\cos t)\,w$ (האיבר $t$ מתבטל), ולכן $w(t)=w(0)e^{\sin t}$, ו-$|w(2)|=0.002\,e^{\sin2}\approx0.00497$:
+          בערך שליש מהחסם של סעיף ג, כי $e^{2-\sin2}\approx2.98$.
+        wrongFeedback: >-
+          חסרו את שתי המשוואות: $w'=(\cos t)\,w$. פתרו בהפרדת משתנים, עם $\int_0^t\cos s\,ds=\sin t$.
+        commonWrong:
+          - value: 0.0147781122
+            feedback: >-
+              $0.002e^{2}$ הוא החסם של גרונוול, לא הפער. החסם מניח $|\cos t|=1$ כל הזמן; בפועל המעריך הוא
+              $\int_0^2\cos s\,ds=\sin2\approx0.91$.
+            misconception: MC-c11-bound-is-equality

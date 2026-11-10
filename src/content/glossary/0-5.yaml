@@ -1,0 +1,32 @@
+# Terms first defined in lesson 0.5 (the Riemann integral in ℝⁿ and Fubini's theorem).
+- id: riemann-integral-box
+  term: אינטגרל רימן על תיבה
+  en: Riemann integral over a box
+  symbol: '\int_Q f'
+  definition: >-
+    ל-$f$ חסומה על תיבה $Q$ ולחלוקה $P$ של $Q$ לתת-תיבות: הסכום העליון $U(f,P)=\sum\sup_{B}f\cdot\operatorname{vol}(B)$
+    והתחתון $L(f,P)=\sum\inf_{B}f\cdot\operatorname{vol}(B)$. $f$ אינטגרבילית רימן אם $\sup_PL(f,P)=\inf_PU(f,P)$, וזה
+    האינטגרל; באופן שקול, לכל $\varepsilon>0$ יש $P$ עם $U-L<\varepsilon$.
+  lesson: '0.5'
+- id: jordan-measurable
+  term: קבוצה בעלת שטח
+  en: Jordan measurable set
+  definition: >-
+    קבוצה חסומה $D\subset\mathbb R^n$ שהשפה שלה בעלת נפח אפס (נקראת גם מדידה ז׳ורדן). עליה מגדירים $\int_Df=\int_Q f\cdot1_D$
+    לתיבה $Q\supseteq D$, והנפח (או השטח) של $D$ הוא $\int_D1$.
+  lesson: '0.5'
+- id: simple-domain
+  term: תחום פשוט
+  en: elementary (simple) region
+  definition: >-
+    תחום מהצורה $\{a\le x\le b,\ \varphi_1(x)\le y\le\varphi_2(x)\}$ עם $\varphi_1\le\varphi_2$ רציפות (פשוט ביחס ל-$x$), או
+    הצורה המקבילה עם $x$ ו-$y$ בתפקידים הפוכים; באותו אופן בממד $3$. עליו משפט פוביני הופך אינטגרל כפול לאינטגרל חוזר.
+  lesson: '0.5'
+- id: fubini-theorem
+  term: משפט פוביני
+  en: Fubini's theorem
+  definition: >-
+    לפונקציה רציפה $f$ על תחום פשוט $D=\{a\le x\le b,\ \varphi_1(x)\le y\le\varphi_2(x)\}$:
+    $\iint_Df=\int_a^b\int_{\varphi_1(x)}^{\varphi_2(x)}f(x,y)\,dy\,dx$, ובאותו אופן בכל סדר שבו התחום פשוט. בלי אינטגרביליות
+    של $f$ שני האינטגרלים החוזרים יכולים להיות שונים.
+  lesson: '0.5'

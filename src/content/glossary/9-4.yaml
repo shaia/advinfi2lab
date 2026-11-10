@@ -1,0 +1,37 @@
+# Terms first defined in lesson 9.4 (completeness and the space H[a,b]).
+- id: hilbert-space
+  term: מרחב הילברט
+  en: Hilbert space
+  definition: >-
+    מרחב מכפלה פנימית שלם: כל סדרת קושי לפי הנורמה המושרית מתכנסת לאיבר של המרחב. $\mathbb R^n$ ו-$\ell^2$ הם מרחבי
+    הילברט; $C[a,b]$ עם $\int fg$ אינו.
+  lesson: '9.4'
+- id: banach-space
+  term: מרחב בנך
+  en: Banach space
+  definition: >-
+    מרחב נורמי שלם: כל סדרת קושי לפי הנורמה מתכנסת לאיבר של המרחב. כל מרחב הילברט הוא מרחב בנך, אבל לא להפך:
+    $C[a,b]$ עם נורמת המקסימום שלם, והנורמה הזו אינה מקיימת את חוק המקבילית, ולכן אינה באה ממכפלה פנימית.
+  lesson: '9.4'
+- id: semi-inner-product
+  term: מכפלה פנימית למחצה
+  en: semi-inner product
+  definition: >-
+    תבנית סימטרית ולינארית עם $\langle x,x\rangle\ge0$, שבה ייתכן $\langle x,x\rangle=0$ גם כש-$x\neq0$. מזהים וקטורים שמרחקם
+    אפס, ואחרי הזיהוי מתקבלת מכפלה פנימית.
+  lesson: '9.4'
+- id: space-H
+  term: המרחב H[a,b]
+  en: the space H[a,b] of square-integrable functions
+  symbol: 'H[a,b]'
+  definition: >-
+    מרחב הפונקציות האינטגרביליות רימן על $[a,b]$ עם $\langle f,g\rangle=\int_a^bfg$: מכפלה פנימית למחצה, ומזהים פונקציות
+    במרחק 0. הוא מכיל את $C[a,b]$ ואת המדרגות, אבל אינו שלם; ההשלמה שלו, $L^2[a,b]$, שייכת לתורת המידה.
+  lesson: '9.4'
+- id: mean-square-convergence
+  term: התכנסות בממוצע ריבועי
+  en: mean-square convergence
+  definition: >-
+    $f_n\to f$ בממוצע ריבועי על $[a,b]$ אם $\int_a^b(f_n-f)^2\to0$, כלומר בנורמה של $\int fg$. התכנסות במידה שווה גוררת
+    אותה, כי $\|g\|\le\sqrt{b-a}\max|g|$; ההפך לא נכון ($x^n$ על $[0,1]$).
+  lesson: '9.4'

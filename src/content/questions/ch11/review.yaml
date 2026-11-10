@@ -1,0 +1,406 @@
+# Chapter 11 review — existence and uniqueness for ODEs (lessons 11.1–11.4), easy to hard.
+# Every regular lesson is touched; most questions combine two or more lessons. Each hint names the lesson to go back to.
+# The enrichment lesson 11.5 (Peano) is covered by its own bank only: the Peano proof question that was here is now
+# Q-11.5-proof-uses, and review-10 no longer uses Peano's theorem.
+chapter: 11
+questions:
+  - id: Q-11-review-01
+    type: mc
+    objectives: [OBJ-11.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזו משוואה אינטגרלית שקולה לבעיית ההתחלה $y'=y+\cos t$, $y(\pi)=2$, עבור פונקציה רציפה $y$?
+    choices:
+      - text: '$y(t)=2+\int_\pi^t\big(y(s)+\cos s\big)\,ds$'
+        correct: true
+        feedback: >-
+          נכון. הגבול התחתון הוא נקודת ההתחלה $\pi$, הקבוע הוא $y(\pi)=2$, ובתוך האינטגרל הכול מוערך ב-$s$.
+      - text: '$y(t)=2+\int_0^t\big(y(s)+\cos s\big)\,ds$'
+        feedback: >-
+          ההצבה $t=\pi$ נותנת כאן $y(\pi)=2+\int_0^\pi(y+\cos s)\,ds$, ולא 2. הגבול התחתון הוא הנקודה שבה $y$ ידוע.
+        misconception: MC-c11-integral-lower-limit
+      - text: '$y(t)=\int_\pi^t\big(y(s)+\cos s\big)\,ds$'
+        feedback: >-
+          חסר ערך ההתחלה: ב-$t=\pi$ המשוואה הזו נותנת $y(\pi)=0$.
+        misconception: MC-c11-integral-forget-y0
+      - text: '$y(t)=2+\int_\pi^t\big(y(t)+\cos s\big)\,ds$'
+        feedback: >-
+          $y$ בתוך האינטגרל מוערך ב-$s$: מצטברת הנגזרת $y'(s)=y(s)+\cos s$ לאורך הדרך, לא ערך קבוע $y(t)$.
+        misconception: MC-c11-integral-y-at-t
+    hints:
+      - 'חזרו לשיעור 11.1: השקילות בין בעיית התחלה למשוואה אינטגרלית.'
+
+  - id: Q-11-review-02
+    type: multi
+    objectives: [OBJ-11.2-3, OBJ-11.4-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהפונקציות הבאות מקיימות תנאי ליפשיץ ב-$y$ בכל הרצועה $[0,1]\times\mathbb{R}$, כך שלכל בעיית התחלה יש פתרון
+      בכל $[0,1]$? סמנו את כולן.
+    choices:
+      - text: '$f(t,y)=t^2y+e^t$'
+        correct: true
+        feedback: >-
+          נכון, לינארית ב-$y$ עם $L=\max_{[0,1]}t^2=1$.
+      - text: '$f(t,y)=\frac{y}{1+t}$'
+        correct: true
+        feedback: >-
+          נכון, עם $L=\max_{[0,1]}\frac1{1+t}=1$.
+      - text: '$f(t,y)=\cos(ty)$'
+        correct: true
+        feedback: >-
+          נכון. $\left|\frac{\partial f}{\partial y}\right|=|t\sin(ty)|\le1$ ב-$[0,1]\times\mathbb{R}$, והחתכים הם כל
+          הישר; לפי משפט הערך הממוצע ב-$y$, $L=1$.
+      - text: '$f(t,y)=\sqrt{|y|}$'
+        feedback: >-
+          רציפה, אבל לא ליפשיצית ליד $y=0$: מנת ההפרשים בין $\eta$ ל-0 היא $\eta^{-1/2}$.
+        misconception: MC-c11-continuous-implies-lipschitz
+      - text: '$f(t,y)=y^3$'
+        feedback: >-
+          ליפשיצית רק מקומית: ברצועה $|y|\le b$ הקבוע $3b^2$, והוא לא חסום.
+        misconception: MC-c11-local-is-global-lipschitz
+    hints:
+      - 'חזרו לשיעור 11.2: ליפשיץ מקומי וגלובלי, ולשיעור 11.4: קיום גלובלי.'
+
+  - id: Q-11-review-03
+    type: numeric
+    objectives: [OBJ-11.3-1, OBJ-11.1-3]
+    level: basic
+    prompt: >-
+      $y'=1+y^2$, $y(0)=0$ במלבן $R=\{|t|\le2,\ |y|\le1\}$. מהו $h=\min(a,\frac bM)$ של משפט פיקאר-לינדלוף?
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $M=\max_R(1+y^2)=2$, ולכן $h=\min(2,\frac12)=\frac12$. הפתרון $\tan t$ קיים בפועל ב-$|t|<\frac\pi2$: המשפט
+      מבטיח פחות ממה שקורה.
+    wrongFeedback: >-
+      $M$ הוא המקסימום של $|f|$ על המלבן; אחר כך משווים בין $a$ ל-$\frac bM$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $a=2$ גדול מזמן ההתפוצצות $\frac\pi2$: הפתרון אפילו לא קיים בכל $[-2,2]$. לכן $h=a$ לא יכול להיות נכון כאן.
+        misconception: MC-c11-interval-is-a
+      - value: 1.5707963268
+        feedback: >-
+          $\frac\pi2$ הוא זמן ההתפוצצות האמיתי של $\tan t$. המשפט לא יודע אותו; הוא נותן רק $\min(a,\frac bM)$.
+        misconception: MC-c11-h-is-exact-interval
+    hints:
+      - 'חזרו לשיעור 11.3: אורך קטע הקיום, ולשיעור 11.1: התפוצצות של $\tan t$.'
+
+  - id: Q-11-review-04
+    type: twotier
+    objectives: [OBJ-11.2-2, OBJ-11.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם $y=t^2$, לכל $t\in\mathbb{R}$, היא פתרון של $y'=2\sqrt{|y|}$, $y(0)=0$ על $\mathbb{R}$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. עבור $t<0$: $y'=2t<0$, ואגף ימין $2\sqrt{t^2}=2|t|>0$.
+      - text: כן
+        feedback: >-
+          בדקו נקודה שלילית: ב-$t=-1$ מתקבל $y'(-1)=-2$ ו-$2\sqrt{|y(-1)|}=2$. הנוסחה פותרת רק עבור $t\ge0$.
+        misconception: MC-c11-formula-everywhere
+    reasons:
+      - text: >-
+          $\sqrt{t^2}=|t|$, ולכן עבור $t<0$ אגף ימין הוא $2|t|>0$ ואילו $y'=2t<0$
+        correct: true
+        feedback: >-
+          בדיוק. אגף ימין אי-שלילי, ולכן כל פתרון לא יורד, ו-$t^2$ יורדת עבור $t<0$. פתרון על $\mathbb{R}$ הוא למשל
+          $0$ עבור $t<0$ ו-$t^2$ עבור $t\ge0$.
+      - text: >-
+          $y(0)=0$ ו-$y'=2t=2\sqrt{t^2}$ לכל $t$, ולכן המשוואה מתקיימת על כל הישר
+        feedback: >-
+          $\sqrt{t^2}=|t|$, לא $t$. השוויון $2t=2\sqrt{t^2}$ נכון רק עבור $t\ge0$.
+        misconception: MC-c11-formula-everywhere
+      - text: >-
+          אגף ימין אינו ליפשיצי ב-0, ולכן לבעיה אין פתרונות כלל
+        feedback: >-
+          יש פתרונות, למשל $y\equiv0$ ו-$(t-c)^2$ אחרי $c\ge0$. בלי ליפשיץ נשברת היחידות, לא הקיום.
+        misconception: MC-c11-no-lipschitz-no-solution
+    hints:
+      - 'חזרו לשיעור 11.2: אינסוף פתרונות של $y''=2\sqrt{|y|}$, ולשיעור 11.1: פתרון בקטע.'
+
+  - id: Q-11-review-05
+    type: twotier
+    objectives: [OBJ-11.2-1, OBJ-11.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(t,y)=|y|$ אינה גזירה ב-$y=0$. נכון או לא: ל-$y'=|y|$, $y(0)=0$ יש פתרון יחיד, $y\equiv0$?
+    choices:
+      - text: נכון
+        correct: true
+        feedback: >-
+          נכון. $|y|$ ליפשיצית עם $L=1$, ולכן לפי גרונוול שני פתרונות עם אותו ערך התחלה שווים.
+      - text: לא נכון
+        feedback: >-
+          אי-גזירות אינה מבטלת את תנאי ליפשיץ: $\big||y_1|-|y_2|\big|\le|y_1-y_2|$. יחידות נובעת מליפשיץ, לא מגזירות.
+        misconception: MC-c11-lipschitz-needs-derivative
+    reasons:
+      - text: >-
+          $|y|$ ליפשיצית עם $L=1$, וגרונוול עם $C=0$ על $u=|y_1-y_2|$ נותן $u\equiv0$
+        correct: true
+        feedback: >-
+          בדיוק: ליפשיץ (שיעור 11.2) ועוד גרונוול (שיעור 11.4). הגזירות של $f$ לא נכנסת לשום מקום.
+      - text: >-
+          $f$ אינה גזירה ב-0, ולכן תנאי ליפשיץ נכשל ואין יחידות
+        feedback: >-
+          $|y|$ היא הדוגמה הקלאסית לליפשיצית שאינה גזירה. מה שמכשיל יחידות הוא מנות הפרשים לא חסומות, כמו
+          ב-$\sqrt{|y|}$.
+        misconception: MC-c11-lipschitz-needs-derivative
+      - text: >-
+          $f$ רציפה בכל המישור, ולכן לבעיית ההתחלה יש פתרון יחיד
+        feedback: >-
+          המסקנה נכונה כאן, אבל רציפות לבדה לא מספיקה: $3y^{2/3}$ רציפה ול-$y'=3y^{2/3}$, $y(0)=0$ אינסוף פתרונות.
+        misconception: MC-c11-continuity-gives-uniqueness
+    hints:
+      - 'חזרו לשיעור 11.2: ליפשיץ בלי נגזרת, ולשיעור 11.4: יחידות מגרונוול.'
+
+  - id: Q-11-review-06
+    type: numeric
+    objectives: [OBJ-11.3-3, OBJ-11.1-1]
+    level: mid
+    prompt: >-
+      איטרציות פיקאר של $y'=ty$, $y(0)=2$, החל מ-$y_0\equiv2$: $y_{k+1}(t)=2+\int_0^ts\,y_k(s)\,ds$. מהו $y_2(1)$?
+    answer: 3.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $y_1=2+t^2$, $y_2=2+t^2+\frac{t^4}4$, ולכן $y_2(1)=\frac{13}4$. הגבול הוא $2e^{t^2/2}$, ו-$2\sqrt e\approx3.297$.
+    wrongFeedback: >-
+      הפעילו את הנוסחה פעמיים, החל מהפונקציה הקבועה 2.
+    commonWrong:
+      - value: 3.2974425414
+        feedback: >-
+          $2\sqrt e=2e^{1/2}$ הוא ערך הפתרון ב-1, הגבול של האיטרציות. $y_2$ היא פולינום, קירוב.
+        misconception: MC-c11-iterate-is-solution
+      - value: 3
+        feedback: >-
+          $3=y_1(1)$. $y_2$ מתקבלת אחרי שתי הפעלות של $T$ על $y_0\equiv2$.
+        misconception: MC-c11-picard-index
+    hints:
+      - 'חזרו לשיעור 11.3: חישוב איטרציות פיקאר, ולשיעור 11.1: המשוואה האינטגרלית שהן מפעילות.'
+
+  - id: Q-11-review-07
+    type: numeric
+    objectives: [OBJ-11.2-3, OBJ-11.4-2]
+    level: mid
+    prompt: >-
+      $f(t,y)=t\arctan y$ ברצועה $[0,2]\times\mathbb{R}$. $y_1,y_2$ פתרונות של $y'=f(t,y)$ עם $|y_1(0)-y_2(0)|=0.001$.
+      מהו החסם שגרונוול נותן ל-$|y_1(2)-y_2(2)|$, כש-$L$ הוא קבוע ליפשיץ הקטן ביותר של $f$ ב-$y$ ברצועה?
+    answer: 0.0545981500
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\left|\frac{\partial f}{\partial y}\right|=\frac{t}{1+y^2}\le2$ ברצועה, ובקצה $t=2$, $y=0$ מתקבל 2, ולכן
+      $L=2$. החסם: $0.001\,e^{2\cdot2}=0.001e^4\approx0.0546$.
+    wrongFeedback: >-
+      קודם מצאו את $L$: הסופרמום של $\left|\frac{\partial f}{\partial y}\right|$ על כל הרצועה, כולל על $t$. אחר כך
+      $\delta e^{L(t-t_0)}$.
+    commonWrong:
+      - value: 0.0073890561
+        feedback: >-
+          $0.001e^2$ מתקבל מ-$L=1$, הקבוע של $\arctan$ לבדה, בלי הגורם $t$. הקבוע צריך להתאים לכל $t\in[0,2]$, והגרוע
+          הוא $t=2$.
+        misconception: MC-c11-lipschitz-L-depends-on-t
+      - value: 0.001
+        feedback: >-
+          הפער ההתחלתי אינו חסם: לפי גרונוול הוא יכול לגדול פי $e^{L(t-t_0)}$.
+        misconception: MC-c11-gronwall-no-growth
+    hints:
+      - 'חזרו לשיעור 11.2: חישוב קבוע ליפשיץ, ולשיעור 11.4: תלות רציפה בתנאי ההתחלה.'
+    explanation: >-
+      החסם אינו הדוק. למשל עבור הפתרונות עם $y(0)=0$ ו-$y(0)=0.001$, חישוב מספרי נותן ב-$t=2$ פער של כ-$0.0074$,
+      קרוב ל-$0.001e^{2}$: ליד $y=0$ הקצב הוא $t$, שגדל בהדרגה מ-0 ל-2. גרונוול עם קבוע אחד משלם על הגרוע ביותר לאורך
+      כל הדרך.
+
+  - id: Q-11-review-08
+    type: mc
+    objectives: [OBJ-11.1-2, OBJ-11.3-3]
+    level: mid
+    prompt: >-
+      $y''=-y$, $y(0)=0$, $y'(0)=1$ נכתבת כמערכת עבור $Y=(u,v)=(y,y')$:
+      $Y(t)=(0,1)+\int_0^t\big(v(s),-u(s)\big)\,ds$. איטרציות פיקאר מתחילות מ-$Y_0\equiv(0,1)$. מהי $Y_2$?
+    choices:
+      - text: '$Y_2(t)=\left(t,\ 1-\frac{t^2}{2}\right)$'
+        correct: true
+        feedback: >-
+          נכון. $Y_1=(0,1)+\int_0^t(1,0)\,ds=(t,1)$, ו-$Y_2=(0,1)+\int_0^t(1,-s)\,ds=\left(t,1-\frac{t^2}2\right)$. האיטרציות
+          בונות את הטורים של $(\sin t,\cos t)$.
+      - text: '$Y_2(t)=(t,\ 1)$'
+        feedback: >-
+          זו $Y_1$. צריך להפעיל את $T$ עוד פעם.
+        misconception: MC-c11-picard-index
+      - text: '$Y_2(t)=\left(t,\ 1+\frac{t^2}{2}\right)$'
+        feedback: >-
+          הרכיב השני של אגף ימין הוא $-u$, ולכן $v_2=1-\int_0^tu_1=1-\frac{t^2}2$. הסימן נקבע על ידי $y''=-y$.
+        misconception: MC-c11-system-substitution
+      - text: '$Y_2(t)=(\sin t,\ \cos t)$'
+        feedback: >-
+          זה הפתרון, הגבול של האיטרציות. כל איטרציה היא זוג פולינומים.
+        misconception: MC-c11-iterate-is-solution
+    hints:
+      - 'חזרו לשיעור 11.1: מערכת מסדר ראשון, ולשיעור 11.3: איטרציות פיקאר.'
+
+  - id: Q-11-review-09
+    type: multi
+    objectives: [OBJ-11.1-3, OBJ-11.3-1, OBJ-11.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על $y'=y^2$, $y(0)=1$. אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: 'הפתרון הוא $\frac1{1-t}$ בקטע $(-\infty,1)$, ואי אפשר להמשיך אותו מעבר ל-1'
+        correct: true
+        feedback: >-
+          נכון. $y(t)\to\infty$ כש-$t\to1^-$, ופתרון בקטע שמכיל את 1 היה רציף שם.
+      - text: 'במלבן עם $a=b=1$ משפט פיקאר-לינדלוף מבטיח פתרון בקטע $|t|\le\frac14$'
+        correct: true
+        feedback: >-
+          נכון. $M=\max_{0\le y\le2}y^2=4$, ולכן $h=\min(1,\frac14)=\frac14$.
+      - text: 'בכל קטע שבו הפתרון קיים הוא יחיד'
+        correct: true
+        feedback: >-
+          נכון. $y^2$ ליפשיצית מקומית, ושני פתרונות עם אותו ערך התחלה מתלכדים בכל קטע משותף (גרונוול על מלבן שמכיל
+          את שני הגרפים).
+      - text: '$y^2$ ליפשיצית גלובלית, ולכן הפתרון קיים לכל $t$'
+        feedback: >-
+          $y^2$ ליפשיצית רק מקומית (הקבוע $2b$ ברצועה $|y|\le b$), ואכן הפתרון מתפוצץ.
+        misconception: MC-c11-local-is-global-lipschitz
+      - text: 'כי המשפט נותן $h=\frac14$, הפתרון לא קיים עבור $t>\frac14$'
+        feedback: >-
+          $\frac14$ היא הבטחה מלמטה; הפתרון קיים עד 1.
+        misconception: MC-c11-h-is-exact-interval
+    hints:
+      - 'חזרו לשיעור 11.1: התפוצצות, לשיעור 11.2: ליפשיץ מקומי, ולשיעור 11.3: הקטע המובטח.'
+
+  - id: Q-11-review-10
+    type: twotier
+    objectives: [OBJ-11.2-2, OBJ-11.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(y)=\sqrt{|y|}$ אינה ליפשיצית באף מלבן שמכיל את $y=0$, ולכן משפט פיקאר-לינדלוף אינו חל על הבעיה
+      $y'=\sqrt{|y|}$, $y(0)=0$. נכון או לא: לבעיה הזו אין פתרון?
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. $y\equiv0$ פתרון, וגם $y=\frac{t^2}4$ עבור $t\ge0$ (ו-0 לפני): יש פתרונות, והם לא יחידים.
+      - text: נכון
+        feedback: >-
+          תנאי ליפשיץ אחראי ליחידות, לא לקיום. $y\equiv0$ פותרת.
+        misconception: MC-c11-no-lipschitz-no-solution
+    reasons:
+      - text: >-
+          $y\equiv0$ ו-$\frac{t^2}{4}$ (עבור $t\ge0$, ו-0 לפני) פותרות; משפט שאינו חל גם אינו שולל פתרון
+        correct: true
+        feedback: >-
+          בדיוק. בדיקה: $\left(\frac{t^2}4\right)'=\frac t2=\sqrt{\frac{t^2}{4}}$ עבור $t\ge0$. מה שנשבר בלי ליפשיץ הוא
+          היחידות. (בשיעור ההעשרה 11.5 נראה שרציפות של $f$ לבדה כבר מבטיחה קיום.)
+      - text: >-
+          כשאגף ימין אינו ליפשיצי, העתקת פיקאר אינה מכווצת ומשפט נקודת השבת לא חל, ולכן אין פתרון
+        feedback: >-
+          כשמשפט לא חל, אין **הבטחה**, לא הוכחה שאין. כאן יש פתרון מפורש.
+        misconception: MC-c11-no-lipschitz-no-solution
+      - text: >-
+          יש בדיוק פתרון אחד, $y\equiv0$, כי $f(0)=0$ והפתרון לא יכול לעזוב את 0
+        feedback: >-
+          גם $\frac{t^2}4$ עבור $t\ge0$ פותרת, וכך גם כל הזזה שלה $\frac{(t-c)^2}4$ אחרי $c\ge0$.
+        misconception: MC-c11-only-zero-solution
+    hints:
+      - 'חזרו לשיעור 11.2: אינסוף פתרונות בלי ליפשיץ, ולשיעור 11.3: מה המשפט מבטיח ומה לא.'
+
+  - id: Q-11-review-11
+    type: rank
+    objectives: [OBJ-11.4-2, OBJ-11.1-1, OBJ-11.2-1]
+    level: exam
+    prompt: >-
+      $f$ רציפה ב-$D=[t_0,t_1]\times\mathbb{R}$ וליפשיצית ב-$y$ עם קבוע $L$. הוכיחו שאם $y_1,y_2$ פותרות את
+      $y'=f(t,y)$, $y(t_0)=y_0$ בקטע $[t_0,t_1]$, אז $y_1=y_2$.
+    help: >-
+      סדרו את שלבי ההוכחה מהראשון לאחרון.
+    items:
+      - id: a
+        label: >-
+          לפי השקילות של שיעור 11.1, $y_i(t)=y_0+\int_{t_0}^t f(s,y_i(s))\,ds$ עבור $i=1,2$.
+      - id: b
+        label: >-
+          מחסירים: $y_1(t)-y_2(t)=\int_{t_0}^t\big(f(s,y_1(s))-f(s,y_2(s))\big)\,ds$.
+      - id: c
+        label: >-
+          לפי תנאי ליפשיץ, $u=|y_1-y_2|$ (רציפה ואי-שלילית) מקיימת $u(t)\le\int_{t_0}^tLu(s)\,ds$.
+      - id: d
+        label: >-
+          אי-שוויון גרונוול עם $C=0$ נותן $u(t)\le0$, כלומר $u\equiv0$ ו-$y_1=y_2$.
+    order: [a, b, c, d]
+    correctFeedback: >-
+      נכון. כל שיעור בפרק תורם שלב: המשוואה האינטגרלית (11.1), תנאי ליפשיץ (11.2) ואי-שוויון גרונוול (11.4).
+    wrongFeedback: >-
+      גרונוול חל על אי-שוויון **אינטגרלי**, ולכן קודם צריך לכתוב את שני הפתרונות כמשוואות אינטגרליות ולהחסיר.
+    hints:
+      - 'חזרו לשיעור 11.4: הוכחת היחידות, ולשיעור 11.1: המשוואה האינטגרלית.'
+
+  - id: Q-11-review-12
+    type: numeric
+    objectives: [OBJ-11.3-2]
+    level: exam
+    prompt: >-
+      $y'=\cos(2y)$, $y(0)=0$ במלבן $R=\{|t|\le\frac14,\ |y|\le1\}$: $M=1$, $h=\frac14$, וקבוע ליפשיץ $L=2$, כך שבנורמת
+      הסופרמום $T$ מכווצת עם $q=hL=\frac12$. האיטרציה הראשונה היא $y_1(t)=t$, ולכן $\|y_1-y_0\|_\infty=\frac14$. לפי חסם
+      השגיאה של בנך, מהו מספר האיטרציות $n$ **הקטן ביותר** שמבטיח $\|y_n-y\|_\infty\le10^{-3}$?
+    answer: 9
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\|y_n-y\|_\infty\le\frac{q^n}{1-q}\|y_1-y_0\|_\infty=\frac{2^{-n}}{1/2}\cdot\frac14=2^{-n-1}$. צריך
+      $2^{n+1}\ge1000$: $2^{10}=1024$, כלומר $n=9$ ($n=8$ נותן $2^{-9}\approx0.00195$).
+    wrongFeedback: >-
+      חסם השגיאה של בנך הוא $d(x_n,x^*)\le\frac{q^n}{1-q}d(x_1,x_0)$. הציבו $q=\frac12$ ו-$d(x_1,x_0)=\frac14$.
+    commonWrong:
+      - value: 8
+        feedback: >-
+          8 מתקבל מ-$q^n\,d(x_1,x_0)\le10^{-3}$, בלי הגורם $\frac1{1-q}=2$. החסם הוא סכום כל הצעדים מ-$n$ והלאה, טור
+          הנדסי.
+        misconception: MC-c11-banach-bound-formula
+    hints:
+      - 'חזרו לשיעור 11.3: העתקת פיקאר כהעתקה מכווצת. את חסם השגיאה של משפט נקודת השבת של בנך ראו באינפי מתקדם 1.'
+
+  - id: Q-11-review-13
+    type: twotier
+    objectives: [OBJ-11.4-3, OBJ-11.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      נכון או לא: אם $f$ רציפה ב-$\mathbb{R}^2$ ומקיימת תנאי ליפשיץ ב-$y$ עם קבוע אחד $L$ בכל המישור, אז אף פתרון של
+      $y'=f(t,y)$ אינו מתפוצץ בזמן סופי.
+    choices:
+      - text: נכון
+        correct: true
+        feedback: >-
+          נכון. לכל קטע $[\alpha,\beta]$ יש פתרון בכל הקטע (שיעור 11.4), ופתרון רציף על קטע סגור חסום בו.
+      - text: לא נכון
+        feedback: >-
+          הדוגמאות להתפוצצות ($y^2$, $1+y^2$, $y^3$) כולן ליפשיציות רק מקומית. ליפשיץ גלובלי נותן פתרון על כל קטע.
+        misconception: MC-c11-smooth-implies-global
+    reasons:
+      - text: >-
+          לפי משפט הקיום הגלובלי יש פתרון בכל $[\alpha,\beta]$, ופתרון רציף חסום בקטע סגור
+        correct: true
+        feedback: >-
+          בדיוק. אפשר גם ישירות מגרונוול: $|y(t)|\le\big(|y_0|+|t-t_0|\max_{[\alpha,\beta]}|f(s,0)|\big)e^{L|t-t_0|}$.
+      - text: >-
+          כי פונקציה ליפשיצית גלובלית חסומה, והפתרון זז בקצב חסום
+        feedback: >-
+          ליפשיץ אינו גורר חסימות: $f=y$ ליפשיצית ולא חסומה, והפתרון $e^t$ אינו חסום על $\mathbb{R}$. הוא פשוט לא
+          מגיע לאינסוף בזמן סופי.
+        misconception: MC-c11-lipschitz-implies-bounded
+      - text: >-
+          כי $f$ רציפה, וכל פתרון של משוואה עם אגף ימין רציף קיים לכל הזמנים
+        feedback: >-
+          $f=y^2$ רציפה ואפילו חלקה, ו-$\frac1{1-t}$ מתפוצץ.
+        misconception: MC-c11-smooth-implies-global
+    hints:
+      - 'חזרו לשיעור 11.4: קיום גלובלי, ולשיעור 11.1: התפוצצות בזמן סופי.'

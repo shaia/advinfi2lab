@@ -1,0 +1,198 @@
+# Lesson 8.6 (enrichment) — closed and exact forms, the angle form, the Poincaré lemma.
+# Objectives (src/course.ts):
+#   OBJ-8.6-1  define closed and exact forms and show that every exact form is closed
+#   OBJ-8.6-2  show that the angle form on the punctured plane is closed and not exact; state the Poincaré lemma on star-shaped regions
+chapter: 8
+questions:
+  - id: Q-8.6-def
+    type: mc
+    objectives: [OBJ-8.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      תבנית $\omega$ על תחום $U$ נקראת **סגורה** אם $d\omega=0$ על $U$, ו**מדויקת** אם יש תבנית $\eta$ על כל $U$ עם
+      $\omega=d\eta$. מה נכון לגבי $\omega=y\,dx+x\,dy+2z\,dz$ על $\mathbb R^3$?
+    choices:
+      - text: 'היא מדויקת, $\omega=d(xy+z^2)$, ולכן גם סגורה'
+        correct: true
+        feedback: >-
+          נכון. ובאופן כללי כל תבנית מדויקת (עם $\eta$ גזירה פעמיים ברציפות) סגורה, כי $d\omega=d(d\eta)=0$ (שיעור 8.3).
+          ישירות: $d\omega=dy\wedge dx+dx\wedge dy+0=0$.
+      - text: 'היא סגורה, אבל ייתכן שאינה מדויקת: סגירות היא התנאי החזק מבין השניים'
+        feedback: >-
+          ההפך: "מדויקת" היא התנאי החזק, כי היא דורשת $\eta$ על כל $U$, ו"סגורה" היא בדיקה מקומית, $d\omega=0$. כאן יש
+          $\eta=xy+z^2$.
+        misconception: MC-c8-closed-exact-swapped
+      - text: 'היא מדויקת, $\omega=d(xy+z^2)$, אבל אינה סגורה, כי $d\omega=2\,dx\wedge dy$'
+        feedback: >-
+          $dy\wedge dx=-dx\wedge dy$, ולכן $d(y\,dx)+d(x\,dy)=dy\wedge dx+dx\wedge dy=0$. תבנית מדויקת תמיד סגורה.
+        misconception: MC-c8-wedge-commutes
+
+  - id: Q-8.6-circle
+    type: numeric
+    objectives: [OBJ-8.6-2]
+    level: basic
+    prompt: >-
+      **תבנית הזווית** במישור בלי הראשית היא $\omega=\frac{x\,dy-y\,dx}{x^2+y^2}$. חשבו $\oint_\gamma\omega$ כש-$\gamma$ מעגל
+      היחידה, פעם אחת נגד כיוון השעון.
+    answer: 6.2831853
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. על $\gamma(t)=(\cos t,\sin t)$: $x\,dy-y\,dx=(\cos^2t+\sin^2t)\,dt=dt$ ו-$x^2+y^2=1$, ולכן האינטגרל $2\pi$.
+    wrongFeedback: >-
+      הציבו $\gamma(t)=(\cos t,\sin t)$. המכנה הוא 1 על המעגל.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          התבנית סגורה, אבל המישור בלי הראשית אינו תחום כוכבי, ולכן אין $f$ עם $df=\omega$ שתאפס את האינטגרל. החישוב
+          הישיר נותן $2\pi$.
+        misconception: MC-c8-closed-implies-exact
+      - value: -6.2831853
+        feedback: >-
+          זה האינטגרל בכיוון השעון.
+        misconception: MC-c8-form-integral-unoriented
+
+  - id: Q-8.6-exactclosed
+    type: twotier
+    objectives: [OBJ-8.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם כל תבנית מדויקת (עם $\eta$ גזירה פעמיים ברציפות) היא סגורה? והאם כל תבנית סגורה היא מדויקת?
+    choices:
+      - text: 'מדויקת גוררת סגורה; סגורה אינה גוררת מדויקת בכל תחום'
+        correct: true
+        feedback: >-
+          נכון. הכיוון הראשון הוא $d^2=0$; לשני יש דוגמה נגדית במישור בלי הראשית.
+      - text: 'שני הכיוונים נכונים תמיד'
+        feedback: >-
+          הכיוון השני נכשל: תבנית הזווית במישור בלי הראשית סגורה ואינה מדויקת.
+        misconception: MC-c8-closed-implies-exact
+      - text: 'סגורה גוררת מדויקת, אבל לא להפך'
+        feedback: >-
+          הפוך. ההגדרות התחלפו: "מדויקת" היא $\omega=d\eta$, והיא החזקה יותר.
+        misconception: MC-c8-closed-exact-swapped
+    reasons:
+      - text: '$d\omega=d(d\eta)=0$; ותבנית הזווית סגורה ב-$\mathbb R^2\setminus\{0\}$, אבל האינטגרל שלה על מעגל היחידה $2\pi$'
+        correct: true
+        feedback: >-
+          בדיוק: כיוון אחד מזהות, והשני נשבר בדוגמה. הלמה של פואנקרה אומרת מתי השני כן נכון: בתחום כוכבי.
+      - text: '$d$ הפיכה: מ-$d\omega=0$ אפשר "לחזור" ל-$\eta$, ולכן שני הכיוונים נכונים בכל תחום'
+        feedback: >-
+          $d$ אינה הפיכה: $d(f+c)=df$, ולא כל תבנית היא בתמונה של $d$. השאלה מתי $d\omega=0$ מבטיח $\eta$ היא בדיוק השאלה
+          של הלמה של פואנקרה.
+        misconception: MC-c8-closed-implies-exact
+
+  - id: Q-8.6-which
+    type: multi
+    objectives: [OBJ-8.6-1]
+    level: mid
+    prompt: >-
+      אילו מהתבניות הבאות על $\mathbb R^3$ סגורות? סמנו את כולן.
+    choices:
+      - text: '$yz\,dx+xz\,dy+xy\,dz$'
+        correct: true
+        feedback: נכון. היא $d(xyz)$, ולכן סגורה (ואף מדויקת).
+      - text: '$y\,dx+x\,dy+dz$'
+        correct: true
+        feedback: 'נכון, היא $d(xy+z)$.'
+      - text: '$x\,dy$'
+        feedback: >-
+          $d(x\,dy)=dx\wedge dy\ne0$.
+        misconception: MC-c8-every-form-exact
+      - text: '$dx\wedge dy+3\,dy\wedge dz$'
+        correct: true
+        feedback: >-
+          נכון. המקדמים קבועים, ולכן $d$ שלה אפס. (היא גם $d(x\,dy-3z\,dy)$.)
+      - text: '$x\,dy\wedge dz$'
+        feedback: >-
+          $d(x\,dy\wedge dz)=dx\wedge dy\wedge dz\ne0$. נשארת הנגזרת לפי המשתנה החסר, $x$.
+        misconception: MC-c8-d-present-variable
+
+  - id: Q-8.6-closedtheta
+    type: twotier
+    objectives: [OBJ-8.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\omega=\frac{x\,dy-y\,dx}{x^2+y^2}$ על $U=\mathbb R^2\setminus\{0\}$. מה נכון?
+    choices:
+      - text: '$\omega$ סגורה ואינה מדויקת על $U$'
+        correct: true
+        feedback: נכון.
+      - text: '$\omega$ אינה סגורה, ולכן אינה מדויקת'
+        feedback: >-
+          חישוב ישיר: $Q_x-P_y=\frac{y^2-x^2}{(x^2+y^2)^2}-\frac{y^2-x^2}{(x^2+y^2)^2}=0$. היא סגורה; האי-דיוק נובע מהצורה של
+          התחום.
+        misconception: MC-c8-dtheta-not-closed
+      - text: '$\omega$ סגורה, ולכן מדויקת: $\omega=d\theta$'
+        feedback: >-
+          $\theta$ אינה פונקציה רציפה על כל $U$: בסיבוב סביב הראשית היא "קופצת" ב-$2\pi$. מקומית $\omega=d\theta$, אבל לא
+          על כל $U$.
+        misconception: MC-c8-closed-implies-exact
+    reasons:
+      - text: '$d\omega=0$ בחישוב ישיר; אילו $\omega=df$ על $U$, האינטגרל על מעגל היחידה היה $f(\gamma(2\pi))-f(\gamma(0))=0$, אבל הוא $2\pi$'
+        correct: true
+        feedback: >-
+          בדיוק. אינטגרל על מסילה סגורה אחת שאינו אפס מספיק כדי לשלול דיוק.
+      - text: '$\omega$ אינה מוגדרת בראשית, ולכן אינה סגורה'
+        feedback: >-
+          סגירות נבדקת על התחום שבו התבנית מוגדרת, $U$, ושם $d\omega=0$ בכל נקודה.
+        misconception: MC-c8-dtheta-not-closed
+      - text: 'הזווית $\theta=\arctan\frac yx$ מקיימת $d\theta=\omega$ על כל $U$'
+        feedback: >-
+          $\arctan\frac yx$ אינה מוגדרת על הציר $x=0$, ואינה הזווית בחצי המישור $x<0$. אין פונקציה גזירה על **כל** $U$ עם
+          $df=\omega$, כפי שמראה האינטגרל על המעגל.
+        misconception: MC-c8-closed-implies-exact
+
+  - id: Q-8.6-offcentre
+    type: numeric
+    objectives: [OBJ-8.6-2]
+    level: mid
+    prompt: >-
+      חשבו $\oint_\gamma\frac{x\,dy-y\,dx}{x^2+y^2}$ כש-$\gamma$ המעגל שמרכזו $(3,0)$ ורדיוסו 1, נגד כיוון השעון.
+    answer: 0
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. המעגל נמצא בחצי המישור $x>0$, שהוא תחום כוכבי שאינו מכיל את הראשית. שם $\omega=d\theta$ עם
+      $\theta=\arctan\frac yx$ גזירה, ולכן האינטגרל על מסילה סגורה הוא אפס (או: גרין על העיגול, כי $d\omega=0$).
+    wrongFeedback: >-
+      האם המעגל מקיף את הראשית? בתחום כוכבי בלי הראשית התבנית מדויקת.
+    commonWrong:
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא האינטגרל על מסילה שמקיפה את הראשית פעם אחת. המעגל הזה אינו מקיף אותה, ומספר הסיבובים שלו סביבה אפס.
+        misconception: MC-c8-winding-always-2pi
+
+  - id: Q-8.6-slit
+    type: twotier
+    objectives: [OBJ-8.6-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $V=\mathbb R^2\setminus\{(x,0):x\le0\}$, המישור בלי הקרן השלילית של ציר $x$. האם $\omega=\frac{x\,dy-y\,dx}{x^2+y^2}$
+      מדויקת על $V$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. על $V$ הזווית הקוטבית $\theta\in(-\pi,\pi)$ היא פונקציה גזירה, ו-$d\theta=\omega$.
+      - text: 'לא, כי הראשית אינה ב-$V$'
+        feedback: >-
+          החסרה של הראשית אינה מספיקה כדי למנוע דיוק. מה שמנע אותו ב-$\mathbb R^2\setminus\{0\}$ היה מסילה סגורה שמקיפה
+          את הראשית, וב-$V$ אין כזו.
+        misconception: MC-c8-hole-means-not-exact
+    reasons:
+      - text: '$V$ כוכבי ביחס ל-$(1,0)$: הקטע מ-$(1,0)$ לכל נקודה של $V$ אינו פוגש את הקרן. $\omega$ סגורה, ולפי הלמה של פואנקרה מדויקת על $V$'
+        correct: true
+        feedback: >-
+          בדיוק. ואפשר גם במפורש: $\theta\in(-\pi,\pi)$ מוגדרת וגזירה על $V$. (קטע מ-$(1,0)$ לנקודה $(a,b)$ עם $b\ne0$
+          חוצה את $y=0$ רק ב-$(1,0)$ עצמה.)
+      - text: 'כל תבנית סגורה מדויקת על כל תחום'
+        feedback: >-
+          לא: על $\mathbb R^2\setminus\{0\}$ אותה תבנית סגורה ואינה מדויקת. התשובה כאן "כן" בגלל הצורה של $V$.
+        misconception: MC-c8-closed-implies-exact
+      - text: 'האינטגרל על מעגל היחידה הוא $2\pi$, ולכן לא'
+        feedback: >-
+          מעגל היחידה אינו מוכל ב-$V$: הוא חוצה את הקרן ב-$(-1,0)$. ב-$V$ אין מסילה סגורה שמקיפה את הראשית.
+        misconception: MC-c8-winding-always-2pi

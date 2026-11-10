@@ -1,0 +1,10 @@
+# Terms first defined in lesson 7.2 (Green's theorem). The positive orientation of a boundary belongs to lesson 6.4.
+- id: greens-theorem
+  term: משפט גרין
+  en: Green's theorem
+  symbol: '\oint_{\partial D}P\,dx+Q\,dy=\iint_D(Q_x-P_y)\,dx\,dy'
+  definition: >-
+    לתחום חסום $D$ במישור שהשפה שלו חלקה למקוטעין, ול-$P,Q$ מסדר $C^1$ בקבוצה פתוחה שמכילה את $D$ ואת שפתו:
+    $\oint_{\partial D}P\,dx+Q\,dy=\iint_D\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy$, כש-$\partial D$
+    בכיוון החיובי (התחום משמאל).
+  lesson: '7.2'

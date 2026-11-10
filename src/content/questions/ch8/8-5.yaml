@@ -1,0 +1,269 @@
+# Lesson 8.5 — the general Stokes theorem ∫_M dω = ∫_∂M ω and its special cases.
+# Objectives (src/course.ts):
+#   OBJ-8.5-1  state the general Stokes theorem: the integral of dω over a region equals the integral of ω over its boundary
+#   OBJ-8.5-2  obtain the fundamental theorem, Green, Stokes and Gauss as special cases
+#   OBJ-8.5-3  compute the integral of a form over the boundary of a parametrized surface with Stokes
+chapter: 8
+questions:
+  - id: Q-8.5-degree
+    type: mc
+    objectives: [OBJ-8.5-1]
+    level: basic
+    prompt: >-
+      **משפט סטוקס הכללי** אומר: אם $M$ תחום חסום ומכוון והשפה $\partial M$ מקבלת את הכיוון המושרה מהכיוון של $M$, אז
+      $\int_M d\omega=\int_{\partial M}\omega$ לכל תבנית חלקה $\omega$ מהסדר המתאים. עכשיו $M$ משטח מכוון ב-$\mathbb R^3$
+      שהשפה שלו מסילה סגורה. מאיזה סדר הן $\omega$ ו-$d\omega$?
+    choices:
+      - text: '$\omega$ מסדר 1 ו-$d\omega$ מסדר 2'
+        correct: true
+        feedback: >-
+          נכון: אינטגרל של תבנית מסדר 1 על מסילה, ושל תבנית מסדר 2 על משטח. זה משפט סטוקס של שיעור 7.4.
+      - text: '$\omega$ מסדר 2 ו-$d\omega$ מסדר 3'
+        feedback: >-
+          על מסילה (ממד 1) אין אינטגרל לתבנית מסדר 2, ועל משטח אין אינטגרל לתבנית מסדר 3.
+        misconception: MC-c8-stokes-degree
+      - text: '$\omega$ פונקציה ו-$d\omega$ מסדר 1'
+        feedback: >-
+          זה המשפט היסודי לאינטגרלים קוויים: $M$ מסילה והשפה שלה שתי נקודות. כאן $M$ משטח.
+        misconception: MC-c8-stokes-degree
+
+  - id: Q-8.5-state
+    type: mc
+    objectives: [OBJ-8.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזה מהניסוחים הבאים הוא הניסוח המדויק של משפט סטוקס הכללי? (בכולם $M$ חסום, ו-$\omega$ חלקה.)
+    choices:
+      - text: '$M$ מכוון מממד $k$, $\partial M$ בכיוון המושרה, $\omega$ מסדר $k-1$: $\int_M d\omega=\int_{\partial M}\omega$'
+        correct: true
+        feedback: >-
+          נכון. על התחום הנגזרת, על השפה התבנית עצמה, והכיוון של השפה נקבע מהכיוון של $M$. ההנחה ש-$M$ חסום אינה
+          קישוט: ב-$M=[0,\infty)$ עם $\omega=1$ אגף שמאל הוא $0$ ואגף ימין הוא מינוס 1, כי לשפה יש רק את נקודת
+          ההתחלה.
+      - text: '$M$ מכוון מממד $k$, $\partial M$ בכיוון המושרה, $\omega$ מסדר $k$: $\int_M\omega=\int_{\partial M}d\omega$'
+        feedback: >-
+          הפוך. על השפה, שממדה $k-1$, אפשר לבצע אינטגרל רק לתבנית מסדר $k-1$, ו-$d\omega$ מסדר גבוה ב-1 מ-$\omega$.
+        misconception: MC-c8-stokes-swapped
+      - text: '$M$ מכוון מממד $k$, $\partial M$ בכיוון המושרה, $\omega$ מסדר $k$: $\int_M d\omega=\int_{\partial M}\omega$'
+        feedback: >-
+          אם $\omega$ מסדר $k$ אז $d\omega$ מסדר $k+1$, ואין לה אינטגרל על $M$ מממד $k$. הסדר הוא $k-1$.
+        misconception: MC-c8-stokes-degree
+      - text: '$M$ מכוון מממד $k$, $\partial M$ בכל כיוון שבוחרים, $\omega$ מסדר $k-1$: $\int_M d\omega=\int_{\partial M}\omega$'
+        feedback: >-
+          היפוך הכיוון של השפה הופך את הסימן של אגף ימין בלבד, ולכן השוויון נכון רק בכיוון המושרה.
+        misconception: MC-c8-boundary-orientation
+
+  - id: Q-8.5-ftc
+    type: mc
+    objectives: [OBJ-8.5-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $M=[a,b]$ בכיוון של $x$ הגדל, ו-$\omega=f$ פונקציה (תבנית מסדר 0). מה אומר משפט סטוקס הכללי?
+    choices:
+      - text: '$\int_a^b f''(x)\,dx=f(b)-f(a)$, כי $\partial M$ היא $b$ עם סימן פלוס ו-$a$ עם סימן מינוס'
+        correct: true
+        feedback: >-
+          נכון: המשפט היסודי. $d f=f'(x)\,dx$, ו"אינטגרל" של פונקציה על נקודות מכוונות הוא סכום ערכיה עם הסימנים.
+      - text: '$\int_a^b f''(x)\,dx=f(b)+f(a)$'
+        feedback: >-
+          לנקודות הקצה יש כיוון: $b$ ביציאה (פלוס) ו-$a$ בכניסה (מינוס). בלי סימנים גם $f\equiv1$ הייתה נותנת
+          $0=2$.
+        misconception: MC-c8-ftc-no-sign
+      - text: 'המשפט אינו חל: לקטע אין שפה שהיא מסילה'
+        feedback: >-
+          ל-$M$ מממד 1 השפה מממד 0, נקודות. המשפט חל בכל ממד, ו-$\omega$ כאן מסדר $1-1=0$.
+        misconception: MC-c8-stokes-degree
+      - text: '$\int_a^b f''(x)\,dx=f(a)-f(b)$'
+        feedback: >-
+          הכיוון המושרה נותן פלוס לנקודה שבה $M$ "יוצא", $b$. הסימנים הפוכים כאן.
+        misconception: MC-c8-boundary-orientation
+
+  - id: Q-8.5-green
+    type: mc
+    objectives: [OBJ-8.5-2]
+    level: mid
+    prompt: >-
+      $D\subseteq\mathbb R^2$ תחום חסום עם שפה חלקה למקוטעין, ו-$\omega=P\,dx+Q\,dy$. מה נותן משפט סטוקס הכללי?
+    choices:
+      - text: '$\oint_{\partial D}P\,dx+Q\,dy=\iint_D(Q_x-P_y)\,dx\,dy$, כש-$\partial D$ בכיוון החיובי (התחום משמאל)'
+        correct: true
+        feedback: >-
+          נכון: משפט גרין. $d\omega=(Q_x-P_y)\,dx\wedge dy$, והכיוון הסטנדרטי של המישור משרה על השפה את הכיוון החיובי.
+      - text: '$\oint_{\partial D}P\,dx+Q\,dy=\iint_D(P_x+Q_y)\,dx\,dy$'
+        feedback: >-
+          $P_x+Q_y$ אינו $d\omega$: האיבר $P_x\,dx\wedge dx$ מתאפס. (הדיברגנץ במישור מופיע בגרסה של גרין לשטף, עם
+          תבנית אחרת, $P\,dy-Q\,dx$.)
+        misconception: MC-c8-d-is-div
+      - text: '$\oint_{\partial D}P\,dx+Q\,dy=\iint_D(P_y-Q_x)\,dx\,dy$'
+        feedback: >-
+          הסימן הפוך: $d(P\,dx)=P_y\,dy\wedge dx=-P_y\,dx\wedge dy$.
+        misconception: MC-c8-d-order-sign
+      - text: '$\oint_{\partial D}P\,dx+Q\,dy=\iint_D(Q_x-P_y)\,dx\,dy$, כש-$\partial D$ בכיוון השעון'
+        feedback: >-
+          בכיוון השעון אגף שמאל מחליף סימן. הכיוון המושרה הוא זה שהתחום משמאלו.
+        misconception: MC-c8-boundary-orientation
+
+  - id: Q-8.5-gauss
+    type: mc
+    objectives: [OBJ-8.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      משפט גאוס, $\oiint_{\partial B}F\cdot d\mathbf S=\iiint_B\nabla\cdot F\,dV$ עם הנורמל החיצוני, הוא משפט סטוקס הכללי
+      עם איזו בחירה?
+    choices:
+      - text: '$M=B$ תחום ב-$\mathbb R^3$ ו-$\omega=F_1\,dy\wedge dz+F_2\,dz\wedge dx+F_3\,dx\wedge dy$'
+        correct: true
+        feedback: >-
+          נכון. $d\omega=(\nabla\cdot F)\,dx\wedge dy\wedge dz$, והאינטגרל של $\omega$ על $\partial B$ הוא השטף. הנורמל
+          החיצוני הוא הכיוון המושרה על השפה.
+      - text: '$M$ משטח ו-$\omega=F_1\,dx+F_2\,dy+F_3\,dz$'
+        feedback: >-
+          זה משפט סטוקס של שיעור 7.4 (רוטור ושפה של משטח). בגאוס התחום הוא מממד 3 והשפה שלו משטח סגור.
+        misconception: MC-c8-special-case-mixup
+      - text: '$M=B$ ו-$\omega=F_1\,dx+F_2\,dy+F_3\,dz$'
+        feedback: >-
+          לתחום מממד 3 צריך $\omega$ מסדר 2. ל-$\omega$ מסדר 1 יש אינטגרל על מסילה, לא על המשטח $\partial B$.
+        misconception: MC-c8-stokes-degree
+      - text: '$M=\partial B$ ו-$\omega=(\nabla\cdot F)\,dx\wedge dy\wedge dz$'
+        feedback: >-
+          הנגזרת יושבת על התחום הגדול, והתבנית על השפה. כאן הפוך, וגם אין אינטגרל לתבנית מסדר 3 על משטח.
+        misconception: MC-c8-stokes-swapped
+
+  - id: Q-8.5-ball
+    type: numeric
+    objectives: [OBJ-8.5-2]
+    level: mid
+    prompt: >-
+      $S$ הספרה שמרכזה בראשית ורדיוסו 2, עם הנורמל החיצוני. חשבו $\int_S\big(x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy\big)$.
+    answer: 100.5309649
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $S=\partial B$ לכדור $B$ ברדיוס 2, ו-$d\omega=3\,dx\wedge dy\wedge dz$. לפי סטוקס (כאן: גאוס)
+      $\int_S\omega=3\cdot\frac43\pi\cdot2^3=32\pi\approx100.53$.
+    wrongFeedback: >-
+      חשבו את $d\omega$ (כל איבר תורם 1), והשתמשו בכך ש-$S$ היא השפה של הכדור.
+    commonWrong:
+      - value: -100.5309649
+        feedback: >-
+          זה האינטגרל עם הנורמל הפנימי. הכיוון המושרה על השפה של הכדור הוא החיצוני, וזה גם הכיוון הנתון.
+        misconception: MC-c8-boundary-orientation
+      - value: 0
+        feedback: >-
+          אפס היה נכון אילו $\omega=d\eta$ (אז $\int_{\partial B}d\eta=\int_B d(d\eta)=0$). כאן $\omega$ אינה כזו:
+          $d\omega=3\,dx\wedge dy\wedge dz\ne0$, וסטוקס מחליף את השפה בתחום, לא בשפה של השפה.
+        misconception: MC-c8-stokes-swapped
+
+  - id: Q-8.5-cap
+    type: numeric
+    objectives: [OBJ-8.5-3]
+    level: mid
+    prompt: >-
+      $M$ חצי הספרה העליונה $x^2+y^2+z^2=1$, $z\ge0$, עם הנורמל שמצביע החוצה מהראשית, ו-$\omega=z\,dx+x\,dy+y\,dz$.
+      חשבו את $\int_M d\omega$.
+    answer: 3.1415927
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. לפי סטוקס $\int_M d\omega=\oint_{\partial M}\omega$, והשפה היא מעגל היחידה במישור $z=0$, נגד כיוון השעון
+      כשמסתכלים מלמעלה (כלל יד ימין). שם $z=0$ ו-$dz=0$, ולכן נשאר $\oint x\,dy=\int_0^{2\pi}\cos^2t\,dt=\pi$. (ישירות:
+      $d\omega=dy\wedge dz+dz\wedge dx+dx\wedge dy$, שטף של $(1,1,1)$; רק הרכיב השלישי תורם, $\pi$.)
+    wrongFeedback: >-
+      במקום אינטגרל על חצי הספרה, השתמשו בסטוקס ועברו לשפה. מהי השפה, ובאיזה כיוון היא מושרית מהנורמל החיצוני?
+    commonWrong:
+      - value: -3.1415927
+        feedback: >-
+          זה האינטגרל על השפה בכיוון השעון. הנורמל החיצוני (כלפי מעלה בקודקוד) משרה את הכיוון נגד השעון כשמסתכלים מלמעלה.
+        misconception: MC-c8-boundary-orientation
+      - value: 0
+        feedback: >-
+          חצי הספרה אינה משטח סגור: יש לה שפה, מעגל, והאינטגרל עליו אינו אפס.
+        misconception: MC-c8-stokes-swapped
+
+  - id: Q-8.5-tilt
+    type: numeric
+    objectives: [OBJ-8.5-3]
+    level: mid
+    prompt: >-
+      $\varphi(u,v)=(u,\ v,\ u^2+3v)$ על עיגול היחידה $D$, $M=\varphi(D)$ בכיוון של $\varphi$, ו-$\omega=z\,dx+x\,dy$. חשבו
+      $\oint_{\partial M}\omega$ בעזרת משפט סטוקס.
+    answer: -6.2831853
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $d\omega=dz\wedge dx+dx\wedge dy$. משיכה לאחור: $\varphi^*dz=2u\,du+3\,dv$, ולכן $\varphi^*(dz\wedge dx)=3\,dv\wedge
+      du=-3\,du\wedge dv$, ו-$\varphi^*(dx\wedge dy)=du\wedge dv$. יחד $-2\,du\wedge dv$, ו-$\int_D(-2)=-2\pi$. בדיקה ישירה
+      על $\gamma(t)=(\cos t,\sin t,\cos^2t+3\sin t)$ נותנת אותו מספר.
+    wrongFeedback: >-
+      חשבו $d\omega$, משכו לאחור דרך $\varphi$ וסדרו לפי $du\wedge dv$. השפה מכוונת כתמונה של מעגל היחידה נגד כיוון השעון.
+    commonWrong:
+      - value: 12.5663706
+        feedback: >-
+          $4\pi$ מתקבל מ-$\varphi^*(dz\wedge dx)=+3\,du\wedge dv$: הסדר $dv\wedge du$ הוחלף בלי סימן.
+        misconception: MC-c8-wedge-commutes
+      - value: 6.2831853
+        feedback: >-
+          הסימן של כל התוצאה הפוך: השפה נלקחה בכיוון השעון, או ש-$d(z\,dx)$ נכתב $dx\wedge dz$.
+        misconception: MC-c8-d-order-sign
+      - value: 3.1415927
+        feedback: >-
+          $\pi$ הוא רק התרומה של $x\,dy$. גם $z\,dx$ תורם, כי $z$ משתנה לאורך השפה ו-$d(z\,dx)=dz\wedge dx\ne0$ על $M$.
+        misconception: MC-c8-pullback-forget-differential
+
+  - id: Q-8.5-reparam
+    type: twotier
+    objectives: [OBJ-8.5-3, OBJ-8.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סטודנטית מחשבת $\oint_{\partial M}\omega$ בעזרת סטוקס על $M=\varphi(D)$ ומקבלת $I$. סטודנט מחשב אותו דבר עם
+      $\psi(s,t)=\varphi(t,s)$ על התחום המשתקף, ומקבל $-I$. האם אחד מהם טעה?
+    choices:
+      - text: 'לא בהכרח: כל אחד חישב את האינטגרל על $\partial M$ בכיוון אחר'
+        correct: true
+        feedback: >-
+          נכון. $\psi$ משרה על $M$ את הכיוון ההפוך, ולכן גם על $\partial M$. שני השוויונות של סטוקס נכונים, וכל אחד
+          לכיוון שלו.
+      - text: 'כן, אחד מהם טעה: לאותו משטח ואותה תבנית יש תשובה אחת'
+        feedback: >-
+          לאותו משטח שני כיוונים, ולשפה שני כיווני מעבר. "התשובה" מוגדרת רק אחרי שבוחרים כיוון.
+        misconception: MC-c8-boundary-orientation
+    reasons:
+      - text: 'החלפת הפרמטרים הופכת גם את סימן $\det$ במשיכה לאחור (אגף שמאל) וגם את כיוון המעבר על $\partial M$ (אגף ימין)'
+        correct: true
+        feedback: >-
+          בדיוק: שני האגפים מתהפכים יחד, ולכן המשפט עקבי. כשמבקשים "את" האינטגרל, צריך לציין את כיוון השפה.
+      - text: 'הכיוון של השפה תמיד נגד השעון, ולכן רק אגף שמאל מחליף סימן'
+        feedback: >-
+          אילו כך היה, אחד השוויונות היה שגוי. הכיוון של $\partial M$ מושרה מהכיוון של $M$, ומתהפך איתו.
+        misconception: MC-c8-boundary-orientation
+      - text: 'האינטגרל של תבנית לא תלוי בפרמטריזציה, ולכן אחד מהם טעה בחשבון'
+        feedback: >-
+          הוא לא תלוי בפרמטריזציה **ששומרת כיוון**. $\psi$ הופכת כיוון, ולכן הסימן מתהפך.
+        misconception: MC-c8-orientation-abs-det
+
+  - id: Q-8.5-flip
+    type: numeric
+    objectives: [OBJ-8.5-3, OBJ-8.5-1]
+    level: exam
+    prompt: >-
+      $\varphi(u,v)=(v,\ u,\ u^2+v^2)$ על עיגול היחידה $D$, ו-$M=\varphi(D)$ בכיוון ש-$\varphi$ משרה. חשבו $\oint_{\partial M}x\,dy$,
+      כש-$\partial M$ בכיוון המושרה.
+    answer: -3.1415927
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $d(x\,dy)=dx\wedge dy$ ו-$\varphi^*(dx\wedge dy)=dv\wedge du=-du\wedge dv$, ולכן $\int_M d\omega=-\pi$. בדיקה:
+      $\partial M=\varphi(\cos t,\sin t)=(\sin t,\cos t,1)$ עובר את המעגל **בכיוון השעון** כשמסתכלים מלמעלה, ו-$\int_0^{2\pi}\sin
+      t\cdot(-\sin t)\,dt=-\pi$. הנורמל $\varphi_u\times\varphi_v=(2v,2u,-1)$ פונה למטה, בהתאם לכלל יד ימין.
+    wrongFeedback: >-
+      משכו את $dx\wedge dy$ דרך $\varphi$: שימו לב ש-$x=v$ ו-$y=u$. או חשבו את השפה ישירות כתמונה של המעגל נגד כיוון השעון.
+    commonWrong:
+      - value: 3.1415927
+        feedback: >-
+          $\pi$ הוא האינטגרל על המעגל נגד כיוון השעון (במבט מלמעלה). אבל $\varphi$ מחליפה את $u$ ו-$v$, $\det=-1$, והשפה
+          המושרית עוברת בכיוון השעון במבט מלמעלה.
+        misconception: MC-c8-boundary-orientation
+      - value: 0
+        feedback: >-
+          $d(x\,dy)=dx\wedge dy\ne0$, ולכן אין סיבה לאפס. (אפס היה מתקבל לתבנית $d f$.)
+        misconception: MC-c8-every-form-exact

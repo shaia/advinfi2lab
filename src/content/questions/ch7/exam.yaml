@@ -1,0 +1,587 @@
+# Chapter 7 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (part א of the final): 7 points, a verdict plus a written justification.
+# Long questions (parts ב, ג): 20 points in 3–4 lettered parts: state a theorem, prove it in an easy case, compute.
+chapter: 7
+questions:
+  - id: Q-7-exam-1
+    type: exam
+    title: שני חצאים של גליל
+    prompt: >-
+      $K=\{x^2+y^2\le1,\ |z|\le1\}$, ו-$\mathbf F$ שדה מסדר $C^1$ בקבוצה פתוחה שמכילה את $K$, כך ש-$\mathbf F=0$ בכל נקודה
+      של השפה $\partial K$. המישור $x=0$ חותך את $K$ לשני חלקים: $K_+$ (שבו $x\ge0$) ו-$K_-$ (שבו $x\le0$). האם ייתכן
+      ש-$\iiint_{K_+}\nabla\cdot\mathbf F\,dV=1$ וגם $\iiint_{K_-}\nabla\cdot\mathbf F\,dV=1$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-7.5-1]
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: לא ייתכן
+            correct: true
+            feedback: >-
+              נכון. שני האינטגרלים תמיד נגדיים זה לזה, ולכן לא שניהם שווים ל-1.
+          - text: ייתכן
+            feedback: >-
+              סכום שני האינטגרלים הוא $\iiint_K\nabla\cdot\mathbf F$, ולפי גאוס זה השטף דרך $\partial K$, שם $\mathbf F=0$. לכן
+              הסכום $0$, לא $2$.
+            misconception: MC-c7-split-region-same
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-7.5-1, OBJ-7.5-3]
+        qualitative: true
+        prompt: >-
+          נמקו: הראו מה הקשר בין שני האינטגרלים.
+        solution:
+          - kind: given
+            text: '$\mathbf F\in C^1$ סביב $K$, $\mathbf F=0$ על $\partial K$. נסמן $M=\{x=0,\ |y|\le1,\ |z|\le1\}$, פאת החיתוך.'
+          - kind: goal
+            text: 'למצוא את הקשר בין $\iiint_{K_+}\nabla\cdot\mathbf F$ ל-$\iiint_{K_-}\nabla\cdot\mathbf F$.'
+          - kind: idea
+            text: >-
+              מפעילים גאוס על כל חלק בנפרד. השפה של כל חלק היא חלק מ-$\partial K$ (שם השדה אפס) ועוד $M$, ו-$M$ מקבלת בשני
+              החלקים נורמלים חיצוניים הפוכים.
+          - kind: theorem
+            text: 'גאוס: לתחום חסום $R$ עם שפה חלקה למקוטעין ושדה מסדר $C^1$ סביבו, $\iiint_R\nabla\cdot\mathbf F\,dV=\oiint_{\partial R}\mathbf F\cdot d\mathbf S$ עם הנורמל החיצוני.'
+          - kind: step
+            text: >-
+              $\partial K_+$ = (החלק של $\partial K$ שבו $x\ge0$) $\cup\ M$, והנורמל החיצוני ל-$K_+$ על $M$ הוא $-\mathbf e_1$. על החלק
+              הראשון $\mathbf F=0$, ולכן $\iiint_{K_+}\nabla\cdot\mathbf F=-\iint_M F_1(0,y,z)\,dy\,dz$.
+          - kind: step
+            text: >-
+              באותו אופן ל-$K_-$ הנורמל החיצוני על $M$ הוא $+\mathbf e_1$, ולכן $\iiint_{K_-}\nabla\cdot\mathbf F=+\iint_M F_1(0,y,z)\,dy\,dz$.
+          - kind: check
+            text: >-
+              דוגמה שמראה שהערכים אינם חייבים להיות אפס: $\mathbf F=\big((1-x^2-y^2)(1-z^2),0,0\big)$ מתאפס על $\partial K$, ו-$\iint_M F_1=\frac43\cdot\frac43=\frac{16}9$,
+              ולכן האינטגרלים $-\frac{16}9$ ו-$\frac{16}9$. (ישירות: $\nabla\cdot\mathbf F=-2x(1-z^2)$, ועל $K_+$ מקבלים $-2\cdot\frac43\cdot\frac23$.)
+          - kind: result
+            text: >-
+              $\iiint_{K_-}\nabla\cdot\mathbf F=-\iiint_{K_+}\nabla\cdot\mathbf F$ תמיד; סכומם $0$. לכן לא ייתכן ששניהם שווים ל-1.
+        rubric:
+          - text: 'הפעלת גאוס על כל חלק בנפרד, עם תיאור נכון של השפה שלו (חלק מ-$\partial K$ ועוד פאת החיתוך)'
+            weight: 2
+          - text: 'שימוש ב-$\mathbf F=0$ על $\partial K$ כדי להשאיר רק את פאת החיתוך'
+            weight: 1
+          - text: 'הנורמלים החיצוניים על פאת החיתוך הפוכים בשני החלקים, ומכאן שהאינטגרלים נגדיים'
+            weight: 2
+          - text: 'מסקנה מפורשת: סכום $0$, ולכן $1+1$ בלתי אפשרי (מותר גם דרך גאוס על $K$ כולו)'
+            weight: 1
+
+  - id: Q-7-exam-2
+    type: exam
+    title: שתי מסילות סביב הראשית
+    prompt: >-
+      $\mathbf F=(P,Q)$ מסדר $C^1$ ב-$\mathbb R^2\setminus\{0\}$ ו-$Q_x=P_y$ שם. $E$ היא האליפסה $\frac{x^2}9+\frac{y^2}4=1$ ו-$S$ מעגל
+      היחידה, שתיהן נגד כיוון השעון. האם ייתכן ש-$\oint_E\mathbf F\cdot d\mathbf s=3$ ו-$\oint_S\mathbf F\cdot d\mathbf s=2$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-7.3-2]
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: לא ייתכן
+            correct: true
+            feedback: >-
+              נכון. שני האינטגרלים שווים, לכל שדה כזה.
+          - text: 'ייתכן, כי המסילות שונות'
+            feedback: >-
+              לשדה עם $Q_x=P_y$ האינטגרל על מסילה סגורה פשוטה סביב הראשית לא תלוי במסילה: גרין על התחום שביניהן נותן אפס.
+            misconception: MC-c7-winding-depends-on-curve
+          - text: 'ייתכן, כי התחום אינו פשוט קשר ולכן אין שום קשר בין האינטגרלים'
+            feedback: >-
+              התחום אינו פשוט קשר, ולכן האינטגרלים לא חייבים להיות $0$; אבל הם חייבים להיות **שווים** זה לזה.
+            misconception: MC-c7-green-singularity
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-7.3-2, OBJ-7.2-1]
+        qualitative: true
+        prompt: >-
+          נמקו.
+        solution:
+          - kind: given
+            text: '$\mathbf F\in C^1(\mathbb R^2\setminus\{0\})$, $Q_x-P_y=0$ שם; $S$ בתוך $E$ (כי $3>1$ ו-$2>1$).'
+          - kind: idea
+            text: >-
+              גרין לא חל על הפנים של $E$, כי הראשית שם. הוא כן חל על התחום שבין $S$ ל-$E$, שאינו מכיל את הראשית.
+          - kind: step
+            text: >-
+              נסמן $D=\{\frac{x^2}9+\frac{y^2}4\le1,\ x^2+y^2\ge1\}$. הראשית אינה ב-$D$, ולכן $P,Q\in C^1$ בקבוצה פתוחה שמכילה את $D$.
+          - kind: step
+            text: >-
+              השפה של $D$ בכיוון החיובי (התחום משמאל): $E$ נגד כיוון השעון ו-$S$ עם כיוון השעון.
+          - kind: theorem
+            text: 'גרין: $\oint_E\mathbf F\cdot d\mathbf s-\oint_S\mathbf F\cdot d\mathbf s=\iint_D(Q_x-P_y)\,dx\,dy=0$ (שתי המסילות נגד כיוון השעון).'
+          - kind: result
+            text: '$\oint_E=\oint_S$ לכל שדה כזה, ולכן $3$ ו-$2$ לא ייתכנו. (הערכים עצמם יכולים להיות שונים מ-$0$: לשדה הסיבוב שניהם $2\pi$.)'
+        rubric:
+          - text: 'בחירת התחום שבין שתי המסילות, ובדיקה שהשדה מסדר $C^1$ עליו (הראשית מחוצה לו)'
+            weight: 2
+          - text: 'הכיוון החיובי של שתי השפות: החיצונית נגד כיוון השעון, הפנימית עם כיוון השעון'
+            weight: 2
+          - text: 'המסקנה מגרין: שני האינטגרלים שווים, ולכן התשובה "לא"'
+            weight: 1
+
+  - id: Q-7-exam-3
+    type: exam
+    title: שטף רוטור דרך שני חצאי ספרה
+    prompt: >-
+      $\mathbf F$ מסדר $C^1$ ב-$\mathbb R^3$. $H_+$ ו-$H_-$ הם חצאי ספרת היחידה העליון והתחתון, שניהם עם הנורמל החיצוני. האם
+      ייתכן ש-$\iint_{H_+}(\nabla\times\mathbf F)\cdot d\mathbf S=2$ ו-$\iint_{H_-}(\nabla\times\mathbf F)\cdot d\mathbf S=3$?
+    parts:
+      - label: א
+        points: 3
+        type: twotier
+        objectives: [OBJ-7.4-1]
+        qualitative: true
+        prompt: >-
+          מה התשובה, ומה הסיבה?
+        choices:
+          - text: לא ייתכן
+            correct: true
+            feedback: נכון. שני השטפים תמיד נגדיים.
+          - text: ייתכן
+            feedback: >-
+              לשני החצאים אותה שפה, וסטוקס קושר כל שטף לאינטגרל עליה. השטפים לא חופשיים.
+            misconception: MC-c7-closed-curl-flux
+        reasons:
+          - text: 'עם הנורמל החיצוני, כלל יד ימין נותן לקו המשווה כיוונים הפוכים בשני החצאים, ולכן שני השטפים נגדיים'
+            correct: true
+            feedback: >-
+              בדיוק. $2$ ו-$-2$ היו אפשריים; $2$ ו-$3$ לא.
+          - text: 'לשני החצאים אותה שפה, ולכן לפי סטוקס השטפים שווים'
+            feedback: >-
+              המסקנה "לא ייתכן" נכונה, אבל הנימוק לא: השפה אותה שפה, אבל עם הנורמל החיצוני היא נעברת בכיוונים **הפוכים**, והשטפים
+              נגדיים, לא שווים.
+            misconception: MC-c7-right-hand-rule
+          - text: 'השטף של רוטור דרך כל משטח הוא אפס'
+            feedback: >-
+              רק דרך משטח **סגור**. דרך חצי ספרה השטף הוא האינטגרל על קו המשווה, ולשדה $(-y,x,0)$ הוא $2\pi$.
+            misconception: MC-c7-closed-curl-flux
+      - label: ב
+        points: 4
+        type: open
+        objectives: [OBJ-7.4-1, OBJ-7.4-3]
+        qualitative: true
+        prompt: >-
+          הוכיחו את מה שבחרתם.
+        solution:
+          - kind: given
+            text: '$\mathbf F\in C^1(\mathbb R^3)$; $C$ מעגל היחידה במישור $z=0$, ו-$C^+$ הוא $C$ נגד כיוון השעון מלמעלה.'
+          - kind: idea
+            text: 'לשני המשטחים אותה שפה $C$. סטוקס לכל אחד, עם הכיוון שכלל יד ימין נותן לו.'
+          - kind: step
+            text: >-
+              ב-$H_+$, בנקודה $(1,0,0)$ הנורמל החיצוני $\mathbf e_1$ והמשטח מעל הנקודה. עם $\mathbf t=\mathbf e_2$, הכיוון של
+              $C^+$ שם, $\hat{\mathbf N}\times\mathbf t=\mathbf e_3$ מצביע אל המשטח, ולכן הכיוון המתואם הוא $C^+$. לפי סטוקס
+              $\iint_{H_+}(\nabla\times\mathbf F)\cdot d\mathbf S=\oint_{C^+}\mathbf F\cdot d\mathbf s$.
+          - kind: step
+            text: >-
+              ב-$H_-$ המשטח מתחת ל-$(1,0,0)$: $\mathbf e_1\times\mathbf e_2=\mathbf e_3$ מצביע הרחק ממנו, והכיוון המתואם הפוך: $\iint_{H_-}(\nabla\times\mathbf F)\cdot d\mathbf S=-\oint_{C^+}\mathbf F\cdot d\mathbf s$.
+          - kind: result
+            text: 'סכום השטפים $0$ לכל $\mathbf F$. לכן $2+3\ne0$ בלתי אפשרי.'
+        rubric:
+          - text: 'ניסוח סטוקס לכל חצי, עם השפה המשותפת'
+            weight: 1
+          - text: 'קביעת הכיוון של השפה בכל חצי לפי כלל יד ימין, והראיה שהכיוונים הפוכים'
+            weight: 2
+          - text: 'המסקנה: השטפים נגדיים, ולכן הזוג $2,3$ בלתי אפשרי'
+            weight: 1
+
+  - id: Q-7-exam-4
+    type: exam
+    title: שדה בלי דיברגנץ וספרה רחוקה
+    prompt: >-
+      $\mathbf F$ מסדר $C^1$ ב-$\mathbb R^3\setminus\{0\}$, ו-$\nabla\cdot\mathbf F=0$ שם. השטף החוצה של $\mathbf F$ דרך ספרת היחידה
+      הוא $4\pi$. האם ייתכן שהשטף החוצה דרך הספרה ברדיוס 2 שמרכזה $(5,0,0)$ הוא $1$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-7.6-2]
+        prompt: >-
+          מה התשובה?
+        choices:
+          - text: לא ייתכן
+            correct: true
+            feedback: נכון. הספרה הזו לא מקיפה את הראשית, והשטף דרכה $0$.
+          - text: 'ייתכן, כי השדה לא מוגדר בראשית ולכן גאוס לא חל בכלל'
+            feedback: >-
+              גאוס לא חל על תחום שמכיל את הראשית. הכדור שמרכזו $(5,0,0)$ וברדיוס 2 רחוק ממנה, ושם הוא חל.
+            misconception: MC-c7-gauss-singularity
+          - text: 'ייתכן, כי השטף דרך ספרה תלוי ברדיוס ובמקום שלה'
+            feedback: >-
+              לשדה עם דיברגנץ אפס השטף דרך משטח סגור תלוי רק בשאלה אם הוא מקיף את הראשית: $4\pi$ אם כן (לפי הנתון), $0$ אם לא.
+            misconception: MC-c7-inverse-square-scales
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-7.6-2, OBJ-7.5-1]
+        qualitative: true
+        prompt: >-
+          נמקו.
+        solution:
+          - kind: given
+            text: '$B=\{\|\mathbf x-(5,0,0)\|\le2\}$, הכדור הסגור שהספרה חוסמת.'
+          - kind: idea
+            text: 'אם הראשית מחוץ ל-$B$, גאוס חל על $B$, והאינטגרל של הדיברגנץ אפס.'
+          - kind: check
+            text: 'המרחק של הראשית מ-$(5,0,0)$ הוא $5>2$, ולכן $0\notin B$, ו-$\mathbf F\in C^1$ בקבוצה פתוחה שמכילה את $B$.'
+          - kind: theorem
+            text: 'גאוס: $\oiint_{\partial B}\mathbf F\cdot d\mathbf S=\iiint_B\nabla\cdot\mathbf F\,dV=\iiint_B0\,dV=0$, עם הנורמל החיצוני.'
+          - kind: result
+            text: 'השטף דרך הספרה הוא $0\ne1$: לא ייתכן. הנתון על ספרת היחידה לא משנה כאן (הוא מתאים, למשל, ל-$\frac{\mathbf x}{\|\mathbf x\|^3}$).'
+        rubric:
+          - text: 'בדיקה מפורשת שהראשית מחוץ לכדור, ולכן תנאי גאוס מתקיימים'
+            weight: 2
+          - text: 'הפעלת גאוס ומסקנה שהשטף $0$'
+            weight: 2
+          - text: 'הבנה שהנתון $4\pi$ לא סותר את זה (הוא על משטח שמקיף את הראשית)'
+            weight: 1
+
+  - id: Q-7-exam-5
+    type: exam
+    title: משפט גרין, שטח ושדה הסיבוב
+    prompt: >-
+      בשאלה זו $\gamma(t)=(\cos^3t,\ \sin t)$, $0\le t\le2\pi$, מסילה סגורה פשוטה, ו-$D$ התחום שהיא חוסמת.
+    parts:
+      - label: א
+        points: 5
+        type: open
+        objectives: [OBJ-7.2-1]
+        qualitative: true
+        prompt: >-
+          נסחו את משפט גרין, כולל ההנחות והכיוון של השפה.
+        solution:
+          - kind: theorem
+            text: >-
+              יהי $D\subset\mathbb R^2$ תחום חסום שהשפה שלו $\partial D$ איחוד סופי של מסילות סגורות פשוטות, חלקות למקוטעין, ויהיו
+              $P,Q$ מסדר $C^1$ בקבוצה פתוחה שמכילה את $D\cup\partial D$.
+          - kind: definition
+            text: >-
+              הכיוון החיובי של $\partial D$: מי שהולך על השפה בכיוון הזה רואה את $D$ משמאלו (החיצונית נגד כיוון השעון,
+              שפות של חורים עם כיוון השעון).
+          - kind: result
+            text: 'אז $\oint_{\partial D}P\,dx+Q\,dy=\iint_D\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy$, כש-$\partial D$ בכיוון החיובי.'
+        rubric:
+          - text: 'השוויון עם $Q_x-P_y$ (בסדר הנכון)'
+            weight: 2
+          - text: 'הכיוון החיובי של השפה ("התחום משמאל")'
+            weight: 2
+          - text: 'ההנחות: $P,Q\in C^1$ על קבוצה פתוחה שמכילה את התחום ושפתו; שפה חלקה למקוטעין'
+            weight: 1
+      - label: ב
+        points: 7
+        type: open
+        objectives: [OBJ-7.2-2]
+        prompt: >-
+          הוכיחו את משפט גרין כש-$D$ הוא מלבן $[a,b]\times[c,d]$.
+        solution:
+          - kind: goal
+            text: '$\oint_{\partial D}P\,dx=-\iint_D P_y$ ו-$\oint_{\partial D}Q\,dy=\iint_D Q_x$, ובחיבור גרין.'
+          - kind: idea
+            text: 'פוביני הופך כל אינטגרל כפול לאינטגרל חוזר, והמשפט היסודי בפנים משאיר רק את ערכי הפונקציה על שתי צלעות נגדיות.'
+          - kind: computation
+            text: >-
+              $\iint_D P_y\,dx\,dy=\int_a^b\left(\int_c^d P_y(x,y)\,dy\right)dx=\int_a^b\big(P(x,d)-P(x,c)\big)\,dx$.
+          - kind: computation
+            text: >-
+              בכיוון החיובי: הצלע התחתונה $(x,c)$, $x$ מ-$a$ ל-$b$, נותנת $\int_a^b P(x,c)\,dx$; העליונה, מ-$b$ ל-$a$, נותנת
+              $-\int_a^b P(x,d)\,dx$; על הצלעות האנכיות $x$ קבוע, $dx=0$, והן תורמות $0$. לכן $\oint P\,dx=-\iint_D P_y$.
+          - kind: step
+            text: >-
+              באותו אופן, עם $y$ ו-$x$ בתפקידים מוחלפים: $\iint_D Q_x=\int_c^d\big(Q(b,y)-Q(a,y)\big)\,dy$; הצלע הימנית (למעלה)
+              נותנת $\int_c^d Q(b,y)\,dy$, השמאלית (למטה) $-\int_c^d Q(a,y)\,dy$, והאופקיות $0$.
+          - kind: result
+            text: 'בחיבור: $\oint_{\partial D}P\,dx+Q\,dy=\iint_D(Q_x-P_y)\,dx\,dy$.'
+        rubric:
+          - text: 'פוביני והמשפט היסודי בחלק של $P$, עם $P(x,d)-P(x,c)$'
+            weight: 2
+          - text: 'חישוב האינטגרל על ארבע הצלעות, עם הכיוונים הנכונים והנימוק לאפס על הצלעות האנכיות'
+            weight: 3
+          - text: 'החלק של $Q$ (מפורש, או "באותו אופן" עם תיאור ההחלפה) והחיבור'
+            weight: 2
+      - label: ג
+        points: 5
+        type: numeric
+        objectives: [OBJ-7.3-1]
+        prompt: >-
+          חשבו את השטח של $D$.
+        answer: 2.3561945
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\frac{3\pi}4$. $\gamma$ עוברת נגד כיוון השעון ($(1,0)\to(0,1)\to(-1,0)$), ולכן השטח
+          $\oint x\,dy=\int_0^{2\pi}\cos^3t\cdot\cos t\,dt=\int_0^{2\pi}\cos^4t\,dt=\frac{3\pi}4$.
+        wrongFeedback: >-
+          הנוסחה הנוחה כאן היא $\oint_{\partial D}x\,dy$. בדקו את כיוון המסילה, וזכרו ש-$\int_0^{2\pi}\cos^4t\,dt=\frac{3\pi}4$.
+        commonWrong:
+          - value: 1.1780972
+            feedback: >-
+              $\frac{3\pi}8$: חציתם את $\oint x\,dy$. החצי שייך רק לנוסחה הסימטרית $\frac12\oint(x\,dy-y\,dx)$.
+            misconception: MC-c7-area-double
+          - value: -2.3561945
+            feedback: >-
+              השטח חיובי, והמסילה בכיוון החיובי. בדקו את הסימן של $x\,y'=\cos^4t\ge0$.
+            misconception: MC-c7-area-always-positive
+      - label: ד
+        points: 3
+        type: twotier
+        objectives: [OBJ-7.3-2]
+        qualitative: true
+        prompt: >-
+          מהו $\oint_\gamma\frac{-y\,dx+x\,dy}{x^2+y^2}$?
+        choices:
+          - text: '$2\pi$'
+            correct: true
+            feedback: נכון. $\gamma$ מסילה סגורה פשוטה שמקיפה את הראשית נגד כיוון השעון.
+          - text: '$0$'
+            feedback: >-
+              הראשית בתוך $D$, ושם השדה לא מוגדר; גרין על $D$ לא חל.
+            misconception: MC-c7-green-singularity
+          - text: 'השטח של $D$ כפול 2'
+            feedback: >-
+              פעמיים השטח מתקבל מ-$\oint(-y\,dx+x\,dy)$ **בלי** המכנה. עם המכנה $x^2+y^2$ התשובה לא תלויה במסילה.
+            misconception: MC-c7-winding-depends-on-curve
+        reasons:
+          - text: 'גרין על התחום שבין $\gamma$ למעגל קטן סביב הראשית נותן $0$, ולכן האינטגרל שווה לזה של המעגל, $2\pi$'
+            correct: true
+            feedback: בדיוק.
+          - text: 'הרוטור המישורי של השדה אפס, ולכן האינטגרל על כל מסילה סגורה אפס'
+            feedback: >-
+              זה נכון בתחום פשוט קשר. $\mathbb R^2\setminus\{0\}$ אינו כזה, ו-$\gamma$ מקיפה את החור.
+            misconception: MC-c6-mixed-partials-suffice
+
+  - id: Q-7-exam-6
+    type: exam
+    title: משפט סטוקס על חתך משופע של גליל
+    prompt: >-
+      $C$ היא החיתוך של הגליל $x^2+y^2=4$ עם המישור $z=3-x$, נגד כיוון השעון כשמסתכלים מלמעלה, ו-$\mathbf F=(z,\ 2x-z,\ y^2)$.
+    parts:
+      - label: א
+        points: 4
+        type: open
+        objectives: [OBJ-7.4-1]
+        qualitative: true
+        prompt: >-
+          נסחו את משפט סטוקס, כולל ההנחות והקשר בין כיוון השפה לנורמל.
+        solution:
+          - kind: theorem
+            text: >-
+              יהי $S$ משטח קומפקטי, מכוון וחלק למקוטעין, עם נורמל יחידה רציף $\hat{\mathbf N}$, שהשפה שלו $\partial S$ מסילה
+              סגורה (או כמה) חלקה למקוטעין, ויהי $\mathbf F$ מסדר $C^1$ בקבוצה פתוחה שמכילה את $S\cup\partial S$.
+          - kind: definition
+            text: >-
+              הכיוון של $\partial S$ מתואם עם $\hat{\mathbf N}$ (כלל יד ימין): בכל נקודה של השפה, בכיוון ההתקדמות $\mathbf t$,
+              הווקטור $\hat{\mathbf N}\times\mathbf t$ מצביע אל תוך $S$ (מי שהולך על השפה כשראשו בכיוון $\hat{\mathbf N}$ רואה את
+              $S$ משמאלו).
+          - kind: result
+            text: 'אז $\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S=\oint_{\partial S}\mathbf F\cdot d\mathbf s$.'
+        rubric:
+          - text: 'השוויון: שטף של רוטור = אינטגרל קווי על השפה'
+            weight: 2
+          - text: 'כלל יד ימין בין $\hat{\mathbf N}$ לכיוון השפה'
+            weight: 1
+          - text: 'ההנחות: משטח מכוון חלק, שפה חלקה למקוטעין, $\mathbf F\in C^1$'
+            weight: 1
+      - label: ב
+        points: 8
+        type: open
+        objectives: [OBJ-7.4-2]
+        prompt: >-
+          הוכיחו את המשפט עבור $S$ שהוא גרף של $f\in C^2$ מעל תחום $D$ שגרין חל עליו, עם הנורמל כלפי מעלה, ועבור שדה מהצורה
+          $(P,0,0)$. (שאר הרכיבים באותו אופן.)
+        solution:
+          - kind: idea
+            text: 'מורידים את שני הצדדים ל-$D$ דרך הפרמטריזציה $\sigma(x,y)=(x,y,f(x,y))$, ומפעילים את גרין על $D$; כלל השרשרת מתאים את המחוברים.'
+          - kind: computation
+            text: >-
+              $\sigma_x\times\sigma_y=(-f_x,-f_y,1)$ (כלפי מעלה), ו-$\nabla\times(P,0,0)=(0,P_z,-P_y)$. לכן
+              $\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S=\iint_D\big(-P_z f_y-P_y\big)\,dx\,dy$, כש-$P$ ונגזרותיו ב-$(x,y,f(x,y))$.
+          - kind: step
+            text: >-
+              עם נורמל כלפי מעלה, הכיוון המתואם של $\partial S$ הוא התמונה של $\partial D$ בכיוון החיובי: לנורמל
+              $(-f_x,-f_y,1)$ רכיב שלישי חיובי, ולכן ההטלה למישור $xy$ שומרת על "המשטח משמאל" במבט מלמעלה. אם $(x(t),y(t))$ מתאר
+              את $\partial D$, אז $\partial S$ היא $(x(t),y(t),f(x(t),y(t)))$, ו-$\oint_{\partial S}P\,dx=\oint_{\partial D}\tilde P\,dx$
+              עם $\tilde P(x,y)=P(x,y,f(x,y))$.
+          - kind: theorem
+            text: 'גרין על $D$ ל-$\tilde P\in C^1$: $\oint_{\partial D}\tilde P\,dx=-\iint_D\tilde P_y\,dx\,dy$.'
+          - kind: computation
+            text: 'כלל השרשרת: $\tilde P_y=P_y+P_z f_y$.'
+          - kind: result
+            text: '$\oint_{\partial S}P\,dx=\iint_D(-P_y-P_z f_y)\,dx\,dy=\iint_S\nabla\times(P,0,0)\cdot d\mathbf S$.'
+        rubric:
+          - text: 'הנורמל $(-f_x,-f_y,1)$ והרוטור $(0,P_z,-P_y)$, וצד השטף כאינטגרל על $D$'
+            weight: 2
+          - text: 'הורדת האינטגרל הקווי ל-$\partial D$, עם הנימוק לכיוון החיובי'
+            weight: 2
+          - text: 'הפעלת גרין על $\tilde P$'
+            weight: 2
+          - text: 'כלל השרשרת עם המחובר $P_z f_y$, והשוואה מסכמת'
+            weight: 2
+      - label: ג
+        points: 5
+        type: numeric
+        objectives: [OBJ-7.4-3]
+        prompt: >-
+          חשבו את $\oint_C\mathbf F\cdot d\mathbf s$.
+        answer: 37.6991118
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $12\pi$. $\nabla\times\mathbf F=(2y+1,\ 1,\ 2)$. המשטח: הגרף של $f=3-x$ מעל העיגול $x^2+y^2\le4$, נורמל כלפי מעלה
+          $(-f_x,-f_y,1)=(1,0,1)$. השטף $\iint(2y+1+2)\,dx\,dy=0+3\cdot4\pi$.
+        wrongFeedback: >-
+          חשבו את הרוטור, ובחרו כמשטח את החלק של המישור $z=3-x$ בתוך הגליל, עם $d\mathbf S=(\sigma_x\times\sigma_y)\,dx\,dy$.
+        commonWrong:
+          - value: -37.6991118
+            feedback: >-
+              הסימן הפוך: נגד כיוון השעון מלמעלה מתאים לנורמל עם רכיב שלישי חיובי, $(1,0,1)$.
+            misconception: MC-c7-right-hand-rule
+          - value: 26.6572976
+            feedback: >-
+              $6\sqrt2\pi$: השתמשתם בנורמל היחידה $\frac{(1,0,1)}{\sqrt2}$ ושילבתם לפי $dx\,dy$. עם $dx\,dy$ צריך את $(1,0,1)$ עצמו.
+            misconception: MC-c7-unit-normal-dA
+          - value: 25.1327412
+            feedback: >-
+              $8\pi$: לקחתם רק את הרכיב השלישי של הרוטור, כאילו הנורמל $\mathbf e_3$. כאן המשטח משופע, והרכיב הראשון תורם עוד $4\pi$.
+            misconception: MC-c7-flux-depends-only-on-boundary
+      - label: ד
+        points: 3
+        type: twotier
+        objectives: [OBJ-7.4-3]
+        qualitative: true
+        prompt: >-
+          $S'$ הוא משטח מכוון אחר ששפתו $C$, עם כיוון מתואם לכיוון הנתון של $C$ (למשל: המעטפת של הגליל מתחת ל-$C$ יחד עם
+          העיגול בבסיס $z=-10$). מהו $\iint_{S'}(\nabla\times\mathbf F)\cdot d\mathbf S$?
+        choices:
+          - text: '$12\pi$'
+            correct: true
+            feedback: נכון.
+          - text: 'אי אפשר לדעת בלי לחשב על $S''$'
+            feedback: >-
+              לפי סטוקס השטף של רוטור דרך כל משטח כזה שווה לאותו אינטגרל קווי.
+            misconception: MC-c7-flux-depends-only-on-boundary
+          - text: '$-12\pi$, כי המשטח פונה למטה'
+            feedback: >-
+              הכיוון של $S'$ נבחר מתואם לכיוון הנתון של $C$, ולכן הסימן לא מתהפך.
+            misconception: MC-c7-right-hand-rule
+        reasons:
+          - text: 'שני השטפים שווים ל-$\oint_C\mathbf F\cdot d\mathbf s$ לפי סטוקס, ו-$\mathbf F$ פולינומי, מסדר $C^1$ בכל המרחב'
+            correct: true
+            feedback: בדיוק.
+          - text: 'לכל שדה, השטף דרך משטחים עם אותה שפה שווה'
+            feedback: >-
+              רק לשדה שהוא רוטור. $(x,y,z)$ נותן $2\pi$ דרך חצי ספרת היחידה ו-$0$ דרך עיגול היחידה.
+            misconception: MC-c7-flux-depends-only-on-boundary
+
+  - id: Q-7-exam-7
+    type: exam
+    title: משפט גאוס ושדה ריבוע-הפוך
+    prompt: >-
+      $\mathbf F(\mathbf x)=\frac{\mathbf x}{\|\mathbf x\|^3}$ ב-$\mathbb R^3\setminus\{0\}$, ו-$E$ האליפסואיד $\frac{x^2}4+\frac{y^2}9+z^2=1$.
+      כל השטפים עם הנורמל החיצוני.
+    parts:
+      - label: א
+        points: 4
+        type: open
+        objectives: [OBJ-7.5-1]
+        qualitative: true
+        prompt: >-
+          נסחו את משפט גאוס.
+        solution:
+          - kind: theorem
+            text: >-
+              יהי $R\subset\mathbb R^3$ תחום חסום שהשפה שלו $\partial R$ משטח סגור חלק למקוטעין, ויהי $\mathbf F$ מסדר $C^1$ בקבוצה
+              פתוחה שמכילה את $R\cup\partial R$.
+          - kind: result
+            text: 'אז $\oiint_{\partial R}\mathbf F\cdot d\mathbf S=\iiint_R\nabla\cdot\mathbf F\,dV$, עם הנורמל החיצוני ל-$R$.'
+        rubric:
+          - text: 'השוויון: שטף דרך השפה = אינטגרל משולש של הדיברגנץ'
+            weight: 2
+          - text: 'הנורמל החיצוני'
+            weight: 1
+          - text: 'ההנחות: תחום חסום, שפה חלקה למקוטעין, שדה מסדר $C^1$ על התחום כולו'
+            weight: 1
+      - label: ב
+        points: 8
+        type: open
+        objectives: [OBJ-7.6-2, OBJ-7.5-3]
+        prompt: >-
+          הוכיחו ש-$\oiint_E\mathbf F\cdot d\mathbf S=4\pi$.
+        solution:
+          - kind: idea
+            text: >-
+              גאוס לא חל על הפנים של $E$, כי הראשית שם. מוציאים כדור קטן סביב הראשית, מפעילים גאוס על מה שנשאר, ומחשבים את הספרה
+              הקטנה ישירות.
+          - kind: computation
+            text: >-
+              מחוץ לראשית, לפי כלל המכפלה, $\nabla\cdot\frac{\mathbf x}{\|\mathbf x\|^3}=\frac{3}{\|\mathbf x\|^3}+\mathbf x\cdot\left(-3\frac{\mathbf x}{\|\mathbf x\|^5}\right)=0$.
+          - kind: step
+            text: >-
+              כל נקודה של $E$ במרחק $1$ לפחות מהראשית ($\frac{x^2}4+\frac{y^2}9+z^2\le x^2+y^2+z^2$). נבחר $\varepsilon=\frac12$
+              ואת $R$: הפנים של $E$ בלי הכדור $\|\mathbf x\|<\varepsilon$. הראשית אינה ב-$R$, ו-$\mathbf F\in C^1$ סביבו.
+          - kind: theorem
+            text: >-
+              גאוס על $R$: $\partial R=E\cup S_\varepsilon$, עם הנורמל החיצוני ל-$R$: על $E$ החוצה, על $S_\varepsilon$ **לכיוון הראשית**.
+              לכן $\oiint_E\mathbf F\cdot d\mathbf S-\oiint_{S_\varepsilon}\mathbf F\cdot d\mathbf S=\iiint_R0=0$, כששני השטפים החוצה מהראשית.
+          - kind: computation
+            text: >-
+              על $S_\varepsilon$: $\hat{\mathbf N}=\frac{\mathbf x}{\varepsilon}$ ו-$\mathbf F\cdot\hat{\mathbf N}=\frac{\varepsilon^2}{\varepsilon^3\cdot\varepsilon}=\frac1{\varepsilon^2}$,
+              ולכן השטף $\frac{1}{\varepsilon^2}\cdot4\pi\varepsilon^2=4\pi$.
+          - kind: result
+            text: '$\oiint_E\mathbf F\cdot d\mathbf S=4\pi$.'
+        rubric:
+          - text: 'הנימוק למה אי אפשר להפעיל גאוס ישירות על הפנים של $E$'
+            weight: 1
+          - text: 'חישוב $\nabla\cdot\mathbf F=0$ מחוץ לראשית'
+            weight: 2
+          - text: 'גאוס על התחום שבין $E$ לספרה קטנה, עם הנורמל של הספרה הקטנה לכיוון הראשית'
+            weight: 3
+          - text: 'חישוב ישיר של השטף דרך הספרה הקטנה, $4\pi$, והמסקנה'
+            weight: 2
+      - label: ג
+        points: 3
+        type: numeric
+        objectives: [OBJ-7.6-2]
+        prompt: >-
+          חשבו את השטף של $\mathbf F$ דרך הספרה ברדיוס 1 שמרכזה $(3,0,0)$.
+        answer: 0
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. הראשית במרחק $3>1$ מהמרכז, מחוץ לכדור הסגור, ולכן לפי גאוס השטף $\iiint0=0$.
+        wrongFeedback: >-
+          בדקו אם הספרה מקיפה את הראשית, ואם לא, הפעילו גאוס על הכדור שהיא חוסמת.
+        commonWrong:
+          - value: 12.5663706
+            feedback: >-
+              $4\pi$ הוא השטף דרך משטח שמקיף את הראשית. הספרה הזו לא מקיפה אותה.
+            misconception: MC-c7-inverse-square-always-4pi
+      - label: ד
+        points: 5
+        type: numeric
+        objectives: [OBJ-7.6-3, OBJ-7.6-2]
+        prompt: >-
+          חשבו את השטף של $\mathbf F$ דרך החצי העליון של $E$ (החלק שבו $z\ge0$, בלי הבסיס), עם הנורמל החיצוני.
+        answer: 6.2831853
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $2\pi$. השיקוף $\rho(x,y,z)=(x,y,-z)$ מעביר את החצי העליון לתחתון, $\mathbf F(\rho\mathbf x)=\rho\,\mathbf F(\mathbf x)$, והוא מעביר
+          נורמל חיצוני לנורמל חיצוני. $\rho$ אורתוגונלית, ולכן $\mathbf F\cdot\hat{\mathbf N}$ ו-$dS$ נשמרים, ושני החצאים נותנים אותו שטף.
+          יחד הם $4\pi$ (סעיף ב), ולכן כל חצי $2\pi$.
+        wrongFeedback: >-
+          חצי אליפסואיד אינו משטח סגור, ושדה לא מוגדר בראשית. חפשו סימטריה בין החצי העליון לתחתון, והשתמשו בסעיף ב.
+        commonWrong:
+          - value: 12.5663706
+            feedback: >-
+              $4\pi$ הוא השטף דרך כל האליפסואיד. החצי העליון הוא רק חלק מהמשטח הסגור.
+            misconception: MC-c7-gauss-open-surface
+          - value: 0
+            feedback: >-
+              הדיברגנץ אפס, אבל המשטח אינו סגור, והראשית על הבסיס שלו. אין כאן גאוס עם $\iiint0$.
+            misconception: MC-c7-gauss-singularity
+          - value: 3.1415927
+            feedback: >-
+              $\pi$ מתקבל אם מחלקים את $4\pi$ לארבעה. השיקוף ב-$z$ מחלק את האליפסואיד לשני חצאים שווים, לא לארבעה.

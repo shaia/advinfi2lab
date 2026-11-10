@@ -1,0 +1,24 @@
+# Terms first defined in lesson 11.2.
+- id: lipschitz-condition-in-y
+  term: תנאי ליפשיץ במשתנה התלוי
+  en: Lipschitz condition in y (uniform in t)
+  symbol: '|f(t,y_1)-f(t,y_2)|\le L|y_1-y_2|'
+  definition: >-
+    $f$ מקיימת תנאי ליפשיץ ב-$y$ בקבוצה $D$, באופן אחיד ב-$t$, אם קיים $L\ge0$ כך שלכל $(t,y_1),(t,y_2)\in D$ (עם
+    אותו $t$) מתקיים $|f(t,y_1)-f(t,y_2)|\le L|y_1-y_2|$. $L$ נקרא קבוע ליפשיץ.
+  reject: [תנאי ליפשיטץ]
+  lesson: '11.2'
+- id: locally-lipschitz-in-y
+  term: ליפשיצית מקומית
+  en: locally Lipschitz in y
+  definition: >-
+    לכל נקודה בתחום יש מלבן סביבה שבו $f$ מקיימת תנאי ליפשיץ ב-$y$, עם קבוע שעשוי להיות תלוי במלבן. למשל $y^2$:
+    ברצועה $|y|\le b$ הקבוע הוא $2b$.
+  lesson: '11.2'
+- id: globally-lipschitz-in-y
+  term: ליפשיצית גלובלית
+  en: globally Lipschitz in y
+  definition: >-
+    $f$ מקיימת תנאי ליפשיץ ב-$y$ עם קבוע אחד בכל התחום, למשל בכל הרצועה $[\alpha,\beta]\times\mathbb{R}$. למשל
+    $a(t)y+b(t)$ עם $a,b$ רציפות, עם הקבוע $\max|a|$.
+  lesson: '11.2'

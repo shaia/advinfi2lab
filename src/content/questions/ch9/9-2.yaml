@@ -1,0 +1,396 @@
+# Lesson 9.2 — orthonormal systems, orthogonality of the trigonometric functions, Gram–Schmidt and Legendre, Pythagoras.
+# Objectives (src/course.ts):
+#   OBJ-9.2-1  define an orthonormal system and check orthogonality of trigonometric functions
+#   OBJ-9.2-2  run Gram–Schmidt on polynomials and obtain the first Legendre polynomials
+#   OBJ-9.2-3  use Pythagoras and coefficients in an orthonormal system
+# Legendre on [−1, 1]: P₀ = 1, P₁ = x, P₂ = (3x² − 1)/2, ‖Pₙ‖² = 2/(2n + 1), eₙ = √((2n + 1)/2) Pₙ.
+# Every number was recomputed with src/math/approx.ts (scratchpad ch9/check.ts, check2.ts).
+chapter: 9
+questions:
+  # ---------------------------------------------------------------- basic
+  - id: Q-9.2-def
+    type: mc
+    objectives: [OBJ-9.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מערכת $e_1,e_2,\dots$ במרחב מכפלה פנימית נקראת **אורתוגונלית** אם $\langle e_i,e_j\rangle=0$ לכל $i\ne j$,
+      ו**אורתונורמלית** אם בנוסף $\|e_i\|=1$ לכל $i$ (בקיצור $\langle e_i,e_j\rangle=\delta_{ij}$). איזו מהמערכות הבאות
+      ב-$\mathbb R^2$, עם המכפלה הסקלרית הרגילה, אורתונורמלית?
+    choices:
+      - text: '$\frac1{\sqrt2}(1,1),\ \frac1{\sqrt2}(1,-1)$'
+        correct: true
+        feedback: >-
+          נכון: המכפלה הסקלרית שלהם $\frac12(1-1)=0$, ולכל אחד נורמה $\sqrt{\frac12\cdot2}=1$.
+      - text: '$(1,1),\ (1,-1)$'
+        feedback: >-
+          ניצבים, ולכן המערכת אורתוגונלית, אבל $\|(1,1)\|=\sqrt2\ne1$: היא אינה מנורמלת.
+        misconception: MC-c9-orthogonal-normalized
+      - text: '$(1,0),\ \frac1{\sqrt2}(1,1)$'
+        feedback: >-
+          נורמה 1 לבדה אינה מספיקה: שני הווקטורים מנורמלים, אבל המכפלה שלהם $\frac1{\sqrt2}\ne0$.
+        misconception: MC-c9-orthogonal-normalized
+      - text: '$(1,0),\ (0,2)$'
+        feedback: >-
+          ניצבים, אבל $\|(0,2)\|=2$. אורתונורמליות דורשת גם ניצבות וגם נורמה 1 לכל איבר.
+        misconception: MC-c9-orthogonal-normalized
+
+  - id: Q-9.2-cos-norm
+    type: numeric
+    objectives: [OBJ-9.2-1]
+    level: basic
+    prompt: >-
+      חשבו את $\int_{-\pi}^{\pi}\cos^2(3x)\,dx$, כלומר את $\|\cos3x\|^2$ במרחב $C[-\pi,\pi]$.
+    answer: 3.1415926536
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\cos^23x=\frac12(1+\cos6x)$, והאינטגרל של $\cos6x$ על תקופות שלמות הוא אפס. נשאר $\frac12\cdot2\pi=\pi$.
+    wrongFeedback: >-
+      השתמשו בזהות $\cos^2\theta=\frac12(1+\cos2\theta)$.
+    commonWrong:
+      - value: 6.2831853072
+        feedback: >-
+          $2\pi$ הוא $\|1\|^2$. ל-$\cos^23x$ הממוצע על הקטע הוא $\frac12$, ולכן האינטגרל $\pi$.
+        misconception: MC-c9-trig-norm-2pi
+      - value: 0
+        feedback: >-
+          אפס מתקבל במכפלה של שני קוסינוסים בתדירויות **שונות**. כאן פונקציה עם עצמה, וריבוע חיובי לא נותן אפס.
+        misconception: MC-c9-trig-norm-2pi
+      - value: 1.7724538509
+        feedback: >-
+          זה $\sqrt\pi$, הנורמה עצמה. השאלה מבקשת את האינטגרל של הריבוע.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.2-pyth-basic
+    type: numeric
+    objectives: [OBJ-9.2-3]
+    level: basic
+    prompt: >-
+      $e_1,e_2$ מערכת אורתונורמלית. חשבו את $\|3e_1-4e_2\|$.
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי משפט פיתגורס $\|3e_1-4e_2\|^2=9\|e_1\|^2+16\|e_2\|^2=25$.
+    wrongFeedback: >-
+      $3e_1\perp4e_2$, ולכן ריבוע הנורמה של הסכום הוא סכום ריבועי הנורמות.
+    commonWrong:
+      - value: 7
+        feedback: >-
+          חיברתם את הנורמות $3+4$. זה רק חסם עליון (אי-שוויון המשולש); לווקטורים ניצבים מחברים ריבועים.
+        misconception: MC-c9-pythagoras-add-norms
+      - value: -1
+        feedback: >-
+          נורמה אינה שלילית. המקדמים נכנסים בריבוע, והסימן שלהם נעלם.
+        misconception: MC-c9-pythagoras-add-norms
+      - value: 25
+        feedback: >-
+          $25$ הוא ריבוע הנורמה. נשאר להוציא שורש.
+        misconception: MC-c9-norm-vs-square
+
+  # ---------------------------------------------------------------- mid
+  - id: Q-9.2-which-on
+    type: mc
+    objectives: [OBJ-9.2-1]
+    level: mid
+    prompt: >-
+      איזו מהמערכות הבאות אורתונורמלית ב-$C[-\pi,\pi]$ עם $\langle f,g\rangle=\int_{-\pi}^{\pi}fg$?
+    choices:
+      - text: '$\frac1{\sqrt{2\pi}},\ \frac{\cos x}{\sqrt\pi},\ \frac{\sin x}{\sqrt\pi},\ \frac{\cos2x}{\sqrt\pi},\ \frac{\sin2x}{\sqrt\pi},\dots$'
+        correct: true
+        feedback: >-
+          נכון. כל שתי פונקציות שונות ניצבות, $\|1\|^2=2\pi$ ו-$\|\cos nx\|^2=\|\sin nx\|^2=\pi$, ולכן מחלקים בשורשים
+          האלה.
+      - text: '$1,\ \cos x,\ \sin x,\ \cos2x,\ \sin2x,\dots$'
+        feedback: >-
+          אורתוגונלית אבל לא מנורמלת: $\|1\|=\sqrt{2\pi}$ ו-$\|\cos x\|=\sqrt\pi$.
+        misconception: MC-c9-orthogonal-normalized
+      - text: '$\frac1{\sqrt\pi},\ \frac{\cos x}{\sqrt\pi},\ \frac{\sin x}{\sqrt\pi},\dots$'
+        feedback: >-
+          הקבוע נורמל לא נכון: $\left\|\frac1{\sqrt\pi}\right\|^2=\frac{2\pi}\pi=2$. לקבוע צריך $\frac1{\sqrt{2\pi}}$.
+        misconception: MC-c9-trig-norm-2pi
+      - text: '$\frac1{\sqrt{2\pi}},\ \frac{\cos x}{\sqrt{2\pi}},\ \frac{\sin x}{\sqrt{2\pi}},\dots$'
+        feedback: >-
+          $\int_{-\pi}^{\pi}\cos^2x\,dx=\pi$, לא $2\pi$, ולכן $\left\|\frac{\cos x}{\sqrt{2\pi}}\right\|^2=\frac12$.
+        misconception: MC-c9-trig-norm-2pi
+
+  - id: Q-9.2-independent
+    type: twotier
+    objectives: [OBJ-9.2-1, OBJ-9.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם כל מערכת אורתונורמלית (סופית או אינסופית) בלתי תלויה לינארית?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. אי-תלות לינארית של מערכת אינסופית פירושה שכל תת-מערכת סופית בלתי תלויה, וזה מה שמוכיחים.
+      - text: לא
+        feedback: >-
+          צירוף לינארי סופי של איברי המערכת ששווה לאפס חייב להיות טריוויאלי; הנימוק הנכון מראה למה.
+        misconception: MC-c9-orthogonal-normalized
+    reasons:
+      - text: 'אם $\sum_{k=1}^n c_ke_k=0$, מכפלה פנימית עם $e_j$ נותנת $c_j=\langle0,e_j\rangle=0$ לכל $j$'
+        correct: true
+        feedback: >-
+          בדיוק. זו גם נוסחת המקדמים: אם $x=\sum c_ke_k$ אז $c_j=\langle x,e_j\rangle$.
+      - text: 'כי איברים ניצבים הם תמיד בלתי תלויים, גם אם אחד מהם הוא 0'
+        feedback: >-
+          מערכת אורתוגונלית שמכילה את 0 תלויה (אפס הוא ניצב לכל וקטור). כאן הנורמה 1 היא מה שמונע זאת.
+        misconception: MC-c9-orthogonal-normalized
+      - text: 'כי לפי פיתגורס $\|\sum c_ke_k\|=\sum|c_k|$, וזה אפס רק כשכל המקדמים אפס'
+        feedback: >-
+          המסקנה נכונה אבל הנוסחה לא: פיתגורס נותן $\|\sum c_ke_k\|^2=\sum c_k^2$. מזה אכן נובעת אי-התלות.
+        misconception: MC-c9-pythagoras-add-norms
+
+  - id: Q-9.2-gs-c
+    type: numeric
+    objectives: [OBJ-9.2-2]
+    level: mid
+    prompt: >-
+      בתהליך גרם-שמידט על $1,x,x^2$ ב-$C[-1,1]$ מחסרים מ-$x^2$ את רכיביו בכיוון $1$ ובכיוון $x$. הרכיב בכיוון $x$ הוא
+      אפס, ומתקבל $x^2-c$. מהו $c$?
+    answer: 0.3333333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $c=\frac{\langle x^2,1\rangle}{\langle1,1\rangle}=\frac{2/3}2=\frac13$. ואכן $x^2-\frac13=\frac23P_2$.
+    wrongFeedback: >-
+      הרכיב של $v$ בכיוון $u$ הוא $\frac{\langle v,u\rangle}{\|u\|^2}u$. כאן $u=1$ ו-$\|1\|^2=\int_{-1}^11\,dx=2$.
+    commonWrong:
+      - value: 0.6666666667
+        feedback: >-
+          $\frac23=\langle x^2,1\rangle$, בלי לחלק ב-$\|1\|^2=2$. בדקו: $\int_{-1}^1\left(x^2-\frac23\right)dx=-\frac23\neq0$.
+        misconception: MC-c9-coef-no-divide
+      - value: 0.4714045208
+        feedback: >-
+          $\frac{2/3}{\sqrt2}$: חילקתם בנורמה $\|1\|=\sqrt2$ במקום בריבוע הנורמה.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.2-parity
+    type: twotier
+    objectives: [OBJ-9.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בגרם-שמידט על $1,x,x^2$ ב-$C[-1,1]$: האם צריך לחסר מ-$x^2$ רכיב בכיוון $x$?
+    choices:
+      - text: לא, הרכיב הזה אפס
+        correct: true
+        feedback: >-
+          נכון, ולכן $P_2$ זוגי ואין בו איבר של $x$.
+      - text: כן, כמו בכל צעד של גרם-שמידט
+        feedback: >-
+          צריך לחשב אותו, ובחישוב יוצא אפס: $\int_{-1}^1x^3\,dx=0$.
+        misconception: MC-c9-orthogonality-any-interval
+    reasons:
+      - text: '$\langle x^2,x\rangle=\int_{-1}^1x^3\,dx=0$, כי האינטגרנד אי-זוגי והקטע סימטרי'
+        correct: true
+        feedback: >-
+          בדיוק. מאותה סיבה $P_1=x$ כבר ניצב ל-1, ו-$P_n$ זוגי או אי-זוגי כמו $n$.
+      - text: 'כי $x^2$ ו-$x$ ניצבים על כל קטע'
+        feedback: >-
+          על $[0,1]$: $\int_0^1x^3\,dx=\frac14\neq0$. הניצבות כאן באה מהסימטריה של $[-1,1]$.
+        misconception: MC-c9-orthogonality-any-interval
+      - text: 'כי $x^2\ge0$ ו-$x$ מחליף סימן'
+        feedback: >-
+          זה לא מספיק: $\int_{-1}^1x^2\left(x+\frac12\right)dx=\frac13\neq0$ אף ש-$x+\frac12$ מחליף סימן. מה שקובע הוא
+          הזוגיות.
+        misconception: MC-c9-orthogonality-any-interval
+
+  - id: Q-9.2-P2-norm
+    type: numeric
+    objectives: [OBJ-9.2-2]
+    level: mid
+    prompt: >-
+      פולינום לז׳נדר $P_2=\frac{3x^2-1}2$ הוא הכפולה של $x^2-\frac13$ (התוצאה של גרם-שמידט) שמקיימת $P_2(1)=1$. חשבו את
+      $\|P_2\|^2=\int_{-1}^1\left(\frac{3x^2-1}2\right)^2dx$ ב-$C[-1,1]$.
+    answer: 0.4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\frac14\int_{-1}^1(9x^4-6x^2+1)\,dx=\frac14\left(\frac{18}5-4+2\right)=\frac14\cdot\frac85=\frac25$, בהתאם ל-$\|P_n\|^2=\frac2{2n+1}$.
+      לכן $e_2=\sqrt{\frac52}P_2$.
+    wrongFeedback: >-
+      פתחו את הריבוע, $(3x^2-1)^2=9x^4-6x^2+1$, וזכרו את הגורם $\frac14$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          פולינומי לז׳נדר מנורמלים לפי $P_n(1)=1$, לא לפי הנורמה. $\|P_2\|^2=\frac25$.
+        misconception: MC-c9-legendre-unit
+      - value: 0.8
+        feedback: >-
+          $\frac12\cdot\frac85$: הוצאתם את $\frac12$ מהריבוע בלי לרבע אותו. $\left\|\frac12g\right\|^2=\frac14\|g\|^2$.
+        misconception: MC-c9-constant-not-squared
+      - value: 0.632455532
+        feedback: >-
+          זה $\sqrt{2/5}$, הנורמה עצמה. השאלה מבקשת את ריבוע הנורמה.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.2-gs-interval
+    type: twotier
+    objectives: [OBJ-9.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מפעילים את גרם-שמידט על $1,x$ ב-$C[0,1]$ (בלי לנרמל). האם מתקבלים $P_0=1$ ו-$P_1=x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. מתקבלים $1$ ו-$x-\frac12$ (שהוא $\frac12P_1(2x-1)$): פולינומי לז׳נדר המוזזים לקטע $[0,1]$.
+      - text: כן
+        feedback: >-
+          פולינומי לז׳נדר שייכים לקטע $[-1,1]$. על $[0,1]$ הפולינום $x$ אינו ניצב ל-1.
+        misconception: MC-c9-orthogonality-any-interval
+    reasons:
+      - text: '$\langle x,1\rangle=\int_0^1x\,dx=\frac12\neq0$, ולכן מחסרים $\frac{1/2}{1}\cdot1$ ומקבלים $x-\frac12$'
+        correct: true
+        feedback: >-
+          בדיוק. המכפלה הפנימית תלויה בקטע, ואיתה גם הפולינומים שגרם-שמידט מייצר.
+      - text: 'גרם-שמידט תלוי רק בסדר של הפונקציות, לא בקטע'
+        feedback: >-
+          כל צעד מחשב מכפלות פנימיות, כלומר אינטגרלים על הקטע. קטע אחר נותן מקדמים אחרים.
+        misconception: MC-c9-orthogonality-any-interval
+      - text: 'גרם-שמידט מחסר רכיב שאינו אפס ולכן הוא משנה כל פונקציה, גם את $x$ על $[-1,1]$'
+        feedback: >-
+          על $[-1,1]$ הרכיב של $x$ בכיוון 1 הוא אפס, ולכן $x$ לא משתנה שם. על $[0,1]$ הרכיב הוא $\frac12$.
+        misconception: MC-c9-coef-no-divide
+
+  - id: Q-9.2-coef
+    type: numeric
+    objectives: [OBJ-9.2-3]
+    level: mid
+    prompt: >-
+      כתבו $x^2=\alpha P_0+\beta P_1+\gamma P_2$ על $[-1,1]$, כאשר $P_0=1$, $P_1=x$, $P_2=\frac{3x^2-1}2$. מהו $\gamma$?
+    answer: 0.6666666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\gamma=\frac{\langle x^2,P_2\rangle}{\|P_2\|^2}=\frac{4/15}{2/5}=\frac23$. ואכן $\frac13P_0+\frac23P_2=\frac13+x^2-\frac13=x^2$.
+    wrongFeedback: >-
+      השוו את מקדם $x^2$ בשני האגפים, או השתמשו ב-$\gamma=\frac{\langle x^2,P_2\rangle}{\|P_2\|^2}$, כי $P_n$ ניצבים אבל לא
+      מנורמלים.
+    commonWrong:
+      - value: 0.2666666667
+        feedback: >-
+          $\frac4{15}=\langle x^2,P_2\rangle$. הבסיס אורתוגונלי ולא אורתונורמלי, ולכן מחלקים ב-$\|P_2\|^2=\frac25$.
+        misconception: MC-c9-coef-no-divide
+      - value: 1.5
+        feedback: >-
+          $\frac32$ הוא מקדם $x^2$ בתוך $P_2$; המקדם $\gamma$ הוא ההופכי שלו, כי $\gamma\cdot\frac32x^2$ צריך להיות $x^2$.
+        misconception: MC-c9-coef-no-divide
+
+  - id: Q-9.2-pyth-converse
+    type: twotier
+    objectives: [OBJ-9.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      במרחב מכפלה פנימית ממשי ידוע ש-$\|x+y\|^2=\|x\|^2+\|y\|^2$. האם בהכרח $x\perp y$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון: במרחב ממשי משפט פיתגורס הפיך.
+      - text: לא בהכרח
+        feedback: >-
+          הפער בין שני האגפים הוא בדיוק $2\langle x,y\rangle$, ולכן השוויון כופה $\langle x,y\rangle=0$.
+        misconception: MC-c9-pythagoras-one-way
+    reasons:
+      - text: '$\|x+y\|^2=\|x\|^2+2\langle x,y\rangle+\|y\|^2$, ולכן השוויון שקול ל-$\langle x,y\rangle=0$'
+        correct: true
+        feedback: >-
+          בדיוק: שני הכיוונים של פיתגורס יוצאים מאותה פתיחה.
+      - text: 'משפט פיתגורס הוא רק בכיוון אחד: ניצבות גוררת את השוויון'
+        feedback: >-
+          פתיחת הריבוע נותנת שקילות, לא רק גרירה.
+        misconception: MC-c9-pythagoras-one-way
+      - text: 'השוויון מתקיים תמיד, ולכן אינו אומר דבר'
+        feedback: >-
+          הוא לא תמיד מתקיים: $x=y=e_1$ נותנים $4$ באגף השמאלי ו-$2$ בימני. האיבר המעורב נעלם רק בניצבות.
+        misconception: MC-c9-drop-cross-term
+
+  - id: Q-9.2-x3
+    type: numeric
+    objectives: [OBJ-9.2-2]
+    level: mid
+    prompt: >-
+      ממשיכים את גרם-שמידט ב-$C[-1,1]$ לפונקציה $x^3$: הרכיבים בכיוון $1$ ובכיוון $P_2$ מתאפסים, ומתקבל $x^3-cx$, שהוא
+      כפולה של $P_3$. מהו $c$?
+    answer: 0.6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $c=\frac{\langle x^3,x\rangle}{\|x\|^2}=\frac{2/5}{2/3}=\frac35$. ואכן $P_3=\frac{5x^3-3x}2=\frac52\left(x^3-\frac35x\right)$.
+    wrongFeedback: >-
+      הרכיבים בכיוון 1 ו-$P_2$ מתאפסים בגלל אי-הזוגיות של $x^3$. חשבו את הרכיב בכיוון $x$ עם $\|x\|^2=\int_{-1}^1x^2\,dx$.
+    commonWrong:
+      - value: 0.4
+        feedback: >-
+          $\frac25=\langle x^3,x\rangle$ בלי לחלק ב-$\|x\|^2=\frac23$.
+        misconception: MC-c9-coef-no-divide
+      - value: 0.4898979486
+        feedback: >-
+          $\frac{2/5}{\sqrt{2/3}}$: חילקתם בנורמה $\|x\|$ במקום בריבוע הנורמה.
+        misconception: MC-c9-norm-vs-square
+
+  # ---------------------------------------------------------------- exam
+  - id: Q-9.2-interval
+    type: twotier
+    objectives: [OBJ-9.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם המערכת $1,\cos x,\sin x,\cos2x,\sin2x,\dots$ אורתוגונלית ב-$C[0,\pi]$ עם $\langle f,g\rangle=\int_0^\pi fg$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. בנפרד, $1,\cos x,\cos2x,\dots$ אורתוגונליות על $[0,\pi]$, וגם $\sin x,\sin2x,\dots$; יחד הן לא.
+      - text: כן, כמו על $[-\pi,\pi]$
+        feedback: >-
+          על $[-\pi,\pi]$ האורתוגונליות של סינוס עם קוסינוס באה מזוגיות; על $[0,\pi]$ הטיעון הזה לא קיים.
+        misconception: MC-c9-orthogonality-any-interval
+    reasons:
+      - text: '$\langle1,\sin x\rangle=\int_0^\pi\sin x\,dx=2\neq0$'
+        correct: true
+        feedback: >-
+          בדיוק, ויש עוד: $\int_0^\pi\sin x\cos2x\,dx=-\frac23$.
+      - text: 'כל זוג טריגונומטרי שונה ניצב על כל קטע שאורכו לפחות $\pi$'
+        feedback: >-
+          לא: $\int_0^\pi\sin x\,dx=2$ על קטע באורך $\pi$ בדיוק. מה שקובע הוא קטע של תקופה שלמה, או סימטריה מתאימה.
+        misconception: MC-c9-orthogonality-any-interval
+      - text: 'המערכת לא אורתוגונלית כי הנורמות אינן 1'
+        feedback: >-
+          נורמות שונות מ-1 פוגעות באורתונורמליות, לא באורתוגונליות. הבעיה כאן היא מכפלות שאינן אפס.
+        misconception: MC-c9-orthogonal-normalized
+
+  - id: Q-9.2-pyth-weights
+    type: numeric
+    objectives: [OBJ-9.2-3]
+    level: exam
+    prompt: >-
+      ב-$C[-1,1]$ יהי $f=2P_0-P_1+3P_2$, כאשר $P_n$ פולינומי לז׳נדר. חשבו את $\|f-x^2\|^2$ בלי לפתוח את האינטגרל:
+      כתבו קודם את $x^2$ בבסיס $P_0,P_1,P_2$.
+    answer: 8.4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{42}5$. $x^2=\frac13P_0+\frac23P_2$, ולכן $f-x^2=\frac53P_0-P_1+\frac73P_2$. $P_0,P_1,P_2$ ניצבים, ולכן לפי
+      פיתגורס עם המשקלות $\|P_n\|^2=\frac2{2n+1}$:
+      $$\|f-x^2\|^2=\frac{25}9\cdot2+1\cdot\frac23+\frac{49}9\cdot\frac25=\frac{250+30+98}{45}=\frac{42}5.$$
+      בדיקה ישירה: $f-x^2=\frac12-x+\frac72x^2$, ו-$\int_{-1}^1\left(\frac12-x+\frac72x^2\right)^2dx=8.4$.
+    wrongFeedback: >-
+      שני שלבים: הצגת $x^2$ בבסיס (השוו מקדמים, או $\frac{\langle x^2,P_n\rangle}{\|P_n\|^2}$), ואז פיתגורס במערכת
+      אורתוגונלית: $\left\|\sum c_nP_n\right\|^2=\sum c_n^2\|P_n\|^2$.
+    commonWrong:
+      - value: 9.2222222222
+        feedback: >-
+          $\frac{25}9+1+\frac{49}9$: זה $\sum c_n^2$, הנכון רק במערכת אורתונורמלית. כאן $\|P_0\|^2=2$, $\|P_1\|^2=\frac23$,
+          $\|P_2\|^2=\frac25$.
+        misconception: MC-c9-pythagoras-no-weights
+      - value: 11.8666666667
+        feedback: >-
+          זה $\|f\|^2-\|x^2\|^2=\frac{184}{15}-\frac25$: ריבועי נורמות אינם מתחסרים כך, כי $f$ ו-$x^2$ אינם ניצבים. חסר
+          האיבר המעורב $-2\langle f,x^2\rangle+2\|x^2\|^2$.
+        misconception: MC-c9-drop-cross-term
+      - value: 10.8444444444
+        feedback: >-
+          כאן נלקח $x^2=\frac23P_2$, בלי הרכיב $\frac13P_0$: $\frac23P_2=x^2-\frac13$. גם ל-$x^2$ יש רכיב קבוע.
+        misconception: MC-c9-projection-drop-hidden

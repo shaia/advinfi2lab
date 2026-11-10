@@ -1,0 +1,28 @@
+# Terms first defined in lesson 8.6 (enrichment).
+- id: closed-form
+  term: תבנית סגורה
+  en: closed form
+  definition: >-
+    תבנית $\omega$ שהנגזרת החיצונית שלה אפס, $d\omega=0$.
+  lesson: '8.6'
+- id: exact-form
+  term: תבנית מדויקת
+  en: exact form
+  definition: >-
+    תבנית $\omega$ שהיא נגזרת חיצונית של תבנית אחרת על כל התחום, $\omega=d\eta$. כל תבנית מדויקת סגורה, כי $d^2=0$.
+  lesson: '8.6'
+- id: angle-form
+  term: תבנית הזווית
+  en: angle form
+  symbol: 'd\theta=\frac{x\,dy-y\,dx}{x^2+y^2}'
+  definition: >-
+    התבנית $\frac{x\,dy-y\,dx}{x^2+y^2}$ במישור בלי הראשית. היא סגורה, והאינטגרל שלה על מעגל סביב הראשית הוא $2\pi$, ולכן
+    אינה מדויקת שם. מקומית היא הדיפרנציאל של הזווית הקוטבית $\theta$.
+  lesson: '8.6'
+- id: poincare-lemma
+  term: הלמה של פואנקרה
+  en: Poincaré lemma
+  definition: >-
+    בתחום כוכבי כל תבנית סגורה מסדר $k\ge1$ מדויקת. ב-$\mathbb R^3$ זו הגרסה בשפת התבניות של "רוטור אפס גורר גרדיאנט"
+    ו"דיברגנץ אפס גורר רוטור" בתחום כוכבי.
+  lesson: '8.6'

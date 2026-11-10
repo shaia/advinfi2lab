@@ -1,0 +1,328 @@
+# Lesson 7.5 — the divergence theorem (Gauss).
+# Objectives (src/course.ts):
+#   OBJ-7.5-1  state the divergence theorem with the outward normal
+#   OBJ-7.5-2  prove it for a box and for a simple region
+#   OBJ-7.5-3  compute the flux through a closed surface by a triple integral of the divergence
+chapter: 7
+questions:
+  - id: Q-7.5-statement
+    type: mc
+    objectives: [OBJ-7.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $R\subset\mathbb R^3$ תחום חסום שהשפה שלו $\partial R$ משטח סגור חלק למקוטעין, ו-$\mathbf F$ מסדר $C^1$ בקבוצה
+      פתוחה שמכילה את $R$ ואת שפתו. מהו משפט גאוס?
+    choices:
+      - text: '$\oiint_{\partial R}\mathbf F\cdot d\mathbf S=\iiint_R\nabla\cdot\mathbf F\,dV$, עם הנורמל החיצוני על $\partial R$'
+        correct: true
+        feedback: >-
+          נכון. השטף החוצה הוא סכום צפיפויות השטף בתוך התחום.
+      - text: '$\oiint_{\partial R}\mathbf F\cdot d\mathbf S=\iiint_R\nabla\cdot\mathbf F\,dV$, עם הנורמל הפנימי'
+        feedback: >-
+          עם הנורמל הפנימי מקבלים מינוס. בדקו על $(x,y,z)$ וספרת היחידה: $\iiint3\,dV=4\pi$, והשטף פנימה $-4\pi$.
+        misconception: MC-c7-gauss-inward
+      - text: '$\oiint_{\partial R}(\nabla\times\mathbf F)\cdot d\mathbf S=\iiint_R\nabla\cdot\mathbf F\,dV$'
+        feedback: >-
+          השמאל כאן הוא שטף של רוטור דרך משטח סגור, ולכן תמיד $0$ (שיעור 7.4), בעוד שהימין לא. בגאוס משמאל השטף של
+          $\mathbf F$ עצמו.
+        misconception: MC-c7-gauss-statement
+      - text: '$\oiint_{\partial R}\nabla\cdot\mathbf F\,dS=\iiint_R\nabla\cdot\mathbf F\,dV$'
+        feedback: >-
+          זה מחבר אינטגרל משטחי של פונקציה לאינטגרל משולש של אותה פונקציה, ואין שוויון כזה: עבור $\mathbf F=(x,y,z)$ על
+          ספרת היחידה השמאל $3\cdot4\pi$ והימין $3\cdot\frac{4\pi}3$.
+        misconception: MC-c7-gauss-statement
+
+  - id: Q-7.5-inward
+    type: numeric
+    objectives: [OBJ-7.5-1, OBJ-7.5-3]
+    level: basic
+    prompt: >-
+      חשבו את השטף של $\mathbf F=(x,\ y,\ z)$ דרך ספרת היחידה עם הנורמל **הפנימי**.
+    answer: -12.5663706
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $-4\pi$. $\nabla\cdot\mathbf F=3$, ולפי גאוס השטף החוצה $3\cdot\frac{4\pi}3=4\pi$. הנורמל הפנימי הופך סימן.
+    wrongFeedback: >-
+      חשבו את השטף החוצה בעזרת גאוס, ואז תקנו לפי כיוון הנורמל.
+    commonWrong:
+      - value: 12.5663706
+        feedback: >-
+          $4\pi$ הוא השטף **החוצה**. השאלה על הנורמל הפנימי.
+        misconception: MC-c7-gauss-inward
+      - value: -4.1887902
+        feedback: >-
+          $-\frac{4\pi}3$ הוא מינוס הנפח. שכחתם שהדיברגנץ הוא $3$, לא $1$.
+
+  - id: Q-7.5-sides
+    type: mc
+    objectives: [OBJ-7.5-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בהוכחת משפט גאוס לתיבה $[a_1,b_1]\times[a_2,b_2]\times[a_3,b_3]$ ולשדה $(0,0,R)$, למה ארבע הפאות הצדדיות
+      ($x=a_1$, $x=b_1$, $y=a_2$, $y=b_2$) לא תורמות לשטף?
+    choices:
+      - text: 'כי עליהן הנורמל אופקי ($\pm\mathbf e_1$ או $\pm\mathbf e_2$), ו-$(0,0,R)\cdot\hat{\mathbf N}=0$'
+        correct: true
+        feedback: >-
+          נכון. השדה אנכי והנורמל אופקי. רק המכסה ($\hat{\mathbf N}=\mathbf e_3$) והתחתית ($\hat{\mathbf N}=-\mathbf e_3$) תורמות.
+      - text: 'כי כל זוג פאות מקבילות ($x=a_1$ ו-$x=b_1$, וכן $y=a_2$ ו-$y=b_2$) מתבטל, כי הנורמלים של הזוג הפוכים'
+        feedback: >-
+          זוגות מקבילים מתבטלים רק לשדה קבוע. כאן כל פאה צדדית לבדה תורמת אפס, כי השדה משיק לה.
+        misconception: MC-c7-side-faces-contribute
+      - text: 'כי $R=0$ על הפאות הצדדיות, לפי ההנחה ש-$\mathbf F$ מתאפס על השפה'
+        feedback: >-
+          אין הנחה כזו על $R$, ואין הנחה ש-$\mathbf F$ מתאפס על השפה. ההוכחה עובדת לכל $R\in C^1$.
+        misconception: MC-c7-side-faces-contribute
+
+  - id: Q-7.5-cube
+    type: numeric
+    objectives: [OBJ-7.5-3]
+    level: basic
+    prompt: >-
+      חשבו את השטף החוצה של $\mathbf F=(x^2,\ y^2,\ z^2)$ דרך השפה של הקובייה $[0,1]^3$.
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\nabla\cdot\mathbf F=2x+2y+2z$, ו-$\iiint_{[0,1]^3}(2x+2y+2z)\,dV=3\cdot2\cdot\frac12=3$. בדיקה ישירה: הפאה $x=1$
+      תורמת $1$ והפאה $x=0$ תורמת $0$, וכך בכל כיוון.
+    wrongFeedback: >-
+      חשבו את $\nabla\cdot\mathbf F$ ושלבו על הקובייה.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          זו התרומה של פאה אחת, $x=1$. לקובייה שש פאות, ושלוש מהן ($x=1$, $y=1$, $z=1$) תורמות $1$ כל אחת.
+      - value: 6
+        feedback: >-
+          $\iiint2x\,dV=1$, לא $2$: $\int_0^1 2x\,dx=1$. ייתכן ששכחתם את הממוצע $\frac12$ של $x$ על הקובייה.
+
+  - id: Q-7.5-positive
+    type: mc
+    objectives: [OBJ-7.5-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\mathbf F$ מסדר $C^1$ ו-$\nabla\cdot\mathbf F>0$ בכל נקודה של כדור היחידה הסגור. מה אפשר לומר על השטף החוצה דרך
+      ספרת היחידה?
+    choices:
+      - text: 'הוא חיובי'
+        correct: true
+        feedback: >-
+          נכון. לפי גאוס הוא $\iiint\nabla\cdot\mathbf F\,dV$, אינטגרל של פונקציה רציפה חיובית.
+      - text: 'הוא אפס, כי מה שנכנס יוצא'
+        feedback: >-
+          "מה שנכנס יוצא" נכון כשהדיברגנץ אפס. כאן הדיברגנץ חיובי, ונוצר "עודף" שיוצא.
+        misconception: MC-c7-div-from-spread
+      - text: 'אי אפשר לדעת בלי לדעת את $\mathbf F$ על הספרה'
+        feedback: >-
+          גאוס מחליף את המידע על הספרה במידע על הדיברגנץ בפנים, וזה מספיק לסימן.
+        misconception: MC-c7-gauss-statement
+
+  - id: Q-7.5-open
+    type: twotier
+    objectives: [OBJ-7.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $H$ הוא חצי ספרת היחידה העליון (בלי הבסיס) עם הנורמל החיצוני, ו-$B_+$ חצי הכדור העליון. האם
+      $\iint_H\mathbf F\cdot d\mathbf S=\iiint_{B_+}\nabla\cdot\mathbf F\,dV$ לכל $\mathbf F$ מסדר $C^1$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $H$ אינו השפה של $B_+$: חסר העיגול בבסיס. עבור $\mathbf F=(0,0,1)$: $\nabla\cdot\mathbf F=0$, אבל השטף דרך $H$
+          הוא $\pi$ (כל השדה שנכנס דרך הבסיס יוצא דרך $H$).
+      - text: כן, זה משפט גאוס
+        feedback: >-
+          גאוס חל על השפה **כולה** של $B_+$: $H$ ועוד העיגול בבסיס עם נורמל $-\mathbf e_3$. בלי המכסה השוויון נכשל, למשל
+          ל-$(0,0,1)$.
+        misconception: MC-c7-gauss-open-surface
+    reasons:
+      - text: 'השפה של $B_+$ היא $H$ יחד עם העיגול בבסיס; השוויון הנכון כולל את שניהם, והשטף דרך העיגול אינו אפס בדרך כלל'
+        correct: true
+        feedback: >-
+          בדיוק. מכאן השיטה: $\iint_H\mathbf F\cdot d\mathbf S=\iiint_{B_+}\nabla\cdot\mathbf F\,dV-\iint_D\mathbf F\cdot d\mathbf S$,
+          כש-$D$ הוא העיגול בבסיס עם הנורמל $-\mathbf e_3$.
+      - text: 'גאוס חל רק על ספרה שלמה ועל הכדור שהיא חוסמת, ולכן לא על חצי כדור בכלל'
+        feedback: >-
+          גאוס חל על כל משטח סגור שחוסם תחום, לא רק על ספרה. $H$ עם הבסיס הוא משטח סגור כזה.
+        misconception: MC-c7-gauss-open-surface
+      - text: 'הנורמל החיצוני של $H$ אינו מוגדר על קו המשווה, ולכן השטף דרך $H$ אינו מוגדר והשוויון חסר משמעות'
+        feedback: >-
+          הנורמל של $H$ מוגדר וחלק גם שם. הבעיה היא שחסר חלק בשפה, לא בעיית חלקות.
+
+  - id: Q-7.5-box-proof
+    type: rank
+    objectives: [OBJ-7.5-2]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה של $\oiint_{\partial B}(0,0,R)\cdot d\mathbf S=\iiint_B R_z\,dV$ לתיבה
+      $B=[a_1,b_1]\times[a_2,b_2]\times[a_3,b_3]$ עם הנורמל החיצוני.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'לפי פוביני: $\iiint_B R_z\,dV=\iint_{[a_1,b_1]\times[a_2,b_2]}\left(\int_{a_3}^{b_3}R_z\,dz\right)dx\,dy$'
+      - id: b
+        label: 'לפי המשפט היסודי: $\int_{a_3}^{b_3}R_z\,dz=R(x,y,b_3)-R(x,y,a_3)$'
+      - id: c
+        label: 'המכסה $z=b_3$ עם $\mathbf e_3$ נותן $\iint R(x,y,b_3)\,dx\,dy$, והתחתית $z=a_3$ עם $-\mathbf e_3$ נותנת $-\iint R(x,y,a_3)\,dx\,dy$; יחד, לפי שני השלבים הקודמים, זה בדיוק $\iiint_B R_z\,dV$'
+      - id: d
+        label: 'על ארבע הפאות הצדדיות הנורמל אופקי, והשדה $(0,0,R)$ תורם $0$; לכן השטף דרך כל $\partial B$ שווה ל-$\iiint_B R_z\,dV$'
+      - id: e
+        label: 'אותו דבר ל-$(P,0,0)$ ול-$(0,Q,0)$, ובחיבור מתקבל גאוס'
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. זה אותו מבנה כמו ההוכחה של גרין במלבן, עם ממד אחד יותר: פוביני, המשפט היסודי, ושתי פאות שנשארות.
+    wrongFeedback: >-
+      התחילו מהאינטגרל המשולש (פוביני, ואז המשפט היסודי בכיוון $z$), אחר כך חשבו את השטף פאה אחר פאה והשוו.
+
+  - id: Q-7.5-walls
+    type: twotier
+    objectives: [OBJ-7.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $W=\{(x,y,z):(x,y)\in D,\ 0\le z\le g(x,y)\}$ עם $g>0$ על $\overline D$, כך ש-$\partial W$ מורכב מהבסיס $D$, מהגרף
+      של $g$ ומ"קיר" אנכי מעל $\partial D$. בהוכחת גאוס לשדה $(0,0,R)$, האם הקיר תורם לשטף?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. הקיר אנכי, הנורמל שלו אופקי, והשדה $(0,0,R)$ משיק לו.
+      - text: כן, כי הקיר אינו פאה של תיבה
+        feedback: >-
+          מה שמאפס את התרומה הוא שהנורמל אופקי, וזה נכון לכל קיר אנכי, לא רק לפאה של תיבה.
+        misconception: MC-c7-side-faces-contribute
+    reasons:
+      - text: 'על הקיר $\hat{\mathbf N}$ ניצב ל-$\mathbf e_3$, ולכן $(0,0,R)\cdot\hat{\mathbf N}=0$; נשארים הבסיס והגרף, וזה המשפט היסודי מ-$0$ עד $g(x,y)$'
+        correct: true
+        feedback: >-
+          בדיוק. לכן ההוכחה עוברת לכל תחום "בין שני גרפים" בכיוון $z$, ואת $(P,0,0)$ ו-$(0,Q,0)$ מטפלים באותו אופן כשהתחום
+          פשוט גם בכיוונים $x$ ו-$y$.
+      - text: 'הקיר תורם, אבל התרומה שלו מתבטלת עם הבסיס'
+        feedback: >-
+          לבסיס ולקיר אין שום סיבה להתבטל זה עם זה. הקיר תורם $0$ לבדו.
+        misconception: MC-c7-side-faces-contribute
+      - text: 'על הקיר $R=0$'
+        feedback: >-
+          אין שום הנחה כזו. התרומה מתאפסת בגלל כיוון הנורמל.
+        misconception: MC-c7-side-faces-contribute
+
+  - id: Q-7.5-tangent
+    type: twotier
+    objectives: [OBJ-7.5-3, OBJ-7.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbf F$ מסדר $C^1$ ב-$\mathbb R^3$ **משיק** לספרת היחידה בכל נקודה שלה. מהו $\iiint_{\|\mathbf x\|\le1}\nabla\cdot\mathbf F\,dV$?
+    choices:
+      - text: '$0$'
+        correct: true
+        feedback: >-
+          נכון. על הספרה $\mathbf F\cdot\hat{\mathbf N}=0$, ולכן השטף, ואיתו האינטגרל המשולש, אפס.
+      - text: 'אי אפשר לדעת'
+        feedback: >-
+          לפי גאוס האינטגרל המשולש שווה לשטף, והשטף של שדה משיק הוא אפס.
+        misconception: MC-c7-gauss-statement
+    reasons:
+      - text: 'לפי גאוס האינטגרל שווה ל-$\oiint\mathbf F\cdot\hat{\mathbf N}\,dS$, והאינטגרנד אפס כי $\mathbf F$ משיק'
+        correct: true
+        feedback: >-
+          בדיוק. לדוגמה $(-y,x,0)$ משיק לספרה, והדיברגנץ שלו אפס בכל מקום. אבל גם שדות משיקים עם דיברגנץ שאינו אפס
+          בפנים נותנים אינטגרל $0$.
+      - text: 'כי שדה משיק לספרה הוא בלי דיברגנץ'
+        feedback: >-
+          לא: $\mathbf F=(1-\|\mathbf x\|^2)\,(1,0,0)$ מתאפס על הספרה, ולכן משיק לה, אבל $\nabla\cdot\mathbf F=-2x$ אינו אפס.
+          רק **האינטגרל** של הדיברגנץ אפס.
+        misconception: MC-c7-zero-flux-zero-div
+      - text: 'כי על הספרה $\nabla\cdot\mathbf F=0$'
+        feedback: >-
+          הנתון על כיוון השדה, לא על הנגזרות שלו. הדוגמה $(1-\|\mathbf x\|^2)(1,0,0)$ נותנת $\nabla\cdot\mathbf F=-2x$ גם על
+          הספרה.
+        misconception: MC-c7-zero-flux-zero-div
+
+  - id: Q-7.5-cylinder
+    type: numeric
+    objectives: [OBJ-7.5-3]
+    level: mid
+    prompt: >-
+      חשבו את השטף החוצה של $\mathbf F=(x^3,\ y^3,\ z)$ דרך השפה של הגליל הסגור $\{x^2+y^2\le1,\ 0\le z\le2\}$ (המעטפת ושני
+      המכסים).
+    answer: 15.7079633
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $5\pi$. $\nabla\cdot\mathbf F=3x^2+3y^2+1=3r^2+1$, ובקואורדינטות גליליות
+      $\int_0^2\int_0^{2\pi}\int_0^1(3r^2+1)\,r\,dr\,d\theta\,dz=2\cdot2\pi\cdot\left(\frac34+\frac12\right)=5\pi$.
+    wrongFeedback: >-
+      חשבו את הדיברגנץ ושלבו בקואורדינטות גליליות, עם היעקוביאן $r$.
+    commonWrong:
+      - value: 25.1327412
+        feedback: >-
+          $8\pi$: שכחתם את היעקוביאן $r$, ושילבתם $(3r^2+1)\,dr$ במקום $(3r^3+r)\,dr$.
+        misconception: MC-c5-forgot-jacobian
+      - value: 9.4247780
+        feedback: >-
+          $3\pi$: חסר המחובר $\partial_z z=1$ בדיברגנץ. הוא תורם את נפח הגליל, $2\pi$.
+
+  - id: Q-7.5-zero-flux
+    type: twotier
+    objectives: [OBJ-7.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      השטף של $\mathbf F$ דרך **כל** ספרה שמרכזה בראשית הוא $0$. האם בהכרח $\nabla\cdot\mathbf F=0$ בכל מקום?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $\mathbf F=(x^2,0,0)$: $\nabla\cdot\mathbf F=2x$, פונקציה אי-זוגית, והאינטגרל שלה על כל כדור סביב הראשית אפס,
+          ולכן גם השטף.
+      - text: כן
+        feedback: >-
+          לפי גאוס הנתון אומר רק ש-$\iiint\nabla\cdot\mathbf F=0$ על כל כדור **סביב הראשית**. $(x^2,0,0)$ מקיים את זה,
+          והדיברגנץ שלו $2x$.
+        misconception: MC-c7-zero-flux-zero-div
+    reasons:
+      - text: 'הנתון שקול ל-$\iiint_{B_r}\nabla\cdot\mathbf F\,dV=0$ לכל $r$, וזה מתקיים ל-$(x^2,0,0)$, שהדיברגנץ שלו $2x\ne0$'
+        correct: true
+        feedback: >-
+          בדיוק. אילו השטף היה אפס דרך כל ספרה סביב **כל** נקודה, אז היה $\nabla\cdot\mathbf F=0$: הדיברגנץ הוא הגבול של
+          השטף לחלק לנפח. דרך ספרת היחידה שמרכזה $(1,0,0)$ השטף של $(x^2,0,0)$ הוא $\frac{8\pi}3\ne0$.
+      - text: 'הדיברגנץ הוא השטף לחלק לנפח, ולכן הוא אפס'
+        feedback: >-
+          זה גבול של ספרות **קטנות סביב הנקודה עצמה**. הספרות כאן כולן סביב הראשית, ולכן הנתון קובע את הדיברגנץ רק
+          בראשית.
+        misconception: MC-c7-zero-flux-zero-div
+      - text: 'שטף אפס פירושו שהשדה משיק לכל ספרה'
+        feedback: >-
+          שטף אפס הוא אינטגרל אפס, לא אינטגרנד אפס: $(x^2,0,0)$ חוצה כל ספרה, פנימה בחלק אחד והחוצה בחלק אחר.
+        misconception: MC-c7-zero-flux-zero-div
+
+  - id: Q-7.5-hemisphere-lid
+    type: numeric
+    objectives: [OBJ-7.5-3, OBJ-7.5-1]
+    level: exam
+    prompt: >-
+      $H$ הוא חצי ספרת היחידה העליון ($z\ge0$, בלי הבסיס) עם הנורמל החיצוני, ו-$\mathbf F=(x^3,\ y^3,\ z^3+2)$. חשבו את
+      $\iint_H\mathbf F\cdot d\mathbf S$.
+    answer: 10.0530965
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{16\pi}5$. סוגרים בעיגול $D$ בבסיס עם הנורמל החיצוני $-\mathbf e_3$. $\nabla\cdot\mathbf F=3(x^2+y^2+z^2)$, ובכדוריות
+      $\iiint_{B_+}3\rho^2\,dV=3\cdot2\pi\int_0^1\rho^4\,d\rho=\frac{6\pi}5$. על $D$: $\mathbf F\cdot(-\mathbf e_3)=-(0+2)=-2$, והשטף
+      $-2\pi$. לכן $\iint_H=\frac{6\pi}5-(-2\pi)=\frac{16\pi}5$.
+    wrongFeedback: >-
+      $H$ אינו משטח סגור. סגרו אותו במכסה עם הנורמל החיצוני, השתמשו בגאוס, והחסירו את השטף דרך המכסה.
+    commonWrong:
+      - value: 3.7699112
+        feedback: >-
+          $\frac{6\pi}5$ הוא השטף דרך כל השפה של חצי הכדור. שכחתם להחסיר את המכסה, שתורם $-2\pi$.
+        misconception: MC-c7-gauss-open-surface
+      - value: -2.5132741
+        feedback: >-
+          $-\frac{4\pi}5=\frac{6\pi}5-2\pi$: לקחתם את המכסה עם נורמל $+\mathbf e_3$. החוץ של חצי הכדור בבסיס הוא כלפי מטה.
+        misconception: MC-c7-lid-normal
+      - value: 7.5398224
+        feedback: >-
+          $\frac{12\pi}5$ הוא האינטגרל של הדיברגנץ על הכדור **כולו**. כאן התחום הוא חצי כדור.

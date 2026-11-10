@@ -1,0 +1,27 @@
+# Terms first defined in lesson 1.3 (unit tangent, curvature, principal normal).
+- id: unit-tangent
+  term: וקטור המשיק היחידה
+  en: unit tangent vector
+  symbol: '\mathbf t'
+  definition: >-
+    $\mathbf t=\frac{\gamma'}{\|\gamma'\|}$ בנקודה רגולרית; בפרמטר אורך הקשת $\mathbf t(s)=\gamma'(s)$. הוא לא תלוי
+    בפרמטריזציה, פרט לסימן: בהיפוך כיוון הוא מתהפך.
+  lesson: '1.3'
+- id: curvature
+  term: עקמומיות
+  en: curvature
+  symbol: '\kappa=\Big\|\frac{d\mathbf t}{ds}\Big\|'
+  definition: >-
+    קצב השינוי של כיוון המשיק ליחידת אורך: $\kappa(s)=\|\mathbf t'(s)\|\ge0$ בפרמטר אורך הקשת. בפרמטר כללי
+    $\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}$. למעגל ברדיוס $r$: $\frac1r$; לישר: $0$.
+  reject: [עיקמומיות]
+  lesson: '1.3'
+- id: principal-normal
+  term: נורמל ראשי
+  en: principal normal
+  symbol: '\mathbf n=\frac{\mathbf t''}{\kappa}'
+  definition: >-
+    בנקודה שבה $\kappa>0$: וקטור היחידה $\mathbf n=\frac{1}{\kappa}\frac{d\mathbf t}{ds}$. הוא ניצב ל-$\mathbf t$
+    (כי $\|\mathbf t\|=1$) ומצביע אל הצד הקעור, אל מרכז העקמומיות. כש-$\kappa=0$ הוא לא מוגדר.
+  reject: [נורמל עיקרי]
+  lesson: '1.3'

@@ -1,0 +1,381 @@
+# Lesson 0.4 — review: the inverse function theorem, the implicit function theorem, regular level sets.
+# Objectives (src/course.ts):
+#   OBJ-0.4-1  state the inverse function theorem and check the invertible-Jacobian condition at a point
+#   OBJ-0.4-2  state the implicit function theorem and deduce that a level set of a regular value is locally a graph
+#   OBJ-0.4-3  compute the tangent space of a regular level set as the kernel of the differential
+chapter: 0
+questions:
+  - id: Q-0.4-ift
+    type: mc
+    objectives: [OBJ-0.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $F:U\to\mathbb R^n$ גזירה ברציפות ($C^1$) על קבוצה פתוחה $U\subseteq\mathbb R^n$, ו-$p\in U$. מה אומר משפט הפונקציה
+      ההפוכה?
+    choices:
+      - text: 'אם $DF(p)$ הפיכה, יש סביבות פתוחות $V\ni p$ ו-$W\ni F(p)$ ש-$F:V\to W$ חד-חד-ערכית ועל, ההפכית $C^1$, ו-$D(F^{-1})(F(p))=DF(p)^{-1}$'
+        correct: true
+        feedback: >-
+          נכון. שימו לב לשלושה חלקים: התנאי הוא בנקודה אחת; המסקנה מקומית (בסביבה); והנגזרת של ההפכית היא המטריצה
+          ההפכית.
+      - text: 'אם $DF(x)$ הפיכה לכל $x\in U$, אז $F:U\to F(U)$ חד-חד-ערכית ועל, וההפכית $F^{-1}:F(U)\to U$ היא $C^1$'
+        feedback: >-
+          המשפט מקומי. $F(x,y)=(e^x\cos y,\ e^x\sin y)$ מקיימת $\det DF=e^{2x}>0$ בכל $\mathbb R^2$, ובכל זאת
+          $F(0,0)=F(0,2\pi)$.
+        misconception: MC-c0-ift-global
+      - text: 'אם $F$ חד-חד-ערכית ועל מסביבה של $p$ לסביבה של $F(p)$ וההפכית רציפה, אז $DF(p)$ הפיכה'
+        feedback: >-
+          זה הכיוון ההפוך, והוא לא נכון: $f(x)=x^3$ הפיכה על $\mathbb R$ ו-$f'(0)=0$. (ההפכית $\sqrt[3]{x}$ אינה גזירה ב-$0$.)
+        misconception: MC-c0-ift-converse
+
+  - id: Q-0.4-polar-points
+    type: multi
+    objectives: [OBJ-0.4-1]
+    level: basic
+    prompt: >-
+      $F(r,\theta)=(r\cos\theta,\ r\sin\theta)$ מוגדרת על כל $\mathbb R^2$. באילו נקודות $(r,\theta)$ מתקיים התנאי של משפט
+      הפונקציה ההפוכה? סמנו את כולן.
+    choices:
+      - text: '$(1,\ 0)$'
+        correct: true
+        feedback: 'נכון: $\det DF=r=1\ne0$.'
+      - text: '$(3,\ \pi)$'
+        correct: true
+        feedback: 'נכון: $\det DF=3\ne0$. הזווית לא משפיעה על היעקוביאן.'
+      - text: '$(-2,\ 1)$'
+        correct: true
+        feedback: >-
+          נכון: $\det DF=r=-2\ne0$. היעקוביאן שלילי, ובכל זאת שונה מאפס, וזה כל מה שהתנאי דורש.
+      - text: '$(0,\ \frac\pi4)$'
+        feedback: >-
+          $F$ חלקה גם כאן, אבל התנאי הוא על $DF$: $\det DF=r=0$. ואכן כל הנקודות $(0,\theta)$ נשלחות לראשית, ולכן $F$
+          אינה חד-חד-ערכית באף סביבה של $(0,\frac\pi4)$.
+        misconception: MC-c0-ift-smooth-enough
+    explanation: >-
+      $\det DF=r$ (שיעור 0.3). התנאי מתקיים בדיוק כש-$r\ne0$.
+
+  - id: Q-0.4-exp
+    type: twotier
+    objectives: [OBJ-0.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $F(x,y)=(e^x\cos y,\ e^x\sin y)$. ידוע ש-$\det DF(x,y)=e^{2x}>0$ בכל נקודה. האם $F$ חד-חד-ערכית על $\mathbb R^2$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $F(x,y)=F(x,\ y+2\pi)$ לכל $(x,y)$. היא חד-חד-ערכית על כל פס $\mathbb R\times[c,\ c+2\pi)$, ולא על שום פס
+          רחב יותר בכיוון $y$.
+      - text: כן
+        feedback: >-
+          יעקוביאן שונה מאפס בכל מקום נותן הפכית **מקומית** ליד כל נקודה, לא הפכית אחת על הכול. בדקו את $(0,0)$ ואת
+          $(0,2\pi)$.
+        misconception: MC-c0-ift-global
+    reasons:
+      - text: '$F(0,0)=(1,0)=F(0,2\pi)$; משפט הפונקציה ההפוכה נותן רק הפכית בסביבה של כל נקודה'
+        correct: true
+        feedback: >-
+          בדיוק. ליד כל נקודה $F$ הפיכה, אבל ההפכיות המקומיות אינן מתחברות להפכית אחת. כך גם בקואורדינטות קוטביות.
+      - text: 'יעקוביאן שונה מאפס בכל נקודה גורר הפכית גלובלית'
+        feedback: >-
+          זו הטענה שהדוגמה הזו מפריכה. במשתנה אחד היא נכונה (נגזרת שאינה מתאפסת על קטע גוררת מונוטוניות), ובממד $2$ כבר לא.
+        misconception: MC-c0-ift-global
+      - text: '$F$ אינה חד-חד-ערכית כי $\det DF$ אינו קבוע'
+        feedback: >-
+          ערך היעקוביאן לא קובע חד-חד-ערכיות: $F(x,y)=(e^x,\ y)$ חד-חד-ערכית עם יעקוביאן $e^x$, שאינו קבוע. הבעיה כאן היא
+          המחזוריות ב-$y$.
+        misconception: MC-c0-ift-global
+
+  - id: Q-0.4-inv-deriv
+    type: numeric
+    objectives: [OBJ-0.4-1]
+    level: mid
+    prompt: >-
+      $F(x,y)=(x^2-y,\ xy)$, $p=(2,1)$, $F(p)=(3,2)$. נסמן $G=F^{-1}$ בסביבה של $(3,2)$, $G(u,v)=(x(u,v),\ y(u,v))$. חשבו
+      את $\frac{\partial x}{\partial u}(3,2)$.
+    answer: 0.2222222222
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $DF(2,1)=\begin{pmatrix}2x&-1\\y&x\end{pmatrix}\Big|_{(2,1)}=\begin{pmatrix}4&-1\\1&2\end{pmatrix}$ עם דטרמיננטה
+      $9$, ולכן $DG(3,2)=DF(2,1)^{-1}=\frac19\begin{pmatrix}2&1\\-1&4\end{pmatrix}$. השורות הן $x,y$ והעמודות $u,v$, ולכן
+      $\frac{\partial x}{\partial u}$ הוא האיבר השמאלי העליון, $\frac29$.
+    wrongFeedback: >-
+      לפי משפט הפונקציה ההפוכה $DG(F(p))=DF(p)^{-1}$. חשבו את $DF(2,1)$, הפכו אותה, וקראו את האיבר בשורה של $x$ ובעמודה
+      של $u$.
+    commonWrong:
+      - value: 4
+        feedback: >-
+          $4$ הוא $\frac{\partial}{\partial x}(x^2-y)$ ב-$p$, איבר של $DF$ עצמה. הנגזרת של ההפכית היא המטריצה **ההפכית**.
+        misconception: MC-c0-inverse-derivative-confusion
+      - value: 0.25
+        feedback: >-
+          $\frac14$ הוא ההופכי של האיבר $4$. ההפכית של מטריצה אינה ההופכיים של איבריה: צריך את כל המטריצה,
+          $\frac{1}{\det}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$.
+        misconception: MC-c0-inverse-derivative-confusion
+      - value: 0.4444444444
+        feedback: >-
+          $\frac49$ הוא $\frac{a}{\det}$: חילקתם את $DF$ בדטרמיננטה בלי להחליף את שני איברי האלכסון. בהפכית של
+          $\begin{pmatrix}a&b\\c&d\end{pmatrix}$ האיבר השמאלי העליון הוא $\frac{d}{\det}=\frac29$. ($\frac49$ הוא
+          $\frac{\partial y}{\partial v}$.)
+        misconception: MC-c0-inverse-derivative-confusion
+      - value: 0.1111111111
+        feedback: >-
+          $\frac19$ הוא $\frac{\partial x}{\partial v}$, האיבר בשורה של $x$ ובעמודה של $v$. העמודה הראשונה של $DG$ היא
+          הנגזרת לפי $u$.
+        misconception: MC-c0-jacobian-entry-mixup
+
+  - id: Q-0.4-implicit
+    type: mc
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $F:\mathbb R^3\to\mathbb R$ גזירה ברציפות, $F(p)=0$. איזה ניסוח הוא משפט הפונקציה הסתומה (לחילוץ $z$)?
+    choices:
+      - text: 'אם $\frac{\partial F}{\partial z}(p)\ne0$, יש סביבה של $p$ שבה $\{F=0\}$ היא הגרף $z=g(x,y)$ של פונקציה $g$ גזירה ברציפות'
+        correct: true
+        feedback: >-
+          נכון. התנאי הוא על הנגזרת לפי המשתנה **שמחלצים**, והמסקנה מקומית. בנוסף $g_x=-\frac{F_x}{F_z}$ ו-$g_y=-\frac{F_y}{F_z}$.
+      - text: 'אם $\nabla F(p)\ne0$, יש סביבה של $p$ שבה $\{F=0\}$ היא הגרף $z=g(x,y)$ של פונקציה $g$ גזירה ברציפות'
+        feedback: >-
+          לא בהכרח לפי $z$. בספרה $x^2+y^2+z^2=1$ בנקודה $(1,0,0)$: $\nabla F=(2,0,0)\ne0$, אבל לכל $(x,y)$ קרוב ל-$(1,0)$
+          עם $x^2+y^2<1$ יש **שני** ערכים של $z$. שם מחלצים את $x$.
+        misconception: MC-c0-implicit-any-variable
+      - text: 'אם $\frac{\partial F}{\partial z}(p)\ne0$, כל הקבוצה $\{F=0\}$ היא הגרף $z=g(x,y)$ של פונקציה $g$ גזירה ברציפות'
+        feedback: >-
+          המסקנה מקומית. הספרה מקיימת את התנאי בקוטב הצפוני, אבל כולה אינה גרף מעל המישור $xy$.
+        misconception: MC-c0-implicit-global
+
+  - id: Q-0.4-regular
+    type: mc
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $F:\mathbb R^3\to\mathbb R$ גזירה ברציפות. מתי $c$ נקרא **ערך רגולרי** של $F$?
+    choices:
+      - text: 'כש-$\nabla F(p)\ne0$ בכל נקודה $p$ שבה $F(p)=c$'
+        correct: true
+        feedback: >-
+          נכון. התנאי נבדק רק על קבוצת הרמה עצמה. ל-$F=x^2+y^2+z^2$ הגרדיאנט מתאפס בראשית, ובכל זאת $1$ ערך רגולרי, כי הראשית
+          לא על הספרה.
+      - text: 'כש-$\nabla F(p)\ne0$ בנקודה אחת לפחות שבה $F(p)=c$'
+        feedback: >-
+          נקודה אחת אינה מספיקה: ל-$x^2+y^2-z^2$ הערך $0$ אינו רגולרי, כי בקודקוד של החרוט הגרדיאנט מתאפס, אף שבשאר
+          הנקודות של החרוט הוא שונה מאפס.
+        misconception: MC-c0-regular-value-local
+      - text: 'כש-$\nabla F\ne0$ בכל $\mathbb R^3$'
+        feedback: >-
+          זה חזק מדי ואינו ההגדרה: לפיו $1$ לא היה ערך רגולרי של $x^2+y^2+z^2$, בגלל הראשית, אף שהספרה חלקה לגמרי.
+        misconception: MC-c0-regular-value-local
+
+  - id: Q-0.4-sphere-graph
+    type: multi
+    objectives: [OBJ-0.4-2]
+    level: mid
+    prompt: >-
+      ליד אילו מהנקודות הבאות ספרת היחידה $x^2+y^2+z^2=1$ היא גרף של פונקציה $z=g(x,y)$? סמנו את כולן.
+    choices:
+      - text: '$(0,0,1)$'
+        correct: true
+        feedback: 'נכון: $F_z=2z=2\ne0$, ו-$g=\sqrt{1-x^2-y^2}$.'
+      - text: '$(0,0,-1)$'
+        correct: true
+        feedback: 'נכון: $F_z=-2\ne0$, ו-$g=-\sqrt{1-x^2-y^2}$. סימן שלילי של $F_z$ לא מפריע.'
+      - text: '$\left(\frac{1}{\sqrt2},\ 0,\ \frac{1}{\sqrt2}\right)$'
+        correct: true
+        feedback: 'נכון: $F_z=\sqrt2\ne0$.'
+      - text: '$(1,0,0)$'
+        feedback: >-
+          כאן $F_z=0$, וזה לבדו עוד לא מוכיח דבר. אבל בדיקה ישירה מראה שאין גרף: לנקודות $(x,0)$ עם $x<1$ קרוב ל-$1$ יש שני
+          ערכים $z=\pm\sqrt{1-x^2}$, ולנקודות עם $x>1$ אין אף אחד. ליד $(1,0,0)$ הספרה היא גרף $x=\sqrt{1-y^2-z^2}$.
+        misconception: MC-c0-implicit-any-variable
+    explanation: >-
+      $F_z=2z$, ולכן התנאי מתקיים בדיוק מחוץ לקו המשווה $z=0$. על קו המשווה הספרה היא גרף לפי $x$ או לפי $y$.
+
+  - id: Q-0.4-graph-proof
+    type: rank
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סדרו את ההוכחה לטענה: אם $c$ ערך רגולרי של $F:\mathbb R^3\to\mathbb R$ ו-$F(p)=c$, אז ליד $p$ הקבוצה $\{F=c\}$ היא גרף של
+      פונקציה גזירה ברציפות של שניים מהמשתנים.
+    help: סדרו את שלבי ההוכחה מהראשון (למעלה) לאחרון.
+    items:
+      - { id: s1, label: 'כי $c$ ערך רגולרי ו-$F(p)=c$, מתקיים $\nabla F(p)\ne0$.' }
+      - { id: s2, label: 'לכן לפחות אחת הנגזרות החלקיות ב-$p$ שונה מאפס; נניח $F_z(p)\ne0$ (אחרת מחליפים את שמות המשתנים).' }
+      - { id: s3, label: 'מפעילים את משפט הפונקציה הסתומה על $F-c$ בנקודה $p$ ולפי המשתנה $z$.' }
+      - { id: s4, label: 'מקבלים סביבה של $p$ שבה $\{F=c\}$ היא הגרף $z=g(x,y)$ עם $g$ גזירה ברציפות.' }
+    order: [s1, s2, s3, s4]
+    correctFeedback: >-
+      נכון. המשתנה שמחלצים נבחר **אחרי** שבודקים איזו נגזרת חלקית לא מתאפסת. לכן קבוצת רמה של ערך רגולרי היא מקומית
+      גרף: ליד כל נקודה שלה היא גרף של פונקציה גזירה ברציפות, אבל לא תמיד לפי אותו משתנה.
+    wrongFeedback: >-
+      ההוכחה מתחילה מההנחה (ערך רגולרי), יורדת לנגזרת חלקית אחת שאינה אפס, ורק אז מפעילה את המשפט עבור המשתנה הזה.
+
+  - id: Q-0.4-cone
+    type: twotier
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      החרוט $x^2+y^2=z^2$. האם יש סביבה של הקודקוד $(0,0,0)$ שבה החרוט הוא גרף $z=g(x,y)$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. בכל סביבה של הקודקוד יש נקודות משני חצאי החרוט, העליון והתחתון, מעל אותה נקודה $(x,y)$.
+      - text: 'כן, $g(x,y)=\sqrt{x^2+y^2}$'
+        feedback: >-
+          זה רק החצי העליון. הנקודות $(x,y,-\sqrt{x^2+y^2})$ שייכות לחרוט וקרובות לקודקוד כרצוננו.
+        misconception: MC-c0-implicit-global
+    reasons:
+      - text: 'לכל $(x,y)\ne(0,0)$ קרוב לראשית, שתי הנקודות $(x,y,\pm\sqrt{x^2+y^2})$ על החרוט ובסביבה'
+        correct: true
+        feedback: >-
+          בדיוק: לנקודה אחת $(x,y)$ יש שני ערכים של $z$, ולכן אין פונקציה. זו בדיקה ישירה; היא מה שמוכיח את התשובה.
+      - text: '$\nabla F(0,0,0)=0$ ל-$F=x^2+y^2-z^2$, ולכן לפי משפט הפונקציה הסתומה החרוט אינו גרף שם'
+        feedback: >-
+          המשפט נותן תנאי **מספיק** לגרף. כשהתנאי נכשל המשפט לא אומר דבר, וצריך לבדוק ישירות. ל-$F=z^3$ למשל $F_z=0$ על
+          כל $\{F=0\}$, והקבוצה היא המישור $z=0$, גרף של $g\equiv0$.
+        misconception: MC-c0-implicit-converse
+      - text: 'החרוט אינו קבוצת רמה של אף פונקציה חלקה'
+        feedback: >-
+          הוא קבוצת הרמה $\{x^2+y^2-z^2=0\}$ של פולינום. הבעיה היא שהערך $0$ אינו רגולרי, ובקודקוד הקבוצה באמת אינה גרף.
+        misconception: MC-c0-level-set-always-smooth
+
+  - id: Q-0.4-zsquared
+    type: twotier
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $F(x,y,z)=(x^2+y^2+z^2-1)^2$. בדקו שהערך $0$ **אינו** ערך רגולרי של $F$. האם מזה נובע שיש נקודה של $\{F=0\}$
+      שבסביבתה הקבוצה אינה גרף של פונקציה גזירה ברציפות של שניים מהמשתנים?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $\nabla F=4(x^2+y^2+z^2-1)(x,y,z)$ אכן מתאפס בכל נקודה של $\{F=0\}$, אבל הקבוצה היא ספרת היחידה, וליד כל
+          נקודה שלה היא גרף (לפי $z$, או לפי $x$ או $y$ על קו המשווה). רק התיאור שלה כקבוצת רמה של $F$ "רע".
+      - text: כן
+        feedback: >-
+          ערך רגולרי הוא תנאי מספיק לכך שהקבוצה מקומית גרף, לא תנאי הכרחי. מהי הקבוצה $\{F=0\}$ עצמה?
+        misconception: MC-c0-implicit-converse
+    reasons:
+      - text: '$\{F=0\}$ היא ספרת היחידה, שהיא גם קבוצת הרמה $\{G=1\}$ של $G=x^2+y^2+z^2$, ו-$1$ ערך רגולרי של $G$'
+        correct: true
+        feedback: >-
+          בדיוק. להיות מקומית גרף היא תכונה של הקבוצה; רגולריות היא תכונה של הפונקציה שמתארת אותה. אותה קבוצה יכולה להיות
+          קבוצת רמה של פונקציה טובה ושל פונקציה רעה, ולכן כשהתנאי נכשל מחפשים תיאור אחר.
+      - text: '$\nabla F$ מתאפס בכל נקודה של הקבוצה, ולכן אין לה מרחב משיק דו-ממדי ואינה גרף באף נקודה'
+        feedback: >-
+          ל-$F$ אין גרדיאנט שונה מאפס על הקבוצה, אבל הקבוצה עצמה היא הספרה, ולה מרחב משיק דו-ממדי בכל נקודה. המסקנה אינה
+          נובעת מכישלון התנאי.
+        misconception: MC-c0-implicit-converse
+      - text: 'כל קבוצת רמה של ערך לא רגולרי היא בעלת חוד או צומת, כמו החרוט'
+        feedback: >-
+          החרוט הוא דוגמה אחת שבה הקבוצה באמת אינה גרף ליד הקודקוד, אבל דוגמה אחת לא קובעת כלל. $F$ כאן היא דוגמה נגדית
+          לכלל.
+        misconception: MC-c0-one-example-proves
+
+  - id: Q-0.4-tangent-sphere
+    type: mc
+    objectives: [OBJ-0.4-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהו המרחב המשיק לספרה $\{F=1\}$, $F=x^2+y^2+z^2$, בנקודה $p=(0,0,1)$?
+    choices:
+      - text: 'תת-המרחב $\{v:\ v_3=0\}$, שפורשים $(1,0,0)$ ו-$(0,1,0)$'
+        correct: true
+        feedback: >-
+          נכון. $DF(p)=(2x,\ 2y,\ 2z)\big|_p=(0,0,2)$, ו-$\ker DF(p)=\{v:\ 2v_3=0\}$. זה תת-מרחב לינארי ממד $2$.
+      - text: 'הישר שפורש $(0,0,1)$'
+        feedback: >-
+          זה הישר של **הנורמל** $\nabla F(p)$. המרחב המשיק ניצב לו.
+        misconception: MC-c0-tangent-is-gradient-span
+      - text: 'המישור $z=1$'
+        feedback: >-
+          המישור $z=1$ הוא המישור המשיק **שעובר ב-$p$**, כלומר $p+T_p$. המרחב המשיק עצמו הוא תת-מרחב לינארי ועובר בראשית:
+          $\{z=0\}$.
+        misconception: MC-c0-tangent-space-through-point
+
+  - id: Q-0.4-tangent-circle
+    type: mc
+    objectives: [OBJ-0.4-3]
+    level: mid
+    prompt: >-
+      $F(x,y,z)=(x^2+y^2+z^2-6,\ x-z)$. הקבוצה $\{F=0\}$ היא מעגל: החיתוך של הספרה ברדיוס $\sqrt6$ עם המישור $x=z$.
+      בדקו ש-$DF$ מדרגה $2$ בכל נקודה של הקבוצה (כלומר $0$ ערך רגולרי, ולכן המרחב המשיק הוא $\ker DF$), ומצאו איזה
+      וקטור פורש את המרחב המשיק בנקודה $p=(1,2,1)$.
+    choices:
+      - text: '$(1,-1,1)$'
+        correct: true
+        feedback: >-
+          נכון. $DF=\begin{pmatrix}2x&2y&2z\\1&0&-1\end{pmatrix}$, ושתי השורות תלויות רק כש-$(x,y,z)\parallel(1,0,-1)$; עם
+          $x=z$ זה רק הראשית, שאינה על הספרה. לכן הדרגה $2$ בכל הקבוצה. ב-$p$: מהשורה השנייה $v_1=v_3$, ומהראשונה
+          $2v_1+4v_2+2v_3=0$, כלומר $v_2=-v_1$.
+      - text: '$(1,0,-1)$'
+        feedback: >-
+          $(1,0,-1)$ מאפס רק את השורה הראשונה: $2-2=0$. השורה השנייה נותנת $1+1=2\ne0$: זה בדיוק הנורמל $\nabla F_2$
+          למישור $x=z$, והווקטור יוצא מהמישור. הגרעין דורש את **כל** השורות.
+        misconception: MC-c0-kernel-one-row
+      - text: '$(1,0,1)$'
+        feedback: >-
+          $(1,0,1)$ מאפס רק את השורה השנייה: הוא במישור $x=z$, אבל השורה הראשונה נותנת $2+0+2=4\ne0$, כלומר הוא אינו משיק
+          לספרה. הגרעין דורש את **כל** השורות.
+        misconception: MC-c0-kernel-one-row
+      - text: '$(1,2,1)$'
+        feedback: >-
+          זה $p$ עצמו, בכיוון של $\nabla F_1(p)=(2,4,2)$: הנורמל לספרה, ניצב לה ולא משיק. $DF(p)(1,2,1)=(12,0)\ne0$.
+        misconception: MC-c0-tangent-is-gradient-span
+
+  - id: Q-0.4-dim
+    type: mc
+    objectives: [OBJ-0.4-3, OBJ-0.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $F:\mathbb R^5\to\mathbb R^2$ גזירה ברציפות, ו-$c$ ערך רגולרי שלה (כלומר $DF(p)$ מדרגה $2$ בכל $p$ עם $F(p)=c$). מהו
+      הממד של המרחב המשיק ל-$\{F=c\}$ בנקודה כזו?
+    choices:
+      - text: '$3$'
+        correct: true
+        feedback: >-
+          נכון. $\dim\ker DF(p)=5-\operatorname{rank}DF(p)=5-2=3$ לפי משפט המימד. כל משוואה רגולרית מורידה ממד אחד.
+      - text: '$2$'
+        feedback: >-
+          $2$ הוא מספר המשוואות, לא הממד. ספרה ב-$\mathbb R^3$, משוואה אחת, היא ממד $2=3-1$.
+        misconception: MC-c0-level-set-dimension
+      - text: '$5$'
+        feedback: >-
+          המרחב המשיק הוא $\ker DF(p)$, תת-מרחב של $\mathbb R^5$ שהמשוואות מצמצמות. $5$ הוא כל המרחב.
+        misconception: MC-c0-level-set-dimension
+
+  - id: Q-0.4-tangent-saddle
+    type: numeric
+    objectives: [OBJ-0.4-3]
+    level: mid
+    prompt: >-
+      האוכף $S=\{z=xy\}$ והנקודה $p=(1,3,3)\in S$. לאיזה ערך של $a$ הווקטור $v=(2,\ a,\ 1)$ נמצא במרחב המשיק ל-$S$ ב-$p$?
+    answer: -5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $S=\{F=0\}$ עם $F=xy-z$, ו-$\nabla F=(y,\ x,\ -1)=(3,1,-1)$ ב-$p$ (שונה מאפס תמיד, כך ש-$0$ ערך רגולרי).
+      $v\in\ker DF(p)$: $3\cdot2+1\cdot a-1=0$, כלומר $a=-5$.
+    wrongFeedback: >-
+      כתבו את $S$ כקבוצת רמה $F=xy-z=0$, חשבו את $\nabla F(p)$ ודרשו $\nabla F(p)\cdot v=0$.
+    commonWrong:
+      - value: -7
+        feedback: >-
+          זה מתקבל מהנורמל $(y,\ x,\ +1)$. ל-$F=xy-z$ הרכיב השלישי הוא $\frac{\partial F}{\partial z}=-1$.
+        misconception: MC-c0-graph-normal-sign
+      - value: -0.3333333333
+        feedback: >-
+          זה מתקבל מ-$(x,\ y,\ -1)=(1,3,-1)$, שבו הוחלפו שני הרכיבים הראשונים: $\frac{\partial}{\partial x}(xy)=y=3$
+          ו-$\frac{\partial}{\partial y}(xy)=x=1$, ולכן $\nabla F(p)=(3,1,-1)$.
+        misconception: MC-c0-jacobian-entry-mixup

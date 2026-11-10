@@ -1,0 +1,404 @@
+# Chapter 7 review — grad, curl, div; Green, Stokes and Gauss (lessons 7.1–7.6), easy to hard.
+# Every lesson is touched; most questions combine two lessons or reach back to chapters 5–6. Each hint names the
+# lesson to go back to. Nothing here uses differential forms (chapter 8).
+chapter: 7
+questions:
+  - id: Q-7-review-01
+    type: numeric
+    objectives: [OBJ-7.1-1]
+    level: basic
+    prompt: >-
+      $\mathbf F=(x^2z,\ -y,\ xyz)$. חשבו את **הרכיב השני** של $\nabla\times\mathbf F$ בנקודה $(1,2,3)$.
+    answer: -5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הרכיב השני הוא $\partial_z F_1-\partial_x F_3=x^2-yz$, ובנקודה $(1,2,3)$: $1-6=-5$.
+      (כל הרוטור: $(xz,\ x^2-yz,\ 0)$.)
+    wrongFeedback: >-
+      הרכיב השני של הרוטור הוא $\partial_z F_1-\partial_x F_3$ (המחזור $x\to y\to z\to x$ קובע את הסדר).
+    commonWrong:
+      - value: 5
+        feedback: >-
+          זה $\partial_x F_3-\partial_z F_1$, הסדר ההפוך.
+        misconception: MC-c7-curl-sign
+      - value: 3
+        feedback: >-
+          זה הרכיב **הראשון**, $\partial_y F_3-\partial_z F_2=xz-0$.
+    hints:
+      - 'חזרו לשיעור 7.1: הרוטור כדטרמיננטה פורמלית.'
+
+  - id: Q-7-review-02
+    type: mc
+    objectives: [OBJ-7.2-1, OBJ-7.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $D$ תחום במישור $xy$, שנחשב משטח במרחב עם הנורמל $\hat{\mathbf N}=\mathbf e_3$, ו-$\mathbf F=(P,Q,0)$ עם $P,Q$ שאינם
+      תלויים ב-$z$. למה הופך משפט סטוקס במקרה הזה?
+    choices:
+      - text: 'למשפט גרין: $(\nabla\times\mathbf F)\cdot\mathbf e_3=Q_x-P_y$, והשפה בכיוון של כלל יד ימין עם $\mathbf e_3$ היא הכיוון החיובי'
+        correct: true
+        feedback: >-
+          נכון. גרין הוא סטוקס למשטח שטוח. לכן גם ההוכחה של סטוקס לגרף "מורידה" הכול למישור ומשתמשת בגרין.
+      - text: 'לגרין עם הכיוון השלילי של השפה, כי כלל יד ימין עם $\mathbf e_3$ נותן לשפה כיוון עם כיוון השעון במבט מלמעלה'
+        feedback: >-
+          אגודל יד ימין לאורך $\mathbf e_3$ (למעלה), והאצבעות נגד כיוון השעון כשמסתכלים מלמעלה: זה הכיוון החיובי.
+        misconception: MC-c7-right-hand-rule
+      - text: 'לגרין בצורת השטף, $\oint P\,dy-Q\,dx=\iint(P_x+Q_y)$, כי משמאל בסטוקס עומד שטף'
+        feedback: >-
+          $(\nabla\times\mathbf F)\cdot\mathbf e_3=\partial_x F_2-\partial_y F_1=Q_x-P_y$, הרוטור המישורי. הדיברגנץ המישורי שייך לשטף
+          דרך השפה, וזה מקרה פרטי של גאוס, לא של סטוקס.
+        misconception: MC-c7-green-divergence-form
+    hints:
+      - 'חזרו לשיעור 7.4: סטוקס למשטח שהוא גרף, ולשיעור 7.2: הניסוח של גרין.'
+
+  - id: Q-7-review-03
+    type: numeric
+    objectives: [OBJ-7.3-1, OBJ-5.2-2]
+    level: basic
+    prompt: >-
+      חשבו את השטח שחוסמת הקרדיואידה $r=1+\cos\theta$, $0\le\theta\le2\pi$, בעזרת $\frac12\oint(x\,dy-y\,dx)$. (למסילה
+      בקוטביות $x=r(\theta)\cos\theta$, $y=r(\theta)\sin\theta$ מתקבל $x\,dy-y\,dx=r^2\,d\theta$.)
+    answer: 4.7123890
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{3\pi}2$. ($x\,dy-y\,dx=r\cos\theta\,(r'\sin\theta+r\cos\theta)-r\sin\theta\,(r'\cos\theta-r\sin\theta)=r^2$, כפול $d\theta$.) לכן השטח
+      $\frac12\int_0^{2\pi}(1+\cos\theta)^2\,d\theta=\frac12(2\pi+0+\pi)=\frac{3\pi}2$.
+    wrongFeedback: >-
+      בדקו ש-$x\,dy-y\,dx=r^2\,d\theta$ למסילה $r=r(\theta)$, ואז שלבו $\frac12 r^2$.
+    commonWrong:
+      - value: 9.4247780
+        feedback: >-
+          $3\pi$: שכחתם את החצי.
+        misconception: MC-c7-area-double
+      - value: 3.1415927
+        feedback: >-
+          $\pi$: חסר המחובר $\int\cos^2\theta\,d\theta=\pi$ בפיתוח של $(1+\cos\theta)^2$.
+    hints:
+      - 'חזרו לשיעור 7.3: שטח כאינטגרל על השפה.'
+
+  - id: Q-7-review-04
+    type: mc
+    objectives: [OBJ-7.5-1, OBJ-6.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $R=\{x^2+y^2\le1,\ 0\le z\le2\}$. כשמפעילים את גאוס על $R$, מה הנורמל על המכסה התחתון $\{z=0,\ x^2+y^2\le1\}$?
+    choices:
+      - text: '$-\mathbf e_3$'
+        correct: true
+        feedback: >-
+          נכון. הנורמל החיצוני מצביע **החוצה מ-$R$**, ומתחת למכסה התחתון זה למטה.
+      - text: '$\mathbf e_3$'
+        feedback: >-
+          $\mathbf e_3$ מצביע מהמכסה התחתון **לתוך** הגליל. על המכסה העליון הנורמל החיצוני $\mathbf e_3$, ועל התחתון $-\mathbf e_3$.
+        misconception: MC-c7-lid-normal
+      - text: 'לא משנה, כי המכסה שטוח'
+        feedback: >-
+          השטף דרך המכסה מחליף סימן כשהנורמל מתהפך, ולכן זה משנה. גאוס נכון רק עם הנורמל החיצוני.
+        misconception: MC-c7-gauss-inward
+    hints:
+      - 'חזרו לשיעור 6.4: משטחים סגורים והנורמל החיצוני, ולשיעור 7.5.'
+
+  - id: Q-7-review-05
+    type: twotier
+    objectives: [OBJ-7.1-2, OBJ-7.5-3, OBJ-7.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbf F$ מסדר $C^2$ ב-$\mathbb R^3$ ו-$S$ השפה של תחום חסום $R$, עם הנורמל החיצוני. האם אפשר להוכיח
+      ש-$\oiint_S(\nabla\times\mathbf F)\cdot d\mathbf S=0$ בעזרת גאוס?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. גאוס מעביר את השטף לאינטגרל משולש של $\nabla\cdot(\nabla\times\mathbf F)$, והוא אפס.
+      - text: 'לא, גאוס חל רק על שדות שאינם רוטור'
+        feedback: >-
+          גאוס חל על כל שדה מסדר $C^1$ בתחום. $\nabla\times\mathbf F$ מסדר $C^1$ כי $\mathbf F\in C^2$.
+        misconception: MC-c7-gauss-statement
+    reasons:
+      - text: '$\oiint_S(\nabla\times\mathbf F)\cdot d\mathbf S=\iiint_R\nabla\cdot(\nabla\times\mathbf F)\,dV=0$, כי דיברגנץ של רוטור אפס'
+        correct: true
+        feedback: >-
+          בדיוק. זו דרך שנייה לתוצאה של שיעור 7.4 (שם: סטוקס על שני חצאים). היא דורשת $\mathbf F\in C^2$, ואילו דרך סטוקס
+          מסתפקת ב-$C^1$.
+      - text: 'כי $\nabla\times\mathbf F$ משיק ל-$S$'
+        feedback: >-
+          אין סיבה לכך: $\mathbf F=(-y,x,0)$, $\nabla\times\mathbf F=(0,0,2)$, ניצב לספרה בקטבים. השטף אפס כאינטגרל, לא נקודתית.
+        misconception: MC-c7-zero-flux-zero-div
+      - text: 'כי לפי גאוס השטף של כל שדה דרך משטח סגור הוא אפס'
+        feedback: >-
+          השטף של $(x,y,z)$ דרך ספרת היחידה $4\pi$. אפס מתקבל רק כשהדיברגנץ אפס, כמו לרוטור.
+        misconception: MC-c7-gauss-statement
+    hints:
+      - 'חזרו לשיעור 7.1 (דיברגנץ של רוטור) ולשיעור 7.5 (גאוס).'
+
+  - id: Q-7-review-06
+    type: numeric
+    objectives: [OBJ-7.2-3, OBJ-5.1-2]
+    level: mid
+    prompt: >-
+      $C$ היא האליפסה $\frac{x^2}4+y^2=1$ נגד כיוון השעון. חשבו את $\oint_C-y^3\,dx+x^3\,dy$.
+    answer: 23.5619449
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{15\pi}2$. $Q_x-P_y=3x^2+3y^2$. עם $x=2r\cos\theta$, $y=r\sin\theta$ (יעקוביאן $2r$):
+      $\iint3(4r^2\cos^2\theta+r^2\sin^2\theta)\,2r\,dr\,d\theta=6\cdot\frac14\cdot(4\pi+\pi)=\frac{15\pi}2$.
+    wrongFeedback: >-
+      הפעילו גרין, ואת האינטגרל הכפול על האליפסה חשבו בקואורדינטות קוטביות מוכללות $x=2r\cos\theta$, $y=r\sin\theta$.
+    commonWrong:
+      - value: 11.7809725
+        feedback: >-
+          $\frac{15\pi}4$: היעקוביאן של $x=2r\cos\theta$, $y=r\sin\theta$ הוא $2r$, לא $r$.
+        misconception: MC-c5-forgot-jacobian
+      - value: 4.7123890
+        feedback: >-
+          $\frac{3\pi}2$ הוא האינטגרל על עיגול היחידה. האליפסה רחבה פי 2 בכיוון $x$.
+      - value: -23.5619449
+        feedback: >-
+          הסימן הפוך: $Q_x-P_y=3x^2-(-3y^2)$ חיובי, והאליפסה בכיוון החיובי.
+        misconception: MC-c7-green-sign
+    hints:
+      - 'חזרו לשיעור 7.2 (גרין) ולשיעור 5.1 (החלפת משתנים).'
+
+  - id: Q-7-review-07
+    type: twotier
+    objectives: [OBJ-7.3-3, OBJ-6.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbf F=\frac{(x,\ y)}{x^2+y^2}$ ב-$\mathbb R^2\setminus\{0\}$, תחום שאינו פשוט קשר, ו-$Q_x=P_y$ שם. האם $\mathbf F$ משמר
+      ב-$\mathbb R^2\setminus\{0\}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. $\mathbf F=\nabla\left(\frac12\ln(x^2+y^2)\right)$ בכל $\mathbb R^2\setminus\{0\}$.
+      - text: 'לא, כי התחום אינו פשוט קשר'
+        feedback: >-
+          תחום שאינו פשוט קשר רק **מונע את ההבטחה** שרוטור אפס נותן שדה משמר. שדה מסוים יכול עדיין להיות משמר, וכאן יש
+          פוטנציאל מפורש.
+        misconception: MC-c6-singularity-means-nonconservative
+    reasons:
+      - text: 'יש לו פוטנציאל $\frac12\ln(x^2+y^2)$ בכל התחום; לחלופין, האינטגרל על מעגל היחידה $0$, וזה מספיק לפי גרין עם חור'
+        correct: true
+        feedback: >-
+          בדיוק. על מעגל היחידה $\mathbf F$ ניצב למשיק, והאינטגרל $0$; לשדה הסיבוב, לעומת זאת, $2\pi$.
+      - text: 'רוטור אפס מבטיח שדה משמר בכל תחום'
+        feedback: >-
+          לא: שדה הסיבוב הוא דוגמה נגדית. כאן המסקנה נכונה מסיבה אחרת, הפוטנציאל המפורש.
+        misconception: MC-c6-mixed-partials-suffice
+      - text: 'כל שדה עם $Q_x=P_y$ שמוגדר במישור פרט לנקודה אחת משמר, כי נקודה אחת לא משפיעה על אינטגרלים'
+        feedback: >-
+          שדה הסיבוב מקיים $Q_x=P_y$ במישור פרט לראשית, ואינו משמר: האינטגרל שלו על מעגל היחידה $2\pi$.
+        misconception: MC-c6-mixed-partials-suffice
+    hints:
+      - 'חזרו לשיעור 7.3 (רוטור אפס בתחום שאינו פשוט קשר) ולשיעור 6.2 (שדה הסיבוב מול השדה הרדיאלי).'
+
+  - id: Q-7-review-08
+    type: numeric
+    objectives: [OBJ-7.4-3, OBJ-7.4-1, OBJ-6.4-2]
+    level: mid
+    prompt: >-
+      $S$ היא "פחית בלי תחתית": המעטפת $x^2+y^2=1$, $0\le z\le2$, יחד עם המכסה העליון $z=2$, עם הנורמל החיצוני. עבור
+      $\mathbf F=(yz-2y,\ x+z^2,\ xy)$ חשבו את $\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S$.
+    answer: 9.4247780
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $3\pi$. השפה של $S$ היא מעגל היחידה במישור $z=0$. הכיוון: ב-$(1,0,0)$ הנורמל החיצוני הוא $\mathbf e_1$ והמשטח
+      מעל הנקודה; עם $\mathbf t=\mathbf e_2$ מתקבל $\hat{\mathbf N}\times\mathbf t=\mathbf e_3$, שמצביע אל המשטח, ולכן השפה נגד
+      כיוון השעון במבט מלמעלה. על $z=0$: $\mathbf F=(-2y,x,xy)$ ו-$dz=0$, ו-$\oint(-2y\,dx+x\,dy)=2\pi+\pi$.
+    wrongFeedback: >-
+      במקום שלושה חלקים, חשבו את האינטגרל על השפה היחידה של $S$. קבעו את הכיוון שלה לפי כלל יד ימין.
+    commonWrong:
+      - value: -9.4247780
+        feedback: >-
+          הכיוון הפוך: בקצה התחתון, עם הנורמל החיצוני (רדיאלי) והמשטח מעל, השפה נגד כיוון השעון מלמעלה.
+        misconception: MC-c7-right-hand-rule
+      - value: 0
+        feedback: >-
+          $S$ אינו משטח סגור (אין לו תחתית), ולכן לשטף של רוטור דרכו אין סיבה להיות אפס.
+        misconception: MC-c7-closed-curl-flux
+      - value: 3.1415927
+        feedback: >-
+          $\pi$ הוא רק המחובר $\oint x\,dy$. גם $\oint-2y\,dx=2\pi$ תורם.
+    hints:
+      - 'חזרו לשיעור 7.4 (החלפת משטח בשפה) ולשיעור 6.4 (משטח שבנוי מכמה חלקים).'
+
+  - id: Q-7-review-09
+    type: numeric
+    objectives: [OBJ-7.5-3, OBJ-5.2-2]
+    level: mid
+    prompt: >-
+      חשבו את השטף החוצה של $\mathbf F=(x^2,\ y^2,\ z^2)$ דרך הספרה ברדיוס 1 שמרכזה $(1,2,3)$.
+    answer: 50.2654825
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $16\pi$. $\nabla\cdot\mathbf F=2(x+y+z)$. הממוצע של $x+y+z$ על הכדור הוא הערך במרכז, $6$, ולכן
+      $\iiint=2\cdot6\cdot\frac{4\pi}3=16\pi$.
+    wrongFeedback: >-
+      הפעילו גאוס. את האינטגרל של פונקציה לינארית על כדור חשבו בעזרת ההזזה $\mathbf x=(1,2,3)+\mathbf u$, $\|\mathbf u\|\le1$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $x+y+z$ אי-זוגית ביחס לראשית, אבל הכדור מרוכז ב-$(1,2,3)$, לא בראשית. אחרי ההזזה נשאר $2\cdot6$ כפול הנפח.
+        misconception: MC-c7-odd-symmetry-off-centre
+      - value: 8.3775804
+        feedback: >-
+          $\frac{8\pi}3=2\cdot\frac{4\pi}{3}$: לקחתם ממוצע $1$ במקום $1+2+3=6$.
+    hints:
+      - 'חזרו לשיעור 7.5: שטף בעזרת אינטגרל משולש של הדיברגנץ.'
+
+  - id: Q-7-review-10
+    type: twotier
+    objectives: [OBJ-7.2-2, OBJ-7.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחה של גרין במלבן ובהוכחה של גאוס בתיבה יש אותו מבנה. איזה טיעון מרכזי משותף לשתיהן?
+    choices:
+      - text: 'פוביני, ובפנים המשפט היסודי של החשבון בכיוון אחד'
+        correct: true
+        feedback: >-
+          נכון. בשתיהן הרכיב ה-$i$ מטופל באינטגרציה ב-$x_i$ בפנים, וצלעות או פאות שמקבילות לכיוון $i$ תורמות אפס.
+      - text: 'החלפת משתנים עם יעקוביאן'
+        feedback: >-
+          בתיבה ובמלבן אין צורך בהחלפת משתנים: כל האינטגרלים הם אינטגרלים חוזרים על קטעים.
+    reasons:
+      - text: '$\int_c^d P_y\,dy=P(x,d)-P(x,c)$ במלבן ו-$\int_{a_3}^{b_3}R_z\,dz=R(x,y,b_3)-R(x,y,a_3)$ בתיבה; שני ההפרשים הם בדיוק התרומות של שתי הצלעות או הפאות הנגדיות'
+        correct: true
+        feedback: >-
+          בדיוק. ההבדל היחיד: בגרין יש סימן מינוס ב-$-P_y$, כי הצלע העליונה נעברת שמאלה.
+      - text: 'כל הצלעות או הפאות תורמות, ומתבטלות בזוגות'
+        feedback: >-
+          רק שתי צלעות (או פאות) תורמות לכל רכיב; האחרות תורמות אפס כי $dx=0$ (במלבן) או כי הנורמל ניצב לשדה (בתיבה).
+        misconception: MC-c7-side-faces-contribute
+      - text: 'בשתיהן משתמשים בכך שהרוטור של גרדיאנט אפס'
+        feedback: >-
+          הזהות הזו לא מופיעה באף אחת מההוכחות. היא שייכת לשיעור 7.1 ולפוטנציאלים.
+        misconception: MC-c7-identity-no-hypothesis
+    hints:
+      - 'חזרו לשיעור 7.2 (ההוכחה במלבן) ולשיעור 7.5 (ההוכחה בתיבה).'
+
+  - id: Q-7-review-11
+    type: numeric
+    objectives: [OBJ-7.6-2, OBJ-7.5-3]
+    level: exam
+    prompt: >-
+      חשבו את השטף החוצה של $\mathbf F=\frac{\mathbf x}{\|\mathbf x\|^3}+(x,\ 0,\ 0)$ דרך ספרת היחידה.
+    answer: 16.7551608
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{16\pi}3$. מפרקים: השטף של $\frac{\mathbf x}{\|\mathbf x\|^3}$ הוא $4\pi$ (חישוב ישיר או ספרה סביב הראשית), ושל
+      $(x,0,0)$, שחלק בכל הכדור, לפי גאוס $\iiint1\,dV=\frac{4\pi}3$.
+    wrongFeedback: >-
+      גאוס לא חל על השדה כולו, כי הוא לא מוגדר בראשית. פרקו לשני מחוברים וטפלו בכל אחד בכלי שמתאים לו.
+    commonWrong:
+      - value: 4.1887902
+        feedback: >-
+          $\frac{4\pi}3$: הפעלתם גאוס על השדה כולו, עם $\nabla\cdot\mathbf F=1$. אבל המחובר הראשון לא מוגדר בראשית ותורם $4\pi$.
+        misconception: MC-c7-gauss-singularity
+      - value: 12.5663706
+        feedback: >-
+          $4\pi$ הוא רק המחובר הראשון. השדה $(x,0,0)$ תורם עוד $\frac{4\pi}3$.
+    hints:
+      - 'חזרו לשיעור 7.6 (השטף של שדה ריבוע-הפוך) ולשיעור 7.5 (גאוס).'
+
+  - id: Q-7-review-12
+    type: numeric
+    objectives: [OBJ-7.4-1, OBJ-7.4-3, OBJ-7.3-2]
+    level: exam
+    prompt: >-
+      $S$ היא המעטפת $x^2+y^2=1$, $0\le z\le1$ (בלי מכסים), עם הנורמל החיצוני, ו-$\mathbf F=(-y(1+z),\ x(1+z),\ 0)$. חשבו את
+      $\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S$ בעזרת סטוקס.
+    answer: -6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $-2\pi$. לשפה שני מעגלים, כמו לטבעת. לפי כלל יד ימין עם נורמל רדיאלי: המעגל התחתון ($z=0$) נגד כיוון השעון
+      מלמעלה, והעליון ($z=1$) **עם** כיוון השעון. על $z=0$: $\oint(-y\,dx+x\,dy)=2\pi$; על $z=1$ נגד כיוון השעון: $4\pi$. לכן
+      $2\pi-4\pi=-2\pi$. בדיקה: $\nabla\times\mathbf F=(-x,-y,2(1+z))$, ועל המעטפת $(\nabla\times\mathbf F)\cdot\hat{\mathbf N}=-1$.
+    wrongFeedback: >-
+      למעטפת שני מעגלי שפה. קבעו את הכיוון של כל אחד לפי כלל יד ימין: בכיוון הנכון $\mathbf t$ הווקטור
+      $\hat{\mathbf N}\times\mathbf t$ מצביע אל המשטח, כמו בטבעת בגרין.
+    commonWrong:
+      - value: 18.8495559
+        feedback: >-
+          $6\pi=2\pi+4\pi$: כיוונתם את שני המעגלים נגד כיוון השעון במבט מלמעלה. בקצה העליון המשטח **מתחת**, ולכן המעגל העליון עם כיוון השעון.
+        misconception: MC-c7-hole-boundary
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא רק המעגל התחתון. גם המעגל העליון הוא חלק מהשפה.
+        misconception: MC-c7-hole-boundary
+      - value: -12.5663706
+        feedback: >-
+          $-4\pi$ הוא רק המעגל העליון (עם כיוון השעון). גם המעגל התחתון הוא חלק מהשפה, ותורם $2\pi$.
+        misconception: MC-c7-hole-boundary
+    hints:
+      - 'חזרו לשיעור 7.4 (כלל יד ימין) ולשיעור 7.3 (שפה עם שני רכיבים).'
+
+  - id: Q-7-review-13
+    type: numeric
+    objectives: [OBJ-7.6-3, OBJ-7.6-1, OBJ-6.2-1]
+    level: exam
+    prompt: >-
+      $\mathbf F=(2xy+z^3,\ x^2,\ 3xz^2)$ ו-$\gamma(t)=(\cos t,\ \sin t,\ \frac t\pi)$, $0\le t\le\pi$. חשבו את $\int_\gamma\mathbf F\cdot d\mathbf s$.
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\nabla\times\mathbf F=(0-0,\ 3z^2-3z^2,\ 2x-2x)=0$ ב-$\mathbb R^3$ (כוכבי), ולכן יש פוטנציאל: $f=x^2y+xz^3$. הקצוות
+      $(1,0,0)$ ו-$(-1,0,1)$, והאינטגרל $f(-1,0,1)-f(1,0,0)=-1-0$.
+    wrongFeedback: >-
+      אל תציבו את המסילה. בדקו את הרוטור, מצאו פוטנציאל, והשתמשו רק בקצוות.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          הפכתם את הקצוות: האינטגרל הוא $f(\gamma(\pi))-f(\gamma(0))$.
+        misconception: MC-c6-potential-order
+      - value: 0
+        feedback: >-
+          המסילה אינה סגורה: היא מתחילה ב-$(1,0,0)$ ומסתיימת ב-$(-1,0,1)$.
+        misconception: MC-c7-tool-choice
+      - value: -2
+        feedback: >-
+          $-2$ מתקבל מ-$f=x^2y+xz^3+xz^3$: חיברתם את הפונקציות הקדומות של $F_1$ ושל $F_3$, ו-$xz^3$ נספר פעמיים.
+        misconception: MC-c6-sum-antiderivatives
+    hints:
+      - 'חזרו לשיעור 7.6 (רוטור אפס בתחום כוכבי) ולשיעור 6.2 (פוטנציאל והפרש בקצוות).'
+
+  - id: Q-7-review-14
+    type: twotier
+    objectives: [OBJ-7.4-3, OBJ-7.3-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\mathbf F$ מסדר $C^1$ ב-$\mathbb R^3$ בלי ציר $z$, עם $\nabla\times\mathbf F=0$ שם, והאינטגרל על מעגל היחידה במישור $z=0$
+      (נגד כיוון השעון מלמעלה) הוא $2\pi$. מהו האינטגרל על המעגל $x^2+y^2=1$ במישור $z=5$, באותו כיוון?
+    choices:
+      - text: '$2\pi$'
+        correct: true
+        feedback: >-
+          נכון. שני המעגלים הם השפה של מעטפת הגליל ביניהם, שאינה נוגעת בציר $z$.
+      - text: '$0$'
+        feedback: >-
+          לפי סטוקס על דיסק במישור $z=5$ היה מתקבל $0$, אבל הדיסק נחתך על ידי ציר $z$, שם $\mathbf F$ לא מוגדר. (כך בדיוק
+          שדה הסיבוב: $2\pi$ בכל גובה.)
+        misconception: MC-c7-green-singularity
+      - text: 'אי אפשר לדעת'
+        feedback: >-
+          אפשר: יש משטח שכולו בתחום של $\mathbf F$ ששפתו שני המעגלים, ושם הרוטור אפס.
+        misconception: MC-c7-winding-depends-on-curve
+    reasons:
+      - text: 'סטוקס על המעטפת $x^2+y^2=1$, $0\le z\le5$: השטף של הרוטור $0$, והשפה היא המעגל התחתון נגד כיוון השעון והעליון עם כיוון השעון, במבט מלמעלה'
+        correct: true
+        feedback: >-
+          בדיוק: $0=\oint_{z=0}-\oint_{z=5}$, כששניהם נגד כיוון השעון במבט מלמעלה. זה גרין עם חור, בגרסה מרחבית.
+      - text: 'כי $\mathbf F$ משמר בתחום שלו'
+        feedback: >-
+          הוא **לא** משמר: האינטגרל על מסילה סגורה (מעגל היחידה) הוא $2\pi\ne0$. התחום, המרחב בלי ציר, אינו פשוט קשר.
+        misconception: MC-c6-mixed-partials-suffice
+      - text: 'כי השדה לא תלוי ב-$z$'
+        feedback: >-
+          זה לא נתון. התשובה נובעת מסטוקס על המעטפת, לכל $\mathbf F$ כזה.
+    hints:
+      - 'חזרו לשיעור 7.4 (החלפת משטח) ולשיעור 7.3 (תחום עם חור).'

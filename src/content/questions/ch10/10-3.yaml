@@ -1,0 +1,416 @@
+# Lesson 10.3 — pointwise convergence: the Dirichlet kernel.
+# Objectives (src/course.ts):
+#   OBJ-10.3-1  write the partial sum as a convolution with the Dirichlet kernel and compute the kernel
+#   OBJ-10.3-2  state and apply the pointwise convergence theorem for piecewise differentiable f: the mean of the one-sided limits
+#   OBJ-10.3-3  describe the Gibbs phenomenon near a jump
+# D_N(t) = 1 + 2Σ_{k≤N} cos kt = sin((N+½)t)/sin(t/2); S_N f(x) = (1/2π)∫_{−π}^{π} f(x − t) D_N(t) dt.
+# Gibbs constant for the ±1 square wave: max S_N → (2/π)Si(π) ≈ 1.17898 (computed: S_200 peaks at 1.17899 at x = π/200).
+chapter: 10
+questions:
+  - id: Q-10.3-D0
+    type: numeric
+    objectives: [OBJ-10.3-1]
+    level: basic
+    prompt: >-
+      **גרעין דיריכלה** מסדר $N$ הוא
+      $$D_N(t)=1+2\sum_{k=1}^N\cos kt=\frac{\sin\big((N+\frac12)t\big)}{\sin(t/2)}\qquad(t\ne0),$$
+      והוא הגרעין שהסכום החלקי $S_Nf$ הוא קונבולוציה איתו. חשבו את $D_5(0)$.
+    answer: 11
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. מהצורה כסכום קוסינוסים $D_N(0)=1+2N=11$. אותו דבר מתקבל מהגבול של
+      $\frac{\sin((N+\frac12)t)}{\sin(t/2)}$ כש-$t\to0$: $\frac{(N+\frac12)t}{t/2}=2N+1$.
+    wrongFeedback: >-
+      הציבו $t=0$ בצורה $1+2\sum_{k=1}^N\cos kt$ (הצורה הסגורה אינה מוגדרת ב-0, ושם לוקחים את הגבול).
+    commonWrong:
+      - value: 6
+        feedback: >-
+          זה $\sum_{k=0}^5\cos0=6$: חסר הגורם 2 שלפני כל קוסינוס. הוא בא מכך שהאיבר הקבוע מקבל $\frac1{2\pi}$ וכל
+          האחרים $\frac1\pi$.
+        misconception: MC-c10-kernel-sum-form
+      - value: 5.5
+        feedback: >-
+          $5.5=\frac12+\sum_{k=1}^5\cos0$: זה הגרעין במוסכמה $\frac12+\sum\cos kt$ של חלק מהספרים, שהוא חצי מ-$D_N$
+          של הקורס (ושם הנוסחה היא $S_Nf=\frac1\pi\int f(x-t)\big(\frac12+\sum\cos kt\big)dt$). בקורס
+          $D_N=1+2\sum\cos kt$.
+        misconception: MC-c10-kernel-sum-form
+
+  - id: Q-10.3-conv
+    type: mc
+    objectives: [OBJ-10.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזו נוסחה נכונה לכל $f\in H$ מחזורית ב-$2\pi$ ולכל $x$?
+    choices:
+      - text: '$S_Nf(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-t)D_N(t)\,dt$'
+        correct: true
+        feedback: >-
+          נכון. מציבים את נוסחאות המקדמים בסכום החלקי ומקבלים $\frac1{2\pi}\int f(t)\big(1+2\sum\cos k(x-t)\big)dt$,
+          ואחרי הזזה $t\mapsto x-t$ את הנוסחה.
+      - text: '$S_Nf(x)=\frac1{\pi}\int_{-\pi}^{\pi}f(x-t)D_N(t)\,dt$'
+        feedback: >-
+          עבור $f\equiv1$ זה נותן $\frac1\pi\int D_N=2$, אבל $S_N1=1$. השטח של $D_N$ הוא $2\pi$, ולכן מנרמלים ב-$\frac1{2\pi}$.
+        misconception: MC-c10-kernel-mass
+      - text: '$S_Nf(x)=\frac1{\pi}\int_{-\pi}^{\pi}f(x-t)\Big(1+\sum_{k=1}^N\cos kt\Big)dt$'
+        feedback: >-
+          עבור $f\equiv1$ זה נותן 2. האיבר הקבוע של הגרעין צריך משקל חצי ביחס לשאר: $\frac1{2\pi}(1+2\sum\cos kt)$.
+        misconception: MC-c10-kernel-sum-form
+
+  - id: Q-10.3-sqval
+    type: mc
+    objectives: [OBJ-10.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      **משפט ההתכנסות הנקודתית:** אם $f$ מחזורית ב-$2\pi$ וגזירה למקוטעין, אז לכל $x$
+      $$S_Nf(x)\to\frac{f(x^+)+f(x^-)}2,$$
+      כאשר $f(x^+)$ ו-$f(x^-)$ הגבולות החד-צדדיים של $f$ ב-$x$, מימין ומשמאל. יהי $f$ הגל הריבועי: $f=1$ על
+      $(0,\pi)$, $f=-1$ על $(-\pi,0)$, ו-$f(0)=1$. לאן שואף $S_Nf(0)$?
+    choices:
+      - text: '$0$'
+        correct: true
+        feedback: >-
+          נכון. $S_Nf(x)=\sum\frac4{\pi n}\sin nx$ (על $n$ אי-זוגיים), וכל איבר מתאפס ב-0, ולכן $S_Nf(0)=0$ לכל $N$.
+          זה הממוצע $\frac{1+(-1)}2$ שהמשפט מבטיח.
+      - text: '$1$, הערך $f(0)$'
+        feedback: >-
+          הערך בנקודה אחת לא משנה אף מקדם, ולכן גם לא את הטור. הטור רואה את $f(0^+)$ ואת $f(0^-)$ ומתכנס לממוצע שלהם.
+        misconception: MC-c10-value-at-jump
+      - text: 'אין גבול, כי בנקודת קפיצה הטור מתבדר'
+        feedback: >-
+          כאן $S_Nf(0)=0$ לכל $N$, כך שיש גבול. המשפט מבטיח התכנסות גם בנקודת קפיצה, לממוצע של הגבולות החד-צדדיים.
+        misconception: MC-c10-value-at-jump
+
+  - id: Q-10.3-jump
+    type: numeric
+    objectives: [OBJ-10.3-2]
+    level: basic
+    prompt: >-
+      $f(x)=e^x$ על $(-\pi,\pi)$, מומשכת למחזורית ב-$2\pi$. לאיזה מספר שואף $S_Nf(\pi)$?
+    answer: 11.5919533
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ההמשכה המחזורית קופצת ב-$\pi$: משמאל $e^{\pi}$, ומימין (כמו ב-$-\pi^+$) $e^{-\pi}$. הממוצע הוא
+      $\frac{e^\pi+e^{-\pi}}2=\cosh\pi\approx11.592$.
+    wrongFeedback: >-
+      הטור מתאר את ההמשכה המחזורית. מצאו את שני הגבולות החד-צדדיים שלה ב-$x=\pi$ וקחו את הממוצע.
+    commonWrong:
+      - value: 23.1406926
+        feedback: >-
+          זה $e^\pi=f(\pi^-)$. מימין ל-$\pi$ ההמשכה מתחילה מחדש מ-$e^{-\pi}$, ולכן $\pi$ היא נקודת קפיצה.
+        misconception: MC-c10-endpoint-not-periodic
+      - value: 0.0432139
+        feedback: >-
+          זה $e^{-\pi}$, רק הגבול מימין. בנקודת קפיצה הטור מתכנס לממוצע של שני הגבולות.
+        misconception: MC-c10-endpoint-not-periodic
+      - value: 12.0703463
+        feedback: >-
+          זה $\frac{e^\pi+e^0}{2}$: הגבול מימין נלקח $e^0=1$, כאילו ההמשכה מתחילה מחדש ב-0 (כאילו המחזור הוא $[0,2\pi)$).
+          אבל $f$ נתונה על $(-\pi,\pi)$, ולכן מימין ל-$\pi$ ההמשכה חוזרת לערכים שליד $-\pi$: $f(\pi^+)=f(-\pi^+)=e^{-\pi}$.
+        misconception: MC-c10-endpoint-not-periodic
+
+  - id: Q-10.3-gibbs-size
+    type: mc
+    objectives: [OBJ-10.3-3]
+    level: basic
+    prompt: >-
+      **תופעת גיבס:** לגל הריבועי $\pm1$ (קפיצה 2 ב-0) המקסימום של $S_Nf$ על $(0,\pi)$ אינו שואף ל-1 אלא לכ-$1.179$:
+      ליד הקפיצה $S_Nf$ חורג מעבר ל-$f(0^+)=1$ בכ-$0.179$, וגודל החריגה פרופורציונלי לגודל הקפיצה. עכשיו $f$ גזירה
+      למקוטעין, עם קפיצה אחת $f(x_0^+)-f(x_0^-)=3$ וחלקה בכל מקום אחר. בערך כמה גבוה מעל $f(x_0^+)$ מגיע $S_Nf$ ליד
+      $x_0$, כש-$N$ גדול מאוד?
+    choices:
+      - text: 'בערך $0.27$'
+        correct: true
+        feedback: >-
+          נכון. החריגה היא כ-$\frac{0.179}2\approx9\%$ מגודל הקפיצה בכל צד ($0.0895\cdot3\approx0.27$), והיא לא קטנה
+          כש-$N$ גדל, רק נדחסת לעבר $x_0$.
+      - text: 'בערך $0$: החריגה שואפת לאפס כש-$N\to\infty$'
+        feedback: >-
+          בכל $x$ קבוע $S_Nf(x)\to f(x)$, אבל המקסימום ליד הקפיצה זז לעבר $x_0$ ואינו יורד: הוא שואף לכ-$9\%$ מהקפיצה.
+        misconception: MC-c10-gibbs-vanishes
+      - text: 'בערך $0.09$'
+        feedback: >-
+          $0.09$ היא החריגה ליחידת קפיצה ($\frac{0.179}2$). כאן הקפיצה 3, ולכן החריגה בערך $3\cdot0.09\approx0.27$.
+        misconception: MC-c10-gibbs-fixed-size
+      - text: 'בערך $0.18$'
+        feedback: >-
+          $0.18$ היא החריגה של הגל הריבועי $\pm1$, שקפיצתו 2. החריגה גדלה באופן יחסי לקפיצה.
+        misconception: MC-c10-gibbs-fixed-size
+
+  - id: Q-10.3-Dval
+    type: numeric
+    objectives: [OBJ-10.3-1]
+    level: basic
+    prompt: >-
+      חשבו את $D_4\!\left(\frac{2\pi}3\right)$.
+    answer: 0
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $(N+\frac12)t=\frac92\cdot\frac{2\pi}3=3\pi$, ולכן המונה $\sin3\pi=0$ והמכנה $\sin\frac\pi3\ne0$. בדיקה בסכום:
+      $1+2\left(-\frac12-\frac12+1-\frac12\right)=0$.
+    wrongFeedback: >-
+      הציבו בנוסחה הסגורה $\frac{\sin((N+\frac12)t)}{\sin(t/2)}$, או סכמו $1+2\sum_{k=1}^4\cos\frac{2\pi k}3$.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          זה $\sum_{k=0}^4\cos\frac{2\pi k}3$, בלי הגורם 2 שלפני הקוסינוסים.
+        misconception: MC-c10-kernel-sum-form
+      - value: 9
+        feedback: >-
+          $2N+1=9$ הוא הערך ב-$t=0$ בלבד. בשאר הנקודות הגרעין מתנודד, ואפילו שלילי.
+        misconception: MC-c10-dirichlet-positive
+
+  - id: Q-10.3-Dfacts
+    type: multi
+    objectives: [OBJ-10.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהטענות על גרעין דיריכלה $D_N(t)=\frac{\sin((N+\frac12)t)}{\sin(t/2)}$ נכונות? סמנו את כולן.
+    choices:
+      - text: '$D_N$ זוגית ומחזורית ב-$2\pi$'
+        correct: true
+        feedback: 'נכון: זה סכום של $1$ ושל $\cos kt$.'
+      - text: '$\frac1{2\pi}\int_{-\pi}^{\pi}D_N(t)\,dt=1$ לכל $N$'
+        correct: true
+        feedback: 'נכון: האינטגרל של כל $\cos kt$ עם $k\ge1$ הוא אפס, ונשאר $\frac1{2\pi}\int1=1$.'
+      - text: '$D_N(t)\ge0$ לכל $t$'
+        feedback: >-
+          לא: $D_3(\pi)=1+2(-1+1-1)=-1$. אילו $\frac1{2\pi}D_N$ היה אי-שלילי עם אינטגרל 1, $S_Nf(x)$ היה ממוצע משוקלל של
+          ערכי $f$, וההתכנסות הייתה נובעת מרציפות בלבד. כי $D_N$ מחליף סימן, ההוכחה צריכה גזירות.
+        misconception: MC-c10-dirichlet-positive
+      - text: '$\frac1{2\pi}\int_{-\pi}^{\pi}|D_N(t)|\,dt=1$ לכל $N$'
+        feedback: >-
+          לא: כי $D_N$ מחליף סימן, $\int|D_N|>\int D_N$. בחישוב $\frac1{2\pi}\int|D_5|\approx1.96$ ו-$\frac1{2\pi}\int|D_{50}|\approx2.86$, וזה ממשיך
+          לגדול.
+        misconception: MC-c10-dirichlet-positive
+      - text: '$\frac1\pi\int_{-\pi}^{\pi}D_N(t)\,dt=1$'
+        feedback: >-
+          $\frac1\pi\int_{-\pi}^{\pi}D_N=2$. מה ששווה 1 הוא $\frac1{2\pi}\int_{-\pi}^\pi D_N$, או $\frac1\pi\int_0^\pi D_N$.
+        misconception: MC-c10-kernel-mass
+
+  - id: Q-10.3-kernel-rank
+    type: rank
+    objectives: [OBJ-10.3-1]
+    level: mid
+    prompt: >-
+      סדרו את שלבי החישוב של הנוסחה $S_Nf(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-t)D_N(t)\,dt$ עם
+      $D_N(t)=\frac{\sin((N+\frac12)t)}{\sin(t/2)}$.
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: plug
+        label: 'מציבים את $a_k=\frac1\pi\int f(t)\cos kt\,dt$ ו-$b_k=\frac1\pi\int f(t)\sin kt\,dt$ בסכום החלקי ומכניסים את הסכום לתוך האינטגרל'
+      - id: trig
+        label: 'מזהים $\cos kx\cos kt+\sin kx\sin kt=\cos k(x-t)$, ומקבלים $S_Nf(x)=\frac1{2\pi}\int f(t)\big(1+2\sum_{k=1}^N\cos k(x-t)\big)dt$'
+      - id: shift
+        label: 'מציבים $t\mapsto x-t$; כי האינטגרנד מחזורי, הקטע נשאר $[-\pi,\pi]$'
+      - id: tele
+        label: 'את הסכום שבאינטגרנד, $1+2\sum_{k=1}^N\cos ku$, מכפילים ב-$\sin\frac u2$ ומשתמשים ב-$2\sin\frac u2\cos ku=\sin(k+\frac12)u-\sin(k-\frac12)u$: הסכום טלסקופי'
+      - id: close
+        label: 'נשאר $\sin((N+\frac12)u)$; מחלקים ב-$\sin\frac u2$, ובאינטגרל שאחרי ההזזה מתקבל בדיוק $D_N(t)$'
+    order: [plug, trig, [shift, tele], close]
+    correctFeedback: >-
+      נכון. הצבה, זהות הסכום לקוסינוס, ואז ההזזה והסכום הטלסקופי (בכל סדר: הזהות הטלסקופית לא תלויה בשם המשתנה), ולבסוף
+      הצורה הסגורה.
+    wrongFeedback: >-
+      קודם מגיעים לגרעין בצורת סכום קוסינוסים (הצבה וזהות טריגונומטרית), ורק אחר כך מחשבים את הסכום בצורה סגורה. ההזזה
+      יכולה לבוא לפני הסכום הטלסקופי או אחריו, אבל הסיום צריך את שניהם.
+
+  - id: Q-10.3-sum5
+    type: numeric
+    objectives: [OBJ-10.3-2]
+    level: mid
+    prompt: >-
+      טור פורייה של $\frac{\pi-x}2$ על $(0,2\pi)$ הוא $\sum_{n\ge1}\frac{\sin nx}n$. חשבו את
+      $\sum_{n=1}^\infty\frac{\sin5n}{n}$.
+    answer: -0.9292037
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $x=5$ נמצא בתוך $(0,2\pi)$, שם הפונקציה רציפה וגזירה, ולכן הטור מתכנס ל-$\frac{\pi-5}2\approx-0.929$.
+    wrongFeedback: >-
+      בדקו באיזה קטע נמצא $x=5$ ($2\pi\approx6.28$), והציבו בנוסחה שנכונה בקטע הזה.
+    commonWrong:
+      - value: 2.212389
+        feedback: >-
+          העברתם את 5 ל-$5-2\pi\approx-1.28$ והצבתם בנוסחה $\frac{\pi-x}2$, שנכונה רק על $(0,2\pi)$. ב-$(-\pi,0)$ ההמשכה
+          המחזורית היא $\frac{-\pi-x}2$, ושם מקבלים שוב $\frac{\pi-5}2$.
+        misconception: MC-c10-endpoint-not-periodic
+
+  - id: Q-10.3-x2sum
+    type: numeric
+    objectives: [OBJ-10.3-2]
+    level: mid
+    prompt: >-
+      טור פורייה של $x^2$ על $[-\pi,\pi]$ הוא $\frac{\pi^2}3+4\sum_{n\ge1}\frac{(-1)^n\cos nx}{n^2}$. חשבו בעזרתו את
+      $$\sum_{n=1}^\infty\frac{(-1)^{n+1}}{n^2}=1-\frac14+\frac19-\cdots$$
+    answer: 0.822467
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ההמשכה המחזורית של $x^2$ רציפה וגזירה למקוטעין, ולכן ב-$x=0$ הטור מתכנס ל-0:
+      $0=\frac{\pi^2}3-4\sum\frac{(-1)^{n+1}}{n^2}$, כלומר הסכום הוא $\frac{\pi^2}{12}$.
+    wrongFeedback: >-
+      הציבו נקודה שבה $\cos nx$ נותן את הסימנים $(-1)^n$ הנכונים, והצדיקו שהטור מתכנס שם לערך הפונקציה.
+    commonWrong:
+      - value: 1.6449341
+        feedback: >-
+          זה $\frac{\pi^2}6$. הוא מתקבל אם לוקחים את $a_0=\frac{2\pi^2}3$ כאיבר הקבוע במקום $\frac{a_0}2$ (או אם מציבים
+          $x=\pi$, ואז מקבלים את $\sum\frac1{n^2}$, טור אחר).
+        misconception: MC-c10-a0-not-halved
+
+  - id: Q-10.3-leibniz
+    type: numeric
+    objectives: [OBJ-10.3-2]
+    level: mid
+    prompt: >-
+      טור פורייה של הגל הריבועי ($f=1$ על $(0,\pi)$, $f=-1$ על $(-\pi,0)$) הוא
+      $\frac4\pi\sum_{k\ge0}\frac{\sin((2k+1)x)}{2k+1}$. הציבו נקודה מתאימה וחשבו את
+      $$\sum_{k=0}^\infty\frac{(-1)^k}{2k+1}=1-\frac13+\frac15-\cdots$$
+    answer: 0.7853982
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\frac\pi4$. ב-$x=\frac\pi2$ הפונקציה רציפה ושווה ל-1, ו-$\sin\frac{(2k+1)\pi}{2}=(-1)^k$. לפי משפט ההתכנסות
+      הנקודתית $1=\frac4\pi\sum\frac{(-1)^k}{2k+1}$, ולכן הסכום $\frac\pi4$ (טור לייבניץ).
+    wrongFeedback: >-
+      חפשו $x$ שבו $\sin((2k+1)x)$ שווה ל-$(-1)^k$, ובדקו ש-$f$ רציפה שם, כדי שהטור יתכנס ל-$f(x)$.
+    commonWrong:
+      - value: 1.5707963
+        feedback: >-
+          זה $\frac\pi2$: הוא יוצא עם המקדמים $\frac2{\pi n}$ במקום $\frac4{\pi n}$, כלומר אינטגרל על $[0,\pi]$ בלי הכפל
+          ב-2.
+        misconception: MC-c10-parity-factor-two
+      - value: 0
+        feedback: >-
+          0 הוא ערך הטור ב-$x=0$, נקודת הקפיצה. שם $\sin((2k+1)\cdot0)=0$, והנקודה הזו לא נותנת שום מידע על הסכום.
+        misconception: MC-c10-value-at-jump
+
+  - id: Q-10.3-hyp
+    type: twotier
+    objectives: [OBJ-10.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ רציפה ומחזורית ב-$2\pi$ (בלי הנחת גזירות). האם משפט ההתכנסות הנקודתית מבטיח $S_Nf(x)\to f(x)$ לכל $x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. המשפט מניח ש-$f$ גזירה למקוטעין. ידוע (בלי הוכחה בקורס) שיש פונקציה רציפה ומחזורית שטור פורייה שלה
+          מתבדר בנקודה.
+      - text: כן
+        feedback: >-
+          רציפות נותנת $f(x^+)=f(x^-)=f(x)$, אבל המשפט לא חל בלי ההנחה על הגזירות, וההנחה הזו לא קישוט.
+        misconception: MC-c10-continuity-enough-pointwise
+    reasons:
+      - text: 'ההוכחה צריכה שהמנה $\frac{f(x-t)-f(x^\pm)}{\sin(t/2)}$ תהיה חסומה, וזה בא מגזירות ולא מרציפות'
+        correct: true
+        feedback: >-
+          בדיוק. בהוכחה כותבים $\sin\big((N+\frac12)t\big)=\sin Nt\cos\frac t2+\cos Nt\sin\frac t2$, ואז ההפרש
+          $S_Nf(x)-\frac{f(x^+)+f(x^-)}2$ הוא סכום של אינטגרלים מהצורה $\int g(t)\sin Nt\,dt$ ו-$\int h(t)\cos Nt\,dt$, כש-$g$
+          מכילה את המנה הזו. כשהמנה חסומה, $g,h\in H$, ולפי למת רימן-לבג (שיעור 10.2) האינטגרלים שואפים ל-0. בלי
+          גזירות המנה אינה חסומה, ואין ממה להפעיל את הלמה.
+      - text: 'ברציפות הממוצע של הגבולות החד-צדדיים הוא $f(x)$, ולכן מסקנת המשפט מתקיימת'
+        feedback: >-
+          זו המסקנה של המשפט **כשהוא חל**. ההנחה שלו היא גזירות למקוטעין, לא רציפות.
+        misconception: MC-c10-continuity-enough-pointwise
+      - text: '$\frac1{2\pi}D_N$ הוא משקל חיובי עם שטח 1 שמתרכז ב-0, ולכן $S_Nf(x)$ ממוצע של ערכים קרובים ל-$f(x)$'
+        feedback: >-
+          $D_N$ אינו חיובי, ו-$\frac1{2\pi}\int|D_N|$ גדל עם $N$. הטיעון של "ממוצע" לא עובד כאן.
+        misconception: MC-c10-dirichlet-positive
+
+  - id: Q-10.3-locality
+    type: twotier
+    objectives: [OBJ-10.3-2, OBJ-10.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ ו-$g$ רציפות למקוטעין ומחזוריות ב-$2\pi$, ו-$f=g$ על הקטע $(-0.1,\ 0.1)$. לא נתון שהן גזירות. האם בהכרח
+      $S_Nf(0)-S_Ng(0)\to0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. זה **עקרון המקומיות**: ההתנהגות של הטור בנקודה תלויה רק בפונקציה בסביבה של הנקודה. שימו לב שלא נטען
+          שאחד מהטורים מתכנס, רק שההפרש שואף ל-0.
+      - text: לא
+        feedback: >-
+          המקדמים תלויים בכל הפונקציה, אבל **ההפרש** $h=f-g$ מתאפס ליד 0, והאינטגרל $\frac1{2\pi}\int h(-t)D_N(t)\,dt$
+          שואף ל-0 לפי למת רימן-לבג.
+        misconception: MC-c10-no-locality
+    reasons:
+      - text: '$h=f-g$ מתאפסת כש-$|t|<0.1$, ולכן $\frac{h(-t)}{\sin(t/2)}$ רציפה למקוטעין; לפי רימן-לבג $\frac1{2\pi}\int h(-t)D_N(t)\,dt\to0$'
+        correct: true
+        feedback: >-
+          בדיוק. החלוקה ב-$\sin(t/2)$ מסוכנת רק ליד $t=0$, ושם $h=0$. ואז
+          $\sin((N+\frac12)t)=\sin Nt\cos\frac t2+\cos Nt\sin\frac t2$, ושני החלקים שואפים ל-0 לפי רימן-לבג (שיעור 10.2).
+      - text: 'המקדמים של $f$ ושל $g$ שונים, ולכן הסכומים החלקיים שלהם ב-0 נשארים רחוקים זה מזה'
+        feedback: >-
+          הטורים שונים, אבל ב-0 ההפרש בין הסכומים החלקיים שואף ל-0. ההבדל הרחוק מ-0 "מתבטל" בגלל התנודות של $D_N$.
+        misconception: MC-c10-no-locality
+      - text: 'שני הטורים מתכנסים ל-$f(0)=g(0)$, ולכן ההפרש שואף ל-0'
+        feedback: >-
+          לא הנחנו גזירות, ולכן משפט ההתכנסות הנקודתית לא חל, ואין ערובה ששני הטורים מתכנסים בכלל. הטענה היא רק על ההפרש.
+        misconception: MC-c10-continuity-enough-pointwise
+
+  - id: Q-10.3-gibbs
+    type: multi
+    objectives: [OBJ-10.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ הגל הריבועי $\pm1$ (קפיצה 2 ב-0). אילו מהטענות על $S_Nf$ ליד 0 נכונות? סמנו את כולן.
+    choices:
+      - text: 'המינימום של $S_Nf$ על $(-\pi,0)$ שואף לכ-$-1.179$, לא ל-$-1$'
+        correct: true
+        feedback: >-
+          נכון: $f$ אי-זוגית, ולכן גם $S_Nf$ (טור סינוסים), והחריגה של גיבס מופיעה בשני צידי הקפיצה. בחישוב
+          $\min S_{200}f\approx-1.1790$.
+      - text: 'מקום המקסימום מתקרב ל-0 כש-$N$ גדל'
+        correct: true
+        feedback: 'נכון: עבור $N=200$ המקסימום נמצא ב-$x=\frac{\pi}{200}\approx0.0157$.'
+      - text: 'לכל $x\in(0,\pi)$ קבוע, $S_Nf(x)\to1$'
+        correct: true
+        feedback: 'נכון: משפט ההתכנסות הנקודתית. החריגה זזה לעבר 0 וחולפת על פני כל $x$ קבוע.'
+      - text: 'גובה החריגה שואף לאפס כש-$N\to\infty$'
+        feedback: >-
+          החריגה מתכווצת לרוחב ולא לגובה: היא שואפת לכ-$0.179$, כ-$9\%$ מגודל הקפיצה.
+        misconception: MC-c10-gibbs-vanishes
+      - text: '$\sup_{0<x<\pi}|f(x)-S_Nf(x)|\to0$'
+        feedback: >-
+          לא, וגם בלי קשר לחריגה של גיבס: $S_Nf$ רציף ו-$S_Nf(0)=0$, ולכן קרוב ל-0 מימין השגיאה קרובה ל-1 לכל $N$.
+        misconception: MC-c10-gibbs-vanishes
+
+  - id: Q-10.3-gibbs-exam
+    type: numeric
+    objectives: [OBJ-10.3-3, OBJ-10.3-2]
+    level: exam
+    prompt: >-
+      $f(x)=x$ על $(-\pi,\pi)$, מומשכת למחזורית ב-$2\pi$. חשבו בקירוב את
+      $$\lim_{N\to\infty}\ \max_{0<x<\pi}S_Nf(x).$$
+      היעזרו בנתון של תופעת גיבס: לגל הריבועי $\pm1$ (קפיצה 2) המקסימום של $S_Nf$ ליד הקפיצה שואף לכ-$1.179$, וגודל
+      החריגה פרופורציונלי לגודל הקפיצה.
+    answer: 3.7038741
+    tolerance: 0.002
+    correctFeedback: >-
+      נכון, בערך $3.704$ (הערך המדויק הוא $2\,\mathrm{Si}(\pi)$, כש-$\mathrm{Si}(y)=\int_0^y\frac{\sin t}t\,dt$). $f$ רציפה
+      בתוך $(-\pi,\pi)$, אבל ההמשכה המחזורית קופצת ב-$\pi$ מ-$f(\pi^-)=\pi$ ל-$f(\pi^+)=-\pi$: קפיצה בגודל $2\pi$. החריגה
+      היא $\frac{0.179}2\approx0.0895$ מגודל הקפיצה, כלומר $0.0895\cdot2\pi\approx0.562$, ומשמאל ל-$\pi$ היא כלפי מעלה
+      (מעבר ל-$f(\pi^-)$). לכן המקסימום שואף ל-$\pi+0.562\approx3.704$, ומקומו ב-$x\approx\pi-\frac\pi N$. בחישוב
+      $\max S_{4000}f\approx3.7031$. בכל $x$ קבוע ב-$(0,\pi)$, לעומת זאת, $S_Nf(x)\to x<\pi$.
+    wrongFeedback: >-
+      איפה ההמשכה המחזורית של $f$ קופצת, ובכמה? החריגה היא אותו חלק מהקפיצה כמו בגל הריבועי, ומוסיפים אותה לגבול
+      החד-צדדי שממנו היא עולה.
+    commonWrong:
+      - value: 3.1415927
+        feedback: >-
+          $\pi=\sup f$. כאן נשכח שההמשכה המחזורית קופצת ב-$\pi$ (מ-$\pi$ ל-$-\pi$), או שהחריגה של גיבס נחשבה לנעלמת. ליד
+          הקפיצה $S_Nf$ עולה מעל $\pi$ בכ-$9\%$ מהקפיצה $2\pi$.
+        misconception: MC-c10-endpoint-not-periodic
+      - value: 3.3205927
+        feedback: >-
+          $\pi+0.179$: זו החריגה של הגל הריבועי, שקפיצתו 2. כאן הקפיצה $2\pi$, והחריגה גדלה איתה: $0.0895\cdot2\pi\approx0.562$.
+        misconception: MC-c10-gibbs-fixed-size
+      - value: 4.2662828
+        feedback: >-
+          $\pi+0.179\cdot2\pi$: $0.179$ היא החריגה לקפיצה 2, לא לקפיצה 1. ליחידת קפיצה החריגה $\frac{0.179}2\approx0.0895$.
+

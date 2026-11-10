@@ -1,0 +1,384 @@
+# Lesson 8.4 — pullback, integrals of 2-forms over parametrized surfaces and of 3-forms over regions.
+# Objectives (src/course.ts):
+#   OBJ-8.4-1  define the pullback of a form along a map and compute it
+#   OBJ-8.4-2  integrate a 2-form over a parametrized surface and a 3-form over a region
+#   OBJ-8.4-3  show that the change-of-variables formula is built into the pullback, with a sign by orientation
+chapter: 8
+questions:
+  - id: Q-8.4-curve
+    type: mc
+    objectives: [OBJ-8.4-1]
+    level: basic
+    prompt: >-
+      **המשיכה לאחור** $\varphi^*\omega$ של תבנית $\omega$ במישור לאורך מסילה $\varphi(t)=(x(t),y(t))$ היא תבנית על
+      הקטע של $t$, ומחשבים אותה כך: מציבים את $\varphi$ במקדמים, ומחליפים כל דיפרנציאל בדיפרנציאל של הרכיב,
+      $dx\mapsto d(x\circ\varphi)=x'(t)\,dt$ ו-$dy\mapsto y'(t)\,dt$. עבור $\varphi(t)=(t^2,t^3)$ ו-$\omega=y\,dx$, מהי
+      $\varphi^*\omega$?
+    choices:
+      - text: '$2t^4\,dt$'
+        correct: true
+        feedback: >-
+          נכון. במקדם מציבים $y=t^3$, ובדיפרנציאל $\varphi^*dx=d(t^2)=2t\,dt$. ביחד $t^3\cdot2t\,dt$.
+      - text: '$t^3\,dt$'
+        feedback: >-
+          הוצב המקדם, אבל $dx$ הוחלף ב-$dt$ בלי הנגזרת. לאורך $\varphi$, $x=t^2$ ולכן $dx$ נמשך ל-$2t\,dt$.
+        misconception: MC-c8-pullback-forget-differential
+      - text: '$3t^2\cdot2t\,dt=6t^3\,dt$'
+        feedback: >-
+          המקדם $y$ מוצב כפי שהוא, $t^3$, ולא נגזר. רק הדיפרנציאלים הופכים לנגזרות.
+        misconception: MC-c8-pullback-differentiate-coefficient
+      - text: '$y\cdot2t\,dt$'
+        feedback: >-
+          גם המקדם צריך לעבור דרך $\varphi$: $y\circ\varphi=t^3$. תבנית על הקטע של $t$ אינה יכולה לכלול את $y$.
+        misconception: MC-c8-pullback-wrong-point
+
+  - id: Q-8.4-polar
+    type: mc
+    objectives: [OBJ-8.4-1, OBJ-8.4-3]
+    level: basic
+    prompt: >-
+      לאורך העתקה $\varphi(u,v)$ מושכים כל דיפרנציאל כמו קודם, $dx\mapsto x_u\,du+x_v\,dv$, ומשיכה לאחור של מכפלת יתד
+      היא מכפלת היתד של המשיכות: $\varphi^*(dx\wedge dy)=\varphi^*dx\wedge\varphi^*dy$. עבור
+      $\varphi(r,\theta)=(r\cos\theta,\ r\sin\theta)$, מהי $\varphi^*(dx\wedge dy)$?
+    choices:
+      - text: '$r\,dr\wedge d\theta$'
+        correct: true
+        feedback: >-
+          נכון. $\varphi^*dx=\cos\theta\,dr-r\sin\theta\,d\theta$, $\varphi^*dy=\sin\theta\,dr+r\cos\theta\,d\theta$, והמכפלה
+          היא $(r\cos^2\theta+r\sin^2\theta)\,dr\wedge d\theta$: היעקוביאן של הקוטביות (שיעור 5.2), שנכנס דרך מכפלת היתד.
+      - text: '$dr\wedge d\theta$'
+        feedback: >-
+          משיכה לאחור אינה "החלפת שמות" של הדיפרנציאלים. $\varphi^*(dx\wedge dy)=\det J\,dr\wedge d\theta$, וכאן $\det J=r$.
+        misconception: MC-c8-pullback-no-jacobian
+      - text: '$r\,d\theta\wedge dr$'
+        feedback: >-
+          $d\theta\wedge dr=-dr\wedge d\theta$, כך שזה מינוס התשובה הנכונה. הסדר $dr\wedge d\theta$ הוא הסדר של
+          המשתנים בפרמטריזציה, שבו $\det J=r>0$.
+        misconception: MC-c8-wedge-commutes
+      - text: '$(\cos\theta\,dr)\wedge(r\cos\theta\,d\theta)=r\cos^2\theta\,dr\wedge d\theta$'
+        feedback: >-
+          חסר האיבר $-r\sin\theta\,d\theta\wedge\sin\theta\,dr=r\sin^2\theta\,dr\wedge d\theta$. פותחים את כל הסוגריים.
+        misconception: MC-c8-wedge-product-only
+
+  - id: Q-8.4-howto
+    type: mc
+    objectives: [OBJ-8.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $S=\sigma(D)$ משטח בפרמטריזציה $\sigma:D\to\mathbb R^3$, ו-$\eta$ תבנית מסדר 2. איך מוגדר $\int_S\eta$ (בכיוון של
+      $\sigma$)?
+    choices:
+      - text: '$\iint_D g\,du\,dv$, כש-$\sigma^*\eta=g\,du\wedge dv$'
+        correct: true
+        feedback: >-
+          נכון: $\int_S\eta=\int_D\sigma^*\eta$. על $D\subseteq\mathbb R^2$ תבנית מסדר 2 היא פונקציה כפול $du\wedge dv$,
+          והאינטגרל שלה הוא האינטגרל הכפול של הפונקציה. לפי ההתאמה בין תבניות לשדות (שיעור 8.2), זה השטף
+          $\iint_S\mathbf F\cdot d\mathbf S$.
+      - text: '$\iint_D h\,du\,dv$, כש-$h$ הוא המקדם של $\eta$ אחרי הצבת $\sigma$'
+        feedback: >-
+          זה מדלג על משיכת הדיפרנציאלים. $\sigma^*(dx\wedge dy)=(x_uy_v-x_vy_u)\,du\wedge dv$, והגורם הזה הוא חלק מהאינטגרנד.
+        misconception: MC-c8-pullback-no-jacobian
+      - text: '$\iint_D|g|\,du\,dv$, כש-$\sigma^*\eta=g\,du\wedge dv$'
+        feedback: >-
+          אינטגרל של תבנית תלוי בכיוון ואינו כולל ערך מוחלט: אם $g<0$ האינטגרל שלילי. ערך מוחלט מופיע בנוסחת החלפת
+          המשתנים (שיעור 5.1) ובאינטגרל $\iint_S\rho\,dS$ של שיעור 5.4, שאינו תלוי בכיוון.
+        misconception: MC-c8-orientation-abs-det
+
+  - id: Q-8.4-cube
+    type: numeric
+    objectives: [OBJ-8.4-2]
+    level: basic
+    prompt: >-
+      אינטגרל של תבנית מסדר 3 על תחום $R\subseteq\mathbb R^3$ **בכיוון הסטנדרטי** מוגדר כך: כותבים את התבנית בצורה
+      $f\,dx\wedge dy\wedge dz$ (הדיפרנציאלים בסדר הזה), ואז $\int_Rf\,dx\wedge dy\wedge dz=\iiint_Rf\,dx\,dy\,dz$. חשבו
+      $\int_C xy\,dz\wedge dx\wedge dy$ כש-$C=[0,1]^3$ בכיוון הסטנדרטי.
+    answer: 0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $dz\wedge dx\wedge dy$ היא תמורה מעגלית של $dx\wedge dy\wedge dz$, ולכן שווה לה. האינטגרל הוא
+      $\iiint_C xy\,dx\,dy\,dz=\frac12\cdot\frac12\cdot1=\frac14$.
+    wrongFeedback: >-
+      כתבו קודם את התבנית כפונקציה כפול $dx\wedge dy\wedge dz$, ורק אז חשבו אינטגרל משולש של הפונקציה.
+    commonWrong:
+      - value: -0.25
+        feedback: >-
+          כאן הסדר $dz\wedge dx\wedge dy$ קיבל סימן מינוס. תמורה מעגלית של שלושה היא שתי החלפות, כלומר זוגית.
+        misconception: MC-c8-permutation-sign
+
+  - id: Q-8.4-define
+    type: mc
+    objectives: [OBJ-8.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\varphi:U\to\mathbb R^3$ גזירה, $U\subseteq\mathbb R^2$, ו-$\eta$ תבנית מסדר 2 על $\mathbb R^3$. מהי ההגדרה של
+      $(\varphi^*\eta)_p(v_1,v_2)$ לנקודה $p\in U$ ולווקטורים $v_1,v_2\in\mathbb R^2$?
+    choices:
+      - text: '$\eta_{\varphi(p)}\big(D\varphi_p v_1,\ D\varphi_p v_2\big)$'
+        correct: true
+        feedback: >-
+          נכון. $\eta$ מוגדרת על $\mathbb R^3$, שם נמצאת התמונה, ולכן מעריכים אותה ב-$\varphi(p)$ על התמונות של הווקטורים
+          תחת הדיפרנציאל.
+          מכאן נובע הכלל המעשי: מציבים במקדמים, ו-$dx\mapsto x_u\,du+x_v\,dv$.
+      - text: '$\eta_{\varphi(p)}(v_1,v_2)$'
+        feedback: >-
+          $v_1,v_2$ הם וקטורים ב-$\mathbb R^2$, ו-$\eta$ מקבלת וקטורים ב-$\mathbb R^3$. צריך להעביר אותם דרך
+          $D\varphi_p$; משם בדיוק בא היעקוביאן.
+        misconception: MC-c8-pullback-wrong-point
+      - text: '$\eta_p\big(D\varphi_p v_1,\ D\varphi_p v_2\big)$'
+        feedback: >-
+          $p$ היא נקודה ב-$U\subseteq\mathbb R^2$, ו-$\eta$ מוגדרת על $\mathbb R^3$. המקדמים מוערכים בתמונה $\varphi(p)$.
+        misconception: MC-c8-pullback-wrong-point
+      - text: '$\big|\det D\varphi_p\big|\,\eta_{\varphi(p)}(v_1,v_2)$'
+        feedback: >-
+          $D\varphi_p$ היא מטריצה $3\times2$ ואין לה דטרמיננטה; וגם כשיש, במשיכה לאחור אין ערך מוחלט. היעקוביאן נוצר
+          מעצמו כש-$D\varphi_p$ פועל על הווקטורים.
+        misconception: MC-c8-orientation-abs-det
+
+  - id: Q-8.4-chain
+    type: twotier
+    objectives: [OBJ-8.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\varphi:\mathbb R^2\to\mathbb R^3$ ו-$f:\mathbb R^3\to\mathbb R$ גזירות ברציפות. האם $\varphi^*(df)=d(f\circ\varphi)$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. משיכה לאחור מתחלפת עם הדיפרנציאל, ולכן אפשר לחשב את $\varphi^*(df)$ גם בלי לחשב קודם את $df$.
+      - text: 'לא, $\varphi^*(df)=(df)\circ\varphi$, הצבה של $\varphi$ במקדמים בלבד'
+        feedback: >-
+          הצבה במקדמים בלבד משאירה את $dx,dy,dz$, שאינם תבניות על $\mathbb R^2$. גם אותם צריך למשוך.
+        misconception: MC-c8-pullback-forget-differential
+    reasons:
+      - text: 'על וקטור $v$: $(\varphi^*df)_p(v)=df_{\varphi(p)}(D\varphi_pv)=D(f\circ\varphi)_p\,v$ לפי כלל השרשרת'
+        correct: true
+        feedback: >-
+          בדיוק: ההגדרה של משיכה לאחור ועוד כלל השרשרת (פרק 0). בפרט $\varphi^*dx=d(x\circ\varphi)=x_u\,du+x_v\,dv$.
+      - text: 'כי $\varphi^*(df)$ מתקבלת מהצבת $\varphi$ במקדמים $f_x,f_y,f_z$, וזה מה ש-$d(f\circ\varphi)$ עושה'
+        feedback: >-
+          הצבה במקדמים לבדה משאירה את $dx,dy,dz$ במקומם. השוויון נכון כי גם $dx\mapsto x_u\,du+x_v\,dv$, ואז הסכום
+          $f_x x_u+f_y y_u+f_z z_u$ הוא $(f\circ\varphi)_u$: כלל השרשרת.
+        misconception: MC-c8-pullback-forget-differential
+      - text: 'כי $f\circ\varphi=f$ על התמונה של $\varphi$'
+        feedback: >-
+          $f\circ\varphi$ מוגדרת על $\mathbb R^2$ ו-$f$ על $\mathbb R^3$; הן פונקציות שונות. הטענה עוסקת בתבניות על
+          $\mathbb R^2$.
+        misconception: MC-c8-pullback-wrong-point
+
+  - id: Q-8.4-coef
+    type: numeric
+    objectives: [OBJ-8.4-1]
+    level: mid
+    prompt: >-
+      $\varphi(u,v)=(uv,\ u+v)$ ו-$\eta=x\,dx\wedge dy$ במישור. כתבו $\varphi^*\eta=g(u,v)\,du\wedge dv$ וחשבו $g(1,3)$.
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\varphi^*dx=v\,du+u\,dv$, $\varphi^*dy=du+dv$, ולכן $\varphi^*(dx\wedge dy)=(v-u)\,du\wedge dv$. עם המקדם
+      $x=uv$: $g=uv(v-u)$, ו-$g(1,3)=3\cdot2=6$.
+    wrongFeedback: >-
+      משכו כל דיפרנציאל ($dx\mapsto x_u\,du+x_v\,dv$), עשו מכפלת יתד, והציבו $x=uv$ במקדם.
+    commonWrong:
+      - value: -6
+        feedback: >-
+          $u-v$ במקום $v-u$: כאן חושב $x_vy_u-x_uy_v$. המקדם של $du\wedge dv$ הוא $x_uy_v-x_vy_u$; בסדר ההפוך הוא של
+          $dv\wedge du$.
+        misconception: MC-c8-wedge-commutes
+      - value: 2
+        feedback: >-
+          2 הוא $\det J$ בנקודה, בלי המקדם $x\circ\varphi=uv=3$.
+        misconception: MC-c8-pullback-drop-coefficient
+      - value: 3
+        feedback: >-
+          3 הוא המקדם $x\circ\varphi$ בלי היעקוביאן, כאילו $\varphi^*(dx\wedge dy)=du\wedge dv$.
+        misconception: MC-c8-pullback-no-jacobian
+
+  - id: Q-8.4-graph
+    type: numeric
+    objectives: [OBJ-8.4-2]
+    level: mid
+    prompt: >-
+      $\sigma(u,v)=(u,\ v,\ uv)$ על $D=[0,1]\times[0,2]$, בכיוון של $\sigma$. חשבו $\int_S x\,dy\wedge dz$.
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sigma^*dy=dv$ ו-$\sigma^*dz=v\,du+u\,dv$, ולכן $\sigma^*(dy\wedge dz)=dv\wedge v\,du=-v\,du\wedge dv$. עם
+      $x=u$: $\int_D(-uv)\,du\,dv=-\frac12\cdot2=-1$. בדיקה דרך ההתאמה בין תבניות לשדות (שיעור 8.2): זה השטף של
+      $(x,0,0)$ עם הנורמל $\sigma_u\times\sigma_v=(-v,-u,1)$.
+    wrongFeedback: >-
+      משכו את $dy$ ואת $dz$, וסדרו את המכפלה לפי $du\wedge dv$. שימו לב ש-$dv\wedge du=-du\wedge dv$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          הסימן: $dv\wedge du=-du\wedge dv$. או שנלקח ערך מוחלט של המקדם; אינטגרל של תבנית שומר על הסימן, והנורמל
+          $(-v,-u,1)$ אכן נותן לשדה $(x,0,0)$ שטף שלילי.
+        misconception: MC-c8-wedge-commutes
+      - value: 0
+        feedback: >-
+          כאן נלקח $\sigma^*(dy\wedge dz)=dv\wedge dz$ בלי למשוך את $dz$, או שהמכפלה $dv\wedge dv$ נחשבה במקום
+          $dv\wedge v\,du$. משכו את $dz=d(uv)=v\,du+u\,dv$ ופתחו.
+        misconception: MC-c8-pullback-forget-differential
+
+  - id: Q-8.4-swap
+    type: twotier
+    objectives: [OBJ-8.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma:D\to\mathbb R^3$ פרמטריזציה של משטח, ו-$\tau(u,v)=\sigma(v,u)$ על התחום המשתקף $D'=\{(u,v):(v,u)\in D\}$:
+      אותו משטח, אותה תמונה. מה הקשר בין $\int_{D'}\tau^*\eta$ לבין $\int_D\sigma^*\eta$? (משיכה לאחור לאורך הרכבה
+      מתהפכת בסדר: $(\sigma\circ s)^*=s^*\sigma^*$, כי $D(\sigma\circ s)=D\sigma\,Ds$ לפי כלל השרשרת.)
+    choices:
+      - text: 'הם נגדיים: $\int_{D''}\tau^*\eta=-\int_D\sigma^*\eta$'
+        correct: true
+        feedback: >-
+          נכון. $\tau$ ו-$\sigma$ מכוונות את המשטח הפוך, $\tau_u\times\tau_v=-(\sigma_u\times\sigma_v)$.
+      - text: 'הם שווים, כי זה אותו משטח'
+        feedback: >-
+          לאותו משטח יש שני כיוונים. השטח $\iint dS$ לא תלוי בכיוון, אבל האינטגרל של תבנית (וכמוהו השטף) כן.
+        misconception: MC-c8-orientation-abs-det
+    reasons:
+      - text: '$\tau=\sigma\circ s$ עם $s(u,v)=(v,u)$, ו-$s^*(du\wedge dv)=-du\wedge dv$'
+        correct: true
+        feedback: >-
+          בדיוק. $\tau^*\eta=s^*(\sigma^*\eta)$, ו-$s$ הופכת כיוון ($\det J_s=-1$). כשמבצעים את האינטגרל הכפול, הסימן
+          הזה נשאר.
+      - text: 'לנוסחת החלפת המשתנים עבור $s$ נכנס $|\det J_s|=1$, ולכן האינטגרלים שווים'
+        feedback: >-
+          בנוסחת החלפת המשתנים יש ערך מוחלט; במשיכה לאחור אין. $\det J_s=-1$, והסימן הזה הוא כל ההבדל.
+        misconception: MC-c8-orientation-abs-det
+      - text: 'כי $s^*(du\wedge dv)=dv\wedge du=du\wedge dv$, והתחום רק משתקף'
+        feedback: >-
+          $dv\wedge du=-du\wedge dv$. בגלל זה בדיוק האינטגרלים נגדיים ולא שווים.
+        misconception: MC-c8-wedge-commutes
+
+  - id: Q-8.4-cov
+    type: mc
+    objectives: [OBJ-8.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\varphi:D\to\varphi(D)\subseteq\mathbb R^2$ חד-חד-ערכית וגזירה ברציפות עם $\det J_\varphi\ne0$ על $D$ (קשיר), ו-$f$
+      רציפה. מה הקשר בין $\int_D\varphi^*(f\,dx\wedge dy)$ לבין $\iint_{\varphi(D)}f\,dx\,dy$?
+    choices:
+      - text: 'שווים אם $\det J_\varphi>0$, ונגדיים אם $\det J_\varphi<0$'
+        correct: true
+        feedback: >-
+          נכון. $\varphi^*(f\,dx\wedge dy)=(f\circ\varphi)\det J_\varphi\,du\wedge dv$, ואילו נוסחת החלפת המשתנים (שיעור
+          5.1) נותנת $\iint_{\varphi(D)}f=\iint_D(f\circ\varphi)|\det J_\varphi|$. על תחום קשיר הסימן של $\det$ קבוע.
+      - text: תמיד שווים
+        feedback: >-
+          רק כש-$\varphi$ שומרת כיוון. עבור $\varphi(u,v)=(v,u)$ ו-$f=1$ על הריבוע: $\int\varphi^*(dx\wedge dy)=-1$, ואילו
+          השטח הוא 1.
+        misconception: MC-c8-orientation-abs-det
+      - text: 'תמיד נגדיים, כי המשיכה לאחור הופכת כיוון'
+        feedback: >-
+          משיכה לאחור לאורך הזהות, או לאורך הקוטביות ($\det=r>0$), שומרת את הסימן. רק $\det<0$ הופך.
+        misconception: MC-c8-orientation-abs-det
+      - text: 'אין קשר כללי, כי באחד יש $du\wedge dv$ ובשני $dx\,dy$'
+        feedback: >-
+          יש קשר מדויק: זו הנוסחה של החלפת המשתנים, "בנויה" לתוך המשיכה לאחור, עם הסימן של $\det J$ במקום הערך המוחלט.
+        misconception: MC-c8-pullback-no-jacobian
+
+  - id: Q-8.4-reverse
+    type: numeric
+    objectives: [OBJ-8.4-3, OBJ-8.4-2]
+    level: mid
+    prompt: >-
+      $\varphi(u,v)=(v,\ 2u)$ על $D=[0,1]^2$. חשבו $\int_D\varphi^*(x\,dx\wedge dy)$.
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\varphi^*dx=dv$, $\varphi^*dy=2\,du$, ולכן $\varphi^*(x\,dx\wedge dy)=v\cdot2\,dv\wedge du=-2v\,du\wedge dv$,
+      ו-$\int_D(-2v)=-1$. לעומת זאת $\iint_{[0,1]\times[0,2]}x\,dx\,dy=1$: $\det J_\varphi=-2<0$, ו-$\varphi$ הופכת כיוון.
+    wrongFeedback: >-
+      משכו את $dx$ ואת $dy$, סדרו לפי $du\wedge dv$, ושימו לב לסימן של $\det J_\varphi$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          זה $\iint_{\varphi(D)}x\,dx\,dy$, עם $|\det J|=2$. במשיכה לאחור מופיע $\det J=-2$ עם הסימן.
+        misconception: MC-c8-orientation-abs-det
+      - value: -0.5
+        feedback: >-
+          חסר הגורם 2 מ-$\varphi^*dy=d(2u)=2\,du$.
+        misconception: MC-c8-pullback-forget-differential
+      - value: 0.5
+        feedback: >-
+          $\frac12=\iint_D v$: הוצב המקדם $x=v$ בלי היעקוביאן, כאילו $\varphi^*(dx\wedge dy)=du\wedge dv$.
+        misconception: MC-c8-pullback-no-jacobian
+
+  - id: Q-8.4-ball
+    type: numeric
+    objectives: [OBJ-8.4-2, OBJ-8.4-1, OBJ-8.4-3]
+    level: mid
+    prompt: >-
+      הקואורדינטות הכדוריות בסדר $(\theta,\psi,\rho)$:
+      $\Phi(\theta,\psi,\rho)=(\rho\sin\psi\cos\theta,\ \rho\sin\psi\sin\theta,\ \rho\cos\psi)$ על
+      $R=[0,2\pi]\times[0,\frac\pi2]\times[0,1]$ (חצי הכדור העליון). משיכה לאחור של תבנית מסדר 3 נותנת
+      $\Phi^*(dx\wedge dy\wedge dz)=\det J_\Phi\,d\theta\wedge d\psi\wedge d\rho$ (העמודות של $J_\Phi$ בסדר
+      $\theta,\psi,\rho$). חשבו $\int_R\Phi^*(z\,dx\wedge dy\wedge dz)$, כש-$R$ בכיוון הסטנדרטי של
+      $d\theta\wedge d\psi\wedge d\rho$.
+    answer: -0.78539816
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $-\frac\pi4$. בסדר $(\rho,\psi,\theta)$ היעקוביאן הוא $\rho^2\sin\psi$; הסדר $(\theta,\psi,\rho)$ מתקבל ממנו
+      בהחלפה של העמודה הראשונה והשלישית, ולכן $\Phi^*(dx\wedge dy\wedge dz)=-\rho^2\sin\psi\,d\theta\wedge d\psi\wedge d\rho$.
+      עם המקדם $z=\rho\cos\psi$:
+      $-2\pi\cdot\int_0^{\pi/2}\cos\psi\sin\psi\,d\psi\cdot\int_0^1\rho^3\,d\rho=-2\pi\cdot\frac12\cdot\frac14$. הסימן אומר
+      ש-$\Phi$ בסדר הזה הופכת כיוון: על חצי הכדור $\iiint z\,dx\,dy\,dz=+\frac\pi4$.
+    wrongFeedback: >-
+      חשבו את $\det J_\Phi$ עם העמודות בסדר $\theta,\psi,\rho$ (לא בסדר המוכר $\rho,\psi,\theta$): כל החלפה של שתי עמודות
+      הופכת סימן. הציבו $z=\rho\cos\psi$ במקדם, ורק אז בצעו אינטגרל משולש.
+    commonWrong:
+      - value: 0.78539816
+        feedback: >-
+          זה $\iiint z$ על חצי הכדור, עם אלמנט הנפח המוכר $\rho^2\sin\psi$. בסדר $(\theta,\psi,\rho)$ הדטרמיננטה היא
+          $-\rho^2\sin\psi$, ומשיכה לאחור שומרת על הסימן.
+        misconception: MC-c8-orientation-abs-det
+      - value: -1.5707963
+        feedback: >-
+          $-\frac\pi2$ מתקבל כשהיעקוביאן נלקח חלקי: $-\rho^2$ בלי $\sin\psi$, או $-\sin\psi$ בלי $\rho^2$. פתחו את
+          הדטרמיננטה במלואה: $\det J_\Phi=-\rho^2\sin\psi$.
+        misconception: MC-c8-pullback-no-jacobian
+
+  - id: Q-8.4-hemisphere
+    type: numeric
+    objectives: [OBJ-8.4-2, OBJ-8.4-1, OBJ-8.4-3]
+    level: exam
+    prompt: >-
+      $S$ חצי ספרת היחידה העליון ($z\ge0$), **מכוון בנורמל החיצוני**, ו-$\eta=x\,dy\wedge dz+y\,dz\wedge dx$. נתונה
+      הפרמטריזציה $\sigma(\theta,\psi)=(\sin\psi\cos\theta,\ \sin\psi\sin\theta,\ \cos\psi)$ על
+      $[0,2\pi]\times[0,\frac\pi2]$, בסדר $\theta$ ואחריו $\psi$. פרמטריזציה מכוונת את $S$ בכיוון של
+      $\sigma_\theta\times\sigma_\psi$, וכשהכיוון הזה הפוך לנדרש $\int_S\eta=-\int_D\sigma^*\eta$. חשבו $\int_S\eta$.
+    answer: 4.1887902
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{4\pi}3$. $\sigma^*(dy\wedge dz)=(y_\theta z_\psi-y_\psi z_\theta)\,d\theta\wedge d\psi=-\sin^2\psi\cos\theta\,d\theta\wedge d\psi$
+      ו-$\sigma^*(dz\wedge dx)=(z_\theta x_\psi-z_\psi x_\theta)\,d\theta\wedge d\psi=-\sin^2\psi\sin\theta\,d\theta\wedge d\psi$,
+      ולכן $\sigma^*\eta=-\sin^3\psi\,(\cos^2\theta+\sin^2\theta)\,d\theta\wedge d\psi=-\sin^3\psi\,d\theta\wedge d\psi$
+      ו-$\int_D\sigma^*\eta=-2\pi\cdot\frac23=-\frac{4\pi}3$. אבל $\sigma_\theta\times\sigma_\psi=-\sin\psi\,\sigma$ מצביע
+      **פנימה**, ולכן עם הנורמל החיצוני מחליפים סימן. בדיקה דרך ההתאמה לשדות: זה השטף של $(x,y,0)$ החוצה,
+      $\iint_S(x^2+y^2)\,dS=\iint_S\sin^2\psi\,dS>0$.
+    wrongFeedback: >-
+      משכו כל אחד משני האיברים בנפרד (המקדם של $d\theta\wedge d\psi$ ב-$\sigma^*(dz\wedge dx)$ הוא
+      $z_\theta x_\psi-z_\psi x_\theta$), חברו, בצעו את האינטגרל, ובסוף בדקו לאן מצביע $\sigma_\theta\times\sigma_\psi$.
+    commonWrong:
+      - value: -4.1887902
+        feedback: >-
+          זה $\int_D\sigma^*\eta$, בכיוון שהפרמטריזציה משרה. $\sigma_\theta\times\sigma_\psi=-\sin\psi\,\sigma$ מצביע
+          פנימה, והנדרש הוא הנורמל החיצוני: מחליפים סימן.
+        misconception: MC-c6-param-normal-trusted
+      - value: 2.0943951
+        feedback: >-
+          $\frac{2\pi}3$ הוא האינטגרל של איבר אחד בלבד (כל אחד משני האיברים תורם $\frac{2\pi}3$). $\eta$ היא סכום, ומושכים
+          את שני האיברים.
+      - value: 0
+        feedback: >-
+          0 מתקבל כש-$\sigma^*(dz\wedge dx)$ נלקח בסימן הפוך, כמו $\sigma^*(dx\wedge dz)$: אז האיברים
+          $-\sin^3\psi\cos^2\theta$ ו-$+\sin^3\psi\sin^2\theta$ מתבטלים באינטגרל על $\theta$. הסדר $dz\wedge dx$ הוא חלק
+          מהתבנית.
+        misconception: MC-c8-dict-sign
+

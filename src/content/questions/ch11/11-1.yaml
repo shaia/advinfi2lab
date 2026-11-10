@@ -1,0 +1,389 @@
+# Lesson 11.1 — initial value problems and the integral equation (chapter 11, beyond the 2002 syllabus; from
+# advinfilab's former chapter 6). Lesson 0.6 already did the linear case (companion matrix of x″+3x′+2x, the blow-up of
+# x′=x² with x(0)=1): the systems and blow-up questions here use other equations.
+# Objectives (src/course.ts):
+#   OBJ-11.1-1  state an IVP and prove it is equivalent to an integral equation when f is continuous
+#   OBJ-11.1-2  rewrite higher-order equations and systems as a first-order system
+#   OBJ-11.1-3  show by examples that a solution can blow up in finite time even with a smooth right-hand side
+chapter: 11
+questions:
+  - id: Q-11.1-integral-form
+    type: mc
+    objectives: [OBJ-11.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בעיית ההתחלה $y'=f(t,y)$, $y(t_0)=y_0$ מבקשת פונקציה $y$ גזירה בקטע שמכיל את $t_0$, שמקיימת את המשוואה בכל
+      נקודה של הקטע ואת $y(t_0)=y_0$. כאן $f(t,y)=t\,y^2$, רציפה במישור. איזו משוואה אינטגרלית שקולה לבעיית ההתחלה
+      $y'=t\,y^2$, $y(1)=2$, עבור פונקציה רציפה $y$ בקטע שמכיל את 1?
+    choices:
+      - text: '$y(t)=2+\int_1^t s\,y(s)^2\,ds$'
+        correct: true
+        feedback: >-
+          נכון. המשפט היסודי נותן $y(t)-y(1)=\int_1^t y'(s)\,ds$, ומציבים $y'(s)=s\,y(s)^2$ ו-$y(1)=2$. בדיקה: ב-$t=1$
+          האינטגרל מתאפס ומתקבל $y(1)=2$.
+      - text: '$y(t)=2+\int_0^t s\,y(s)^2\,ds$'
+        feedback: >-
+          הגבול התחתון חייב להיות נקודת ההתחלה 1. כאן ההצבה $t=1$ נותנת $y(1)=2+\int_0^1 s\,y(s)^2\,ds$, והאינטגרל
+          חיובי אלא אם $y\equiv0$ ב-$[0,1]$: תנאי ההתחלה לא מתקיים.
+        misconception: MC-c11-integral-lower-limit
+      - text: '$y(t)=\int_1^t s\,y(s)^2\,ds$'
+        feedback: >-
+          חסר הקבוע $y(1)=2$. ההצבה $t=1$ נותנת כאן $y(1)=0$, כלומר זו המשוואה של בעיה אחרת, עם $y(1)=0$.
+        misconception: MC-c11-integral-forget-y0
+      - text: '$y(t)=2+\int_1^t t\,y(t)^2\,ds$'
+        feedback: >-
+          בתוך האינטגרל המשתנה הוא $s$, וגם $y$ מוערך ב-$s$. הביטוי הזה שווה ל-$2+(t-1)\,t\,y(t)^2$: זו משוואה
+          אלגברית בערך $y(t)$, לא צבירה של הנגזרת לאורך הדרך.
+        misconception: MC-c11-integral-y-at-t
+
+  - id: Q-11.1-system
+    type: mc
+    objectives: [OBJ-11.1-2]
+    level: basic
+    prompt: >-
+      משוואת המטוטלת $y''=-\sin y$, עם $y(0)=1$ ו-$y'(0)=-2$, אינה לינארית. כותבים אותה כמערכת מסדר ראשון בנעלמים
+      $u=y$, $v=y'$. מהי המערכת?
+    choices:
+      - text: >-
+          $u'=v,\ v'=-\sin u$, עם $(u,v)(0)=(1,-2)$
+        correct: true
+        feedback: >-
+          נכון. $u'=y'=v$ לפי ההגדרה של $v$, ו-$v'=y''=-\sin y=-\sin u$. תנאי ההתחלה של המערכת הוא הווקטור
+          $(y(0),y'(0))$.
+      - text: >-
+          $u'=v,\ v'=-\sin v$, עם $(u,v)(0)=(1,-2)$
+        feedback: >-
+          $v'=y''=-\sin y$, ו-$y$ הוא $u$, לא $v$. המשוואה $v'=-\sin v$ אומרת $y''=-\sin y'$, משוואה אחרת.
+        misconception: MC-c11-system-substitution
+      - text: >-
+          $u'=v,\ v'=\sin u$, עם $(u,v)(0)=(1,-2)$
+        feedback: >-
+          הסימן אבד: $v'=y''=-\sin y=-\sin u$. המערכת $v'=\sin u$ היא $y''=\sin y$: ליד $y=0$ הכוח דוחף הלאה משיווי
+          המשקל במקום להחזיר אליו.
+        misconception: MC-c11-system-substitution
+      - text: >-
+          $u'=v,\ v'=-\sin u$, עם $(u,v)(0)=(1,0)$
+        feedback: >-
+          המערכת נכונה, אבל תנאי ההתחלה של $v$ הוא $v(0)=y'(0)=-2$, הנתון בבעיה. עם $(1,0)$ פותרים בעיה אחרת: מטוטלת
+          שמשתחררת ממנוחה.
+        misconception: MC-c11-forget-initial-condition
+
+  - id: Q-11.1-kepler
+    type: numeric
+    objectives: [OBJ-11.1-2]
+    level: basic
+    prompt: >-
+      תנועה של כוכב לכת במישור מתוארת על ידי שתי משוואות מסדר שני:
+      $$x''=-\frac{x}{(x^2+y^2)^{3/2}},\qquad y''=-\frac{y}{(x^2+y^2)^{3/2}}.$$
+      כשכותבים אותן כמערכת מסדר ראשון $Y'=F(Y)$, מהו המימד של $Y$ (מספר הפונקציות הנעלמות)? זה גם מספר תנאי
+      ההתחלה הדרושים.
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $Y=(x,y,x',y')$: כל משוואה מסדר שני תורמת את הפונקציה ואת הנגזרת שלה. צריך מיקום התחלתי ומהירות
+      התחלתית, שני מספרים כל אחד.
+    wrongFeedback: >-
+      כל משוואה מסדר שני הופכת לשתי משוואות מסדר ראשון, בנעלמים הפונקציה והנגזרת שלה. ספרו כמה נעלמים כאלה יש.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          2 הוא מספר המשוואות, לא מספר הנעלמים במערכת מסדר ראשון. הנגזרות $x'$ ו-$y'$ הן נעלמים נוספים, ובלי
+          המהירות ההתחלתית הבעיה לא קובעת את התנועה.
+        misconception: MC-c11-system-order-count
+
+  - id: Q-11.1-blowup-time
+    type: numeric
+    objectives: [OBJ-11.1-3]
+    level: basic
+    prompt: >-
+      פתרו את $y'=y^2$, $y(0)=2$. באיזה זמן $T>0$ הפתרון מתפוצץ?
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הפרדת משתנים: $-\frac1y=t+c$, ו-$y(0)=2$ נותן $c=-\frac12$, כלומר $y=\frac{2}{1-2t}$. המכנה מתאפס
+      ב-$t=\frac12$, ו-$y(t)\to\infty$ כש-$t\to\frac12$ משמאל.
+    wrongFeedback: >-
+      הפרידו משתנים: $\frac{y'}{y^2}=1$, כלומר $\left(-\frac1y\right)'=1$. הציבו את תנאי ההתחלה ומצאו איפה המכנה
+      מתאפס.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          זמן ההתפוצצות אינו ערך ההתחלה. מהנוסחה $y=\frac{y_0}{1-y_0t}$ הוא $\frac1{y_0}$: ערך התחלה גדול יותר
+          מתפוצץ **מהר** יותר.
+        misconception: MC-c11-blowup-time-guess
+      - value: 1
+        feedback: >-
+          1 הוא זמן ההתפוצצות של הדוגמה המוכרת עם $y(0)=1$ (שיעור 0.6). עם $y(0)=2$ צריך לפתור מחדש:
+          $y=\frac{2}{1-2t}$.
+        misconception: MC-c11-blowup-time-guess
+
+  - id: Q-11.1-equiv-direction
+    type: twotier
+    objectives: [OBJ-11.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ רציפה במישור, ו-$y$ פונקציה **רציפה** בקטע $I$ שמכיל את $t_0$, שמקיימת
+      $y(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds$ לכל $t\in I$. האם $y$ בהכרח גזירה ב-$I$ ופותרת את בעיית ההתחלה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. אגף ימין של המשוואה גזיר, ולכן גם $y$; ונגזרתו היא בדיוק $f(t,y(t))$. ההצבה $t=t_0$ נותנת
+          $y(t_0)=y_0$.
+      - text: לא, היא רק רציפה
+        feedback: >-
+          כאן ההנחה ש-$f$ רציפה עושה את העבודה: האינטגרנד $s\mapsto f(s,y(s))$ רציף, ואינטגרל של פונקציה רציפה
+          גזיר. הגזירות של $y$ היא מסקנה מהמשוואה.
+        misconception: MC-c11-integral-equation-weaker
+    reasons:
+      - text: >-
+          $s\mapsto f(s,y(s))$ רציפה, ולכן לפי המשפט היסודי אגף ימין גזיר ונגזרתו $f(t,y(t))$
+        correct: true
+        feedback: >-
+          בדיוק. זה הכיוון "מהמשוואה האינטגרלית לבעיית ההתחלה", והוא היחיד שבו משתמשים ברציפות של $f$ לאורך
+          הגרף של $y$.
+      - text: >-
+          לכל פונקציה אינטגרבילית $g$, הפונקציה $\int_{t_0}^t g$ גזירה ונגזרתה $g$
+        feedback: >-
+          לא נכון בלי רציפות: עבור $g(s)=\operatorname{sgn}s$ מקבלים $\int_0^t g=|t|$, שאינה גזירה ב-0. המשפט
+          היסודי נותן נגזרת בנקודות הרציפות של $g$.
+        misconception: MC-c11-integral-always-differentiable
+      - text: >-
+          המשוואה האינטגרלית מבטיחה רק רציפות של $y$, וגזירות צריך להניח בנפרד, כמו בהגדרה של פתרון
+        feedback: >-
+          אין צורך להניח: מהמשוואה עצמה, עם $f$ רציפה, נובע ש-$y$ גזירה. לכן מספיק לחפש פתרון במרחב הפונקציות
+          הרציפות, וזה מה שהוכחת פיקאר-לינדלוף תעשה בשיעור 11.3.
+        misconception: MC-c11-integral-equation-weaker
+
+  - id: Q-11.1-system-ty
+    type: mc
+    objectives: [OBJ-11.1-2]
+    level: mid
+    prompt: >-
+      כותבים את $y''+t\,y'+y=0$ כמערכת $(u,v)'=F(t,u,v)$ בנעלמים $u=y$, $v=y'$. מהי $F$?
+    choices:
+      - text: '$F(t,u,v)=(v,\ -tv-u)$'
+        correct: true
+        feedback: >-
+          נכון. $u'=v$, ומהמשוואה $y''=-ty'-y$, כלומר $v'=-tv-u$. $F$ לינארית ב-$(u,v)$ עם המטריצה
+          $\begin{pmatrix}0&1\\-1&-t\end{pmatrix}$, שתלויה ב-$t$.
+      - text: '$F(t,u,v)=(v,\ -tu-v)$'
+        feedback: >-
+          המקדם $t$ כופל את $y'$, כלומר את $v$, ולא את $y=u$. כאן החליפו את התפקידים של $u$ ו-$v$ ברכיב השני.
+        misconception: MC-c11-system-substitution
+      - text: '$F(t,u,v)=(v,\ tv+u)$'
+        feedback: >-
+          מבודדים $y''$ מ-$y''+ty'+y=0$ ומקבלים $y''=-ty'-y$: שני הסימנים שליליים.
+        misconception: MC-c11-system-substitution
+      - text: '$F(t,u,v)=(u,\ -tv-u)$'
+        feedback: >-
+          הרכיב הראשון הוא $u'$, וזה $y'=v$, לא $u$. עם $u'=u$ המערכת אומרת ש-$y$ מעריכית, בלי קשר למשוואה.
+        misconception: MC-c11-system-substitution
+
+  - id: Q-11.1-two-conditions
+    type: twotier
+    objectives: [OBJ-11.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נתון רק תנאי אחד: $y''=-y$, $y(0)=0$. האם התנאי הזה קובע את הפתרון באופן יחיד?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $y=c\sin t$ פותרת את המשוואה ומקיימת $y(0)=0$ לכל $c$ ממשי: יש אינסוף פתרונות.
+      - text: כן
+        feedback: >-
+          משוואה מסדר שני היא מערכת בשני נעלמים, $y$ ו-$y'$, ותנאי ההתחלה שלה הוא ווקטור. כאן $y'(0)$ חופשי, וכל
+          בחירה $y'(0)=c$ נותנת פתרון אחר, $c\sin t$.
+        misconception: MC-c11-system-order-count
+    reasons:
+      - text: >-
+          $y'(0)=c$ אינו נתון, ו-$c\sin t$ פותרת את הבעיה לכל $c$
+        correct: true
+        feedback: >-
+          בדיוק. רק הזוג $y(0)=0$, $y'(0)=c$ קובע את הפתרון. "משוואה מסדר $n$, $n$ תנאי התחלה".
+      - text: >-
+          משוואה דיפרנציאלית צריכה תנאי התחלה אחד, ולכן הבעיה קובעת את הפתרון
+        feedback: >-
+          זה נכון למשוואה מסדר **ראשון** בנעלם אחד. כאן הסדר שני: $y\equiv0$ ו-$y=\sin t$ הם שני פתרונות שונים עם
+          $y(0)=0$.
+        misconception: MC-c11-system-order-count
+      - text: >-
+          יש בדיוק שני פתרונות, $y\equiv0$ ו-$y=\sin t$: מבין $\sin t$ ו-$\cos t$ רק $\sin t$ מתאפסת ב-0
+        feedback: >-
+          חסר פרמטר שלם, לא פתרון אחד: כל $c\sin t$ פותרת, למשל $5\sin t$. התנאי החסר הוא $y'(0)$, וכל ערך שלו
+          נותן פתרון.
+        misconception: MC-c11-system-order-count
+
+  - id: Q-11.1-blowup-tan
+    type: numeric
+    objectives: [OBJ-11.1-3]
+    level: mid
+    prompt: >-
+      פתרו את $y'=1+y^2$, $y(0)=1$. באיזה זמן $T>0$ הפתרון מתפוצץ?
+    answer: 0.7853981634
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון, $T=\frac\pi4\approx0.785$. $(\arctan y)'=\frac{y'}{1+y^2}=1$, ולכן $\arctan y=t+\frac\pi4$ (כי
+      $\arctan1=\frac\pi4$), כלומר $y=\tan\left(t+\frac\pi4\right)$. הוא מתפוצץ כש-$t+\frac\pi4=\frac\pi2$.
+    wrongFeedback: >-
+      הפרידו משתנים: $\frac{y'}{1+y^2}=1$. מה הפונקציה הקדומה של $\frac1{1+y^2}$, ואיזה קבוע נותן $y(0)=1$?
+    commonWrong:
+      - value: 1.5707963268
+        feedback: >-
+          $\frac\pi2$ הוא זמן ההתפוצצות של $\tan t$, הפתרון עם $y(0)=0$. כאן $y(0)=1$, הפתרון מוזז:
+          $\tan\left(t+\frac\pi4\right)$, והוא מגיע לקוטב מוקדם יותר.
+        misconception: MC-c11-forget-initial-condition
+      - value: 1
+        feedback: >-
+          זמן ההתפוצצות אינו ערך ההתחלה; צריך לפתור. הפתרון $\tan\left(t+\frac\pi4\right)$ מתפוצץ ב-$\frac\pi4$.
+        misconception: MC-c11-blowup-time-guess
+
+  - id: Q-11.1-blowup-claim
+    type: twotier
+    objectives: [OBJ-11.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(t,y)=e^{y}$ גזירה אינסוף פעמים בכל המישור. האם כל פתרון של $y'=e^{y}$ מוגדר לכל $t\in\mathbb{R}$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. הפתרון עם $y(0)=0$ הוא $-\ln(1-t)$, והוא קיים רק בקטע $(-\infty,1)$.
+      - text: כן
+        feedback: >-
+          חלקות של $f$ אינה מונעת התפוצצות. $y=-\ln(1-t)$ פותרת את $y'=e^{y}$, $y(0)=0$ (הנגזרת $\frac1{1-t}=e^{y}$),
+          ו-$y(t)\to\infty$ כש-$t\to1$ משמאל.
+        misconception: MC-c11-smooth-implies-global
+    reasons:
+      - text: >-
+          כל פתרון עם $y(0)=0$ מקיים $(e^{-y})'=-1$, כלומר $e^{-y(t)}=1-t$, וזה אפשרי רק עבור $t<1$
+        correct: true
+        feedback: >-
+          בדיוק. החישוב מראה גם שאין פתרון אחר עם $y(0)=0$, ולכן אי אפשר להמשיך אותו מעבר ל-1: $e^{-y}$ חיובית תמיד,
+          ו-$1-t$ כבר לא.
+      - text: >-
+          אגף ימין חלק בכל המישור ואין לו נקודות סינגולריות, ולכן לפתרון אין סיבה להיעצר
+        feedback: >-
+          הסיבה היא הגדילה המהירה של $f$ ב-$y$: ככל ש-$y$ גדול יותר הוא גדל מהר יותר, ו-$\int_0^\infty e^{-y}\,dy=1$
+          סופי, כך שהפתרון מגיע לאינסוף בזמן 1.
+        misconception: MC-c11-smooth-implies-global
+      - text: >-
+          הנוסחה $-\ln|1-t|$ מוגדרת לכל $t\ne1$, ולכן הפתרון מוגדר על $\mathbb{R}\setminus\{1\}$
+        feedback: >-
+          פתרון מוגדר בקטע שמכיל את $t_0=0$, ו-$\mathbb{R}\setminus\{1\}$ אינו קטע. וחוץ מזה, עבור $t>1$ הנוסחה
+          כלל אינה פותרת: הנגזרת שלה $\frac1{1-t}$ שלילית, ואילו $e^{y}>0$.
+        misconception: MC-c11-formula-everywhere
+
+  - id: Q-11.1-rank-equiv
+    type: rank
+    objectives: [OBJ-11.1-1]
+    level: exam
+    prompt: >-
+      $f$ רציפה במישור. הוכיחו שכל פתרון של בעיית ההתחלה $y'=f(t,y)$, $y(t_0)=y_0$ בקטע $I$ מקיים
+      $y(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds$ לכל $t\in I$.
+    help: >-
+      סדרו את שלבי ההוכחה ש**פתרון של בעיית ההתחלה** $y'=f(t,y)$, $y(t_0)=y_0$ (עם $f$ רציפה) מקיים את המשוואה
+      האינטגרלית, מהשלב הראשון לאחרון.
+    items:
+      - id: a
+        label: >-
+          יהי $y$ פתרון בקטע $I$. $y$ גזירה ב-$I$, ולכן רציפה בו.
+      - id: b
+        label: >-
+          $t\mapsto(t,y(t))$ רציפה ו-$f$ רציפה, ולכן $t\mapsto f(t,y(t))$ רציפה ב-$I$.
+      - id: c
+        label: >-
+          לכן $y'(t)=f(t,y(t))$ רציפה: $y$ גזירה ברציפות ב-$I$.
+      - id: d
+        label: >-
+          לפי נוסחת ניוטון-לייבניץ, $y(t)-y(t_0)=\int_{t_0}^t y'(s)\,ds$ לכל $t\in I$.
+      - id: e
+        label: >-
+          מציבים $y'(s)=f(s,y(s))$ ו-$y(t_0)=y_0$ ומקבלים $y(t)=y_0+\int_{t_0}^t f(s,y(s))\,ds$.
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. הנקודה העדינה היא שלב ג: ניוטון-לייבניץ דורש נגזרת אינטגרבילית, והרציפות שלה באה מהרציפות של $f$
+      לאורך הגרף.
+    wrongFeedback: >-
+      לפני שמפעילים את ניוטון-לייבניץ צריך לדעת ש-$y'$ אינטגרבילית. מאיפה זה בא? מהרציפות של $y$ (כי היא גזירה)
+      ושל $f$.
+    explanation: >-
+      הכיוון ההפוך (פתרון רציף של המשוואה האינטגרלית פותר את בעיית ההתחלה) משתמש באותה רציפות בדיוק: האינטגרנד
+      $s\mapsto f(s,y(s))$ רציף, ולכן לפי המשפט היסודי אגף ימין גזיר ונגזרתו $f(t,y(t))$.
+
+  - id: Q-11.1-sign
+    type: twotier
+    objectives: [OBJ-11.1-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f(t,y)=\operatorname{sgn}t$ (עם $\operatorname{sgn}0=0$) חסומה אבל אינה רציפה. למשוואה האינטגרלית
+      $y(t)=\int_0^t f(s,y(s))\,ds$ יש פתרון רציף, $y(t)=|t|$. האם לבעיית ההתחלה $y'=\operatorname{sgn}t$, $y(0)=0$
+      יש פתרון בקטע כלשהו שמכיל את 0 בפנים?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. כאן השקילות בין המשוואה האינטגרלית לבעיית ההתחלה נשברת, כי $f$ אינה רציפה.
+      - text: כן, $y=|t|$
+        feedback: >-
+          $|t|$ אינה גזירה ב-0, ולכן אינה פתרון בשום קטע שמכיל את 0 בפנים. היא פותרת את המשוואה האינטגרלית בלבד:
+          השקילות דורשת ש-$f$ תהיה רציפה.
+        misconception: MC-c11-integral-always-differentiable
+    reasons:
+      - text: >-
+          לנגזרת יש תכונת ערך הביניים (משפט דרבו), ו-$\operatorname{sgn}t$ מדלגת על הערך $\frac12$
+        correct: true
+        feedback: >-
+          בדיוק. אם $y$ הייתה פתרון, $y'=\operatorname{sgn}t$ הייתה נגזרת בלי תכונת ערך הביניים. אפשר גם ישירות:
+          פתרון היה מקיים את המשוואה האינטגרלית, ולכן היה שווה ל-$|t|$, שאינה גזירה ב-0.
+      - text: >-
+          $|t|$ פותרת את המשוואה האינטגרלית, והמשוואה האינטגרלית שקולה לבעיית ההתחלה
+        feedback: >-
+          השקילות הוכחה בהנחה ש-$f$ רציפה, והיא נכשלת כאן: האינטגרל של פונקציה עם קפיצה אינו גזיר בנקודת הקפיצה.
+        misconception: MC-c11-integral-always-differentiable
+      - text: >-
+          $|t|$ גזירה ב-$(0,\infty)$ וב-$(-\infty,0)$ ופותרת בכל אחד מהם, ולכן היא פתרון על כל הישר
+        feedback: >-
+          פתרון חייב להיות גזיר ולקיים את המשוואה בכל נקודה של הקטע, כולל $t=0$. הדבקה של שני פתרונות היא פתרון רק
+          אם היא גזירה בנקודת ההדבקה.
+        misconception: MC-c11-formula-everywhere
+
+  - id: Q-11.1-blowup-which
+    type: multi
+    objectives: [OBJ-11.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      לאילו מבעיות ההתחלה הבאות יש פתרון שמתפוצץ **קדימה** בזמן, כלומר $|y(t)|\to\infty$ כש-$t$ שואף לזמן סופי
+      $T>0$? סמנו את כולן.
+    choices:
+      - text: '$y''=y^3$, $y(0)=1$'
+        correct: true
+        feedback: >-
+          נכון. $\left(-\frac{1}{2y^2}\right)'=1$ נותן $y=\frac1{\sqrt{1-2t}}$, שמתפוצץ ב-$T=\frac12$.
+      - text: '$y''=1+y^2$, $y(0)=0$'
+        correct: true
+        feedback: >-
+          נכון. $y=\tan t$ מתפוצץ ב-$T=\frac\pi2$, אף ש-$f$ פולינום.
+      - text: '$y''=y^2$, $y(0)=-1$'
+        feedback: >-
+          הפתרון הוא $y=-\frac1{1+t}$: הקוטב ב-$t=-1$, **אחורה** בזמן. קדימה $y(t)\to0$, והפתרון קיים לכל $t\ge0$.
+        misconception: MC-c11-blowup-backward
+      - text: '$y''=-y^3$, $y(0)=1$'
+        feedback: >-
+          הפתרון הוא $y=\frac1{\sqrt{1+2t}}$, שקיים לכל $t>-\frac12$ ודועך ל-0. ההתפוצצות היא אחורה, ב-$t=-\frac12$.
+        misconception: MC-c11-blowup-backward
+      - text: '$y''=y$, $y(0)=1$'
+        feedback: >-
+          $y=e^t$ גדל מהר, אבל הוא סופי לכל $t$. התפוצצות פירושה הגעה לאינסוף בזמן **סופי**; גדילה לינארית ב-$y$
+          של $f$ אינה מספיקה לזה.
+        misconception: MC-c11-growth-is-blowup
+    explanation: >-
+      הכלל המעשי: עבור $y'=g(y)$ עם $g>0$, הזמן להגיע מ-$y_0$ לאינסוף הוא $\int_{y_0}^\infty\frac{dy}{g(y)}$. הוא סופי
+      עבור $y^2$, $y^3$ ו-$1+y^2$, ואינסופי עבור $y$.

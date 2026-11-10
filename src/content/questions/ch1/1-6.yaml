@@ -1,0 +1,290 @@
+# Lesson 1.6 — the plane curve is determined by its signed curvature.
+# Objectives (src/course.ts):
+#   OBJ-1.6-1  recover a plane curve from k(s) by two integrations
+#   OBJ-1.6-2  k determines the curve up to translation and rotation (proof)
+#   OBJ-1.6-3  constant curvature gives circles and lines; the spiral k(s) = s
+chapter: 1
+questions:
+  - id: Q-1.6-recipe
+    type: mc
+    objectives: [OBJ-1.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      נתונה פונקציה רציפה $k(s)$ על $[0,L]$, נקודה $p$ וזווית $\theta_0$. איך בונים את המסילה בפרמטר אורך הקשת עם
+      עקמומיות מסומנת $k$, $\gamma(0)=p$ ו-$\mathbf t(0)=(\cos\theta_0,\sin\theta_0)$?
+    choices:
+      - text: '$\theta(s)=\theta_0+\int_0^sk$, ואז $$\gamma(s)=p+\int_0^s(\cos\theta(u),\ \sin\theta(u))\,du$$'
+        correct: true
+        feedback: >-
+          נכון. האינטגרציה הראשונה נותנת את זווית המשיק, כי $\theta'=k$ (שיעור 1.5); השנייה נותנת את המסילה, כי
+          $\gamma'=\mathbf t$. בדיקה: $\|\gamma'\|=1$ ו-$\mathbf t'=\theta'\mathbf n_s=k\mathbf n_s$.
+      - text: '$$\gamma(s)=p+\int_0^s(\cos k(u),\ \sin k(u))\,du$$'
+        feedback: >-
+          כאן $k$ שימשה כזווית במקום כקצב שינוי הזווית. ל-$k\equiv1$ זה נותן ישר בזווית רדיאן אחד, ולא מעגל.
+        misconception: MC-c1-k-integrate-once
+      - text: 'מבצעים אינטגרציה של $k$ פעמיים ומקבלים את שני הרכיבים של $\gamma$'
+        feedback: >-
+          $k$ היא סקלר, ו-$\iint k$ הוא סקלר אחד. צריך לעבור דרך הזווית: $\theta=\int k$, ואז את הווקטור
+          $(\cos\theta,\sin\theta)$ מכניסים לאינטגרל.
+        misconception: MC-c1-k-integrate-once
+
+  - id: Q-1.6-circle-num
+    type: numeric
+    objectives: [OBJ-1.6-1]
+    level: basic
+    prompt: >-
+      המסילה בפרמטר אורך הקשת עם $k\equiv1$, $\gamma(0)=(0,0)$ ו-$\mathbf t(0)=(1,0)$. מהו רכיב ה-$y$ של $\gamma(\pi)$?
+    answer: 2
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $\theta(s)=s$, ולכן $\gamma(s)=\big(\sin s,\ 1-\cos s\big)$: מעגל היחידה סביב $(0,1)$ נגד כיוון השעון.
+      אחרי חצי סיבוב, $\gamma(\pi)=(0,2)$.
+    wrongFeedback: >-
+      $\theta(s)=\int_0^s1=s$, ואז $y(s)=\int_0^s\sin u\,du$. שימו לב ש-$k>0$ פירושו פנייה שמאלה.
+    commonWrong:
+      - value: -2
+        feedback: >-
+          $k>0$ פירושו פנייה שמאלה, נגד כיוון השעון: מ-$(0,0)$ בכיוון $(1,0)$ המסילה עולה, והמרכז $(0,1)$.
+        misconception: MC-c1-signed-sign-convention
+      - value: 2.6435591
+        feedback: >-
+          $\pi\sin1$: לקחו $\theta=k=1$, כלומר ישר בזווית רדיאן אחד. $k$ היא קצב השינוי של הזווית, ולכן $\theta=s$.
+        misconception: MC-c1-k-integrate-once
+
+  - id: Q-1.6-const
+    type: mc
+    objectives: [OBJ-1.6-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מסילה מישורית בפרמטר אורך הקשת מקיימת $k\equiv c$ (קבוע). מה היא?
+    choices:
+      - text: 'קטע ישר אם $c=0$; קשת של מעגל ברדיוס $\frac1{|c|}$ אם $c\ne0$, נגד כיוון השעון כש-$c>0$ ובכיוונו כש-$c<0$'
+        correct: true
+        feedback: >-
+          נכון. $\theta=\theta_0+cs$, ושתי אינטגרציות נותנות
+          $\gamma(s)=\gamma(0)+\frac1c\big(\sin(\theta_0+cs)-\sin\theta_0,\ \cos\theta_0-\cos(\theta_0+cs)\big)$. לפי
+          היחידות, אלה **כל** המסילות עם $k$ קבוע.
+      - text: 'קטע ישר אם $c=0$; קשת של מעגל ברדיוס $|c|$ אם $c\ne0$, נגד כיוון השעון כש-$c>0$ ובכיוונו כש-$c<0$'
+        feedback: >-
+          מעגל ברדיוס $r$ מקיים $|k|=\frac1r$. ל-$k\equiv\frac13$ הרדיוס $3$.
+        misconception: MC-c1-curvature-radius
+      - text: 'קטע ישר אם $c=0$; קשת של מעגל ברדיוס $\frac1c$ אם $c>0$; כש-$c<0$ אין מסילה כזו, כי עקמומיות אינה שלילית'
+        feedback: >-
+          $\kappa\ge0$, אבל $k$ יכולה להיות שלילית: $k\equiv-\frac13$ היא מעגל ברדיוס $3$ שמקיפים בכיוון השעון.
+        misconception: MC-c1-ns-is-n
+
+  - id: Q-1.6-vertical
+    type: numeric
+    objectives: [OBJ-1.6-1]
+    level: mid
+    prompt: >-
+      המסילה עם $k(s)=s$, $\theta(0)=0$. מהו ה-$s>0$ הראשון שבו המשיק אנכי, כלומר $\mathbf t(s)=(0,1)$?
+    answer: 1.7724539
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $s=\sqrt\pi$. $\theta(s)=\int_0^su\,du=\frac{s^2}{2}$, ו-$\frac{s^2}2=\frac\pi2$. לפני כן $0<\theta<\frac\pi2$, ולכן
+      זה הראשון.
+    wrongFeedback: >-
+      קודם מצאו את $\theta(s)$ באינטגרציה של $k$, ואז פתרו $\theta(s)=\frac\pi2$.
+    commonWrong:
+      - value: 1.5707963
+        feedback: >-
+          $\frac\pi2$ מתקבל מ-$\theta=k=s$. אבל $k=\frac{d\theta}{ds}$, ולכן $\theta=\frac{s^2}{2}$.
+        misconception: MC-c1-k-integrate-once
+
+  - id: Q-1.6-uniqueness-proof
+    type: rank
+    objectives: [OBJ-1.6-2]
+    level: mid
+    help: >-
+      סדרו את שלבי ההוכחה, מהראשון לאחרון.
+    prompt: >-
+      $\gamma_1,\gamma_2:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת, מסדר $C^2$, עם אותה עקמומיות מסומנת $k(s)$. הוכיחו
+      שיש סיבוב $R$ ווקטור $c$ כך ש-$\gamma_1=R\gamma_2+c$.
+    items:
+      - id: normalize
+        label: 'בוחרים סיבוב $R$ ש-$R\mathbf t_2(0)=\mathbf t_1(0)$, ו-$c$ ש-$R\gamma_2(0)+c=\gamma_1(0)$; נסמן $\tilde\gamma_2=R\gamma_2+c$'
+      - id: keep
+        label: 'סיבוב והזזה שומרים את $k$, ולכן גם ל-$\tilde\gamma_2$ עקמומיות מסומנת $k$'
+      - id: angles
+        label: 'לזוויות המשיק $\theta_1''=k=\tilde\theta_2''$, ואפשר לבחור $\theta_1(0)=\tilde\theta_2(0)$; לכן $\theta_1\equiv\tilde\theta_2$'
+      - id: tangents
+        label: 'לכן $\mathbf t_1(s)=\tilde{\mathbf t}_2(s)$ לכל $s$'
+      - id: integrate
+        label: '$$\gamma_1(s)=\gamma_1(0)+\int_0^s\mathbf t_1=\tilde\gamma_2(0)+\int_0^s\tilde{\mathbf t}_2=\tilde\gamma_2(s)$$'
+    order: [normalize, keep, angles, tangents, integrate]
+    correctFeedback: >-
+      נכון. הסיבוב והזזה "בולעים" את שלושת קבועי האינטגרציה (שני רכיבי הנקודה והזווית), ואז שתי אינטגרציות של אותה
+      פונקציה עם אותם תנאי התחלה נותנות אותה תוצאה. שיקוף אינו נחוץ, ואינו מותר: הוא הופך את $k$.
+    wrongFeedback: >-
+      קודם מזיזים ומסובבים כדי להשוות את נתוני ההתחלה, ורק אז משווים זוויות, משיקים, ולבסוף את המסילות.
+
+  - id: Q-1.6-unsigned
+    type: twotier
+    objectives: [OBJ-1.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma_1,\gamma_2:\mathbb R\to\mathbb R^2$ בפרמטר אורך הקשת, מסדר $C^2$, עם אותה עקמומיות **לא-מסומנת**
+      $\kappa(s)$ לכל $s$. האם בהכרח יש תנועה קשיחה $A(x)=Qx+c$, $Q$ אורתוגונלית (סיבוב או שיקוף), כך
+      ש-$\gamma_2=A\circ\gamma_1$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. במישור צריך את העקמומיות המסומנת. $\kappa$ "שוכחת" לאיזה צד פונים, ובכל נקודה שבה $\kappa=0$ אפשר
+          להחליף צד.
+      - text: כן
+        feedback: >-
+          המשפט של השיעור מדבר על $k$, לא על $\kappa$. עם $\kappa$ בלבד היחידות נכשלת: ראו את הנימוק הנכון.
+        misconception: MC-c1-unsigned-determines
+    reasons:
+      - text: '$k_1(s)=s$ ו-$k_2(s)=|s|$: לשתיהן $\kappa=|s|$, ו-$A\circ\gamma_1$ מקיימת $k=(\det Q)\,s$, שאינה $|s|$ לא עבור $\det Q=1$ ולא עבור $\det Q=-1$'
+        correct: true
+        feedback: >-
+          בדיוק. ב-$s=1$ נדרש $\det Q=1$, וב-$s=-1$ נדרש $\det Q=-1$. ($k_2$ רציפה, ולכן לפי שיעור 1.6 יש מסילה
+          מסדר $C^2$ כזו.)
+      - text: 'כן: $\kappa=|k|$, ושיקוף מתקן את הסימן של $k$'
+        feedback: >-
+          שיקוף הופך את הסימן של $k$ **בכל** $s$ בבת אחת. כשהסימן צריך להשתנות רק בחלק מהמסילה, אין תנועה שעושה זאת.
+        misconception: MC-c1-unsigned-determines
+      - text: 'כן: לפי משפט היחידות, העקמומיות קובעת את המסילה עד כדי תנועה קשיחה'
+        feedback: >-
+          המשפט הוא על **העקמומיות המסומנת**. כאן נתונה רק $\kappa$, והיא מידע חלקי.
+        misconception: MC-c1-unsigned-determines
+
+  - id: Q-1.6-mirror
+    type: mc
+    objectives: [OBJ-1.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma_1$ היא המסילה עם $k_1(s)=s$ ו-$\gamma_2$ המסילה עם $k_2(s)=-s$, $s\in\mathbb R$, שתיהן בפרמטר אורך הקשת.
+      מה הקשר ביניהן?
+    choices:
+      - text: '$\gamma_2$ היא העתק ראי של $\gamma_1$ (אחרי סיבוב והזזה), ואין סיבוב והזזה שמעבירים את $\gamma_1$ ל-$\gamma_2$'
+        correct: true
+        feedback: >-
+          נכון. שיקוף $\sigma$ נותן $k_{\sigma\circ\gamma_1}=-s=k_2$, ולפי היחידות $\gamma_2=A\circ\sigma\circ\gamma_1$
+          עם $A$ סיבוב והזזה. סיבוב והזזה לבדם שומרים את $k=s$.
+      - text: '$\gamma_2$ היא $\gamma_1$ מסובבת בחצי סיבוב סביב הראשית, כי $k_2=-k_1$ וחצי סיבוב הופך כל וקטור'
+        feedback: >-
+          סיבוב בחצי סיבוב הוא $x\mapsto-x$, עם דטרמיננטה $1$: הוא שומר את $k$. הוא לא יכול להפוך את $k=s$ ל-$k=-s$.
+        misconception: MC-c1-congruence-reflection
+      - text: '$\gamma_2(s)=\gamma_1(-s)$, אותה מסילה בכיוון ההפוך, כי היפוך כיוון הופך את הסימן של $k$'
+        feedback: >-
+          בכיוון ההפוך, $\delta(s)=\gamma_1(-s)$, מתקיים $k_\delta(s)=-k_1(-s)=-(-s)=s$: שוב $k=s$, לא $k=-s$. צריך להציב את
+          הנקודה המתאימה.
+        misconception: MC-c0-chain-wrong-point
+
+  - id: Q-1.6-closed-length
+    type: numeric
+    objectives: [OBJ-1.6-3]
+    level: mid
+    prompt: >-
+      המסילה בפרמטר אורך הקשת עם $k\equiv-\frac13$ מתחילה ב-$(0,0)$. מהו ה-$L>0$ הקטן ביותר שבו $\gamma(L)=(0,0)$
+      שוב?
+    answer: 18.849556
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $L=6\pi$. זה מעגל ברדיוס $3$ בכיוון השעון, והמסילה חוזרת לנקודת ההתחלה כשזווית המשיק השתנתה ב-$2\pi$:
+      $\frac13L=2\pi$.
+    wrongFeedback: >-
+      לפי השיעור זה מעגל. מה הרדיוס שלו, ומה ההיקף?
+    commonWrong:
+      - value: 2.0943951
+        feedback: >-
+          $\frac{2\pi}3$ הוא ההיקף של מעגל ברדיוס $\frac13$. הרדיוס הוא $\frac{1}{|k|}=3$.
+        misconception: MC-c1-curvature-radius
+
+  - id: Q-1.6-cornu-symmetric
+    type: mc
+    objectives: [OBJ-1.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ספירלת קורנו: המסילה עם $k(s)=s$, $s\in\mathbb R$, $\gamma(0)=(0,0)$ ו-$\theta(0)=0$. איזו סימטריה יש לה?
+    choices:
+      - text: '$\gamma(-s)=-\gamma(s)$: סימטריה לחצי סיבוב סביב הראשית'
+        correct: true
+        feedback: >-
+          נכון. $\theta(s)=\frac{s^2}2$ זוגית, ולכן $\mathbf t(-s)=\mathbf t(s)$, ו-
+          $\gamma(-s)=\int_0^{-s}\mathbf t(u)\,du=-\int_0^{s}\mathbf t(-v)\,dv=-\gamma(s)$. בצד $s>0$ המסילה מתלפפת
+          שמאלה סביב $(\frac{\sqrt\pi}2,\frac{\sqrt\pi}2)$, ובצד $s<0$ ימינה סביב הנקודה הנגדית.
+      - text: '$\gamma(-s)=(-x(s),\ y(s))$: שיקוף בציר $y$'
+        feedback: >-
+          שיקוף הופך את $k$. אילו המסילה הייתה סימטרית כך, אז $s\mapsto\sigma(\gamma(-s))$ (שיקוף והיפוך) הייתה
+          מסילה עם $k(s)=-s$; אבל המסילה עצמה מקיימת $k=s$. הסימטריה היא סיבוב.
+        misconception: MC-c1-reflection-keeps-k
+      - text: '$\gamma(-s)=(x(s),\ -y(s))$: שיקוף בציר $x$'
+        feedback: >-
+          גם זה שיקוף, ושיקוף לא שומר את $k=s$. בדקו: ב-$s=1.3$ $\gamma\approx(1.21,0.35)$, וב-$s=-1.3$
+          $\gamma\approx(-1.21,-0.35)$.
+        misconception: MC-c1-reflection-keeps-k
+
+  - id: Q-1.6-catenary
+    type: numeric
+    objectives: [OBJ-1.6-1]
+    level: exam
+    prompt: >-
+      המסילה בפרמטר אורך הקשת עם $k(s)=\frac{2}{1+s^2}$, $\gamma(0)=(0,0)$ ו-$\theta(0)=\frac\pi2$ (המסילה יוצאת כלפי
+      מעלה). חשבו את רכיב ה-$x$ של $\gamma(1)$.
+    answer: -0.6931471806
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון: $-\ln2$. $\theta(s)=\frac\pi2+\int_0^s\frac{2\,du}{1+u^2}=\frac\pi2+2\arctan s$, ולכן
+      $\cos\theta=-\sin(2\arctan s)=-\frac{2s}{1+s^2}$ (נוסחת הזווית הכפולה עם $\psi=2\arctan s$, $\tan\frac\psi2=s$).
+      לכן $x(s)=-\int_0^s\frac{2u\,du}{1+u^2}=-\ln(1+s^2)$, וב-$s=1$: $-\ln2$. הסימן השלילי מתאים: המסילה יוצאת למעלה
+      ופונה שמאלה ($k>0$).
+    wrongFeedback: >-
+      $\theta=\theta(0)+\int_0^s k$, אחר כך $x=\int\cos\theta$ עם $x(0)=0$. בטאו את $\cos\big(\frac\pi2+2\arctan s\big)$ בלי
+      פונקציות טריגונומטריות (נוסחת הזווית הכפולה).
+    commonWrong:
+      - value: 0.5707963268
+        feedback: >-
+          $\frac\pi2-1$ מתקבל מ-$\theta(s)=2\arctan s$, כלומר מ-$\theta(0)=0$: שכחתם את זווית ההתחלה $\frac\pi2$. אז
+          $x=\int(\frac{2}{1+u^2}-1)\,du=2\arctan s-s$.
+        misconception: MC-c1-initial-data-ignored
+      - value: 3.1415926536
+        feedback: >-
+          $\pi=\theta(1)$ היא **זווית המשיק** ב-$s=1$, תוצאת האינטגרציה הראשונה. צריך עוד אינטגרציה, של $\cos\theta$.
+        misconception: MC-c1-k-integrate-once
+      - value: 0.6931471806
+        feedback: >-
+          הסימן הפוך. $k>0$ פירושו פנייה שמאלה; מסילה שיוצאת כלפי מעלה ופונה שמאלה זזה ל-$x<0$.
+        misconception: MC-c1-signed-sign-convention
+
+  - id: Q-1.6-cornu-bounded
+    type: twotier
+    objectives: [OBJ-1.6-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      ספירלת קורנו, $k(s)=s$ על $[0,\infty)$ עם $\gamma(0)=(0,0)$ ו-$\theta(0)=0$, היא מסילה באורך אינסופי. האם התמונה
+      שלה חסומה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. $\gamma(s)\to(\frac{\sqrt\pi}2,\frac{\sqrt\pi}2)\approx(0.886,0.886)$: המסילה מתלפפת סביב הנקודה הזו
+          אינסוף פעמים, ברדיוסים שקטנים לאפס.
+      - text: לא
+        feedback: >-
+          אורך אינסופי לא מחייב התרחקות: המסילה יכולה להסתובב אינסוף פעמים בתחום חסום, כשכל סיבוב קצר מקודמו.
+        misconception: MC-c1-spiral-unbounded
+    reasons:
+      - text: 'רדיוס העקמומיות $\frac1s\to0$, והרכיבים $x(s)=\int_0^s\cos\frac{u^2}2du$, $y(s)=\int_0^s\sin\frac{u^2}2du$ מתכנסים (אינטגרלי פרנל) ל-$\frac{\sqrt\pi}2$'
+        correct: true
+        feedback: >-
+          בדיוק. בהצבה $v=\frac{u^2}2$ מקבלים $\int\frac{\cos v}{\sqrt{2v}}dv$, אינטגרל מתכנס בתנאי (כמו
+          $\int\frac{\sin x}{x}$, מאינפי 2). ב-$s=30$ המסילה כבר במרחק של כ-$\frac1{30}$ מהגבול.
+      - text: 'לא: המשיק מסתובב אינסוף פעמים, ולכן המסילה עוזבת כל עיגול'
+        feedback: >-
+          גם מעגל קטן מסתובב אינסוף פעמים אם מקיפים אותו שוב ושוב. כאן כל סיבוב בעיגול קטן יותר, והמסילה מתכווצת לנקודה.
+        misconception: MC-c1-spiral-unbounded
+      - text: 'לא: אורך אינסופי בתחום חסום אינו אפשרי'
+        feedback: >-
+          זה אפשרי, ופשוט: המעגל שמקיפים שוב ושוב, $(\cos s,\sin s)$ על $[0,\infty)$, הוא בעל אורך אינסופי וחסום.
+        misconception: MC-c1-spiral-unbounded

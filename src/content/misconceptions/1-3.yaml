@@ -1,0 +1,110 @@
+# Misconceptions first detected in lesson 1.3 (unit tangent, curvature, principal normal).
+- id: MC-c1-curvature-radius
+  title: מבלבלים בין עקמומיות לרדיוס
+  belief: >-
+    העקמומיות של מעגל ברדיוס $r$ היא $r$: מעגל גדול "מעוקם יותר".
+  truth: >-
+    $\kappa=\frac1r$: מעגל גדול כמעט ישר בכל קטע קטן, ולכן עקמומיותו קטנה. הרדיוס $\rho=\frac1\kappa$ הוא
+    **רדיוס העקמומיות** (שיעור 1.4).
+  remedy: { lesson: '1.3', anchor: circle, label: 'העקמומיות של מעגל' }
+
+- id: MC-c1-curvature-acceleration
+  title: חושבים שהעקמומיות היא אורך התאוצה בכל פרמטר
+  belief: >-
+    $\kappa(t)=\|\gamma''(t)\|$, גם כשהפרמטר אינו אורך הקשת; מסילה שעוברים עליה מהר מעוקמת יותר.
+  truth: >-
+    $\kappa=\|\frac{d\mathbf t}{ds}\|$, ורק בפרמטר אורך הקשת זה $\|\gamma''(s)\|$. בפרמטר כללי התאוצה כוללת גם
+    שינוי מהירות לאורך המשיק: $(e^t,2e^t)$ היא קרן, $\kappa=0$, אבל $\gamma''\ne0$. ההגדרה לא תלויה במהירות.
+  remedy: { lesson: '1.3', anchor: kappa-def, label: 'העקמומיות לפי אורך הקשת' }
+
+- id: MC-c1-curvature-power
+  title: טועים בחזקה של המכנה בנוסחת העקמומיות
+  belief: >-
+    $\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^2}$ (או חזקה אחרת): החזקה היא עניין של מוסכמה.
+  truth: >-
+    $\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}$. החזקה נכפית: בהחלפת פרמטר $\delta=\gamma\circ\varphi$
+    מתקיים $\delta'\times\delta''=\varphi'^3\,\gamma'\times\gamma''$, ו-$\|\delta'\|^3=|\varphi'|^3\|\gamma'\|^3$,
+    כך שרק החזקה השלישית נותנת גודל שלא תלוי בפרמטריזציה.
+  remedy: { lesson: '1.3', anchor: why-cube, label: 'מאיפה באה החזקה השלישית' }
+
+- id: MC-c1-zero-curvature-straight
+  title: חושבים שעקמומיות אפס בנקודה אחת פירושה שהמסילה ישרה שם
+  belief: >-
+    אם $\kappa(s_0)=0$, המסילה היא קטע ישר בסביבת $\gamma(s_0)$.
+  truth: >-
+    עקמומיות אפס **על קטע** גוררת קטע ישר. בנקודה בודדת לא: $y=x^3$ מקיימת $\kappa(0)=0$ ומתעקלת משני
+    צדדי הראשית: שם הקעירות מתחלפת.
+  remedy: { lesson: '1.3', anchor: kappa-zero, label: 'עקמומיות אפס: ישר, ונקודה שבה הקעירות מתחלפת' }
+
+- id: MC-c1-curvature-scaling
+  title: טועים בהשפעה של הגדלה על העקמומיות
+  belief: >-
+    אם מגדילים מסילה פי $c$ (כלומר $c\gamma$), גם העקמומיות גדלה פי $c$, או שאינה משתנה.
+  truth: >-
+    $\kappa_{c\gamma}=\frac{\kappa_\gamma}{c}$ בנקודה המתאימה ($c>0$): המונה $\|\gamma'\times\gamma''\|$ גדל פי $c^2$ והמכנה
+    פי $c^3$. מעגל ברדיוס $2$ מעוקם חצי ממעגל ברדיוס $1$. גם אורך הקשת גדל פי $c$.
+  remedy: { lesson: '1.3', anchor: ex-1-3-3, label: 'מה משנה את העקמומיות' }
+
+- id: MC-c1-natural-circle
+  title: חושבים שהמעגל המנשק הוא המעגל הטבעי של הצורה
+  belief: >-
+    העקמומיות של סליל היא העקמומיות של מעגל החתך של הגליל, $\frac1a$; מרכז העקמומיות של אליפסה הוא המרכז שלה.
+  truth: >-
+    העקמומיות היא תכונה מקומית של המסילה. בסליל $(a\cos t,a\sin t,bt)$ היא $\frac{a}{a^2+b^2}<\frac1a$, כי העלייה
+    "מיישרת" אותו, והמרכז נמצא במרחק $\frac{b^2}a$ מהציר. באליפסה המרכז משתנה מנקודה לנקודה, ואינו מרכז האליפסה.
+  remedy: { lesson: '1.4', anchor: helix-centre, label: 'המעגל המנשק של סליל ושל אליפסה' }
+
+- id: MC-c1-ellipse-ends
+  title: חושבים שאליפסה שטוחה בקצות הציר הארוך
+  belief: >-
+    באליפסה $(a\cos t,b\sin t)$, $a>b$, הקצוות $(\pm a,0)$ הם החלקים השטוחים.
+  truth: >-
+    בקצות הציר הארוך האליפסה **הכי** מעוקמת: $\kappa=\frac{a}{b^2}$; בקצות הציר הקצר הכי שטוחה: $\kappa=\frac{b}{a^2}$.
+    ב-$(2\cos t,\sin t)$: $2$ ב-$(\pm2,0)$ ו-$\frac14$ ב-$(0,\pm1)$.
+  remedy: { lesson: '1.4', anchor: ellipse-ends, label: 'האליפסה בקצות הצירים' }
+
+- id: MC-c1-normal-outward
+  title: חושבים שהנורמל הראשי מצביע החוצה מהעיקול
+  belief: >-
+    הנורמל הראשי של מעגל או של סליל מצביע הרחק מהמרכז או מהציר.
+  truth: >-
+    $\mathbf n=\frac{\mathbf t'}{\kappa}$ הוא הכיוון שאליו המשיק **פונה**, אל הצד הקעור. במעגל ובסליל
+    $(a\cos t,a\sin t,bt)$ הוא $(-\cos t,-\sin t,0)$, פנימה אל הציר.
+  remedy: { lesson: '1.3', anchor: helix-normal, label: 'הנורמל הראשי של הסליל' }
+
+- id: MC-c1-normal-any-perpendicular
+  title: חושבים שכל וקטור יחידה ניצב למשיק הוא הנורמל הראשי
+  belief: >-
+    במרחב, הנורמל הראשי הוא וקטור יחידה כלשהו שניצב ל-$\mathbf t$.
+  truth: >-
+    ב-$\mathbb R^3$ הווקטורים הניצבים ל-$\mathbf t$ ממלאים מישור שלם. $\mathbf n$ הוא הכיוון המסוים של
+    $\frac{d\mathbf t}{ds}$: שם המסילה מתעקלת.
+  remedy: { lesson: '1.3', anchor: normal-def, label: 'הגדרת הנורמל הראשי' }
+
+- id: MC-c1-normal-along-acceleration
+  title: חושבים שהנורמל הראשי מקביל תמיד לנגזרת השנייה
+  belief: >-
+    $\mathbf n=\frac{\gamma''}{\|\gamma''\|}$ בכל פרמטר.
+  truth: >-
+    $\gamma''=\frac{d}{dt}\|\gamma'\|\,\mathbf t+\kappa\|\gamma'\|^2\,\mathbf n$: לתאוצה יש רכיב לאורך המשיק כשהמהירות
+    משתנה. רק במהירות קבועה $\gamma''\parallel\mathbf n$. בפרבולה $(t,t^2)$ ב-$t=1$: $\gamma''=(0,2)$, אבל
+    $\mathbf n=\frac{1}{\sqrt5}(-2,1)$.
+  remedy: { lesson: '1.3', anchor: normal-accel, label: 'הנורמל הראשי מול הנגזרת השנייה' }
+
+- id: MC-c1-normal-always-defined
+  title: חושבים שהנורמל הראשי מוגדר ורציף בכל נקודה של מסילה רגולרית
+  belief: >-
+    לכל מסילה רגולרית יש נורמל ראשי בכל נקודה, ובנקודה שבה $\kappa=0$ ממשיכים אותו ברציפות.
+  truth: >-
+    $\mathbf n$ מוגדר רק כש-$\kappa>0$. ב-$(t,t^3)$ הוא שואף ל-$(0,1)$ מימין ל-$t=0$ ול-$(0,-1)$ משמאל: אין המשך
+    רציף. במישור פותרים זאת בעזרת הנורמל המסובב והעקמומיות המסומנת (שיעור 1.5).
+  remedy: { lesson: '1.3', anchor: inflection, label: 'הנורמל הראשי כשהעקמומיות מתאפסת' }
+
+- id: MC-c1-curvature-no-global
+  title: חושבים שהעקמומיות, כגודל מקומי, לא מוגבלת בגודל התחום שהמסילה בו
+  belief: >-
+    עקמומיות נמדדת בכל נקודה לחוד, ולכן מסילה סגורה בתוך כדור קטן יכולה להיות שטוחה כרצוננו בכל נקודה.
+  truth: >-
+    מסילה סגורה בכדור ברדיוס $R$ סביב הראשית מקיימת $\kappa\ge\frac1R$ בנקודה הרחוקה ביותר מהראשית: שם
+    $f=\|\gamma\|^2$ מקסימלית, $f''=2(1+\gamma\cdot\mathbf t')\le0$, ולכן $1\le\|\gamma\|\,\kappa$.
+  remedy: { lesson: '1.3', anchor: ex-1-3-6, label: 'עקמומיות ומסילה סגורה בתוך כדור' }

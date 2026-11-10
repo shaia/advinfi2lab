@@ -1,0 +1,10 @@
+# Terms first defined in lesson 8.5.
+- id: general-stokes-theorem
+  term: משפט סטוקס הכללי
+  en: generalized Stokes theorem
+  symbol: '\int_M d\omega=\int_{\partial M}\omega'
+  definition: >-
+    לעצם חסום (קומפקטי) ומכוון $M$ מממד $k$ עם שפה $\partial M$ בכיוון המושרה, ולתבנית חלקה $\omega$ מסדר $k-1$:
+    $\int_M d\omega=\int_{\partial M}\omega$. מקרים פרטיים: המשפט היסודי ($k=1$), גרין (תחום במישור), סטוקס (משטח
+    ב-$\mathbb R^3$) וגאוס (תחום ב-$\mathbb R^3$).
+  lesson: '8.5'

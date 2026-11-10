@@ -1,0 +1,647 @@
+# Lesson 10.6 — the Weierstrass approximation theorem.
+# Objectives (src/course.ts):
+#   OBJ-10.6-1  state the Weierstrass approximation theorem and its trigonometric version
+#   OBJ-10.6-2  prove it with Bernstein polynomials or with a Fourier series and Taylor series, and compute a simple Bernstein polynomial
+#   OBJ-10.6-3  deduce that polynomials are dense in H, and tell uniform approximation from least-squares approximation
+#   OBJ-10.6-4  define Cesàro means and the Fejér kernel; prove the kernel is nonnegative with mean 1
+#   OBJ-10.6-5  state and prove Fejér's theorem, and deduce the trigonometric Weierstrass theorem from it
+# B_n f(x) = Σ_k f(k/n) C(n,k) x^k (1−x)^{n−k};  B_n 1 = 1, B_n x = x, B_n(x²) = x² + x(1−x)/n.
+# σ_N f = (S_0 f + … + S_N f)/(N+1) = (1/2π)∫ f(x−t) F_N(t) dt, F_N = (1/(N+1)) Σ_{k≤N} D_k = (1/(N+1)) (sin((N+1)t/2)/sin(t/2))².
+# The OBJ-10.6-4/5 questions came from advinfilab's former Fourier chapter (lesson 5.5, handover 2026-11-06), recomputed
+# with fejerKernel / dirichletKernel (scratchpad merge-nums.ts).
+chapter: 10
+questions:
+  - id: Q-10.6-B4
+    type: numeric
+    objectives: [OBJ-10.6-2]
+    level: basic
+    prompt: >-
+      **פולינום ברנשטיין** מסדר $n$ של פונקציה $f$ על $[0,1]$ הוא
+      $B_nf(x)=\sum_{k=0}^nf\!\left(\frac kn\right)\binom nk x^k(1-x)^{n-k}$, ממוצע משוקלל של הערכים $f(\frac kn)$. חשבו את
+      $B_4f$ ל-$f(x)=x^2$ בנקודה $x=\frac12$, כלומר $\sum_{k=0}^4\left(\frac k4\right)^2\binom4k\left(\frac12\right)^4$.
+    answer: 0.3125
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac1{16}\left(0+\frac1{16}\cdot4+\frac4{16}\cdot6+\frac9{16}\cdot4+1\right)=\frac{80}{256}=\frac5{16}$. ואכן
+      $x^2+\frac{x(1-x)}4$ ב-$\frac12$ שווה $\frac14+\frac1{16}=\frac5{16}$.
+    wrongFeedback: >-
+      סכמו את חמשת האיברים, או השתמשו בנוסחה $B_n(x^2)=x^2+\frac{x(1-x)}n$.
+    commonWrong:
+      - value: 0.25
+        feedback: >-
+          $\frac14=\left(\frac12\right)^2$ הוא ערך הפונקציה. פולינום ברנשטיין לא עובר דרך ערכי $f$ בצמתים הפנימיים:
+          הוא חורג ב-$\frac{x(1-x)}n=\frac1{16}$.
+        misconception: MC-c10-bernstein-reproduces
+
+  - id: Q-10.6-statement
+    type: mc
+    objectives: [OBJ-10.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה אומר משפט הקירוב של ויירשטראס?
+    choices:
+      - text: 'לכל $f$ רציפה על קטע סגור וחסום $[a,b]$ ולכל $\varepsilon>0$ יש פולינום $p$ עם $\max_{[a,b]}|f-p|<\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. בניסוח שקול: הפולינומים צפופים ב-$C[a,b]$ עם נורמת המקסימום.
+      - text: 'לכל $f$ רציפה על קטע $(a,b)$ ולכל $\varepsilon>0$ יש פולינום $p$ עם $\sup_{(a,b)}|f-p|<\varepsilon$'
+        feedback: >-
+          על קטע פתוח זה לא נכון: $\frac1x$ רציפה על $(0,1)$, וכל פולינום חסום שם, ולכן $\sup|\frac1x-p|=\infty$.
+        misconception: MC-c10-weierstrass-hypotheses
+      - text: 'לכל $f$ גזירה אינסוף פעמים על $[a,b]$, פולינומי טיילור שלה מתכנסים אליה במידה שווה'
+        feedback: >-
+          זה לא המשפט, וגם לא נכון: יש פונקציות חלקות שטור טיילור שלהן לא מתכנס אליהן. ויירשטראס לא דורש אפילו גזירות
+          אחת: $|x|$ על $[-1,1]$ מקורבת.
+        misconception: MC-c10-weierstrass-via-taylor
+      - text: 'לכל $f$ חסומה על $[a,b]$ יש פולינומים שמתכנסים אליה במידה שווה'
+        feedback: >-
+          גבול במידה שווה של פולינומים רציף. פונקציית מדרגה חסומה, ואין פולינומים שמתכנסים אליה במידה שווה.
+        misconception: MC-c10-weierstrass-hypotheses
+
+  - id: Q-10.6-B2abs
+    type: numeric
+    objectives: [OBJ-10.6-2]
+    level: basic
+    prompt: >-
+      $f(x)=\left|x-\frac12\right|$ על $[0,1]$. חשבו את $(B_2f)\!\left(\frac12\right)$.
+    answer: 0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $B_2f(x)=f(0)(1-x)^2+f(\tfrac12)\cdot2x(1-x)+f(1)x^2=\frac12(1-x)^2+\frac12x^2$, וב-$\frac12$ זה $\frac18+\frac18=\frac14$.
+    wrongFeedback: >-
+      כתבו את שלושת האיברים $f(\frac k2)\binom2k x^k(1-x)^{2-k}$ והציבו $x=\frac12$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $f(\frac12)=0$, אבל $B_2f(\frac12)$ הוא ממוצע משוקלל של כל הערכים $f(0),f(\frac12),f(1)$, ולא הערך באמצע.
+        misconception: MC-c10-bernstein-reproduces
+
+  - id: Q-10.6-Bnot
+    type: twotier
+    objectives: [OBJ-10.6-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      יהי $n\ge2$. האם $B_np=p$ לכל פולינום $p$ ממעלה $\le n$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. $B_n$ משחזר את $1$ ואת $x$ בלבד: כבר $B_n(x^2)\ne x^2$.'
+      - text: כן
+        feedback: >-
+          $B_n(x^2)=x^2+\frac{x(1-x)}n$, ו-$x^2$ ממעלה $2\le n$. $B_n$ אינו הטלה על הפולינומים.
+        misconception: MC-c10-bernstein-reproduces
+    reasons:
+      - text: '$B_n(x^2)=x^2+\frac{x(1-x)}n\ne x^2$ לכל $n$'
+        correct: true
+        feedback: >-
+          בדיוק. ההפרש $\frac{x(1-x)}n$ שואף לאפס במידה שווה: $B_n$ מתכנס, אבל לאט.
+      - text: 'כן, כי $B_n$ היא ההטלה על הפולינומים ממעלה $\le n$'
+        feedback: >-
+          ההטלה הייתה משאירה כל פולינום כזה במקומו. $B_n$ לינארי וחיובי, אבל אינו הטלה.
+        misconception: MC-c10-bernstein-reproduces
+      - text: 'כן, כי $B_np$ עובר דרך $p$ ב-$n+1$ הצמתים $\frac kn$, ופולינום ממעלה $\le n$ נקבע על ידי $n+1$ ערכים'
+        feedback: >-
+          $B_n$ אינו אינטרפולציה: $B_4(x^2)$ ב-$\frac12$ הוא $\frac5{16}$, לא $\frac14$. השוויון מתקיים רק בקצוות 0 ו-1.
+        misconception: MC-c10-bernstein-reproduces
+
+  - id: Q-10.6-grandi
+    type: numeric
+    objectives: [OBJ-10.6-4]
+    level: basic
+    prompt: >-
+      **ממוצעי צזרו** של סדרה $s_0,s_1,s_2,\dots$ הם $\sigma_N=\frac{s_0+s_1+\dots+s_N}{N+1}$. הסכומים החלקיים של הטור
+      $1-1+1-1+\cdots$ הם $s_0=1,\ s_1=0,\ s_2=1,\ s_3=0,\dots$. לאיזה מספר שואפים $\sigma_N$?
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sigma_N=\frac12$ ל-$N$ אי-זוגי ו-$\frac{N/2+1}{N+1}$ ל-$N$ זוגי (למשל $\sigma_4=\frac35$), ושניהם שואפים
+      ל-$\frac12$. הסדרה $s_N$ אינה מתכנסת, אבל הממוצעים שלה מתכנסים.
+    wrongFeedback: >-
+      ספרו כמה מ-$s_0,\dots,s_N$ שווים ל-1, וחלקו ב-$N+1$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          1 הוא ערך של חלק מהסכומים החלקיים, לא הגבול של הממוצעים. בערך חצי מהם 1 וחצי 0.
+        misconception: MC-c10-cesaro-converse
+      - value: 0.6
+        feedback: >-
+          $\frac35=\sigma_4$, איבר אחד של הסדרה. השאלה היא על הגבול, $N\to\infty$.
+
+  - id: Q-10.6-kernel-props
+    type: multi
+    objectives: [OBJ-10.6-4]
+    qualitative: true
+    level: basic
+    prompt: >-
+      ממוצעי צזרו של טור פורייה הם $\sigma_Nf=\frac{S_0f+S_1f+\dots+S_Nf}{N+1}$. מהנוסחה
+      $S_kf(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-t)D_k(t)\,dt$ (שיעור 10.3) נובע
+      $\sigma_Nf(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-t)F_N(t)\,dt$, כאשר **גרעין פייר** הוא $F_N=\frac{1}{N+1}\sum_{k=0}^{N}D_k$.
+      בצורה סגורה $F_N(t)=\frac{1}{N+1}\left(\frac{\sin\frac{(N+1)t}{2}}{\sin(t/2)}\right)^2$ ל-$t\notin2\pi\mathbb Z$. אילו מהטענות
+      נכונות? סמנו את כולן.
+    choices:
+      - text: '$F_N(t)\ge0$ לכל $t$'
+        correct: true
+        feedback: 'נכון: ריבוע חלקי מספר חיובי (וב-$t=0$ הערך $N+1>0$).'
+      - text: '$\frac1{2\pi}\int_{-\pi}^{\pi}F_N=1$'
+        correct: true
+        feedback: 'נכון: זה ממוצע של $D_0,\dots,D_N$, ולכל אחד מהם $\frac1{2\pi}\int D_k=1$.'
+      - text: 'לכל $0<\delta<\pi$: $\max_{\delta\le|t|\le\pi}F_N(t)\to0$'
+        correct: true
+        feedback: >-
+          נכון: שם $\sin^2(t/2)\ge\sin^2(\delta/2)$, ולכן $F_N(t)\le\frac{1}{(N+1)\sin^2(\delta/2)}$. המסה מתרכזת ליד 0.
+      - text: '$F_N(0)=2N+1$'
+        feedback: >-
+          $2N+1=D_N(0)$. $F_N(0)$ הוא הממוצע של $D_k(0)=2k+1$, $k=0,\dots,N$, כלומר $N+1$.
+        misconception: MC-c10-dirichlet-fejer-confusion
+      - text: '$\frac1{2\pi}\int|F_N|$ גדל כמו $\ln N$'
+        feedback: >-
+          זה נכון ל-$D_N$. כי $F_N\ge0$, $\frac1{2\pi}\int|F_N|=\frac1{2\pi}\int F_N=1$ לכל $N$, וזה כל ההבדל.
+        misconception: MC-c10-dirichlet-fejer-confusion
+
+  - id: Q-10.6-at-pi
+    type: numeric
+    objectives: [OBJ-10.6-4]
+    level: basic
+    prompt: >-
+      גרעין פייר מסדר 2 הוא $F_2=\frac{D_0+D_1+D_2}{3}$, ממוצע של גרעיני דיריכלה $D_k(t)=1+2\sum_{j=1}^k\cos jt$. חשבו את
+      $F_2(\pi)$.
+    answer: 0.3333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $D_0(\pi)=1$, $D_1(\pi)=1+2\cos\pi=-1$, $D_2(\pi)=1-2+2=1$, והממוצע $\frac13$. מהצורה הסגורה:
+      $\frac13\left(\frac{\sin(3\pi/2)}{\sin(\pi/2)}\right)^2=\frac13$.
+    wrongFeedback: >-
+      חשבו $D_0(\pi),D_1(\pi),D_2(\pi)$ מהצורה $1+2\sum\cos j\pi$, ומצעו.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          1 הוא $D_2(\pi)$, גרעין דיריכלה. $F_2$ הוא הממוצע של $D_0,D_1,D_2$.
+        misconception: MC-c10-dirichlet-fejer-confusion
+      - value: 3
+        feedback: >-
+          $3=F_2(0)=N+1$, הערך באפס, שהוא המקסימום של הגרעין. ב-$t=\pi$ הגרעין קטן.
+        misconception: MC-c10-fejer-normalization
+
+  - id: Q-10.6-statement-fejer
+    type: mc
+    objectives: [OBJ-10.6-5]
+    qualitative: true
+    level: basic
+    prompt: >-
+      **משפט פייר** עוסק בממוצעי צזרו $\sigma_Nf=\frac{S_0f+\dots+S_Nf}{N+1}$. מה הוא אומר?
+    choices:
+      - text: 'לכל $f$ רציפה ומחזורית ב-$2\pi$, $\sigma_Nf\to f$ במידה שווה על $\mathbb{R}$'
+        correct: true
+        feedback: >-
+          נכון. בלי שום הנחת גזירות: רציפות ומחזוריות מספיקות, כי $F_N\ge0$.
+      - text: 'לכל $f$ רציפה ומחזורית ב-$2\pi$, $S_Nf\to f$ במידה שווה על $\mathbb{R}$'
+        feedback: >-
+          זה נכון לפונקציות רציפות על המעגל שהן גם גזירות למקוטעין (שיעור 10.4), אבל לא לכל רציפה: ידוע (בלי הוכחה בקורס)
+          שיש רציפה שהטור שלה מתבדר בנקודה. פייר עוסק בממוצעים $\sigma_Nf$.
+        misconception: MC-c10-fejer-for-partial-sums
+      - text: 'לכל $f$ רציפה למקוטעין ומחזורית ב-$2\pi$, $\sigma_Nf\to f$ במידה שווה על $\mathbb{R}$'
+        feedback: >-
+          $\sigma_Nf$ הם פולינומים טריגונומטריים, ולכן רציפים, וגבול במידה שווה שלהם רציף. לגל הריבועי זה בלתי אפשרי.
+        misconception: MC-c10-uniform-limit-can-jump
+      - text: 'לכל $f$ רציפה ומחזורית ב-$2\pi$, $\sigma_Nf\to f$ נקודתית, אבל לא בהכרח במידה שווה'
+        feedback: >-
+          המשפט נותן יותר: במידה שווה. בהוכחה החסם על $|\sigma_Nf(x)-f(x)|$ לא תלוי ב-$x$, בזכות הרציפות במידה שווה של $f$.
+        misconception: MC-c10-fejer-only-pointwise
+
+  - id: Q-10.6-domains
+    type: multi
+    objectives: [OBJ-10.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לאילו מהזוגות (פונקציה, קבוצה) יש סדרת פולינומים שמתכנסת לפונקציה **במידה שווה** על הקבוצה? סמנו את כולם.
+    choices:
+      - text: '$|x|$ על $[-1,1]$'
+        correct: true
+        feedback: 'נכון: רציפה על קטע סגור וחסום; אי-הגזירות ב-0 לא משנה.'
+      - text: '$\sqrt x$ על $[0,1]$'
+        correct: true
+        feedback: 'נכון: רציפה על $[0,1]$, אף שאינה גזירה ב-0 ואין לה טור טיילור שם.'
+      - text: '$e^x$ על $[0,10]$'
+        correct: true
+        feedback: 'נכון: כאן אפילו פולינומי טיילור עובדים.'
+      - text: '$\frac1x$ על $(0,1]$'
+        feedback: >-
+          כל פולינום חסום על $[0,1]$, ו-$\frac1x$ לא: $\sup|\frac1x-p|=\infty$. הקטע אינו סגור.
+        misconception: MC-c10-weierstrass-hypotheses
+      - text: '$\sin x$ על $\mathbb R$'
+        feedback: >-
+          פולינום לא קבוע שואף לאינסוף, ולכן $\sup_{\mathbb R}|\sin x-p|=\infty$, ופולינום קבוע לא מתקרב. הקבוצה אינה חסומה.
+        misconception: MC-c10-weierstrass-hypotheses
+      - text: 'פונקציית הסימן על $[-1,1]$'
+        feedback: >-
+          גבול במידה שווה של פולינומים רציף, ופונקציית הסימן קופצת ב-0. (בנורמה של $H$, לעומת זאת, יש קירוב.)
+        misconception: MC-c10-weierstrass-hypotheses
+
+  - id: Q-10.6-trig
+    type: twotier
+    objectives: [OBJ-10.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם יש פולינום טריגונומטרי $T$ עם $\max_{[-\pi,\pi]}|x-T(x)|<1$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. כל $T$ מקיים $T(-\pi)=T(\pi)$, ו-$x$ לא.'
+      - text: כן
+        feedback: >-
+          הגרסה הטריגונומטרית דורשת $f(-\pi)=f(\pi)$. כאן $2\pi=|\pi-(-\pi)|\le|\pi-T(\pi)|+|T(-\pi)+\pi|$, ולכן אחד המרחקים
+          לפחות $\pi$.
+        misconception: MC-c10-trig-approx-nonperiodic
+    reasons:
+      - text: '$T(\pi)=T(-\pi)$, ולכן $|\pi-T(\pi)|+|-\pi-T(-\pi)|\ge2\pi$, ואחד מהם לפחות $\pi>1$'
+        correct: true
+        feedback: >-
+          בדיוק. הפולינומים הטריגונומטריים מחזוריים, ולכן מקרבים במידה שווה רק פונקציות שהמשכתן המחזורית רציפה.
+      - text: 'כן: $x$ רציפה על $[-\pi,\pi]$, והגרסה הטריגונומטרית של ויירשטראס חלה'
+        feedback: >-
+          הגרסה הטריגונומטרית היא על פונקציות רציפות **על המעגל**, כלומר רציפות ומחזוריות. $x$ קופצת בהמשכה.
+        misconception: MC-c10-trig-approx-nonperiodic
+      - text: 'כן: $x$ חלקה, ולכן $S_Nf\to f$ במידה שווה'
+        feedback: >-
+          חלקות על הקטע לא מספיקה: ב-$x=\pi$ מתקיים $S_Nf(\pi)=0$ לכל $N$.
+        misconception: MC-c10-smooth-on-interval-uniform
+
+  - id: Q-10.6-trig-vs-fourier
+    type: twotier
+    objectives: [OBJ-10.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ רציפה ומחזורית ב-$2\pi$. לפי הגרסה הטריגונומטרית של ויירשטראס יש פולינומים טריגונומטריים $T_k$ עם
+      $\max|f-T_k|\to0$. האם נובע מזה ש-$S_Nf\to f$ במידה שווה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. המשפט מבטיח פולינומים טריגונומטריים כלשהם, לא את הסכומים החלקיים. ידוע (בלי הוכחה בקורס) שיש $f$ רציפה
+          ומחזורית שטור פורייה שלה מתבדר בנקודה.
+      - text: כן
+        feedback: >-
+          המשפט אומר שקיימים קירובים טובים, ולא אומר מי הם. $S_Nf$ אופטימלי בנורמה אחרת.
+        misconception: MC-c10-trig-weierstrass-is-fourier
+    reasons:
+      - text: 'הקירובים $T_k$ אינם בהכרח $S_Nf$; $S_Nf$ אופטימלי בנורמה של $H$ בלבד, ולכן רק $\|f-S_Nf\|\to0$ נובע'
+        correct: true
+        feedback: >-
+          בדיוק: $\|f-S_Nf\|\le\|f-T_k\|\le\sqrt{2\pi}\max|f-T_k|$ כש-$T_k\in T_N$. מה שנובע הוא התכנסות בממוצע ריבועי.
+      - text: 'כן, כי $S_Nf$ הקירוב הטוב ביותר מ-$T_N$, ולכן קרוב ל-$f$ לפחות כמו $T_k$ גם במקסימום'
+        feedback: >-
+          $S_Nf$ הוא הטוב ביותר בנורמה של $H$, לא בנורמת המקסימום. בנורמת המקסימום הוא יכול להיות גרוע בהרבה.
+        misconception: MC-c9-ls-is-uniform
+      - text: 'כן, זה בדיוק תוכן הגרסה הטריגונומטרית'
+        feedback: >-
+          הגרסה הטריגונומטרית מדברת על קיום קירובים, לא על טור פורייה.
+        misconception: MC-c10-trig-weierstrass-is-fourier
+
+  - id: Q-10.6-Berror
+    type: numeric
+    objectives: [OBJ-10.6-2]
+    level: mid
+    prompt: >-
+      מהו ה-$n$ הקטן ביותר שעבורו $\max_{[0,1]}\big|B_n(x^2)-x^2\big|\le10^{-3}$?
+    answer: 250
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $B_n(x^2)-x^2=\frac{x(1-x)}n$, והמקסימום של $x(1-x)$ על $[0,1]$ הוא $\frac14$ (ב-$x=\frac12$). לכן
+      $\frac1{4n}\le10^{-3}\iff n\ge250$.
+    wrongFeedback: >-
+      מצאו את המקסימום של $\frac{x(1-x)}n$ על $[0,1]$ ופתרו את אי-השוויון.
+    commonWrong:
+      - value: 1000
+        feedback: >-
+          חסמתם $x(1-x)\le1$. זה חסם נכון אבל לא המקסימום: $x(1-x)\le\frac14$, ולכן כבר $n=250$ מספיק.
+        misconception: MC-c10-sup-not-maximized
+
+  - id: Q-10.6-rank
+    type: rank
+    objectives: [OBJ-10.6-2]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה ש-$B_nf\to f$ במידה שווה על $[0,1]$ לכל $f$ רציפה ($p_{n,k}(x)=\binom nk x^k(1-x)^{n-k}$).
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: variance
+        label: 'מהחישוב $B_n1=1$, $B_nx=x$, $B_n(x^2)=x^2+\frac{x(1-x)}n$ מסיקים $\sum_k\left(x-\frac kn\right)^2p_{n,k}(x)=\frac{x(1-x)}n\le\frac1{4n}$'
+      - id: unif
+        label: 'יהי $\varepsilon>0$; מרציפות במידה שווה יש $\delta$ עם $|f(x)-f(y)|<\frac\varepsilon2$ כש-$|x-y|<\delta$; $M=\max|f|$'
+      - id: split
+        label: 'כותבים $f(x)-B_nf(x)=\sum_k\big(f(x)-f(\frac kn)\big)p_{n,k}(x)$ ומפצלים: האיברים עם $|\frac kn-x|<\delta$ תורמים פחות מ-$\frac\varepsilon2$, והשאר לכל היותר $\frac{2M}{\delta^2}\cdot\frac1{4n}$'
+      - id: choose
+        label: 'בוחרים $n>\frac{M}{\varepsilon\delta^2}$, ומקבלים $|f(x)-B_nf(x)|<\varepsilon$ לכל $x$ בבת אחת'
+    order: [[variance, unif], split, choose]
+    correctFeedback: >-
+      נכון. החישוב של שלושת המומנטים הוא כל האלגברה; השאר הוא רציפות במידה שווה ואי-שוויון מסוג צ׳בישב. המומנטים
+      והבחירה של $\delta$ אינם תלויים זה בזה, ולכן כל סדר ביניהם טוב.
+    wrongFeedback: >-
+      הפיצול צריך שני מרכיבים, בכל סדר: החישוב של $B_n$ על $1,x,x^2$ (ממנו בא חסם על המשקל של הצמתים הרחוקים מ-$x$),
+      ו-$\delta$ מהרציפות במידה שווה. הבחירה של $n$ אחרונה.
+
+  - id: Q-10.6-dense
+    type: twotier
+    objectives: [OBJ-10.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ פונקציית הסימן על $[-1,1]$. האם יש פולינום $p$ עם $\int_{-1}^1(f-p)^2<0.01$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. הפולינומים צפופים ב-$H[-1,1]$, אף שאינם מקרבים את $f$ במידה שווה.'
+      - text: לא
+        feedback: >-
+          ויירשטראס דורש רציפות לקירוב **במידה שווה**. בנורמה של $H$ הדרישה חלשה יותר, ושם גם פונקציות קופצות מקורבות.
+        misconception: MC-c10-weierstrass-hypotheses
+    reasons:
+      - text: 'בוחרים $g$ רציפה עם $\|f-g\|<0.05$, ופולינום $p$ עם $\max|g-p|<\frac{0.05}{\sqrt2}$; אז $\|f-p\|<0.1$'
+        correct: true
+        feedback: >-
+          בדיוק: $\|g-p\|\le\sqrt{b-a}\,\max|g-p|$ עם $b-a=2$, ומאי-שוויון המשולש $\|f-p\|^2<0.01$.
+      - text: 'לא, כי ויירשטראס חל רק על פונקציות רציפות'
+        feedback: >-
+          ויירשטראס נותן קירוב לפונקציה הרציפה $g$; את הפער בין $f$ ל-$g$ סוגרים בנורמה של $H$, שם הוא קטן.
+        misconception: MC-c10-weierstrass-hypotheses
+      - text: 'כן, כי יש $p$ עם $\max_{[-1,1]}|f-p|<0.1$'
+        feedback: >-
+          אין כזה: $p$ רציף, ולכן ליד 0 הוא לא יכול להיות גם קרוב ל-1 מימין וגם קרוב ל-$-1$ משמאל. הקירוב הוא רק בממוצע ריבועי.
+        misconception: MC-c10-uniform-limit-can-jump
+
+  - id: Q-10.6-ls-vs-uniform
+    type: mc
+    objectives: [OBJ-10.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על $[0,1]$, $p_1=x-\frac16$ הוא הישר הקרוב ביותר ל-$x^2$ בריבועים פחותים (שיעור 9.3), ו-$p_2=x-\frac18$. מה נכון?
+    choices:
+      - text: '$p_1$ טוב יותר בממוצע ריבועי ($\frac1{180}$ מול $\frac7{960}$), ו-$p_2$ טוב יותר במקסימום ($\frac18$ מול $\frac16$)'
+        correct: true
+        feedback: >-
+          נכון. $\int_0^1(x^2-p_1)^2=\frac1{180}\approx0.0056$ ו-$\int_0^1(x^2-p_2)^2=\frac7{960}\approx0.0073$, אבל
+          $\max|x^2-p_1|=\frac16$ (בקצוות) ו-$\max|x^2-p_2|=\frac18$. כל נורמה בוחרת "קרוב ביותר" משלה.
+      - text: '$p_1$ טוב יותר בשני המובנים, כי הוא הקירוב הטוב ביותר'
+        feedback: >-
+          הוא הטוב ביותר רק ב-$\int(f-p)^2$. במקסימום: $\frac16>\frac18$.
+        misconception: MC-c9-ls-is-uniform
+      - text: '$p_2$ טוב יותר בשני המובנים, כי שגיאה מקסימלית קטנה גוררת שגיאה ריבועית קטנה'
+        feedback: >-
+          מהמקסימום נובע רק חסם, $\|g\|\le\sqrt{b-a}\,\max|g|$, לא השוואה בין שני קירובים. כאן $\frac7{960}>\frac1{180}$.
+        misconception: MC-c9-ls-is-uniform
+
+  - id: Q-10.6-cesaro-regular
+    type: twotier
+    objectives: [OBJ-10.6-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      טענה: אם $s_N\to s$ אז גם ממוצעי צזרו $\sigma_N=\frac{s_0+\dots+s_N}{N+1}\to s$. נכון או לא?
+    choices:
+      - text: נכון
+        correct: true
+        feedback: >-
+          נכון. מיצוע לא משנה גבול קיים. לכן משפט פייר לא יכול "לסתור" את משפט ההתכנסות הנקודתית: היכן ש-$S_Nf(x)$
+          מתכנס, $\sigma_Nf(x)$ מתכנס לאותו מספר.
+      - text: לא נכון
+        feedback: >-
+          מיצוע שומר על גבולות קיימים. ההוכחה: האיברים הראשונים "נמחקים" בחלוקה ב-$N+1$, והזנב קרוב ל-$s$.
+        misconception: MC-c10-cesaro-changes-limit
+    reasons:
+      - text: 'בוחרים $M$ שאחריו $|s_k-s|<\varepsilon$; אז $|\sigma_N-s|\le\frac{1}{N+1}\sum_{k\le M}|s_k-s|+\varepsilon$, והאיבר הראשון שואף ל-0'
+        correct: true
+        feedback: >-
+          בדיוק: זה הטיעון "התחלה סופית ועוד זנב קטן", כמו בהוכחה של משפט פייר.
+      - text: 'כי גם ההפך נכון: אם $\sigma_N\to s$ אז $s_N\to s$, והשקילות נותנת את הכיוון הזה'
+        feedback: >-
+          ההפך שקרי: ל-$s_N=1,0,1,0,\dots$ הממוצעים שואפים ל-$\frac12$ והסדרה עצמה לא מתכנסת. ובכל מקרה, ההפך לא מוכיח
+          את הכיוון שנשאל.
+        misconception: MC-c10-cesaro-converse
+      - text: 'לא נכון: האיברים הראשונים יכולים להיות גדולים מאוד ולשנות את הממוצע לתמיד'
+        feedback: >-
+          את הממוצע הם משנים רק בתרומה $\frac{1}{N+1}\sum_{k\le M}s_k$, שהיא קבוע חלקי $N+1$ ושואפת ל-0.
+        misconception: MC-c10-cesaro-changes-limit
+
+  - id: Q-10.6-closed-form
+    type: rank
+    objectives: [OBJ-10.6-4]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה ש-$F_N(t)=\frac{1}{N+1}\cdot\frac{\sin^2\frac{(N+1)t}{2}}{\sin^2(t/2)}$ ל-$t\notin2\pi\mathbb Z$, ולכן
+      $F_N\ge0$. כאן $F_N=\frac1{N+1}\sum_{k=0}^ND_k$ ו-$D_k$ גרעין דיריכלה.
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: dk
+        label: 'מהצורה הסגורה של גרעין דיריכלה (שיעור 10.3): $\sin(t/2)\,D_k(t)=\sin\left((k+\tfrac12)t\right)$'
+      - id: product
+        label: 'כופלים את הזהות הזו ב-$2\sin(t/2)$ ומשתמשים ב-$2\sin A\sin B=\cos(A-B)-\cos(A+B)$: $2\sin^2(t/2)\,D_k(t)=\cos kt-\cos(k+1)t$'
+      - id: telescope
+        label: 'מסכמים על $k=0,\dots,N$, והסכום טלסקופי: $2\sin^2(t/2)\sum_{k=0}^{N}D_k(t)=1-\cos(N+1)t=2\sin^2\frac{(N+1)t}{2}$'
+      - id: divide
+        label: 'מחלקים ב-$2(N+1)\sin^2(t/2)$ ומקבלים את הנוסחה; היא ריבוע חלקי מספר חיובי, ולכן $F_N\ge0$'
+    order: [dk, product, telescope, divide]
+    correctFeedback: >-
+      נכון. הרעיון: הכפל ב-$\sin(t/2)$ הופך את $D_k$ לסינוס אחד, ואז הסכום על $k$ טלסקופי.
+    wrongFeedback: >-
+      התחילו ממה שכבר ידוע על $D_k$, הפכו כל איבר להפרש של שני קוסינוסים, ורק אז סכמו.
+
+  - id: Q-10.6-sigma-coef
+    type: numeric
+    objectives: [OBJ-10.6-4, OBJ-10.6-5]
+    level: mid
+    prompt: >-
+      $f(x)=\cos3x$. ממוצע צזרו $\sigma_4f=\frac{S_0f+\dots+S_4f}5$ הוא מהצורה $c\cos3x$. מהו $c$?
+    answer: 0.4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $S_nf=0$ ל-$n<3$ ו-$S_nf=\cos3x$ ל-$n\ge3$. מתוך $S_0,\dots,S_4$ שניים שווים ל-$\cos3x$, ולכן
+      $\sigma_4f=\frac25\cos3x$. באופן כללי
+      $\sigma_Nf=\frac{a_0}2+\sum_{n=1}^N\left(1-\frac{n}{N+1}\right)(a_n\cos nx+b_n\sin nx)$.
+    wrongFeedback: >-
+      כתבו את $S_0f,\dots,S_4f$ אחד אחד ומצעו אותם.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $S_4f=\cos3x$: הסכום החלקי משחזר כל פולינום טריגונומטרי ממעלה עד $N$. ממוצע צזרו **מקטין** את המקדמים, ולכן
+          $\sigma_Nf\ne S_Nf$.
+        misconception: MC-c10-fejer-for-partial-sums
+      - value: 0.25
+        feedback: >-
+          $1-\frac34=\frac14$: חילקתם ב-$N=4$ במקום ב-$N+1=5$. ממצעים חמישה סכומים חלקיים, $S_0$ עד $S_4$.
+        misconception: MC-c10-fejer-normalization
+
+  - id: Q-10.6-density
+    type: mc
+    objectives: [OBJ-10.6-5, OBJ-10.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הגרסה הטריגונומטרית של משפט ויירשטראס: לכל $f$ רציפה ומחזורית ב-$2\pi$ ולכל $\varepsilon>0$ יש פולינום טריגונומטרי
+      $T$ עם $\max|f-T|<\varepsilon$. איזה טיעון מוכיח אותה?
+    choices:
+      - text: 'משפט פייר: $\sigma_Nf$ הוא פולינום טריגונומטרי ממעלה $\le N$, ו-$\max|\sigma_Nf-f|\to0$'
+        correct: true
+        feedback: >-
+          נכון, וזו מסקנה ישירה: לוקחים $T=\sigma_Nf$ עם $N$ גדול מספיק. כך משפט פייר מוכיח את הגרסה הטריגונומטרית.
+      - text: 'התכנסות במידה שווה: $S_Nf\to f$ במידה שווה לכל $f$ רציפה ומחזורית, ו-$S_Nf$ פולינום טריגונומטרי'
+        feedback: >-
+          הטענה על $S_Nf$ שקרית: היא נכונה רק כש-$f$ גם גזירה למקוטעין (שיעור 10.4), ויש רציפה שהטור שלה מתבדר בנקודה.
+          הקירוב בא מהממוצעים $\sigma_Nf$.
+        misconception: MC-c10-fejer-for-partial-sums
+      - text: 'משפט ויירשטראס לפולינומים רגילים, כי כל פולינום הוא פולינום טריגונומטרי'
+        feedback: >-
+          פולינום כמו $x$ אינו מחזורי, ולכן אינו פולינום טריגונומטרי. ויירשטראס לפולינומים רגילים הוא טענה אחרת.
+        misconception: MC-c10-polynomials-are-trig
+      - text: 'שוויון פרסבל: $\|f-S_Nf\|\to0$ בנורמה של $H$, ולכן גם $\max|f-S_Nf|\to0$'
+        feedback: >-
+          הגרירה השנייה שקרית: התכנסות בנורמה של $H$ אינה גוררת התכנסות במידה שווה (הגל הריבועי, שיעור 10.5).
+        misconception: MC-c9-L2-implies-uniform
+
+  - id: Q-10.6-trig-sup
+    type: numeric
+    objectives: [OBJ-10.6-1]
+    level: exam
+    prompt: >-
+      $f(x)=x^2+x$ על $[-\pi,\pi]$. חשבו את $\inf_T\ \max_{[-\pi,\pi]}|f(x)-T(x)|$, כשה-infimum הוא על כל הפולינומים
+      הטריגונומטריים $T$.
+    answer: 3.1415927
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\pi$. חסם מלרע: $f(\pi)-f(-\pi)=2\pi$ ו-$T(\pi)=T(-\pi)$, ולכן
+      $2\pi\le|f(\pi)-T(\pi)|+|T(-\pi)-f(-\pi)|$, ואחד המרחקים לפחות $\pi$. חסם מלמעלה: $x^2$ רציפה על המעגל
+      ($(-\pi)^2=\pi^2$), ולפי הגרסה הטריגונומטרית של ויירשטראס לכל $\varepsilon$ יש $T$ עם $\max|x^2-T|<\varepsilon$; אז
+      $\max|f-T|\le\max|x|+\varepsilon=\pi+\varepsilon$. (ה-infimum אינו בהכרח מושג.)
+    wrongFeedback: >-
+      פרקו $f$ לחלק שרציף על המעגל ולחלק שקופץ. מה ש-$T$ עושה ב-$\pi$ הוא מה שהוא עושה ב-$-\pi$, ואת החלק הרציף על המעגל
+      אפשר לקרב כרצוננו.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $f(-\pi)=\pi^2-\pi\ne\pi^2+\pi=f(\pi)$: ההמשכה קופצת, ולכן הגרסה הטריגונומטרית של ויירשטראס לא חלה על $f$, והמרחק
+          חסום מלרע ב-$\pi$, חצי הקפיצה.
+        misconception: MC-c10-trig-approx-nonperiodic
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא גודל הקפיצה. אבל הערך המשותף $T(\pm\pi)$ יכול לעמוד באמצע, $\pi^2$, ואז השגיאה בכל אחד מהקצוות היא
+          $\pi$ בלבד.
+
+  - id: Q-10.6-fourier-taylor
+    type: rank
+    objectives: [OBJ-10.6-2, OBJ-10.6-1]
+    level: exam
+    prompt: >-
+      סדרו את שלבי ההוכחה של ויירשטראס בעזרת טור פורייה וטור טיילור, לפונקציה $f$ רציפה על $[a,b]$ ו-$\varepsilon>0$.
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: rescale
+        label: 'החלפת משתנה לינארית מעבירה את $[a,b]$ ל-$[0,\pi]$ ושומרת על "פולינום"; לכן מספיק להוכיח על $[0,\pi]$'
+      - id: linear
+        label: 'אחרי ההחלפה $f$ רציפה על $[0,\pi]$, ומרציפות במידה שווה יש עליו $g$ רציפה וליניארית למקוטעין עם $\max|f-g|<\frac\varepsilon3$'
+      - id: even
+        label: 'ממשיכים את $g$ לזוגית על $[-\pi,\pi]$ ואז למחזורית: רציפה על המעגל וגזירה למקוטעין'
+      - id: fourier
+        label: 'לפי שיעור 10.4 $S_Ng\to g$ במידה שווה; בוחרים $N$ עם $\max|g-S_Ng|<\frac\varepsilon3$, ו-$S_Ng=\frac{a_0}2+\sum_{n\le N}a_n\cos nx$'
+      - id: taylor
+        label: 'כל $\cos nx$ מקורב במידה שווה על $[0,\pi]$ על ידי פולינום טיילור שלו; מחליפים, בשגיאה כוללת $<\frac\varepsilon3$, ומקבלים פולינום'
+    order: [rescale, linear, even, fourier, taylor]
+    correctFeedback: >-
+      נכון. ההמשכה הזוגית היא הטריק: היא הופכת פונקציה על קטע לפונקציה רציפה על המעגל, ולכן הטור שלה מתכנס במידה שווה.
+    wrongFeedback: >-
+      טיילור נכנס רק בסוף, על $\cos nx$ ולא על $f$. לפני זה צריך פונקציה שהטור שלה מתכנס במידה שווה: רציפה על המעגל
+      וגזירה למקוטעין.
+
+  - id: Q-10.6-legendre
+    type: twotier
+    objectives: [OBJ-10.6-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f\in H[-1,1]$ מקיימת $\int_{-1}^1f(x)x^k\,dx=0$ לכל $k=0,1,2,\dots$. האם בהכרח $\|f\|=0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. $f$ ניצבת לכל פולינום, והפולינומים צפופים ב-$H$. במילים אחרות: פולינומי לז׳נדר הם מערכת שלמה, ופרסבל חל עבורם.
+      - text: לא
+        feedback: >-
+          ניצבות לקבוצה צפופה היא ניצבות לכל המרחב, ובפרט ל-$f$ עצמה.
+        misconception: MC-c10-weierstrass-hypotheses
+    reasons:
+      - text: 'לכל $\varepsilon$ יש פולינום $p$ עם $\|f-p\|<\varepsilon$; אז $\|f\|^2=\langle f,f-p\rangle\le\|f\|\,\varepsilon$, ולכן $\|f\|\le\varepsilon$'
+        correct: true
+        feedback: >-
+          בדיוק: $\langle f,p\rangle=0$, ומקושי-שוורץ $\|f\|^2=\langle f,f-p\rangle\le\|f\|\,\|f-p\|$.
+      - text: 'לא: ויירשטראס חל רק על פונקציות רציפות, ו-$f\in H$ יכולה לקפוץ'
+        feedback: >-
+          הצפיפות ב-$H$ נובעת מוויירשטראס יחד עם קירוב של $f$ בפונקציה רציפה בנורמה של $H$. היא חלה על כל $f\in H$.
+        misconception: MC-c10-weierstrass-hypotheses
+      - text: 'כן, אבל רק אם $f$ רציפה; אחרת אין פרסבל'
+        feedback: >-
+          הטיעון לא צריך רציפות של $f$, רק צפיפות של הפולינומים ב-$H$. (ול-$f$ רציפה המסקנה חזקה יותר: $f\equiv0$.)
+        misconception: MC-c10-parseval-needs-continuity
+
+  - id: Q-10.6-proof
+    type: rank
+    objectives: [OBJ-10.6-5]
+    level: exam
+    prompt: >-
+      סדרו את שלבי ההוכחה של משפט פייר ל-$f$ רציפה ומחזורית ב-$2\pi$:
+      $\sigma_Nf(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-t)F_N(t)\,dt\to f(x)$ במידה שווה.
+    help: גררו את השלבים לסדר הנכון, מהראשון לאחרון.
+    items:
+      - id: diff
+        label: 'כי $\frac1{2\pi}\int F_N=1$: $\sigma_Nf(x)-f(x)=\frac1{2\pi}\int_{-\pi}^{\pi}\left(f(x-t)-f(x)\right)F_N(t)\,dt$'
+      - id: uc
+        label: 'יהי $\varepsilon>0$. $f$ רציפה במידה שווה (קנטור, על מחזור אחד), ולכן יש $\delta$ כך ש-$|f(x-t)-f(x)|<\varepsilon$ לכל $x$ ולכל $|t|<\delta$'
+      - id: near
+        label: 'על $|t|<\delta$, בזכות $F_N\ge0$: התרומה לאינטגרל של ההפרש היא לכל היותר $\varepsilon\cdot\frac1{2\pi}\int F_N=\varepsilon$'
+      - id: far
+        label: 'על $\delta\le|t|\le\pi$: התרומה לאינטגרל של ההפרש היא לכל היותר $2\max|f|\cdot\frac{1}{(N+1)\sin^2(\delta/2)}$'
+      - id: conclude
+        label: 'מ-$N$ מסוים, שאינו תלוי ב-$x$, התרומה הרחוקה קטנה מ-$\varepsilon$, ולכן $\max|\sigma_Nf-f|\le2\varepsilon$'
+    order: [[diff, uc], [near, far], conclude]
+    correctFeedback: >-
+      נכון. שלוש התכונות של $F_N$ משמשות כל אחת פעם: ממוצע 1 בכתיבת ההפרש, חיוביות ליד 0, וריכוז הרחק מ-0. הרציפות
+      **במידה שווה** היא מה שעושה את ההתכנסות אחידה.
+    wrongFeedback: >-
+      את $\delta$ בוחרים לפני שמפצלים את האינטגרל, ו-$N$ בוחרים אחרון, אחרי שיודעים כמה גדולה התרומה הרחוקה.
+
+  - id: Q-10.6-why-positive
+    type: twotier
+    objectives: [OBJ-10.6-5]
+    qualitative: true
+    level: exam
+    prompt: >-
+      טענה: אם מחליפים בהוכחה של משפט פייר את $F_N$ ב-$D_N$, מקבלים הוכחה ש-$S_Nf\to f$ במידה שווה לכל $f$ רציפה
+      ומחזורית. נכון או לא?
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. ההוכחה נשענת על החיוביות של הגרעין ועל הריכוז שלו הרחק מ-0, ו-$D_N$ חסר את שתיהן.
+      - text: נכון
+        feedback: >-
+          בשלב "ליד 0" חסמנו $\frac1{2\pi}\left|\int(f(x-t)-f(x))F_N\right|\le\varepsilon\cdot\frac1{2\pi}\int F_N=\varepsilon$
+          בזכות $F_N\ge0$. עם $D_N$ מקבלים רק $\varepsilon\cdot\frac1{2\pi}\int|D_N|$, וזה גדל כמו $\varepsilon\cdot\frac{4}{\pi^2}\ln N$
+          (ובנוסף $D_N$ לא קטן הרחק מ-0).
+        misconception: MC-c10-dirichlet-positive
+    reasons:
+      - text: 'החסם ליד 0 דורש ש-$\frac1{2\pi}\int|K|$ יהיה חסום; ל-$F_N$ זה 1, ול-$D_N$ זה גדל כמו $\ln N$'
+        correct: true
+        feedback: >-
+          בדיוק. זה ההבדל המהותי בין הגרעינים, וזו הסיבה שיש פונקציות רציפות שהטור שלהן מתבדר בנקודה (ידוע, בלי הוכחה
+          בקורס).
+      - text: 'גם ל-$D_N$ האינטגרל המנורמל הוא 1, וזה כל מה שההוכחה צריכה מהגרעין'
+        feedback: >-
+          ממוצע 1 משמש רק בכתיבת ההפרש. בשלב "ליד 0" צריך גם חיוביות, כדי ש-$\int|K|=\int K$.
+        misconception: MC-c10-dirichlet-positive
+      - text: 'ההוכחה משתמשת רק ברציפות במידה שווה של $f$, ולא בתכונות הגרעין'
+        feedback: >-
+          היא משתמשת בשלוש תכונות של הגרעין: ממוצע 1, חיוביות, וריכוז ליד 0. ל-$D_N$ חסרות שתיים מהן.
+        misconception: MC-c10-continuity-enough-pointwise

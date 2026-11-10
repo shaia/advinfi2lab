@@ -1,0 +1,310 @@
+# Lesson 1.1 — smooth and regular curves, the trace, the tangent.
+# Objectives (src/course.ts):
+#   OBJ-1.1-1  curve (the function) vs its image; two different curves with the same image
+#   OBJ-1.1-2  smooth vs regular; a smooth curve can make a cusp where the derivative vanishes
+#   OBJ-1.1-3  tangent vector and tangent line at a regular point
+# Conventions: "חלקה" = גזירה אינסוף פעמים; "רגולרית" = γ′(t) ≠ 0 לכל t.
+chapter: 1
+questions:
+  - id: Q-1.1-trace
+    type: mc
+    objectives: [OBJ-1.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      נתונות $\gamma(t)=(\cos t,\sin t)$ ו-$\delta(t)=(\cos 2t,\sin 2t)$, שתיהן על $[0,2\pi]$. איזו טענה נכונה?
+    choices:
+      - text: לשתיהן אותה תמונה, מעגל היחידה, אבל אלה שתי מסילות שונות
+        correct: true
+        feedback: >-
+          נכון. מסילה היא פונקציה, ושתי הפונקציות שונות: $\gamma(\pi)=(-1,0)$ אבל $\delta(\pi)=(1,0)$. $\delta$ מקיפה
+          את המעגל פעמיים, במהירות $2$.
+      - text: זו אותה מסילה, כי התמונה זהה
+        feedback: >-
+          התמונה היא רק קבוצת הנקודות. המסילה כוללת גם מתי מגיעים לכל נקודה וכמה פעמים: $\delta$ עוברת בכל נקודה
+          של המעגל פעמיים, ו-$\gamma$ פעם אחת.
+        misconception: MC-c0-curve-is-image
+      - text: התמונות שונות, כי $\delta$ מהירה פי שניים
+        feedback: >-
+          המהירות לא משנה את קבוצת הנקודות. כל נקודה $(\cos\alpha,\sin\alpha)$ מתקבלת ב-$\delta$ עבור
+          $t=\frac{\alpha}{2}$, כך ששתי התמונות הן כל מעגל היחידה.
+        misconception: MC-c0-curve-is-image
+      - text: התמונה של $\delta$ היא חצי מעגל, כי הפרמטר רץ רק עד $2\pi$
+        feedback: >-
+          כש-$t$ רץ על $[0,2\pi]$ הזווית $2t$ רצה על $[0,4\pi]$: שני סיבובים שלמים, לא חצי. התמונה היא כל המעגל.
+        misconception: MC-c0-missing-parameter-range
+    explanation: >-
+      שאלה שתחזור בכל הפרק: איזה גודל תלוי רק בתמונה ובכיוון, ואיזה גם בפרמטריזציה. האורך של $\delta$, למשל, הוא
+      $4\pi$ ולא $2\pi$ (שיעור 1.2).
+
+  - id: Q-1.1-regular-def
+    type: mc
+    objectives: [OBJ-1.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מסילה $\gamma:I\to\mathbb R^n$ גזירה ברציפות נקראת **רגולרית** אם:
+    choices:
+      - text: '$\gamma''(t)\ne0$ לכל $t\in I$'
+        correct: true
+        feedback: >-
+          נכון. רגולריות היא תנאי על הפרמטריזציה: המהירות לא מתאפסת אף פעם, ולכן בכל נקודה יש וקטור משיק שאינו אפס.
+      - text: 'הרכיבים של $\gamma$ גזירים אינסוף פעמים'
+        feedback: >-
+          זו חלקות, לא רגולריות. $(t^2,t^3)$ גזירה אינסוף פעמים, ובכל זאת $\gamma'(0)=(0,0)$, ובתמונה יש חוד.
+        misconception: MC-c0-smooth-map-smooth-image
+      - text: 'התמונה של $\gamma$ היא קו בלי פינות ובלי חודים'
+        feedback: >-
+          זו תכונה של התמונה, ורגולריות היא תכונה של הפונקציה. $(t^3,t^3)$ מציירת את הישר $y=x$, שאין בו שום פינה,
+          ובכל זאת אינה רגולרית: $\gamma'(0)=0$.
+        misconception: MC-c0-curve-is-image
+      - text: '$\gamma$ חד-חד-ערכית'
+        feedback: >-
+          חד-חד-ערכיות היא דרישה אחרת. $(t^3-t,\,t^2)$ רגולרית, כי $\gamma'(t)=(3t^2-1,2t)$ לא מתאפס, ובכל זאת
+          $\gamma(-1)=\gamma(1)=(0,1)$.
+        misconception: MC-c1-regular-image-nice
+
+  - id: Q-1.1-which-regular
+    type: multi
+    objectives: [OBJ-1.1-2]
+    level: basic
+    prompt: >-
+      אילו מהמסילות הבאות, כולן מוגדרות על כל $\mathbb R$, **רגולריות**? סמנו את כולן.
+    choices:
+      - text: '$(t^3-t,\ t^2)$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma'(t)=(3t^2-1,\,2t)$. הרכיב השני מתאפס רק ב-$t=0$, ושם הרכיב הראשון הוא $3\cdot0^2-1\ne0$. המסילה חותכת
+          את עצמה ב-$(0,1)$, וזה לא סותר רגולריות.
+      - text: '$(\cosh t,\ \sinh t)$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma'(t)=(\sinh t,\cosh t)$, ו-$\cosh t\ge1$ לכל $t$.
+      - text: '$(t^2,\ t^3)$'
+        feedback: >-
+          $\gamma'(t)=(2t,3t^2)$ מתאפס ב-$t=0$. זו המסילה החלקה עם החוד בראשית.
+        misconception: MC-c0-smooth-map-smooth-image
+      - text: '$(t^3,\ t^3)$'
+        feedback: >-
+          התמונה היא הישר $y=x$, שנראה "חלק" לגמרי, אבל $\gamma'(t)=(3t^2,3t^2)$ מתאפס ב-$t=0$. רגולריות נבדקת על
+          הפונקציה, לא על התמונה.
+        misconception: MC-c0-curve-is-image
+      - text: '$(t-\sin t,\ 1-\cos t)$'
+        feedback: >-
+          $\gamma'(t)=(1-\cos t,\sin t)$ מתאפס בכל $t=2\pi m$: שם הציקלואידה נוגעת בציר ויוצרת חוד. נוסחה חלקה אינה
+          מבטיחה רגולריות.
+        misconception: MC-c0-smooth-map-smooth-image
+
+  - id: Q-1.1-tangent-line
+    type: numeric
+    objectives: [OBJ-1.1-3]
+    level: basic
+    prompt: >-
+      מצאו את הישר המשיק ל-$\gamma(t)=(t^2,t^3)$ בנקודה $t=2$, וכתבו אותו בצורה $y=mx+c$. מהו $c$?
+    answer: -4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\gamma(2)=(4,8)$ ו-$\gamma'(2)=(4,12)$, ולכן הישר הוא $(4,8)+\lambda(4,12)$, שיפועו
+      $\frac{12}{4}=3$, והמשוואה $y=8+3(x-4)=3x-4$.
+    wrongFeedback: >-
+      הישר המשיק הוא $\gamma(t_0)+\lambda\gamma'(t_0)$. השיפוע שלו הוא היחס בין הרכיב השני לרכיב הראשון של
+      $\gamma'(t_0)$.
+    commonWrong:
+      - value: -40
+        feedback: >-
+          זה ישר עם שיפוע $12=y'(2)$. אבל $y'$ הוא קצב השינוי של $y$ לפי $t$; לפי $x$ צריך לחלק ב-$x'(2)=4$.
+        misconception: MC-c1-parametric-slope
+      - value: 6.666667
+        feedback: >-
+          זה השיפוע ההפוך, $\frac{x'}{y'}=\frac13$. כיוון הישר הוא $(x',y')=(4,12)$, ולכן השיפוע הוא $\frac{y'}{x'}=3$.
+        misconception: MC-c1-parametric-slope
+
+  - id: Q-1.1-parabola
+    type: multi
+    objectives: [OBJ-1.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהמסילות הבאות, כולן מוגדרות על כל $\mathbb R$, תמונתן היא **בדיוק** כל הפרבולה
+      $\{(x,y):y=x^2\}$? סמנו את כולן.
+    choices:
+      - text: '$(t,\ t^2)$'
+        correct: true
+        feedback: נכון. כל נקודה $(a,a^2)$ מתקבלת ב-$t=a$.
+      - text: '$(-t,\ t^2)$'
+        correct: true
+        feedback: >-
+          נכון. $(a,a^2)$ מתקבלת ב-$t=-a$. זו מסילה אחרת, בכיוון ההפוך, עם אותה תמונה.
+      - text: '$(t^3,\ t^6)$'
+        correct: true
+        feedback: >-
+          נכון. $t\mapsto t^3$ על ומכסה את כל $\mathbb R$, ו-$(a,a^2)$ מתקבלת ב-$t=\sqrt[3]{a}$. המסילה אינה רגולרית
+          ב-$t=0$, אבל התמונה היא כל הפרבולה.
+      - text: '$(\sin t,\ \sin^2 t)$'
+        feedback: >-
+          כל נקודה מקיימת $y=x^2$, אבל $|\sin t|\le1$: התמונה היא רק הקשת $|x|\le1$, שהמסילה עוברת עליה הלוך
+          ושוב.
+        misconception: MC-c1-equation-is-image
+      - text: '$(e^t,\ e^{2t})$'
+        feedback: >-
+          $e^t>0$, ולכן מתקבל רק החצי $x>0$ של הפרבולה. שימו לב: "מקיימת את המשוואה" נותן רק הכלה.
+        misconception: MC-c1-equation-is-image
+      - text: '$(t^2,\ t^4)$'
+        feedback: >-
+          $t^2\ge0$, ולכן מתקבל רק החצי $x\ge0$, וכל נקודה בו פעמיים (ב-$\pm t$).
+        misconception: MC-c1-equation-is-image
+
+  - id: Q-1.1-reversed
+    type: twotier
+    objectives: [OBJ-1.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma(t)=(\cos t,\sin t)$ על $[0,2\pi]$, ו-$\delta(t)=(\cos t,-\sin t)$ על $[0,2\pi]$. האם $\gamma$
+      ו-$\delta$ הן אותה מסילה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $\gamma(\frac\pi2)=(0,1)$ ו-$\delta(\frac\pi2)=(0,-1)$: אלה פונקציות שונות, אף ששתיהן מציירות את מעגל
+          היחידה.
+      - text: כן
+        feedback: >-
+          לשתיהן אותה תמונה, אבל מסילה היא פונקציה. $\delta$ מקיפה את המעגל בכיוון השעון ו-$\gamma$ נגדו.
+        misconception: MC-c0-curve-is-image
+    reasons:
+      - text: 'יש $t$ שבו $\gamma(t)\ne\delta(t)$; הן מקיפות את אותו מעגל בכיוונים הפוכים'
+        correct: true
+        feedback: >-
+          בדיוק. $\delta(t)=\gamma(2\pi-t)$: זו אותה תמונה בכיוון ההפוך. בשיעור 1.5 נראה גודל שמרגיש בכיוון הזה:
+          העקמומיות המסומנת.
+      - text: 'התמונות שלהן שונות: האחת חצי המעגל העליון והשנייה התחתון'
+        feedback: >-
+          כש-$t$ רץ על $[0,2\pi]$, גם $\delta$ עוברת על כל המעגל: $\delta(\frac{3\pi}2)=(0,1)$. התמונות שוות, ומה ששונה
+          הוא הסדר שבו עוברים על הנקודות.
+        misconception: MC-c0-curve-is-image
+      - text: 'לשתיהן אותה תמונה, ומסילה נקבעת לפי התמונה שלה'
+        feedback: >-
+          זו בדיוק ההבחנה של השיעור: מסילה היא הפונקציה $t\mapsto\gamma(t)$. אותה תמונה יכולה להתקבל מאינסוף מסילות
+          שונות.
+        misconception: MC-c0-curve-is-image
+
+  - id: Q-1.1-cusp
+    type: twotier
+    objectives: [OBJ-1.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma$ מסילה חלקה (גזירה אינסוף פעמים) במישור ו-$\gamma'(t_0)=0$. האם בהכרח יש לתמונה חוד (או פינה) בנקודה $\gamma(t_0)$?
+    choices:
+      - text: לא בהכרח
+        correct: true
+        feedback: >-
+          נכון. התאפסות הנגזרת מאפשרת חוד אבל לא מחייבת אותו.
+      - text: כן, תמיד
+        feedback: >-
+          $(t^3,t^3)$ מקיימת $\gamma'(0)=0$, והתמונה שלה היא הישר $y=x$, בלי שום שבירה.
+        misconception: MC-c1-zero-derivative-cusp
+    reasons:
+      - text: '$\gamma(t)=(t^3,t^3)$: $\gamma''(0)=0$, אבל התמונה היא הישר $y=x$; המסילה רק מאטה לרגע וממשיכה'
+        correct: true
+        feedback: >-
+          בדיוק. מה שיוצר את החוד ב-$(t^2,t^3)$ הוא שכיוון התנועה, $\frac{\gamma'}{\|\gamma'\|}$, מתהפך ב-$t=0$.
+          ב-$(t^3,t^3)$ הכיוון הוא $\frac{1}{\sqrt2}(1,1)$ משני הצדדים.
+      - text: 'ב-$(t^2,t^3)$ יש חוד בדיוק במקום שבו הנגזרת מתאפסת, וזו הדוגמה הכללית'
+        feedback: >-
+          דוגמה אחת לא מוכיחה טענה כללית. היא מראה שחוד **ייתכן**; השאלה היא אם הוא **מחויב**, ו-$(t^3,t^3)$ מראה
+          שלא.
+        misconception: MC-c1-zero-derivative-cusp
+      - text: 'כשהמהירות מתאפסת המסילה נעצרת, ולכן היא חייבת לחזור על עקבותיה'
+        feedback: >-
+          עצירה לא מחייבת שינוי כיוון. ב-$(t^3,t^3)$ המסילה נעצרת בראשית לרגע וממשיכה באותו כיוון בדיוק.
+        misconception: MC-c1-zero-derivative-cusp
+
+  - id: Q-1.1-reparam-tangent
+    type: mc
+    objectives: [OBJ-1.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma:\mathbb R\to\mathbb R^3$ רגולרית, $\varphi(u)=u^3+u$, ו-$\delta=\gamma\circ\varphi$. בנקודה
+      $P=\delta(u_0)=\gamma(\varphi(u_0))$, מה הקשר בין וקטורי המשיק של שתי המסילות?
+    choices:
+      - text: '$\delta''(u_0)=(3u_0^2+1)\,\gamma''(\varphi(u_0))$: אותו ישר משיק, וקטורים באורך שונה (פרט ל-$u_0=0$)'
+        correct: true
+        feedback: >-
+          נכון. כלל השרשרת נותן $\delta'(u)=\varphi'(u)\gamma'(\varphi(u))$, ו-$\varphi'(u)=3u^2+1>0$. וקטור המשיק תלוי
+          בפרמטריזציה; הישר המשיק לא.
+      - text: '$\delta''(u_0)=\gamma''(\varphi(u_0))$: לנקודה $P$ של התמונה יש וקטור משיק אחד, שאינו תלוי במסילה'
+        feedback: >-
+          וקטור המשיק הוא המהירות, והמהירות תלויה בפרמטריזציה. למשל ב-$u_0=1$ הווקטור $\delta'(1)$ ארוך פי $4$
+          מ-$\gamma'(2)$.
+        misconception: MC-c1-tangent-vector-geometric
+      - text: '$\delta''(u_0)=\gamma''(u_0)$, כי $\delta$ ו-$\gamma$ מציירות את אותה תמונה באותו כיוון'
+        feedback: >-
+          כאן שכחו גם את $\varphi'$ וגם הציבו את הנקודה הלא נכונה: $\delta(u_0)$ היא $\gamma(\varphi(u_0))$, לא
+          $\gamma(u_0)$. לפי כלל השרשרת $\delta'(u_0)=\varphi'(u_0)\gamma'(\varphi(u_0))$.
+        misconception: MC-c1-reparam-chain-rule
+      - text: 'הווקטורים מקבילים, אבל הישרים המשיקים שונים כי הם עוברים בנקודות שונות'
+        feedback: >-
+          שני הישרים עוברים באותה נקודה $P$ ובאותו כיוון, ולכן הם אותו ישר. זה הגודל שלא תלוי בפרמטריזציה.
+        misconception: MC-c1-tangent-vector-geometric
+
+  - id: Q-1.1-singular-tangent
+    type: mc
+    objectives: [OBJ-1.1-3, OBJ-1.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מה קורה לוקטור המשיק של $\gamma(t)=(t^2,t^3)$ בנקודה $t=0$?
+    choices:
+      - text: '$\gamma''(0)=0$, ו-$\gamma(0)+\lambda\gamma''(0)$ הוא נקודה; $\frac{\gamma''}{\|\gamma''\|}$ שואף ל-$(1,0)$ מימין ול-$(-1,0)$ משמאל'
+        correct: true
+        feedback: >-
+          נכון. $\frac{\gamma'(t)}{\|\gamma'(t)\|}=\frac{(2t,3t^2)}{|t|\sqrt{4+9t^2}}$, ששואף ל-$(\operatorname{sgn}t,0)$.
+          המסילה מגיעה לראשית בכיוון $(-1,0)$ ויוצאת בכיוון $(1,0)$: זה החוד.
+      - text: 'הישר המשיק הוא $\gamma(0)+\lambda\gamma''(0)$, כמו בכל נקודה, וזה ציר $x$ שאליו שני הענפים משיקים'
+        feedback: >-
+          $\gamma'(0)=(0,0)$, ולכן $\gamma(0)+\lambda\gamma'(0)=(0,0)$ לכל $\lambda$: נקודה אחת. הנוסחה עובדת רק
+          בנקודה רגולרית.
+        misconception: MC-c1-tangent-at-singular
+      - text: '$\frac{\gamma''}{\|\gamma''\|}$ ממשיך ברציפות דרך $t=0$ ושווה שם $(1,0)$, כי שני הענפים יוצאים לאורך ציר $x$'
+        feedback: >-
+          משמאל, ב-$t<0$, הרכיב הראשון של $\gamma'$ הוא $2t<0$: הווקטור שואף ל-$(-1,0)$. שני הגבולות החד-צדדיים שונים,
+          ולכן אין המשך רציף.
+        misconception: MC-c1-tangent-at-singular
+
+  - id: Q-1.1-loop-corner
+    type: twotier
+    objectives: [OBJ-1.1-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן שמסילה **רגולרית** $\gamma:[a,b]\to\mathbb R^2$ עם $\gamma(a)=\gamma(b)$ (מסילה סגורה) מציירת
+      תמונה שיש בה פינה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. רגולריות מבטיחה ישר משיק בכל $t$, אבל בנקודת הסגירה נפגשים שני ערכי פרמטר, $a$ ו-$b$, עם שני וקטורים
+          משיקים שאין סיבה שיהיו מקבילים.
+      - text: לא
+        feedback: >-
+          ראו את $(t^3-t,\,t^2)$ על $[-1,1]$: היא רגולרית, מתחילה ומסתיימת ב-$(0,1)$, ושם התמונה נשברת.
+        misconception: MC-c1-regular-image-nice
+    reasons:
+      - text: '$\gamma(t)=(t^3-t,\,t^2)$ על $[-1,1]$: רגולרית, $\gamma(\pm1)=(0,1)$, אבל $\gamma''(-1)=(2,-2)$ ו-$\gamma''(1)=(2,2)$ אינם מקבילים'
+        correct: true
+        feedback: >-
+          בדיוק. התמונה היא לולאה דמוית טיפה עם פינה של $90^\circ$ ב-$(0,1)$: בכיוון $(2,-2)$ יוצאים ממנה,
+          ובכיוון $(2,2)$ חוזרים אליה.
+      - text: 'לא: מסילה רגולרית יש לה ישר משיק בכל נקודה של התמונה, ולכן אין פינה'
+        feedback: >-
+          לרגולרית יש ישר משיק בכל **ערך פרמטר**. נקודה של התמונה שמתקבלת משני ערכי פרמטר יכולה לקבל שני ישרים משיקים
+          שונים, וזו בדיוק הפינה.
+        misconception: MC-c1-regular-image-nice
+      - text: 'כן: $(t^2,t^3)$ על $[-1,1]$'
+        feedback: >-
+          $(t^2,t^3)$ אינה רגולרית ב-$t=0$, ו-$\gamma(-1)=(1,-1)\ne(1,1)=\gamma(1)$, כך שהיא גם לא סגורה. החוד שלה בא
+          מהתאפסות הנגזרת, וכאן מבקשים פינה ממסילה רגולרית.
+        misconception: MC-c0-smooth-map-smooth-image

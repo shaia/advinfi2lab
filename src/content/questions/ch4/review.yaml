@@ -1,0 +1,384 @@
+# Chapter 4 review — the curvature of surfaces (lessons 4.1–4.7), easy to hard.
+# Every lesson is touched; most questions combine two lessons, some reach back to chapters 1–3. Each hint names the
+# lesson to go back to. No surface integrals (∬K dS is lesson 6.5).
+chapter: 4
+questions:
+  - id: Q-4-review-01
+    type: numeric
+    objectives: [OBJ-4.1-1, OBJ-4.2-2]
+    level: basic
+    prompt: >-
+      הגליל ברדיוס 3, $\sigma(u,v)=(3\cos u,\,3\sin u,\,v)$, עם הנורמל
+      $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$. חשבו את העקמומיות הנורמלית בכיוון
+      $\sigma_u+\sigma_v$.
+    answer: -0.3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\hat{\mathbf N}=(\cos u,\sin u,0)$ (החוצה), $Q_1=9\,du^2+dv^2$, $Q_2=-3\,du^2$, ולכן
+      $\kappa_n(1,1)=\frac{-3}{9+1}=-\frac{3}{10}$.
+    wrongFeedback: >-
+      חשבו קודם את $E,F,G$ ואת $L,M,N$ (לאיזה צד מצביע הנורמל?), ואז את המנה $\frac{Q_2}{Q_1}$ בכיוון $(1,1)$.
+    commonWrong:
+      - value: -1.5
+        feedback: >-
+          חילקתם ב-$1^2+1^2$, האורך במישור הפרמטרים. האורך על הגליל הוא $Q_1(1,1)=10$.
+        misconception: MC-c4-kn-without-Q1
+      - value: -3
+        feedback: 'זה $Q_2(1,1)$ בלי החלוקה ב-$Q_1$.'
+        misconception: MC-c4-kn-without-Q1
+      - value: 0.3
+        feedback: 'הנורמל מצביע החוצה, ו-$\sigma_{uu}$ פנימה: $L=-3$.'
+        misconception: MC-c4-Q2-orientation-free
+    hints:
+      - 'חזרו לשיעור 4.1 (חישוב $L,M,N$) ולשיעור 4.2 (העקמומיות הנורמלית כמנה $Q_2/Q_1$).'
+
+  - id: Q-4-review-02
+    type: mc
+    objectives: [OBJ-4.5-2, OBJ-4.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מאיזה סוג הראשית בגרף $z=x^2+2xy+y^2$?
+    choices:
+      - text: 'פרבולית'
+        correct: true
+        feedback: >-
+          נכון. $L=M=N=2$, ולכן $K=4-4=0$, אבל $Q_2=2(dx+dy)^2\neq0$. אכן $z=(x+y)^2$ הוא גליל פרבולי: לאורך $x+y=0$ הוא
+          ישר.
+      - text: 'אליפטית'
+        feedback: >-
+          $L$ ו-$N$ חיוביים, אבל $M^2=LN$ מאפס את $K$. האיבר המעורב חשוב בדיוק כמו האלכסון.
+        misconception: MC-c4-diagonal-only
+      - text: 'מישורית'
+        feedback: 'מישורית פירושו $Q_2=0$. כאן $K=0$ אבל $Q_2\neq0$: בכיוון $(1,1)$ $\kappa_n=4$.'
+        misconception: MC-c4-K-zero-planar
+      - text: 'היפרבולית'
+        feedback: >-
+          זה יוצא אם לוקחים את מקדמי הפולינום באלכסון ($1$, $1$) ואת $M=2$: $1-4<0$. הנגזרות השניות הן $2$, $2$, $2$.
+        misconception: MC-c4-taylor-coefficient
+    hints:
+      - 'חזרו לשיעור 4.1 (מקדמים של גרף) ולשיעור 4.5 (הסיווג לפי $K$, ונקודה פרבולית מול מישורית).'
+
+  - id: Q-4-review-03
+    type: multi
+    objectives: [OBJ-4.7-2, OBJ-3.5-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מזוגות המשטחים הבאים **יכולים** להיות איזומטריים מקומית (חלק פתוח של האחד לחלק פתוח של השני)? סמנו את כולם.
+    choices:
+      - text: 'מישור וגליל'
+        correct: true
+        feedback: 'נכון. פורשים את הגליל בלי למתוח (שיעור 3.5); לשניהם $K=0$.'
+      - text: 'מישור וחרוט (הרחק מהקודקוד)'
+        correct: true
+        feedback: 'נכון. גם החרוט נפרש לגזרה של עיגול; $K=0$.'
+      - text: 'ספרה ברדיוס 1 וספרה ברדיוס 2'
+        feedback: >-
+          אותה צורה, אבל לא אותם מרחקים: $K=1$ מול $K=\frac14$. הקטנה פי 2 משנה את $Q_1$ פי 4.
+        misconception: MC-c4-distance-map
+      - text: 'מישור וספרה'
+        feedback: '$K=0$ מול $K>0$. זו הסיבה שאין מפה מדויקת של כדור הארץ.'
+        misconception: MC-c4-paper-sphere
+    hints:
+      - 'חזרו לשיעור 3.5 (איזומטריות של הגליל והחרוט) ולשיעור 4.7 (איזומטריה שומרת על $K$).'
+
+  - id: Q-4-review-04
+    type: mc
+    objectives: [OBJ-4.6-1, OBJ-4.4-1]
+    level: basic
+    prompt: >-
+      בגליל $\sigma(u,v)=(2\cos u,\,2\sin u,\,v)$ עם $\hat{\mathbf N}=(\cos u,\sin u,0)$ מתקיים
+      $\hat{\mathbf N}_u=(-\sin u,\cos u,0)=\frac12\sigma_u$ ו-$\hat{\mathbf N}_v=0$. מהן העקמומיויות הראשיות?
+    choices:
+      - text: '$\kappa_1=0$, $\kappa_2=-\frac12$'
+        correct: true
+        feedback: >-
+          נכון. $d\hat{\mathbf N}=\mathrm{diag}(\frac12,0)$ בבסיס $\sigma_u,\sigma_v$, ו-$S=-d\hat{\mathbf N}=\mathrm{diag}(-\frac12,0)$.
+      - text: '$\kappa_1=\frac12$, $\kappa_2=0$'
+        feedback: >-
+          אלה הערכים העצמיים של $d\hat{\mathbf N}$. אופרטור הצורה הוא **מינוס** $d\hat{\mathbf N}$: עם הנורמל החוצה הגליל
+          מתעקם הרחק ממנו.
+        misconception: MC-c4-dN-equals-S
+      - text: '$\kappa_1=0$, $\kappa_2=-2$'
+        feedback: >-
+          $-2$ הוא $L$. העקמומיות הראשית היא $\frac LE=-\frac24$: $\sigma_u$ באורך 2.
+        misconception: MC-c4-eigen-of-Q2
+    hints:
+      - 'חזרו לשיעור 4.6 ($d\hat{\mathbf N}=-S$) ולשיעור 4.4 (העקמומיויות הראשיות כערכים עצמיים של $S$).'
+
+  - id: Q-4-review-05
+    type: numeric
+    objectives: [OBJ-4.3-2, OBJ-4.2-2, OBJ-2.3-3]
+    level: mid
+    prompt: >-
+      הסליל $\gamma(t)=(2\cos t,\,2\sin t,\,3t)$ על הגליל $\sigma(u,v)=(2\cos u,\,2\sin u,\,v)$, עם הנורמל החוצה. מהי
+      העקמומיות הנורמלית שלו?
+    answer: -0.1538462
+    tolerance: 0.0001
+    correctFeedback: >-
+      נכון: $-\frac2{13}$. $\gamma(t)=\sigma(t,3t)$, $Q_2(1,3)=-2$, $Q_1(1,3)=4+9=13$. הסליל גאודזית, ולכן
+      $\kappa=|\kappa_n|=\frac2{13}$, בדיוק $\frac{a}{a^2+b^2}$ עם $a=2$, $b=3$ (שיעור 2.3).
+    wrongFeedback: >-
+      כתבו $\gamma(t)=\sigma(u(t),v(t))$ ומצאו את הכיוון $(\dot u,\dot v)$. אחר כך $\frac{Q_2}{Q_1}$.
+    commonWrong:
+      - value: 0
+        feedback: 'הסליל גאודזית: $\kappa_g=0$, לא $\kappa_n$. כל העקמומיות שלו נורמלית.'
+        misconception: MC-c4-geodesic-kn-zero
+      - value: -0.2
+        feedback: 'חילקתם ב-$1+9$, לא ב-$Q_1(1,3)=4\cdot1+9$.'
+        misconception: MC-c4-kn-without-Q1
+      - value: 0.1538462
+        feedback: 'הגודל נכון; עם הנורמל החוצה הסימן שלילי.'
+        misconception: MC-c4-Q2-orientation-free
+    hints:
+      - 'חזרו לשיעור 4.2 ($\kappa_n=Q_2/Q_1$) ולשיעור 4.3 (סלילים כגאודזיות של הגליל). העקמומיות של הסליל: שיעור 2.3.'
+
+  - id: Q-4-review-06
+    type: numeric
+    objectives: [OBJ-4.4-3, OBJ-4.5-1]
+    level: mid
+    prompt: >-
+      בנקודה $P$ של משטח, העקמומיות הנורמלית בכיוון $v$ היא $3$ ובכיוון הניצב לו היא $-1$. מהי העקמומיות הממוצעת $H$
+      ב-$P$?
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי אוילר $\kappa_n(\theta)+\kappa_n(\theta+\frac\pi2)=\kappa_1+\kappa_2=2H$, ולכן $H=\frac{3-1}2=1$. לא צריך
+      לדעת את $\kappa_1,\kappa_2$ עצמן.
+    wrongFeedback: >-
+      הציבו $\theta$ ו-$\theta+\frac\pi2$ בנוסחת אוילר וחברו.
+    commonWrong:
+      - value: 2
+        feedback: 'זה $\kappa_1+\kappa_2$. $H$ היא ממוצע: חצי מזה.'
+        misconception: MC-c4-H-sum
+      - value: -3
+        feedback: >-
+          $3\cdot(-1)$ איננו $K$, וגם $H$ איננו מכפלה. מכפלת העקמומיויות בשני כיוונים ניצבים שווה ל-$K$ רק כשאלה הכיוונים
+          הראשיים.
+        misconception: MC-c4-K-is-principal
+    hints:
+      - 'חזרו לשיעור 4.4 (נוסחת אוילר) ולשיעור 4.5 (ההגדרה של $H$).'
+
+  - id: Q-4-review-07
+    type: numeric
+    objectives: [OBJ-4.2-3, OBJ-4.2-1]
+    level: mid
+    prompt: >-
+      מסילה על ספרה ברדיוס 2 עוברת בנקודה $P$ עם עקמומיות $\kappa(P)=1$. מהו $|\cos\theta|$, כש-$\theta$ היא הזווית בין
+      הנורמל הראשי $\mathbf n$ של המסילה לנורמל $\hat{\mathbf N}$ של הספרה ב-$P$?
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. על ספרה ברדיוס 2, $|\kappa_n|=\frac12$ בכל כיוון, ולפי מנייה $|\kappa_n|=\kappa|\cos\theta|$: $\frac12=1\cdot|\cos\theta|$.
+      המסילה היא (ליד $P$) כמו מעגל ברדיוס 1 על הספרה, מעגל קטן.
+    wrongFeedback: >-
+      $\kappa_n=\kappa\cos\theta$ (משפט מנייה), ו-$|\kappa_n|$ על ספרה ברדיוס $R$ הוא $\frac1R$ בכל כיוון.
+    commonWrong:
+      - value: 2
+        feedback: '$|\cos\theta|\le1$. הקשר הוא $\kappa_n=\kappa\cos\theta$, ולכן $|\cos\theta|=\frac{|\kappa_n|}{\kappa}$.'
+        misconception: MC-c4-meusnier-multiply
+      - value: 1
+        feedback: >-
+          $|\cos\theta|=1$ פירושו $\mathbf n=\pm\hat{\mathbf N}$, ואז $\kappa=|\kappa_n|=\frac12$. כאן $\kappa=1$, ולכן המסילה
+          אינה מעגל גדול.
+        misconception: MC-c4-tangent-fixes-curvature
+    hints:
+      - 'חזרו לשיעור 4.2: משפט מנייה בצורה $\kappa_n=\kappa\cos\theta$.'
+
+  - id: Q-4-review-08
+    type: numeric
+    objectives: [OBJ-4.2-1, OBJ-4.3-2, OBJ-1.3-2]
+    level: mid
+    prompt: >-
+      האליפסה $\gamma(t)=(\cos t,\,\sin t,\,\cos t)$ על הגליל $x^2+y^2=1$ (החיתוך עם המישור $z=x$). ב-$t=0$, עם הנורמל
+      החוצה $\hat{\mathbf N}=(1,0,0)$, $\kappa_n=-1$. מהו $|\kappa_g|$ ב-$t=0$?
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\gamma'(0)=(0,1,0)$, $\gamma''(0)=(-1,0,-1)$, ולכן $\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}=\|(-1,0,1)\|=\sqrt2$
+      (שיעור 1.3), ו-$\kappa_g^2=2-1=1$. מכאן שהאליפסה אינה גאודזית.
+    wrongFeedback: >-
+      חשבו קודם את $\kappa$ בנוסחה עם המכפלה הווקטורית, ואז $\kappa_g^2=\kappa^2-\kappa_n^2$.
+    commonWrong:
+      - value: 0.4142136
+        feedback: '$\sqrt2-1$: חיסרתם את העקמומיויות במקום את ריבועיהן.'
+        misconception: MC-c4-curvature-sum
+      - value: 0
+        feedback: >-
+          חתך מישורי של הגליל אינו בהכרח גאודזית: למישור $z=x$ יש רכיב של $\gamma''$ בכיוון $z$, שמשיק לגליל.
+        misconception: MC-c4-plane-section-geodesic
+    hints:
+      - 'חזרו לשיעור 1.3 (עקמומיות בפרמטר כללי), לשיעור 4.2 ($\kappa^2=\kappa_n^2+\kappa_g^2$) ולשיעור 4.3 (גאודזיות של הגליל).'
+
+  - id: Q-4-review-09
+    type: numeric
+    objectives: [OBJ-4.1-3, OBJ-4.5-1, OBJ-4.5-3]
+    level: mid
+    prompt: >-
+      בטורוס $\sigma(u,v)=((3+\cos v)\cos u,\,(3+\cos v)\sin u,\,\sin v)$, עם הנורמל החוצה מהצינור, במשווה החיצוני
+      $\kappa_1=-\frac14$ ו-$\kappa_2=-1$. מהי העקמומיות הממוצעת שם ביחס לנורמל **לתוך** הצינור?
+    answer: 0.625
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. עם הנורמל החוצה $H=\frac{-\frac14-1}2=-\frac58$, ובהיפוך הנורמל $H$ מחליפה סימן: $\frac58$. (ו-$K=\frac14$ לא
+      משתנה.)
+    wrongFeedback: >-
+      חשבו את $H$ עם הנורמל הנתון, ואז קבעו מה היפוך הנורמל עושה לה.
+    commonWrong:
+      - value: -0.625
+        feedback: 'זו $H$ עם הנורמל **החוצה**. היפוך הנורמל הופך את הסימן של $H$.'
+        misconception: MC-c4-Q2-orientation-free
+      - value: 1.25
+        feedback: 'זה $|\kappa_1+\kappa_2|$. העקמומיות הממוצעת היא חצי מהסכום.'
+        misconception: MC-c4-H-sum
+      - value: 0.25
+        feedback: '$\frac14$ היא $K=\kappa_1\kappa_2$, לא $H$.'
+        misconception: MC-c4-K-is-principal
+    hints:
+      - 'חזרו לשיעור 4.1 (היפוך הנורמל) ולשיעור 4.5 ($H$ מחליפה סימן, $K$ לא).'
+
+  - id: Q-4-review-10
+    type: numeric
+    objectives: [OBJ-4.6-3, OBJ-4.4-1]
+    level: mid
+    prompt: >-
+      $M$ משטח מינימלי, ובנקודה $P$ יש כיוון $v$ עם $\kappa_n(v)=2$. מהו הערך **הגדול ביותר** האפשרי של $K(P)$?
+    answer: -4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\kappa_1=\max\kappa_n\ge2$, ובמשטח מינימלי $\kappa_2=-\kappa_1$, ולכן $K=-\kappa_1^2\le-4$. שוויון כש-$v$ כיוון
+      ראשי.
+    wrongFeedback: >-
+      מה אומר $\kappa_n(v)=2$ על $\kappa_1$? ומה אומר $H=0$ על $\kappa_2$?
+    commonWrong:
+      - value: 4
+        feedback: 'במשטח מינימלי $K\le0$: העקמומיויות הראשיות בסימנים הפוכים.'
+        misconception: MC-c4-minimal-elliptic
+      - value: -2
+        feedback: '$K$ היא מכפלה של שתי עקמומיויות ראשיות, $\kappa_1\cdot(-\kappa_1)$, לא עקמומיות אחת.'
+        misconception: MC-c4-K-is-principal
+      - value: 0
+        feedback: >-
+          $K=0$ דורש $\kappa_1=0$, אבל $\kappa_1\ge\kappa_n(v)=2$. משטח מינימלי אינו שטוח.
+        misconception: MC-c4-minimal-flat
+    hints:
+      - 'חזרו לשיעור 4.4 ($\kappa_1$ כמקסימום של $\kappa_n$) ולשיעור 4.6 (במשטח מינימלי $K=-\kappa_1^2$).'
+
+  - id: Q-4-review-11
+    type: twotier
+    objectives: [OBJ-4.3-3, OBJ-4.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן שעל ספרת היחידה יש שתי נקודות שדרכן עוברות **בדיוק שתי** גאודזיות שלמות שונות, כלומר שני מעגלים גדולים
+      שלמים שונים (סופרים עקבות שלמות, לא קשתות)?
+    choices:
+      - text: 'לא'
+        correct: true
+        feedback: 'נכון. על הספרה מספר המעגלים הגדולים השלמים דרך שתי נקודות הוא תמיד 1 או אינסוף.'
+      - text: 'כן: הקשת הקצרה והקשת הארוכה'
+        feedback: >-
+          שתי הקשתות הן חלקים של **אותו** מעגל גדול, אותה עקבה. כעקבות, דרך שתי נקודות לא אנטיפודליות עובר מעגל גדול אחד.
+        misconception: MC-c4-geodesic-shortest
+    reasons:
+      - text: 'מעגל גדול דרך $P,Q$ הוא חיתוך עם מישור דרך $0,P,Q$: יחיד אם $P\neq\pm Q$, ואינסוף אם $Q=-P$'
+        correct: true
+        feedback: >-
+          בדיוק: אלגברה לינארית (שיעור 0.2), אחרי שיודעים שהגאודזיות הן בדיוק המעגלים הגדולים (שיעור 4.3). אם $P\neq\pm Q$,
+          הווקטורים בלתי תלויים והמישור שהם פורשים יחיד; אם $Q=-P$, כל מישור שמכיל את הישר $0P$ מתאים.
+      - text: 'על הספרה דרך כל שתי נקודות עוברות אינסוף גאודזיות'
+        feedback: 'רק דרך נקודות אנטיפודליות. דרך $(1,0,0)$ ו-$(0,1,0)$ עובר רק קו המשווה.'
+        misconception: MC-c4-always-infinite-geodesics
+      - text: 'דרך שתי נקודות על כל משטח עוברת גאודזית אחת בדיוק'
+        feedback: 'דרך הקטבים עוברים אינסוף מעגלים גדולים, ועל הגליל אינסוף סלילים.'
+        misconception: MC-c4-geodesic-unique
+    hints:
+      - 'חזרו לשיעור 4.3: גאודזיות על הספרה וספירת הגאודזיות בין שתי נקודות.'
+
+  - id: Q-4-review-12
+    type: numeric
+    objectives: [OBJ-4.2-3, OBJ-4.4-1, OBJ-4.5-1, OBJ-4.5-2]
+    level: exam
+    prompt: >-
+      בנקודה $P$ של משטח, **כל** חתך נורמלי (חיתוך עם מישור שמכיל את $\hat{\mathbf N}(P)$) הוא מסילה עם עקמומיות 3 ב-$P$.
+      מהי $K(P)$?
+    answer: 9
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. העקמומיות של חתך נורמלי היא $|\kappa_n(v)|$, ולכן $|\kappa_n|=3$ בכל כיוון. $\kappa_n(\theta)$ רציפה על מעגל הכיוונים
+      ולא מקבלת ערכים ב-$(-3,3)$, ולכן קבועה: $\kappa_n\equiv3$ או $\kappa_n\equiv-3$. הנקודה טבורית, $K=9$ ו-$|H|=3$.
+    wrongFeedback: >-
+      מה עקמומיות החתך הנורמלי בכיוון $v$ (משפט מנייה)? מה זה אומר על $\kappa_1$ ועל $\kappa_2$?
+    commonWrong:
+      - value: 3
+        feedback: '3 היא כל אחת מהעקמומיויות הראשיות. $K$ היא המכפלה שלהן.'
+        misconception: MC-c4-K-is-principal
+      - value: -9
+        feedback: >-
+          זה היה $K$ אם $\kappa_1=3$ ו-$\kappa_2=-3$. אבל אז $\kappa_n$ הייתה מקבלת גם את הערך 0 (אוילר), וחתך נורמלי
+          בכיוון הזה היה בעל עקמומיות 0.
+        misconception: MC-c4-K-changes-sign
+    hints:
+      - 'חזרו לשיעור 4.2 (חתך נורמלי ומשפט מנייה), לשיעור 4.4 (נוסחת אוילר) ולשיעור 4.5 (נקודה טבורית).'
+
+  - id: Q-4-review-13
+    type: numeric
+    objectives: [OBJ-4.7-3, OBJ-3.4-1]
+    level: exam
+    prompt: >-
+      לפרבולואיד $\sigma(u,v)=(v\cos u,\,v\sin u,\,v^2)$, $v>0$, חשבו את $Q_1$, ומתוכה **בלבד** (בנוסחה למקרה $F=0$) את $K$
+      בנקודה עם $v=1$.
+    answer: 0.16
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sigma_u=(-v\sin u,v\cos u,0)$, $\sigma_v=(\cos u,\sin u,2v)$, ולכן $E=v^2$, $F=0$, $G=1+4v^2$.
+      $\sqrt{EG}=v\sqrt{1+4v^2}$, $\frac{E_v}{\sqrt{EG}}=\frac{2}{\sqrt{1+4v^2}}$, הנגזרת לפי $v$ היא $-\frac{8v}{(1+4v^2)^{3/2}}$,
+      ו-$G_u=0$. לכן $K=\frac{1}{2v\sqrt{1+4v^2}}\cdot\frac{8v}{(1+4v^2)^{3/2}}=\frac{4}{(1+4v^2)^2}$, וב-$v=1$: $\frac4{25}$.
+      בדיקה: זה הגרף $z=x^2+y^2$, ו-$\frac{f_{xx}f_{yy}-f_{xy}^2}{(1+f_x^2+f_y^2)^2}=\frac{4}{25}$ ב-$(1,0)$.
+    wrongFeedback: >-
+      $K=-\frac{1}{2\sqrt{EG}}\left[\left(\frac{E_v}{\sqrt{EG}}\right)_v+\left(\frac{G_u}{\sqrt{EG}}\right)_u\right]$. חשבו קודם
+      את $E,F,G$ מ-$\sigma_u,\sigma_v$.
+    commonWrong:
+      - value: -0.16
+        feedback: 'איבדתם את המינוס שבראש הנוסחה. בפרבולואיד, כמו בכיפה, $K>0$.'
+        misconception: MC-c4-egregium-sign
+      - value: 0
+        feedback: >-
+          השתמשתם בצורה המקוצרת $K=-\frac{(\sqrt E)_{vv}}{\sqrt E}$, עם $\sqrt E=v$. היא נכונה רק כש-$G=1$; כאן
+          $G=1+4v^2$, וצריך את הנוסחה המלאה.
+        misconception: MC-c4-egregium-reduced-formula
+    hints:
+      - 'חזרו לשיעור 3.4 (חישוב התבנית הראשונה) ולשיעור 4.7 ($K$ מהתבנית הראשונה כש-$F=0$).'
+
+  - id: Q-4-review-14
+    type: twotier
+    objectives: [OBJ-4.5-3, OBJ-4.1-2, OBJ-4.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן ש-$K(P)<0$, ובכל זאת ליד $P$ המשטח נמצא כולו בצד אחד של המישור המשיק ב-$P$?
+    choices:
+      - text: 'לא'
+        correct: true
+        feedback: 'נכון. בנקודה היפרבולית המשטח תמיד חוצה את המישור המשיק.'
+      - text: 'כן, אם האיברים מסדר שלישי חזקים מספיק'
+        feedback: >-
+          איברים מסדר גבוה מכריעים רק כשהתבנית השנייה מנוונת. כאן $Q_2$ מקבלת ערכים חיוביים ושליליים: בכיוון $v_1$ עם
+          $Q_2(v_1)>0$ האיבר הריבועי
+          גובר על כל השארית.
+        misconception: MC-c4-parabolic-one-side
+    reasons:
+      - text: '$K<0$ פירושו $\kappa_1>0>\kappa_2$; לאורך $\sigma(p+tw_1)$ עם $w_1$ בכיוון הראשי הראשון המרחק החתום הוא $\frac{t^2}2Q_2(w_1)+o(t^2)>0$, ולאורך $w_2$ הוא שלילי'
+        correct: true
+        feedback: >-
+          בדיוק: שני כיוונים, שני סימנים. השארית $o(t^2)$ קטנה מ-$\frac{t^2}2|Q_2(w_i)|$ לכל $t$ קטן מספיק.
+      - text: '$K<0$ פירושו שהמשטח מתעקם הרחק מהנורמל בכל כיוון, ולכן הוא כולו מצד אחד של המישור המשיק'
+        feedback: >-
+          $K$ לא תלויה בנורמל, ולכן לא יכולה לומר "הרחק מהנורמל". מה שהיא אומרת הוא ש-$\kappa_1$ ו-$\kappa_2$ בסימנים הפוכים.
+        misconception: MC-c4-K-changes-sign
+      - text: 'ב-$K<0$ גם $H<0$, ולכן $Q_2$ שלילית בכל כיוון והמשטח כולו מתחת למישור המשיק'
+        feedback: '$K<0$ לא קובע את סימן $H$ (באוכף $z=xy$ בראשית $H=0$), ו-$Q_2$ מקבלת ערכים חיוביים ושליליים.'
+        misconception: MC-c4-K-is-principal
+    hints:
+      - 'חזרו לשיעור 4.1 (המרחק מהמישור המשיק הוא בקירוב $\frac12Q_2$) ולשיעור 4.5 (צורת המשטח ליד כל סוג נקודה).'

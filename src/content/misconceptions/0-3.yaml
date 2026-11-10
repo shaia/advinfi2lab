@@ -1,0 +1,99 @@
+# Misconceptions first detected in lesson 0.3 (the differential, the Jacobian matrix, the chain rule, the gradient).
+- id: MC-c0-jacobian-transposed
+  title: הופכים את הממדים של מטריצת יעקובי
+  belief: >-
+    להעתקה $F:\mathbb R^n\to\mathbb R^m$ מטריצת יעקובי מסדר $n\times m$: שורה לכל משתנה.
+  truth: >-
+    $DF(x)$ היא מסדר $m\times n$: שורה לכל **רכיב** של $F$ ועמודה לכל **משתנה**, כך ש-$DF(x)h$ מוגדר ל-$h\in\mathbb R^n$
+    ונותן וקטור ב-$\mathbb R^m$. לפרמטריזציה $\sigma:\mathbb R^2\to\mathbb R^3$ זו מטריצה $3\times2$ שעמודותיה
+    $\sigma_u,\sigma_v$.
+  remedy: { lesson: '0.3', label: 'מטריצת יעקובי' }
+
+- id: MC-c0-partials-imply-differentiable
+  title: חושבים שקיום הנגזרות החלקיות גורר דיפרנציאביליות
+  belief: >-
+    אם לפונקציה יש בנקודה כל הנגזרות החלקיות, היא דיפרנציאבילית שם.
+  truth: >-
+    $f(x,y)=\frac{xy}{x^2+y^2}$, $f(0,0)=0$, גזירה חלקית בראשית בשני המשתנים (שתי הנגזרות $0$), אבל על הישר $y=x$
+    היא שווה ל-$\frac12$, ולכן אינה רציפה בראשית ובוודאי אינה דיפרנציאבילית שם. מספיק (אבל לא הכרחי) שהחלקיות
+    **רציפות** בסביבה.
+  remedy: { lesson: '0.3', label: 'הדיפרנציאל כקירוב הלינארי הטוב ביותר' }
+
+- id: MC-c0-differential-is-value
+  title: מבלבלים בין הדיפרנציאל לבין הערך המקורב
+  belief: >-
+    הקירוב הלינארי של $f(p+h)$ הוא $Df(p)h$.
+  truth: >-
+    $Df(p)h$ הוא קירוב **לשינוי** $f(p+h)-f(p)$. הקירוב לערך עצמו הוא $f(p)+Df(p)h$.
+  remedy: { lesson: '0.3', label: 'הדיפרנציאל כקירוב הלינארי' }
+
+- id: MC-c0-chain-position-for-velocity
+  title: בכלל השרשרת למסילה כופלים בנקודה במקום במהירות
+  belief: >-
+    $\frac{d}{dt}f(\gamma(t))=\nabla f(\gamma(t))\cdot\gamma(t)$.
+  truth: >-
+    $\frac{d}{dt}f(\gamma(t))=\nabla f(\gamma(t))\cdot\gamma'(t)$: הגרדיאנט בנקודה, כפול **וקטור המהירות**.
+  remedy: { lesson: '0.3', label: 'כלל השרשרת: פונקציה לאורך מסילה' }
+
+- id: MC-c0-chain-order
+  title: הופכים את סדר המטריצות בכלל השרשרת
+  belief: >-
+    $D(G\circ F)(x)=DF(x)\,DG(F(x))$.
+  truth: >-
+    $D(G\circ F)(x)=DG(F(x))\,DF(x)$: קודם $DF$ פועל על $h$, ואחריו $DG$. המכפלה בסדר ההפוך לא מוגדרת בכלל כשהממדים
+    שונים.
+  remedy: { lesson: '0.3', label: 'כלל השרשרת להרכבת העתקות' }
+
+- id: MC-c0-chain-wrong-point
+  title: מציבים את הנקודה הלא נכונה בנגזרת של הפונקציה החיצונית
+  belief: >-
+    $D(G\circ F)(x)=DG(x)\,DF(x)$.
+  truth: >-
+    את $DG$ מחשבים בנקודה $F(x)$, כי $G$ פועלת על הערכים של $F$: $D(G\circ F)(x)=DG(F(x))\,DF(x)$.
+  remedy: { lesson: '0.3', label: 'כלל השרשרת להרכבת העתקות' }
+
+- id: MC-c0-chain-one-path
+  title: שוכחים מסלול בכלל השרשרת
+  belief: >-
+    $\frac{\partial}{\partial\theta}g(x(r,\theta),y(r,\theta))$ שווה ל-$g_x\,x_\theta$ בלבד, או ל-$g_y\,y_\theta$ בלבד.
+  truth: >-
+    סוכמים על **כל** המשתנים הביניים: $\frac{\partial h}{\partial\theta}=g_x\,x_\theta+g_y\,y_\theta$. זו בדיוק שורה כפול
+    עמודה במכפלה $Dg\,DF$.
+  remedy: { lesson: '0.3', label: 'כלל השרשרת בקואורדינטות קוטביות' }
+
+- id: MC-c0-inverse-derivative-confusion
+  title: מבלבלים בין הנגזרת של העתקה לנגזרת של ההפכית שלה
+  belief: >-
+    הנגזרת של $F^{-1}$ היא $DF$ עצמה, או המטריצה של ההופכיים של האיברים של $DF$; ובאותה טעות, היעקוביאן של $F$ מתחלף
+    ביעקוביאן של ההפכית.
+  truth: >-
+    $D(F^{-1})(F(p))=DF(p)^{-1}$, **המטריצה ההפכית**, ולכן $\det D(F^{-1})(F(p))=\frac{1}{\det DF(p)}$. ההפכית של מטריצה אינה
+    ההופכיים של איבריה.
+  remedy: { lesson: '0.4', label: 'משפט הפונקציה ההפוכה: הנגזרת של ההפכית' }
+
+- id: MC-c0-gradient-tangent-to-level
+  title: חושבים שהגרדיאנט משיק לקו הרמה
+  belief: >-
+    הגרדיאנט מצביע לאורך קו הרמה.
+  truth: >-
+    הגרדיאנט **ניצב** לקו הרמה: אם $\gamma$ בתוך $\{f=c\}$ אז $f(\gamma(t))=c$, ולפי כלל השרשרת $\nabla f\cdot\gamma'=0$. לאורך
+    קו הרמה $f$ לא משתנה; בכיוון הגרדיאנט היא עולה הכי מהר.
+  remedy: { lesson: '0.3', label: 'גרדיאנט ניצב לקווי רמה' }
+
+- id: MC-c0-normal-is-position
+  title: חושבים שהנורמל לקו רמה הוא וקטור המקום
+  belief: >-
+    הנורמל לעקום בנקודה $p$ הוא הווקטור $p$, כמו במעגל שמרכזו בראשית.
+  truth: >-
+    זה נכון רק למעגלים ולספרות שמרכזם בראשית. באופן כללי הנורמל הוא $\nabla f(p)$: לאליפסה $x^2+4y^2=8$ בנקודה
+    $(2,1)$ הנורמל הוא $(4,8)$, בכיוון $(1,2)$, ולא $(2,1)$.
+  remedy: { lesson: '0.3', label: 'גרדיאנט ניצב לקווי רמה' }
+
+- id: MC-c0-level-set-always-smooth
+  title: חושבים שכל קבוצת רמה של פונקציה חלקה היא עקום חלק
+  belief: >-
+    לפונקציה חלקה כל קבוצת רמה היא עקום (או משטח) חלק, עם נורמל $\nabla f$.
+  truth: >-
+    בנקודה שבה $\nabla f=0$ זה יכול להישבר: $\{x^2-y^2=0\}$ היא זוג הישרים $y=\pm x$ שנחתכים בראשית. התנאי
+    שמבטיח קבוצת רמה חלקה הוא שהערך יהיה **רגולרי** (שיעור 0.4).
+  remedy: { lesson: '0.4', label: 'קבוצות רמה רגולריות' }

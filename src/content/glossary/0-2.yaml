@@ -1,0 +1,56 @@
+# Terms first defined in lesson 0.2 (inner and cross product, orthogonal matrices, the spectral theorem).
+- id: cross-product
+  term: מכפלה וקטורית
+  en: cross product
+  symbol: 'u\times v'
+  definition: >-
+    ל-$u,v\in\mathbb R^3$: $u\times v=(u_2v_3-u_3v_2,\ u_3v_1-u_1v_3,\ u_1v_2-u_2v_1)$. היא ניצבת ל-$u$ ול-$v$, אורכה
+    $\|u\|\|v\|\sin\theta$ (שטח המקבילית שהם פורשים), והשלשה $u,v,u\times v$ ימנית. היא ביליניארית ואנטי-חילופית:
+    $v\times u=-(u\times v)$.
+  lesson: '0.2'
+- id: triple-product
+  term: מכפלה משולשת
+  en: scalar triple product
+  symbol: 'u\cdot(v\times w)'
+  definition: >-
+    המספר $u\cdot(v\times w)=\det(u,v,w)$. ערכו המוחלט הוא נפח המקבילון ש-$u,v,w$ פורשים, וסימנו חיובי בדיוק כשהשלשה
+    ימנית. החלפה מעגלית של הגורמים לא משנה אותו; החלפה של שניים הופכת את הסימן.
+  lesson: '0.2'
+- id: orthogonal-matrix
+  term: מטריצה אורתוגונלית
+  en: orthogonal matrix
+  definition: >-
+    מטריצה ריבועית $A$ עם $A^{T}A=I$; באופן שקול, עמודותיה בסיס אורתונורמלי, או $\langle Au,Av\rangle=\langle u,v\rangle$ לכל
+    $u,v$. מתקיים $\det A=\pm1$: עם $\det A=1$ היא סיבוב, ועם $\det A=-1$ היא הופכת כיוון (שיקוף, או שיקוף אחרי
+    סיבוב, כמו $-I$ ב-$\mathbb R^3$).
+  reject: [אורטוגונלית]
+  lesson: '0.2'
+- id: rigid-motion
+  term: תנועה קשיחה
+  en: rigid motion
+  symbol: 'F(x)=Ax+b'
+  definition: >-
+    העתקה $F(x)=Ax+b$ של $\mathbb R^n$ עם $A$ אורתוגונלית: הזזה אחרי מטריצה אורתוגונלית. היא שומרת מרחקים וזוויות. אם
+    $\det A=1$ היא שומרת גם כיוון (תנועה קשיחה ישרה); אם $\det A=-1$ היא כוללת שיקוף.
+  lesson: '0.2'
+- id: symmetric-matrix
+  term: מטריצה סימטרית
+  en: symmetric matrix
+  definition: >-
+    מטריצה ריבועית ממשית עם $A^{T}=A$, כלומר $\langle Au,v\rangle=\langle u,Av\rangle$ לכל $u,v$.
+  lesson: '0.2'
+- id: antisymmetric-matrix
+  term: מטריצה אנטי-סימטרית
+  en: antisymmetric (skew-symmetric) matrix
+  definition: >-
+    מטריצה ריבועית ממשית עם $A^{T}=-A$. האלכסון שלה אפס, ו-$\langle Ax,x\rangle=0$ לכל $x$. כל מטריצה אנטי-סימטרית
+    $3\times3$ היא $x\mapsto\omega\times x$ לווקטור קבוע $\omega$.
+  lesson: '0.2'
+- id: spectral-theorem
+  term: המשפט הספקטרלי
+  en: spectral theorem
+  definition: >-
+    לכל מטריצה סימטרית ממשית $A$ מסדר $n\times n$ יש בסיס אורתונורמלי של $\mathbb R^n$ שמורכב מווקטורים עצמיים שלה, וכל
+    הערכים העצמיים שלה ממשיים. בפרט $A=QDQ^{T}$ עם $Q$ אורתוגונלית ו-$D$ אלכסונית, והמקסימום של $x^{T}Ax$ על $\|x\|=1$ הוא
+    הערך העצמי הגדול ביותר.
+  lesson: '0.2'

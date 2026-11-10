@@ -1,0 +1,366 @@
+# Chapter 3 review — surfaces and the first fundamental form (lessons 3.1–3.5), easy to hard.
+# Every lesson is touched; most questions combine two lessons, some reach back to chapters 0–2.
+# Each hint names the lesson to go back to.
+chapter: 3
+questions:
+  - id: Q-3-review-01
+    type: multi
+    objectives: [OBJ-3.1-1, OBJ-3.2-1]
+    level: basic
+    prompt: >-
+      אילו מהפרמטריזציות הבאות **רגולריות בכל נקודה** של $\mathbb R^2$? סמנו את כולן.
+    choices:
+      - text: '$(u,\ v,\ \sin(uv))$'
+        correct: true
+        feedback: >-
+          נכון: זה גרף, ו-$\sigma_u\times\sigma_v=(-f_u,-f_v,1)$ אינו מתאפס לעולם.
+      - text: '$(u^2,\ v,\ u)$'
+        correct: true
+        feedback: >-
+          נכון. $\sigma_u=(2u,0,1)$ ו-$\sigma_v=(0,1,0)$, ו-$\sigma_u\times\sigma_v=(-1,0,2u)\ne0$. התמונה היא $x=z^2$, גליל
+          פרבולי, שהוא גרף מעל המישור $yz$.
+      - text: '$(u+v,\ u+v,\ uv)$'
+        feedback: >-
+          $\sigma_u=(1,1,v)$ ו-$\sigma_v=(1,1,u)$, ו-$\sigma_u\times\sigma_v=(u-v,\ v-u,\ 0)$ מתאפס על כל הישר $u=v$. שתי
+          הנגזרות שונות מאפס תמיד, ובכל זאת שם הן שוות.
+        misconception: MC-c3-nonzero-partials-enough
+      - text: '$(\cos u\cos v,\ \sin u\cos v,\ \sin v)$'
+        feedback: >-
+          $\|\sigma_u\times\sigma_v\|=|\cos v|$ מתאפס ב-$v=\frac\pi2+k\pi$: בקטבים קו רוחב שלם נשלח לנקודה.
+        misconception: MC-c3-regularity-only-generic-point
+    hints:
+      - 'חזרו לשיעור 3.1 (רגולריות: $\sigma_u\times\sigma_v\ne0$) ולשיעור 3.2 (גרף תמיד רגולרי).'
+
+  - id: Q-3-review-02
+    type: numeric
+    objectives: [OBJ-3.3-1, OBJ-0.3-3]
+    level: basic
+    prompt: >-
+      המישור המשיק לאליפסואיד $x^2+2y^2+3z^2=6$ בנקודה $(1,1,1)$ הוא $x+2y+3z=d$. מהו $d$?
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\nabla F=(2x,4y,6z)=(2,4,6)$ ניצב למשטח, והמישור $2(x-1)+4(y-1)+6(z-1)=0$ הוא $x+2y+3z=6$. בדיקה: $(1,1,1)$
+      עליו.
+    wrongFeedback: >-
+      הגרדיאנט ניצב למשטח הרמה. כתבו $\nabla F(p)\cdot(x-p)=0$ ופשטו.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $x+2y+3z=0$ הוא $\nabla F(p)^{\perp}$, המרחב של וקטורי המהירות, שעובר בראשית. המישור המשיק הגאומטרי עובר
+          בנקודה $p$.
+        misconception: MC-c3-tangent-plane-through-origin
+    hints:
+      - 'חזרו לשיעור 3.3 (המישור המשיק של משטח רמה) ולשיעור 0.3 (הגרדיאנט ניצב לקבוצות רמה).'
+
+  - id: Q-3-review-03
+    type: numeric
+    objectives: [OBJ-3.4-2, OBJ-3.4-1]
+    level: basic
+    prompt: >-
+      על הגליל $\sigma(u,v)=(3\cos u,\ 3\sin u,\ v)$ חשבו את אורך המסילה $u=t$, $v=4t$, $0\le t\le1$.
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $E=9$, $F=0$, $G=1$, ולכן $\|\gamma'\|^2=9\cdot1+16\cdot1=25$ והאורך $5$. אחרי פריסת הגליל זה היתר במשולש
+      ישר-זווית עם ניצבים 3 ו-4.
+    wrongFeedback: >-
+      $\|\gamma'\|^2=Eu'^2+2Fu'v'+Gv'^2$ עם $u'=1$, $v'=4$.
+    commonWrong:
+      - value: 25
+        feedback: >-
+          זה $\int Q_1\,dt$. האורך הוא $\int\sqrt{Q_1}\,dt=\int_0^15\,dt$.
+        misconception: MC-c3-norm-vs-square
+      - value: 4.1231056
+        feedback: >-
+          זה $\sqrt{1+16}=\sqrt{17}$, כאילו $E=1$: מדדתם את $(u',v')=(1,4)$ במישור הפרמטרים. על גליל ברדיוס 3, $E=9$.
+        misconception: MC-c3-q1-is-euclidean-in-params
+    hints:
+      - 'חזרו לשיעור 3.4: אורך של מסילה על משטח.'
+
+  - id: Q-3-review-04
+    type: twotier
+    objectives: [OBJ-3.2-2, OBJ-3.3-1, OBJ-3.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שני סטודנטים חישבו את $\hat{\mathbf N}$ של אותו משטח באותה נקודה, כל אחד בפרמטריזציה רגולרית אחרת, וקיבלו וקטורים
+      מנוגדים. האם אחד מהם בהכרח טעה?
+    choices:
+      - text: לא בהכרח
+        correct: true
+        feedback: >-
+          נכון. $\hat{\mathbf N}$ נקבע עד כדי סימן: שתי פרמטריזציות נותנות אותו ישר נורמלי, ואולי כיוונים מנוגדים עליו.
+      - text: כן, לנקודה של משטח יש נורמל יחידה אחד
+        feedback: >-
+          יש שניים, $\pm\hat{\mathbf N}$, וכל פרמטריזציה בוחרת אחד מהם לפי סדר הפרמטרים שלה.
+        misconception: MC-c3-reparam-keeps-normal-direction
+    reasons:
+      - text: 'אם $\tilde\sigma=\sigma\circ\varphi$ אז $\tilde\sigma_s\times\tilde\sigma_t=\det(D\varphi)\,\sigma_u\times\sigma_v$, והסימן של $\det(D\varphi)$ יכול להיות שלילי'
+        correct: true
+        feedback: >-
+          בדיוק. למשל $\varphi(s,t)=(t,s)$ עם $\det=-1$. מה שבלתי תלוי בפרמטריזציה הוא הישר הנורמלי, לא הכיוון.
+      - text: 'אחד מהם כתב את המכפלה הווקטורית בסדר הפוך, וזו טעות'
+        feedback: >-
+          ייתכן שאיש לא טעה: כל אחד כתב $\sigma_u\times\sigma_v$ בפרמטרים **שלו**, ושני הסדרים שונים זה מזה בדטרמיננטה
+          שלילית.
+        misconception: MC-c3-normal-order-irrelevant
+      - text: 'המשטח בהכרח אינו מכוון'
+        feedback: >-
+          גם בספרה, שהיא מכוונת, $\sigma(u,v)$ ו-$\sigma(v,u)$ נותנות נורמלים מנוגדים. משטח מכוון הוא משטח שיש עליו בחירה
+          רציפה **אחת**, לא משטח שבו כל פרמטריזציה מסכימה.
+        misconception: MC-c3-orientable-pointwise
+    hints:
+      - 'חזרו לשיעור 3.2 (המכפלה הווקטורית בהחלפת פרמטרים) ולשיעור 3.3 (הנורמל בשתי פרמטריזציות של הספרה).'
+
+  - id: Q-3-review-05
+    type: numeric
+    objectives: [OBJ-3.4-2, OBJ-1.2-1, OBJ-3.1-2]
+    level: mid
+    prompt: >-
+      על החרוט $\sigma(u,v)=(v\cos u,\ v\sin u,\ v)$, $v>0$, חשבו את אורך המסילה $u=t$, $v=e^t$, $0\le t\le1$.
+    answer: 2.9761514
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\sqrt3\,(e-1)$. $E=v^2$, $F=0$, $G=2$, ולכן $\|\gamma'\|^2=e^{2t}\cdot1+2\cdot e^{2t}=3e^{2t}$, והאורך
+      $\int_0^1\sqrt3\,e^t\,dt=\sqrt3\,(e-1)$. בדיקה ישירה: $\gamma=(e^t\cos t,\ e^t\sin t,\ e^t)$ ו-$\|\gamma'\|^2=2e^{2t}+e^{2t}$.
+    wrongFeedback: >-
+      חשבו את $E,F,G$ של החרוט, הציבו $u'=1$, $v'=e^t$, ואל תשכחו את השורש.
+    commonWrong:
+      - value: 9.5835841
+        feedback: >-
+          זה $\int_0^13e^{2t}\,dt=\frac32(e^2-1)$, אינטגרל של $Q_1$ בלי שורש. אורך הוא $\int\|\gamma'\|\,dt$.
+        misconception: MC-c3-norm-vs-square
+      - value: 2.4300175
+        feedback: >-
+          זה $\sqrt2\,(e-1)$, כאילו $G=1$: מדדתם את $v'$ כאילו $v$ הוא אורך לאורך הישר היוצר. כאן $G=\|\sigma_v\|^2=\|(\cos u,\sin u,1)\|^2=2$.
+        misconception: MC-c3-q1-is-euclidean-in-params
+    hints:
+      - 'חזרו לשיעור 3.4 (אורך עם $E,F,G$), לשיעור 1.2 (אורך קשת) ולשיעור 3.1 (פרמטריזציה של החרוט).'
+
+  - id: Q-3-review-06
+    type: twotier
+    objectives: [OBJ-3.1-1, OBJ-3.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם ייתכן שמשטח $S$ הוא התמונה של פרמטריזציה **רגולרית בכל נקודה** $\sigma:\mathbb R\times(-1,1)\to\mathbb R^3$, ובכל
+      זאת $S$ אינו מכוון?
+    choices:
+      - text: כן, ייתכן
+        correct: true
+        feedback: >-
+          נכון: רצועת מביוס. רגולריות היא תנאי מקומי, וכיווניות גלובלית.
+      - text: לא, פרמטריזציה רגולרית אחת נותנת תמיד כיוון $\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$
+        feedback: >-
+          זה נכון רק כש-$\sigma$ חד-חד-ערכית: אז לכל נקודה של $S$ יש זוג פרמטרים אחד ונורמל אחד. ברצועת מביוס לנקודה
+          יש שני זוגות פרמטרים, והם נותנים נורמלים מנוגדים.
+        misconception: MC-c3-orientable-one-chart
+    reasons:
+      - text: 'ברצועת מביוס $\sigma(u+2\pi,-v)=\sigma(u,v)$, ו-$\hat{\mathbf N}(2\pi,0)=-\hat{\mathbf N}(0,0)$ באותה נקודה'
+        correct: true
+        feedback: >-
+          בדיוק. $\sigma$ אינה חד-חד-ערכית, ולכן הנוסחה $\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$ אינה מגדירה
+          פונקציה של **הנקודה**.
+      - text: 'כי ברצועת מביוס יש קו של נקודות לא רגולריות'
+        feedback: >-
+          אין: $\|\sigma_u\times\sigma_v\|>1$ בכל נקודה עם $|v|<1$. הכשל אינו מקומי.
+        misconception: MC-c3-nonorientable-means-singular
+      - text: 'כי $\sigma$ אינה חד-חד-ערכית, וכל פרמטריזציה לא חד-חד-ערכית נותנת משטח לא מכוון'
+        feedback: >-
+          הגליל $(\cos u,\sin u,v)$ על $\mathbb R\times(-1,1)$ אינו חד-חד-ערכי ומכוון. אי חד-חד-ערכיות רק פותחת את
+          האפשרות; צריך לבדוק מה קורה לנורמל.
+        misconception: MC-c3-regular-means-injective
+    hints:
+      - 'חזרו לשיעור 3.1 (רגולריות מול חד-חד-ערכיות) ולשיעור 3.3 (רצועת מביוס).'
+
+  - id: Q-3-review-07
+    type: numeric
+    objectives: [OBJ-3.5-3, OBJ-1.3-2, OBJ-2.3-3]
+    level: mid
+    prompt: >-
+      $f(x,y)=(2\cos\frac x2,\ 2\sin\frac x2,\ y)$ מלפפת את המישור על הגליל ברדיוס 2, והיא איזומטריה מקומית. מהי העקמומיות
+      $\kappa$ של התמונה $f(t,t)$ של הישר $x=y$?
+    answer: 0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(t,t)=(2\cos\frac t2,\ 2\sin\frac t2,\ t)$; עם $s=\frac t2$ זה הסליל $(2\cos s,\ 2\sin s,\ 2s)$, $a=b=2$, ולכן
+      $\kappa=\frac{a}{a^2+b^2}=\frac28=\frac14$. הישר, שעקמומיותו 0, הפך למסילה עם עקמומיות $\frac14$: העקמומיות של מסילה
+      חיצונית.
+    wrongFeedback: >-
+      כתבו את המסילה, זהו בה סליל $(a\cos s,a\sin s,bs)$, או חשבו $\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          איזומטריה מקומית שומרת אורכים וזוויות, אבל לא את העקמומיות של מסילה במרחב: התמונה היא סליל, לא ישר.
+        misconception: MC-c3-curvature-of-curve-intrinsic
+    hints:
+      - 'חזרו לשיעור 3.5 (תכונה פנימית מול חיצונית), לשיעור 1.3 (עקמומיות בפרמטר כללי) ולשיעור 2.3 (הסליל).'
+
+  - id: Q-3-review-08
+    type: numeric
+    objectives: [OBJ-3.2-2, OBJ-3.4-1]
+    level: mid
+    prompt: >-
+      בנקודה מסוימת של פרמטריזציה $\sigma(u,v)$ מתקיים $E=1$, $F=3$, $G=10$. נגדיר $\tilde\sigma(s,t)=\sigma(2s,t)$. חשבו את
+      $\tilde E\tilde G-\tilde F^2$ בנקודה המתאימה.
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\tilde\sigma_s=2\sigma_u$ ו-$\tilde\sigma_t=\sigma_v$, ולכן $\tilde E=4$, $\tilde F=6$, $\tilde G=10$ ו-$\tilde E\tilde G-\tilde F^2=40-36=4$.
+      באופן כללי $\tilde E\tilde G-\tilde F^2=\det(D\varphi)^2\,(EG-F^2)=4\cdot1$.
+    wrongFeedback: >-
+      חשבו את $\tilde\sigma_s,\tilde\sigma_t$ בעזרת כלל השרשרת ומהם את $\tilde E,\tilde F,\tilde G$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          זה $EG-F^2$ לפני ההחלפה. $E,F,G$ ו-$EG-F^2$ תלויים בפרמטריזציה: כאן $\|\tilde\sigma_s\times\tilde\sigma_t\|^2=4\|\sigma_u\times\sigma_v\|^2$.
+        misconception: MC-c3-partials-are-geometric
+      - value: 2
+        feedback: >-
+          $|\det(D\varphi)|=2$ מכפיל את $\|\sigma_u\times\sigma_v\|$, ו-$EG-F^2$ הוא הריבוע שלו: מוכפל ב-4.
+        misconception: MC-c3-norm-vs-square
+    hints:
+      - 'חזרו לשיעור 3.2 (החלפת פרמטרים וכלל השרשרת) ולשיעור 3.4 (זהות לגרנז׳).'
+
+  - id: Q-3-review-09
+    type: numeric
+    objectives: [OBJ-3.4-2, OBJ-3.2-3]
+    level: mid
+    prompt: >-
+      $\sigma(u,v)=(u+v,\ v,\ 0)$ היא פרמטריזציה של המישור $z=0$. חשבו את $\cos\theta$ של הזווית בין הקווים הפרמטריים בכל
+      נקודה. (בפרמטריזציה $(x,y,0)$ של אותו מישור הקווים הפרמטריים ניצבים.)
+    answer: 0.7071068
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $E=1$, $F=1$, $G=2$ ו-$\cos\theta=\frac{1}{\sqrt2}$, זווית $45^\circ$. הזווית בין **הקווים הפרמטריים** היא נתון של
+      הפרמטריזציה; הזווית בין **שתי מסילות נתונות** אינה תלויה בה.
+    wrongFeedback: >-
+      $\cos\theta=\frac{F}{\sqrt{EG}}$ עם $\sigma_u=(1,0,0)$ ו-$\sigma_v=(1,1,0)$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          זה נכון בפרמטריזציה $(x,y,0)$, לא בזו. כאן $F=\sigma_u\cdot\sigma_v=1\ne0$: הקווים $v=\text{const}$ אופקיים והקווים
+          $u=\text{const}$ אלכסוניים.
+        misconception: MC-c3-coordinate-curves-orthogonal
+      - value: 0.5
+        feedback: >-
+          זה $\frac{F}{EG}$. במכנה האורכים $\sqrt E\sqrt G=\sqrt2$, לא הריבועים.
+        misconception: MC-c3-norm-vs-square
+    hints:
+      - 'חזרו לשיעור 3.4 (זווית בין קווים פרמטריים) ולשיעור 3.2 (מה תלוי בפרמטריזציה).'
+
+  - id: Q-3-review-10
+    type: numeric
+    objectives: [OBJ-3.4-2, OBJ-3.1-2, OBJ-3.5-1]
+    level: mid
+    prompt: >-
+      בטורוס $\big((3+\cos v)\cos u,\ (3+\cos v)\sin u,\ \sin v\big)$ חשבו את היחס בין אורך קו המשווה החיצוני $v=0$ לבין
+      אורך קו המשווה הפנימי $v=\pi$.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $E=(3+\cos v)^2$, ולכן האורכים $2\pi\cdot4$ ו-$2\pi\cdot2$, והיחס 2. מסקנה: אין איזומטריה של הטורוס לעצמו שמעבירה
+      את המעגל החיצוני לפנימי, כי איזומטריה שומרת אורכים.
+    wrongFeedback: >-
+      על קו $v=\text{const}$ רק $u$ משתנה, ולכן האורך הוא $\int_0^{2\pi}\sqrt E\,du$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          שני המעגלים מתוארים באותו קטע $0\le u\le2\pi$ במישור הפרמטרים, אבל על הטורוס הם באורכים שונים: $\sqrt E$ שונה.
+        misconception: MC-c3-q1-is-euclidean-in-params
+      - value: 4
+        feedback: >-
+          זה היחס בין $E(0)=16$ ל-$E(\pi)=4$. אורך מחושב מ-$\sqrt E$, ולכן היחס $\frac42$.
+        misconception: MC-c3-norm-vs-square
+    hints:
+      - 'חזרו לשיעור 3.4 (אורך של מסילה), לשיעור 3.1 (הטורוס) ולשיעור 3.5 (איזומטריה שומרת אורכים).'
+
+  - id: Q-3-review-11
+    type: multi
+    objectives: [OBJ-3.1-3, OBJ-3.2-1, OBJ-3.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      החרוט הכפול $C=\{x^2+y^2=z^2\}$ ו-$F(x,y,z)=x^2+y^2-z^2$. אילו מהטענות הבאות נכונות? סמנו את כולן.
+    choices:
+      - text: '0 אינו ערך רגולרי של $F$'
+        correct: true
+        feedback: 'נכון: $\nabla F=(2x,2y,-2z)$ מתאפס בראשית, שנמצאת על $C$.'
+      - text: 'העובדה ש-0 אינו ערך רגולרי של $F$ מוכיחה ש-$C$ אינו משטח חלק'
+        feedback: >-
+          ההסקה הזו שגויה, אף שהמסקנה עצמה נכונה: ערך לא רגולרי לא מוכיח דבר ($z^2=0$ הוא מישור). צריך טיעון על הקבוצה,
+          למשל שסביבה של הקודקוד בלי הקודקוד אינה קשירה.
+        misconception: MC-c3-regular-value-necessary
+      - text: '$C$ בלי הראשית הוא משטח חלק'
+        correct: true
+        feedback: >-
+          נכון: על $\mathbb R^3\setminus\{0\}$ הגרדיאנט אינו מתאפס, ולכן 0 ערך רגולרי של $F$ שם.
+      - text: '$C$ בלי הראשית איזומטרי מקומית למישור'
+        correct: true
+        feedback: >-
+          נכון: כל חצי של החרוט נפרש לגזרה, ובפרמטריזציה $(v\cos u,v\sin u,v)$ מתקבל $E=v^2$, $G=2$, $F=0$, המקדמים של
+          $(\sqrt2\,v\cos\frac u{\sqrt2},\ \sqrt2\,v\sin\frac u{\sqrt2},\ 0)$.
+      - text: 'הפרמטריזציה $(v\cos u,\ v\sin u,\ v)$ רגולרית גם ב-$v=0$, אם רק בוחרים $u$ נכון'
+        feedback: >-
+          $\|\sigma_u\times\sigma_v\|=\sqrt2\,|v|$ מתאפס ב-$v=0$ לכל $u$.
+        misconception: MC-c3-regularity-only-generic-point
+    hints:
+      - 'חזרו לשיעור 3.1 (קודקוד החרוט), לשיעור 3.2 (ערך רגולרי: מספיק, לא הכרחי) ולשיעור 3.5 (פורשים חרוט).'
+
+  - id: Q-3-review-12
+    type: mc
+    objectives: [OBJ-3.5-1, OBJ-3.5-3, OBJ-3.4-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      על משטח $S$ יש פרמטריזציה על $\{0<u<\pi,\ v>0\}$ עם $E=v^2$, $F=0$, $G=1$. מה נובע מזה בהכרח?
+    choices:
+      - text: '$S$ איזומטרי מקומית למישור, אבל אינו בהכרח חתיכה של מישור'
+        correct: true
+        feedback: >-
+          נכון. לקואורדינטות קוטביות $(v\cos u,\ v\sin u,\ 0)$ אותם מקדמים, ולכן יש איזומטריה. אבל גם החרוט
+          $\big(a v\cos\frac ua,\ a v\sin\frac ua,\ \sqrt{1-a^2}\,v\big)$, $0<a<1$, נותן $E=v^2$, $F=0$, $G=1$.
+      - text: '$S$ הוא חתיכה של מישור'
+        feedback: >-
+          התבנית הראשונה קובעת את הגאומטריה הפנימית בלבד. החרוט של התשובה הנכונה הוא דוגמה נגדית.
+        misconception: MC-c3-q1-determines-shape
+      - text: '$S$ אינו איזומטרי מקומית למישור, כי $E\ne1$'
+        feedback: >-
+          איזומטריה צריכה פרמטריזציה **כלשהי** של חתיכת מישור עם אותם מקדמים, לא את $E=G=1$ דווקא. קואורדינטות קוטביות
+          נותנות $E=v^2$.
+        misconception: MC-c3-isometry-requires-unit-coefficients
+      - text: '$\hat{\mathbf N}$ של $S$ קבוע, כמו של מישור'
+        feedback: >-
+          $\hat{\mathbf N}$ אינו נקבע מ-$E,F,G$. בחרוט של התשובה הנכונה הנורמל משתנה עם $u$.
+        misconception: MC-c3-normal-is-intrinsic
+    hints:
+      - 'חזרו לשיעור 3.5 (מתי שני משטחים איזומטריים, תכונה פנימית מול חיצונית) ולשיעור 3.4 (קואורדינטות קוטביות).'
+
+  - id: Q-3-review-13
+    type: rank
+    objectives: [OBJ-3.3-3, OBJ-3.3-1, OBJ-3.2-1]
+    level: mid
+    help: >-
+      סדרו את שלבי ההוכחה מהשלב הראשון לאחרון.
+    prompt: >-
+      $F:\mathbb R^3\to\mathbb R$ חלקה ו-$c$ ערך רגולרי שלה. הוכיחו ש-$S=F^{-1}(c)$ הוא משטח מכוון.
+    items:
+      - id: surface
+        label: 'לפי משפט הפונקציה הסתומה, $S$ הוא מקומית גרף, ולכן משטח חלק'
+      - id: tangent
+        label: 'לכל $p\in S$: $T_pS=\nabla F(p)^{\perp}$, כי לכל מסילה $\gamma$ ב-$S$ מתקיים $F(\gamma(t))=c$, ולכן $\nabla F\cdot\gamma''=0$'
+      - id: define
+        label: 'לכן $\nabla F(p)$ ניצב ל-$T_pS$, והוא שונה מאפס כי $c$ ערך רגולרי; מגדירים $\mathbf n(p)=\frac{\nabla F(p)}{\|\nabla F(p)\|}$'
+      - id: props
+        label: '$\mathbf n$ רציפה (מנה של פונקציות רציפות עם מכנה שונה מאפס), באורך 1 וניצבת ל-$T_pS$'
+      - id: conclude
+        label: 'לכן $\mathbf n$ היא בחירה רציפה של נורמל יחידה על $S$, ו-$S$ מכוון'
+    order: [surface, tangent, define, props, conclude]
+    correctFeedback: >-
+      נכון. הרעיון: הגרדיאנט הוא פונקציה של הנקודה במרחב, ולכן הוא נותן נורמל על כל המשטח בבת אחת, בלי לתפור
+      פרמטריזציות. מכאן גם שרצועת מביוס אינה משטח רמה של ערך רגולרי.
+    wrongFeedback: >-
+      קודם מראים ש-$S$ משטח ומזהים את המישור המשיק; אחר כך מגדירים את הנורמל ובודקים את שלוש התכונות שלו.
+    hints:
+      - 'חזרו לשיעור 3.3 (המישור המשיק של משטח רמה, משטח מכוון) ולשיעור 3.2 (קבוצת רמה של ערך רגולרי).'

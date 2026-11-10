@@ -1,0 +1,10 @@
+# Terms first defined in lesson 8.4.
+- id: pullback
+  term: משיכה לאחור
+  en: pullback
+  symbol: '\varphi^*\omega'
+  definition: >-
+    להעתקה גזירה $\varphi$ ותבנית $\omega$ על מרחב התמונה, $(\varphi^*\omega)_p(v_1,\dots,v_k)=\omega_{\varphi(p)}(D\varphi_pv_1,\dots,D\varphi_pv_k)$.
+    בפועל מציבים $x=x(u,v)$ במקדמים ו-$dx=x_u\,du+x_v\,dv$ בדיפרנציאלים; למשל $\varphi^*(dx\wedge dy)=\det J\,du\wedge dv$.
+    האינטגרל של $\omega$ על משטח $\varphi(D)$ מוגדר כ-$\int_D\varphi^*\omega$.
+  lesson: '8.4'

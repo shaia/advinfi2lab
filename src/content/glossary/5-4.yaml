@@ -1,0 +1,39 @@
+# Terms first defined in lesson 5.4 (integrals of a function over a curve and over a surface).
+- id: scalar-line-integral
+  term: אינטגרל של פונקציה לפי אורך קשת
+  en: line integral of a function (with respect to arc length)
+  symbol: '\int_\gamma\rho\,ds'
+  definition: >-
+    $\int_\gamma\rho\,ds=\int_a^b\rho(\gamma(t))\,\|\gamma'(t)\|\,dt$ למסילה רגולרית $\gamma:[a,b]\to\mathbb R^n$. אינו
+    תלוי בפרמטריזציה ולא בכיוון; עם $\rho=1$ הוא אורך המסילה.
+  lesson: '5.4'
+- id: scalar-surface-integral
+  term: אינטגרל של פונקציה לפי שטח
+  en: surface integral of a function
+  symbol: '\iint_S\rho\,dS'
+  definition: >-
+    $\iint_S\rho\,dS=\iint_D\rho(\sigma(u,v))\,\|\sigma_u\times\sigma_v\|\,du\,dv$ לפרמטריזציה רגולרית וחד-חד-ערכית
+    של $S$. אינו תלוי בפרמטריזציה ולא בכיוון הנורמל; עם $\rho=1$ הוא שטח המשטח.
+  lesson: '5.4'
+- id: density
+  term: צפיפות
+  en: density
+  definition: >-
+    פונקציה $\rho\ge0$ על מסילה, משטח או גוף, שהאינטגרל שלה (לפי אורך, שטח או נפח) הוא המסה.
+  lesson: '5.4'
+- id: centre-of-mass
+  term: מרכז מסה
+  en: centre of mass
+  symbol: '\bar z=\frac{\iint_Sz\,\rho\,dS}{\iint_S\rho\,dS}'
+  definition: >-
+    הנקודה $(\bar x,\bar y,\bar z)$ שכל קואורדינטה שלה היא ממוצע הקואורדינטה במשקל הצפיפות: למשטח
+    $\bar z=\frac{\iint_Sz\,\rho\,dS}{\iint_S\rho\,dS}$, ובאותה צורה למסילה ולגוף. מרכז המסה של מעטפת אינו בהכרח על
+    המעטפת.
+  lesson: '5.4'
+- id: average-of-function
+  term: ממוצע של פונקציה על מסילה או משטח
+  en: average value
+  definition: >-
+    $\frac1L\int_\gamma f\,ds$ כש-$L$ אורך המסילה, או $\frac1A\iint_Sf\,dS$ כש-$A$ שטח המשטח. ממוצע של קבוע $c$
+    הוא $c$.
+  lesson: '5.4'

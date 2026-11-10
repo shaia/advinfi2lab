@@ -1,0 +1,46 @@
+# Terms first defined in lesson 2.1 (the Frenet frame and the osculating plane).
+# Chapter 1 owns curvature, the unit tangent, the principal normal, the osculating circle and arc length.
+- id: binormal
+  term: בינורמל
+  en: binormal
+  symbol: '\mathbf b=\mathbf t\times\mathbf n'
+  definition: >-
+    בנקודה שבה $\kappa>0$, הבינורמל הוא $\mathbf b=\mathbf t\times\mathbf n$, המכפלה הווקטורית של המשיק היחידה בנורמל הראשי.
+    הוא וקטור יחידה הניצב למישור המנשק. בפרמטר כללי $\mathbf b=\frac{\gamma'\times\gamma''}{\|\gamma'\times\gamma''\|}$.
+  reject: [בי-נורמל]
+  lesson: '2.1'
+- id: frenet-frame
+  term: השלשה של פרנה
+  en: Frenet frame
+  symbol: '(\mathbf t,\mathbf n,\mathbf b)'
+  definition: >-
+    שלושת הווקטורים $\mathbf t,\mathbf n,\mathbf b$ בנקודה של מסילה שבה $\kappa>0$: בסיס אורתונורמלי ימני של $\mathbb R^3$
+    שנע עם המסילה. בנקודה שבה $\kappa=0$ השלשה לא מוגדרת, ולפעמים אין לה הרחבה רציפה.
+  lesson: '2.1'
+- id: osculating-plane
+  term: מישור מנשק
+  en: osculating plane
+  definition: >-
+    המישור דרך $\gamma(t_0)$ שנפרש על ידי $\mathbf t$ ו-$\mathbf n$, כלומר הניצב ל-$\mathbf b$; בפרמטר כללי
+    $\bigl(x-\gamma(t_0)\bigr)\cdot\bigl(\gamma'(t_0)\times\gamma''(t_0)\bigr)=0$. המעגל המנשק מונח בו.
+  lesson: '2.1'
+- id: normal-plane
+  term: מישור נורמלי
+  en: normal plane (of a curve)
+  definition: >-
+    המישור דרך $\gamma(t_0)$ הניצב למשיק, שנפרש על ידי $\mathbf n$ ו-$\mathbf b$.
+  lesson: '2.1'
+- id: rectifying-plane
+  term: מישור מיישר
+  en: rectifying plane
+  definition: >-
+    המישור דרך $\gamma(t_0)$ שנפרש על ידי $\mathbf t$ ו-$\mathbf b$, כלומר הניצב לנורמל הראשי $\mathbf n$.
+  lesson: '2.1'
+- id: twisted-cubic
+  term: המסילה המעוקבת
+  en: twisted cubic
+  symbol: '(t,t^2,t^3)'
+  definition: >-
+    המסילה $\gamma(t)=(t,t^2,t^3)$, הדוגמה הבסיסית למסילה שאינה מישורית: $\kappa(0)=2$, $\tau(0)=3$, והשלשה של פרנה בראשית
+    היא הבסיס הסטנדרטי.
+  lesson: '2.1'

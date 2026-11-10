@@ -1,0 +1,370 @@
+# Lesson 0.1 — how the course is studied: reading a parametrization, testing a definition on the test objects,
+# and the self-study path. Diagnostic questions, mostly basic and mid.
+# Objectives (src/course.ts):
+#   OBJ-0.1-1  read a parametrization of a curve or a surface and sketch its image
+#   OBJ-0.1-2  test every geometric definition on the course's test objects
+#   OBJ-0.1-3  plan self-study: understanding questions after each lesson, review and exam questions per chapter
+chapter: 0
+questions:
+  - id: Q-0.1-circle2
+    type: mc
+    objectives: [OBJ-0.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהי התמונה של המסילה $\gamma(t)=(\cos 2t,\ \sin 2t)$, $t\in[0,2\pi]$, ואיך המסילה עוברת עליה?
+    choices:
+      - text: מעגל היחידה, שהמסילה מקיפה פעמיים נגד כיוון השעון
+        correct: true
+        feedback: >-
+          נכון. $\cos^2 2t+\sin^2 2t=1$, ולכן כל נקודה על מעגל היחידה. הזווית $2t$ עוברת מ-$0$ עד $4\pi$, כלומר שני
+          סיבובים מלאים, ועולה, ולכן נגד כיוון השעון.
+      - text: מעגל ברדיוס $2$, שהמסילה מקיפה פעם אחת
+        feedback: >-
+          ה-$2$ נמצא **בתוך** הארגומנט, ולכן הוא משנה את הקצב ולא את הרדיוס. רדיוס $2$ נותנת $(2\cos t,\ 2\sin t)$.
+        misconception: MC-c0-param-coefficient-scale
+      - text: מעגל היחידה, שהמסילה מקיפה פעם אחת, בדיוק כמו $(\cos t,\ \sin t)$
+        feedback: >-
+          התמונה אכן מעגל היחידה, אבל המסילה היא הפונקציה, לא רק התמונה: כבר ב-$t=\pi$ המסילה חזרה ל-$(1,0)$, ועד
+          $t=2\pi$ היא מקיפה פעם נוספת.
+        misconception: MC-c0-curve-is-image
+      - text: חצי מעגל היחידה, כי $t$ עובר רק על $[0,2\pi]$
+        feedback: >-
+          כש-$t$ עובר על $[0,2\pi]$ הזווית $2t$ עוברת על $[0,4\pi]$, יותר מסיבוב שלם. חצי מעגל היה מתקבל, למשל,
+          עבור $t\in[0,\frac\pi2]$.
+        misconception: MC-c0-missing-parameter-range
+
+  - id: Q-0.1-cusp
+    type: mc
+    objectives: [OBJ-0.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהי התמונה של $\gamma(t)=(t^2,\ t^3)$, $t\in\mathbb R$?
+    choices:
+      - text: 'העקום $y^2=x^3$ עם $x\ge0$: שני ענפים, $y=x^{3/2}$ ו-$y=-x^{3/2}$, שנפגשים בחוד בראשית'
+        correct: true
+        feedback: >-
+          נכון. $x=t^2\ge0$ ו-$y^2=t^6=x^3$. ל-$t>0$ מתקבל הענף העליון, ל-$t<0$ התחתון, ושניהם יוצאים מהראשית
+          באותו כיוון, לאורך ציר $x$: זה החוד.
+      - text: 'הענף $y=x^{3/2}$, $x\ge0$ בלבד: עקום אחד שיוצא מהראשית לאורך ציר $x$ ועולה'
+        feedback: >-
+          זה מה שמתקבל מ-$t\ge0$ בלבד. עבור $t<0$ הערך $y=t^3$ שלילי, ואז מתקבל הענף $y=-x^{3/2}$.
+        misconception: MC-c0-missing-parameter-range
+      - text: 'העקום $y^2=x^3$, $x\ge0$, בלי חוד ובלי פינה: שני הרכיבים פולינומים, ולכן התמונה חלקה'
+        feedback: >-
+          הרכיבים גזירים אינסוף פעמים, ובכל זאת לתמונה יש חוד בראשית: שם $\gamma'(0)=(0,0)$, המסילה נעצרת ומשנה
+          כיוון.
+        misconception: MC-c0-smooth-map-smooth-image
+      - text: 'הפרבולה $y=x^2$, שעוברת בראשית ופתוחה כלפי מעלה'
+        feedback: >-
+          הצבה: $x=t^2$ ו-$y=t^3$. אז $y^2=x^3$, לא $y=x^2$. בדקו בנקודה $t=2$: $(4,8)$, ואכן $8^2=4^3$, בעוד ש-$4^2\ne8$.
+        misconception: MC-c0-eliminate-parameter
+
+  - id: Q-0.1-sphere
+    type: mc
+    objectives: [OBJ-0.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהי התמונה של
+      $$\sigma(\theta,\varphi)=(\sin\varphi\cos\theta,\ \sin\varphi\sin\theta,\ \cos\varphi),\qquad \theta\in[0,2\pi],\ \varphi\in\left[0,\tfrac\pi2\right]?$$
+    choices:
+      - text: 'חצי ספרת היחידה העליון, $z\ge0$'
+        correct: true
+        feedback: >-
+          נכון. סכום הריבועים הוא $\sin^2\varphi+\cos^2\varphi=1$, כך שכל נקודה על ספרת היחידה, ו-$z=\cos\varphi\ge0$ כי
+          $\varphi\in[0,\frac\pi2]$. הקווים $\varphi=$ קבוע הם מעגלי רוחב.
+      - text: 'כל ספרת היחידה'
+        feedback: >-
+          את כל הספרה נותן $\varphi\in[0,\pi]$. כאן $\varphi\le\frac\pi2$, ולכן $\cos\varphi\ge0$: רק החצי העליון.
+        misconception: MC-c0-missing-parameter-range
+      - text: 'עיגול היחידה במישור $z=0$'
+        feedback: >-
+          הרכיב השלישי $z=\cos\varphi$ אינו אפס (פרט ל-$\varphi=\frac\pi2$). הנקודה $\varphi=0$, למשל, היא הקוטב $(0,0,1)$.
+        misconception: MC-c0-curve-is-image
+      - text: 'חצי ספרת היחידה התחתון, $z\le0$'
+        feedback: >-
+          בדקו נקודה אחת: $\varphi=0$ נותן $(0,0,1)$, הקוטב העליון. $z=\cos\varphi$ חיובי על $[0,\frac\pi2)$.
+        misconception: MC-c0-missing-parameter-range
+
+  - id: Q-0.1-helix
+    type: numeric
+    objectives: [OBJ-0.1-1]
+    level: basic
+    prompt: >-
+      המסילה $\gamma(t)=(2\cos t,\ 2\sin t,\ 3t)$ היא סליל על הגליל $x^2+y^2=4$. כמה עולה הגובה $z$ בין שני מעברים עוקבים
+      של המסילה מעל הנקודה $(2,0)$?
+    answer: 18.849556
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון, $6\pi$. המסילה מעל $(2,0)$ בדיוק כש-$\cos t=1$ ו-$\sin t=0$, כלומר ב-$t=2\pi k$. בין $t=0$ ל-$t=2\pi$
+      הגובה עולה ב-$3\cdot2\pi=6\pi\approx18.850$.
+    wrongFeedback: >-
+      מצאו מתי המסילה חוזרת מעל $(2,0)$ (הרכיבים הראשונים מחזוריים), וחשבו את $z$ באותם רגעים.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          $3$ הוא הקצב שבו $z$ עולה ליחידת פרמטר, לא העלייה בסיבוב שלם. סיבוב שלם הוא $2\pi$ יחידות פרמטר.
+        misconception: MC-c0-param-coefficient-scale
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא השינוי בפרמטר בסיבוב שלם. הגובה הוא $z=3t$, ולכן הוא עולה פי $3$ מזה.
+        misconception: MC-c0-param-coefficient-scale
+
+  - id: Q-0.1-speed
+    type: twotier
+    objectives: [OBJ-0.1-2, OBJ-0.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שתי המסילות $\gamma_1(t)=(\cos t,\ \sin t)$ ו-$\gamma_2(t)=(\cos 2t,\ \sin 2t)$, $t\in[0,2\pi]$, מציירות את מעגל
+      היחידה. האם הגודל $\|\gamma'(t)\|$, המהירות, הוא תכונה של המעגל עצמו?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $\|\gamma_1'\|=1$ ו-$\|\gamma_2'\|=2$: אותה תמונה, מהירויות שונות. המהירות היא תכונה של הפרמטריזציה.
+      - text: כן
+        feedback: >-
+          שתי המסילות מציירות את אותו מעגל, אבל במהירויות שונות. מסילה היא פונקציה, והמהירות שלה תלויה באיך עוברים על
+          התמונה.
+        misconception: MC-c0-curve-is-image
+    reasons:
+      - text: '$\|\gamma_1''(t)\|=1$ ו-$\|\gamma_2''(t)\|=2$ לכל $t$'
+        correct: true
+        feedback: >-
+          בדיוק. לכן כל הגדרה גאומטרית בקורס, כמו עקמומיות, תיבדק על שתי פרמטריזציות של אותה תמונה: היא צריכה לתת את אותה
+          תשובה.
+      - text: 'לשתיהן אותה תמונה, ולכן אותה מהירות'
+        feedback: >-
+          תמונה משותפת לא קובעת את המהירות: $\gamma_2(t)=\gamma_1(2t)$, ולפי כלל השרשרת $\gamma_2'(t)=2\gamma_1'(2t)$.
+        misconception: MC-c0-curve-is-image
+      - text: 'ל-$\gamma_2$ רדיוס $2$, ולכן המהירות שלה $2$'
+        feedback: >-
+          הרדיוס של שתיהן $1$. המהירות $2$ באה מהקצב: הזווית $2t$ מסתובבת פי שניים מהר.
+        misconception: MC-c0-param-coefficient-scale
+
+  - id: Q-0.1-test-def
+    type: multi
+    objectives: [OBJ-0.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סטודנטית מציעה להגדיר "כמה מסילה מתעקלת" בנקודה כ-$\|\gamma''(t)\|$. אנחנו מצפים שלישר יהיה ערך $0$ ולמעגל היחידה
+      ערך $1$, בכל פרמטריזציה. אילו מהבדיקות הבאות **חושפות** שההגדרה אינה טובה? סמנו את כולן.
+    choices:
+      - text: 'מעגל היחידה בפרמטריזציה $(\cos 2t,\ \sin 2t)$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma''(t)=-4(\cos 2t,\ \sin 2t)$, ולכן $\|\gamma''\|=4$ ולא $1$: התשובה תלויה בפרמטריזציה.
+      - text: 'הישר $\gamma(t)=(t^3,\ 0)$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma''(t)=(6t,\ 0)$, ולכן $\|\gamma''(t)\|=6|t|$, שאינו $0$ לכל $t\ne0$, על ישר שאינו מתעקל כלל. התאוצה כאן נובעת משינוי
+          הקצב, לא מכיפוף.
+      - text: 'מעגל היחידה בפרמטריזציה $(\cos t,\ \sin t)$'
+        feedback: >-
+          כאן $\|\gamma''\|=1$, בדיוק מה שציפינו. הבדיקה הזו עוברת, ולכן לא חושפת דבר: דוגמה שמצליחה אינה הוכחה.
+        misconception: MC-c0-one-example-proves
+      - text: 'הישר $\gamma(t)=(t,\ 2t)$'
+        feedback: >-
+          $\gamma''=0$, כמצופה. גם הבדיקה הזו עוברת. רק בדיקה שנכשלת חושפת בעיה.
+        misconception: MC-c0-one-example-proves
+    explanation: >-
+      זו כל השיטה של הקורס: מנסחים הגדרה ובודקים אותה על אובייקטי המבחן, ובמיוחד על פרמטריזציה **אחרת** של אותה תמונה.
+      בפרק 1 נתקן את ההגדרה: גוזרים לפי פרמטר אורך הקשת, ואז התשובה לא תלויה בקצב.
+
+  - id: Q-0.1-cusp-smooth
+    type: twotier
+    objectives: [OBJ-0.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נכון או לא: "אם כל רכיבי המסילה $\gamma:\mathbb R\to\mathbb R^2$ גזירים אינסוף פעמים, לתמונה שלה אין חודים ואין פינות."
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. אובייקט המבחן $(t^2,\ t^3)$ מפריך את הטענה.
+      - text: נכון
+        feedback: >-
+          הגזירות של הרכיבים לא מספיקה. לתמונה של $(t^2,\ t^3)$, מסילה עם רכיבים פולינומיים, יש חוד בראשית.
+        misconception: MC-c0-smooth-map-smooth-image
+    reasons:
+      - text: '$(t^2,\ t^3)$ גזירה אינסוף פעמים, $\gamma''(0)=0$, ולתמונה $y^2=x^3$ יש חוד בראשית'
+        correct: true
+        feedback: >-
+          בדיוק. כשהמהירות מתאפסת המסילה יכולה להיעצר ולצאת לכיוון אחר. מה שמונע חודים הוא $\gamma'(t)\ne0$, תנאי
+          שייקרא בפרק 1 רגולריות.
+      - text: 'החוד נוצר כי $t^3$ אינה גזירה ב-$0$'
+        feedback: >-
+          $t^3$ גזירה בכל מקום, ונגזרתה $3t^2$. גם $t^2$ גזירה. החוד לא נובע מאי-גזירות אלא מהתאפסות של $\gamma'(0)$.
+        misconception: MC-c0-smooth-map-smooth-image
+      - text: 'התמונה של העתקה חלקה היא תמיד קבוצה חלקה'
+        feedback: >-
+          זו בדיוק הטענה שצריך לבדוק, והיא שקרית: התמונה של $(t^2,\ t^3)$, העתקה חלקה, היא עקום עם חוד.
+        misconception: MC-c0-smooth-map-smooth-image
+
+  - id: Q-0.1-ruled
+    type: twotier
+    objectives: [OBJ-0.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נכון או לא: "משטח ב-$\mathbb R^3$ (כמו אובייקטי המבחן: מישור, גליל, ספרה, אוכף) שדרך כל נקודה שלו עובר ישר שלם
+      המוכל בו הוא חלק ממישור."
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. שניים מאובייקטי המבחן מפריכים את הטענה: הגליל והאוכף.
+      - text: נכון
+        feedback: >-
+          בדקו את הטענה על הגליל $x^2+y^2=1$: דרך הנקודה $(\cos\theta,\ \sin\theta,\ z_0)$ עובר הישר האנכי
+          $(\cos\theta,\ \sin\theta,\ z)$, והגליל אינו מישור.
+        misconception: MC-c0-curved-means-no-lines
+    reasons:
+      - text: 'על האוכף $z=xy$, דרך $(a,b,ab)$ עובר הישר $(a+t,\ b,\ ab+bt)$, ובכל זאת האוכף אינו מישור'
+        correct: true
+        feedback: >-
+          בדיוק: $(a+t)\,b=ab+bt$ לכל $t$, כך שכל הישר על המשטח. האוכף מכיל אפילו שני ישרים כאלה דרך כל נקודה.
+      - text: 'משטח שאינו מישור מתעקל, ולכן אינו יכול להכיל ישר'
+        feedback: >-
+          משטח יכול להתעקל בכיוון אחד ולהישאר ישר בכיוון אחר: הגליל עקום מסביב לציר וישר לאורכו.
+        misconception: MC-c0-curved-means-no-lines
+      - text: 'הספרה מכילה ישרים דרך כל נקודה: המעגלים הגדולים'
+        feedback: >-
+          מעגל גדול אינו ישר. הספרה חסומה, ולכן אינה מכילה אף ישר שלם. היא לא מפריכה את הטענה; הגליל והאוכף כן.
+        misconception: MC-c0-one-example-proves
+
+  - id: Q-0.1-corner
+    type: twotier
+    objectives: [OBJ-0.1-2, OBJ-0.1-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן שמסילה $\gamma:\mathbb R\to\mathbb R^2$ גזירה פעמיים ברציפות מציירת בדיוק את הגרף $y=|x|$, שיש לו פינה בראשית?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. גזירות של המסילה, גם פעמיים ברציפות, אינה מונעת פינה בתמונה; היא רק מכריחה את המסילה לעצור בפינה.
+      - text: לא
+        feedback: >-
+          זה נשמע סביר, אבל אובייקט המבחן הנכון מפריך את זה: מסילה שמאטה עד עצירה בפינה, ממשיכה בכיוון אחר, וכל זה בגזירות
+          מלאה.
+        misconception: MC-c0-smooth-map-smooth-image
+    reasons:
+      - text: '$\gamma(t)=(t^3,\ |t|^3)$: $\gamma''(t)=(3t^2,\ 3t|t|)$ ו-$\gamma''''(t)=(6t,\ 6|t|)$ רציפות, והתמונה היא $y=|x|$'
+        correct: true
+        feedback: >-
+          בדיוק. ל-$t\ge0$ מתקבל $(t^3,t^3)$, החצי $y=x$, ול-$t<0$ מתקבל $(t^3,-t^3)$, החצי $y=-x$ עם $x<0$. ב-$t=0$
+          המהירות $\gamma'(0)=0$, ושם הפינה. בפרק 1 נראה שבמסילה **רגולרית** זה לא יכול לקרות.
+      - text: 'פינה פירושה שהנגזרת קופצת, וזה לא ייתכן למסילה גזירה ברציפות'
+        feedback: >-
+          ה**כיוון** של $\gamma'$ קופץ, לא $\gamma'$ עצמה: ב-$(t^3,|t|^3)$ הנגזרת רציפה ושווה ל-$0$ בפינה, והכיוון
+          $\frac{\gamma'}{\|\gamma'\|}$ קופץ מ-$\frac{1}{\sqrt2}(1,-1)$ ל-$\frac{1}{\sqrt2}(1,1)$.
+        misconception: MC-c0-smooth-map-smooth-image
+      - text: 'המסילה $(t,\ |t|)$ מציירת את הגרף, והיא גזירה פעמיים בכל $t\ne0$; זה מספיק'
+        feedback: >-
+          הדרישה היא גזירות בכל $t\in\mathbb R$, ודווקא ב-$t=0$, בפינה, $|t|$ אינה גזירה. אסור לדלג על הנקודה היחידה
+          שבה הבעיה נמצאת.
+        misconception: MC-c0-missing-parameter-range
+
+  - id: Q-0.1-path
+    type: rank
+    objectives: [OBJ-0.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      סדרו את שלבי מסלול הלימוד העצמי של פרק אחד, מהראשון לאחרון.
+    help: גררו את השלבים לסדר שבו עובדים, מהראשון (למעלה) לאחרון.
+    items:
+      - { id: lesson, label: 'השיעור' }
+      - { id: understanding, label: 'שאלות ההבנה של השיעור: בסיס, בינוני, מבחן' }
+      - { id: workbook, label: 'חוברת התרגול של השיעור' }
+      - { id: review, label: 'שאלות החזרה על הפרק' }
+      - { id: exam, label: 'שאלות המבחן של הפרק' }
+      - { id: test, label: 'מבחן הפרק' }
+    order: [lesson, understanding, workbook, review, exam, test]
+    correctFeedback: >-
+      נכון. כל שלב קשה מקודמו ונשען עליו. בסוף הפרק באים הסיכום ו"המסלול שלי", שמראה את השליטה לפי מטרה.
+    wrongFeedback: >-
+      התחילו מהשיעור ומהשאלות הקלות שלו. שאלות החזרה מערבבות את כל השיעורים, ולכן באות אחרי כולם; שאלות המבחן קשות
+      משאלות החזרה; מבחן הפרק מוגרל ובודק הכול, ולכן הוא אחרון.
+
+  - id: Q-0.1-sure
+    type: mc
+    objectives: [OBJ-0.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      עניתם על שאלה תשובה שגויה וסימנתם "בטוחים". מה זה מלמד?
+    choices:
+      - text: 'כנראה שיש לכם תפיסה שגויה: אמונה יציבה שתחזור. כדאי לקרוא את המשוב ולחזור לשיעור שהוא מפנה אליו'
+        correct: true
+        feedback: >-
+          נכון. טעות עם "בטוחים" היא בדיוק מה שהקורס מחפש: היא מסמנת תפיסה שגויה במרשם, ו"המסלול שלי" מציג אותה עד
+          שתופרך.
+      - text: 'שום דבר מיוחד: "המסלול שלי" סופר רק את הנכונות של התשובה, והסימון הוא לשימושכם בלבד'
+        feedback: >-
+          הסימון הוא מה שמבדיל בין פער ידע (טעות עם "לא בטוחים") לבין תפיסה שגויה (טעות עם "בטוחים"). לכל אחד תיקון אחר.
+        misconception: MC-c0-confidence-irrelevant
+      - text: 'שזו כנראה טעות מקרית או טעות הקלדה, ואפשר להמשיך לשאלה הבאה ולחזור אליה בסוף הפרק'
+        feedback: >-
+          טעות שאתם בטוחים בה איננה מקרית: היא תחזור במבחן אם לא תופרך. זה הזמן לעצור ולקרוא את המשוב.
+        misconception: MC-c0-confidence-irrelevant
+
+  - id: Q-0.1-order
+    type: multi
+    objectives: [OBJ-0.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהמשפטים הבאים נכונים לגבי הלימוד העצמי בקורס? סמנו את כולם.
+    choices:
+      - text: 'מתחילים בשאלות הבסיס של פרק 0, ובכל מקום שנכשלים חוזרים לחומר המתאים מאינפי מתקדם 1 או מאלגברה לינארית'
+        correct: true
+        feedback: >-
+          נכון. פרק 0 הוא אבחון: הוא מגלה את הפערים לפני שהם עוצרים אתכם בפרק 1.
+      - text: 'שאלה בשיעור X משתמשת רק בחומר הקודם ובשיעורים עד X'
+        correct: true
+        feedback: >-
+          נכון. סדר הקורס הוא סדר הידיעה: למשל, נוסחת החלפת המשתנים באינטגרל מופיעה רק בפרק 5, ולכן לא תצטרכו אותה לפני.
+      - text: 'פרקים 9–10 (תורת הקירובים) תלויים רק בפרק 0 ובאינפי מתקדם 1, ואפשר ללמוד אותם במקביל לשאר'
+        correct: true
+        feedback: >-
+          נכון. הם לא נשענים על הגאומטריה של פרקים 1–4 או על האינטגרציה של פרקים 5–8.
+      - text: 'כדאי לפתור את שאלות המבחן של פרק לפני שאלות ההבנה, כדי לראות מה חשוב'
+        feedback: >-
+          שאלת מבחן שנכשלים בה בלי השלבים הקודמים לא מראה איפה הפער. שאלות ההבנה מפרקות את החומר לצעדים, ושם הטעות
+          מצביעה על המושג החסר.
+        misconception: MC-c0-jump-to-exam
+      - text: 'פרק 0 הוא חזרה, ולכן מי שעבר את אינפי מתקדם 1 יכול לדלג עליו'
+        feedback: >-
+          עבר את הקורס, אבל לא בהכרח זוכר כל כלי. פרק 0 קצר, ושאלות הבסיס שלו מגלות בתוך זמן קצר מה נשכח. כל פרק נשען
+          עליו.
+        misconception: MC-c0-skip-review
+
+  - id: Q-0.1-rubric
+    type: mc
+    objectives: [OBJ-0.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בשאלת מבחן יש סעיף הוכחה פתוח. איך בודקים אותו כשלומדים לבד?
+    choices:
+      - text: 'כותבים הוכחה מלאה, משווים להוכחה לדוגמה, ומסמנים בכנות אילו שורות במחוון ההוכחה שלכם מקיימת'
+        correct: true
+        feedback: >-
+          נכון. המחוון מפרק את ההוכחה לרכיבים (הרעיון, השימוש במשפט, הבדיקה). שורה שלא סימנתם מראה בדיוק מה לתקן.
+      - text: 'קוראים את ההוכחה לדוגמה, ואם היא נראית מובנת, מסמנים את הסעיף כפתור'
+        feedback: >-
+          להבין הוכחה של מישהו אחר ולכתוב הוכחה בעצמכם הם שני כישורים שונים. במבחן תצטרכו את השני. כתבו קודם, ורק אחר כך
+          השוו.
+        misconception: MC-c0-jump-to-exam
+      - text: 'מדלגים על סעיפי ההוכחה ופותרים רק את הסעיפים שנבדקים אוטומטית'
+        feedback: >-
+          בבחינה של 80316 רוב הנקודות הן על נימוק והוכחה. מי שמדלג עליהם מתאמן על החלק הקטן של המבחן.
+        misconception: MC-c0-jump-to-exam

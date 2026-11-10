@@ -1,0 +1,348 @@
+# Lesson 7.2 — Green's theorem.
+# Objectives (src/course.ts):
+#   OBJ-7.2-1  state Green's theorem with the positive orientation of the boundary
+#   OBJ-7.2-2  prove Green's theorem for a rectangle and for a simple region
+#   OBJ-7.2-3  compute a line integral over a closed curve by a double integral, and the reverse
+chapter: 7
+questions:
+  - id: Q-7.2-statement
+    type: mc
+    objectives: [OBJ-7.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      יהי $D\subset\mathbb R^2$ תחום חסום שהשפה שלו $\partial D$ היא מסילה סגורה פשוטה חלקה למקוטעין, ויהיו $P,Q$
+      פונקציות מסדר $C^1$ בקבוצה פתוחה שמכילה את $D$ ואת שפתו. **הכיוון החיובי** של $\partial D$ הוא זה שבו מי שהולך
+      על השפה רואה את $D$ משמאלו. מהו הניסוח של משפט גרין?
+    choices:
+      - text: '$\oint_{\partial D}P\,dx+Q\,dy=\iint_D\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy$, כש-$\partial D$ בכיוון החיובי'
+        correct: true
+        feedback: >-
+          נכון. הכיוון החיובי הוא זה שבו מי שהולך על השפה רואה את $D$ משמאלו; לתחום בלי חורים זה נגד כיוון השעון.
+      - text: '$\oint_{\partial D}P\,dx+Q\,dy=\iint_D\left(\frac{\partial P}{\partial y}-\frac{\partial Q}{\partial x}\right)dx\,dy$, כש-$\partial D$ בכיוון החיובי'
+        feedback: >-
+          הסימן הפוך. בדקו על $P=-y$, $Q=x$ ועל מעגל היחידה נגד כיוון השעון: האינטגרל הקווי הוא $2\pi$, אבל
+          $\iint(P_y-Q_x)=\iint(-2)=-2\pi$.
+        misconception: MC-c7-green-sign
+      - text: '$\oint_{\partial D}P\,dx+Q\,dy=\iint_D\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}\right)dx\,dy$, כש-$\partial D$ בכיוון החיובי'
+        feedback: >-
+          זה הדיברגנץ, והוא שייך לשטף החוצה $\oint P\,dy-Q\,dx$, לא לסירקולציה $\oint P\,dx+Q\,dy$. דוגמה: $P=x$, $Q=0$
+          על מעגל היחידה נותנים $\oint x\,dx=0$, אבל $\iint 1=\pi$.
+        misconception: MC-c7-green-divergence-form
+      - text: '$\oint_{\partial D}P\,dx+Q\,dy=\iint_D\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy$, בכל כיוון של $\partial D$'
+        feedback: >-
+          היפוך הכיוון של המסילה הופך את סימן האינטגרל הקווי, ואילו האינטגרל הכפול לא משתנה. השוויון נכון רק בכיוון
+          אחד: החיובי.
+        misconception: MC-c6-orientation-irrelevant
+
+  - id: Q-7.2-halfdisk
+    type: mc
+    objectives: [OBJ-7.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $D$ הוא חצי העיגול העליון $\{x^2+y^2\le1,\ y\ge0\}$. איזה תיאור של $\partial D$ הוא **הכיוון החיובי**?
+    choices:
+      - text: 'הקשת מ-$(1,0)$ דרך $(0,1)$ ל-$(-1,0)$, ואחריה הקטע על ציר $x$ מ-$(-1,0)$ ל-$(1,0)$'
+        correct: true
+        feedback: >-
+          נכון. על הקשת, נגד כיוון השעון, התחום משמאל (פנימה, לכיוון הראשית); על הקטע, ימינה, התחום שוב משמאל
+          (למעלה).
+      - text: 'הקשת מ-$(-1,0)$ דרך $(0,1)$ ל-$(1,0)$, ואחריה הקטע מ-$(1,0)$ ל-$(-1,0)$'
+        feedback: >-
+          זה הכיוון השלילי: כשהולכים על הקטע שמאלה, התחום (למעלה) נמצא מימין. כאן התחום תמיד מימין, וזה עם כיוון
+          השעון.
+        misconception: MC-c6-orientation-irrelevant
+      - text: 'הקשת מ-$(1,0)$ ל-$(-1,0)$ דרך $(0,1)$, ואחריה הקטע מ-$(1,0)$ ל-$(-1,0)$'
+        feedback: >-
+          זו אינה מסילה סגורה בכלל: הקשת נגמרת ב-$(-1,0)$ והקטע מתחיל ב-$(1,0)$. כל חלק של השפה צריך להתחיל איפה
+          שהקודם נגמר.
+      - text: 'אין כיוון חיובי, כי לשפה יש פינות'
+        feedback: >-
+          משפט גרין חל על שפה חלקה למקוטעין. הכיוון החיובי מוגדר על כל חלק חלק: התחום משמאל.
+
+  - id: Q-7.2-vertical
+    type: mc
+    objectives: [OBJ-7.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בהוכחת משפט גרין למלבן $[a,b]\times[c,d]$ מחשבים את $\oint P\,dx$ על ארבע הצלעות. למה הצלעות האנכיות
+      $x=a$ ו-$x=b$ לא תורמות?
+    choices:
+      - text: 'כי עליהן $x$ קבוע, ולכן $x''(t)=0$ באינטגרנד $P(\gamma(t))\,x''(t)$'
+        correct: true
+        feedback: >-
+          נכון. על צלע אנכית $\gamma(t)=(b,t)$, ולכן התרומה $\int P(b,t)\cdot0\,dt=0$, מה שלא יהיה $P$.
+      - text: 'כי שתי הצלעות נעברות בכיוונים הפוכים, והתרומות שלהן מתבטלות'
+        feedback: >-
+          הכיוונים אכן הפוכים, אבל $P$ על $x=a$ ועל $x=b$ שונה, ולכן אין סיבה להתבטלות. כל צלע לבדה תורמת אפס, כי $dx=0$
+          עליה.
+        misconception: MC-c7-dx-on-vertical
+      - text: 'כי $P=0$ על הצלעות האנכיות'
+        feedback: >-
+          אין שום הנחה כזו על $P$. ההוכחה עובדת לכל $P\in C^1$.
+        misconception: MC-c7-dx-on-vertical
+      - text: 'הן כן תורמות, ולכן מוסיפים אותן לאינטגרל הכפול'
+        feedback: >-
+          לאינטגרל $\oint P\,dx$ הן תורמות אפס, כי $dx=0$ עליהן. הן תורמות לחלק השני, $\oint Q\,dy$.
+        misconception: MC-c7-dx-on-vertical
+
+  - id: Q-7.2-square
+    type: numeric
+    objectives: [OBJ-7.2-3]
+    level: basic
+    prompt: >-
+      $C$ היא השפה של הריבוע $[0,1]\times[0,1]$ נגד כיוון השעון. חשבו בעזרת משפט גרין את
+      $\oint_C xy\,dx+(x^2+2y)\,dy$.
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $Q_x-P_y=2x-x=x$, ו-$\iint_{[0,1]^2}x\,dx\,dy=\frac12$.
+    wrongFeedback: >-
+      עם $P=xy$ ו-$Q=x^2+2y$ חשבו $Q_x-P_y$ ושלבו על הריבוע.
+    commonWrong:
+      - value: -0.5
+        feedback: >-
+          זה $\iint(P_y-Q_x)$: הסימן הפוך.
+        misconception: MC-c7-green-sign
+      - value: 2.5
+        feedback: >-
+          זה $\iint(P_x+Q_y)=\iint(y+2)$, הדיברגנץ במקום הרוטור המישורי.
+        misconception: MC-c7-green-divergence-form
+      - value: 1.5
+        feedback: >-
+          חיברתם $Q_x+P_y=3x$ במקום להחסיר.
+        misconception: MC-c7-green-sign
+
+  - id: Q-7.2-triangle
+    type: numeric
+    objectives: [OBJ-7.2-1, OBJ-7.2-3]
+    level: mid
+    prompt: >-
+      $C$ היא השפה של המשולש עם הקודקודים $(0,0)$, $(2,0)$, $(0,2)$, **בסדר** $(0,0)\to(0,2)\to(2,0)\to(0,0)$.
+      חשבו את $\oint_C y^2\,dx+3x\,dy$.
+    answer: -3.3333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $-\frac{10}3$. הסדר הנתון עולה קודם על ציר $y$, ולכן המשולש מימין: זה הכיוון השלילי. לפי גרין
+      $\iint_T(Q_x-P_y)=\iint_T(3-2y)=3\cdot2-2\cdot\frac43=\frac{10}3$ (שטח המשולש $2$, ו-$\iint_T y=\frac43$),
+      ובכיוון ההפוך מקבלים $-\frac{10}{3}$.
+    wrongFeedback: >-
+      קבעו קודם את הכיוון של $C$ ביחס לכיוון החיובי, ואז חשבו $\iint_T(Q_x-P_y)$ עם $P=y^2$, $Q=3x$.
+    commonWrong:
+      - value: 3.3333333
+        feedback: >-
+          זה הערך בכיוון החיובי. ב-$(0,0)\to(0,2)$ עולים על ציר $y$ והמשולש מימין, כלומר $C$ עם כיוון השעון,
+          והאינטגרל מחליף סימן. (אותו ערך מתקבל גם מהחלפת הסימן של $Q_x-P_y$.)
+        misconception: MC-c6-orientation-irrelevant
+      - value: -6
+        feedback: >-
+          חישבתם רק $\iint Q_x=6$ (והפכתם את הסימן לפי הכיוון), ושכחתם את $-P_y=-2y$.
+
+  - id: Q-7.2-flux-form
+    type: twotier
+    objectives: [OBJ-7.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בתנאי משפט גרין, האם נכון ש-$\oint_{\partial D}P\,dy-Q\,dx=\iint_D\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}\right)dx\,dy$,
+      כש-$\partial D$ בכיוון החיובי?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. זו הצורה "שטף החוצה = דיברגנץ" של אותו משפט.
+      - text: 'לא, מימין צריך לעמוד $Q_x-P_y$'
+        feedback: >-
+          $Q_x-P_y$ שייך ל-$\oint P\,dx+Q\,dy$. כאן הפונקציות בתפקידים אחרים: המקדם של $dx$ הוא $-Q$ והמקדם של
+          $dy$ הוא $P$.
+        misconception: MC-c7-green-divergence-form
+    reasons:
+      - text: 'גרין לזוג $\tilde P=-Q$, $\tilde Q=P$ נותן $\iint(\tilde Q_x-\tilde P_y)=\iint(P_x+Q_y)$'
+        correct: true
+        feedback: >-
+          בדיוק. ומשמעות: $(dy,-dx)$ לאורך השפה בכיוון החיובי הוא הנורמל החיצוני כפול $ds$, ולכן השמאל הוא השטף של $(P,Q)$
+          החוצה דרך השפה.
+      - text: 'כי $dy\,dx=-dx\,dy$'
+        feedback: >-
+          באינטגרל כפול רגיל $dx\,dy$ הוא אלמנט שטח חיובי, ואין לו סימן. (סימן כזה יופיע רק בתבניות, בפרק 8.) הנימוק
+          כאן הוא הפעלת גרין לזוג אחר.
+      - text: 'כי זה בדיוק אותו אינטגרל קווי כמו $\oint P\,dx+Q\,dy$'
+        feedback: >-
+          אלה אינטגרלים שונים. על מעגל היחידה עם $P=x$, $Q=0$: $\oint x\,dy=\pi$, אבל $\oint x\,dx=0$.
+        misconception: MC-c7-green-divergence-form
+
+  - id: Q-7.2-rect-proof
+    type: rank
+    objectives: [OBJ-7.2-2]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה של $\oint_{\partial R}P\,dx=-\iint_R\frac{\partial P}{\partial y}\,dx\,dy$ למלבן
+      $R=[a,b]\times[c,d]$, עם השפה בכיוון החיובי.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'לפי פוביני: $\iint_R P_y\,dx\,dy=\int_a^b\left(\int_c^d P_y(x,y)\,dy\right)dx$'
+      - id: b
+        label: 'לפי המשפט היסודי: $\int_c^d P_y(x,y)\,dy=P(x,d)-P(x,c)$'
+      - id: d
+        label: 'על השפה הצלע התחתונה ימינה נותנת $\int_a^b P(x,c)\,dx$, העליונה שמאלה נותנת $-\int_a^b P(x,d)\,dx$, והאנכיות אפס כי $dx=0$; לכן, עם השלב הקודם, $\oint_{\partial R}P\,dx=-\int_a^b\left(P(x,d)-P(x,c)\right)dx=-\iint_R P_y\,dx\,dy$'
+    order: [a, b, d]
+    correctFeedback: >-
+      נכון. אותו חישוב עם תפקידי $x$ ו-$y$ מוחלפים נותן $\oint Q\,dy=\iint Q_x$, ובחיבור מקבלים את גרין.
+    wrongFeedback: >-
+      הפכו קודם את האינטגרל הכפול לאינטגרל חוזר (פוביני) והשתמשו במשפט היסודי בפנים. רק אז השוו לאינטגרל על ארבע
+      הצלעות.
+
+  - id: Q-7.2-simple-region
+    type: twotier
+    objectives: [OBJ-7.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $D=\{a\le x\le b,\ \varphi_1(x)\le y\le\varphi_2(x)\}$ עם $\varphi_1\le\varphi_2$ רציפות וגזירות ברציפות. האם
+      ההוכחה "פוביני ואז המשפט היסודי בכיוון $y$" מוכיחה את משפט גרין **כולו** על $D$?
+    choices:
+      - text: 'לא, היא מוכיחה רק את $\oint_{\partial D}P\,dx=-\iint_D P_y$'
+        correct: true
+        feedback: >-
+          נכון. הצורה הזו של $D$ מתאימה לאינטגרציה ב-$y$ בפנים, וזה מה שהחלק של $P$ צריך. בשביל
+          $\oint Q\,dy=\iint Q_x$ צריך את $D$ גם בצורה $c\le y\le d,\ \psi_1(y)\le x\le\psi_2(y)$.
+      - text: 'כן, היא מוכיחה את שני החלקים'
+        feedback: >-
+          בחלק של $Q$ צריך לבצע את האינטגרל ב-$x$ בפנים: $\int Q_x\,dx=Q(\psi_2(y),y)-Q(\psi_1(y),y)$. זה דורש לתאר
+          את $D$ בין שני גרפים **מעל ציר $y$**, וזה לא תמיד אפשרי, למשל בתחום בצורת פרסה שפתוחה למטה.
+        misconception: MC-c7-one-type-enough
+    reasons:
+      - text: 'בחלק של $Q$ צריך את $D$ כתחום בין שני גרפים של $x$ כפונקציה של $y$; תחום שפשוט בשני הכיוונים מקבל את שני החלקים'
+        correct: true
+        feedback: >-
+          בדיוק. מלבן, עיגול ומשולש פשוטים בשני הכיוונים. תחום כללי יותר חותכים לחלקים כאלה.
+      - text: 'החלק של $Q$ מתקבל מהחלק של $P$ בהחלפת השמות $P$ ו-$Q$'
+        feedback: >-
+          החלפת השמות לא מחליפה את התפקידים של $x$ ו-$y$. צריך להחליף את המשתנים, וזה משנה את צורת התחום שנדרשת.
+        misconception: MC-c7-one-type-enough
+      - text: 'על הצלעות האנכיות $x=a$ ו-$x=b$ האינטגרל של $Q\,dy$ אפס'
+        feedback: >-
+          זה הפוך: על צלע אנכית $dx=0$, ולכן מתאפס $P\,dx$, ולא $Q\,dy$.
+        misconception: MC-c7-dx-on-vertical
+
+  - id: Q-7.2-cuts
+    type: mc
+    objectives: [OBJ-7.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מחלקים תחום $D$ בקטע ישר לשני חלקים פשוטים $D_1$ ו-$D_2$, מוכיחים את גרין לכל אחד מהם בכיוון החיובי של שפתו,
+      ומחברים. מה קורה לאינטגרלים על הקטע שחותך?
+    choices:
+      - text: 'הם מתבטלים, כי הקטע נעבר פעם אחת בכל כיוון'
+        correct: true
+        feedback: >-
+          נכון. על הקטע $D_1$ נמצא בצד אחד ו-$D_2$ בצד השני, ולכן "התחום משמאל" קובע כיוונים הפוכים. מה שנשאר הוא
+          בדיוק $\oint_{\partial D}$, והאינטגרלים הכפולים מתחברים ל-$\iint_D$.
+      - text: 'הם מתווספים, וצריך לחשב אותם בנפרד'
+        feedback: >-
+          אם היו מתווספים, התוצאה הייתה תלויה בחתך שבחרנו, אף שהצד השני, $\iint_D(Q_x-P_y)$, לא תלוי בו.
+        misconception: MC-c7-cuts-add-up
+      - text: 'הם אפס, כי הקטע ישר'
+        feedback: >-
+          אינטגרל קווי על קטע ישר אינו אפס בדרך כלל. מה שמאפס את הסכום הוא שהקטע נעבר פעמיים, בכיוונים הפוכים.
+        misconception: MC-c7-cuts-add-up
+      - text: 'הם נשארים, ולכן גרין נכון רק לתחומים פשוטים'
+        feedback: >-
+          החתכים מתבטלים, ולכן גרין עובר מחלקים פשוטים לכל תחום שאפשר לחתוך לחלקים כאלה.
+        misconception: MC-c7-cuts-add-up
+
+  - id: Q-7.2-circle-cw
+    type: numeric
+    objectives: [OBJ-7.2-3]
+    level: mid
+    prompt: >-
+      $C$ הוא המעגל $x^2+y^2=4$ **עם כיוון השעון**. חשבו את $\oint_C y^3\,dx-x^3\,dy$.
+    answer: 75.3982237
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $24\pi$. $Q_x-P_y=-3x^2-3y^2$, ובקוטביות
+      $\iint_{r\le2}(-3r^2)\,r\,dr\,d\theta=-3\cdot2\pi\cdot\frac{2^4}{4}=-24\pi$. זה הערך נגד כיוון השעון; עם כיוון
+      השעון הסימן מתהפך.
+    wrongFeedback: >-
+      חשבו את האינטגרל הכפול בקוטביות, ואחר כך תקנו את הסימן לפי כיוון המעגל.
+    commonWrong:
+      - value: -75.3982237
+        feedback: >-
+          זה $-24\pi$, הערך בכיוון החיובי. המעגל נתון עם כיוון השעון, ולכן צריך להפוך את הסימן.
+        misconception: MC-c6-orientation-irrelevant
+      - value: 50.2654825
+        feedback: >-
+          זה $16\pi$: שכחתם את היעקוביאן $r$ בקוטביות, וחישבתם $\int_0^2 r^2\,dr$ במקום $\int_0^2 r^3\,dr$.
+        misconception: MC-c5-forgot-jacobian
+      - value: -50.2654825
+        feedback: >-
+          שתי טעויות: גם היעקוביאן $r$ חסר, וגם הכיוון לא תוקן.
+        misconception: MC-c5-forgot-jacobian
+
+  - id: Q-7.2-semicircle
+    type: numeric
+    objectives: [OBJ-7.2-3]
+    level: exam
+    prompt: >-
+      $\gamma$ היא חצי מעגל היחידה העליון, מ-$(1,0)$ ל-$(-1,0)$. חשבו את
+      $$\int_\gamma\left(e^x\sin y-y+x^2\right)dx+\left(e^x\cos y-1\right)dy.$$
+    answer: 0.9041297
+    tolerance: 0.001
+    hints:
+      - 'סגרו את $\gamma$ בקטע על ציר $x$ וחשבו את $Q_x-P_y$.'
+    correctFeedback: >-
+      נכון, $\frac\pi2-\frac23$. סוגרים בקטע $L$ מ-$(-1,0)$ ל-$(1,0)$; יחד עם $\gamma$ זו השפה של חצי העיגול
+      העליון בכיוון החיובי. $Q_x-P_y=e^x\cos y-(e^x\cos y-1)=1$, ולכן $\oint=\frac\pi2$ (שטח חצי העיגול). על $L$:
+      $y=0$, $dy=0$, ונשאר $\int_{-1}^1x^2\,dx=\frac23$. לכן $\int_\gamma=\frac\pi2-\frac23$.
+    wrongFeedback: >-
+      ישירות זה קשה. סגרו את המסילה, השתמשו בגרין, והחסירו את האינטגרל על הקטע שהוספתם.
+    commonWrong:
+      - value: 1.5707963
+        feedback: >-
+          $\frac\pi2$ הוא האינטגרל על השפה **כולה**. צריך להחסיר את התרומה של הקטע הסוגר, $\frac23$.
+        misconception: MC-c7-closing-segment
+      - value: 2.2374630
+        feedback: >-
+          $\frac\pi2+\frac23$: הוספתם את הקטע במקום להחסיר אותו.
+        misconception: MC-c7-closing-segment
+      - value: -2.2374630
+        feedback: >-
+          $-\frac\pi2-\frac23$: הנחתם שהשפה (הקשת ואחריה הקטע ימינה) היא עם כיוון השעון. התחום משמאל לשני החלקים, ולכן
+          זה הכיוון החיובי.
+        misconception: MC-c6-orientation-irrelevant
+
+  - id: Q-7.2-every-circle
+    type: twotier
+    objectives: [OBJ-7.2-3, OBJ-7.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $P,Q$ מסדר $C^1$ ב-$\mathbb R^2$, ו-$\oint_C P\,dx+Q\,dy=0$ לכל מעגל $C$ במישור (נגד כיוון השעון). האם בהכרח
+      $Q_x=P_y$ בכל נקודה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. אם בנקודה אחת $Q_x-P_y\ne0$, האינטגרל על מעגל קטן סביבה שונה מאפס.
+      - text: 'לא, אפשר רק להסיק ש-$\iint_D(Q_x-P_y)=0$ על כל עיגול'
+        feedback: >-
+          זה נכון, אבל ממנו כבר נובעת המסקנה: פונקציה רציפה שהאינטגרל שלה על **כל** עיגול הוא אפס היא אפס בכל נקודה.
+          ראו את הנימוק.
+    reasons:
+      - text: 'אם $g=Q_x-P_y$ חיובית בנקודה, מרציפות היא חיובית בעיגול קטן סביבה, וגרין נותן אינטגרל חיובי על שפתו'
+        correct: true
+        feedback: >-
+          בדיוק: גרין ממיר את המידע על מעגלים למידע על $\iint g$, והרציפות של $g$ (כי $P,Q\in C^1$) מסיימת.
+      - text: 'כי השדה $(P,Q)$ משמר, והרוטור של שדה משמר הוא אפס'
+        feedback: >-
+          המסקנה נכונה, אבל הנימוק קופץ: הנתון הוא רק על מעגלים, לא על כל מסילה סגורה, ולכן "משמר" לא נתון. הדרך
+          הקצרה היא גרין על עיגולים קטנים.
+        misconception: MC-c6-mixed-partials-suffice
+      - text: 'כי מספיק לבדוק את מעגל היחידה'
+        feedback: >-
+          מעגל אחד לא מספיק: עבור $(P,Q)=(-y\,(1-x^2-y^2),\ x\,(1-x^2-y^2))$ האינטגרל על מעגל היחידה אפס (השדה מתאפס
+          עליו), ובכל זאת $Q_x-P_y=2-4(x^2+y^2)$, שבראשית שווה ל-2.

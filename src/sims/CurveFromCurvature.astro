@@ -1,0 +1,7 @@
+---
+/** Lesson 1.6 figure: <Spread figure={CurveFromCurvature} figureProps={{ law, laws, c, len, theta0, rotatable, tasks }}>. */
+import CurveFromCurvature, { type CurveFromCurvatureProps } from './CurveFromCurvature';
+type Props = CurveFromCurvatureProps;
+---
+
+<CurveFromCurvature client:visible {...Astro.props} />

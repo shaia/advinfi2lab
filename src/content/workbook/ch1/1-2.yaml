@@ -1,0 +1,367 @@
+# Workbook of lesson 1.2 — arc length and the arc-length parameter.
+# Objectives (src/course.ts):
+#   OBJ-1.2-1  length as the sup of inscribed polygons; the formula L = ∫‖γ′‖
+#   OBJ-1.2-2  length does not depend on the parametrization (monotone change of parameter)
+#   OBJ-1.2-3  pass to the arc-length parameter of a regular curve; there ‖γ′‖ = 1
+# Every number recomputed with src/math/geometry.ts (arcLength) and multivar.ts (simpson) on 2026-11-09.
+lesson: '1.2'
+practice:
+  - id: W-1.2-01
+    level: basic
+    objectives: [OBJ-1.2-1]
+    prompt: >-
+      חשבו את האורך של $\gamma(t)=(t^2,\ 2t,\ \ln t)$, $1\le t\le e$.
+    answer: >-
+      $L=e^2\approx7.389$.
+    solution:
+      - kind: computation
+        text: >-
+          $\gamma'(t)=\big(2t,\ 2,\ \frac1t\big)$, ולכן
+          $$\|\gamma'(t)\|^2=4t^2+4+\frac{1}{t^2}=\Big(2t+\frac1t\Big)^2.$$
+      - kind: step
+        text: >-
+          על $[1,e]$, $2t+\frac1t>0$, ולכן $\|\gamma'(t)\|=2t+\frac1t$.
+      - kind: computation
+        text: >-
+          $$L=\int_1^e\Big(2t+\frac1t\Big)\,dt=\Big[t^2+\ln t\Big]_1^e=e^2+1-1=e^2.$$
+      - kind: check
+        text: >-
+          חישוב מספרי של $\int_1^e\|\gamma'\|$ נותן $7.389056$. והמיתר בין הקצוות קצר ממנו, כמו שצריך.
+      - kind: result
+        text: >-
+          $L=e^2$.
+
+  - id: W-1.2-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.2-1]
+    prompt: >-
+      רבע המעגל $\gamma(t)=(\cos t,\ \sin t)$, $0\le t\le\frac\pi2$.
+
+      (א) חשבו את $\ell(P)$ לחלוקה $P=\{0,\ \frac\pi2\}$ ולחלוקה $P'=\{0,\ \frac\pi4,\ \frac\pi2\}$.
+
+      (ב) השוו ל-$L(\gamma)$, והסבירו בלי חישוב למה הסדר בין שלושת המספרים חייב להיות כזה.
+    answer: >-
+      (א) $\ell(P)=\sqrt2\approx1.4142$, $\ell(P')=4\sin\frac\pi8\approx1.5307$. (ב) $\ell(P)\le\ell(P')\le L=\frac\pi2\approx1.5708$.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $\ell(P)=\|(0,1)-(1,0)\|=\sqrt2$. ב-$P'$ שני מיתרים שווים, כל אחד מול זווית $\frac\pi4$ במעגל היחידה, באורך $2\sin\frac\pi8$. לכן
+          $\ell(P')=4\sin\frac\pi8\approx1.5307$.
+      - kind: step
+        text: >-
+          (ב) $P'$ מתקבלת מ-$P$ בהוספת נקודה, ולפי אי-שוויון המשולש עידון רק מאריך: $\ell(P)\le\ell(P')$.
+      - kind: step
+        text: >-
+          $L$ הוא הסופרמום של כל $\ell(Q)$, ולכן $\ell(P')\le L$. ו-$L=\int_0^{\pi/2}1\,dt=\frac\pi2$.
+      - kind: result
+        text: >-
+          $1.4142\le1.5307\le1.5708$: קווים שבורים מתקרבים לאורך מלמטה.
+
+  - id: W-1.2-03
+    level: basic
+    objectives: [OBJ-1.2-3]
+    prompt: >-
+      מצאו $c>0$ כך שהמסילה $\gamma(s)=(\cos cs,\ \sin cs,\ 2cs)$ תהיה בפרמטר אורך הקשת.
+    answer: >-
+      $c=\frac{1}{\sqrt5}$.
+    solution:
+      - kind: theorem
+        text: >-
+          $s$ הוא פרמטר אורך הקשת אם ורק אם $\|\gamma'(s)\|=1$ לכל $s$.
+      - kind: computation
+        text: >-
+          $\gamma'(s)=c\,(-\sin cs,\ \cos cs,\ 2)$, ו-$\|\gamma'(s)\|=c\sqrt{1+4}=c\sqrt5$.
+      - kind: step
+        text: >-
+          $c\sqrt5=1$ נותן $c=\frac{1}{\sqrt5}$.
+      - kind: check
+        text: >-
+          חישוב מספרי של האורך על $[0,1]$ עם $c=\frac{1}{\sqrt5}$ נותן $1$. בלי הרכיב השלישי היינו מקבלים $c=1$: הסליל מטפס, וזה מאט את הפרמטר.
+      - kind: result
+        text: >-
+          $c=\frac{1}{\sqrt5}$.
+
+  - id: W-1.2-04
+    level: mid
+    objectives: [OBJ-1.2-1]
+    prompt: >-
+      האסטרואידה היא הקבוצה $x^{2/3}+y^{2/3}=a^{2/3}$, $a>0$. היא תמונת המסילה $\gamma(t)=(a\cos^3t,\ a\sin^3t)$,
+      $0\le t\le2\pi$. חשבו את אורכה.
+    answer: >-
+      $L=6a$.
+    solution:
+      - kind: computation
+        text: >-
+          גוזרים: $$\gamma'(t)=3a\sin t\cos t\,(-\cos t,\ \sin t),$$ ולכן $\|\gamma'(t)\|=3a|\sin t\cos t|$.
+      - kind: idea
+        text: >-
+          הערך המוחלט חשוב: $\sin t\cos t$ מחליף סימן ברבעים. לפי הסימטריה מחשבים רבע ומכפילים בארבע.
+      - kind: computation
+        text: >-
+          $$\int_0^{\pi/2}3a\sin t\cos t\,dt=\frac{3a}{2}\Big[\sin^2t\Big]_0^{\pi/2}=\frac{3a}2.$$
+      - kind: step
+        text: >-
+          לכן $L=4\cdot\frac{3a}2=6a$. הנוסחה חלה אף שהמסילה אינה רגולרית בארבעת החודים: $\|\gamma'\|$ רציפה.
+      - kind: check
+        text: >-
+          חישוב מספרי עם $a=2$ נותן $12$. בלי ערך מוחלט, $\int_0^{2\pi}3a\sin t\cos t\,dt=0$: האורך היה יוצא אפס.
+      - kind: result
+        text: >-
+          $L=6a$.
+
+  - id: W-1.2-05
+    level: mid
+    objectives: [OBJ-1.2-1]
+    prompt: >-
+      (א) הוכיחו שאם $f:[a,b]\to\mathbb R$ גזירה ברציפות, אורך הגרף שלה הוא $\int_a^b\sqrt{1+f'(x)^2}\,dx$.
+
+      (ב) חשבו את אורך הגרף של $f(x)=x^{3/2}$ על $[0,4]$.
+    answer: >-
+      (א) הגרף הוא המסילה $(x,f(x))$. (ב) $\frac{8}{27}\big(10\sqrt{10}-1\big)\approx9.0734$.
+    solution:
+      - kind: step
+        text: >-
+          (א) הגרף הוא התמונה של $\gamma(x)=(x,\ f(x))$, שעוברת עליו פעם אחת. $\gamma'(x)=(1,\ f'(x))$, ולכן $\|\gamma'\|=\sqrt{1+f'^2}$, ולפי המשפט של השיעור $L=\int_a^b\sqrt{1+f'^2}$.
+      - kind: computation
+        text: >-
+          (ב) $f'(x)=\frac32x^{1/2}$, $1+f'^2=1+\frac94x$. בהצבה $w=1+\frac94x$, $dw=\frac94dx$:
+          $$\int_0^4\sqrt{1+\tfrac94x}\,dx=\frac49\cdot\frac23\Big[w^{3/2}\Big]_1^{10}=\frac{8}{27}\big(10^{3/2}-1\big).$$
+      - kind: check
+        text: >-
+          $\frac{8}{27}(31.623-1)\approx9.0734$, וחישוב מספרי של האינטגרל נותן אותו ערך. המיתר מ-$(0,0)$ ל-$(4,8)$ באורך $\sqrt{80}\approx8.944$, קצר יותר.
+      - kind: result
+        text: >-
+          $\frac{8}{27}\big(10\sqrt{10}-1\big)\approx9.0734$.
+
+  - id: W-1.2-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.2-2]
+    prompt: >-
+      $\gamma(t)=(\cos t,\ \sin t)$, $0\le t\le2\pi$, באורך $2\pi$. בלי לחשב אינטגרל של $\|\delta'\|$ ישירות, מצאו את האורך של:
+
+      (א) $\delta_1(u)=\big(\cos u^3,\ \sin u^3\big)$, $0\le u\le(2\pi)^{1/3}$.
+
+      (ב) $$\delta_2(u)=\big(\cos(2\pi\sin^2u),\ \sin(2\pi\sin^2u)\big),\quad 0\le u\le\pi.$$
+    answer: >-
+      (א) $2\pi$. (ב) $4\pi$.
+    solution:
+      - kind: idea
+        text: >-
+          $\delta_i=\gamma\circ\varphi_i$. בודקים אם $\varphi_i$ מונוטונית ועל $[0,2\pi]$; אם היא הולכת וחוזרת, מפצלים לקטעי מונוטוניות.
+      - kind: step
+        text: >-
+          (א) $\varphi_1(u)=u^3$ עולה ממש ועל $[0,2\pi]$, ולכן $L(\delta_1)=2\pi$. ($\varphi_1'(0)=0$, אבל ההצבה $t=u^3$ עדיין חוקית, כי $\varphi_1'\ge0$.)
+      - kind: step
+        text: >-
+          (ב) $\varphi_2(u)=2\pi\sin^2u$ עולה מ-$0$ ל-$2\pi$ על $[0,\frac\pi2]$ ויורדת חזרה ל-$0$ על $[\frac\pi2,\pi]$. על כל חצי היא מונוטונית ועל, ולכן כל חצי תורם $2\pi$.
+      - kind: check
+        text: >-
+          חישוב מספרי נותן $6.283185$ ו-$12.566371$. ב-(ב) התמונה היא מעגל היחידה, אבל $\delta_2$ מקיפה אותו הלוך וחזור.
+      - kind: result
+        text: >-
+          (א) $2\pi$. (ב) $4\pi$.
+
+  - id: W-1.2-07
+    level: mid
+    objectives: [OBJ-1.2-3]
+    prompt: >-
+      כתבו את הספירלה על החרוט $\gamma(t)=e^t(\cos t,\ \sin t,\ 1)$, $t\ge0$, בפרמטר אורך הקשת מ-$t=0$, ובדקו שהמהירות 1.
+    answer: >-
+      $s=\sqrt3(e^t-1)$ ו-$t(s)=\ln\big(1+\frac{s}{\sqrt3}\big)$, ולכן $$\tilde\gamma(s)=\Big(1+\frac{s}{\sqrt3}\Big)\big(\cos t(s),\ \sin t(s),\ 1\big).$$
+    solution:
+      - kind: computation
+        text: >-
+          גוזרים בכלל המכפלה: $$\gamma'(t)=e^t(\cos t-\sin t,\ \sin t+\cos t,\ 1),$$ ו-$\|\gamma'(t)\|^2=e^{2t}(2+1)$, ולכן $\|\gamma'(t)\|=\sqrt3e^t$.
+      - kind: computation
+        text: >-
+          $$s(t)=\int_0^t\sqrt3e^\tau d\tau=\sqrt3(e^t-1).$$ ההפכית: $e^t=1+\frac{s}{\sqrt3}$, כלומר $t(s)=\ln\big(1+\frac{s}{\sqrt3}\big)$.
+      - kind: step
+        text: >-
+          $e^{t(s)}=1+\frac{s}{\sqrt3}$, ולכן
+          $$\tilde\gamma(s)=\Big(1+\frac{s}{\sqrt3}\Big)\big(\cos t(s),\ \sin t(s),\ 1\big).$$
+      - kind: check
+        text: >-
+          $t'(s)=\frac{1}{\sqrt3+s}$ ו-$\|\gamma'(t(s))\|=\sqrt3+s$: המכפלה $1$. חישוב מספרי של האורך של $\tilde\gamma$ על $[0,2]$ נותן $2$.
+      - kind: result
+        text: >-
+          $$\tilde\gamma(s)=\Big(1+\frac{s}{\sqrt3}\Big)\big(\cos t(s),\ \sin t(s),\ 1\big),$$ עם $t(s)=\ln\big(1+\frac{s}{\sqrt3}\big)$.
+
+  - id: W-1.2-08
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.2-2]
+    prompt: >-
+      ההוכחה בשיעור שהאורך לא תלוי בפרמטריזציה השתמשה בנגזרות. הוכיחו אותה מההגדרה בעזרת קווים שבורים, בלי נגזרות:
+      אם $\gamma:[a,b]\to\mathbb R^n$ רציפה ו-$\varphi:[c,d]\to[a,b]$ רציפה, עולה ממש ועל, אז $L(\gamma\circ\varphi)=L(\gamma)$.
+    answer: >-
+      $\varphi$ מעבירה חלוקות של $[c,d]$ בהתאמה חד-חד-ערכית ועל לחלוקות של $[a,b]$, עם אותו קו שבור; לכן קבוצות ה-$\ell$ שוות, וגם הסופרמומים.
+    solution:
+      - kind: idea
+        text: >-
+          לחלוקה של $[c,d]$ ולתמונה שלה תחת $\varphi$ יש אותן נקודות על המסילה, ולכן אותו קו שבור. אם כל חלוקה מתקבלת כך, הסופרמום על אותה קבוצה של מספרים.
+      - kind: step
+        text: >-
+          $\varphi$ רציפה, עולה ממש ועל, ולכן הפיכה עם הפכית עולה ממש. לחלוקה $Q:\ c=u_0<\dots<u_m=d$ נתאים
+          $$\varphi(Q):\ a=\varphi(u_0)<\dots<\varphi(u_m)=b$$, חלוקה של $[a,b]$; וכל חלוקה $P$ של $[a,b]$ היא $\varphi(Q)$ עם $Q=\varphi^{-1}(P)$.
+      - kind: step
+        text: >-
+          הנקודות $(\gamma\circ\varphi)(u_i)=\gamma(\varphi(u_i))$ זהות, ולכן $\ell_{\gamma\circ\varphi}(Q)=\ell_\gamma(\varphi(Q))$.
+      - kind: step
+        text: >-
+          לכן $\{\ell_{\gamma\circ\varphi}(Q)\}_Q=\{\ell_\gamma(P)\}_P$, אותה קבוצה של מספרים, ולשתי הקבוצות אותו סופרמום (גם אם הוא $\infty$).
+      - kind: check
+        text: >-
+          לא השתמשנו בגזירות כלל, ולכן הטענה נכונה גם למסילות רציפות בלבד. אם $\varphi$ יורדת ממש, אותו טיעון עם החלוקה בסדר הפוך. אם $\varphi$ אינה מונוטונית, $\varphi(Q)$ אינה חלוקה בכלל, וההתאמה נשברת.
+      - kind: result
+        text: >-
+          $L(\gamma\circ\varphi)=L(\gamma)$ לכל $\varphi$ רציפה, מונוטונית ממש ועל.
+
+  - id: W-1.2-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.2-1]
+    prompt: >-
+      תהי $\gamma(t)=\big(t,\ t\sin\frac1t\big)$ ל-$0<t\le1$, ו-$\gamma(0)=(0,0)$.
+
+      (א) הראו ש-$\gamma$ רציפה על $[0,1]$.
+
+      (ב) הוכיחו שאין לה אורך: לכל $M$ יש חלוקה עם $\ell(P)>M$.
+
+      (ג) למה זה לא סותר את המשפט $L=\int\|\gamma'\|$?
+    answer: >-
+      (ב) דרך הנקודות $t_k=\frac{1}{\pi(k+\frac12)}$, שבהן $|y|=t_k$: $\ell(P)\ge\sum_k t_k$, טור הרמוני מתבדר. (ג) $\gamma$ אינה גזירה ב-$0$, ו-$\gamma'$ אינה חסומה.
+    solution:
+      - kind: step
+        text: >-
+          (א) ב-$t>0$ זו הרכבה של פונקציות רציפות. ב-$0$: $\big|t\sin\frac1t\big|\le t\to0$, ולכן $\gamma(t)\to(0,0)=\gamma(0)$.
+      - kind: idea
+        text: >-
+          הגרף מתנודד בין הישרים $y=t$ ו-$y=-t$ אינסוף פעמים ליד $0$. כל תנודה מוסיפה לפחות את גובה הקצה שלה, והגבהים האלה מתנהגים כמו $\frac1k$.
+      - kind: step
+        text: >-
+          (ב) נגדיר $t_k=\frac{1}{\pi(k+\frac12)}$. אז $$\sin\frac{1}{t_k}=\sin\Big(\pi k+\frac\pi2\Big)=(-1)^k,$$ ולכן $y(t_k)=(-1)^kt_k$: הסימנים מתחלפים.
+      - kind: step
+        text: >-
+          ניקח את החלוקה $$0<t_K<t_{K-1}<\dots<t_1<t_0<1$$. מיתר בין $\gamma(t_{k+1})$ ל-$\gamma(t_k)$ ארוך לפחות כמו ההפרש בגובה: $$|y(t_k)-y(t_{k+1})|=t_k+t_{k+1}\ge t_k.$$ לכן
+          $$\ell(P)\ge\sum_{k=0}^{K-1}t_k=\frac1\pi\sum_{k=0}^{K-1}\frac{1}{k+\frac12}.$$
+      - kind: step
+        text: >-
+          הטור $\sum\frac{1}{k+\frac12}$ מתבדר (השוואה ל-$\sum\frac1{k+1}$), ולכן לכל $M$ יש $K$ עם $\ell(P)>M$: $L(\gamma)=\infty$.
+      - kind: step
+        text: >-
+          (ג) המשפט דורש $\gamma$ גזירה ברציפות על הקטע **הסגור** $[0,1]$. כאן $y'(t)=\sin\frac1t-\frac1t\cos\frac1t$ אינה חסומה ליד $0$, ו-$\int_0^1\|\gamma'\|=\infty$ כאינטגרל לא אמיתי, בהתאמה לתוצאה.
+      - kind: check
+        text: >-
+          חישוב מספרי של הקו השבור דרך $0,t_K,\dots,t_0,1$: עם $K=10$, $100$, $1000$, $10000$ האורך $2.69$, $4.09$, $5.55$, $7.01$. הוא גדל בכל פעם בערך ב-$\frac{2\ln10}{\pi}\approx1.47$, כמו לוגריתם.
+      - kind: result
+        text: >-
+          $\gamma$ רציפה ואין לה אורך. אין סתירה: היא אינה גזירה ברציפות על הקטע הסגור.
+
+  - id: W-1.2-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.2-3]
+    prompt: >-
+      $\gamma:I\to\mathbb R^n$ מסילה בפרמטר אורך הקשת, ו-$\beta=\gamma\circ\varphi:J\to\mathbb R^n$ החלפת פרמטר שגם היא בפרמטר אורך הקשת
+      ($\varphi$ גזירה ברציפות, על, $J$ קטע). הוכיחו ש-$\varphi(u)=u+c$ או $\varphi(u)=-u+c$ לאיזה קבוע $c$.
+    answer: >-
+      $1=\|\beta'\|=|\varphi'|\,\|\gamma'\|=|\varphi'|$, ו-$\varphi'$ רציפה, ולכן $\varphi'\equiv1$ או $\varphi'\equiv-1$.
+    solution:
+      - kind: idea
+        text: >-
+          שתי המסילות במהירות 1, ולכן גם הפרמטר מתקדם במהירות 1 זה ביחס לזה. פרמטר אורך הקשת יחיד עד כדי נקודת התחלה וכיוון.
+      - kind: step
+        text: >-
+          כלל השרשרת: $\beta'(u)=\varphi'(u)\,\gamma'(\varphi(u))$, ולכן $1=\|\beta'(u)\|=|\varphi'(u)|\cdot1$, כלומר $|\varphi'(u)|=1$ לכל $u$.
+      - kind: step
+        text: >-
+          $\varphi'$ רציפה על הקטע $J$ ומקבלת רק את הערכים $\pm1$. לפי משפט ערך הביניים היא לא יכולה לעבור מ-$1$ ל-$-1$ בלי לעבור ב-$0$, ולכן $\varphi'\equiv1$ או $\varphi'\equiv-1$.
+      - kind: step
+        text: >-
+          מאינטגרציה: $\varphi(u)=u+c$ או $\varphi(u)=-u+c$.
+      - kind: check
+        text: >-
+          במעגל היחידה, $(\cos s,\sin s)$ ו-$(\cos(s+1),\sin(s+1))$ ו-$(\cos(-s),\sin(-s))$ כולן בפרמטר אורך הקשת: הזזה של נקודת ההתחלה והיפוך כיוון. לעומת זאת $(\cos2s,\sin2s)$ במהירות $2$.
+      - kind: result
+        text: >-
+          $\varphi(u)=\pm u+c$: פרמטר אורך הקשת נקבע עד כדי בחירת נקודת התחלה וכיוון.
+challenge:
+  - id: W-1.2-c1
+    stars: 1
+    objectives: [OBJ-1.2-1]
+    prompt: >-
+      הפונקציות $x,y:[a,b]\to\mathbb R$ מקיימות תנאי ליפשיץ: יש $M$ כך ש-$|x(t)-x(u)|\le M|t-u|$ ו-$|y(t)-y(u)|\le M|t-u|$
+      לכל $t,u$. הוכיחו שלמסילה $\Gamma(t)=(x(t),\ y(t))$ יש אורך סופי, ותנו חסם עליו. האם החסם נכון גם כש-$x,y$ אינן גזירות?
+    answer: >-
+      $L(\Gamma)\le\sqrt2\,M(b-a)$; כן, ההוכחה לא משתמשת בנגזרות.
+    solution:
+      - kind: idea
+        text: >-
+          כל מיתר קצר מ-$\sqrt2M$ כפול אורך קטע הפרמטר שלו. סכום אורכי הקטעים הוא $b-a$, לכל חלוקה.
+      - kind: step
+        text: >-
+          לחלוקה $P$ ולכל $i$:
+          $$\|\Gamma(t_i)-\Gamma(t_{i-1})\|=\sqrt{(x(t_i)-x(t_{i-1}))^2+(y(t_i)-y(t_{i-1}))^2}\le\sqrt2\,M\Delta_i.$$
+      - kind: step
+        text: >-
+          מסכמים: $$\ell(P)\le\sqrt2M\sum_i\Delta_i=\sqrt2M(b-a)$$. החסם לא תלוי ב-$P$, ולכן $L(\Gamma)\le\sqrt2M(b-a)<\infty$.
+      - kind: check
+        text: >-
+          לא השתמשנו בגזירות: $x(t)=|t|$, $y(t)=0$ על $[-1,1]$ ליפשיץית עם $M=1$ ואינה גזירה ב-$0$, ואורכה $2\le2\sqrt2$. והחסם מושג: הישר $(t,t)$, עם $M=1$, באורך בדיוק $\sqrt2(b-a)$.
+      - kind: result
+        text: >-
+          $L(\Gamma)\le\sqrt2\,M(b-a)$.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 2'
+      year: 2002
+      problem: 'תרגיל 2'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex02.html
+      verified: '2026-11-09'
+      adapted: true
+
+  - id: W-1.2-c2
+    stars: 1
+    objectives: [OBJ-1.2-1]
+    prompt: >-
+      תהי $\gamma:[0,1]\to\mathbb R^2$ רציפה עם $\gamma([0,1])=[0,1]^2$, מסילה שממלאת ריבוע (מסילות כאלה קיימות: מסילת פאנו).
+      הוכיחו שאין לה אורך.
+
+      (רמז: אם $L=L(\gamma)<\infty$, הראו קודם שהפונקציה $s(t)=L(\gamma|_{[0,t]})$ רציפה ועולה, ואז חלקו את $[0,1]$ ל-$n$ חלקים שבכל אחד מהם האורך $\frac Ln$.)
+    answer: >-
+      אם $L<\infty$, הריבוע מכוסה ב-$n$ עיגולים ברדיוס $\frac Ln$, שסכום שטחיהם $\frac{\pi L^2}{n}\to0$, בסתירה לשטח $1$.
+    solution:
+      - kind: idea
+        text: >-
+          קשת באורך $\ell$ לא מתרחקת מנקודת ההתחלה שלה יותר מ-$\ell$, ולכן נמצאת בעיגול ברדיוס $\ell$. אם כל המסילה באורך סופי, אפשר לכסות אותה בהרבה עיגולים קטנים ששטחם הכולל זניח, ואז היא לא יכולה למלא ריבוע.
+      - kind: step
+        text: >-
+          **אורך מתחבר.** ל-$0\le u\le v\le1$ מתקיים $$L(\gamma|_{[0,v]})=L(\gamma|_{[0,u]})+L(\gamma|_{[u,v]}):$$ כל חלוקה של $[0,v]$ אפשר לעדן כך שתכיל את $u$ (וזה רק מאריך), ואז היא איחוד של חלוקה של $[0,u]$ וחלוקה של $[u,v]$; ולהפך.
+      - kind: step
+        text: >-
+          **$s$ רציפה.** $s$ עולה. נראה רציפות מימין ב-$t_0$ (משמאל באותו אופן). יהי $\varepsilon>0$; יש חלוקה $t_0<t_1<\dots<t_m=1$ עם $\ell>L(\gamma|_{[t_0,1]})-\varepsilon$, ומרציפות $\gamma$ אפשר להוסיף לה נקודה $t^*$ קרובה ל-$t_0$ עם $\|\gamma(t^*)-\gamma(t_0)\|<\varepsilon$. אז
+          $$L(\gamma|_{[t^*,1]})\ge\ell-\varepsilon>L(\gamma|_{[t_0,1]})-2\varepsilon,$$
+          ולפי החיבוריות $L(\gamma|_{[t_0,t^*]})<2\varepsilon$, וכך גם לכל $t\in(t_0,t^*)$.
+      - kind: step
+        text: >-
+          **חלוקה לחלקים שווים.** לפי משפט ערך הביניים יש $0=u_0<u_1<\dots<u_n=1$ עם $s(u_j)=\frac{jL}{n}$, ולכן כל קשת $\gamma|_{[u_{j-1},u_j]}$ באורך $\frac Ln$.
+      - kind: step
+        text: >-
+          **כיסוי.** לכל $t\in[u_{j-1},u_j]$, החלוקה $\{u_{j-1},t,u_j\}$ נותנת $\|\gamma(t)-\gamma(u_{j-1})\|\le\frac Ln$. לכן התמונה של הקשת ה-$j$ בתוך העיגול הסגור ברדיוס $\frac Ln$ סביב $\gamma(u_{j-1})$, והריבוע כולו בתוך איחוד של $n$ עיגולים כאלה.
+      - kind: step
+        text: >-
+          **סתירה.** שטח (תכולת ז׳ורדן, פרק 0.5) מונוטוני ותת-אדיטיבי. שטח הריבוע הוא $1$, ושטח כל עיגול הוא $\pi\frac{L^2}{n^2}$, ולכן $$1\le n\cdot\pi\frac{L^2}{n^2}=\frac{\pi L^2}{n}$$ לכל $n$. עבור $n>\pi L^2$ זו סתירה.
+      - kind: check
+        text: >-
+          איפה נשען על "ממלאת ריבוע"? רק בשטח $1$ של התמונה. אותו טיעון מראה שתמונה של כל מסילה בעלת אורך היא קבוצה בעלת שטח $0$: מסילה עם אורך היא "דקה".
+      - kind: result
+        text: >-
+          למסילה שממלאת ריבוע אין אורך.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 1'
+      year: 2002
+      problem: 'תרגיל 1'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex01.html
+      verified: '2026-11-09'
+      adapted: true

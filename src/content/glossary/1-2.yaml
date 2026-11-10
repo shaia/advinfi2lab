@@ -1,0 +1,32 @@
+# Terms first defined in lesson 1.2 (arc length and the arc-length parameter).
+- id: inscribed-polygon
+  term: קו שבור חסום
+  en: inscribed polygon
+  definition: >-
+    לחלוקה $a=t_0<\dots<t_m=b$: הקו השבור שמחבר את $\gamma(t_0),\dots,\gamma(t_m)$ בקטעים ישרים, שאורכו
+    $\sum_i\|\gamma(t_i)-\gamma(t_{i-1})\|$. עידון החלוקה רק מאריך אותו (אי-שוויון המשולש).
+  lesson: '1.2'
+- id: curve-length
+  term: אורך של מסילה
+  en: length of a curve (arc length)
+  symbol: 'L(\gamma)=\int_a^b\|\gamma''(t)\|\,dt'
+  definition: >-
+    הסופרמום של אורכי הקווים השבורים החסומים במסילה. כשהמסילה גזירה ברציפות הוא שווה ל-$\int_a^b\|\gamma'(t)\|\,dt$,
+    ואינו תלוי בהחלפת פרמטר מונוטונית.
+  lesson: '1.2'
+- id: arc-length-parameter
+  term: פרמטר אורך הקשת
+  en: arc-length parameter
+  symbol: 's(t)=\int_{t_0}^t\|\gamma''(\tau)\|\,d\tau'
+  definition: >-
+    במסילה רגולרית, $s(t)=\int_{t_0}^t\|\gamma'\|$ עולה ממש ובעלת הפכית גזירה, ו-$\tilde\gamma(s)=\gamma(t(s))$
+    מקיימת $\|\tilde\gamma'(s)\|=1$: כל קטע של הפרמטר באורך $\ell$ מתאים לקשת באורך $\ell$. נקרא גם הפרמטר
+    הטבעי.
+  lesson: '1.2'
+- id: rectifiable-curve
+  term: מסילה בעלת אורך
+  en: rectifiable curve
+  definition: >-
+    מסילה רציפה $\gamma:[a,b]\to\mathbb R^n$ שאורכי הקווים השבורים החסומים בה חסומים מלעיל, כלומר $L(\gamma)<\infty$.
+    כל מסילה גזירה ברציפות על קטע סגור היא כזו; מסילה רציפה שתמונתה ריבוע מלא אינה כזו.
+  lesson: '1.2'

@@ -1,0 +1,319 @@
+# Lesson 8.2 — 2- and 3-forms, the wedge product, the dictionary to vector fields.
+# Objectives (src/course.ts):
+#   OBJ-8.2-1  define 2- and 3-forms and compute wedge products: antisymmetry, α∧α = 0 for a 1-form
+#   OBJ-8.2-2  translate between 1- and 2-forms and vector fields in ℝ³
+#   OBJ-8.2-3  understand the wedge product of two 1-forms as a determinant
+chapter: 8
+questions:
+  - id: Q-8.2-anti
+    type: mc
+    objectives: [OBJ-8.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      **מכפלת היתד** של שתי תבניות מסדר 1 היא התבנית מסדר 2 שערכה על זוג וקטורים הוא
+      $(\alpha\wedge\beta)(v,w)=\alpha(v)\beta(w)-\alpha(w)\beta(v)$. במה שווה $dy\wedge dx$?
+    choices:
+      - text: '$-dx\wedge dy$'
+        correct: true
+        feedback: >-
+          נכון. מכפלת יתד של תבניות מסדר 1 אנטי-סימטרית: $\alpha\wedge\beta=-\beta\wedge\alpha$. על וקטורים:
+          $dy\wedge dx(v,w)=v_2w_1-v_1w_2=-(v_1w_2-v_2w_1)$.
+      - text: '$dx\wedge dy$'
+        feedback: >-
+          מכפלת יתד אינה חילופית. על $v=e_1$, $w=e_2$: $dx\wedge dy(e_1,e_2)=1$, ואילו $dy\wedge dx(e_1,e_2)=0\cdot0-1\cdot1=-1$.
+        misconception: MC-c8-wedge-commutes
+      - text: '$0$'
+        feedback: >-
+          אפס מתקבל במכפלה של תבנית **בעצמה**, למשל $dx\wedge dx$. כאן שני הגורמים שונים, והמכפלה היא מינוס $dx\wedge dy$.
+        misconception: MC-c8-wedge-self-nonzero
+
+  - id: Q-8.2-expand
+    type: mc
+    objectives: [OBJ-8.2-1]
+    level: basic
+    prompt: >-
+      חשבו את $(x\,dx+dy)\wedge(dx+z\,dy)$.
+    choices:
+      - text: '$(xz-1)\,dx\wedge dy$'
+        correct: true
+        feedback: >-
+          נכון. פותחים סוגריים: $x\,dx\wedge dx+xz\,dx\wedge dy+dy\wedge dx+z\,dy\wedge dy$. האיבר הראשון והאחרון
+          מתאפסים, ו-$dy\wedge dx=-dx\wedge dy$.
+      - text: '$(xz+1)\,dx\wedge dy$'
+        feedback: >-
+          כאן כתבו $dy\wedge dx=dx\wedge dy$. ההחלפה מחליפה סימן.
+        misconception: MC-c8-wedge-commutes
+      - text: '$xz\,dx\wedge dy$'
+        feedback: >-
+          $dy\wedge dx$ אינו אפס; הוא $-dx\wedge dy$. רק מכפלה של דיפרנציאל בעצמו, כמו $dx\wedge dx$, מתאפסת.
+        misconception: MC-c8-wedge-self-nonzero
+      - text: '$x\,dx\wedge dx+(xz-1)\,dx\wedge dy+z\,dy\wedge dy$, ולא ניתן לפשט יותר'
+        feedback: >-
+          $dx\wedge dx=0$ ו-$dy\wedge dy=0$, כי כל תבנית מסדר 1 מקיימת $\alpha\wedge\alpha=-\alpha\wedge\alpha$.
+        misconception: MC-c8-wedge-self-nonzero
+
+  - id: Q-8.2-dict1
+    type: mc
+    objectives: [OBJ-8.2-2]
+    level: basic
+    prompt: >-
+      **ההתאמה בין תבניות לשדות** ב-$\mathbb R^3$ (נקרא לה בקיצור "המילון") מתאימה לשדה $F=(F_1,F_2,F_3)$ תבנית מסדר 1
+      $\omega_F=F_1\,dx+F_2\,dy+F_3\,dz$ (שהאינטגרל שלה על מסילה הוא העבודה של $F$), ותבנית מסדר 2 $\eta_F$ שהאינטגרל
+      שלה על משטח הוא השטף של $F$: בה כל רכיב $F_i$ הולך עם זוג הדיפרנציאלים **בלי** הקואורדינטה ה-$i$, בסדר המעגלי
+      $dy\wedge dz,\ dz\wedge dx,\ dx\wedge dy$. מהי $\eta_F$ לשדה $F=(yz,\ x,\ -z^2)$?
+    choices:
+      - text: '$yz\,dy\wedge dz+x\,dz\wedge dx-z^2\,dx\wedge dy$'
+        correct: true
+        feedback: >-
+          נכון. המילון: $F_1\,dy\wedge dz+F_2\,dz\wedge dx+F_3\,dx\wedge dy$, בסדר מעגלי. כל רכיב הולך עם זוג
+          הדיפרנציאלים **בלי** הקואורדינטה שלו.
+      - text: '$yz\,dx+x\,dy-z^2\,dz$'
+        feedback: >-
+          זו $\omega_F$, התבנית מסדר 1 של העבודה. שטף מתבצע על משטח, ולכן צריך תבנית מסדר 2.
+        misconception: MC-c8-dict-index
+      - text: '$yz\,dx\wedge dy+x\,dy\wedge dz-z^2\,dz\wedge dx$'
+        feedback: >-
+          הרכיבים הותאמו לזוגות הלא נכונים. הרכיב הראשון של $v\times w$ הוא $v_2w_3-v_3w_2=dy\wedge dz(v,w)$, ולכן $F_1$
+          הולך עם $dy\wedge dz$.
+        misconception: MC-c8-dict-index
+      - text: '$yz\,dy\wedge dz+x\,dx\wedge dz-z^2\,dx\wedge dy$'
+        feedback: >-
+          הרכיב השני הולך עם $dz\wedge dx$, ו-$dx\wedge dz=-dz\wedge dx$. התבנית הזו מתאימה לשדה $(yz,-x,-z^2)$.
+        misconception: MC-c8-dict-sign
+
+  - id: Q-8.2-det
+    type: numeric
+    objectives: [OBJ-8.2-3]
+    level: basic
+    prompt: >-
+      חשבו את $dx\wedge dy(v,w)$ עבור $v=(2,1,5)$ ו-$w=(-1,3,4)$.
+    answer: 7
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $dx\wedge dy(v,w)=\det\begin{pmatrix}v_1&w_1\\ v_2&w_2\end{pmatrix}=2\cdot3-1\cdot(-1)=7$. הרכיבים השלישיים
+      (5 ו-4) אינם משתתפים: זו ההטלה על מישור $xy$.
+    wrongFeedback: >-
+      $dx\wedge dy(v,w)=dx(v)\,dy(w)-dx(w)\,dy(v)=v_1w_2-w_1v_2$.
+    commonWrong:
+      - value: -7
+        feedback: >-
+          זה $dx\wedge dy(w,v)=dy\wedge dx(v,w)$: הסדר התהפך. החלפת הווקטורים מחליפה את הסימן.
+        misconception: MC-c8-wedge-commutes
+      - value: 6
+        feedback: >-
+          $6=v_1w_2$ בלבד. חסר האיבר $-v_2w_1$, שבלעדיו אין אנטי-סימטריה.
+        misconception: MC-c8-wedge-product-only
+      - value: 5
+        feedback: >-
+          $5=v_1w_2+v_2w_1$: סכום במקום הפרש.
+        misconception: MC-c8-wedge-product-only
+
+  - id: Q-8.2-self
+    type: twotier
+    objectives: [OBJ-8.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\alpha=P\,dx+Q\,dy+R\,dz$ תבנית מסדר 1 כלשהי על $\mathbb R^3$. האם תמיד $\alpha\wedge\alpha=0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון, לכל תבנית מסדר 1, בכל נקודה.
+      - text: 'לא, $\alpha\wedge\alpha=(P^2+Q^2+R^2)\,dx\wedge dy\wedge dz$'
+        feedback: >-
+          זו אנלוגיה לריבוע של מספר, והיא שגויה פעמיים: $\alpha\wedge\alpha$ מסדר 2, לא 3, והיא אפס.
+        misconception: MC-c8-wedge-self-nonzero
+      - text: 'רק אם המקדמים קבועים'
+        feedback: >-
+          המקדמים בנקודה הם מספרים, והחישוב נעשה נקודה-נקודה. אין חשיבות לתלות שלהם בנקודה.
+        misconception: MC-c8-wedge-self-nonzero
+    reasons:
+      - text: 'האנטי-סימטריה נותנת $\alpha\wedge\alpha=-\alpha\wedge\alpha$; או בפתיחת סוגריים: $dx\wedge dx=0$, והאיברים המעורבים מתבטלים בזוגות, $PQ\,dx\wedge dy+QP\,dy\wedge dx=0$'
+        correct: true
+        feedback: >-
+          בדיוק. שתי הדרכים אומרות אותו דבר: מספר ששווה למינוס עצמו הוא אפס.
+      - text: 'רק האיברים $dx\wedge dx$, $dy\wedge dy$, $dz\wedge dz$ מתאפסים, ולכן נשארים האיברים המעורבים'
+        feedback: >-
+          האיברים המעורבים מופיעים פעמיים, בשני סדרים: $PQ\,dx\wedge dy$ ו-$QP\,dy\wedge dx=-PQ\,dx\wedge dy$. הם מתבטלים.
+        misconception: MC-c8-wedge-commutes
+      - text: 'כי $\alpha(v)\alpha(v)-\alpha(v)\alpha(v)=0$'
+        feedback: >-
+          זו הערכה על **אותו** וקטור פעמיים. צריך $(\alpha\wedge\alpha)(v,w)=\alpha(v)\alpha(w)-\alpha(w)\alpha(v)$ לכל
+          $v,w$; גם זה אפס, אבל הנימוק צריך זוג וקטורים כלשהו.
+        misconception: MC-c8-wedge-product-only
+
+  - id: Q-8.2-triple
+    type: numeric
+    objectives: [OBJ-8.2-1]
+    level: mid
+    prompt: >-
+      $(dx+dy)\wedge(dy+dz)\wedge(dz+dx)=c\,dx\wedge dy\wedge dz$. מהו $c$?
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. מתוך שמונה האיברים בפתיחת הסוגריים נשארים רק אלה בלי דיפרנציאל חוזר: $dx\wedge dy\wedge dz$ ו-$dy\wedge
+      dz\wedge dx$. השני הוא תמורה מעגלית (שתי החלפות), ולכן שווה ל-$+dx\wedge dy\wedge dz$. סה״כ $c=2$, וזו גם
+      הדטרמיננטה של מטריצת המקדמים.
+    wrongFeedback: >-
+      פתחו סוגריים, מחקו כל איבר שבו דיפרנציאל חוזר, וסדרו את הנותרים לפי $dx\wedge dy\wedge dz$ עם סימן התמורה.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          כאן נלקח $dy\wedge dz\wedge dx=-dx\wedge dy\wedge dz$. תמורה מעגלית של שלושה זוגית: $dy\wedge dz\wedge dx\to
+          dy\wedge dx\wedge dz\to dx\wedge dy\wedge dz$, שתי החלפות.
+        misconception: MC-c8-permutation-sign
+      - value: 8
+        feedback: >-
+          8 הוא מספר האיברים בפתיחת הסוגריים. רובם מכילים דיפרנציאל חוזר (כמו $dx\wedge dy\wedge dx$) ולכן אפס.
+        misconception: MC-c8-wedge-self-nonzero
+
+  - id: Q-8.2-dict2
+    type: mc
+    objectives: [OBJ-8.2-2]
+    level: mid
+    prompt: >-
+      לאיזה שדה מתאימה התבנית מסדר 2 $\eta=x\,dy\wedge dz+y^2\,dx\wedge dz+3\,dx\wedge dy$, כלומר מהו $F$
+      ש-$\int_S\eta=\iint_SF\cdot d\mathbf S$?
+    choices:
+      - text: '$F=(x,\ -y^2,\ 3)$'
+        correct: true
+        feedback: >-
+          נכון. קודם כותבים את $\eta$ בסדר המעגלי: $y^2\,dx\wedge dz=-y^2\,dz\wedge dx$. אז
+          $\eta=x\,dy\wedge dz-y^2\,dz\wedge dx+3\,dx\wedge dy$.
+      - text: '$F=(x,\ y^2,\ 3)$'
+        feedback: >-
+          המקדם של $dx\wedge dz$ אינו הרכיב השני; המקדם של $dz\wedge dx$ הוא. ההחלפה מוסיפה מינוס.
+        misconception: MC-c8-dict-sign
+      - text: '$F=(3,\ y^2,\ x)$'
+        feedback: >-
+          כאן התאימו את $dx\wedge dy$ לרכיב הראשון. הרכיב השלישי הוא זה ש"חסר" ממנו $dz$, כלומר $dx\wedge dy$ שייך ל-$F_3$.
+        misconception: MC-c8-dict-index
+
+  - id: Q-8.2-cross
+    type: twotier
+    objectives: [OBJ-8.2-2, OBJ-8.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $F=(A,B,C)$ ו-$\eta_F=A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy$. האם לכל שני וקטורים $v,w$ מתקיים
+      $\eta_F(v,w)=F\cdot(v\times w)$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. זו הסיבה שהאינטגרל של $\eta_F$ על משטח הוא השטף: על $\sigma_u,\sigma_v$ התבנית נותנת
+          $F\cdot(\sigma_u\times\sigma_v)$.
+      - text: 'לא, $\eta_F(v,w)=F\cdot v+F\cdot w$'
+        feedback: >-
+          $\eta_F$ דו-לינארית ואנטי-סימטרית; $F\cdot v+F\cdot w$ אינו כזה (הוא לא מחליף סימן כשמחליפים את $v$ ו-$w$).
+        misconception: MC-c8-wedge-product-only
+      - text: 'רק כש-$v$ ו-$w$ ניצבים'
+        feedback: >-
+          הזהות אלגברית ומתקיימת לכל זוג וקטורים, גם לא ניצבים.
+        misconception: MC-c8-wedge-unsigned
+    reasons:
+      - text: '$dy\wedge dz(v,w)=v_2w_3-v_3w_2$, $dz\wedge dx(v,w)=v_3w_1-v_1w_3$, $dx\wedge dy(v,w)=v_1w_2-v_2w_1$: אלה בדיוק שלושת הרכיבים של $v\times w$'
+        correct: true
+        feedback: >-
+          בדיוק. כל מכפלת יתד של שני דיפרנציאלים היא דטרמיננטה $2\times2$, והמכפלה הווקטורית בנויה משלוש דטרמיננטות כאלה.
+      - text: '$dx\wedge dy(v,w)$ הוא השטח של המקבילית שנפרשת על ידי $v,w$, וגם $\|v\times w\|$ הוא השטח הזה'
+        feedback: >-
+          $dx\wedge dy(v,w)$ הוא השטח **המסומן** של ההטלה על מישור $xy$, לא שטח המקבילית. לכן משווים רכיב-רכיב, לא
+          אורכים.
+        misconception: MC-c8-wedge-unsigned
+      - text: 'כי $(\alpha\wedge\beta)(v,w)=\alpha(v)\beta(w)$, ומכפלה כזו היא רכיב של מכפלה וקטורית'
+        feedback: >-
+          ההגדרה היא $\alpha(v)\beta(w)-\alpha(w)\beta(v)$. בלי האיבר המחוסר, $dx\wedge dy(v,w)$ היה $v_1w_2$, שאינו רכיב
+          של $v\times w$.
+        misconception: MC-c8-wedge-product-only
+
+  - id: Q-8.2-det2
+    type: numeric
+    objectives: [OBJ-8.2-3, OBJ-8.2-1]
+    level: mid
+    prompt: >-
+      $\alpha=x\,dx+dy$ ו-$\beta=dz-y\,dx$. חשבו את $(\alpha\wedge\beta)_p(v,w)$ בנקודה $p=(2,3,1)$, עבור $v=(1,0,1)$
+      ו-$w=(0,1,2)$.
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. בנקודה $p$: $\alpha_p=2\,dx+dy$ ו-$\beta_p=-3\,dx+dz$. אז $\alpha(v)=2$, $\alpha(w)=1$, $\beta(v)=-2$,
+      $\beta(w)=2$, ו-$\alpha(v)\beta(w)-\alpha(w)\beta(v)=4-(-2)=6$.
+    wrongFeedback: >-
+      הציבו את $p$ במקדמים, חשבו את ארבעת המספרים $\alpha(v),\alpha(w),\beta(v),\beta(w)$, וקחו את הדטרמיננטה.
+    commonWrong:
+      - value: -6
+        feedback: >-
+          זה $(\beta\wedge\alpha)(v,w)$, או החלפה של $v$ ו-$w$. הסדר קובע את הסימן.
+        misconception: MC-c8-wedge-commutes
+      - value: 4
+        feedback: >-
+          $4=\alpha(v)\beta(w)$ בלבד. מכפלת יתד היא הדטרמיננטה, עם האיבר $-\alpha(w)\beta(v)$.
+        misconception: MC-c8-wedge-product-only
+      - value: 2
+        feedback: >-
+          $2=\alpha(v)\beta(w)+\alpha(w)\beta(v)$: סכום במקום הפרש.
+        misconception: MC-c8-wedge-product-only
+
+  - id: Q-8.2-projection
+    type: mc
+    objectives: [OBJ-8.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $v=(1,0,0)$ ו-$w=(0,0,1)$ פורשים ריבוע שטחו 1 במישור $xz$. מה המשמעות הגאומטרית של $dx\wedge dy(v,w)$, ומה ערכו כאן?
+    choices:
+      - text: השטח המסומן של ההטלה של המקבילית על מישור $xy$; כאן 0, כי ההטלה היא קטע
+        correct: true
+        feedback: >-
+          נכון. $dx\wedge dy(v,w)=1\cdot0-0\cdot0=0$. ההטלה של $v$ היא $(1,0)$, של $w$ היא $(0,0)$, והמקבילית המוטלת מנוונת.
+      - text: השטח של המקבילית שנפרשת על ידי $v$ ו-$w$; כאן 1
+        feedback: >-
+          זה $\|v\times w\|$. $dx\wedge dy$ "רואה" רק את רכיבי $x,y$: הוא מודד את ההטלה על מישור $xy$, עם סימן.
+        misconception: MC-c8-wedge-unsigned
+      - text: 'המכפלה $dx(v)\,dy(w)$; כאן 0'
+        feedback: >-
+          הערך במקרה נכון, אבל ההגדרה שגויה: $dx\wedge dy(v,w)=dx(v)dy(w)-dx(w)dy(v)$. עבור $v=e_2$, $w=e_1$ ההגדרה
+          השגויה נותנת 0, והנכונה $-1$.
+        misconception: MC-c8-wedge-product-only
+      - text: השטח (תמיד אי-שלילי) של ההטלה על מישור $xy$; כאן 0
+        feedback: >-
+          חסר הסימן: $dx\wedge dy(w,v)=-dx\wedge dy(v,w)$. עבור $v=e_2$, $w=e_1$ הערך הוא $-1$.
+        misconception: MC-c8-wedge-unsigned
+
+  - id: Q-8.2-dependent
+    type: twotier
+    objectives: [OBJ-8.2-1, OBJ-8.2-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\alpha,\beta$ תבניות מסדר 1 על $\mathbb R^3$, ובנקודה $p$ שתיהן שונות מאפס. האם ייתכן ש-$(\alpha\wedge\beta)_p=0$?
+    choices:
+      - text: כן, בדיוק כש-$\alpha_p$ ו-$\beta_p$ תלויים לינארית
+        correct: true
+        feedback: >-
+          נכון. למשל $\alpha=dx$, $\beta=2\,dx$: $\alpha\wedge\beta=2\,dx\wedge dx=0$. ואם הם בלתי תלויים, המכפלה אינה אפס.
+      - text: 'לא, מכפלה של שני גורמים שונים מאפס שונה מאפס'
+        feedback: >-
+          זה נכון במספרים, לא במכפלת יתד: $dx\wedge(2\,dx)=0$ אף ששני הגורמים שונים מאפס.
+        misconception: MC-c8-wedge-self-nonzero
+      - text: 'כן, לכל $\alpha_p,\beta_p$, כי מכפלת יתד של תבניות מסדר 1 היא תמיד אפס'
+        feedback: >-
+          רק מכפלה של תבנית **בעצמה** (או בכפולה שלה) מתאפסת. $dx\wedge dy\ne0$: ערכה על $e_1,e_2$ הוא 1.
+        misconception: MC-c8-wedge-self-nonzero
+    reasons:
+      - text: 'אם $\beta_p=c\,\alpha_p$ המכפלה היא $c\,\alpha_p\wedge\alpha_p=0$; אם הם בלתי תלויים, יש $v,w$ שעליהם היא 1'
+        correct: true
+        feedback: >-
+          בדיוק: $(\alpha\wedge\beta)(v,w)$ היא הדטרמיננטה של $\begin{pmatrix}\alpha(v)&\alpha(w)\\ \beta(v)&\beta(w)\end{pmatrix}$,
+          והיא אפס לכל $v,w$ בדיוק כששתי השורות תלויות. כשהם בלתי תלויים בוחרים $v,w$ עם $\alpha(v)=\beta(w)=1$ ו-$\alpha(w)=\beta(v)=0$:
+          הם קיימים כי שני פונקציונלים בלתי תלויים על $\mathbb R^3$ משלימים לבסיס דואלי (לינארית 1).
+      - text: 'מכפלת יתד חילופית, $\alpha\wedge\beta=\beta\wedge\alpha$, ולכן כשהיא גם אנטי-סימטרית היא אפס'
+        feedback: >-
+          $\alpha\wedge\beta=-\beta\wedge\alpha$. השוויון בלי מינוס היה אומר $\alpha\wedge\beta=0$ תמיד, וזה לא נכון.
+        misconception: MC-c8-wedge-commutes
+      - text: 'כי $(\alpha\wedge\beta)(v,w)=\alpha(v)\beta(w)$, ואפשר לבחור $v$ עם $\alpha(v)=0$'
+        feedback: >-
+          ההגדרה כוללת גם $-\alpha(w)\beta(v)$, והשאלה היא אם המכפלה אפס **לכל** $v,w$, לא לזוג אחד.
+        misconception: MC-c8-wedge-product-only

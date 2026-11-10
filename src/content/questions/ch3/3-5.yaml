@@ -1,0 +1,363 @@
+# Lesson 3.5 — local isometries and intrinsic geometry. Understanding questions, basic → mid → exam.
+# Objectives (src/course.ts):
+#   OBJ-3.5-1  define a local isometry and show that it preserves the first form
+#   OBJ-3.5-2  show that the cylinder and the cone are locally isometric to the plane (rolling a sheet without stretching)
+#   OBJ-3.5-3  tell an intrinsic property (depends only on the first form) from an extrinsic one (depends on the embedding)
+# No Gauss curvature here (chapter 4): the sphere is told from the plane by the lengths of intrinsic circles.
+chapter: 3
+questions:
+  - id: Q-3.5-def
+    type: mc
+    objectives: [OBJ-3.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מתי העתקה חלקה $f:S_1\to S_2$ בין משטחים נקראת **איזומטריה מקומית**?
+    choices:
+      - text: 'כשהיא מעבירה כל מסילה ב-$S_1$ למסילה ב-$S_2$ באותו אורך'
+        correct: true
+        feedback: >-
+          נכון. שקול לכך: אם $\sigma_1$ פרמטריזציה של חתיכה של $S_1$ ו-$\sigma_2=f\circ\sigma_1$, אז ל-$\sigma_1$ ול-$\sigma_2$
+          אותם $E,F,G$.
+      - text: 'כש-$\|f(p)-f(q)\|=\|p-q\|$ לכל $p,q\in S_1$'
+        feedback: >-
+          זו שמירת מרחקים **בקו ישר במרחב**, כמו בתנועה קשיחה. גלגול דף לגליל אינו שומר אותם (שני קצות הדף מתקרבים), אבל
+          שומר כל אורך של מסילה על הדף.
+        misconception: MC-c3-isometry-is-rigid-motion
+      - text: 'כשהיא שומרת את גודל השטח של כל מקבילית משיקה, $\sqrt{EG-F^2}$'
+        feedback: >-
+          זה חלש מדי: $(x,y)\mapsto(2x,\frac y2)$ במישור שומרת שטחים, ומכפילה את אורך הקטע מ-$(0,0)$ ל-$(1,0)$.
+        misconception: MC-c3-isometry-area-only
+
+  - id: Q-3.5-cylinder-path
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    level: basic
+    prompt: >-
+      ההעתקה $f(x,y)=(\cos x,\ \sin x,\ y)$ מלפפת את המישור על גליל היחידה. מה אורך המסילה על הגליל שהיא התמונה של
+      הקטע מ-$(0,0)$ ל-$(\pi,\pi)$ במישור?
+    answer: 4.4428829
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi\sqrt2$. ל-$\sigma(x,y)=(\cos x,\sin x,y)$ יש $E=1$, $F=0$, $G=1$, כמו למישור, ולכן $f$ שומרת אורכים: אורך
+      הסליל $(\cos t,\sin t,t)$, $0\le t\le\pi$, שווה לאורך הקטע, $\sqrt{\pi^2+\pi^2}$.
+    wrongFeedback: >-
+      חשבו את $E,F,G$ של $(\cos x,\sin x,y)$ והשוו למישור; אחר כך מספיק למדוד את הקטע במישור.
+    commonWrong:
+      - value: 3.7241917
+        feedback: >-
+          זה $\sqrt{4+\pi^2}$, המרחק **בקו ישר במרחב** בין $(1,0,0)$ ל-$(-1,0,\pi)$. המסילה על הגליל ארוכה ממנו: איזומטריה
+          שומרת אורכים של מסילות על המשטח, לא מרחקים במרחב.
+        misconception: MC-c3-isometry-is-rigid-motion
+
+  - id: Q-3.5-intrinsic
+    type: multi
+    objectives: [OBJ-3.5-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהגדלים הבאים הם **תכונות פנימיות** של משטח (נקבעים מהתבנית הראשונה בלבד, ולכן נשמרים בכל איזומטריה
+      מקומית)? סמנו את כולם.
+    choices:
+      - text: 'האורך של מסילה על המשטח'
+        correct: true
+        feedback: 'נכון: $L=\int\sqrt{Eu''^2+2Fu''v''+Gv''^2}\,dt$.'
+      - text: 'הזווית בין שתי מסילות שנחתכות'
+        correct: true
+        feedback: 'נכון: $\cos\theta$ מחושב מ-$E,F,G$ ומרכיבי המהירויות.'
+      - text: 'גודל השטח $\sqrt{EG-F^2}$ של המקבילית שנפרשת על ידי $\sigma_u,\sigma_v$ בנקודה'
+        correct: true
+        feedback: 'נכון: הוא בנוי מ-$E,F,G$ בלבד.'
+      - text: 'הנורמל היחידה $\hat{\mathbf N}$'
+        feedback: >-
+          למישור ולגליל יש פרמטריזציות עם $E=1$, $F=0$, $G=1$; הנורמל של המישור קבוע, ושל הגליל מסתובב. $\hat{\mathbf N}$
+          תלוי בשיכון.
+        misconception: MC-c3-normal-is-intrinsic
+      - text: 'המרחק בקו ישר במרחב בין שתי נקודות של המשטח'
+        feedback: >-
+          גלגול דף לגליל משנה אותו. הגודל הפנימי המקביל הוא **המרחק הפנימי**: האינפימום של אורכי מסילות במשטח.
+        misconception: MC-c3-isometry-is-rigid-motion
+      - text: 'העקמומיות $\kappa$ של מסילה על המשטח, כמסילה במרחב'
+        feedback: >-
+          הלפפת המישור על הגליל מעבירה ישר ($\kappa=0$) לסליל או למעגל ($\kappa>0$). זו תכונה חיצונית.
+        misconception: MC-c3-curvature-of-curve-intrinsic
+
+  - id: Q-3.5-graph-chart
+    type: mc
+    objectives: [OBJ-3.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $S$ הגרף $z=f(x,y)$ של פונקציה חלקה. מתי ההטלה $(x,y,f(x,y))\mapsto(x,y)$ מ-$S$ למישור היא איזומטריה מקומית?
+    choices:
+      - text: 'רק כש-$f_x=f_y=0$ בכל מקום, כלומר $f$ קבועה מקומית'
+        correct: true
+        feedback: >-
+          נכון. לגרף $E=1+f_x^2$, $F=f_xf_y$, $G=1+f_y^2$, ולמישור $(1,0,1)$. השוויון דורש $f_x=f_y=0$. אחרת ההטלה מקצרת
+          כל מסילה שעולה או יורדת.
+      - text: 'תמיד: ההטלה חד-חד-ערכית ועל, והפרמטריזציה $(x,y,f)$ רגולרית'
+        feedback: >-
+          הטלה הפיכה ורגולרית היא החלפת קואורדינטות, לא איזומטריה. בגרף $z=x$ הקטע מ-$(0,0,0)$ ל-$(1,0,1)$ אורכו $\sqrt2$,
+          והטלתו אורכה 1.
+        misconception: MC-c3-chart-is-isometry
+      - text: 'כש-$F=0$, כלומר כשהקווים הפרמטריים ניצבים'
+        feedback: >-
+          $F=0$ מתאר רק את הזווית בין $\sigma_x$ ל-$\sigma_y$. בגרף $z=x$ יש $F=0$ ו-$E=2\ne1$.
+        misconception: MC-c3-chart-is-isometry
+
+  - id: Q-3.5-cone-angle
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    level: mid
+    prompt: >-
+      החרוט $z=\sqrt{x^2+y^2}$, $z>0$, בפרמטריזציה $\sigma(u,v)=(v\cos u,\ v\sin u,\ v)$, $v>0$, מקיים $E=v^2$, $F=0$, $G=2$.
+      חותכים אותו לאורך ישר יוצר ופורשים אותו על מישור בלי למתוח. מהי הזווית (ברדיאנים) של הגזרה שמתקבלת?
+    answer: 4.4428829
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{2\pi}{\sqrt2}=\pi\sqrt2$. המרחק מהקודקוד לאורך החרוט הוא $\rho=\sqrt2\,v$, ומעגל בגובה $v$ אורכו $2\pi v=\frac{2\pi}{\sqrt2}\rho$.
+      בגזרה בזווית $\alpha$ הקשת ברדיוס $\rho$ אורכה $\alpha\rho$, ולכן $\alpha=\frac{2\pi}{\sqrt2}\approx4.443$, פחות מ-$2\pi$.
+    wrongFeedback: >-
+      השוו את אורך מעגל הרוחב, $2\pi v$, למרחק שלו מהקודקוד לאורך ישר יוצר, $\int_0^v\sqrt G\,dv$.
+    commonWrong:
+      - value: 6.2831853
+        feedback: >-
+          זה $2\pi$, מישור שלם. אילו החרוט היה נפרש למישור שלם, מעגל הרוחב היה באורך $2\pi\rho=2\pi\sqrt2\,v$, אבל אורכו $2\pi v$.
+        misconception: MC-c3-cone-full-angle
+      - value: 8.8857659
+        feedback: >-
+          זה $2\pi\sqrt2$: היחס הפוך. המרחק לאורך החרוט, $\sqrt2\,v$, **גדול** מרדיוס המעגל $v$, ולכן הזווית קטנה מ-$2\pi$.
+        misconception: MC-c3-cone-full-angle
+
+  - id: Q-3.5-cone-map
+    type: mc
+    objectives: [OBJ-3.5-2, OBJ-3.5-1]
+    level: mid
+    prompt: >-
+      $\sigma(u,v)=(v\cos u,\ v\sin u,\ v)$, $0<u<2\pi$, $v>0$, היא חתיכה של החרוט עם $E=v^2$, $F=0$, $G=2$. איזו פרמטריזציה
+      $\tau(u,v)$ של חתיכה של המישור $z=0$ נותנת אותם $E,F,G$, כך ש-$\tau\circ\sigma^{-1}$ איזומטריה?
+    choices:
+      - text: '$\tau(u,v)=\big(\sqrt2\,v\cos\frac{u}{\sqrt2},\ \sqrt2\,v\sin\frac{u}{\sqrt2},\ 0\big)$'
+        correct: true
+        feedback: >-
+          נכון. $\tau_u=(-v\sin\frac u{\sqrt2},\ v\cos\frac u{\sqrt2},\ 0)$ נותן $E=v^2$, ו-$\tau_v=(\sqrt2\cos\frac u{\sqrt2},\ \sqrt2\sin\frac u{\sqrt2},\ 0)$
+          נותן $G=2$, $F=0$. התמונה היא גזרה בזווית $\frac{2\pi}{\sqrt2}$.
+      - text: '$\tau(u,v)=(v\cos u,\ v\sin u,\ 0)$, ההטלה האנכית של החרוט'
+        feedback: >-
+          כאן $G=1\ne2$: ההטלה מקצרת כל ישר יוצר פי $\sqrt2$. הטלה על מישור אינה איזומטריה.
+        misconception: MC-c3-chart-is-isometry
+      - text: '$\tau(u,v)=(\sqrt2\,v\cos u,\ \sqrt2\,v\sin u,\ 0)$'
+        feedback: >-
+          $G=2$ נכון, אבל $E=2v^2\ne v^2$: הזווית רצה עד $2\pi$, וכל מעגל נמתח. החרוט נפרש לגזרה, לא למישור שלם.
+        misconception: MC-c3-cone-full-angle
+
+  - id: Q-3.5-wrap
+    type: twotier
+    objectives: [OBJ-3.5-2, OBJ-3.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x,y)=(\cos x,\ \sin x,\ y)$ מהמישור לגליל היחידה. היא אינה חד-חד-ערכית, כי $f(x+2\pi,y)=f(x,y)$. האם $f$ היא
+      איזומטריה מקומית?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. מקומית, בכל רצועה $a<x<a+2\pi$, ההעתקה הפיכה ושומרת אורכים: זה "גלגול דף בלי למתוח".
+      - text: לא
+        feedback: >-
+          "מקומית" פירושו שבודקים בסביבות קטנות. אי חד-חד-ערכיות גלובלית לא מפריעה, ואורכים נשמרים בכל מקום.
+        misconception: MC-c3-local-isometry-injective
+    reasons:
+      - text: 'ל-$(x,y)\mapsto(x,y,0)$ ול-$f$ אותם מקדמים, $E=1$, $F=0$, $G=1$, ולכן לכל מסילה אותו אינטגרל אורך'
+        correct: true
+        feedback: >-
+          בדיוק: $f_x=(-\sin x,\cos x,0)$ ו-$f_y=(0,0,1)$ הם וקטורי יחידה ניצבים, כמו $(1,0,0)$ ו-$(0,1,0)$.
+      - text: 'לא, כי איזומטריה צריכה להיות חד-חד-ערכית'
+        feedback: >-
+          איזומטריה **מקומית** אינה חייבת להיות חד-חד-ערכית: $f$ מלפפת את המישור על הגליל אינסוף פעמים, ובכל רצועה ברוחב
+          פחות מ-$2\pi$ היא הפיכה ושומרת אורכים.
+        misconception: MC-c3-local-isometry-injective
+      - text: 'לא, כי הנורמל של המישור קבוע והנורמל של הגליל מסתובב'
+        feedback: >-
+          הנורמל אינו חלק מההגדרה של איזומטריה. איזומטריה צריכה לשמור רק אורכים של מסילות, ו-$f$ שומרת אותם.
+        misconception: MC-c3-isometry-needs-normal
+
+  - id: Q-3.5-same-forms
+    type: twotier
+    objectives: [OBJ-3.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma_1,\sigma_2:D\to\mathbb R^3$ פרמטריזציות רגולריות וחד-חד-ערכיות של שני משטחים $S_1,S_2$, ובכל נקודה של $D$
+      יש להן אותם $E,F,G$. האם $f=\sigma_2\circ\sigma_1^{-1}:S_1\to S_2$ איזומטריה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. זה הכיוון "אותה תבנית ראשונה גוררת איזומטריה", והכלי העיקרי של השיעור.
+      - text: 'לא בהכרח, צריך גם שהמשטחים יהיו מונחים באותו אופן במרחב'
+        feedback: >-
+          ההגדרה מדברת רק על אורכים של מסילות. המישור והגליל מונחים במרחב אחרת לגמרי, ועדיין יש ביניהם איזומטריה מקומית.
+        misconception: MC-c3-isometry-needs-normal
+    reasons:
+      - text: 'מסילה $\sigma_1(u(t),v(t))$ עוברת ל-$\sigma_2(u(t),v(t))$, ושני האורכים הם אותו אינטגרל $\int\sqrt{Eu''^2+2Fu''v''+Gv''^2}\,dt$'
+        correct: true
+        feedback: >-
+          בדיוק. האורך נקבע רק מהמקדמים לאורך המסילה במישור הפרמטרים, ואלה זהים.
+      - text: 'כי אז $f$ היא צמצום של תנועה קשיחה של המרחב'
+        feedback: >-
+          לא: ל-$(x,y,0)$ ול-$(\cos x,\sin x,y)$ אותם מקדמים, והמישור אינו חופף לגליל. $f$ שומרת אורכים על המשטח, לא מרחקים
+          במרחב.
+        misconception: MC-c3-isometry-is-rigid-motion
+      - text: 'כי אותם $E,F,G$ פירושם אותו נורמל יחידה'
+        feedback: >-
+          $\hat{\mathbf N}$ אינו נקבע מ-$E,F,G$: למישור ולגליל אותם מקדמים ונורמלים שונים. הנימוק צריך להיות על אורכים.
+        misconception: MC-c3-normal-is-intrinsic
+
+  - id: Q-3.5-helix-curvature
+    type: twotier
+    objectives: [OBJ-3.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ההעתקה $f(x,y)=(\cos x,\sin x,y)$ היא איזומטריה מקומית מהמישור לגליל היחידה. היא מעבירה את הישר $\ell(t)=(t,t)$
+      לסליל $(\cos t,\ \sin t,\ t)$. האם העקמומיות $\kappa$ של מסילה (כמסילה במרחב) היא תכונה פנימית של המשטח?
+    choices:
+      - text: לא, היא תכונה חיצונית
+        correct: true
+        feedback: >-
+          נכון. איזומטריה מקומית שומרת אורכים וזוויות, אבל לא את $\kappa$.
+      - text: כן, כי איזומטריה שומרת אורכים, ועקמומיות מחושבת מאורך הקשת
+        feedback: >-
+          העקמומיות היא $\|\frac{d\mathbf t}{ds}\|$, ו-$\mathbf t$ הוא וקטור **במרחב**: הוא תלוי באופן שבו המסילה יושבת
+          במרחב, לא רק באורך הקשת שלה.
+        misconception: MC-c3-curvature-of-curve-intrinsic
+    reasons:
+      - text: 'לישר $\kappa=0$, ולסליל $(\cos t,\sin t,t)$ $\kappa=\frac{a}{a^2+b^2}=\frac12$, אף שהם תמונה זה של זה באיזומטריה מקומית'
+        correct: true
+        feedback: >-
+          בדיוק: סליל עם $a=b=1$ (שיעור 2.3). אורך הקשת נשמר, $\sqrt2$ ליחידת $t$ בשניהם, והעקמומיות לא.
+      - text: 'לסליל $\kappa=0$, כמו לישר, כי מגלגלים את הדף בלי למתוח'
+        feedback: >-
+          הסליל אינו ישר במרחב: $\kappa=\frac{a}{a^2+b^2}=\frac12$. "בלי למתוח" פירושו שאורכים נשמרים, לא עקמומיות.
+        misconception: MC-c3-curvature-of-curve-intrinsic
+      - text: 'כי הנורמל של הגליל מסתובב, ולכן כל גודל על הגליל שונה מאשר במישור'
+        feedback: >-
+          זה מוכיח יותר מדי: גם אורכים וזוויות על הגליל שווים לאלה שבמישור. צריך דוגמה של גודל מסוים שמשתנה.
+        misconception: MC-c3-normal-is-intrinsic
+
+  - id: Q-3.5-intrinsic-circle
+    type: numeric
+    objectives: [OBJ-3.5-3]
+    level: mid
+    prompt: >-
+      **המרחק הפנימי** בין שתי נקודות של משטח הוא האינפימום של אורכי המסילות במשטח שמחברות ביניהן. על ספרת היחידה, קבוצת
+      הנקודות שהמרחק הפנימי שלהן מהקוטב הצפוני הוא $\frac\pi3$ היא קו הרוחב שבו הקולטיטודה
+      (הזווית מהקוטב) היא $\frac\pi3$. מה אורכו? (השוו לאורך של מעגל ברדיוס $\frac\pi3$ במישור.)
+    answer: 5.441398
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi\sin\frac\pi3=\pi\sqrt3\approx5.441$, קצר מ-$2\pi\cdot\frac\pi3\approx6.580$. איזומטריה (העתקה הפיכה ששומרת אורכים)
+      שומרת גם מרחקים פנימיים, ולכן מעבירה "מעגל פנימי" ברדיוס $\rho$ למעגל פנימי ברדיוס $\rho$ באותו אורך.
+    wrongFeedback: >-
+      קו הרוחב בקולטיטודה $\rho$ הוא מעגל ברדיוס $\sin\rho$ (המרחק מציר $z$).
+    commonWrong:
+      - value: 6.5797363
+        feedback: >-
+          זה $2\pi\cdot\frac\pi3$, אורך מעגל ברדיוס $\frac\pi3$ **במישור**. על הספרה המעגל קצר יותר: רדיוסו במרחב הוא
+          $\sin\frac\pi3<\frac\pi3$. בדיוק הפער הזה מבדיל את הספרה מהמישור.
+        misconception: MC-c3-every-surface-locally-flat
+
+  - id: Q-3.5-proof-rank
+    type: rank
+    objectives: [OBJ-3.5-1]
+    level: mid
+    help: >-
+      סדרו את שלבי ההוכחה מהשלב הראשון לאחרון.
+    prompt: >-
+      $f:S_1\to S_2$ איזומטריה מקומית, $\sigma_1:D\to S_1$ פרמטריזציה רגולרית, ו-$\sigma_2=f\circ\sigma_1$ (גם היא רגולרית).
+      הוכיחו ש-$E_1=E_2$, $F_1=F_2$, $G_1=G_2$ בכל נקודה $(u_0,v_0)\in D$.
+    items:
+      - id: curves
+        label: 'לכל $(a,b)$ ולכל $\varepsilon>0$ קטן, מסתכלים על המסילות $\gamma_1(t)=\sigma_1(u_0+at,\ v_0+bt)$ ו-$\gamma_2=f\circ\gamma_1=\sigma_2(u_0+at,\ v_0+bt)$, $0\le t\le\varepsilon$'
+      - id: equal-length
+        label: 'כי $f$ איזומטריה מקומית: $\int_0^\varepsilon\sqrt{Q_1^{(1)}}\,dt=\int_0^\varepsilon\sqrt{Q_1^{(2)}}\,dt$ לכל $\varepsilon$, כש-$Q_1^{(i)}=E_ia^2+2F_iab+G_ib^2$ בנקודה $(u_0+at,v_0+bt)$'
+      - id: differentiate
+        label: 'גוזרים לפי $\varepsilon$ ב-$\varepsilon=0$ (המשפט היסודי): $Q_1^{(1)}(a,b)=Q_1^{(2)}(a,b)$ ב-$(u_0,v_0)$, לכל $(a,b)$'
+      - id: polarize
+        label: '$(a,b)=(1,0)$ נותן $E_1=E_2$, $(0,1)$ נותן $G_1=G_2$, ו-$(1,1)$ נותן $E_1+2F_1+G_1=E_2+2F_2+G_2$, ולכן $F_1=F_2$'
+    order: [curves, equal-length, differentiate, polarize]
+    correctFeedback: >-
+      נכון. הרעיון: שוויון אורכים לכל קטע קצר, בכל כיוון, נותן אחרי גזירה שוויון של התבנית הריבועית בנקודה, ותבנית
+      ריבועית נקבעת מערכיה על שלושה כיוונים.
+    wrongFeedback: >-
+      התחילו ממסילות ישרות קצרות במישור הפרמטרים, השוו אורכים, גזרו כדי לעבור מאינטגרל לערך בנקודה, ובסוף הציבו כיוונים.
+
+  - id: Q-3.5-plane-cylinder
+    type: twotier
+    objectives: [OBJ-3.5-3, OBJ-3.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן שלשני משטחים $S_1,S_2$ יש פרמטריזציות על אותו תחום עם אותם $E,F,G$ בכל נקודה, אבל אין תנועה קשיחה של
+      המרחב שמעבירה את $S_1$ ל-$S_2$?
+    choices:
+      - text: כן, ייתכן
+        correct: true
+        feedback: >-
+          נכון. התבנית הראשונה קובעת רק את הגאומטריה הפנימית, לא את הצורה במרחב.
+      - text: לא, אותם $E,F,G$ פירושם אותו משטח עד כדי תנועה קשיחה
+        feedback: >-
+          זה מה שקורה למסילות (עקמומיות ופיתול קובעים מסילה, שיעור 2.4), אבל למשטחים $E,F,G$ לבדם לא מספיקים. ראו את
+          הדוגמה בנימוק הנכון.
+        misconception: MC-c3-q1-determines-shape
+    reasons:
+      - text: '$(x,y,0)$ ו-$(\cos x,\sin x,y)$ על $0<x<\pi$: לשתיהן $E=1,F=0,G=1$; אבל דרך כל נקודה של רצועת המישור עוברים קטעים ישרים בכל כיוון, ודרך נקודה של חצי הגליל רק הקטע האנכי, ותנועה קשיחה מעבירה קטע לקטע'
+        correct: true
+        feedback: >-
+          בדיוק. תנועה קשיחה שהייתה מעבירה את הרצועה לחצי הגליל הייתה מעבירה קטע אופקי ברצועה לקטע ישר בחצי הגליל, ושם
+          אין קטע ישר שאינו אנכי. ההבדל חיצוני: הוא נמדד במרחב, לא במשטח. (האיזומטריה $f$ עצמה מעבירה את הקטע $y=0$ לחצי
+          מעגל.)
+      - text: 'הספרה והמישור: לשניהם אפשר למצוא פרמטריזציות עם $F=0$'
+        feedback: >-
+          $F=0$ לבד אינו "אותם $E,F,G$". לספרה ולמישור אין פרמטריזציות עם אותה תבנית ראשונה: אורך המעגל הפנימי ברדיוס $\rho$
+          הוא $2\pi\sin\rho$ בספרה ו-$2\pi\rho$ במישור.
+        misconception: MC-c3-every-surface-locally-flat
+      - text: 'ייתכן, כי לשני המשטחים יש נורמלים שונים, והנורמל נקבע מ-$E,F,G$'
+        feedback: >-
+          הנורמל דווקא **אינו** נקבע מ-$E,F,G$, וזו כל הנקודה: אותה תבנית ראשונה, שיכונים שונים.
+        misconception: MC-c3-normal-is-intrinsic
+
+  - id: Q-3.5-sphere-plane
+    type: twotier
+    objectives: [OBJ-3.5-3, OBJ-3.5-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן שסביבה $U$ של הקוטב הצפוני בספרת היחידה איזומטרית (בהעתקה הפיכה ששומרת אורכים) לקבוצה פתוחה במישור?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. אין צורך בכלים של פרק 4: מספיק להשוות מעגלים פנימיים.
+      - text: כן, כי ליד כל נקודה הספרה היא גרף, כלומר "כמעט מישור"
+        feedback: >-
+          גרף הוא הומיאומורפי לתחום במישור, לא איזומטרי לו: ההטלה $(x,y,f)\mapsto(x,y)$ מקצרת מסילות. הספרה נבדלת מהמישור
+          באורכים.
+        misconception: MC-c3-every-surface-locally-flat
+    reasons:
+      - text: 'איזומטריה הייתה שומרת מרחקים פנימיים ואורכים; המעגל של הנקודות במרחק פנימי $\rho$ מהקוטב אורכו $2\pi\sin\rho$, ובמישור $2\pi\rho$, ו-$\sin\rho<\rho$'
+        correct: true
+        feedback: >-
+          בדיוק. ל-$\rho$ קטן מספיק שני המעגלים נמצאים בתוך הסביבות, והאיזומטריה הייתה מעבירה אחד לשני ושומרת על אורכו. זה
+          סותר את $2\pi\sin\rho<2\pi\rho$. (שאלת המבחן הארוכה של הפרק משלימה את הפרטים.)
+      - text: 'הספרה מעוקלת, והנורמל שלה מסתובב, בעוד שהנורמל של המישור קבוע'
+        feedback: >-
+          גם הנורמל של הגליל מסתובב, והגליל איזומטרי מקומית למישור. הנורמל הוא תכונה חיצונית, ולכן אינו יכול להכריע.
+        misconception: MC-c3-normal-is-intrinsic
+      - text: 'הספרה קומפקטית והמישור לא'
+        feedback: >-
+          השאלה היא על **סביבה** קטנה של הקוטב, לא על כל הספרה, וגם חתיכה קטנה של המישור חסומה. תכונה גלובלית לא יכולה
+          להכריע בשאלה מקומית.
+        misconception: MC-c3-global-argument-for-local-claim

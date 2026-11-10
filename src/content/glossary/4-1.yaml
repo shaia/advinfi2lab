@@ -1,0 +1,11 @@
+# Terms first defined in lesson 4.1.
+- id: second-fundamental-form
+  term: התבנית היסודית השנייה
+  en: second fundamental form
+  symbol: 'Q_2=L\,du^2+2M\,du\,dv+N\,dv^2'
+  definition: >-
+    התבנית הריבועית על המישור המשיק עם המקדמים $L=\sigma_{uu}\cdot\hat{\mathbf N}$, $M=\sigma_{uv}\cdot\hat{\mathbf N}$,
+    $N=\sigma_{vv}\cdot\hat{\mathbf N}$. המרחק החתום של $\sigma(u_0+h,v_0+k)$ מהמישור המשיק ב-$\sigma(u_0,v_0)$ הוא
+    $\frac12Q_2(h,k)+o(h^2+k^2)$. המקדם $N$ הוא מספר, ואין לבלבל אותו עם הנורמל $\hat{\mathbf N}$. כשהופכים את הנורמל
+    $Q_2$ מחליפה סימן.
+  lesson: '4.1'

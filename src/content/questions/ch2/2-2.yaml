@@ -1,0 +1,413 @@
+# Lesson 2.2 — torsion.
+# Objectives (src/course.ts):
+#   OBJ-2.2-1  define torsion by the derivative of the binormal, with the course's sign, and compute it for the helix
+#   OBJ-2.2-2  compute torsion in a general parameter with the triple-product formula
+#   OBJ-2.2-3  prove that a curve with κ > 0 is planar if and only if its torsion is identically zero
+# The course's sign: b' = −τn, so the right-handed helix (a cos t, a sin t, bt), b > 0, has τ = b/(a²+b²) > 0.
+# Every number below was recomputed with src/math/geometry.ts (torsion, curvature, frenet).
+chapter: 2
+questions:
+  - id: Q-2.2-sign
+    type: mc
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      הבינורמל הוא $\mathbf b=\mathbf t\times\mathbf n$ (שיעור 2.1). בקורס **הפיתול** $\tau$ מוגדר על ידי
+      $\mathbf b'(s)=-\tau(s)\,\mathbf n(s)$, בפרמטר אורך הקשת $s$ ובנקודות שבהן $\kappa>0$ (ש-$\mathbf b'$ אכן מקביל
+      ל-$\mathbf n$ נוכיח בהמשך). במסילה מסוימת, בפרמטר אורך הקשת, $\mathbf b'(s_0)=2\,\mathbf n(s_0)$. מהו $\tau(s_0)$?
+    choices:
+      - text: '$\tau(s_0)=-2$'
+        correct: true
+        feedback: >-
+          נכון. $2\mathbf n=-\tau\mathbf n$ נותן $\tau=-2$: המקדם של $\mathbf n$ ב-$\mathbf b'$, עם סימן מינוס. עם המוסכמה
+          הזו לסליל ימני יש פיתול חיובי (השאלה הבאה).
+      - text: '$\tau(s_0)=2$, המקדם של $\mathbf n$ ב-$\mathbf b''$'
+        feedback: >-
+          זו המוסכמה $\mathbf b'=\tau\mathbf n$ של חלק מהספרים, וגם היא לגיטימית, אבל בה לסליל ימני יש פיתול שלילי. בקורס
+          הזה $\mathbf b'=-\tau\mathbf n$, וכל הנוסחאות (למשל עם המכפלה המשולשת) נגזרות ממנה.
+        misconception: MC-c2-torsion-sign
+      - text: '$\tau(s_0)=2$, כי הפיתול הוא האורך $\|\mathbf b''(s_0)\|$'
+        feedback: >-
+          $\|\mathbf b'\|=|\tau|$: ההגדרה הזו מאבדת את הסימן, שמבחין בין סליל ימני לשמאלי.
+        misconception: MC-c2-torsion-nonnegative
+      - text: 'אי אפשר לדעת בלי המהירות: אם עוברים על המסילה במהירות $v$, הפיתול הוא $-2v$'
+        feedback: >-
+          ההגדרה היא לפי אורך הקשת, ולכן הפיתול אינו תלוי בקצב. בפרמטר כללי $\frac{d\mathbf b}{dt}=-v\tau\mathbf n$, כאשר
+          $v=\|\gamma'\|$: המהירות נכנסת לנגזרת לפי $t$, לא ל-$\tau$.
+        misconception: MC-c2-torsion-depends-on-speed
+
+  - id: Q-2.2-helix
+    type: numeric
+    objectives: [OBJ-2.2-1]
+    level: basic
+    prompt: >-
+      חשבו את הפיתול של הסליל $\gamma(t)=(2\cos t,\ 2\sin t,\ t)$.
+    answer: 0.2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לסליל $(a\cos t,a\sin t,bt)$ יש $\tau=\frac{b}{a^2+b^2}$, וכאן $\tau=\frac{1}{4+1}=\frac15$. הוא חיובי כי הסליל
+      ימני: הוא עולה בכיוון $z$ כשמסתובבים נגד כיוון השעון במבט מלמעלה (מ-$+z$).
+    wrongFeedback: >-
+      $\mathbf b=\frac{1}{\sqrt5}(\sin t,-\cos t,2)$, $\mathbf n=(-\cos t,-\sin t,0)$ ו-$\frac{ds}{dt}=\sqrt5$. גזרו את
+      $\mathbf b$ לפי $s$ והשוו ל-$-\tau\mathbf n$.
+    commonWrong:
+      - value: -0.2
+        feedback: >-
+          הסימן הפוך. בקורס $\mathbf b'=-\tau\mathbf n$, ולסליל ימני יש $\tau>0$.
+        misconception: MC-c2-torsion-sign
+      - value: 0.4
+        feedback: >-
+          זו העקמומיות, $\kappa=\frac{a}{a^2+b^2}=\frac25$. בפיתול המונה הוא הגובה $b$, לא הרדיוס $a$.
+      - value: 0.4472136
+        feedback: >-
+          זה $\frac{1}{\sqrt5}$: גזרתם את $\mathbf b$ לפי $t$ ולא לפי $s$ (או לא חילקתם במהירות $\sqrt5$). הפיתול מוגדר לפי
+          אורך הקשת.
+        misconception: MC-c2-fs-general-param
+
+  - id: Q-2.2-formula
+    type: mc
+    objectives: [OBJ-2.2-2]
+    level: basic
+    prompt: >-
+      איזו נוסחה נותנת את הפיתול של מסילה רגולרית בפרמטר כללי, בנקודה שבה $\kappa>0$, עם הסימן של הקורס?
+    choices:
+      - text: '$\tau=\dfrac{(\gamma''\times\gamma'''')\cdot\gamma''''''}{\|\gamma''\times\gamma''''\|^2}$'
+        correct: true
+        feedback: >-
+          נכון. בפרמטר אורך הקשת: $\gamma'=\mathbf t$, $\gamma''=\kappa\mathbf n$ ו-$\gamma'''=\kappa'\mathbf n+\kappa\mathbf n'$,
+          ולכן $\gamma'\times\gamma''=\kappa\mathbf b$ והמונה הוא $\kappa\,\mathbf b\cdot(\kappa'\mathbf n+\kappa\mathbf n')=\kappa^2\,\mathbf b\cdot\mathbf n'$.
+          גזירת $\mathbf b\cdot\mathbf n=0$ נותנת $\mathbf b\cdot\mathbf n'=-\mathbf b'\cdot\mathbf n=\tau$, כך שהמונה $\kappa^2\tau$
+          והמכנה $\kappa^2$. שהנוסחה נותנת אותו ערך בכל פרמטר נבדוק בהמשך השיעור. בדיקה על הסליל
+          $(a\cos t,a\sin t,bt)$: המונה $a^2b$, המכנה $a^2(a^2+b^2)$, והיחס $\frac{b}{a^2+b^2}$.
+      - text: '$\tau=\dfrac{(\gamma''\times\gamma'''')\cdot\gamma''''''}{\|\gamma''\|^6}$'
+        feedback: >-
+          בהשוואה לנוסחה הנכונה חסר כאן $\kappa^2$: המכנה $\|\gamma'\|^6$ נכון רק כש-$\kappa=1$. החזקה השישית של המהירות
+          כבר נמצאת בתוך $\|\gamma'\times\gamma''\|^2=\kappa^2v^6$.
+        misconception: MC-c2-torsion-denominator
+      - text: '$\tau=\dfrac{(\gamma''\times\gamma'''')\cdot\gamma''''''}{\|\gamma''\times\gamma''''\|}$'
+        feedback: >-
+          המונה מתנהג כמו $\kappa^2\tau v^6$ והמכנה כאן כמו $\kappa v^3$: היחס תלוי במהירות ואינו הפיתול. צריך את הריבוע.
+        misconception: MC-c2-torsion-denominator
+      - text: '$\tau=\dfrac{(\gamma''''\times\gamma'')\cdot\gamma''''''}{\|\gamma''\times\gamma''''\|^2}$'
+        feedback: >-
+          החלפת הגורמים במכפלה הווקטורית הופכת את הסימן: זה $-\tau$, הפיתול במוסכמה ההפוכה.
+        misconception: MC-c2-torsion-sign
+
+  - id: Q-2.2-ellipse
+    type: mc
+    objectives: [OBJ-2.2-3, OBJ-2.2-2]
+    level: basic
+    prompt: >-
+      נתונה המסילה $\gamma(t)=(\cos t,\ \sin t,\ \sin t)$. מה נכון?
+    choices:
+      - text: '$\tau\equiv0$, והמסילה מוכלת במישור $z=y$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma'\times\gamma''=(0,-1,1)$ קבוע, ו-$\gamma'''=(\sin t,-\cos t,-\cos t)$ ניצב לו, כך שהמכפלה המשולשת אפס.
+          הנורמל הקבוע $(0,-1,1)$ הוא בדיוק הנורמל למישור $z-y=0$, והמסילה היא אליפסה בו.
+      - text: 'המסילה לא מישורית, כי שלוש הקואורדינטות שלה משתנות'
+        feedback: >-
+          מישורית פירושו מוכלת במישור כלשהו, לא במישור קואורדינטות. כאן $z=y$ בכל נקודה.
+        misconception: MC-c2-planar-coordinate-plane
+      - text: '$\tau\equiv0$, אבל המסילה לא מישורית כי העקמומיות שלה לא קבועה'
+        feedback: >-
+          עקמומיות קבועה מאפיינת מעגל, לא מישוריות: אליפסה מישורית ועקמומיותה משתנה. לפי המשפט של השיעור, $\kappa>0$
+          ו-$\tau\equiv0$ גוררים מסילה מישורית.
+        misconception: MC-c2-planar-means-circle
+
+  - id: Q-2.2-why-parallel
+    type: rank
+    objectives: [OBJ-2.2-1]
+    level: mid
+    prompt: >-
+      ההגדרה $\mathbf b'=-\tau\mathbf n$ מניחה ש-$\mathbf b'$ מקביל ל-$\mathbf n$. סדרו את שלבי ההוכחה של העובדה הזו (מסילה
+      מסדר $C^3$, כך ש-$\mathbf n=\frac{\mathbf t'}{\kappa}$ ו-$\mathbf b$ גזירים; פרמטר אורך הקשת, $\kappa>0$).
+    help: סדרו את שלבי ההוכחה מהראשון לאחרון. שני שלבים שאינם תלויים זה בזה מופיעים באותה דרגה.
+    items:
+      - id: unit
+        label: 'מ-$\mathbf b\cdot\mathbf b=1$ גזירה נותנת $\mathbf b''\cdot\mathbf b=0$'
+      - id: product
+        label: '$\mathbf b''=\mathbf t''\times\mathbf n+\mathbf t\times\mathbf n''=\kappa\,\mathbf n\times\mathbf n+\mathbf t\times\mathbf n''=\mathbf t\times\mathbf n''$, ולכן $\mathbf b''$ ניצב ל-$\mathbf t$'
+      - id: conclude
+        label: 'וקטור שניצב ל-$\mathbf t$ ול-$\mathbf b$ הוא כפולה של $\mathbf n$, ולכן יש מספר יחיד $\tau(s)$ עם $\mathbf b''=-\tau\mathbf n$'
+    order: [[unit, product], conclude]
+    correctFeedback: >-
+      נכון. שני המידעים, $\mathbf b'\perp\mathbf b$ ו-$\mathbf b'\perp\mathbf t$, באים משני חישובים נפרדים, ושניהם יחד
+      משאירים רק את הכיוון של $\mathbf n$.
+    wrongFeedback: >-
+      ההוכחה אוספת שני ניצבויות ($\mathbf b'\perp\mathbf b$ מהאורך, $\mathbf b'\perp\mathbf t$ מכלל המכפלה), ורק אחריהן
+      מסיקה שהווקטור מקביל ל-$\mathbf n$.
+
+  - id: Q-2.2-hand
+    type: twotier
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הסליל $\gamma(t)=(2\cos t,\ -2\sin t,\ t)$ הוא תמונת המראה של הסליל $(2\cos t,\ 2\sin t,\ t)$ במישור $y=0$. מה הפיתול
+      שלו?
+    choices:
+      - text: '$\tau=-\frac15$'
+        correct: true
+        feedback: >-
+          נכון. זה סליל שמאלי: הוא עולה בכיוון $z$ כשמסתובבים עם כיוון השעון במבט מלמעלה. העקמומיות שלו $\frac25$, כמו של
+          המקורי.
+      - text: '$\tau=\frac15$'
+        feedback: >-
+          לשני הסלילים אותה עקמומיות, אבל הם מתפתלים בכיוונים הפוכים. בנוסחת המכפלה המשולשת: $\gamma'\times\gamma''=(-2\sin t,-2\cos t,-4)$,
+          המכפלה עם $\gamma'''=(2\sin t,2\cos t,0)$ היא $-4$, והמכנה $20$.
+        misconception: MC-c2-torsion-mirror-invariant
+    reasons:
+      - text: 'שיקוף $R$ מקיים $R\mathbf t\times R\mathbf n=-R(\mathbf t\times\mathbf n)$, ולכן הבינורמל של התמונה הוא $-R\mathbf b$ והפיתול מחליף סימן'
+        correct: true
+        feedback: >-
+          בדיוק. $\det R=-1$ הופך את הכיוון של כל מכפלה וקטורית, ו-$\mathbf t,\mathbf n$ עוברים ל-$R\mathbf t,R\mathbf n$
+          כרגיל. סיבוב, עם $\det=1$, שומר את הפיתול.
+      - text: 'הפיתול הוא אורך של וקטור, $\|\mathbf b''\|$, ולכן אינו שלילי'
+        feedback: >-
+          $\|\mathbf b'\|=|\tau|$, והסימן של $\tau$ הוא בדיוק מה שמבחין בין ימני לשמאלי.
+        misconception: MC-c2-torsion-nonnegative
+      - text: 'החלפת $t$ ב-$-t$ בשני הרכיבים הראשונים היא היפוך כיוון, והיפוך כיוון הופך את סימן הפיתול'
+        feedback: >-
+          זה לא היפוך כיוון: רכיב ה-$z$ עדיין $t$, כך שזו אינה אותה מסילה בכיוון ההפוך אלא מסילה אחרת, תמונת המראה. היפוך
+          כיוון אמיתי הוא $\gamma(-t)$, בכל שלושת הרכיבים.
+        misconception: MC-c2-torsion-flips-with-orientation
+
+  - id: Q-2.2-orient
+    type: twotier
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\tilde\gamma(t)=\gamma(-t)$ היא אותה מסילה בכיוון ההפוך. מה הקשר בין הפיתול $\tilde\tau$ של $\tilde\gamma$ בנקודה
+      $\tilde\gamma(t)$ לבין הפיתול $\tau$ של $\gamma$ באותה נקודה, $\gamma(-t)$?
+    choices:
+      - text: 'הם שווים'
+        correct: true
+        feedback: >-
+          נכון. בניגוד לעקמומיות המסומנת של מסילה מישורית (שיעור 1.5), הפיתול לא תלוי בכיוון ההליכה.
+      - text: '$\tilde\tau=-\tau$'
+        feedback: >-
+          זה מה שקורה לעקמומיות המסומנת במישור. בפיתול שני שינויי סימן מתבטלים; ראו את הנימוק.
+        misconception: MC-c2-torsion-flips-with-orientation
+    reasons:
+      - text: '$\tilde{\mathbf t}=-\mathbf t$, $\tilde{\mathbf n}=\mathbf n$, $\tilde{\mathbf b}=-\mathbf b$, והגזירה לפי $\tilde s=-s$ מוסיפה עוד סימן'
+        correct: true
+        feedback: >-
+          בדיוק. $\frac{d\tilde{\mathbf b}}{d\tilde s}=\frac{d(-\mathbf b)}{d(-s)}=\mathbf b'=-\tau\mathbf n=-\tau\tilde{\mathbf n}$.
+          בנוסחה: $\gamma'$ ו-$\gamma'''$ מחליפים סימן ו-$\gamma''$ לא, כך שהמונה נשמר.
+      - text: 'כל אחד משלושת הווקטורים $\mathbf t,\mathbf n,\mathbf b$ מחליף סימן'
+        feedback: >-
+          $\mathbf n=\frac{d\mathbf t}{ds}/\kappa$, ושני הסימנים, של $\mathbf t$ ושל $ds$, מתבטלים: הנורמל לא משתנה. הוא
+          מצביע לצד שאליו המסילה פונה, ואותו צד בשני הכיוונים.
+        misconception: MC-c2-reversal-flips-frame
+      - text: 'בנוסחה, $\gamma''''''$ מחליף סימן ושאר הגורמים לא'
+        feedback: >-
+          גם $\gamma'$ מחליף סימן (כלל השרשרת עם $-1$), ו-$\gamma''$ לא. לכן המונה $(\gamma'\times\gamma'')\cdot\gamma'''$
+          מקבל שני סימני מינוס, והמכנה לא משתנה.
+        misconception: MC-c2-torsion-flips-with-orientation
+
+  - id: Q-2.2-cosh
+    type: numeric
+    objectives: [OBJ-2.2-2]
+    level: mid
+    prompt: >-
+      חשבו את הפיתול של $\gamma(t)=(\cosh t,\ \sinh t,\ t)$ בנקודה $t=0$.
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ב-$t=0$: $\gamma'=(0,1,1)$, $\gamma''=(1,0,0)$, $\gamma'''=(0,1,0)$, $\gamma'\times\gamma''=(0,1,-1)$, ולכן
+      $\tau(0)=\frac{(0,1,-1)\cdot(0,1,0)}{2}=\frac12$. בכל נקודה מתקבל $\tau=\frac{1}{2\cosh^2t}$.
+    wrongFeedback: >-
+      הציבו $t=0$ בשלוש הנגזרות, חשבו $\gamma'\times\gamma''$, והשתמשו ב-$\tau=\frac{(\gamma'\times\gamma'')\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}$.
+    commonWrong:
+      - value: 0.125
+        feedback: >-
+          זה המונה, $1$, חלקי $\|\gamma'\|^6=(\sqrt2)^6=8$. המכנה הנכון הוא $\|\gamma'\times\gamma''\|^2=2$.
+        misconception: MC-c2-torsion-denominator
+      - value: 0.7071068
+        feedback: >-
+          זה $\frac{1}{\sqrt2}$: המכנה בלי ריבוע. $\|\gamma'\times\gamma''\|=\sqrt2$, והנוסחה מחלקת בריבוע שלו.
+        misconception: MC-c2-torsion-denominator
+      - value: -0.5
+        feedback: >-
+          הסימן הפוך: חישבתם $(\gamma''\times\gamma')\cdot\gamma'''$. הסדר הוא $\gamma'\times\gamma''$.
+        misconception: MC-c2-torsion-sign
+      - value: 1
+        feedback: >-
+          זה המונה בלבד. חלקו ב-$\|\gamma'\times\gamma''\|^2=2$.
+        misconception: MC-c2-torsion-denominator
+
+  - id: Q-2.2-tc
+    type: numeric
+    objectives: [OBJ-2.2-2]
+    level: mid
+    prompt: >-
+      חשבו את הפיתול של המסילה המעוקבת $\gamma(t)=(t,t^2,t^3)$ בנקודה $t=1$. (ב-$t=0$ הוא 3.)
+    answer: 0.1578947
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\gamma'\times\gamma''=(6t^2,-6t,2)$ ו-$\gamma'''=(0,0,6)$, ולכן
+      $\tau(t)=\frac{12}{36t^4+36t^2+4}=\frac{3}{9t^4+9t^2+1}$, ו-$\tau(1)=\frac{3}{19}\approx0.158$.
+    wrongFeedback: >-
+      ב-$t=1$: $\gamma'=(1,2,3)$, $\gamma''=(0,2,6)$, $\gamma'''=(0,0,6)$. חשבו את המכפלה המשולשת ואת $\|\gamma'\times\gamma''\|^2$.
+    commonWrong:
+      - value: 0.0043732
+        feedback: >-
+          זה $\frac{12}{14^3}$: חילקתם ב-$\|\gamma'\|^6$. המכנה הוא $\|\gamma'\times\gamma''\|^2=76$.
+        misconception: MC-c2-torsion-denominator
+      - value: 1.3764944
+        feedback: >-
+          זה $\frac{12}{\sqrt{76}}$: המכנה בלי ריבוע.
+        misconception: MC-c2-torsion-denominator
+      - value: -0.1578947
+        feedback: >-
+          הסימן הפוך. $(6,-6,2)\cdot(0,0,6)=12>0$, ולכן $\tau(1)>0$.
+        misconception: MC-c2-torsion-sign
+      - value: 3
+        feedback: >-
+          זה $\tau(0)$. הפיתול של המסילה המעוקבת משתנה מנקודה לנקודה.
+
+  - id: Q-2.2-scale
+    type: mc
+    objectives: [OBJ-2.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מגדילים מסילה פי 3: $\tilde\gamma(t)=3\gamma(t)$. מה הפיתול של $\tilde\gamma$ בנקודה $\tilde\gamma(t)$, ביחס לפיתול
+      $\tau$ של $\gamma$ ב-$\gamma(t)$?
+    choices:
+      - text: '$\frac{\tau}{3}$'
+        correct: true
+        feedback: >-
+          נכון. המונה $(\tilde\gamma'\times\tilde\gamma'')\cdot\tilde\gamma'''$ גדל פי $3^3$, והמכנה
+          $\|\tilde\gamma'\times\tilde\gamma''\|^2$ פי $3^4$. כמו העקמומיות, הפיתול הוא "אחד חלקי אורך".
+      - text: '$\tau$'
+        feedback: >-
+          הפיתול נמדד ליחידת אורך: הבינורמל של המסילה המוגדלת מסתובב באותה זווית לאורך קשת ארוכה פי 3. ראו את הסליל: ל-$(a\cos t,a\sin t,bt)$
+          יש $\frac{b}{a^2+b^2}$, ובהגדלה פי 3 מתקבל $\frac{3b}{9(a^2+b^2)}$.
+        misconception: MC-c2-torsion-scale
+      - text: '$3\tau$'
+        feedback: >-
+          הגדלה מאריכה את המסילה, ולכן הבינורמל מסתובב לאט יותר ליחידת אורך, לא מהר יותר.
+        misconception: MC-c2-torsion-scale
+      - text: '$-3\tau$'
+        feedback: >-
+          הגדלה ב-$\lambda>0$ היא לא שיקוף, ואינה משנה את הסימן. גם הגודל לא נכון: הפיתול קטן פי 3.
+        misconception: MC-c2-torsion-scale
+
+  - id: Q-2.2-reparam
+    type: twotier
+    objectives: [OBJ-2.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\tilde\gamma(t)=\gamma(2t)$ עוברת על אותה מסילה במהירות כפולה. האם נוסחת המכפלה המשולשת נותנת ל-$\tilde\gamma$ ב-$t$ את
+      אותו פיתול כמו ל-$\gamma$ ב-$2t$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. הפיתול הוא תכונה של המסילה ולא של הקצב: הוא מוגדר בפרמטר אורך הקשת, והנוסחה מתאימה לכל פרמטר.
+      - text: לא, הוא גדל פי 2
+        feedback: >-
+          המהירות גדלה, אבל גם הדרך שעוברים ליחידת זמן. הסיבוב של $\mathbf b$ ליחידת **אורך** לא משתנה.
+        misconception: MC-c2-torsion-depends-on-speed
+    reasons:
+      - text: 'המונה גדל פי $2\cdot2^2\cdot2^3=2^6$ והמכנה פי $(2\cdot2^2)^2=2^6$'
+        correct: true
+        feedback: >-
+          בדיוק. $\tilde\gamma^{(k)}(t)=2^k\gamma^{(k)}(2t)$, והחזקות מתבטלות. אותו חשבון לכל קבוע $c\ne0$, ובשילוב עם
+          השאלה על היפוך הכיוון גם ל-$c<0$.
+      - text: 'המכנה $\|\gamma''\times\gamma''''\|^2$ לא משתנה בהחלפת פרמטר'
+        feedback: >-
+          הוא משתנה, פי $2^6$. מה שנשמר הוא היחס, לא כל חלק בנפרד.
+        misconception: MC-c2-torsion-denominator
+      - text: 'הפיתול לא תלוי בפרמטריזציה, אבל הנוסחה נכונה רק בפרמטר אורך הקשת'
+        feedback: >-
+          הנוסחה עם המכפלה המשולשת נכונה בכל פרמטר רגולרי: היא בדיוק הדרך לחשב את הפיתול בלי לעבור לאורך הקשת.
+        misconception: MC-c2-fs-general-param
+
+  - id: Q-2.2-planar-proof
+    type: rank
+    objectives: [OBJ-2.2-3]
+    level: mid
+    prompt: >-
+      סדרו את ההוכחה של הכיוון "אם $\kappa>0$ ו-$\tau\equiv0$ אז $\gamma$ מישורית" (פרמטר אורך הקשת, $s$ בקטע).
+    help: סדרו את שלבי ההוכחה מהראשון לאחרון.
+    items:
+      - id: const
+        label: 'מ-$\mathbf b''=-\tau\mathbf n=0$ נובע ש-$\mathbf b(s)=\mathbf b_0$ קבוע'
+      - id: define
+        label: 'מגדירים $f(s)=\bigl(\gamma(s)-\gamma(s_0)\bigr)\cdot\mathbf b_0$'
+      - id: derive
+        label: '$f''(s)=\mathbf t(s)\cdot\mathbf b_0=\mathbf t(s)\cdot\mathbf b(s)=0$'
+      - id: zero
+        label: '$f(s_0)=0$ ו-$f''\equiv0$, ולכן $f\equiv0$ על הקטע'
+      - id: plane
+        label: 'כלומר $\gamma(s)$ מונחת במישור דרך $\gamma(s_0)$ הניצב ל-$\mathbf b_0$'
+    order: [const, define, derive, zero, plane]
+    correctFeedback: >-
+      נכון. ההנחה $\kappa>0$ נכנסת כבר בשלב הראשון: בלעדיה $\mathbf b$ ו-$\tau$ לא מוגדרים, וגם "$\mathbf b'=0$ ולכן
+      $\mathbf b$ קבוע" דורש ש-$\mathbf b$ יהיה מוגדר וגזיר על **כל** הקטע.
+    wrongFeedback: >-
+      הרעיון: מוצאים וקטור קבוע שהמסילה "לא זזה בכיוונו". קודם מראים ש-$\mathbf b$ קבוע, ואז שהמרחק המסומן מהמישור הניצב
+      לו קבוע.
+
+  - id: Q-2.2-converse
+    type: mc
+    objectives: [OBJ-2.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הכיוון השני: $\gamma$ מוכלת במישור עם נורמל יחידה $\mathbf e$, ו-$\kappa>0$. למה $\tau\equiv0$?
+    choices:
+      - text: '$\mathbf t$ ו-$\mathbf n$ במישור, ולכן $\mathbf b=\pm\mathbf e$; כי $\mathbf b$ רציף ו-$\mathbf e$ קבוע, הסימן קבוע ו-$\mathbf b''=0$'
+        correct: true
+        feedback: >-
+          נכון. השלב של הרציפות חשוב: בלעדיו $\mathbf b$ היה יכול לקפוץ בין $\mathbf e$ ל-$-\mathbf e$. עם $\kappa>0$ הוא רציף,
+          ולכן קבוע, ו-$\tau=-\mathbf b'\cdot\mathbf n=0$.
+      - text: 'כי במסילה מישורית $\gamma''''''=0$, ולכן המונה בנוסחת המכפלה המשולשת מתאפס בכל נקודה'
+        feedback: >-
+          במעגל $\gamma'''\ne0$. במסילה מישורית $\gamma'''$ מונח במישור, ולכן הוא צירוף של $\gamma'$ ו-$\gamma''$: מה שמתאפס
+          הוא המכפלה המשולשת, לא $\gamma'''$.
+        misconception: MC-c2-fs-dropped-term
+      - text: 'כי מסילה מישורית היא, לפי ההגדרה, מסילה שקואורדינטת ה-$z$ שלה קבועה, ואז $\gamma''''''\perp\gamma''\times\gamma''''$'
+        feedback: >-
+          מישור כללי אינו מישור קואורדינטות. הטיעון צריך לעבוד לכל מישור, והוא עובד דרך הנורמל $\mathbf e$.
+        misconception: MC-c2-planar-coordinate-plane
+
+  - id: Q-2.2-glued
+    type: mc
+    objectives: [OBJ-2.2-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      המסילה המודבקת משיעור 2.1: $\gamma(t)=(t,f(t),0)$ כש-$t\le0$ ו-$\gamma(t)=(t,0,f(t))$ כש-$t>0$, עם $f(t)=e^{-1/t^2}$
+      ($f(0)=0$), על הקטע $|t|<\sqrt{2/3}$. הקטע נבחר כך: $f''(t)=\frac{4-6t^2}{t^6}e^{-1/t^2}$ שונה מאפס כש-$0<|t|<\sqrt{2/3}$,
+      וכל חצי הוא גרף מישורי עם $\kappa=\frac{|f''|}{(1+f'^2)^{3/2}}>0$. לכן $\kappa(0)=0$, $\kappa>0$ בשאר הקטע, ו-$\tau=0$
+      בכל נקודה שבה הוא מוגדר; ובכל זאת המסילה אינה מוכלת במישור (משמאל היא במישור $z=0$, מימין במישור $y=0$). בהוכחה
+      של "$\kappa>0$ ו-$\tau\equiv0$ גוררים מסילה מישורית" ($\mathbf b'=0$, ולכן $\mathbf b\equiv\mathbf b_0$; אז
+      $f_0(s)=(\gamma(s)-\gamma(s_0))\cdot\mathbf b_0$ מקיימת $f_0'=\mathbf t\cdot\mathbf b_0=0$, ולכן $f_0\equiv0$), איזה שלב
+      נכשל כאן?
+    choices:
+      - text: '"$\mathbf b'' = 0$ ולכן $\mathbf b$ קבוע": $\mathbf b$ אינו מוגדר ב-$t=0$, והוא $(0,0,1)$ משמאל ו-$(0,-1,0)$ מימין'
+        correct: true
+        feedback: >-
+          נכון. "נגזרת אפס גוררת קבוע" נכון רק על **קטע** שבו הפונקציה מוגדרת וגזירה. הנקודה שבה $\kappa=0$ חוצה את הקטע
+          לשניים, ובכל חצי $\mathbf b$ קבוע אחר. זו הסיבה שהמשפט מניח $\kappa>0$ בכל נקודה.
+      - text: '"$f_0''=\mathbf t\cdot\mathbf b_0=0$": ב-$t=0$ המשיק אינו ניצב לבינורמל, ולכן $f_0$ אינה קבועה שם'
+        feedback: >-
+          $\mathbf t(0)=(1,0,0)$ ניצב גם ל-$(0,0,1)$ וגם ל-$(0,-1,0)$. השלב הזה אינו הבעיה; הוא לא מגיע לפעולה כי אין
+          $\mathbf b_0$ אחד לכל הקטע.
+        misconception: MC-c2-planar-without-kappa
+      - text: 'אף שלב אינו נכשל: המסילה אינה חלקה ב-$t=0$, ולכן היא מחוץ להנחות המשפט מסיבה אחרת'
+        feedback: >-
+          היא חלקה: כל הנגזרות של $f$ מתאפסות ב-0, ולכן שני הצדדים מתחברים עם כל הנגזרות. ההנחה שנכשלת היא $\kappa>0$.
+        misconception: MC-c2-kappa-zero-singular
+      - text: 'ההנחה $\tau\equiv0$: ב-$t=0$ הפיתול שונה מאפס, וזה מה שמעביר את המסילה ממישור למישור'
+        feedback: >-
+          הפיתול לא מוגדר ב-$t=0$ (אין שם $\mathbf n$), ובכל נקודה אחרת הוא אפס. הבעיה היא לא ערך של $\tau$ אלא ש-$\kappa$
+          מתאפסת.
+        misconception: MC-c2-planar-without-kappa

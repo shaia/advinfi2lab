@@ -1,0 +1,11 @@
+# Terms first defined in lesson 7.5 (the divergence theorem). The outward normal belongs to lesson 6.4.
+- id: divergence-theorem
+  term: משפט גאוס
+  en: divergence theorem (Gauss)
+  symbol: '\oiint_{\partial R}\mathbf F\cdot d\mathbf S=\iiint_R\nabla\cdot\mathbf F\,dV'
+  definition: >-
+    לתחום חסום $R\subset\mathbb R^3$ שהשפה שלו משטח סגור חלק למקוטעין, ולשדה $\mathbf F$ מסדר $C^1$ בקבוצה פתוחה שמכילה את $R$ ואת
+    שפתו: השטף של $\mathbf F$ החוצה דרך $\partial R$, עם הנורמל החיצוני, שווה לאינטגרל המשולש של $\nabla\cdot\mathbf F$ על $R$. נקרא
+    גם משפט הדיברגנץ.
+  reject: [חוק גאוס]
+  lesson: '7.5'

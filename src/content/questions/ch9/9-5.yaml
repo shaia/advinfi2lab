@@ -1,0 +1,408 @@
+# Lesson 9.5 — projection onto a non-empty closed convex set in a Hilbert space and onto a complete subspace.
+# Objectives (src/course.ts):
+#   OBJ-9.5-1  prove that a non-empty closed convex set in a Hilbert space has a unique nearest point, via the parallelogram law
+#   OBJ-9.5-2  characterize the projection onto a convex set by the obtuse-angle condition, onto a complete subspace by orthogonality
+#   OBJ-9.5-3  give examples with no nearest point because the set is not closed or the space is not complete
+# Every number and counterexample was recomputed (scratchpad ch9/check.ts, check2.ts).
+chapter: 9
+questions:
+  # ---------------------------------------------------------------- basic
+  - id: Q-9.5-ball
+    type: numeric
+    objectives: [OBJ-9.5-1]
+    level: basic
+    prompt: >-
+      המרחק של נקודה $x$ מקבוצה $K$ הוא $d(x,K)=\inf_{k\in K}\|x-k\|$, ונקודה $y\in K$ שמשיגה אותו היא **הנקודה הקרובה
+      ביותר** (ההטלה $P_Kx$). $K$ עיגול היחידה הסגור במישור, $\{k\in\mathbb R^2:\|k\|\le1\}$. מהו $d(x,K)$ ל-$x=(3,4)$?
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הנקודה הקרובה ביותר היא $\frac{x}{\|x\|}=\left(\frac35,\frac45\right)$, והמרחק $\|x\|-1=5-1=4$. לכל $k\in K$:
+      $\|x-k\|\ge\|x\|-\|k\|\ge4$.
+    wrongFeedback: >-
+      ההטלה על עיגול סגור של נקודה מחוצה לו היא הנקודה על השפה בכיוון של $x$.
+    commonWrong:
+      - value: 5
+        feedback: >-
+          $5=\|x\|$ הוא המרחק למרכז. המרחק לעיגול קטן ממנו ברדיוס.
+        misconception: MC-c9-distance-to-center
+      - value: 16
+        feedback: >-
+          $16$ הוא ריבוע המרחק.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.5-statement
+    type: mc
+    objectives: [OBJ-9.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      באילו תנאים מבטיח משפט ההטלה שלכל $x$ יש נקודה **יחידה** ב-$K$ שקרובה ביותר אליו?
+    choices:
+      - text: '$K$ קבוצה לא ריקה, סגורה וקמורה במרחב הילברט'
+        correct: true
+        feedback: >-
+          נכון. הקמירות נותנת את אי-השוויון מחוק המקבילית, השלמות את הגבול של הסדרה הממזערת, והסגירות שהגבול ב-$K$.
+      - text: '$K$ קבוצה לא ריקה וסגורה במרחב הילברט'
+        feedback: >-
+          בלי קמירות זה נכשל, גם ביחידות וגם בקיום: ב-$\ell^2$ הקבוצה $\{(1+\frac1n)e_n\}$ סגורה ואין בה נקודה קרובה
+          ביותר ל-0.
+        misconception: MC-c9-closed-enough
+      - text: '$K$ קבוצה לא ריקה וקמורה בכל מרחב מכפלה פנימית'
+        feedback: >-
+          בלי סגירות ובלי שלמות האינפימום לא תמיד מתקבל: מהחצי-מישור הפתוח $\{(a,b):b>0\}$ אין נקודה קרובה ביותר ל-$(0,-1)$.
+        misconception: MC-c9-inf-attained
+      - text: '$K$ קבוצה לא ריקה, חסומה וסגורה במרחב הילברט'
+        feedback: >-
+          חסומה וסגורה אינה קומפקטית בממד אינסופי. הקבוצה $\{(1+\frac1n)e_n\}$ חסומה וסגורה, ובכל זאת אין בה נקודה
+          קרובה ביותר ל-0.
+        misconception: MC-c9-closed-enough
+
+  - id: Q-9.5-obtuse-def
+    type: mc
+    objectives: [OBJ-9.5-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $K$ קבוצה לא ריקה, סגורה וקמורה במרחב הילברט, ו-$y\in K$. איזה תנאי שקול ל-$y=P_Kx$?
+    choices:
+      - text: '$\langle x-y,k-y\rangle\le0$ לכל $k\in K$'
+        correct: true
+        feedback: >-
+          נכון: הזווית בין $x-y$ לבין הכיוון מ-$y$ לכל נקודה של $K$ אינה חדה. בקטע $K=[0,1]\subset\mathbb R$ ו-$x=3$:
+          $y=1$ ו-$(3-1)(k-1)\le0$ לכל $k\in[0,1]$.
+      - text: '$\langle x-y,k-y\rangle\ge0$ לכל $k\in K$'
+        feedback: >-
+          הסימן הפוך. בדוגמה $K=[0,1]$, $x=3$: ל-$y=1$ מתקבל $2(k-1)\le0$, ואילו $y=0$ מקיים $3k\ge0$ אף שאינו הקרוב ביותר.
+        misconception: MC-c9-obtuse-sign
+      - text: '$\langle x-y,k-y\rangle=0$ לכל $k\in K$'
+        feedback: >-
+          שוויון נדרש רק כש-$K$ תת-מרחב. ב-$K=[0,1]$, $x=3$, $y=1$: $\langle x-y,k-y\rangle=2(k-1)$ שלילי ל-$k<1$.
+        misconception: MC-c9-obtuse-sign
+      - text: '$\langle x,k-y\rangle\le0$ לכל $k\in K$'
+        feedback: >-
+          חסר החיסור של $y$: הזווית נמדדת ב-$y$, בין $x-y$ ל-$k-y$. ב-$K=[1,2]$ ו-$x=0$ מתקבל $\langle x,k-y\rangle=0$ לכל
+          $y$, כך שכל נקודה של $K$ עומדת בתנאי, אף שרק $y=1$ היא הקרובה ביותר.
+        misconception: MC-c9-obtuse-sign
+
+  - id: Q-9.5-open-ball
+    type: twotier
+    objectives: [OBJ-9.5-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $K=\{(a,b)\in\mathbb R^2:b>0\}$, החצי-מישור הפתוח העליון, ו-$x=(0,-1)$. האם יש ב-$K$ נקודה קרובה ביותר ל-$x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. המרחק הוא 1, ואף נקודה של $K$ לא משיגה אותו.
+      - text: כן, הנקודה $(0,0)$
+        feedback: >-
+          $(0,0)\notin K$, כי $b=0$ אינו מקיים $b>0$. היא משיגה את האינפימום, אבל אינה בקבוצה.
+        misconception: MC-c9-inf-attained
+    reasons:
+      - text: 'המרחקים מ-$(0,t)$ שואפים ל-1 כש-$t\to0^+$, אבל כל נקודה של $K$ במרחק גדול מ-1'
+        correct: true
+        feedback: >-
+          בדיוק. המרחק מ-$(0,t)$ הוא $1+t$, ו-$\|x-(a,b)\|^2=a^2+(b+1)^2>1$ כש-$b>0$. $K$ קמורה; התנאי שנכשל הוא הסגירות.
+      - text: '$K$ קמורה, ולכן לפי משפט ההטלה יש נקודה קרובה ביותר'
+        feedback: >-
+          המשפט דורש גם קבוצה סגורה. $K$ פתוחה, והאינפימום 1 לא מתקבל.
+        misconception: MC-c9-inf-attained
+      - text: '$\mathbb R^2$ אינו שלם, ולכן המשפט אינו חל'
+        feedback: >-
+          $\mathbb R^2$ שלם. מה שנכשל כאן הוא הסגירות של $K$.
+        misconception: MC-c9-blame-wrong-hypothesis
+
+  # ---------------------------------------------------------------- mid
+  - id: Q-9.5-proof
+    type: rank
+    objectives: [OBJ-9.5-1]
+    level: mid
+    prompt: >-
+      $K$ קבוצה לא ריקה, סגורה וקמורה במרחב הילברט, ו-$x$ נקודה. סדרו את צעדי ההוכחה שיש ב-$K$ נקודה יחידה הקרובה ביותר ל-$x$.
+    help: סדרו מהצעד הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'נסמן $d=\inf_{k\in K}\|x-k\|$ ונבחר $y_n\in K$ עם $\|x-y_n\|\to d$'
+      - id: b
+        label: 'חוק המקבילית ל-$x-y_n$ ול-$x-y_m$: $\|y_n-y_m\|^2=2\|x-y_n\|^2+2\|x-y_m\|^2-4\left\|x-\frac{y_n+y_m}2\right\|^2$'
+      - id: c
+        label: 'מהקמירות $\frac{y_n+y_m}2\in K$, ולכן $\|y_n-y_m\|^2\le2\|x-y_n\|^2+2\|x-y_m\|^2-4d^2\to0$'
+      - id: d
+        label: '$(y_n)$ סדרת קושי; מהשלמות היא מתכנסת לנקודה $y$, ומהסגירות $y\in K$'
+      - id: e
+        label: 'מרציפות הנורמה $\|x-y\|=d$; ואם גם $z\in K$ משיגה את $d$, אותו חישוב עם $y,z$ נותן $\|y-z\|^2\le0$'
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. הרעיון: חוק המקבילית הופך "קרובות ל-$x$" ל"קרובות זו לזו", בתנאי שהאמצע ב-$K$. כל אחד משלושת התנאים (קמירות,
+      שלמות, סגירות) משמש בדיוק בצעד אחד.
+    wrongFeedback: >-
+      קודם סדרה ממזערת, אחר כך חוק המקבילית, הקמירות שמכניסה את $d$, קושי ⇒ גבול ב-$K$, ובסוף המרחק והיחידות.
+
+  - id: Q-9.5-parallelogram-bound
+    type: numeric
+    objectives: [OBJ-9.5-1]
+    level: mid
+    prompt: >-
+      $K$ קבוצה סגורה וקמורה במרחב הילברט, $d(x,K)=1$, ושתי נקודות $y_1,y_2\in K$ מקיימות $\|x-y_1\|^2=1.01$ ו-$\|x-y_2\|^2=1.02$.
+      מהו החסם העליון על $\|y_1-y_2\|^2$ שנותן הצעד של חוק המקבילית בהוכחת משפט ההטלה?
+    answer: 0.06
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\|y_1-y_2\|^2\le2\cdot1.01+2\cdot1.02-4\cdot1^2=0.06$, כי האמצע $\frac{y_1+y_2}2\in K$ ולכן רחוק מ-$x$ לפחות $d=1$.
+      נקודות כמעט-ממזערות קרובות זו לזו.
+    wrongFeedback: >-
+      $\|y_1-y_2\|^2=2\|x-y_1\|^2+2\|x-y_2\|^2-4\left\|x-\frac{y_1+y_2}2\right\|^2$, והאיבר האחרון לפחות $4d^2$.
+    commonWrong:
+      - value: 0.03
+        feedback: >-
+          $1.01+1.02-2$: חסרים המקדמים של חוק המקבילית, $2\|u\|^2+2\|v\|^2$ ו-$4d^2$.
+        misconception: MC-c9-parallelogram-form
+      - value: 0.2449489743
+        feedback: >-
+          זה $\sqrt{0.06}$, חסם על $\|y_1-y_2\|$. השאלה מבקשת את החסם על הריבוע.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.5-circle
+    type: twotier
+    objectives: [OBJ-9.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $K=\{k\in\mathbb R^2:\|k\|=1\}$, מעגל היחידה, ו-$x=0$. האם יש ב-$K$ נקודה **יחידה** הקרובה ביותר ל-$x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון: כל נקודה של המעגל במרחק 1 מהראשית.
+      - text: כן
+        feedback: >-
+          כל נקודות $K$ במרחק 1 בדיוק. בלי קמירות היחידות נכשלת.
+        misconception: MC-c9-nonconvex-unique
+    reasons:
+      - text: '$K$ סגורה ו-$\mathbb R^2$ שלם, אבל $K$ אינה קמורה, וההוכחה צריכה שהאמצע של שתי נקודות יהיה ב-$K$'
+        correct: true
+        feedback: >-
+          בדיוק: אמצע הקטע בין $(1,0)$ ל-$(-1,0)$ הוא $0\notin K$. ביחידות משתמשים בכך שאמצע שתי נקודות קרובות ביותר נמצא
+          ב-$K$ וקרוב עוד יותר.
+      - text: 'המעגל אינו סגור'
+        feedback: >-
+          המעגל סגור: הוא קבוצת האפסים של הפונקציה הרציפה $\|k\|-1$. התנאי שנכשל הוא הקמירות.
+        misconception: MC-c9-blame-wrong-hypothesis
+      - text: 'בממד סופי אין יחידות; היא מתקבלת רק במרחב הילברט אינסופי'
+        feedback: >-
+          $\mathbb R^2$ הוא מרחב הילברט. לקבוצה קמורה סגורה במישור הנקודה הקרובה ביותר יחידה.
+        misconception: MC-c9-nonconvex-unique
+
+  - id: Q-9.5-subspace
+    type: twotier
+    objectives: [OBJ-9.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $Y$ תת-מרחב סגור של מרחב הילברט ו-$y\in Y$. האם התנאי $\langle x-y,k-y\rangle\le0$ לכל $k\in Y$ שקול ל-$x-y\perp Y$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ולכן ההטלה על תת-מרחב שלם מאופיינת בניצבות, כמו בשיעור 9.3.
+      - text: לא, התנאי עם $\le$ חלש יותר
+        feedback: >-
+          בקבוצה קמורה כללית הוא חלש יותר. בתת-מרחב הכיוונים $k-y$ סגורים לכפל ב-$-1$, וזה מחזק אותו לשוויון.
+        misconception: MC-c9-obtuse-sign
+    reasons:
+      - text: 'כש-$k$ עובר על $Y$, $z=k-y$ עובר על כל $Y$; מ-$\langle x-y,z\rangle\le0$ ומ-$\langle x-y,-z\rangle\le0$ נובע $\langle x-y,z\rangle=0$'
+        correct: true
+        feedback: >-
+          בדיוק. ובכיוון ההפוך: אם $x-y\perp Y$ אז $\langle x-y,k-y\rangle=0\le0$.
+      - text: 'כי בתת-מרחב תמיד $\langle x-y,y\rangle=0$'
+        feedback: >-
+          זה לא נכון לכל $y\in Y$ (רק להטלה עצמה), ואינו מספיק: צריך ניצבות לכל $z\in Y$.
+        misconception: MC-c9-obtuse-sign
+      - text: 'תת-מרחב הוא קבוצה קמורה, ולכן נשאר רק אי-השוויון $\le$, בלי שוויון'
+        feedback: >-
+          אי-השוויון נשאר, אבל כש-$z$ ו-$-z$ שניהם כיוונים מותרים, הוא נותן שוויון.
+        misconception: MC-c9-obtuse-sign
+
+  - id: Q-9.5-c00-nearest
+    type: twotier
+    objectives: [OBJ-9.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ב-$\ell^2$, יהי $c_{00}$ תת-המרחב של הסדרות שרק מספר סופי מאיבריהן שונה מאפס, ו-$x=(\frac1n)_{n\in\mathbb N}$. האם יש
+      ב-$c_{00}$ נקודה קרובה ביותר ל-$x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. המרחק של $x$ מ-$c_{00}$ הוא 0, ו-$x\notin c_{00}$.
+      - text: כן, החיתוך $(1,\frac12,\dots,\frac1k,0,\dots)$ עם $k$ גדול מספיק
+        feedback: >-
+          לכל $k$ החיתוך הבא, עם $k+1$ איברים, קרוב יותר. אין חיתוך "אחרון", והאינפימום 0 לא מתקבל.
+        misconception: MC-c9-inf-attained
+    reasons:
+      - text: 'המרחק מהחיתוכים שואף ל-0, כלומר $d(x,c_{00})=0$, ונקודה במרחק 0 הייתה $x$ עצמה'
+        correct: true
+        feedback: >-
+          בדיוק. המרחק מהחיתוך ה-$k$ הוא $\sqrt{\sum_{n>k}\frac1{n^2}}\to0$, ו-$x\notin c_{00}$. $\ell^2$ שלם ו-$c_{00}$ קמור
+          (תת-מרחב); התנאי שנכשל הוא הסגירות.
+      - text: '$c_{00}$ סגור, כי כל תת-מרחב סגור'
+        feedback: >-
+          בממד אינסופי תת-מרחב אינו חייב להיות סגור: $x$ הוא גבול של איברי $c_{00}$ ואינו בו.
+        misconception: MC-c9-closed-enough
+      - text: '$\ell^2$ אינו שלם, ולכן המשפט אינו חל'
+        feedback: >-
+          $\ell^2$ שלם (שיעור 9.4). מה שנכשל כאן הוא הסגירות של $c_{00}$.
+        misconception: MC-c9-blame-wrong-hypothesis
+
+  - id: Q-9.5-complete-subspace
+    type: twotier
+    objectives: [OBJ-9.5-2, OBJ-9.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $C[0,1]$ עם $\int fg$ אינו שלם. האם לכל $f\in C[0,1]$ יש בכל זאת ישר קרוב ביותר (במרחק של $\int fg$)?
+    choices:
+      - text: כן, ויחיד
+        correct: true
+        feedback: >-
+          נכון. ההטלה על תת-מרחב סוף-ממדי קיימת בכל מרחב מכפלה פנימית.
+      - text: לא, כי המרחב אינו שלם
+        feedback: >-
+          השלמות של המרחב כולו אינה נחוצה כאן; מספיק ש-$Y$ עצמו שלם, וכל תת-מרחב סוף-ממדי שלם.
+        misconception: MC-c9-completeness-necessary
+    reasons:
+      - text: 'תת-המרחב של הישרים סוף-ממדי ולכן שלם, וההטלה עליו נבנית מבסיס אורתונורמלי (שיעור 9.3)'
+        correct: true
+        feedback: >-
+          בדיוק. בהוכחת משפט ההטלה השלמות משמשת רק כדי שהסדרה הממזערת, שנמצאת ב-$Y$, תתכנס; אם $Y$ שלם, זה מספיק.
+      - text: 'משפט ההטלה דורש שהמרחב כולו יהיה שלם, ולכן הקיום כאן הוא מקרה'
+        feedback: >-
+          ההוכחה דורשת רק שהסדרה הממזערת תתכנס בתוך $K$. ל-$K=Y$ שלם זה מתקיים בלי קשר למרחב.
+        misconception: MC-c9-completeness-necessary
+      - text: 'יש ישר קרוב ביותר כי $C[0,1]$ שלם בנורמת המקסימום'
+        feedback: >-
+          השלמות בנורמת המקסימום אינה רלוונטית למרחק של $\int fg$. הקיום כאן נובע מהממד הסופי של $Y$.
+        misconception: MC-c9-L2-limit-continuous
+
+  # ---------------------------------------------------------------- exam
+  - id: Q-9.5-derive
+    type: rank
+    objectives: [OBJ-9.5-2]
+    level: exam
+    prompt: >-
+      סדרו את צעדי ההוכחה שאם $y=P_Kx$ ($K$ סגורה וקמורה במרחב הילברט), אז $\langle x-y,k-y\rangle\le0$ לכל $k\in K$.
+    help: סדרו מהצעד הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'יהי $k\in K$. מהקמירות $y+t(k-y)\in K$ לכל $t\in[0,1]$'
+      - id: b
+        label: 'מהמינימליות של $y$: $\|x-y-t(k-y)\|^2\ge\|x-y\|^2$'
+      - id: c
+        label: 'פותחים את הריבוע: $-2t\langle x-y,k-y\rangle+t^2\|k-y\|^2\ge0$'
+      - id: d
+        label: 'מחלקים ב-$t>0$ ומשאיפים $t\to0^+$: $\langle x-y,k-y\rangle\le0$'
+    order: [a, b, c, d]
+    correctFeedback: >-
+      נכון. הרעיון: מזיזים את $y$ מעט לכיוון $k$ בלי לצאת מ-$K$, והמרחק לא יכול לקטון. האיבר מסדר ראשון ב-$t$ קובע את הסימן.
+    wrongFeedback: >-
+      הקמירות קודם (הנקודה הזזה נשארת ב-$K$), אחר כך המינימליות, הפיתוח, ובסוף החלוקה ב-$t$ והגבול.
+
+  - id: Q-9.5-cone
+    type: numeric
+    objectives: [OBJ-9.5-1, OBJ-9.5-2]
+    level: exam
+    prompt: >-
+      ב-$\ell^2$ תהי $K=\{x\in\ell^2:x_n\ge0\ \forall n\}$ (קבוצה סגורה וקמורה), ו-$x_n=\left(-\frac12\right)^n$. חשבו את
+      $d(x,K)^2$.
+    answer: 0.2666666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $P_Kx=(\max(x_n,0))_n$: מאפסים את האיברים השליליים, אלה עם $n$ אי-זוגי. תנאי הזווית מתקיים:
+      $\langle x-P_Kx,k-P_Kx\rangle=\sum_{j\ge1}x_{2j-1}k_{2j-1}\le0$, כי במקומות האי-זוגיים $x_n<0\le k_n$ (ובמקומות
+      הזוגיים $x-P_Kx$ מתאפס). לכן $d^2=\sum_{j\ge1}4^{-(2j-1)}=\frac{1/4}{1-1/16}=\frac4{15}$.
+    wrongFeedback: >-
+      נחשו את $P_Kx$ (איזה שינוי מינימלי מכניס את $x$ ל-$K$?), בדקו אותו בתנאי הזווית, וסכמו את ריבועי האיברים שהשתנו.
+    commonWrong:
+      - value: 0.3333333333
+        feedback: >-
+          $\frac13=\|x\|^2$, המרחק לנקודה $0$. אבל $0$ אינה הקרובה ביותר: אפשר להשאיר את האיברים החיוביים.
+        misconception: MC-c9-distance-to-center
+      - value: 0.0666666667
+        feedback: >-
+          $\frac1{15}=\sum_{j\ge1}4^{-2j}$: איפסתם את האיברים החיוביים במקום את השליליים. בדקו את תנאי הזווית.
+        misconception: MC-c9-obtuse-sign
+      - value: 0.6666666667
+        feedback: >-
+          $\frac23=\sum_{j\ge1}2^{-(2j-1)}$: סכום ערכים מוחלטים בלי ריבוע.
+        misconception: MC-c9-norm-without-square
+      - value: 0.5163977795
+        feedback: >-
+          זה $\sqrt{4/15}$, המרחק עצמו. השאלה מבקשת את ריבועו.
+        misconception: MC-c9-norm-vs-square
+
+  - id: Q-9.5-C-step
+    type: twotier
+    objectives: [OBJ-9.5-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      ב-$C[-1,1]$ עם $\int fg$, יהי $Y$ תת-המרחב של הפונקציות שמתאפסות על $[-1,0]$ ($Y$ סגור וקמור), ו-$g\equiv1$. האם
+      יש ב-$Y$ נקודה קרובה ביותר ל-$g$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. המרחק הוא 1 ואינו מתקבל.
+      - text: כן, רמפה $f_n$ עם $n$ גדול מספיק
+        feedback: >-
+          $\|1-f_n\|^2=1+\frac1{3n}$ (כאשר $f_n$ עולה מ-0 ל-1 על $[0,\frac1n]$), ולכן הרמפה הבאה תמיד קרובה יותר.
+        misconception: MC-c9-inf-attained
+    reasons:
+      - text: 'לכל $f\in Y$, $\|1-f\|^2=1+\int_0^1(1-f)^2\ge1$, הרמפות מראות שהאינפימום 1, ושוויון דורש $f$ לא רציפה'
+        correct: true
+        feedback: >-
+          בדיוק: שוויון היה דורש $f\equiv1$ על $(0,1]$ עם $f(0)=0$. $Y$ סגור: אם $f_k\in Y$ ו-$\|f_k-f\|\to0$ עם $f$ רציפה, אז $\int_{-1}^0f^2\le\|f-f_k\|^2\to0$, ולכן $f=0$ על $[-1,0]$.
+          הקמירות והסגירות מתקיימות, והשלמות לא.
+      - text: '$Y$ אינו סגור, ולכן המשפט אינו חל'
+        feedback: >-
+          $Y$ סגור (ראו את הנימוק הנכון). כאן נכשלת השלמות של $C[-1,1]$ בנורמה של $\int fg$.
+        misconception: MC-c9-blame-wrong-hypothesis
+      - text: 'האינפימום הוא 0, כי הרמפות מתקרבות ל-1 על $(0,1]$'
+        feedback: >-
+          על $[-1,0]$ כל $f\in Y$ שווה 0, והמרחק שם תורם $\int_{-1}^01\,dx=1$ תמיד. האינפימום הוא 1.
+        misconception: MC-c9-inf-attained
+
+  - id: Q-9.5-spikes
+    type: twotier
+    objectives: [OBJ-9.5-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      ב-$\ell^2$ תהי $K=\{(1+\frac1n)e_n:n\in\mathbb N\}$, ו-$x=0$. האם יש ב-$K$ נקודה קרובה ביותר ל-$x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. המרחקים הם $1+\frac1n$, האינפימום 1, ואף נקודה של $K$ לא משיגה אותו.
+      - text: כן, כי $K$ סגורה ו-$\ell^2$ שלם
+        feedback: >-
+          זה מספיק ב-$\mathbb R^n$ (קומפקטיות), לא בממד אינסופי. המשפט דורש גם קמירות.
+        misconception: MC-c9-closed-enough
+    reasons:
+      - text: '$K$ סגורה (נקודותיה רחוקות זו מזו יותר מ-$\sqrt2$) ו-$\ell^2$ שלם, אבל $K$ אינה קמורה'
+        correct: true
+        feedback: >-
+          בדיוק: $\|(1+\frac1n)e_n-(1+\frac1m)e_m\|^2=(1+\frac1n)^2+(1+\frac1m)^2>2$, ולכן סדרה מתכנסת ב-$K$ קבועה מנקודה
+          מסוימת, ו-$K$ סגורה. בלי קמירות חוק המקבילית לא נותן סדרת קושי.
+      - text: '$K$ אינה סגורה, כי $e_n$ "מתכנסת לאינסוף"'
+        feedback: >-
+          לסדרה $(1+\frac1n)e_n$ אין גבול ב-$\ell^2$ בכלל, ולכן אין גבול שחסר ב-$K$. $K$ סגורה.
+        misconception: MC-c9-blame-wrong-hypothesis
+      - text: '$\ell^2$ אינו שלם'
+        feedback: >-
+          $\ell^2$ שלם (שיעור 9.4). התנאי שנכשל כאן הוא הקמירות.
+        misconception: MC-c9-blame-wrong-hypothesis

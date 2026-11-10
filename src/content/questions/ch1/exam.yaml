@@ -1,0 +1,609 @@
+# Chapter 1 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (Q-1-exam-1…4) are worth 7 points: a verdict and a written justification.
+# Long questions (Q-1-exam-5…7) are worth 20 points in lettered parts.
+# Every question has an open part graded against a model solution and a rubric.
+chapter: 1
+questions:
+  - id: Q-1-exam-1
+    type: exam
+    title: פינה במסילה חלקה
+    prompt: >-
+      האם קיימת מסילה **חלקה** (גזירה אינסוף פעמים) $\gamma:\mathbb R\to\mathbb R^2$ שהתמונה שלה היא
+      $$\{(x,0):0\le x<1\}\ \cup\ \{(0,y):0\le y<1\},$$
+      שני קטעים ניצבים עם פינה בראשית?
+    parts:
+      - label: א
+        points: 3
+        type: mc
+        objectives: [OBJ-1.1-2]
+        qualitative: true
+        prompt: >-
+          בחרו את התשובה הנכונה.
+        choices:
+          - text: 'כן; ובכל מסילה כזו $\gamma''(t_0)=0$ ב-$t_0$ שבו $\gamma(t_0)=(0,0)$'
+            correct: true
+            feedback: >-
+              נכון. אילו $\gamma'(t_0)=v\ne0$, ליד $t_0$ הנקודות $\gamma(t)\approx(t-t_0)v$ היו ממלאות את שני הכיוונים $\pm v$
+              של ישר אחד, ובתמונה אין שני כיוונים מנוגדים מהראשית. את הדוגמה בונים בסעיף ב.
+          - text: 'לא: למסילה חלקה יש ישר משיק בכל נקודה, ולכן לתמונה אין פינות'
+            feedback: >-
+              ישר משיק מובטח רק בנקודה **רגולרית**. חלקות לא מונעת מ-$\gamma'$ להתאפס, וכשהמסילה נעצרת לגמרי היא
+              יכולה לצאת בכל כיוון.
+            misconception: MC-c0-smooth-map-smooth-image
+          - text: 'כן, למשל $\gamma(t)=(\max(t,0),\ \max(-t,0))$'
+            feedback: >-
+              התמונה נכונה (אחרי שמגבילים את הטווח), אבל $\max(t,0)$ אינה גזירה ב-$t=0$, ולכן המסילה אינה חלקה. הפינה
+              הזו "קנויה" באי-גזירות; השאלה היא אם אפשר בלי.
+            misconception: MC-c0-smooth-map-smooth-image
+
+      - label: ב
+        points: 4
+        type: open
+        objectives: [OBJ-1.1-2, OBJ-1.1-1]
+        prompt: >-
+          בנו מסילה כזו והוכיחו שהיא חלקה ושהתמונה שלה היא בדיוק הקבוצה הנתונה.
+        solution:
+          - kind: goal
+            text: 'מסילה חלקה שתמונתה $\{(x,0):0\le x<1\}\cup\{(0,y):0\le y<1\}$.'
+          - kind: idea
+            text: >-
+              פונקציה חלקה שכל נגזרותיה מתאפסות ב-$0$ מאפשרת למסילה להאט עד עצירה מוחלטת בפינה, ולצאת ממנה בכיוון
+              חדש בלי לשבור את הגזירות.
+          - kind: definition
+            text: >-
+              $f(t)=e^{-1/t}$ ל-$t>0$ ו-$f(t)=0$ ל-$t\le0$. מאינפי 1: $f$ גזירה אינסוף פעמים ו-$f^{(m)}(0)=0$ לכל $m$;
+              $f$ עולה ממש על $(0,\infty)$, $f(0)=0$ ו-$f(t)\to1$ כש-$t\to\infty$.
+          - kind: step
+            text: >-
+              נגדיר $\gamma(t)=(f(t),\ f(-t))$. שני הרכיבים חלקים, ולכן $\gamma$ חלקה.
+          - kind: computation
+            text: >-
+              ל-$t\ge0$: $\gamma(t)=(f(t),0)$, ו-$f$ מקבלת על $[0,\infty)$ בדיוק את $[0,1)$. ל-$t\le0$:
+              $\gamma(t)=(0,f(-t))$, ו-$f(-t)$ מקבלת שם בדיוק את $[0,1)$. לכן התמונה היא שני הקטעים.
+          - kind: check
+            text: >-
+              $\gamma'(0)=(f'(0),-f'(0))=(0,0)$: הפינה נמצאת בנקודה לא רגולרית, כפי שסעיף א מחייב.
+          - kind: result
+            text: 'כן: $\gamma(t)=(f(t),f(-t))$ עם $f(t)=e^{-1/t}$ ל-$t>0$ ו-$0$ אחרת היא מסילה חלקה שתמונתה הקבוצה הנתונה.'
+        rubric:
+          - text: 'פונקציה חלקה שכל נגזרותיה מתאפסות בנקודה, עם הצדקה או הפניה לחלקות שלה'
+            weight: 2
+          - text: 'מסילה מפורשת, ובדיקה שהתמונה היא בדיוק שני הקטעים (מונוטוניות וטווח של $f$)'
+            weight: 2
+          - text: 'הנימוק שהמסילה חלקה, והערה ש-$\gamma''=0$ בפינה'
+            weight: 1
+
+  - id: Q-1-exam-2
+    type: exam
+    title: אותה עקמומיות, מסילות לא חופפות
+    prompt: >-
+      האם ייתכן שלשתי מסילות מישוריות רגולריות $\gamma_1,\gamma_2:\mathbb R\to\mathbb R^2$ מסדר $C^2$, בפרמטר אורך
+      הקשת, יש אותה עקמומיות $\kappa_1(s)=\kappa_2(s)$ לכל $s$, ובכל זאת אין תנועה קשיחה $A(x)=Qx+c$ ($Q$
+      אורתוגונלית: סיבוב או שיקוף) כך ש-$\gamma_2=A\circ\gamma_1$?
+    parts:
+      - label: א
+        points: 3
+        type: mc
+        objectives: [OBJ-1.6-2]
+        qualitative: true
+        prompt: >-
+          בחרו את התשובה הנכונה.
+        choices:
+          - text: כן
+            correct: true
+            feedback: >-
+              נכון. $\kappa=|k|$ שוכחת את כיוון הפנייה, ובמקום שבו $\kappa=0$ אפשר להחליף אותו בחלק אחד של המסילה בלבד.
+          - text: 'לא, לפי משפט היחידות של שיעור 1.6'
+            feedback: >-
+              משפט היחידות מדבר על העקמומיות **המסומנת** $k$. כאן נתונה רק $\kappa$.
+            misconception: MC-c1-unsigned-determines
+          - text: 'לא: $\kappa=|k|$, ושיקוף מתקן את הסימן של $k$ כשצריך'
+            feedback: >-
+              שיקוף הופך את הסימן של $k$ לאורך **כל** המסילה בבת אחת. הוא לא יכול לתקן סימן בחלק ממנה בלבד.
+            misconception: MC-c1-unsigned-determines
+
+      - label: ב
+        points: 4
+        type: open
+        objectives: [OBJ-1.6-2, OBJ-1.5-3]
+        prompt: >-
+          תנו דוגמה והוכיחו אותה.
+        solution:
+          - kind: idea
+            text: >-
+              תנועה קשיחה מכפילה את $k$ בסימן **קבוע**, $\det Q$. בוחרים שתי עקמומיות מסומנות עם אותו ערך מוחלט, שהיחס
+              ביניהן מחליף סימן.
+          - kind: step
+            text: >-
+              $k_1(s)=s$ ו-$k_2(s)=|s|$ רציפות. לפי שיעור 1.6 יש מסילות $\gamma_1,\gamma_2$ בפרמטר אורך הקשת, מסדר $C^2$,
+              עם העקמומיות המסומנות האלה, ו-$\kappa_1=|s|=\kappa_2$.
+          - kind: step
+            text: >-
+              נניח $\gamma_2=Q\gamma_1+c$. אז $\mathbf t_2=Q\mathbf t_1$ ו-$\mathbf t_2'=Q\mathbf t_1'=k_1\,QJ\mathbf t_1$, כש-$J$
+              הוא הסיבוב ב-$+90^\circ$. לסיבוב $QJ=JQ$ ולשיקוף $QJ=-JQ$, כלומר $QJ=(\det Q)JQ$.
+          - kind: computation
+            text: >-
+              לכן $\mathbf t_2'=(\det Q)k_1\,J\mathbf t_2=(\det Q)k_1\,\mathbf n_{s,2}$, כלומר $k_2(s)=(\det Q)\,k_1(s)$ לכל $s$.
+          - kind: check
+            text: >-
+              ב-$s=1$: $1=\det Q$. ב-$s=-1$: $1=-\det Q$, כלומר $\det Q=-1$. סתירה.
+          - kind: result
+            text: 'כן, ייתכן: למסילות עם $k_1(s)=s$ ו-$k_2(s)=|s|$ אותה $\kappa$, ואין תנועה קשיחה שמעבירה אחת לשנייה.'
+        rubric:
+          - text: 'דוגמה מפורשת שבה $|k_1|=|k_2|$ והיחס $\frac{k_2}{k_1}$ מחליף סימן'
+            weight: 2
+          - text: 'הצדקת קיום המסילות (שחזור מעקמומיות מסומנת רציפה)'
+            weight: 1
+          - text: 'הוכחה שתנועה קשיחה מכפילה את $k$ ב-$\det Q$, ומכאן הסתירה'
+            weight: 2
+
+  - id: Q-1-exam-3
+    type: exam
+    title: עקמומיות קבועה ומסילה סגורה
+    prompt: >-
+      האם ייתכן שמסילה מישורית רגולרית $\gamma:[0,L]\to\mathbb R^2$ מסדר $C^2$, בפרמטר אורך הקשת, מקיימת $\kappa\equiv1$,
+      $\gamma(0)=\gamma(L)$ ו-$L=3\pi$?
+    parts:
+      - label: א
+        points: 3
+        type: mc
+        objectives: [OBJ-1.6-3]
+        qualitative: true
+        prompt: >-
+          בחרו את התשובה הנכונה.
+        choices:
+          - text: לא
+            correct: true
+            feedback: >-
+              נכון. $\kappa\equiv1$ מחייבת קשת של מעגל היחידה, וקשת כזו חוזרת לנקודת ההתחלה רק אחרי סיבובים שלמים, באורך
+              $2\pi m$.
+          - text: 'כן: מחברים קשתות ברדיוס 1 שפונות פעם שמאלה ופעם ימינה, עד שהמסילה נסגרת באורך $3\pi$'
+            feedback: >-
+              בחיבור כזה $k$ קופצת מ-$k=1$ ל-$k=-1$, ולכן המסילה אינה מסדר $C^2$. במסילה מסדר $C^2$ הפונקציה $k$ רציפה.
+            misconception: MC-c1-sign-switch-anywhere
+          - text: 'כן: מעגל שהיקפו $3\pi$, ברדיוס $\frac32$'
+            feedback: >-
+              למעגל ברדיוס $\frac32$ יש $\kappa=\frac23$, לא $1$. העקמומיות קובעת את הרדיוס: $r=\frac1\kappa=1$.
+            misconception: MC-c1-curvature-radius
+
+      - label: ב
+        points: 4
+        type: open
+        objectives: [OBJ-1.6-3, OBJ-1.5-1, OBJ-1.2-3]
+        prompt: >-
+          הוכיחו את תשובתכם.
+        solution:
+          - kind: given
+            text: '$\gamma$ מסדר $C^2$ בפרמטר אורך הקשת, $\kappa\equiv1$, $\gamma(0)=\gamma(L)$.'
+          - kind: idea
+            text: >-
+              $\kappa\equiv1$ ורציפות $k$ נותנות $k$ קבועה, ולכן מעגל; אחר כך בודקים מתי מעגל שעוברים עליו באורך $L$ חוזר
+              לנקודת ההתחלה.
+          - kind: step
+            text: >-
+              $k=\det(\mathbf t,\mathbf t')$ רציפה ו-$|k|=\kappa=1$. לפי משפט ערך הביניים $k$ אינה מחליפה סימן (אחרת הייתה
+              מתאפסת), ולכן $k\equiv\varepsilon$ עם $\varepsilon=\pm1$.
+          - kind: theorem
+            text: >-
+              לפי שיעור 1.6, $\theta(s)=\theta_0+\varepsilon s$ ו-
+              $\gamma(s)=\gamma(0)+\varepsilon\big(\sin(\theta_0+\varepsilon s)-\sin\theta_0,\ \cos\theta_0-\cos(\theta_0+\varepsilon s)\big)$.
+          - kind: computation
+            text: >-
+              $\|\gamma(L)-\gamma(0)\|=\big|e^{i(\theta_0+\varepsilon L)}-e^{i\theta_0}\big|=|e^{i\varepsilon L}-1|=2\big|\sin\frac L2\big|$.
+          - kind: step
+            text: >-
+              לכן $\gamma(L)=\gamma(0)$ אם ורק אם $\sin\frac L2=0$, כלומר $L\in2\pi\mathbb N$. ב-$L=3\pi$:
+              $2|\sin\frac{3\pi}2|=2$, ו-$\gamma(3\pi)$ היא הנקודה הנגדית ל-$\gamma(0)$ על המעגל.
+          - kind: result
+            text: 'לא ייתכן: מסילה כזו היא קשת של מעגל היחידה, והיא נסגרת רק באורך שהוא כפולה של $2\pi$.'
+        rubric:
+          - text: 'מ-$|k|=1$ ורציפות $k$: $k$ קבועה, $\pm1$ (משפט ערך הביניים)'
+            weight: 2
+          - text: 'זיהוי המסילה כקשת של מעגל ברדיוס 1, בנוסחה או לפי משפט היחידות'
+            weight: 1
+          - text: 'חישוב שהקשת נסגרת רק כש-$L$ כפולה של $2\pi$, ומסקנה ל-$3\pi$'
+            weight: 2
+
+  - id: Q-1-exam-4
+    type: exam
+    title: מסילה סגורה בתוך כדור
+    prompt: >-
+      האם ייתכן שמסילה מחזורית $\gamma:\mathbb R\to\mathbb R^3$ מסדר $C^2$ בפרמטר אורך הקשת ($\gamma(s+L)=\gamma(s)$ לכל
+      $s$, עבור $L>0$ כלשהו) מוכלת בכדור הסגור $\{x:\|x\|\le2\}$, ועקמומיותה קטנה מ-$\frac12$ בכל נקודה?
+    parts:
+      - label: א
+        points: 3
+        type: mc
+        objectives: [OBJ-1.3-1]
+        qualitative: true
+        prompt: >-
+          בחרו את התשובה הנכונה.
+        choices:
+          - text: לא
+            correct: true
+            feedback: >-
+              נכון. בנקודה הרחוקה ביותר מהראשית המסילה מתעקלת לפחות כמו הספרה שעוברת שם, ברדיוס $\le2$: $\kappa\ge\frac12$.
+              מעגל ברדיוס $2$ מראה שהחסם הדוק.
+          - text: 'כן: עקמומיות היא גודל מקומי, ולכן גודל הכדור לא מגביל אותה'
+            feedback: >-
+              העקמומיות נמדדת בכל נקודה לחוד, אבל מסילה **סגורה** צריכה להסתובב חזרה, ובכדור קטן היא חייבת לעשות זאת
+              בחדות. הטיעון בסעיף ב הופך את זה לאי-שוויון.
+            misconception: MC-c1-curvature-no-global
+          - text: 'כן, אם המסילה אינה מישורית: במרחב יש מספיק מקום להסתובב לאט'
+            feedback: >-
+              הטיעון של סעיף ב עובד בכל ממד: הוא משתמש רק בנקודת המקסימום של $\|\gamma\|$ ובאי-שוויון קושי-שוורץ.
+            misconception: MC-c1-curvature-no-global
+
+      - label: ב
+        points: 4
+        type: open
+        objectives: [OBJ-1.3-1, OBJ-1.3-3]
+        prompt: >-
+          הוכיחו את תשובתכם.
+        solution:
+          - kind: idea
+            text: >-
+              בוחנים את $f(s)=\|\gamma(s)\|^2$ בנקודת המקסימום שלה. שם הנגזרת השנייה אי-חיובית, וזה מכריח את המסילה
+              להתעקל לכיוון הראשית.
+          - kind: step
+            text: >-
+              $f$ רציפה ומחזורית, ולכן מקבלת מקסימום ב-$s_0$ (מקסימום של $f$ על $[0,L]$ הוא מקסימום על $\mathbb R$, וכל
+              נקודה היא פנימית). $f(s_0)>0$, אחרת $\gamma\equiv0$, בניגוד לרגולריות.
+          - kind: computation
+            text: >-
+              $f'=2\gamma\cdot\mathbf t$ ו-$f''=2(\mathbf t\cdot\mathbf t+\gamma\cdot\mathbf t')=2(1+\gamma\cdot\mathbf t')$.
+          - kind: step
+            text: >-
+              במקסימום $f''(s_0)\le0$, כלומר $\gamma(s_0)\cdot\mathbf t'(s_0)\le-1$.
+          - kind: step
+            text: >-
+              לפי קושי-שוורץ: $1\le|\gamma(s_0)\cdot\mathbf t'(s_0)|\le\|\gamma(s_0)\|\,\|\mathbf t'(s_0)\|=\|\gamma(s_0)\|\,\kappa(s_0)\le2\kappa(s_0)$.
+          - kind: result
+            text: 'לא ייתכן: תמיד יש נקודה שבה $\kappa\ge\frac12$.'
+        rubric:
+          - text: 'בחירת המקסימום של $\|\gamma\|^2$ והצדקת קיומו (מחזוריות ורציפות)'
+            weight: 1
+          - text: 'חישוב $f''$ ו-$f''''$ בעזרת $\|\mathbf t\|=1$'
+            weight: 1
+          - text: 'תנאי סדר שני וקושי-שוורץ שנותנים $\kappa(s_0)\,\|\gamma(s_0)\|\ge1$'
+            weight: 2
+          - text: 'המסקנה $\kappa(s_0)\ge\frac12$, גם כשהעקמומיות שם אפס (מתקבלת סתירה $1\le0$)'
+            weight: 1
+
+  - id: Q-1-exam-5
+    type: exam
+    title: הציקלואידה
+    prompt: >-
+      הציקלואידה $\gamma(t)=(t-\sin t,\ 1-\cos t)$, $t\in[0,2\pi]$, היא המסלול של נקודה על שפת גלגל ברדיוס $1$
+      שמתגלגל על ציר $x$.
+    parts:
+      - label: א
+        points: 4
+        type: mc
+        objectives: [OBJ-1.1-2]
+        qualitative: true
+        prompt: >-
+          באילו ערכי $t\in[0,2\pi]$ המסילה **אינה** רגולרית, ומה קורה לתמונה שם?
+        choices:
+          - text: 'ב-$t=0$ וב-$t=2\pi$: שם המסילה נוגעת בציר בחוד אנכי; וקטור המשיק היחידה שואף ל-$(0,1)$ כש-$t$ שואף ל-$0$ מימין, ול-$(0,-1)$ כש-$t$ שואף ל-$2\pi$ משמאל'
+            correct: true
+            feedback: >-
+              נכון. $\gamma'=(1-\cos t,\sin t)=2\sin\frac t2\big(\sin\frac t2,\cos\frac t2\big)$ מתאפס רק כש-$\sin\frac t2=0$,
+              והכיוון $(\sin\frac t2,\cos\frac t2)$ עובר מ-$(0,1)$ ל-$(0,-1)$.
+          - text: 'בשום מקום: הרכיבים גזירים אינסוף פעמים'
+            feedback: >-
+              גזירות אינה רגולריות: $\gamma'(0)=(1-1,0)=(0,0)$. הנקודה על השפה נעצרת לרגע כשהיא נוגעת בכביש.
+            misconception: MC-c0-smooth-map-smooth-image
+          - text: 'ב-$t=0$ וב-$t=2\pi$, אבל התמונה חלקה שם, עם משיק אופקי כמו בשאר המקומות'
+            feedback: >-
+              ליד $t=0$ הכיוון $\frac{\gamma'}{\|\gamma'\|}=(\sin\frac t2,\cos\frac t2)$ שואף ל-$(0,1)$: המשיק אנכי, ומשני צדי
+              החוד המסילה מגיעה ויוצאת באותו ישר בכיוונים מנוגדים.
+            misconception: MC-c1-tangent-at-singular
+
+      - label: ב
+        points: 5
+        type: numeric
+        objectives: [OBJ-1.2-1]
+        prompt: >-
+          חשבו את האורך של הקשת, $t\in[0,2\pi]$.
+        answer: 8
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון. $\|\gamma'(t)\|=\sqrt{2-2\cos t}=2\sin\frac t2$ על $[0,2\pi]$, ו-
+          $\int_0^{2\pi}2\sin\frac t2\,dt=\big[-4\cos\frac t2\big]_0^{2\pi}=8$.
+        wrongFeedback: >-
+          פשטו את $\|\gamma'\|$ בעזרת $1-\cos t=2\sin^2\frac t2$, ושימו לב לגורם הפנימי באינטגרל.
+        commonWrong:
+          - value: 6.2831853
+            feedback: >-
+              $2\pi$ הוא המרחק שהגלגל התגלגל. הנקודה על השפה גם עולה ויורדת, ועוברת $8>2\pi$.
+            misconception: MC-c1-cycloid-base
+          - value: 4
+            feedback: >-
+              $4$ מתקבל מ-$\int\sin\frac t2\,dt=-\cos\frac t2$. הפונקציה הקדומה היא $F(t)=-2\cos\frac t2$.
+            misconception: MC-c1-substitution-factor
+
+      - label: ג
+        points: 7
+        type: open
+        objectives: [OBJ-1.3-2, OBJ-1.5-1]
+        prompt: >-
+          הוכיחו ש-$\kappa(t)=\frac{1}{4\sin(t/2)}$ לכל $0<t<2\pi$, וקבעו את הסימן של העקמומיות המסומנת כשעוברים על
+          המסילה עם $t$ עולה.
+        solution:
+          - kind: computation
+            text: '$\gamma''(t)=(1-\cos t,\ \sin t)$ ו-$\gamma''''(t)=(\sin t,\ \cos t)$.'
+          - kind: computation
+            text: >-
+              $$x'y''-y'x''=(1-\cos t)\cos t-\sin^2t=\cos t-1=-2\sin^2\frac t2$$.
+          - kind: computation
+            text: >-
+              $\|\gamma'(t)\|^2=(1-\cos t)^2+\sin^2t=2-2\cos t=4\sin^2\frac t2$, ולכן $\|\gamma'(t)\|=2\sin\frac t2$, כי
+              $\sin\frac t2>0$ על $(0,2\pi)$.
+          - kind: step
+            text: >-
+              $\kappa=\frac{|x'y''-y'x''|}{\|\gamma'\|^3}=\frac{2\sin^2(t/2)}{8\sin^3(t/2)}=\frac{1}{4\sin(t/2)}$.
+          - kind: step
+            text: >-
+              $k=\frac{x'y''-y'x''}{\|\gamma'\|^3}=-\frac{1}{4\sin(t/2)}<0$: המסילה פונה ימינה, כמו שמתאים לקשת קעורה כלפי
+              מטה שעוברים עליה משמאל לימין.
+          - kind: check
+            text: >-
+              ב-$t=\pi$, בראש הקשת: $\kappa=\frac14$. כש-$t\to0^+$: $\kappa\to\infty$, כצפוי ליד חוד.
+          - kind: result
+            text: '$\kappa(t)=\frac{1}{4\sin(t/2)}$ ו-$k(t)=-\frac{1}{4\sin(t/2)}$ על $(0,2\pi)$.'
+        rubric:
+          - text: 'נגזרות נכונות $\gamma''$ ו-$\gamma''''$'
+            weight: 1
+          - text: '$x''y''''-y''x''''=\cos t-1$ ופישוט בעזרת $1-\cos t=2\sin^2\frac t2$'
+            weight: 2
+          - text: '$\|\gamma''\|=2\sin\frac t2$, עם הצדקת הסימן על $(0,2\pi)$'
+            weight: 1
+          - text: 'התוצאה $\kappa=\frac{1}{4\sin(t/2)}$ עם החזקה השלישית במכנה'
+            weight: 2
+          - text: 'הסימן השלילי של $k$, עם נימוק (מהנוסחה או מכיוון הפנייה)'
+            weight: 1
+
+      - label: ד
+        points: 4
+        type: numeric
+        objectives: [OBJ-1.4-1]
+        prompt: >-
+          מהו רדיוס העקמומיות בראש הקשת, $t=\pi$?
+        answer: 4
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון: $\rho=4\sin\frac\pi2=4$. המעגל המנשק בראש הקשת גדול פי ארבעה מהגלגל, ומרכזו ב-$(\pi,-2)$, מתחת לכביש.
+        wrongFeedback: >-
+          $\rho=\frac1\kappa$, ו-$\kappa(\pi)=\frac{1}{4\sin(\pi/2)}$ (סעיף ג).
+        commonWrong:
+          - value: 0.25
+            feedback: >-
+              $\frac14$ היא העקמומיות בראש הקשת. הרדיוס הוא ההופכי שלה.
+            misconception: MC-c1-curvature-radius
+          - value: 1
+            feedback: >-
+              $1$ הוא רדיוס הגלגל. המסילה אינה מעגל החתך של הגלגל: היא שטוחה ממנו בהרבה בראש הקשת.
+            misconception: MC-c1-natural-circle
+
+  - id: Q-1-exam-6
+    type: exam
+    title: מסילה מתוך עקמומיות נתונה
+    prompt: >-
+      נתונה העקמומיות המסומנת $k(s)=\frac{1}{1+s^2}$, $s\in\mathbb R$.
+    parts:
+      - label: א
+        points: 5
+        type: open
+        objectives: [OBJ-1.6-2, OBJ-1.6-1]
+        qualitative: true
+        prompt: >-
+          נסחו את משפט הקיום והיחידות למסילה מישורית בעלת עקמומיות מסומנת נתונה.
+        solution:
+          - kind: theorem
+            text: >-
+              **קיום:** תהי $k:I\to\mathbb R$ רציפה על קטע $I$, $s_0\in I$, $p\in\mathbb R^2$ ו-$\theta_0\in\mathbb R$. קיימת
+              מסילה $\gamma:I\to\mathbb R^2$ מסדר $C^2$ בפרמטר אורך הקשת, עם $\gamma(s_0)=p$,
+              $\mathbf t(s_0)=(\cos\theta_0,\sin\theta_0)$ ועקמומיות מסומנת $k$.
+          - kind: step
+            text: >-
+              בנייה: $\theta(s)=\theta_0+\int_{s_0}^sk$ ו-$\gamma(s)=p+\int_{s_0}^s(\cos\theta,\sin\theta)$.
+          - kind: theorem
+            text: >-
+              **יחידות:** אם $\gamma_1,\gamma_2:I\to\mathbb R^2$ בפרמטר אורך הקשת ובעלות אותה עקמומיות מסומנת, יש סיבוב $R$
+              ווקטור $c$ כך ש-$\gamma_2=R\gamma_1+c$. עם אותם $p$ ו-$\theta_0$ מתקבל $\gamma_1=\gamma_2$.
+          - kind: check
+            text: >-
+              שיקוף אינו חלק מהמשפט: הוא הופך את $k$. והנתון הוא $k$, לא $\kappa$.
+          - kind: result
+            text: '$k$ קובעת את המסילה עד כדי סיבוב והזזה, ונתוני ההתחלה קובעים אותה לגמרי.'
+        rubric:
+          - text: 'קיום, עם נתוני התחלה (נקודה וכיוון) ו-$k$ רציפה'
+            weight: 2
+          - text: 'יחידות עד כדי סיבוב והזזה, לא שיקוף'
+            weight: 2
+          - text: 'הבנייה בשתי אינטגרציות, או תפקיד נתוני ההתחלה'
+            weight: 1
+
+      - label: ב
+        points: 8
+        type: open
+        objectives: [OBJ-1.6-1]
+        prompt: >-
+          מצאו את $\theta(s)$ ואת $\gamma(s)$ עבור $\gamma(0)=(0,0)$ ו-$\mathbf t(0)=(1,0)$.
+        solution:
+          - kind: idea
+            text: 'שתי אינטגרציות: קודם זווית המשיק, אחר כך המסילה.'
+          - kind: computation
+            text: '$\theta(s)=0+\int_0^s\frac{du}{1+u^2}=\arctan s$.'
+          - kind: computation
+            text: >-
+              $\arctan s\in(-\frac\pi2,\frac\pi2)$, שם הקוסינוס חיובי, ולכן $\cos\theta=\frac{1}{\sqrt{1+s^2}}$ ו-
+              $\sin\theta=\frac{s}{\sqrt{1+s^2}}$.
+          - kind: computation
+            text: >-
+              $x(s)=\int_0^s\frac{du}{\sqrt{1+u^2}}=\operatorname{arsinh}s=\ln\big(s+\sqrt{1+s^2}\big)$ ו-
+              $y(s)=\int_0^s\frac{u\,du}{\sqrt{1+u^2}}=\sqrt{1+s^2}-1$.
+          - kind: check
+            text: >-
+              $\|\gamma'\|^2=\frac{1+s^2}{1+s^2}=1$. ובמהירות 1, $k=x'y''-y'x''=\frac{1}{(1+s^2)^2}+\frac{s^2}{(1+s^2)^2}=\frac{1}{1+s^2}$.
+          - kind: result
+            text: '$\theta(s)=\arctan s$ ו-$\gamma(s)=\big(\operatorname{arsinh}s,\ \sqrt{1+s^2}-1\big)$.'
+        rubric:
+          - text: '$\theta(s)=\arctan s$, עם $\theta(0)=0$'
+            weight: 2
+          - text: 'הקוסינוס והסינוס של $\arctan s$, עם הסימן הנכון'
+            weight: 2
+          - text: 'שני האינטגרלים, עם הקבועים שנקבעים מ-$\gamma(0)=(0,0)$'
+            weight: 3
+          - text: 'בדיקה: מהירות 1, או חישוב חוזר של $k$'
+            weight: 1
+
+      - label: ג
+        points: 3
+        type: numeric
+        objectives: [OBJ-1.6-1]
+        prompt: >-
+          מהו רכיב ה-$x$ של $\gamma(\frac34)$?
+        answer: 0.69314718
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון: $\operatorname{arsinh}\frac34=\ln\big(\frac34+\frac54\big)=\ln2$.
+        wrongFeedback: >-
+          $x(s)=\int_0^s\cos\theta(u)\,du$ עם $\theta=\arctan u$; ראו סעיף ב.
+        commonWrong:
+          - value: 0.75
+            feedback: >-
+              $x=s$ היה נכון רק אילו המסילה הייתה ישר אופקי. המשיק מסתובב, ו-$x'(s)=\cos\theta<1$.
+            misconception: MC-c1-unit-speed-scaling
+          - value: 0.64350111
+            feedback: >-
+              $\arctan\frac34$ היא זווית המשיק, תוצאת האינטגרציה הראשונה. צריך עוד אינטגרציה, של $\cos\theta$.
+            misconception: MC-c1-k-integrate-once
+
+      - label: ד
+        points: 4
+        type: mc
+        objectives: [OBJ-1.6-1]
+        qualitative: true
+        standalone: false
+        prompt: >-
+          מהי התמונה של $\gamma$?
+        choices:
+          - text: 'הגרף $y=\cosh x-1$ (שרשרת)'
+            correct: true
+            feedback: >-
+              נכון. $x=\operatorname{arsinh}s$ נותן $s=\sinh x$, ואז $$y=\sqrt{1+\sinh^2x}-1=\cosh x-1$$. ובכיוון ההפוך:
+              לשרשרת $\kappa=\frac{1}{\cosh^2x}$ ו-$s=\sinh x$, כלומר $\kappa=\frac{1}{1+s^2}$.
+          - text: 'הפרבולה $y=\frac{x^2}{2}$: בקודקוד יש לה אותה נקודה, אותו משיק ו-$k(0)=1$'
+            feedback: >-
+              הנתונים בנקודה אחת קובעים רק את המעגל המנשק. לפרבולה $k=\frac{1}{(1+x^2)^{3/2}}$, ובפרמטר אורך הקשת זו
+              פונקציה אחרת של $s$ מ-$\frac{1}{1+s^2}$.
+            misconception: MC-c1-one-point-determines
+          - text: 'מעגל היחידה סביב $(0,1)$: אותה נקודה, אותו משיק ו-$k(0)=1$'
+            feedback: >-
+              למעגל $k\equiv1$, וכאן $k$ יורדת לאפס. שתי מסילות שמסכימות בנקודה אחת עד סדר שני אינן בהכרח אותה מסילה.
+            misconception: MC-c1-one-point-determines
+
+  - id: Q-1-exam-7
+    type: exam
+    title: עקמומיות של גרפים
+    prompt: >-
+      $f$ פונקציה מסדר $C^2$ על קטע פתוח, והגרף שלה הוא המסילה $\gamma(x)=(x,f(x))$.
+    parts:
+      - label: א
+        points: 7
+        type: open
+        objectives: [OBJ-1.4-3, OBJ-1.3-2, OBJ-1.5-1]
+        prompt: >-
+          הוכיחו ש-$\kappa=\frac{|f''|}{(1+f'^2)^{3/2}}$ ו-$k=\frac{f''}{(1+f'^2)^{3/2}}$ (כשעוברים על הגרף משמאל לימין),
+          ופרשו את הסימן של $k$.
+        solution:
+          - kind: step
+            text: '$\gamma''(x)=(1,f''(x))\ne0$: המסילה רגולרית, ו-$\gamma''''(x)=(0,f''''(x))$.'
+          - kind: computation
+            text: >-
+              כווקטורים ב-$\mathbb R^3$ עם רכיב שלישי אפס, $\gamma'\times\gamma''=(0,0,\,1\cdot f''-f'\cdot0)=(0,0,f'')$.
+          - kind: computation
+            text: >-
+              $\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}=\frac{|f''|}{(1+f'^2)^{3/2}}$.
+          - kind: step
+            text: >-
+              $k=\frac{x'y''-y'x''}{(x'^2+y'^2)^{3/2}}=\frac{f''}{(1+f'^2)^{3/2}}$. לכן $k>0$ בדיוק כש-$f''>0$: גרף קמור (קעור
+              כלפי מעלה) שעוברים עליו ימינה פונה שמאלה.
+          - kind: check
+            text: >-
+              ל-$f(x)=x^2$ בקודקוד: $\kappa=k=2$, כמו בשיעור 1.4. כש-$f'=0$ מתקבל $\kappa=|f''|$.
+          - kind: result
+            text: '$\kappa=\frac{|f''''|}{(1+f''^2)^{3/2}}$, $k=\frac{f''''}{(1+f''^2)^{3/2}}$, ו-$k>0$ היכן ש-$f$ קמורה.'
+        rubric:
+          - text: 'הפרמטריזציה, הנגזרות ובדיקת הרגולריות'
+            weight: 1
+          - text: 'המכפלה הווקטורית, או $x''y''''-y''x''''=f''''$'
+            weight: 2
+          - text: 'החזקה $\frac32$ במכנה, כ-$\|\gamma''\|^3$'
+            weight: 2
+          - text: 'הסימן של $k$ ופירושו: קמירות כפנייה שמאלה'
+            weight: 2
+
+      - label: ב
+        points: 6
+        type: numeric
+        objectives: [OBJ-1.4-3]
+        prompt: >-
+          מצאו את ה-$x>0$ שבו העקמומיות של $y=\ln x$ מקסימלית.
+        answer: 0.70710678
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון: $x=\frac{1}{\sqrt2}$. $\kappa(x)=\frac{1/x^2}{(1+1/x^2)^{3/2}}=\frac{x}{(1+x^2)^{3/2}}$, והנגזרת
+          $\frac{(1+x^2)-3x^2}{(1+x^2)^{5/2}}$ מתאפסת ב-$x^2=\frac12$. שם $\kappa=\frac{2}{3\sqrt3}$, וב-$0^+$ וב-$\infty$
+          העקמומיות שואפת לאפס.
+        wrongFeedback: >-
+          פשטו את $\kappa(x)$ (כפלו מונה ומכנה ב-$x^3$), גזרו, והשוו לאפס.
+        commonWrong:
+          - value: 1
+            feedback: >-
+              ב-$x=1$ השיפוע $1$, "המרפק" של הגרף לפי העין. הנקודה הכי מעוקמת נמצאת בגזירה, ב-$x=\frac1{\sqrt2}$.
+            misconception: MC-c1-elbow-guess
+          - value: 0.57735027
+            feedback: >-
+              $\frac{1}{\sqrt3}$ מקסם את $\frac{x}{(1+x^2)^2}$, כלומר חזקה $2$ במכנה. החזקה הנכונה היא $\frac32$.
+            misconception: MC-c1-curvature-power
+
+      - label: ג
+        points: 7
+        type: twotier
+        objectives: [OBJ-1.4-3, OBJ-1.5-3]
+        qualitative: true
+        standalone: false
+        prompt: >-
+          היעזרו בסעיף ב: באיזו נקודה העקמומיות של הגרף $y=e^x$ מקסימלית?
+        choices:
+          - text: 'ב-$\big(-\frac{\ln2}{2},\ \frac{1}{\sqrt2}\big)$'
+            correct: true
+            feedback: >-
+              נכון. זו התמונה של $\big(\frac1{\sqrt2},\ln\frac1{\sqrt2}\big)$ בשיקוף בישר $y=x$, ו-$\ln\frac1{\sqrt2}=-\frac{\ln2}2$.
+          - text: 'ב-$(0,1)$, שם השיפוע $1$'
+            feedback: >-
+              $\kappa(0)=\frac{1}{2\sqrt2}\approx0.354$, ובנקודה $x=-\frac{\ln2}2$ העקמומיות $\frac{2}{3\sqrt3}\approx0.385$.
+              המרפק שהעין רואה אינו המקסימום.
+            misconception: MC-c1-elbow-guess
+          - text: 'אין מקסימום: $e^x$ נעשית קמורה יותר ויותר, והעקמומיות עולה'
+            feedback: >-
+              $f''=e^x$ עולה, אבל $\kappa=\frac{e^x}{(1+e^{2x})^{3/2}}$ דועכת כמו $e^{-2x}$ כש-$x\to\infty$: השיפוע הגדול
+              מיישר את הגרף.
+            misconception: MC-c1-graph-curvature-fpp
+        reasons:
+          - text: 'השיקוף בישר $y=x$ שולח את הגרף של $\ln$ לגרף של $\exp$ ואת $(a,\ln a)$ ל-$(\ln a,a)$; הוא תנועה קשיחה, ולכן שומר את $\kappa$ בנקודות המתאימות'
+            correct: true
+            feedback: >-
+              בדיוק. השיקוף הופך את $k$ (לגרף של $\ln$, קעור, $k<0$; ל-$e^x$, קמור, $k>0$), אבל $\kappa=|k|$ לא משתנה.
+          - text: 'שיקוף הופך את הסימן של העקמומיות, ולכן המקסימום של $\ln$ הופך למינימום של $e^x$'
+            feedback: >-
+              שיקוף הופך את $k$, לא את $\kappa\ge0$. הערכים $|k|$ זהים בנקודות המתאימות, ולכן גם המקסימום עובר למקסימום.
+            misconception: MC-c1-curvature-depends-orientation
+          - text: 'המקסימום של $\ln x$ ב-$x=\frac1{\sqrt2}$, ולכן גם של $e^x$ ב-$x=\frac1{\sqrt2}$'
+            feedback: >-
+              השיקוף מחליף את התפקידים של $x$ ו-$y$: הנקודה המתאימה ל-$(\frac1{\sqrt2},\ln\frac1{\sqrt2})$ היא
+              $(\ln\frac1{\sqrt2},\frac1{\sqrt2})$, לא נקודה עם אותו $x$.
+            misconception: MC-c0-chain-wrong-point

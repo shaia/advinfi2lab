@@ -1,0 +1,32 @@
+# Terms first defined in lesson 0.4 (the inverse and implicit function theorems, regular level sets).
+- id: inverse-function-theorem
+  term: משפט הפונקציה ההפוכה
+  en: inverse function theorem
+  definition: >-
+    אם $F:U\subseteq\mathbb R^n\to\mathbb R^n$ גזירה ברציפות ו-$DF(p)$ הפיכה, יש סביבות פתוחות $V\ni p$ ו-$W\ni F(p)$ כך
+    ש-$F:V\to W$ חד-חד-ערכית ועל, ההפכית גזירה ברציפות, ו-$D(F^{-1})(F(p))=DF(p)^{-1}$. המשפט מקומי בלבד.
+  lesson: '0.4'
+- id: implicit-function-theorem
+  term: משפט הפונקציה הסתומה
+  en: implicit function theorem
+  definition: >-
+    אם $F:\mathbb R^{n}\times\mathbb R^{k}\to\mathbb R^k$ גזירה ברציפות, $F(a,b)=0$, והמטריצה של הנגזרות החלקיות לפי $k$
+    המשתנים האחרונים הפיכה ב-$(a,b)$, אז ליד $(a,b)$ הקבוצה $\{F=0\}$ היא גרף $y=g(x)$ של פונקציה גזירה ברציפות. במקרה
+    $k=1$: אם $\frac{\partial F}{\partial z}(p)\ne0$, ליד $p$ הקבוצה היא גרף $z=g(x,y)$.
+  lesson: '0.4'
+- id: regular-value
+  term: ערך רגולרי
+  en: regular value
+  definition: >-
+    $c$ ערך רגולרי של $F:\mathbb R^n\to\mathbb R^k$ אם $DF(p)$ על (מדרגה $k$) **בכל** נקודה $p$ שבה $F(p)=c$. ל-$k=1$:
+    $\nabla F(p)\ne0$ על כל קבוצת הרמה. אז קבוצת הרמה היא, ליד כל נקודה, גרף של פונקציה חלקה של $n-k$ משתנים.
+  lesson: '0.4'
+- id: tangent-space
+  term: מרחב משיק
+  en: tangent space
+  symbol: 'T_pS'
+  definition: >-
+    לקבוצת רמה רגולרית $S=\{F=c\}$ ונקודה $p\in S$: תת-המרחב הלינארי $T_pS=\ker DF(p)$, שהוא בדיוק קבוצת וקטורי המהירות
+    $\gamma'(0)$ של מסילות גזירות בתוך $S$ עם $\gamma(0)=p$. הממד שלו $n-k$. ההזזה $p+T_pS$ היא הישר או המישור המשיק
+    שעובר ב-$p$.
+  lesson: '0.4'

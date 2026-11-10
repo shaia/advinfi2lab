@@ -1,0 +1,20 @@
+# Terms first defined in lesson 7.1 (grad, curl, div). The gradient itself belongs to chapter 0.
+- id: curl
+  term: רוטור
+  en: curl
+  symbol: '\nabla\times\mathbf F'
+  definition: >-
+    לשדה $\mathbf F=(F_1,F_2,F_3)$ מסדר $C^1$ ב-$\mathbb R^3$, השדה הווקטורי
+    $\nabla\times\mathbf F=(\partial_y F_3-\partial_z F_2,\ \partial_z F_1-\partial_x F_3,\ \partial_x F_2-\partial_y F_1)$.
+    הרכיב שלו בכיוון $\hat{\mathbf N}$ הוא צפיפות הסירקולציה: הסירקולציה סביב לולאה קטנה במישור הניצב ל-$\hat{\mathbf N}$, לחלק לשטח שהיא חוסמת.
+  reject: [רוטציה]
+  lesson: '7.1'
+- id: divergence
+  term: דיברגנץ
+  en: divergence
+  symbol: '\nabla\cdot\mathbf F'
+  definition: >-
+    לשדה $\mathbf F$ מסדר $C^1$, הפונקציה הסקלרית $\nabla\cdot\mathbf F=\partial_x F_1+\partial_y F_2+\partial_z F_3$, העקבה של מטריצת
+    יעקובי. היא צפיפות השטף: השטף החוצה דרך משטח סגור קטן סביב הנקודה, לחלק לנפח שהוא כולא.
+  reject: [דיוורגנץ, דייברגנץ]
+  lesson: '7.1'

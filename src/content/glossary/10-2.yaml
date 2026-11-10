@@ -1,0 +1,22 @@
+# Terms first defined in lesson 10.2 (Bessel's inequality and the Riemann-Lebesgue lemma).
+- id: bessel-inequality
+  term: אי-שוויון בסל
+  en: Bessel's inequality
+  definition: >-
+    לכל $f\in H[-\pi,\pi]$: $\frac{a_0^2}2+\sum_{n\ge1}(a_n^2+b_n^2)\le\frac1\pi\int_{-\pi}^{\pi}f^2$. הוא נובע
+    מפיתגורס $\|f\|^2=\|S_Nf\|^2+\|f-S_Nf\|^2$. במערכת אורתונורמלית כללית: $\sum\langle f,e_k\rangle^2\le\|f\|^2$.
+  lesson: '10.2'
+- id: riemann-lebesgue-lemma
+  term: למת רימן-לבג
+  en: Riemann-Lebesgue lemma
+  definition: >-
+    לכל $f\in H[-\pi,\pi]$, $a_n\to0$ ו-$b_n\to0$, כלומר $\int f(x)\cos nx\,dx\to0$ ו-$\int f(x)\sin nx\,dx\to0$. נובעת
+    מבסל, כי איברי טור מתכנס שואפים לאפס.
+  lesson: '10.2'
+- id: trigonometric-series
+  term: טור טריגונומטרי
+  en: trigonometric series
+  definition: >-
+    טור מהצורה $\frac{c_0}2+\sum_{n\ge1}(c_n\cos nx+d_n\sin nx)$ עם מקדמים כלשהם. לא כל טור כזה הוא טור פורייה:
+    $\sum\frac{\sin nx}{\sqrt n}$ מתכנס בכל נקודה, ובסל פוסל אותו.
+  lesson: '10.2'

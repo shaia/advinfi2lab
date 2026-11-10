@@ -1,0 +1,9 @@
+# Terms first defined in lesson 2.4 (the existence and uniqueness theorem).
+# Rigid motion (תנועה קשיחה) belongs to lesson 0.2.
+- id: curves-fundamental-theorem
+  term: משפט הקיום והיחידות למסילות
+  en: fundamental theorem of space curves
+  definition: >-
+    לכל $\kappa:I\to(0,\infty)$ ו-$\tau:I\to\mathbb R$ רציפות קיימת מסילה בפרמטר אורך הקשת שהעקמומיות והפיתול שלה הם $\kappa$
+    ו-$\tau$, וכל שתי מסילות כאלה נבדלות בסיבוב ובהזזה, $x\mapsto Ax+c$ עם $A^TA=I$ ו-$\det A=1$.
+  lesson: '2.4'

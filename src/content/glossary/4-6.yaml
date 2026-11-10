@@ -1,0 +1,30 @@
+# Terms first defined in lesson 4.6.
+- id: gauss-map
+  term: העתקת גאוס
+  en: Gauss map
+  symbol: '\hat{\mathbf N}:M\to S^2'
+  definition: >-
+    ההעתקה ששולחת כל נקודה של משטח מכוון לנורמל היחידה שלה, כנקודה על ספרת היחידה. הדיפרנציאל שלה הוא מינוס
+    אופרטור הצורה, ו-$\hat{\mathbf N}_u\times\hat{\mathbf N}_v=K\,\sigma_u\times\sigma_v$.
+  lesson: '4.6'
+- id: minimal-surface
+  term: משטח מינימלי
+  en: minimal surface
+  definition: >-
+    משטח שעקמומיותו הממוצעת אפס בכל נקודה, $H\equiv0$. דוגמאות: המישור, הקטנואיד, ההליקואיד. אין בו נקודה אליפטית,
+    כי $K=-\kappa_1^2\le0$.
+  lesson: '4.6'
+- id: catenoid
+  term: קטנואיד
+  en: catenoid
+  symbol: '\sigma(u,v)=(c\cosh\tfrac vc\cos u,\ c\cosh\tfrac vc\sin u,\ v)'
+  definition: >-
+    משטח הסיבוב של השרשרת $x=c\cosh\frac zc$ סביב ציר $z$. משטח מינימלי עם $K=-\frac{1}{c^2\cosh^4(v/c)}$.
+  lesson: '4.6'
+- id: helicoid
+  term: הליקואיד
+  en: helicoid
+  symbol: '\sigma(u,v)=(v\cos u,\ v\sin u,\ cu)'
+  definition: >-
+    המשטח שמסרק ישר אופקי יוצר כשהוא עולה לאורך ציר $z$ ומסתובב בקצב קבוע. משטח מינימלי.
+  lesson: '4.6'

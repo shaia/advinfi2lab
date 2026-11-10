@@ -1,0 +1,310 @@
+# Lesson 8.3 — the exterior derivative: computing d, d² = 0 and the identities of grad, curl, div, the Leibniz rule.
+# Objectives (src/course.ts):
+#   OBJ-8.3-1  compute the exterior derivative of forms of every degree in ℝ² and ℝ³
+#   OBJ-8.3-2  prove d² = 0 and identify it with the identities of grad, curl and div
+#   OBJ-8.3-3  apply the Leibniz rule to the exterior derivative of a wedge product
+chapter: 8
+questions:
+  - id: Q-8.3-plane
+    type: mc
+    objectives: [OBJ-8.3-1]
+    level: basic
+    prompt: >-
+      **הנגזרת החיצונית** של תבנית מוגדרת איבר-איבר: $d(P\,dx)=dP\wedge dx$, כש-$dP$ הדיפרנציאל של המקדם (ובאופן דומה
+      $d(A\,dy\wedge dz)=dA\wedge dy\wedge dz$), ו-$d$ של סכום הוא סכום ה-$d$-ים. חשבו את $d\big(x^2y\,dx+xy^3\,dy\big)$
+      במישור.
+    choices:
+      - text: '$(y^3-x^2)\,dx\wedge dy$'
+        correct: true
+        feedback: >-
+          נכון. $d(x^2y\,dx)=x^2\,dy\wedge dx=-x^2\,dx\wedge dy$ (האיבר $2xy\,dx\wedge dx$ מתאפס), ו-$d(xy^3\,dy)=y^3\,dx\wedge
+          dy$. בקיצור $(Q_x-P_y)\,dx\wedge dy$, האינטגרנד של משפט גרין.
+      - text: '$(x^2-y^3)\,dx\wedge dy$'
+        feedback: >-
+          הסימן הפוך. $d(P\,dx)=dP\wedge dx$: הדיפרנציאל של המקדם בא **ראשון**, ו-$dy\wedge dx=-dx\wedge dy$.
+        misconception: MC-c8-d-order-sign
+      - text: '$(2xy+3xy^2)\,dx\wedge dy$'
+        feedback: >-
+          זה $P_x+Q_y$, "דיברגנץ". אבל $P_x$ מופיע עם $dx\wedge dx=0$ ונעלם; נשארות הנגזרות לפי המשתנה **האחר**.
+        misconception: MC-c8-d-is-div
+      - text: '$2xy\,dx+3xy^2\,dy$'
+        feedback: >-
+          $d$ מעלה את הסדר: מתבנית מסדר 1 מתקבלת תבנית מסדר 2. כאן התקבלה שוב תבנית מסדר 1.
+        misconception: MC-c8-d-is-div
+
+  - id: Q-8.3-two
+    type: numeric
+    objectives: [OBJ-8.3-1]
+    level: basic
+    prompt: >-
+      $\eta=x^2y\,dy\wedge dz+yz\,dz\wedge dx+xz^2\,dx\wedge dy$, ו-$d\eta=g\,dx\wedge dy\wedge dz$. חשבו את $g(1,2,3)$.
+    answer: 13
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $d\eta=\big(\partial_x(x^2y)+\partial_y(yz)+\partial_z(xz^2)\big)\,dx\wedge dy\wedge dz=(2xy+z+2xz)\,dx\wedge
+      dy\wedge dz$, הדיברגנץ של $(x^2y,yz,xz^2)$. בנקודה: $4+3+6=13$.
+    wrongFeedback: >-
+      בכל איבר רק הנגזרת לפי המשתנה **החסר** שורדת: $d(A\,dy\wedge dz)=A_x\,dx\wedge dy\wedge dz$. שימו לב גם לסדר
+      המעגלי: $dy\wedge dz\wedge dx=dx\wedge dy\wedge dz$.
+    commonWrong:
+      - value: 12
+        feedback: >-
+          $12=x^2+y+z^2$ בנקודה: גזרו כל מקדם לפי משתנה שכבר מופיע בו (את $x^2y$ לפי $y$ וכו'). איברים כאלה מכילים
+          דיפרנציאל חוזר ומתאפסים.
+        misconception: MC-c8-d-present-variable
+      - value: 7
+        feedback: >-
+          $7=4-3+6$: האיבר האמצעי קיבל מינוס, כאילו $dy\wedge dz\wedge dx=-dx\wedge dy\wedge dz$. תמורה מעגלית זוגית.
+        misconception: MC-c8-permutation-sign
+
+  - id: Q-8.3-identity
+    type: mc
+    objectives: [OBJ-8.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $F$ שדה חלק ב-$\mathbb R^3$ ו-$\omega_F=F_1\,dx+F_2\,dy+F_3\,dz$. איזו זהות של שדות היא בדיוק $d(d\omega_F)=0$?
+    choices:
+      - text: '$\nabla\cdot(\nabla\times F)=0$'
+        correct: true
+        feedback: >-
+          נכון. $d\omega_F$ מתאימה לרוטור (תבנית מסדר 2), ו-$d$ של תבנית מסדר 2 הוא הדיברגנץ. זו הזהות השנייה של שיעור 7.1.
+      - text: '$\nabla\times(\nabla f)=0$'
+        feedback: >-
+          זו $d(df)=0$, כשמתחילים מ**פונקציה**. כאן מתחילים מתבנית מסדר 1, ולכן שני ה-$d$ הם רוטור ואחריו דיברגנץ.
+        misconception: MC-c8-dict-degree
+      - text: '$\nabla\cdot(\nabla f)=\Delta f$'
+        feedback: >-
+          זו הגדרת הלפלסיאן, לא זהות $d^2=0$. ובשפת התבניות $\nabla\cdot\nabla f$ אינו $d(df)$: $d(df)$ היא תבנית מסדר 2,
+          והיא אפס.
+        misconception: MC-c8-dict-degree
+
+  - id: Q-8.3-fa
+    type: mc
+    objectives: [OBJ-8.3-3]
+    level: basic
+    prompt: >-
+      $f$ פונקציה חלקה ו-$\alpha$ תבנית מסדר 1. במה שווה $d(f\alpha)$?
+    choices:
+      - text: '$df\wedge\alpha+f\,d\alpha$'
+        correct: true
+        feedback: >-
+          נכון: כלל לייבניץ עם $k=0$ (פונקציה היא תבנית מסדר 0), ולכן הסימן פלוס.
+      - text: '$f\,d\alpha$'
+        feedback: >-
+          רק קבוע יוצא החוצה. עם $f=x$ ו-$\alpha=dy$: $d(x\,dy)=dx\wedge dy$, ואילו $x\,d(dy)=0$.
+        misconception: MC-c8-d-ignores-function
+      - text: '$\alpha\wedge df+f\,d\alpha$'
+        feedback: >-
+          $\alpha\wedge df=-df\wedge\alpha$. הדיפרנציאל של הפונקציה בא לפני $\alpha$, כמו בהגדרה $d(f\,dx)=df\wedge dx$.
+        misconception: MC-c8-d-order-sign
+      - text: '$df\wedge\alpha-f\,d\alpha$'
+        feedback: >-
+          הסימן $(-1)^k$ תלוי בסדר של הגורם **הראשון**. כאן הוא $f$, מסדר 0, ו-$(-1)^0=1$.
+        misconception: MC-c8-leibniz-sign
+
+  - id: Q-8.3-curl
+    type: mc
+    objectives: [OBJ-8.3-1]
+    level: mid
+    prompt: >-
+      חשבו את $d\omega$ עבור $\omega=z\,dx+x^2\,dy+y\,dz$ ב-$\mathbb R^3$.
+    choices:
+      - text: '$dy\wedge dz+dz\wedge dx+2x\,dx\wedge dy$'
+        correct: true
+        feedback: >-
+          נכון. $d(z\,dx)=dz\wedge dx$, $d(x^2\,dy)=2x\,dx\wedge dy$, $d(y\,dz)=dy\wedge dz$. בהתאמה בין תבניות לשדות ("המילון" של שיעור 8.2) זה הרוטור
+          $\nabla\times(z,x^2,y)=(1,1,2x)$.
+      - text: '$dy\wedge dz+dx\wedge dz+2x\,dx\wedge dy$'
+        feedback: >-
+          $d(z\,dx)=dz\wedge dx$, לא $dx\wedge dz$. בסדר ההפוך הסימן מתהפך, והשדה שמתקבל, $(1,-1,2x)$, אינו הרוטור.
+        misconception: MC-c8-d-order-sign
+      - text: '$(0+0+0)\,dx\wedge dy\wedge dz=0$'
+        feedback: >-
+          זה הדיברגנץ של $(z,x^2,y)$: כל מקדם נגזר לפי המשתנה שלו. $d$ של תבנית מסדר 1 הוא תבנית מסדר 2, הרוטור.
+        misconception: MC-c8-dict-degree
+      - text: '$dz+2x\,dx+dy$'
+        feedback: >-
+          אלה הדיפרנציאלים של המקדמים בלבד. צריך לעשות מכפלת יתד של כל אחד עם הדיפרנציאל שלידו: $dz\wedge dx$ וכו'.
+        misconception: MC-c8-d-is-div
+
+  - id: Q-8.3-xyz
+    type: twotier
+    objectives: [OBJ-8.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\omega=yz\,dx+xz\,dy+xy\,dz$. האם $d\omega=0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון.
+      - text: 'לא, $d\omega=(z+z+y)\,dx\wedge dy+\dots$'
+        feedback: >-
+          בחישוב נכון כל זוג מתבטל: למשל המקדם של $dx\wedge dy$ הוא $\partial_x(xz)-\partial_y(yz)=z-z=0$.
+        misconception: MC-c8-d-order-sign
+    reasons:
+      - text: '$\omega=d(xyz)$, ו-$d(df)=0$; או ישירות: כל מקדם של $d\omega$ הוא הפרש של שתי נגזרות שוות, כמו $z-z$'
+        correct: true
+        feedback: >-
+          בדיוק. הרוטור של $(yz,xz,xy)=\nabla(xyz)$ הוא אפס, וזה $d^2=0$ על פונקציות.
+      - text: 'כל מקדם הוא מכפלה של שני משתנים, ולכן הנגזרות שלו מתאפסות'
+        feedback: >-
+          הנגזרות של $yz$ אינן אפס ($\partial_z(yz)=y$). מה שמתאפס הוא ההפרש בין זוגות של נגזרות, בזכות המבנה של $d(xyz)$.
+        misconception: MC-c8-d-present-variable
+      - text: 'כי $d$ של כל תבנית מסדר 1 היא אפס'
+        feedback: >-
+          $d(x\,dy)=dx\wedge dy\ne0$. הנגזרת החיצונית מתאפסת רק לתבניות מיוחדות, למשל דיפרנציאלים של פונקציות.
+        misconception: MC-c8-every-form-exact
+
+  - id: Q-8.3-why
+    type: twotier
+    objectives: [OBJ-8.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f\in C^2(\mathbb R^3)$. למה $d(df)=0$?
+    choices:
+      - text: כי האיברים של $d(df)$ מתבטלים בזוגות
+        correct: true
+        feedback: נכון; הנימוק מסביר למה הם מתבטלים.
+      - text: 'כי $df$ היא כבר נגזרת, ונגזרת של נגזרת היא אפס'
+        feedback: >-
+          נגזרת שנייה בדרך כלל אינה אפס ($f=x^2$: $f''=2$). הביטול כאן הוא תוצאה של מבנה מסוים, לא של "נגזרת פעמיים".
+        misconception: MC-c8-dd-trivial
+    reasons:
+      - text: '$d(df)=\sum_{i,j}f_{x_jx_i}\,dx_j\wedge dx_i$: איברי $i=j$ מתאפסים, ולכל $i\ne j$ הזוג מתבטל לפי שוורץ ו-$dx_i\wedge dx_j=-dx_j\wedge dx_i$'
+        correct: true
+        feedback: >-
+          בדיוק. שני מרכיבים: שוויון הנגזרות המעורבות (כאן נחוץ $C^2$) והאנטי-סימטריה. כל אחד לבדו אינו מספיק.
+      - text: 'כי המקדמים של $df$ קבועים'
+        feedback: >-
+          המקדמים של $df$ הם $f_x,f_y,f_z$, פונקציות. ל-$f=x^2y$: $df=2xy\,dx+x^2\,dy$.
+        misconception: MC-c8-dd-trivial
+      - text: 'כי הנגזרות המעורבות שוות, ולכן $f_{xy}\,dx\wedge dy+f_{yx}\,dy\wedge dx=2f_{xy}\,dx\wedge dy=0$'
+        feedback: >-
+          בלי האנטי-סימטריה אין ביטול: עם $dy\wedge dx=dx\wedge dy$ היה מתקבל $2f_{xy}\,dx\wedge dy$, שאינו אפס. הביטול
+          בא מכך ש-$dy\wedge dx=-dx\wedge dy$.
+        misconception: MC-c8-wedge-commutes
+
+  - id: Q-8.3-proof
+    type: rank
+    objectives: [OBJ-8.3-2]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה ש-$d(d\omega)=0$ לתבנית $\omega=P\,dx+Q\,dy+R\,dz$ ב-$\mathbb R^3$ עם מקדמים ב-$C^2$, ושממנה
+      $\nabla\cdot(\nabla\times F)=0$.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'מחשבים $d\omega=(R_y-Q_z)\,dy\wedge dz+(P_z-R_x)\,dz\wedge dx+(Q_x-P_y)\,dx\wedge dy$'
+      - id: b
+        label: 'מפעילים $d$ שוב: בכל איבר שורדת רק הנגזרת לפי המשתנה החסר'
+      - id: c
+        label: 'מקבלים $d(d\omega)=\big(R_{yx}-Q_{zx}+P_{zy}-R_{xy}+Q_{xz}-P_{yz}\big)\,dx\wedge dy\wedge dz$'
+      - id: d
+        label: 'לפי משפט שוורץ $R_{xy}=R_{yx}$, $Q_{xz}=Q_{zx}$, $P_{yz}=P_{zy}$, והסכום מתאפס'
+      - id: e
+        label: 'במילון: $d\omega$ מתאימה ל-$\nabla\times F$ ו-$d$ על תבנית מסדר 2 לדיברגנץ, ולכן $\nabla\cdot(\nabla\times F)=0$'
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. החישוב, הביטול בזכות שוורץ, ואז התרגום לשפת השדות. שימו לב שהסימנים בשלב השלישי באים מהסדר המעגלי
+      ($dz\wedge dx\wedge dy=dx\wedge dy\wedge dz$).
+    wrongFeedback: >-
+      קודם מחשבים $d\omega$, אחר כך $d$ שוב ומסדרים, ורק כשיש ביטוי מפורש משתמשים בשוויון הנגזרות המעורבות. התרגום
+      לשדות בא בסוף.
+
+  - id: Q-8.3-leib
+    type: twotier
+    objectives: [OBJ-8.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\alpha,\beta$ תבניות מסדר 1 על $\mathbb R^3$. האם $d(\alpha\wedge\beta)=d\alpha\wedge\beta+\alpha\wedge d\beta$?
+    choices:
+      - text: 'לא; $d(\alpha\wedge\beta)=d\alpha\wedge\beta-\alpha\wedge d\beta$'
+        correct: true
+        feedback: >-
+          נכון: $d(\alpha\wedge\beta)=d\alpha\wedge\beta+(-1)^k\alpha\wedge d\beta$ עם $k=1$.
+      - text: 'כן, כמו כלל המכפלה לנגזרת'
+        feedback: >-
+          בכלל המכפלה הרגיל אין סימן כי מספרים מתחלפים. כאן הסדר משנה: ראו את הדוגמה בנימוק.
+        misconception: MC-c8-leibniz-sign
+    reasons:
+      - text: 'ל-$\alpha=x\,dy$, $\beta=x\,dz$: $d(\alpha\wedge\beta)=2x\,dx\wedge dy\wedge dz$, ואילו $d\alpha\wedge\beta=x\,dx\wedge dy\wedge dz=-\alpha\wedge d\beta$'
+        correct: true
+        feedback: >-
+          בדיוק. ישירות $d(x^2\,dy\wedge dz)=2x\,dx\wedge dy\wedge dz$, ו-$\alpha\wedge d\beta=x\,dy\wedge dx\wedge dz=-x\,dx\wedge dy\wedge dz$.
+          עם פלוס היה מתקבל 0, ורק עם מינוס $2x$. הסיבה הכללית: ב-$d(f\,dx_i\wedge g\,dx_j)$ את $dg$ צריך להעביר מעבר
+          ל-$dx_i$, וזו החלפה אחת.
+      - text: '$d$ לינארי, ולכן כלל לייבניץ עבורו הוא כלל המכפלה הרגיל, בלי סימנים'
+        feedback: >-
+          הלינאריות של $d$ אומרת $d(\alpha+\beta)=d\alpha+d\beta$, ואינה אומרת דבר על מכפלה. הסימן בא מהאנטי-סימטריה של
+          $\wedge$.
+        misconception: MC-c8-leibniz-sign
+      - text: 'הסימן הוא $(-1)^l$ כש-$l$ הסדר של $\beta$'
+        feedback: >-
+          הסדר הקובע הוא של הגורם הראשון, $\alpha$: את $d$ "מעבירים" מעבר לדיפרנציאלים שלה. כאן שניהם מסדר 1 ולכן אותה
+          תשובה במקרה, אבל עבור $f\beta$ (פונקציה כפול תבנית מסדר 1) הכלל השגוי היה נותן מינוס.
+        misconception: MC-c8-leibniz-sign
+
+  - id: Q-8.3-leibnum
+    type: numeric
+    objectives: [OBJ-8.3-3, OBJ-8.3-1]
+    level: mid
+    prompt: >-
+      $\alpha=yz\,dx$ ו-$\beta=xz\,dy$. כתבו $d(\alpha\wedge\beta)=g\,dx\wedge dy\wedge dz$ וחשבו $g(1,2,3)$.
+    answer: 12
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ישירות: $\alpha\wedge\beta=xyz^2\,dx\wedge dy$, ו-$d$ שלה הוא $\partial_z(xyz^2)\,dz\wedge dx\wedge dy=2xyz\,dx\wedge
+      dy\wedge dz$. בלייבניץ: $d\alpha\wedge\beta=xyz\,dx\wedge dy\wedge dz$ ו-$\alpha\wedge d\beta=-xyz\,dx\wedge dy\wedge
+      dz$, וההפרש $2xyz$. בנקודה: 12.
+    wrongFeedback: >-
+      חשבו קודם $\alpha\wedge\beta$ ישירות (זו תבנית מסדר 2 עם מקדם אחד), או השתמשו ב-$d(\alpha\wedge\beta)=d\alpha\wedge\beta-\alpha\wedge
+      d\beta$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          זה $d\alpha\wedge\beta+\alpha\wedge d\beta=xyz-xyz$: כלל לייבניץ עם פלוס. לשתי תבניות מסדר 1 הסימן הוא מינוס.
+        misconception: MC-c8-leibniz-sign
+      - value: 6
+        feedback: >-
+          $6=xyz$ הוא רק אחד משני האיברים בלייבניץ. גם $\alpha\wedge d\beta$ אינו אפס, כי $d\beta$ מכיל $x\,dz\wedge dy$.
+        misconception: MC-c8-d-ignores-function
+      - value: -12
+        feedback: >-
+          סדר הדיפרנציאלים: $dz\wedge dx\wedge dy$ היא תמורה מעגלית של $dx\wedge dy\wedge dz$, ולכן שווה לה, בלי מינוס.
+        misconception: MC-c8-permutation-sign
+
+  - id: Q-8.3-noprimitive
+    type: twotier
+    objectives: [OBJ-8.3-2, OBJ-8.3-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם קיימת תבנית $\omega$ מסדר 1 עם מקדמים ב-$C^2(\mathbb R^3)$ כך ש-$d\omega=x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. השדה המתאים, $(x,y,z)$, אינו רוטור של שום שדה $C^2$.
+      - text: 'כן, כי ב-$\mathbb R^3$ כל תבנית מסדר 2 היא $d$ של משהו'
+        feedback: >-
+          לא כל תבנית: הנגזרת החיצונית של $d\omega$ תמיד אפס, וזה תנאי הכרחי שהתבנית הזו אינה מקיימת.
+        misconception: MC-c8-every-form-exact
+    reasons:
+      - text: 'אילו $d\omega=\eta$, אז $d\eta=d(d\omega)=0$; אבל $d\eta=(1+1+1)\,dx\wedge dy\wedge dz=3\,dx\wedge dy\wedge dz\ne0$'
+        correct: true
+        feedback: >-
+          בדיוק. בשפת השדות: $\nabla\cdot(\nabla\times G)=0$ לכל $G$, ואילו $\nabla\cdot(x,y,z)=3$.
+      - text: 'המקדמים של $\eta$ אינם קבועים, ולכן אין לה פרימיטיבית'
+        feedback: >-
+          מקדמים לא קבועים אינם מכשול: $d\big(\tfrac{x^2}2\,dy\big)=x\,dx\wedge dy$, והמקדם $x$ אינו קבוע. מה שקובע
+          כאן הוא התנאי ההכרחי $d\eta=0$.
+        misconception: MC-c8-every-form-exact
+      - text: 'כי $d(d\omega)$ היא הרוטור של גרדיאנט, ולכן אפס, ו-$\eta$ אינה גרדיאנט'
+        feedback: >-
+          הרעיון קרוב, אבל המילון שגוי: $\omega$ מסדר 1, ולכן $d(d\omega)=0$ היא "דיברגנץ של רוטור אפס". $\eta$ מסדר 2
+          ואינה יכולה להיות גרדיאנט.
+        misconception: MC-c8-dict-degree

@@ -1,0 +1,74 @@
+# Misconceptions first detected in lesson 6.3 (flux through an oriented surface).
+- id: MC-c6-unit-normal-no-area
+  title: מכפילים בנורמל היחידה ומחשבים את האינטגרל לפי du dv בלי אלמנט השטח
+  belief: >-
+    השטף הוא $\iint_D\mathbf F(\sigma)\cdot\hat{\mathbf N}\,du\,dv$.
+  truth: >-
+    $d\mathbf S=\hat{\mathbf N}\,dS=\hat{\mathbf N}\,\|\sigma_u\times\sigma_v\|\,du\,dv=(\sigma_u\times\sigma_v)\,du\,dv$. עם נורמל
+    יחידה צריך גם את $\|\sigma_u\times\sigma_v\|$; עם הנורמל הלא מנורמל $\sigma_u\times\sigma_v$, לא צריך שום גורם נוסף.
+  remedy: { lesson: '6.3', label: 'ההגדרה של שטף: dS = (σ_u × σ_v) du dv' }
+
+- id: MC-c6-param-normal-trusted
+  title: לוקחים את הנורמל של הפרמטריזציה בלי לבדוק שהוא בכיוון שהשאלה ביקשה
+  belief: >-
+    מחשבים $\iint\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)\,du\,dv$, וזו התשובה, גם כשהשאלה ביקשה נורמל "כלפי חוץ"
+    או "כלפי מעלה".
+  truth: >-
+    $\sigma_u\times\sigma_v$ קובע כיוון אחד מתוך שניים, לפי סדר הפרמטרים. בודקים אותו בנקודה אחת (למשל סימן הרכיב $z$, או
+    מכפלה סקלרית עם וקטור המקום), ואם הוא הפוך לכיוון המבוקש, מחליפים את הסימן של התוצאה.
+  remedy: { lesson: '6.3', label: 'קביעת כיוון הנורמל ותיקון הסימן' }
+
+- id: MC-c6-flux-orientation-free
+  title: חושבים שהשטף תלוי רק בקבוצת הנקודות של המשטח
+  belief: >-
+    אותו משטח נותן אותו שטף בכל פרמטריזציה, גם אם מחליפים את סדר הפרמטרים.
+  truth: >-
+    השטף מוגדר על משטח **מכוון**. החלפת סדר הפרמטרים הופכת את $\sigma_u\times\sigma_v$, ואיתו את סימן השטף. רק
+    פרמטריזציות ששומרות על הכיוון (יעקוביאן חיובי) נותנות אותו שטף.
+  remedy: { lesson: '6.3', label: 'החלפת סדר הפרמטרים הופכת את הנורמל' }
+
+- id: MC-c6-cross-order
+  title: טועים בחישוב וקטור הנורמל של הפרמטריזציה
+  belief: >-
+    לגרף $z=f(x,y)$ הנורמל הוא $(f_x,f_y,-1)$ או סתם $(0,0,1)$; ו-$\sigma_u\times\sigma_v$ ו-$\sigma_v\times\sigma_u$ הם אותו וקטור.
+  truth: >-
+    לגרף $\sigma(x,y)=(x,y,f)$: $\sigma_x\times\sigma_y=(1,0,f_x)\times(0,1,f_y)=(-f_x,-f_y,1)$, שרכיב ה-$z$ שלו חיובי.
+    $\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$. וכשהמשטח אינו אופקי, $(0,0,1)$ אינו ניצב לו.
+  remedy: { lesson: '6.3', label: 'הנורמל של גרף' }
+
+- id: MC-c6-zero-flux-means-tangent
+  title: מסיקים משטף אפס שהשדה משיק למשטח בכל נקודה
+  belief: >-
+    אם $\iint_S\mathbf F\cdot d\mathbf S=0$, אז $\mathbf F\cdot\hat{\mathbf N}=0$ בכל נקודה של $S$.
+  truth: >-
+    השטף הוא אינטגרל של $\mathbf F\cdot\hat{\mathbf N}$, שיכול להיות חיובי בחלק אחד ושלילי בחלק אחר. ל-$\mathbf F=(0,0,x)$
+    דרך הריבוע $[-1,1]^2$ במישור $z=0$ השטף אפס, ו-$\mathbf F\cdot\hat{\mathbf N}=x$ אינו אפס.
+  remedy: { lesson: '6.3', label: 'סימטריה: שטף אפס בלי חישוב' }
+
+- id: MC-c6-one-direction-positive
+  title: חושבים ששדה שמצביע תמיד לאותו צד נותן שטף חיובי דרך משטח סגור
+  belief: >-
+    $(0,0,z^2)$ מצביע כלפי מעלה בכל נקודה, ולכן השטף שלו החוצה דרך ספרה חיובי.
+  truth: >-
+    על חצי הספרה העליון השדה יוצא, ועל התחתון הוא נכנס. לספרת היחידה $\mathbf F\cdot\hat{\mathbf N}=z^3$, פונקציה אי-זוגית
+    ב-$z$, והשטף אפס. כך גם לכל שדה קבוע.
+  remedy: { lesson: '6.3', label: 'סימטריה: שטף אפס בלי חישוב' }
+
+- id: MC-c6-symmetry-of-field
+  title: בודקים סימטריה של השדה במקום סימטריה של הרכיב הנורמלי
+  belief: >-
+    אם השדה, או אחד מרכיביו, אי-זוגי (למשל $(x,y,z)$ או $(x,0,0)$), אז השטף שלו דרך ספרה סביב הראשית הוא אפס.
+  truth: >-
+    לאינטגרל נכנס $\mathbf F\cdot\hat{\mathbf N}$, וגם $\hat{\mathbf N}$ תלוי בנקודה: על ספרת היחידה $\hat{\mathbf N}=(x,y,z)$
+    מתהפך בנקודה הנגדית. ל-$(x,y,z)$ מתקבל $\mathbf F\cdot\hat{\mathbf N}=1$ ושטף $4\pi$; ל-$(x,0,0)$ מתקבל $x^2\ge0$. השטף
+    אפס לפי סימטריה רק כש-$\mathbf F\cdot\hat{\mathbf N}$ עצמו אי-זוגי.
+  remedy: { lesson: '6.3', label: 'סימטריה: שטף אפס בלי חישוב' }
+
+- id: MC-c6-nonorientable-flux
+  title: מחשבים שטף דרך משטח לא מכוון כמו רצועת מביוס
+  belief: >-
+    לרצועת מביוס יש פרמטריזציה, ולכן אפשר לחשב שטף דרכה עם $\sigma_u\times\sigma_v$ (או שהשטף אפס כי "שני הצדדים מתבטלים").
+  truth: >-
+    שטף דורש בחירה רציפה של נורמל יחידה על כל המשטח. ברצועת מביוס אין בחירה כזו (שיעור 3.3): הנורמל חוזר הפוך אחרי
+    סיבוב אחד. לכן שטף דרכה אינו מוגדר.
+  remedy: { lesson: '6.3', label: 'שטף דורש משטח מכוון' }

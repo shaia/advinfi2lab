@@ -1,0 +1,523 @@
+# Chapter 8 exam questions — original, in the style of an 80316 final (not taken from a real exam).
+# Short questions (7 points): a verdict and an open justification. Long questions (20 points): state, compute, prove.
+# None depends on lesson 8.6 (enrichment).
+chapter: 8
+questions:
+  - id: Q-8-exam-1
+    type: exam
+    title: פרימיטיבית לתבנית מסדר 2
+    prompt: >-
+      האם קיימת תבנית $\omega$ מסדר 1 על $\mathbb R^3$, עם מקדמים ב-$C^2$, כך ש-$d\omega=x\,dy\wedge dz+z\,dx\wedge dy$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-8.3-2]
+        qualitative: true
+        prompt: מה התשובה?
+        choices:
+          - text: לא
+            correct: true
+            feedback: נכון; סעיף ב מנמק.
+          - text: כן
+            feedback: >-
+              תנאי הכרחי לכך שתבנית היא $d\omega$ הוא שהנגזרת החיצונית שלה אפס. בדקו אותו.
+            misconception: MC-c8-every-form-exact
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-8.3-2, OBJ-8.3-1]
+        prompt: נמקו.
+        solution:
+          - kind: given
+            text: '$\eta=x\,dy\wedge dz+z\,dx\wedge dy$, ונניח בשלילה ש-$\eta=d\omega$ עם $\omega$ בעלת מקדמים ב-$C^2$.'
+          - kind: idea
+            text: >-
+              $d(d\omega)=0$ לכל תבנית כזו. לכן מספיק להראות ש-$d\eta\ne0$.
+          - kind: theorem
+            text: >-
+              $d(d\omega)=0$ לתבנית מסדר 1 עם מקדמים ב-$C^2$: האיברים מתבטלים בזוגות לפי שוויון הנגזרות המעורבות
+              והאנטי-סימטריה (שיעור 8.3).
+          - kind: computation
+            text: >-
+              $d(x\,dy\wedge dz)=dx\wedge dy\wedge dz$ ו-$d(z\,dx\wedge dy)=dz\wedge dx\wedge dy=dx\wedge dy\wedge dz$ (תמורה
+              מעגלית). לכן $d\eta=2\,dx\wedge dy\wedge dz$.
+          - kind: step
+            text: 'אילו $\eta=d\omega$, היה $2\,dx\wedge dy\wedge dz=d\eta=d(d\omega)=0$, סתירה.'
+          - kind: result
+            text: >-
+              אין תבנית כזו. (בשפת השדות: $(x,0,z)$ אינו רוטור של שום שדה $C^2$, כי הדיברגנץ שלו 2 ואילו
+              $\nabla\cdot(\nabla\times G)=0$.)
+        rubric:
+          - text: 'שימוש בתנאי ההכרחי $d(d\omega)=0$, עם ציון ההנחה $C^2$'
+            weight: 2
+          - text: 'חישוב נכון של $d\eta=2\,dx\wedge dy\wedge dz$, כולל הסימן של התמורה המעגלית'
+            weight: 2
+          - text: 'מסקנה מנומקת (סתירה), לא רק "הנגזרת אינה אפס"'
+            weight: 1
+
+  - id: Q-8-exam-2
+    type: exam
+    title: אותו משטח, שתי פרמטריזציות
+    prompt: >-
+      האם ייתכן שקיימות שתי פרמטריזציות חד-חד-ערכיות ורגולריות $\varphi,\psi:[0,1]^2\to\mathbb R^3$ עם אותה תמונה $S$,
+      ותבנית $\eta$ מסדר 2, כך ש-$\int_{[0,1]^2}\varphi^*\eta\ne\int_{[0,1]^2}\psi^*\eta$?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-8.4-3]
+        qualitative: true
+        prompt: מה התשובה?
+        choices:
+          - text: כן
+            correct: true
+            feedback: נכון; סעיף ב נותן דוגמה.
+          - text: לא
+            feedback: >-
+              זה נכון לשטח ולאינטגרל של פונקציה לפי שטח, שבהם מופיע ערך מוחלט. באינטגרל של תבנית מופיע $\det$ עם סימן.
+            misconception: MC-c8-orientation-abs-det
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-8.4-3, OBJ-8.4-2]
+        prompt: נמקו, עם דוגמה מפורשת, ואמרו מתי שני האינטגרלים כן שווים.
+        solution:
+          - kind: idea
+            text: >-
+              החלפת סדר הפרמטרים מחליפה את הכיוון שהפרמטריזציה משרה, ובמשיכה לאחור מופיע $\det$ של החלפת הפרמטרים עם
+              הסימן שלו.
+          - kind: given
+            text: '$\varphi(u,v)=(u,v,0)$ ו-$\psi(u,v)=(v,u,0)$: שתיהן חד-חד-ערכיות ורגולריות, ותמונת שתיהן הריבוע $S=[0,1]^2\times\{0\}$. $\eta=dx\wedge dy$.'
+          - kind: computation
+            text: >-
+              $\varphi^*(dx\wedge dy)=du\wedge dv$, ולכן $\int\varphi^*\eta=1$. $\psi^*dx=dv$, $\psi^*dy=du$, ולכן
+              $\psi^*(dx\wedge dy)=dv\wedge du=-du\wedge dv$ ו-$\int\psi^*\eta=-1$.
+          - kind: step
+            text: >-
+              באופן כללי, אם $\psi=\varphi\circ h$ עם $h:[0,1]^2\to[0,1]^2$ דיפאומורפיזם, אז
+              $\psi^*\eta=h^*(\varphi^*\eta)$, ולפי החלפת המשתנים $\int h^*\big(g\,du\wedge dv\big)=\pm\int g$, עם הסימן של
+              $\det Dh$.
+          - kind: result
+            text: >-
+              כן, ייתכן: בדוגמה $1\ne-1$. האינטגרלים שווים כש-$\det Dh>0$ (שתי הפרמטריזציות משרות אותו כיוון),
+              ונגדיים כש-$\det Dh<0$.
+        rubric:
+          - text: 'דוגמה מפורשת עם שתי פרמטריזציות של אותה תמונה'
+            weight: 2
+          - text: 'חישוב נכון של שני האינטגרלים, כולל $dv\wedge du=-du\wedge dv$'
+            weight: 2
+          - text: 'ההסבר הכללי: הסימן של $\det$ של החלפת הפרמטרים קובע שוויון או סימן הפוך'
+            weight: 1
+
+  - id: Q-8-exam-3
+    type: exam
+    title: תבנית שמכפלת היתד שלה עם כל תבנית מתאפסת
+    prompt: >-
+      $\alpha$ תבנית מסדר 1 על $\mathbb R^3$, ובנקודה $p$ מסוימת $\alpha_p\ne0$. האם ייתכן ש-$\alpha\wedge\beta=0$ לכל
+      תבנית $\beta$ מסדר 1?
+    parts:
+      - label: א
+        points: 2
+        type: mc
+        objectives: [OBJ-8.2-1]
+        qualitative: true
+        prompt: מה התשובה?
+        choices:
+          - text: לא
+            correct: true
+            feedback: נכון; סעיף ב מנמק.
+          - text: כן
+            feedback: >-
+              $\alpha\wedge\beta$ מתאפסת רק כש-$\beta_p$ כפולה של $\alpha_p$. לא כל $\beta$ כזו: למשל $\alpha=dx$, $\beta=dy$.
+            misconception: MC-c8-wedge-self-nonzero
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-8.2-3, OBJ-8.2-1]
+        prompt: נמקו.
+        solution:
+          - kind: idea
+            text: >-
+              מוצאים $\beta$ קבועה שבנקודה $p$ בלתי תלויה ב-$\alpha_p$, ומחשבים את מכפלת היתד כדטרמיננטה על זוג וקטורים
+              מתאים.
+          - kind: step
+            text: >-
+              $\alpha_p\ne0$ הוא פונקציונל לינארי על $\mathbb R^3$. לכל היותר אחד מ-$dx,dy,dz$ הוא כפולה של $\alpha_p$
+              (שניים כאלה היו תלויים זה בזה). נבחר $\beta$ אחד מהם שאינו כפולה של $\alpha_p$.
+          - kind: step
+            text: >-
+              $\alpha_p$ ו-$\beta$ בלתי תלויים, ולכן ההעתקה $v\mapsto(\alpha_p(v),\beta(v))$ מ-$\mathbb R^3$ ל-$\mathbb R^2$ היא
+              על (דרגה 2). נבחר $v,w$ עם $(\alpha_p(v),\beta(v))=(1,0)$ ו-$(\alpha_p(w),\beta(w))=(0,1)$.
+          - kind: computation
+            text: '$(\alpha\wedge\beta)_p(v,w)=\alpha_p(v)\beta(w)-\alpha_p(w)\beta(v)=1\cdot1-0\cdot0=1\ne0$.'
+          - kind: result
+            text: >-
+              לא ייתכן: יש $\beta$ (אחד הדיפרנציאלים $dx,dy,dz$) עם $(\alpha\wedge\beta)_p\ne0$. מכפלת היתד של שתי תבניות
+              מסדר 1 מתאפסת בנקודה בדיוק כשהן תלויות לינארית שם.
+        rubric:
+          - text: 'בחירה מנומקת של $\beta$ בלתי תלויה ב-$\alpha_p$'
+            weight: 2
+          - text: 'מציאת $v,w$ (או נימוק שקיימים) שעליהם הדטרמיננטה אינה אפס'
+            weight: 2
+          - text: 'שימוש נכון בנוסחה $(\alpha\wedge\beta)(v,w)=\alpha(v)\beta(w)-\alpha(w)\beta(v)$'
+            weight: 1
+
+  - id: Q-8-exam-4
+    type: exam
+    title: משפט סטוקס הכללי על משטח בפרמטריזציה
+    prompt: >-
+      $D=\{(u,v):u^2+v^2\le4\}$, $\varphi(u,v)=(u-v,\ u+v,\ uv)$, ו-$M=\varphi(D)$ מכוון לפי $\varphi$. השפה $\partial M$
+      היא התמונה של מעגל הרדיוס 2 נגד כיוון השעון במישור $uv$. נתונה $\omega=z\,dx+x\,dy+y\,dz$.
+    parts:
+      - label: א
+        points: 5
+        type: open
+        objectives: [OBJ-8.5-1]
+        prompt: >-
+          נסחו את משפט סטוקס הכללי, והסבירו למה במקרה הזה $\oint_{\partial M}\omega=\int_D\varphi^*(d\omega)$. ודאו
+          ש-$\varphi$ חד-חד-ערכית ורגולרית.
+        solution:
+          - kind: theorem
+            text: >-
+              משפט סטוקס הכללי: אם $M$ עצם מכוון וחסום מממד $k$ עם שפה $\partial M$ בכיוון המושרה, ו-$\omega$ תבנית
+              מסדר $k-1$ עם מקדמים $C^1$ בסביבה של $M$, אז $\int_M d\omega=\int_{\partial M}\omega$.
+          - kind: check
+            text: >-
+              $\varphi$ חד-חד-ערכית: מ-$x=u-v$, $y=u+v$ מקבלים $u=\frac{x+y}2$, $v=\frac{y-x}2$. רגולרית:
+              $\varphi_u=(1,1,v)$, $\varphi_v=(-1,1,u)$, ו-$\varphi_u\times\varphi_v=(u-v,\,-u-v,\,2)\ne0$.
+          - kind: step
+            text: >-
+              כאן $k=2$ ו-$\omega$ מסדר 1. לפי ההגדרה של אינטגרל של תבנית על משטח בפרמטריזציה,
+              $\int_M d\omega=\int_D\varphi^*(d\omega)$. הכיוון המושרה על $\partial M$ מהכיוון של $\varphi$ הוא התמונה של
+              השפה החיובית של $D$, כלומר בדיוק הכיוון הנתון.
+          - kind: result
+            text: '$\oint_{\partial M}\omega=\int_M d\omega=\int_D\varphi^*(d\omega)$.'
+        rubric:
+          - text: 'ניסוח מלא: $M$ מכוון, $\omega$ מסדר $k-1$, $\partial M$ בכיוון המושרה'
+            weight: 2
+          - text: 'בדיקת חד-חד-ערכיות ורגולריות של $\varphi$'
+            weight: 1
+          - text: 'זיהוי $\int_M d\omega$ עם $\int_D\varphi^*(d\omega)$ והתאמת הכיוון של השפה'
+            weight: 2
+
+      - label: ב
+        points: 4
+        type: mc
+        objectives: [OBJ-8.4-1, OBJ-8.3-1]
+        prompt: >-
+          מהי $\varphi^*(d\omega)$?
+        choices:
+          - text: '$(2-2v)\,du\wedge dv$'
+            correct: true
+            feedback: >-
+              נכון. $d\omega=dz\wedge dx+dx\wedge dy+dy\wedge dz$. עם $\varphi^*dx=du-dv$, $\varphi^*dy=du+dv$,
+              $\varphi^*dz=v\,du+u\,dv$: $\varphi^*(dz\wedge dx)=(-u-v)\,du\wedge dv$, $\varphi^*(dx\wedge dy)=2\,du\wedge dv$,
+              $\varphi^*(dy\wedge dz)=(u-v)\,du\wedge dv$. הסכום $2-2v$.
+          - text: '$(2v-2)\,du\wedge dv$'
+            feedback: >-
+              כל הסימנים הפוכים: כנראה $d(z\,dx)$ נכתב $dx\wedge dz$ וכן הלאה. $d(f\,dx_I)=df\wedge dx_I$, הדיפרנציאל של
+              המקדם ראשון.
+            misconception: MC-c8-d-order-sign
+          - text: '$(2-2u)\,du\wedge dv$'
+            feedback: >-
+              טעות סימן ב-$\varphi^*(dy\wedge dz)$: $(du+dv)\wedge(v\,du+u\,dv)=u\,du\wedge dv+v\,dv\wedge du=(u-v)\,du\wedge dv$.
+              כאן התקבל $(v-u)\,du\wedge dv$, כאילו הגורמים הוחלפו ($\varphi^*dz\wedge\varphi^*dy$ במקום
+              $\varphi^*dy\wedge\varphi^*dz$) בלי להחליף סימן.
+            misconception: MC-c8-wedge-commutes
+          - text: '$2\,du\wedge dv$'
+            feedback: >-
+              זו רק התרומה של $dx\wedge dy$. גם $dz$ נמשך לאורך $\varphi$, $\varphi^*dz=d(uv)=v\,du+u\,dv$, ולכן $dz\wedge
+              dx$ ו-$dy\wedge dz$ אינם אפס.
+            misconception: MC-c8-pullback-forget-differential
+
+      - label: ג
+        points: 6
+        type: numeric
+        objectives: [OBJ-8.5-3]
+        prompt: >-
+          חשבו את $\oint_{\partial M}\omega$.
+        answer: 25.1327412
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון. $\int_D(2-2v)\,du\,dv=2\cdot4\pi-2\iint_Dv\,du\,dv=8\pi\approx25.13$: השטח של $D$ הוא $4\pi$, והאינטגרל של
+          $v$ על עיגול שמרכזו בראשית אפס, מסימטריה. בדיקה ישירה על $\gamma(t)=\varphi(2\cos t,2\sin t)$ נותנת אותו מספר.
+        wrongFeedback: >-
+          בצעו אינטגרל של המקדם $2-2v$ על העיגול ברדיוס 2. השתמשו בסימטריה עבור $v$.
+        commonWrong:
+          - value: -25.1327412
+            feedback: >-
+              הסימן הפוך. $\det$ של $(x,y)$ לפי $(u,v)$ הוא $+2$, ו-$\varphi$ שומרת את הכיוון שנתון לשפה.
+            misconception: MC-c8-boundary-orientation
+          - value: 12.5663706
+            feedback: >-
+              $4\pi$ מתקבל כש-$\varphi^*(dx\wedge dy)$ נלקח כ-$du\wedge dv$, בלי $\det=2$. המקדם הנכון הוא $2-2v$.
+            misconception: MC-c8-pullback-no-jacobian
+
+      - label: ד
+        points: 5
+        type: open
+        standalone: false
+        objectives: [OBJ-8.4-3, OBJ-8.5-3]
+        prompt: >-
+          סטודנט משתמש ב-$\psi(s,t)=\varphi(t,s)$ על אותו עיגול $D$, ומקבל $\int_D\psi^*(d\omega)=-8\pi$. האם זה סותר את
+          סעיף ג? הסבירו.
+        solution:
+          - kind: idea
+            text: >-
+              $\psi$ היא $\varphi$ אחרי החלפת הפרמטרים $h(s,t)=(t,s)$, ש-$\det$ שלה $-1$. היא משרה על $M$ את הכיוון ההפוך, וכך
+              גם על $\partial M$.
+          - kind: computation
+            text: >-
+              $\psi^*(d\omega)=h^*\big((2-2v)\,du\wedge dv\big)=(2-2s)\,dt\wedge ds=-(2-2s)\,ds\wedge dt$, ו-$\int_D-(2-2s)=-8\pi$.
+              החישוב של הסטודנט נכון.
+          - kind: step
+            text: >-
+              השפה החיובית של $D$ במשתנים $(s,t)$, דרך $\psi$, מקיפה את $\partial M$ בכיוון ההפוך לזה שבסעיף ג (כי
+              $(s,t)\mapsto(t,s)$ הופך את כיוון המעגל). לפי סטוקס, $-8\pi$ הוא $\oint_{\partial M}\omega$ בכיוון ההפוך.
+          - kind: result
+            text: >-
+              אין סתירה: $\oint_{-\partial M}\omega=-\oint_{\partial M}\omega=-8\pi$. האינטגרל של תבנית תלוי בכיוון, וכל
+              אחד חישב לכיוון אחר.
+        rubric:
+          - text: 'זיהוי ש-$\psi$ הופכת כיוון ($\det$ של החלפת הפרמטרים $-1$)'
+            weight: 2
+          - text: 'הסבר שגם הכיוון המושרה על $\partial M$ מתהפך'
+            weight: 2
+          - text: 'מסקנה: אין סתירה, שני האגפים של סטוקס מתהפכים יחד'
+            weight: 1
+
+  - id: Q-8-exam-5
+    type: exam
+    title: משיכה לאחור והחלפת משתנים
+    prompt: >-
+      בשאלה זו $\varphi:D\to\mathbb R^2$, $\varphi(u,v)=(x(u,v),y(u,v))$, גזירה ברציפות על תחום $D\subseteq\mathbb R^2$, ו-$f$
+      רציפה.
+    parts:
+      - label: א
+        points: 6
+        type: open
+        objectives: [OBJ-8.4-3, OBJ-8.4-1]
+        prompt: >-
+          הוכיחו ש-$\varphi^*(f\,dx\wedge dy)=(f\circ\varphi)\det J_\varphi\,du\wedge dv$, והסיקו את הקשר בין
+          $\int_D\varphi^*(f\,dx\wedge dy)$ לבין $\iint_{\varphi(D)}f\,dx\,dy$ כש-$\varphi$ חד-חד-ערכית ו-$\det J_\varphi$ שונה
+          מאפס על $D$ קשיר.
+        solution:
+          - kind: idea
+            text: >-
+              מושכים כל גורם בנפרד ($\varphi^*$ שומרת מכפלות יתד), פותחים סוגריים, ומשווים לנוסחת החלפת המשתנים.
+          - kind: step
+            text: >-
+              $\varphi^*f=f\circ\varphi$, $\varphi^*dx=d(x\circ\varphi)=x_u\,du+x_v\,dv$, $\varphi^*dy=y_u\,du+y_v\,dv$ (כלל
+              השרשרת), ו-$\varphi^*(f\,dx\wedge dy)=(f\circ\varphi)\,\varphi^*dx\wedge\varphi^*dy$.
+          - kind: computation
+            text: >-
+              $(x_u\,du+x_v\,dv)\wedge(y_u\,du+y_v\,dv)=x_uy_v\,du\wedge dv+x_vy_u\,dv\wedge du=(x_uy_v-x_vy_u)\,du\wedge
+              dv=\det J_\varphi\,du\wedge dv$, כי $du\wedge du=dv\wedge dv=0$.
+          - kind: theorem
+            text: >-
+              נוסחת החלפת המשתנים (שיעור 5.1): $\iint_{\varphi(D)}f\,dx\,dy=\iint_D(f\circ\varphi)\,|\det J_\varphi|\,du\,dv$.
+          - kind: step
+            text: >-
+              $\det J_\varphi$ רציפה ושונה מאפס על $D$ הקשיר, ולכן הסימן שלה קבוע (ערך הביניים). אם הוא חיובי,
+              $|\det J|=\det J$; אם שלילי, $|\det J|=-\det J$.
+          - kind: result
+            text: >-
+              $\int_D\varphi^*(f\,dx\wedge dy)=\pm\iint_{\varphi(D)}f\,dx\,dy$, עם פלוס כש-$\varphi$ שומרת כיוון ($\det J>0$)
+              ומינוס כשהיא הופכת כיוון.
+        rubric:
+          - text: 'משיכה נכונה של $dx$ ו-$dy$ בכלל השרשרת'
+            weight: 2
+          - text: 'פתיחת מכפלת היתד עם $dv\wedge du=-du\wedge dv$ וקבלת $\det J$'
+            weight: 2
+          - text: 'השוואה לנוסחת החלפת המשתנים, עם נימוק לסימן הקבוע של $\det J$'
+            weight: 2
+
+      - label: ב
+        points: 4
+        type: numeric
+        objectives: [OBJ-8.4-2, OBJ-5.2-1]
+        prompt: >-
+          $\varphi(r,\theta)=(r\cos\theta,\ r\sin\theta)$ על $[0,1]\times[0,2\pi]$. חשבו $\int\varphi^*\big((x^2+y^2)\,dx\wedge dy\big)$.
+        answer: 1.5707963
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון. $\varphi^*\big((x^2+y^2)\,dx\wedge dy\big)=r^2\cdot r\,dr\wedge d\theta$, ו-$\int_0^{2\pi}\int_0^1r^3=\frac\pi2$.
+        wrongFeedback: >-
+          לפי סעיף א המקדם הוא $(f\circ\varphi)\det J$, עם $f\circ\varphi=r^2$ ו-$\det J=r$.
+        commonWrong:
+          - value: 2.0943951
+            feedback: >-
+              $\frac{2\pi}3=\int_0^{2\pi}\int_0^1r^2$: חסר היעקוביאן $r$.
+            misconception: MC-c8-pullback-no-jacobian
+          - value: -1.5707963
+            feedback: >-
+              בסדר $(r,\theta)$ ההעתקה שומרת כיוון, $\det J=r>0$. מינוס היה מתקבל בסדר $(\theta,r)$.
+            misconception: MC-c8-wedge-commutes
+
+      - label: ג
+        points: 4
+        type: numeric
+        objectives: [OBJ-8.4-1, OBJ-5.2-1]
+        prompt: >-
+          $\Phi(\rho,\theta,\psi)=(\rho\sin\psi\cos\theta,\ \rho\sin\psi\sin\theta,\ \rho\cos\psi)$, **בסדר המשתנים**
+          $(\rho,\theta,\psi)$. כתבו $\Phi^*(dx\wedge dy\wedge dz)=c\,d\rho\wedge d\theta\wedge d\psi$, וחשבו את $c$ בנקודה
+          $\rho=2$, $\psi=\frac\pi6$ (ו-$\theta$ כלשהו).
+        answer: -2
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $c=\det\frac{\partial(x,y,z)}{\partial(\rho,\theta,\psi)}=-\rho^2\sin\psi$, ובנקודה $-4\cdot\frac12=-2$. בסדר
+          הרגיל $(\rho,\psi,\theta)$ היעקוביאן הוא $+\rho^2\sin\psi$; החלפת שני משתנים מחליפה סימן.
+        wrongFeedback: >-
+          $c$ הוא הדטרמיננטה של מטריצת הנגזרות בסדר העמודות $\rho,\theta,\psi$. השוו ליעקוביאן הכדורי הידוע, וזכרו מה עושה
+          החלפת שתי עמודות.
+        commonWrong:
+          - value: 2
+            feedback: >-
+              $\rho^2\sin\psi=2$ הוא היעקוביאן בסדר $(\rho,\psi,\theta)$, או הערך המוחלט. בסדר $(\rho,\theta,\psi)$ הסימן
+              הפוך.
+            misconception: MC-c8-orientation-abs-det
+
+      - label: ד
+        points: 6
+        type: open
+        standalone: false
+        objectives: [OBJ-8.4-2, OBJ-8.4-3]
+        prompt: >-
+          $B$ כדור היחידה בכיוון הסטנדרטי (של $dx\wedge dy\wedge dz$). חשבו $\int_B z^2\,dx\wedge dy\wedge dz$ בעזרת $\Phi$
+          מסעיף ג על $[0,1]\times[0,2\pi]\times[0,\pi]$, ושימו לב לסימן.
+        solution:
+          - kind: idea
+            text: >-
+              $\Phi$ בסדר $(\rho,\theta,\psi)$ הופכת כיוון ($c<0$), ולכן $\int\Phi^*\omega$ הוא מינוס האינטגרל על $B$ בכיוון
+              הסטנדרטי.
+          - kind: computation
+            text: >-
+              $\Phi^*(z^2\,dx\wedge dy\wedge dz)=\rho^2\cos^2\psi\cdot(-\rho^2\sin\psi)\,d\rho\wedge d\theta\wedge d\psi$, ולכן
+              $\int\Phi^*\omega=-\int_0^1\rho^4\,d\rho\int_0^{2\pi}d\theta\int_0^\pi\cos^2\psi\sin\psi\,d\psi=-\frac15\cdot2\pi\cdot\frac23=-\frac{4\pi}{15}$.
+          - kind: step
+            text: >-
+              $\Phi$ חד-חד-ערכית על הפנים של התיבה, ו-$c=-\rho^2\sin\psi<0$ שם: $\Phi$ הופכת כיוון. לפי סעיף א (בגרסה
+              התלת-ממדית), $\int\Phi^*\omega=-\int_B\omega$.
+          - kind: check
+            text: >-
+              בדיקה: $\iiint_Bz^2\,dV=\frac13\iiint_B(x^2+y^2+z^2)\,dV=\frac13\cdot4\pi\int_0^1\rho^4\,d\rho=\frac{4\pi}{15}$,
+              חיובי כמו שצריך לאינטגרנד חיובי.
+          - kind: result
+            text: '$\int_B z^2\,dx\wedge dy\wedge dz=\frac{4\pi}{15}\approx0.838$.'
+        rubric:
+          - text: 'משיכה לאחור נכונה, עם המקדם $-\rho^2\sin\psi$ מסעיף ג'
+            weight: 2
+          - text: 'חישוב האינטגרל המשולש על התיבה'
+            weight: 2
+          - text: 'תיקון הסימן בגלל היפוך הכיוון, ובדיקת סבירות (אינטגרנד חיובי)'
+            weight: 2
+
+  - id: Q-8-exam-6
+    type: exam
+    title: הנגזרת החיצונית פעמיים ושטף של רוטור
+    prompt: >-
+      בשאלה זו כל התבניות על $\mathbb R^3$ עם מקדמים ב-$C^2$.
+    parts:
+      - label: א
+        points: 7
+        type: open
+        objectives: [OBJ-8.3-2]
+        prompt: >-
+          הוכיחו ש-$d(d\omega)=0$ לכל תבנית $\omega=P\,dx+Q\,dy+R\,dz$, והסיקו ש-$\nabla\cdot(\nabla\times F)=0$ לכל שדה $F$
+          מסוג $C^2$.
+        solution:
+          - kind: idea
+            text: >-
+              מחשבים $d\omega$ במפורש, מפעילים $d$ שוב, ומראים שהנגזרות המעורבות מתבטלות בזוגות לפי משפט שוורץ.
+          - kind: computation
+            text: >-
+              $d\omega=dP\wedge dx+dQ\wedge dy+dR\wedge dz=(R_y-Q_z)\,dy\wedge dz+(P_z-R_x)\,dz\wedge dx+(Q_x-P_y)\,dx\wedge
+              dy$.
+          - kind: computation
+            text: >-
+              ב-$d$ של כל איבר שורדת רק הנגזרת לפי המשתנה החסר, וכל מכפלה משולשת היא תמורה מעגלית של $dx\wedge dy\wedge
+              dz$: $d(d\omega)=\big((R_y-Q_z)_x+(P_z-R_x)_y+(Q_x-P_y)_z\big)\,dx\wedge dy\wedge dz$.
+          - kind: theorem
+            text: 'משפט שוורץ: למקדמים ב-$C^2$, $R_{yx}=R_{xy}$, $Q_{zx}=Q_{xz}$, $P_{zy}=P_{yz}$.'
+          - kind: step
+            text: >-
+              המקדם הוא $R_{yx}-Q_{zx}+P_{zy}-R_{xy}+Q_{xz}-P_{yz}=0$.
+          - kind: step
+            text: >-
+              בהתאמה בין תבניות לשדות ("המילון" של שיעור 8.2), $\omega_F=F_1\,dx+F_2\,dy+F_3\,dz$, $d\omega_F$ היא התבנית מסדר 2 של $\nabla\times F$, ו-$d$ של תבנית
+              מסדר 2 היא הדיברגנץ שלה כפול $dx\wedge dy\wedge dz$.
+          - kind: result
+            text: '$d(d\omega)=0$, ולכן $\nabla\cdot(\nabla\times F)\,dx\wedge dy\wedge dz=d(d\omega_F)=0$, כלומר $\nabla\cdot(\nabla\times F)=0$.'
+        rubric:
+          - text: 'חישוב נכון של $d\omega$ עם הסימנים (הדיפרנציאל של המקדם ראשון)'
+            weight: 2
+          - text: 'חישוב $d(d\omega)$ וסידור לפי $dx\wedge dy\wedge dz$ עם סימני התמורות'
+            weight: 2
+          - text: 'שימוש מפורש במשפט שוורץ, עם ההנחה $C^2$'
+            weight: 2
+          - text: 'תרגום נכון לזהות של השדות דרך המילון'
+            weight: 1
+
+      - label: ב
+        points: 6
+        type: numeric
+        objectives: [OBJ-8.3-3, OBJ-8.3-1]
+        prompt: >-
+          $\alpha=x^2\,dy$ ו-$\beta=(x+z)\,dz$. כתבו $d(\alpha\wedge\beta)=g\,dx\wedge dy\wedge dz$ וחשבו $g(1,5,2)$.
+        answer: 7
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\alpha\wedge\beta=x^2(x+z)\,dy\wedge dz$, ולכן $g=\partial_x(x^3+x^2z)=3x^2+2xz$, ובנקודה $3+4=7$. בלייבניץ:
+          $d\alpha\wedge\beta=2x(x+z)\,dx\wedge dy\wedge dz$, $\alpha\wedge d\beta=x^2\,dy\wedge dx\wedge dz=-x^2\,dx\wedge
+          dy\wedge dz$, ו-$d\alpha\wedge\beta-\alpha\wedge d\beta=3x^2+2xz$.
+        wrongFeedback: >-
+          חשבו את $\alpha\wedge\beta$ ישירות, או השתמשו ב-$d(\alpha\wedge\beta)=d\alpha\wedge\beta-\alpha\wedge d\beta$
+          לשתי תבניות מסדר 1.
+        commonWrong:
+          - value: 5
+            feedback: >-
+              $5=x^2+2xz$ בנקודה: כלל לייבניץ עם פלוס, $d\alpha\wedge\beta+\alpha\wedge d\beta$. לתבנית מסדר 1 בגורם
+              הראשון הסימן הוא מינוס.
+            misconception: MC-c8-leibniz-sign
+          - value: 6
+            feedback: >-
+              $6=2x^2+2xz$ הוא רק $d\alpha\wedge\beta$. גם $\alpha\wedge d\beta$ תורם, כי $d\beta=dx\wedge dz\ne0$.
+            misconception: MC-c8-d-ignores-function
+
+      - label: ג
+        points: 7
+        type: open
+        objectives: [OBJ-8.5-1, OBJ-8.3-2, OBJ-7.5-1]
+        prompt: >-
+          $B$ תחום חסום עם שפה חלקה $S=\partial B$ (בכיוון החיצוני), ו-$\omega$ תבנית מסדר 1 בסביבה של $B$. הוכיחו
+          בשתי דרכים ש-$\int_Sd\omega=0$, והסיקו את השטף של $\nabla\times(yz^2,\ x^2z,\ e^xy)$ דרך ספרת היחידה.
+        solution:
+          - kind: idea
+            text: >-
+              סטוקס הכללי פעמיים: פעם על המשטח $S$, שאין לו שפה; ופעם על התחום $B$, עם $d^2=0$.
+          - kind: step
+            text: >-
+              דרך ראשונה: $S$ משטח סגור, $\partial S=\emptyset$. לפי סטוקס על $S$ (עם $k=2$ ו-$\omega$ מסדר 1),
+              $\int_Sd\omega=\int_{\partial S}\omega=0$.
+          - kind: step
+            text: >-
+              דרך שנייה: לפי סטוקס על $B$ (עם $k=3$ ו-$d\omega$ מסדר 2), $\int_Sd\omega=\int_{\partial B}d\omega=\int_Bd(d\omega)=\int_B0=0$,
+              לפי סעיף א.
+          - kind: step
+            text: >-
+              במילון, $\int_Sd\omega_F=\oiint_S(\nabla\times F)\cdot d\mathbf S$. ל-$F=(yz^2,x^2z,e^xy)$ עם מקדמים חלקים
+              על כל $\mathbb R^3$, ו-$S$ ספרת היחידה כשפת כדור היחידה, השטף אפס.
+          - kind: result
+            text: >-
+              $\int_Sd\omega=0$ לכל $\omega$ כזו, ובפרט $\oiint_{S^2}\nabla\times(yz^2,x^2z,e^xy)\cdot d\mathbf S=0$, בלי לחשב
+              את הרוטור.
+        rubric:
+          - text: 'הדרך הראשונה: סטוקס על $S$ עם $\partial S=\emptyset$'
+            weight: 2
+          - text: 'הדרך השנייה: סטוקס על $B$ ו-$d(d\omega)=0$, עם התאמת הסדרים והממדים'
+            weight: 2
+          - text: 'ציון ההנחה ש-$\omega$ חלקה על כל $B$ (בלי חורים)'
+            weight: 1
+          - text: 'תרגום לשטף של רוטור ומסקנה שהשטף אפס'
+            weight: 2

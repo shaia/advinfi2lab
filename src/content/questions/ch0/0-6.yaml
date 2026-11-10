@@ -1,0 +1,296 @@
+# Lesson 0.6 — review: linear systems of differential equations. The antisymmetric result (OBJ-0.6-3) is the tool of
+# the uniqueness half of the Frenet–Serret theorem in chapter 2.
+# Objectives (src/course.ts):
+#   OBJ-0.6-1  state the existence and uniqueness theorem for a linear system with continuous coefficients and an
+#              initial condition
+#   OBJ-0.6-2  write a first-order vector equation as a system, and solve a constant-matrix system in simple examples
+#   OBJ-0.6-3  show that if A(t) is antisymmetric, solutions of X′ = AX preserve inner products
+chapter: 0
+questions:
+  - id: Q-0.6-eu
+    type: mc
+    objectives: [OBJ-0.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $A(t)$ מטריצה $n\times n$ ו-$B(t)$ וקטור, שתיהן רציפות על קטע $I$; $t_0\in I$ ו-$X_0\in\mathbb R^n$. מה אומר משפט הקיום
+      והיחידות על הבעיה $X'=A(t)X+B(t)$, $X(t_0)=X_0$?
+    choices:
+      - text: 'יש לה פתרון אחד ויחיד, והוא מוגדר על כל הקטע $I$'
+        correct: true
+        feedback: >-
+          נכון. למערכת **לינארית** הפתרון קיים על כל הקטע שבו המקדמים רציפים, לא רק ליד $t_0$.
+      - text: 'יש לה פתרון יחיד בקטע קטן סביב $t_0$, שעלול להתפוצץ לפני סוף $I$'
+        feedback: >-
+          כך זה במשוואות לא לינאריות ($x'=x^2$). במערכת לינארית הפתרון לא מתפוצץ: הוא קיים על כל $I$.
+        misconception: MC-c0-linear-ode-local-only
+      - text: 'יש לה פתרון יחיד רק כש-$A$ ו-$B$ קבועות'
+        feedback: >-
+          המשפט דורש רציפות בלבד. נוסחה מפורשת יש כש-$A$ קבועה, אבל הקיום והיחידות לא תלויים בה.
+        misconception: MC-c0-ode-constant-only
+
+  - id: Q-0.6-zero
+    type: twotier
+    objectives: [OBJ-0.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $X$ פתרון של $X'=A(t)X$ על קטע $I$ ($A$ רציפה), ו-$X(t_0)=0$ לאיזה $t_0\in I$. האם $X(t)=0$ לכל $t\in I$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. פתרון שמתאפס ברגע אחד הוא האפס בכל הקטע.
+      - text: 'לא בהכרח'
+        feedback: >-
+          הפונקציה $X\equiv0$ פותרת את אותה בעיה עם אותו תנאי התחלה. לפי היחידות אין פתרון אחר.
+        misconception: MC-c0-ode-solution-can-leave-zero
+    reasons:
+      - text: '$X\equiv0$ הוא פתרון עם $X(t_0)=0$, ולפי היחידות הוא היחיד'
+        correct: true
+        feedback: >-
+          בדיוק. מכאן גם: אם שני פתרונות שווים ברגע אחד, ההפרש שלהם פתרון שמתאפס שם, ולכן הם שווים תמיד.
+      - text: 'רק אם $A(t)$ הפיכה לכל $t$'
+        feedback: >-
+          ההפיכות של $A$ לא משחקת תפקיד. גם עם $A\equiv0$ הפתרונות קבועים, והפתרון שמתאפס ב-$t_0$ הוא אפס.
+        misconception: MC-c0-ode-solution-can-leave-zero
+      - text: 'רק אם $A$ קבועה, ואז $X(t)=e^{(t-t_0)A}X(t_0)=0$'
+        feedback: >-
+          זה חישוב נכון כש-$A$ קבועה, אבל המסקנה נכונה לכל $A(t)$ רציפה, לפי היחידות.
+        misconception: MC-c0-ode-constant-only
+
+  - id: Q-0.6-blowup
+    type: twotier
+    objectives: [OBJ-0.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נכון או לא: "לכל פונקציה חלקה $f:\mathbb R\to\mathbb R$, לבעיה $x'=f(x)$, $x(0)=1$ יש פתרון שמוגדר על כל $\mathbb R$."
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. הקיום על כל הקטע הוא תכונה של משוואות לינאריות.
+      - text: נכון
+        feedback: >-
+          ל-$f(x)=x^2$ הפתרון הוא $x(t)=\frac{1}{1-t}$, שמתפוצץ ב-$t=1$.
+        misconception: MC-c0-nonlinear-global
+    reasons:
+      - text: 'ל-$x''=x^2$, $x(0)=1$ הפתרון $\frac1{1-t}$ שואף לאינסוף כש-$t\to1^-$'
+        correct: true
+        feedback: >-
+          בדיוק: $\left(\frac1{1-t}\right)'=\frac1{(1-t)^2}=x^2$, ו-$x(0)=1$. המשוואה אינה לינארית ב-$x$, ולכן משפט הקיום
+          על כל הקטע לא חל עליה.
+      - text: 'משפט הקיום והיחידות מבטיח פתרון על כל הקטע לכל משוואה עם אגף ימין חלק'
+        feedback: >-
+          המשפט הכללי נותן פתרון רק בקטע קטן סביב $t_0$. קיום על כל הקטע מובטח למשוואות לינאריות עם מקדמים רציפים, ובאופן כללי יותר כשאגף ימין ליפשיצי גלובלית (פרק 11); $x^2$ אינה כזו.
+        misconception: MC-c0-linear-ode-local-only
+      - text: 'הפתרון של $x''=x^2$ הוא $e^{t}$'
+        feedback: >-
+          $(e^t)'=e^t\ne e^{2t}$. הפתרון הוא $\frac1{1-t}$, ובדיוק הוא מראה שהטענה שקרית.
+        misconception: MC-c0-nonlinear-global
+
+  - id: Q-0.6-companion
+    type: mc
+    objectives: [OBJ-0.6-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      כתבו את $x''+3x'+2x=0$ כמערכת $X'=AX$ עם $X=(x,\ x')$. מהי $A$?
+    choices:
+      - text: '$\begin{pmatrix}0&1\\-2&-3\end{pmatrix}$'
+        correct: true
+        feedback: >-
+          נכון. השורה הראשונה אומרת $(x)'=x'$. השנייה: $(x')'=x''=-2x-3x'$.
+      - text: '$\begin{pmatrix}0&1\\2&3\end{pmatrix}$'
+        feedback: >-
+          את $2x$ ו-$3x'$ צריך להעביר אגף: $x''=-2x-3x'$. הסימנים קובעים דעיכה ($e^{-t}$, $e^{-2t}$) במקום גדילה.
+        misconception: MC-c0-ode-sign
+      - text: '$\begin{pmatrix}1&0\\-3&-2\end{pmatrix}$'
+        feedback: >-
+          השורה הראשונה צריכה לומר $(x)'=x'$, כלומר $0\cdot x+1\cdot x'$. ובשורה השנייה המקדם של $x$ הוא $-2$, ושל $x'$ הוא $-3$.
+        misconception: MC-c0-ode-sign
+
+  - id: Q-0.6-diag
+    type: numeric
+    objectives: [OBJ-0.6-2]
+    level: basic
+    prompt: >-
+      $X'=\begin{pmatrix}2&0\\0&-1\end{pmatrix}X$ עם $X(0)=(1,\ 3)$. חשבו את $x_2(1)$.
+    answer: 1.1036383
+    tolerance: 0.0002
+    correctFeedback: >-
+      נכון: $\frac3e\approx1.1036$. המערכת מפורקת: $x_2'=-x_2$, ולכן $x_2(t)=3e^{-t}$.
+    wrongFeedback: >-
+      המטריצה אלכסונית, כך שכל רכיב פותר משוואה משלו: $x_i'=\lambda_ix_i$, ו-$x_i(t)=e^{\lambda_it}x_i(0)$.
+    commonWrong:
+      - value: 8.1548455
+        feedback: >-
+          זה $3e$: הסימן של המקדם $-1$ אבד. $x_2'=-x_2$ היא משוואת דעיכה.
+        misconception: MC-c0-ode-sign
+
+  - id: Q-0.6-rotation
+    type: numeric
+    objectives: [OBJ-0.6-2]
+    level: mid
+    prompt: >-
+      $X'=\begin{pmatrix}0&-1\\1&0\end{pmatrix}X$ עם $X(0)=(2,\ 1)$. חשבו את $x_1\!\left(\frac\pi2\right)$.
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הפתרון הוא $X(t)=\begin{pmatrix}\cos t&-\sin t\\ \sin t&\cos t\end{pmatrix}X(0)=(2\cos t-\sin t,\ 2\sin t+\cos t)$,
+      סיבוב נגד כיוון השעון. ב-$\frac\pi2$: $X=(-1,\ 2)$. בדיקה: $x_1'=-2\sin t-\cos t=-x_2$.
+    wrongFeedback: >-
+      המערכת $x_1'=-x_2$, $x_2'=x_1$ מסובבת את המישור. נחשו $X(t)=R(t)X(0)$ עם מטריצת סיבוב, ובדקו את הסימן מתוך המשוואה.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          זה מתקבל מסיבוב **בכיוון השעון**, $(2\cos t+\sin t,\ \dots)$. אבל ב-$X=(2,1)$ המשוואה נותנת $x_1'=-1<0$: $x_1$ יורד, כמו
+          בסיבוב נגד כיוון השעון.
+        misconception: MC-c0-rotation-direction
+
+  - id: Q-0.6-eigen
+    type: numeric
+    objectives: [OBJ-0.6-2]
+    level: exam
+    prompt: >-
+      $X'=\begin{pmatrix}1&2\\2&1\end{pmatrix}X$ עם $X(0)=(1,\ 0)$. חשבו את $x_2(\ln2)$.
+    answer: 3.75
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\frac{15}4$. הערכים העצמיים $3$ (וקטור $(1,1)$) ו-$-1$ (וקטור $(1,-1)$). $X(0)=\frac12(1,1)+\frac12(1,-1)$, ולכן
+      $X(t)=\frac12e^{3t}(1,1)+\frac12e^{-t}(1,-1)$ ו-$x_2(t)=\frac12(e^{3t}-e^{-t})$. ב-$\ln2$: $\frac12(8-\frac12)=\frac{15}4$.
+    wrongFeedback: >-
+      מצאו ערכים ווקטורים עצמיים, פרקו את $X(0)$ לפיהם, וכל רכיב מתפתח לפי $e^{\lambda t}$.
+    commonWrong:
+      - value: 7.5
+        feedback: >-
+          זה $e^{3t}-e^{-t}$ בלי המקדמים $\frac12$. בלי המקדמים $X(0)$ היה $(2,0)$ ולא $(1,0)$: פתרו את
+          $c_1(1,1)+c_2(1,-1)=(1,0)$.
+        misconception: MC-c0-eigen-initial-coefficients
+
+  - id: Q-0.6-length
+    type: mc
+    objectives: [OBJ-0.6-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $A(t)$ רציפה ואנטי-סימטרית ($A^{T}=-A$) לכל $t$, ו-$X$ פתרון של $X'=A(t)X$. מהי $\frac{d}{dt}\|X(t)\|^2$?
+    choices:
+      - text: '$0$, ולכן $\|X(t)\|$ קבוע'
+        correct: true
+        feedback: >-
+          נכון. $\frac{d}{dt}\langle X,X\rangle=2\langle X',X\rangle=2\langle AX,X\rangle$, ו-$\langle AX,X\rangle=\langle X,A^{T}X\rangle=-\langle X,AX\rangle$,
+          ולכן $\langle AX,X\rangle=0$.
+      - text: 'חיובית, כי הפתרון גדל אקספוננציאלית'
+        feedback: >-
+          גדילה אקספוננציאלית יש, למשל, עם $A=I$. עם $A$ אנטי-סימטרית הפתרון רק מסתובב: $X'=AX$ ניצב ל-$X$.
+        misconception: MC-c0-antisym-growth
+      - text: '$0$ רק כש-$A$ קבועה'
+        feedback: >-
+          החישוב משתמש רק ב-$A(t)^{T}=-A(t)$ ברגע $t$. הוא עובד לכל $A(t)$ אנטי-סימטרית ורציפה.
+        misconception: MC-c0-antisym-needs-constant
+
+  - id: Q-0.6-norm
+    type: numeric
+    objectives: [OBJ-0.6-3]
+    level: basic
+    prompt: >-
+      $A=\begin{pmatrix}0&-3&2\\3&0&-1\\-2&1&0\end{pmatrix}$ ו-$X$ הפתרון של $X'=AX$ עם $X(0)=(3,4,0)$. מהו $\|X(5)\|$?
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $A$ אנטי-סימטרית, ולכן $\|X(t)\|=\|X(0)\|=\sqrt{9+16}=5$ לכל $t$. לא צריך לפתור את המערכת.
+    wrongFeedback: >-
+      בדקו קודם איזו תכונה יש ל-$A$: $A^{T}=-A$. מה זה אומר על האורך של הפתרון?
+    commonWrong:
+      - value: 25
+        feedback: >-
+          $25$ הוא $\|X(0)\|^2$. הגודל שנשמר הוא גם $\|X\|^2$ וגם $\|X\|$, והשאלה שואלת על האורך: $5$.
+        misconception: MC-c0-norm-without-root
+      - value: 742.0657955
+        feedback: >-
+          זה $5e^5$: גדילה אקספוננציאלית. עם $A$ אנטי-סימטרית אין גדילה; הפתרון מסתובב סביב ציר.
+        misconception: MC-c0-antisym-growth
+
+  - id: Q-0.6-proof
+    type: rank
+    objectives: [OBJ-0.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סדרו את ההוכחה לטענה: אם $A(t)$ אנטי-סימטרית ו-$X,Y$ פתרונות של $X'=A(t)X$, אז $\langle X(t),Y(t)\rangle$ קבוע.
+    help: סדרו את שלבי ההוכחה מהראשון (למעלה) לאחרון.
+    items:
+      - { id: s1, label: 'גוזרים את המכפלה הפנימית: $\frac{d}{dt}\langle X,Y\rangle=\langle X'',Y\rangle+\langle X,Y''\rangle$.' }
+      - { id: s2, label: 'מציבים את המשוואה: $=\langle AX,Y\rangle+\langle X,AY\rangle$.' }
+      - { id: s3, label: 'מעבירים את $A$ לצד השני: $\langle X,AY\rangle=\langle A^{T}X,Y\rangle$, ולכן הסכום הוא $\langle (A+A^{T})X,Y\rangle$.' }
+      - { id: s4, label: 'כי $A^{T}=-A$, הסכום הוא $0$.' }
+      - { id: s5, label: 'לכן הפונקציה $t\mapsto\langle X(t),Y(t)\rangle$, שנגזרתה אפס על קטע, קבועה.' }
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. עם $X=Y$ מתקבלת שמירת האורך, ובכלל: אורכים וזוויות בין פתרונות נשמרים. זה הכלי שיוכיח בפרק 2 שהשלשה של
+      פרנה-סרה נשארת אורתונורמלית.
+    wrongFeedback: >-
+      מתחילים בכלל המכפלה לנגזרת של מכפלה פנימית, מציבים את המשוואה, ורק אז משתמשים באנטי-סימטריה. המסקנה (קבוע) באה
+      בסוף.
+
+  - id: Q-0.6-not-antisym
+    type: twotier
+    objectives: [OBJ-0.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $A=\begin{pmatrix}1&0\\0&-1\end{pmatrix}$. העקבה שלה אפס. האם הפתרונות של $X'=AX$ שומרים על אורך?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. הפתרון עם $X(0)=(1,0)$ הוא $(e^t,0)$, שאורכו גדל.
+      - text: כן
+        feedback: >-
+          בדקו פתרון אחד: $X(t)=(e^t,\ 0)$ פותר את המערכת, ו-$\|X(t)\|=e^t$.
+        misconception: MC-c0-trace-zero-preserves-length
+    reasons:
+      - text: '$\frac{d}{dt}\|X\|^2=\langle (A+A^{T})X,X\rangle=2(x_1^2-x_2^2)$, שאינו אפס; למשל $(e^t,0)$ גדל'
+        correct: true
+        feedback: >-
+          בדיוק. אורך נשמר כש-$A+A^{T}=0$. עקבה אפס היא תנאי אחר, חלש יותר.
+      - text: 'עקבה אפס גוררת שהפתרון שומר על אורך'
+        feedback: >-
+          עקבה אפס אינה $A^{T}=-A$. $A$ כאן סימטרית ועם עקבה אפס, והפתרונות מתמתחים בכיוון אחד ומתכווצים בשני.
+        misconception: MC-c0-trace-zero-preserves-length
+      - text: '$A$ סימטרית, ומטריצה סימטרית תמיד שומרת אורך'
+        feedback: >-
+          ההפך: $A=I$ סימטרית ונותנת $e^tX_0$. התנאי לשמירת אורך הוא אנטי-סימטריה.
+        misconception: MC-c0-symmetric-preserves-length
+
+  - id: Q-0.6-frame
+    type: mc
+    objectives: [OBJ-0.6-3, OBJ-0.6-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\kappa(s),\tau(s)$ רציפות על קטע $I$. הווקטורים $e_1(s),e_2(s),e_3(s)\in\mathbb R^3$ פותרים
+      $$e_1'=\kappa e_2,\qquad e_2'=-\kappa e_1+\tau e_3,\qquad e_3'=-\tau e_2,$$
+      ו-$e_1(s_0),e_2(s_0),e_3(s_0)$ בסיס אורתונורמלי. נסמן ב-$M(s)$ את המטריצה שהשורות שלה $e_1,e_2,e_3$; אז
+      $M'=KM$ עם $K=\begin{pmatrix}0&\kappa&0\\-\kappa&0&\tau\\0&-\tau&0\end{pmatrix}$. למה $e_1,e_2,e_3$ אורתונורמליים לכל $s\in I$?
+    choices:
+      - text: 'כל עמודה של $M$ פותרת $X''=KX$, ו-$K$ אנטי-סימטרית; לכן $M^{T}M$ קבועה ושווה $I$, ו-$M$ אורתוגונלית'
+        correct: true
+        feedback: >-
+          נכון. $M^{T}M$ היא מטריצת המכפלות הפנימיות של העמודות, והיא קבועה ושווה ל-$I$ ב-$s_0$. מטריצה ריבועית עם
+          $M^{T}M=I$ מקיימת גם $MM^{T}=I$, כלומר השורות אורתונורמליות. זו בדיוק שמירת השלשה של פרנה-סרה.
+      - text: 'העקבה של $K$ אפס, ולכן $\det M$ קבוע; $M^{T}M=I$ ב-$s_0$, ולכן $M^{T}M=I$ לכל $s$'
+        feedback: >-
+          עקבה אפס אכן שומרת את $\det M$ (נפח), אבל לא את המכפלות הפנימיות: ל-$K=\operatorname{diag}(1,-1,0)$ הדטרמיננטה
+          קבועה והאורכים משתנים. דטרמיננטה קבועה אינה גוררת $M^{T}M=I$. מה שעובד הוא $K^{T}=-K$.
+        misconception: MC-c0-trace-zero-preserves-length
+      - text: 'רק אם $\kappa$ ו-$\tau$ קבועות, כי אז $M(s)=e^{(s-s_0)K}M(s_0)$ ו-$e^{(s-s_0)K}$ אורתוגונלית'
+        feedback: >-
+          הנוסחה נכונה כשהמקדמים קבועים, אבל ההוכחה של שמירת המכפלות הפנימיות משתמשת רק ב-$K(s)^{T}=-K(s)$ בכל $s$.
+        misconception: MC-c0-antisym-needs-constant
+      - text: 'כי הפתרון של מערכת לינארית קיים רק ליד $s_0$, ושם הבסיס עדיין קרוב לאורתונורמלי'
+        feedback: >-
+          הפתרון קיים על כל $I$, ו"קרוב לאורתונורמלי" אינו אורתונורמלי. השמירה מדויקת ומתקיימת לכל $s$.
+        misconception: MC-c0-linear-ode-local-only

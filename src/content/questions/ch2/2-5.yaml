@@ -1,0 +1,278 @@
+# Lesson 2.5 (enrichment) — spherical curves and Lancret's theorem.
+# Objectives (src/course.ts):
+#   OBJ-2.5-1  prove that a curve is a generalized helix (the tangent makes a constant angle with a fixed direction) iff τ/κ is constant
+#   OBJ-2.5-2  derive a condition on the curvature and torsion of a curve lying on a sphere
+# Enrichment: no review or exam question of the chapter depends on this lesson.
+# Every number below was recomputed with src/math/geometry.ts (curvature, torsion, frenet).
+chapter: 2
+questions:
+  - id: Q-2.5-helix-ratio
+    type: mc
+    objectives: [OBJ-2.5-1]
+    level: basic
+    prompt: >-
+      **סליל מוכלל** הוא מסילה עם $\kappa>0$ שהמשיק שלה יוצר זווית קבועה $\theta$ עם כיוון קבוע $\mathbf u$, **הציר**:
+      $\mathbf t\cdot\mathbf u=\cos\theta$ קבוע. הסליל $(a\cos t,a\sin t,bt)$ עם $a,b>0$ הוא סליל מוכלל. מה היחס
+      $\frac\tau\kappa$ שלו, ומהו הציר?
+    hints:
+      - 'חזרו לשיעור 2.2 (העקמומיות והפיתול של סליל) ולשיעור 2.5 (משפט לנקרה).'
+    choices:
+      - text: '$\frac\tau\kappa=\frac ba$, והציר $(0,0,1)$'
+        correct: true
+        feedback: >-
+          נכון. $\kappa=\frac{a}{a^2+b^2}$, $\tau=\frac{b}{a^2+b^2}$, ו-$\mathbf t\cdot(0,0,1)=\frac{b}{\sqrt{a^2+b^2}}$ קבוע:
+          זה $\cos\theta$, ו-$\cot\theta=\frac ba$, כפי שמשפט לנקרה אומר.
+      - text: '$\frac\tau\kappa=\frac ab$, והציר $(0,0,1)$'
+        feedback: >-
+          זה היחס ההפוך, $\frac\kappa\tau$. בפיתול המונה הוא $b$.
+        misconception: MC-c2-lancret-ratio-is-cos
+      - text: '$\frac\tau\kappa=\frac{b}{\sqrt{a^2+b^2}}$'
+        feedback: >-
+          זה $\cos\theta$, הקוסינוס של הזווית בין המשיק לציר. היחס $\frac\tau\kappa$ הוא $\cot\theta$.
+        misconception: MC-c2-lancret-ratio-is-cos
+      - text: 'הסליל המעגלי אינו סליל מוכלל, כי סליל מוכלל אינו מעגלי'
+        feedback: >-
+          "מוכלל" פירושו שהמושג רחב יותר: הסליל המעגלי הוא המקרה שבו גם $\kappa$ וגם $\tau$ קבועים.
+        misconception: MC-c2-generalized-helix-constant
+
+  - id: Q-2.5-def
+    type: mc
+    objectives: [OBJ-2.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מתי מסילה עם $\kappa>0$ נקראת סליל מוכלל?
+    choices:
+      - text: 'כשיש וקטור יחידה קבוע $\mathbf u$ כך ש-$\mathbf t(s)\cdot\mathbf u$ קבוע (המשיק יוצר זווית קבועה עם כיוון קבוע)'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf u$ הוא הציר של הסליל המוכלל. בסליל המעגלי $\mathbf u=(0,0,1)$ ו-$\mathbf t\cdot\mathbf u=\frac{b}{\sqrt{a^2+b^2}}$.
+      - text: 'כש-$\kappa$ ו-$\tau$ קבועים'
+        feedback: >-
+          זה הסליל המעגלי, מקרה פרטי. סליל מוכלל דורש רק שהיחס $\frac\tau\kappa$ יהיה קבוע (משפט לנקרה):
+          ל-$(\cosh t,\sinh t,t)$ יש $\kappa=\tau=\frac{1}{2\cosh^2t}$, לא קבועות.
+        misconception: MC-c2-generalized-helix-constant
+      - text: 'כשהמסילה מונחת על גליל מעגלי'
+        feedback: >-
+          גם מעגל אופקי על הגליל, שבו $\mathbf t\perp\mathbf u$, וגם מסילות מתפתלות שעולות ויורדות על הגליל, מונחות עליו; רק
+          חלקן סלילים מוכללים. ומנגד, סליל מוכלל לא חייב להיות על גליל מעגלי.
+        misconception: MC-c2-generalized-helix-constant
+      - text: 'כש-$\mathbf b(s)\cdot\mathbf u$ קבוע עבור וקטור $\mathbf u$ כלשהו, גם לא קבוע'
+        feedback: >-
+          אם $\mathbf u$ מותר להשתנות, כל מסילה מקיימת את זה (קחו $\mathbf u=\mathbf b$). ההגדרה דורשת כיוון **קבוע**.
+        misconception: MC-c2-binormal-any-perp
+
+  - id: Q-2.5-tc
+    type: numeric
+    objectives: [OBJ-2.5-1]
+    level: basic
+    prompt: >-
+      במסילה המעוקבת $(t,t^2,t^3)$ ידוע $\kappa(0)=2$ ו-$\tau(0)=3$. חשבו את $\frac{\tau}{\kappa}$ ב-$t=0$. (ב-$t=1$ היחס הוא
+      בערך $0.949$, ולכן המסילה המעוקבת אינה סליל מוכלל.)
+    answer: 1.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac32$. היחס משתנה מנקודה לנקודה, ולפי משפט לנקרה המסילה אינה סליל מוכלל: אין כיוון קבוע שהמשיק יוצר איתו
+      זווית קבועה.
+    wrongFeedback: >-
+      חלקו את הפיתול בעקמומיות.
+    commonWrong:
+      - value: 0.6666667
+        feedback: >-
+          זה $\frac\kappa\tau$, היחס ההפוך.
+        misconception: MC-c2-lancret-ratio-is-cos
+      - value: 6
+        feedback: >-
+          זו המכפלה $\kappa\tau$, לא היחס.
+
+  - id: Q-2.5-cosh
+    type: numeric
+    objectives: [OBJ-2.5-1]
+    level: mid
+    prompt: >-
+      ל-$\gamma(t)=(\cosh t,\sinh t,t)$ יש $\kappa(t)=\tau(t)=\frac{1}{2\cosh^2t}$, ולכן לפי משפט לנקרה היא סליל מוכלל. חשבו את
+      $\cos\theta$, כאשר $\theta$ הזווית בין המשיק לציר $\mathbf u$ שבנימוק של המשפט, $\mathbf u=\cos\theta\,\mathbf t+\sin\theta\,\mathbf b$.
+    answer: 0.7071068
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. גזירת $\mathbf u$ נותנת $(\kappa\cos\theta-\tau\sin\theta)\mathbf n=0$, כלומר $\cot\theta=\frac\tau\kappa=1$,
+      $\theta=45^\circ$, $\cos\theta=\frac{1}{\sqrt2}$. הציר הוא $\mathbf u=(0,1,0)$: $\mathbf t\cdot(0,1,0)=\frac{\cosh t}{\sqrt2\cosh t}=\frac{1}{\sqrt2}$
+      בכל נקודה.
+    wrongFeedback: >-
+      $\frac\tau\kappa$ אינו $\cos\theta$, אלא $\cot\theta$. מצאו את $\theta$ מ-$\cot\theta=1$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $1=\frac\tau\kappa=\cot\theta$, לא $\cos\theta$. אם $\cos\theta=1$, המשיק היה מקביל לציר בכל נקודה, והמסילה ישר.
+        misconception: MC-c2-lancret-ratio-is-cos
+      - value: 0.5
+        feedback: >-
+          זה הערך של $\kappa(0)$, לא קוסינוס של זווית.
+
+  - id: Q-2.5-gh
+    type: twotier
+    objectives: [OBJ-2.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם המסילה $\gamma(t)=(3t,\ 3t^2,\ 2t^3)$ היא סליל מוכלל?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. החישוב נותן $\kappa=\tau=\frac{2}{3(1+2t^2)^2}$, והיחס $\frac\tau\kappa=1$ קבוע; הציר הוא $\frac{1}{\sqrt2}(1,0,1)$.
+      - text: 'לא, כי העקמומיות והפיתול אינם קבועים'
+        feedback: >-
+          סליל מוכלל לא דורש $\kappa$ ו-$\tau$ קבועים, רק יחס קבוע ביניהם.
+        misconception: MC-c2-generalized-helix-constant
+    reasons:
+      - text: '$\|\gamma''\|=3(1+2t^2)$ ו-$\gamma''\cdot(1,0,1)=3+6t^2$, ולכן $\mathbf t\cdot\frac{(1,0,1)}{\sqrt2}=\frac{1}{\sqrt2}$ בכל נקודה'
+        correct: true
+        feedback: >-
+          בדיוק, וזה מראה את ההגדרה ישירות, בלי משפט לנקרה. $\|\gamma'\|^2=9+36t^2+36t^4=9(1+2t^2)^2$.
+      - text: 'כל מסילה מהצורה $(at,bt^2,ct^3)$ היא סליל מוכלל'
+        feedback: >-
+          המסילה המעוקבת $(t,t^2,t^3)$ היא דוגמה נגדית: $\frac\tau\kappa$ הוא $\frac32$ ב-$t=0$ ובערך $0.949$ ב-$t=1$. התנאי
+          על המקדמים הוא $9a^2c^2=4b^4$, וכאן $9\cdot9\cdot4=324=4\cdot81$.
+        misconception: MC-c2-generalized-helix-constant
+      - text: '$\gamma$ מונחת על גליל מעגלי'
+        feedback: >-
+          זה לא הנימוק: השאלה היא אם יש כיוון קבוע שהמשיק יוצר איתו זווית קבועה. בדקו את $\mathbf t\cdot\mathbf u$ ישירות.
+        misconception: MC-c2-generalized-helix-constant
+
+  - id: Q-2.5-sphere-kappa
+    type: twotier
+    objectives: [OBJ-2.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מסילה חלקה מונחת על ספרה ברדיוס 2. האם ייתכן שבנקודה כלשהי שלה $\kappa=\frac13$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. על ספרה ברדיוס $R$ כל מסילה מקיימת $\kappa\ge\frac1R=\frac12$.
+      - text: כן
+        feedback: >-
+          מסילה על ספרה חייבת להתעקם לפחות כמו מעגל גדול, כדי להישאר על הספרה. ראו את הנימוק.
+        misconception: MC-c2-spherical-kappa-any
+    reasons:
+      - text: 'גזירת $\|\gamma-c\|^2=4$ פעמיים נותנת $\mathbf t\cdot(\gamma-c)=0$ ו-$\kappa\,\mathbf n\cdot(\gamma-c)=-1$, ולכן $\kappa=\frac{1}{|\mathbf n\cdot(\gamma-c)|}\ge\frac12$'
+        correct: true
+        feedback: >-
+          בדיוק. בגזירה השנייה $\mathbf t'\cdot(\gamma-c)+\mathbf t\cdot\mathbf t=0$, ולפי קושי-שוורץ $|\mathbf n\cdot(\gamma-c)|\le\|\gamma-c\|=2$.
+          שוויון מתקבל במעגלים גדולים.
+      - text: 'כל מסילה על ספרה היא מעגל, ולכן $\kappa\ge\frac12$'
+        feedback: >-
+          לא כל מסילה על ספרה היא מעגל (חשבו על מסילה שמתפתלת מהקוטב לקו המשווה). המסקנה נכונה, אבל הנימוק צריך לעבוד לכל
+          מסילה.
+        misconception: MC-c2-spherical-kappa-any
+      - text: 'העקמומיות של מסילה על ספרה שווה תמיד ל-$\frac1R$'
+        feedback: >-
+          זה נכון רק למעגלים גדולים. מעגל קטן ברדיוס $r<R$ מונח על הספרה עם $\kappa=\frac1r>\frac1R$.
+        misconception: MC-c2-spherical-kappa-any
+
+  - id: Q-2.5-sphere-R
+    type: numeric
+    objectives: [OBJ-2.5-2]
+    level: mid
+    prompt: >-
+      מסילה בפרמטר אורך הקשת מונחת על ספרה, ו-$\tau\ne0$ בה. בנקודה מסוימת רדיוס העקמומיות $\rho=\frac1\kappa=3$, הנגזרת
+      $\rho'=2$ ו-$\tau=\frac12$. מהו רדיוס הספרה?
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\gamma-c=-\rho\,\mathbf n-\frac{\rho'}{\tau}\mathbf b$, ולכן $R^2=\rho^2+\left(\frac{\rho'}{\tau}\right)^2=9+16=25$.
+    wrongFeedback: >-
+      מגזירת $\mathbf n\cdot(\gamma-c)=-\rho$ מקבלים $\mathbf b\cdot(\gamma-c)=-\frac{\rho'}{\tau}$. חברו את שני הרכיבים
+      בפיתגורס (הרכיב לאורך $\mathbf t$ אפס).
+    commonWrong:
+      - value: 3
+        feedback: >-
+          זה $\rho$ לבד: הרכיב לאורך $\mathbf n$ בלבד. זה הרדיוס רק כש-$\rho'=0$, כלומר במעגל גדול.
+        misconception: MC-c2-spherical-kappa-any
+      - value: 3.1622777
+        feedback: >-
+          זה $\sqrt{9+(\rho'\tau)^2}$. הרכיב לאורך $\mathbf b$ הוא $\frac{\rho'}{\tau}=4$, לא $\rho'\tau=1$.
+      - value: 7
+        feedback: >-
+          זה $\rho+\frac{\rho'}{\tau}$. הרכיבים ניצבים זה לזה, ולכן מחברים את הריבועים.
+
+  - id: Q-2.5-proofrank
+    type: rank
+    objectives: [OBJ-2.5-1]
+    level: mid
+    prompt: >-
+      סדרו את ההוכחה של הכיוון "סליל מוכלל גורר $\frac\tau\kappa$ קבוע": נתון $\mathbf t\cdot\mathbf u=\cos\theta$ קבוע, עם
+      $\mathbf u$ וקטור יחידה קבוע ו-$0<\theta<\pi$.
+    help: סדרו את שלבי ההוכחה מהראשון לאחרון.
+    items:
+      - id: diff1
+        label: 'גזירה: $\kappa\,\mathbf n\cdot\mathbf u=0$, ולכן $\mathbf n\cdot\mathbf u=0$ (כי $\kappa>0$)'
+      - id: expand
+        label: '$\mathbf u$ במישור של $\mathbf t$ ו-$\mathbf b$: $\mathbf u=\cos\theta\,\mathbf t+\sin\theta\,\mathbf b$ (אחרי בחירת הסימן של $\theta$)'
+      - id: diff2
+        label: 'גזירה של $\mathbf u$ הקבוע: $0=(\kappa\cos\theta-\tau\sin\theta)\,\mathbf n$'
+      - id: ratio
+        label: 'לכן $\frac\tau\kappa=\cot\theta$, קבוע'
+    order: [diff1, expand, diff2, ratio]
+    correctFeedback: >-
+      נכון. לכיוון ההפוך מגדירים $\mathbf u=\cos\theta\,\mathbf t+\sin\theta\,\mathbf b$ עם $\cot\theta=\frac\tau\kappa$, ואותו חישוב
+      מראה ש-$\mathbf u'=0$.
+    wrongFeedback: >-
+      ההוכחה גוזרת פעמיים: פעם את $\mathbf t\cdot\mathbf u$ (ומקבלת ש-$\mathbf u$ במישור המיישר), ופעם את $\mathbf u$ עצמו.
+
+  - id: Q-2.5-sphere-helix
+    type: twotier
+    objectives: [OBJ-2.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם יש מסילה על ספרה עם עקמומיות קבועה ופיתול שאינו מתאפס באף נקודה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. בפרט שום סליל מעגלי אינו מונח על ספרה.
+      - text: 'כן, למשל סליל קצר מספיק'
+        feedback: >-
+          קטע של סליל, קצר ככל שיהיה, אינו מונח על ספרה: ראו את הנימוק, שהוא מקומי.
+        misconception: MC-c2-generalized-helix-constant
+    reasons:
+      - text: 'מ-$R^2=\rho^2+(\rho''/\tau)^2$ ו-$\rho''=0$ נובע $\rho=R$, אז $\mathbf n\cdot(\gamma-c)=-R$, כלומר $\gamma-c=-R\,\mathbf n$; גזירה נותנת $\mathbf t=R\kappa\mathbf t-R\tau\mathbf b$, ולכן $\tau=0$: סתירה'
+        correct: true
+        feedback: >-
+          בדיוק. $\gamma-c=-R\mathbf n$ נובע מ-$|\mathbf n\cdot(\gamma-c)|=R=\|\gamma-c\|$ (שוויון בקושי-שוורץ). המסילה היא מעגל
+          גדול, שהפיתול שלו אפס.
+      - text: 'עקמומיות קבועה במרחב פירושה מעגל'
+        feedback: >-
+          הסליל המעגלי הוא דוגמה נגדית: עקמומיות קבועה ופיתול שונה מאפס. הטענה על הספרה צריכה את הנתון שהמסילה על ספרה.
+        misconception: MC-c2-kappa-alone-determines
+      - text: 'מסילה על ספרה מקיימת $\kappa=\frac1R$, ולכן $\tau=0$'
+        feedback: >-
+          על ספרה $\kappa\ge\frac1R$, לא בהכרח שוויון: למעגל קטן $\kappa>\frac1R$.
+        misconception: MC-c2-spherical-kappa-any
+
+  - id: Q-2.5-sphere-derive
+    type: rank
+    objectives: [OBJ-2.5-2]
+    level: exam
+    prompt: >-
+      סדרו את הגזירה של $R^2=\rho^2+\left(\frac{\rho'}{\tau}\right)^2$ למסילה בפרמטר אורך הקשת על הספרה $\|\gamma-c\|=R$, עם
+      $\kappa>0$ ו-$\tau\ne0$ ($\rho=\frac1\kappa$).
+    help: סדרו את שלבי ההוכחה מהראשון לאחרון.
+    items:
+      - id: t
+        label: 'גזירת $\|\gamma-c\|^2=R^2$: $\mathbf t\cdot(\gamma-c)=0$'
+      - id: n
+        label: 'גזירה שנייה: $\kappa\,\mathbf n\cdot(\gamma-c)+1=0$, כלומר $\mathbf n\cdot(\gamma-c)=-\rho$'
+      - id: b
+        label: 'גזירה שלישית עם $\mathbf n''=-\kappa\mathbf t+\tau\mathbf b$: $\tau\,\mathbf b\cdot(\gamma-c)=-\rho''$'
+      - id: decompose
+        label: '$\gamma-c=-\rho\,\mathbf n-\frac{\rho''}{\tau}\mathbf b$, ולכן $R^2=\rho^2+\left(\frac{\rho''}{\tau}\right)^2$'
+    order: [t, n, b, decompose]
+    correctFeedback: >-
+      נכון. גזירה נוספת של $\mathbf b\cdot(\gamma-c)=-\frac{\rho'}{\tau}$ נותנת את התנאי המקומי
+      $\left(\frac{\rho'}{\tau}\right)'+\tau\rho=0$, שלא מזכיר את $R$.
+    wrongFeedback: >-
+      בכל גזירה מקבלים רכיב אחד של $\gamma-c$ בבסיס של פרנה: קודם לאורך $\mathbf t$, אחר כך $\mathbf n$, ואחר כך $\mathbf b$.

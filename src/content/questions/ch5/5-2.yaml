@@ -1,0 +1,386 @@
+# Lesson 5.2 — polar, cylindrical and spherical coordinates.
+# Objectives (src/course.ts):
+#   OBJ-5.2-1  the Jacobians of polar, cylindrical and spherical coordinates
+#   OBJ-5.2-2  choose coordinates that fit the region and the integrand, and compute in them
+#   OBJ-5.2-3  the Gaussian integral of e^{-x²} over the line through a double integral in polar coordinates
+# Spherical coordinates throughout: x = ρ sin φ cos θ, y = ρ sin φ sin θ, z = ρ cos φ, 0 ≤ φ ≤ π (from the z-axis), 0 ≤ θ ≤ 2π.
+chapter: 5
+questions:
+  - id: Q-5.2-polar-jac
+    type: mc
+    objectives: [OBJ-5.2-1]
+    level: basic
+    prompt: >-
+      מהו $\det\frac{\partial(x,y)}{\partial(r,\theta)}$ עבור $x=r\cos\theta$, $y=r\sin\theta$?
+    choices:
+      - text: '$r$'
+        correct: true
+        feedback: >-
+          נכון. $\det\begin{pmatrix}\cos\theta&-r\sin\theta\\\sin\theta&r\cos\theta\end{pmatrix}=r\cos^2\theta+r\sin^2\theta=r$.
+          לכן $dx\,dy=r\,dr\,d\theta$.
+      - text: '$1$'
+        feedback: >-
+          כך היה אילו $(r,\theta)\mapsto(x,y)$ שמרה על שטחים. היא לא: מלבן קטן $dr\times d\theta$ במרחק $r$ מהראשית
+          הופך לקשת ברוחב $dr$ ובאורך $r\,d\theta$.
+        misconception: MC-c5-forgot-jacobian
+      - text: '$\frac1r$'
+        feedback: >-
+          זה היעקוביאן של ההעתקה ההפוכה, $(x,y)\mapsto(r,\theta)$. בנוסחה צריך את זה של $(r,\theta)\mapsto(x,y)$.
+        misconception: MC-c5-inverse-jacobian
+      - text: '$r^2$'
+        feedback: >-
+          חשבו את הדטרמיננטה: העמודה של $\theta$ היא $(-r\sin\theta,\ r\cos\theta)$, ורק בה מופיע $r$. התוצאה
+          לינארית ב-$r$. $r^2$ הוא חלק מהיעקוביאן הכדורי, בתלת-ממד.
+        misconception: MC-c5-spherical-jacobian
+
+  - id: Q-5.2-spherical-jac
+    type: mc
+    objectives: [OBJ-5.2-1]
+    level: basic
+    prompt: >-
+      עם $x=\rho\sin\varphi\cos\theta$, $y=\rho\sin\varphi\sin\theta$, $z=\rho\cos\varphi$ (כש-$0\le\varphi\le\pi$
+      היא הזווית מציר $z$), מהו $\left|\frac{\partial(x,y,z)}{\partial(\rho,\varphi,\theta)}\right|$?
+    choices:
+      - text: '$\rho^2\sin\varphi$'
+        correct: true
+        feedback: >-
+          נכון. פיתוח הדטרמיננטה (לפי השורה של $z$) נותן $\rho^2\sin\varphi$, שאינו שלילי כש-$0\le\varphi\le\pi$,
+          ולכן $|\cdot|$ אינו משנה אותו בתחום הזה.
+      - text: '$\rho\sin\varphi$'
+        feedback: >-
+          חסרה חזקה של $\rho$. תיבה קטנה היא בקירוב $d\rho\cdot\rho\,d\varphi\cdot\rho\sin\varphi\,d\theta$: שתי
+          צלעות מתארכות עם $\rho$. בדיקה: עם $\rho\sin\varphi$ נפח כדור היחידה יוצא $2\pi$ ולא $\frac{4\pi}{3}$.
+        misconception: MC-c5-spherical-jacobian
+      - text: '$\rho^2\cos\varphi$'
+        feedback: >-
+          $\cos\varphi$ מתאים לזווית רוחב שנמדדת מקו המשווה. כאן $\varphi$ נמדדת מציר $z$, והמעגל שבזווית $\varphi$
+          הוא ברדיוס $\rho\sin\varphi$. ועוד: $\cos\varphi<0$ בחצי התחתון, וזה לא ייתכן למקדם נפח.
+        misconception: MC-c5-spherical-jacobian
+      - text: '$\rho^2$'
+        feedback: >-
+          זה נכון רק על קו המשווה. ליד הקטבים מעגלי הרוחב קטנים, ואיתם הצלע $\rho\sin\varphi\,d\theta$.
+        misconception: MC-c5-spherical-jacobian
+
+  - id: Q-5.2-disc
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    level: basic
+    prompt: >-
+      חשבו את $\iint_{x^2+y^2\le4}(x^2+y^2)\,dx\,dy$.
+    answer: 25.132741
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $8\pi$. בקוטביות: $\int_0^{2\pi}\int_0^2r^2\cdot r\,dr\,d\theta=2\pi\cdot\frac{2^4}{4}=8\pi$.
+    wrongFeedback: >-
+      בקוטביות האינטגרנד הוא $r^2$, התחום $[0,2]\times[0,2\pi]$, ומקדם השטח $r$.
+    commonWrong:
+      - value: 16.755161
+        feedback: >-
+          זה $\frac{16\pi}{3}=\int_0^{2\pi}\int_0^2r^2\,dr\,d\theta$, בלי היעקוביאן $r$.
+        misconception: MC-c5-forgot-jacobian
+
+  - id: Q-5.2-choose
+    type: mc
+    objectives: [OBJ-5.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      רוצים לחשב $\iiint_Ez\,(x^2+y^2)\,dV$, כאשר $E=\{x^2+y^2\le4,\ 0\le z\le3\}$. באילו קואורדינטות
+      כדאי לחשב, ולמה?
+    choices:
+      - text: 'גליליות, כי $E$ הופך בהן לתיבה $[0,2]\times[0,2\pi]\times[0,3]$'
+        correct: true
+        feedback: >-
+          נכון. האינטגרנד נעשה $zr^2$, עם היעקוביאן $r$, והאינטגרל נפרד:
+          $\int_0^{2\pi}d\theta\int_0^2r^3\,dr\int_0^3z\,dz=2\pi\cdot4\cdot\frac92=36\pi$.
+      - text: 'כדוריות, כי באינטגרנד מופיע $x^2+y^2=\rho^2\sin^2\varphi$'
+        feedback: >-
+          $E$ הוא גליל, ובכדוריות הוא אינו תיבה: הגבול של $\rho$ תלוי ב-$\varphi$ (המעטפת $\rho\sin\varphi=2$
+          והמכסה $\rho\cos\varphi=3$). בוחרים לפי התחום והאינטגרנד יחד.
+        misconception: MC-c5-coordinates-mismatch
+      - text: 'קרטזיות, כי $E$ חסום על ידי המישורים $z=0$ ו-$z=3$'
+        feedback: >-
+          רק שתי הפאות מישוריות. המעטפת $x^2+y^2=4$ נותנת גבולות $\pm\sqrt{4-x^2}$ ל-$y$, ואינטגרל מסורבל יותר.
+        misconception: MC-c5-coordinates-mismatch
+      - text: 'החלפה לינארית $u=x+y$, $v=x-y$, $w=z$'
+        feedback: >-
+          החלפה לינארית מפשטת תחום שבין ישרים או מישורים מקבילים. כאן $u^2+v^2=2(x^2+y^2)$, ולכן היא שולחת את
+          הגליל לגליל עגול אחר, ברדיוס $2\sqrt2$, ולא מפשטת דבר: עדיין צריך קוטביות.
+        misconception: MC-c5-coordinates-mismatch
+
+  - id: Q-5.2-gauss-why
+    type: mc
+    objectives: [OBJ-5.2-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      ל-$e^{-x^2}$ אין פונקציה קדומה אלמנטרית, ובכל זאת מחשבים את $\iint_{\mathbb R^2}e^{-(x^2+y^2)}\,dx\,dy$
+      בקוטביות בקלות. מה עושה את העבודה?
+    choices:
+      - text: 'היעקוביאן $r$: ל-$re^{-r^2}$ יש פונקציה קדומה אלמנטרית, $-\frac12e^{-r^2}$'
+        correct: true
+        feedback: >-
+          נכון. $\int_0^Rre^{-r^2}\,dr=\frac12(1-e^{-R^2})$. בלי הגורם $r$ היינו נתקעים באותו מקום כמו
+          בממד אחד.
+      - text: 'ל-$e^{-r^2}$ יש פונקציה קדומה אלמנטרית, בניגוד ל-$e^{-x^2}$'
+        feedback: >-
+          זו אותה פונקציה עם שם אחר למשתנה. ההבדל בין המקרים הוא הגורם $r$ שמביא היעקוביאן.
+        misconception: MC-c5-gauss-why-polar
+      - text: 'בקוטביות האינטגרנד אינו תלוי ב-$\theta$, וזה מספיק'
+        feedback: >-
+          אי-התלות ב-$\theta$ רק מפרידה את האינטגרל ל-$2\pi$ כפול אינטגרל ב-$r$. אילו זה היה $\int_0^\infty e^{-r^2}dr$,
+          היינו חוזרים לבעיה המקורית.
+        misconception: MC-c5-gauss-why-polar
+      - text: 'בקוטביות מקבלים ישר את $\int_{-\infty}^\infty e^{-x^2}dx$, בלי לעבור דרך ריבוע'
+        feedback: >-
+          האינטגרל הכפול הוא **הריבוע** של האינטגרל החד-ממדי (פוביני על ריבועים). החישוב נותן $\pi$, והאינטגרל
+          עצמו הוא $\sqrt\pi$.
+        misconception: MC-c5-gauss-forget-root
+
+  - id: Q-5.2-box
+    type: mc
+    objectives: [OBJ-5.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בקואורדינטות כדוריות $x=\rho\sin\varphi\cos\theta$, $y=\rho\sin\varphi\sin\theta$, $z=\rho\cos\varphi$ (כש-$\varphi$
+      היא הזווית מציר $z$), התיבה הקטנה $[\rho,\rho+d\rho]\times[\varphi,\varphi+d\varphi]\times[\theta,\theta+d\theta]$
+      עוברת בקירוב לתיבה במרחב. מהם אורכי הצלעות שלה?
+    choices:
+      - text: '$d\rho$, $\rho\,d\varphi$, $\rho\sin\varphi\,d\theta$'
+        correct: true
+        feedback: >-
+          נכון. $\varphi$ זזה על מעגל גדול ברדיוס $\rho$, ו-$\theta$ על מעגל רוחב ברדיוס $\rho\sin\varphi$ (המרחק
+          מציר $z$). המכפלה היא $\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta$.
+      - text: '$d\rho$, $d\varphi$, $d\theta$'
+        feedback: >-
+          זוויות אינן אורכים. הזזה בזווית $d\varphi$ על מעגל ברדיוס $\rho$ היא קשת באורך $\rho\,d\varphi$.
+        misconception: MC-c5-forgot-jacobian
+      - text: '$d\rho$, $\rho\,d\varphi$, $\rho\,d\theta$'
+        feedback: >-
+          $\theta$ מסובבת סביב ציר $z$, ולכן נעה על מעגל שרדיוסו המרחק מהציר, $\rho\sin\varphi$, ולא $\rho$. ליד
+          הקוטב המעגל הזה כמעט נקודה.
+        misconception: MC-c5-spherical-jacobian
+      - text: '$d\rho$, $\rho\,d\varphi$, $\rho\cos\varphi\,d\theta$'
+        feedback: >-
+          המרחק מציר $z$ הוא $\sqrt{x^2+y^2}=\rho\sin\varphi$ כש-$\varphi$ נמדדת מהציר. $\cos$ היה מתאים לזווית
+          שנמדדת מקו המשווה.
+        misconception: MC-c5-spherical-jacobian
+
+  - id: Q-5.2-off-centre
+    type: mc
+    objectives: [OBJ-5.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      רוצים לחשב את השטח של העיגול $(x-1)^2+y^2\le1$ כאינטגרל $\int\int r\,dr\,d\theta$ בקואורדינטות קוטביות. אילו
+      גבולות אינטגרציה נותנים את התשובה הנכונה?
+    choices:
+      - text: '$-\frac\pi2\le\theta\le\frac\pi2$, $0\le r\le2\cos\theta$'
+        correct: true
+        feedback: >-
+          נכון. השפה $x^2+y^2=2x$ היא $r^2=2r\cos\theta$, כלומר $r=2\cos\theta$, והעיגול כולו בחצי המישור $x\ge0$.
+          בדיקה: $\int_{-\pi/2}^{\pi/2}\int_0^{2\cos\theta}r\,dr\,d\theta=\int_{-\pi/2}^{\pi/2}2\cos^2\theta\,d\theta=\pi$.
+      - text: '$0\le\theta\le2\pi$, $0\le r\le1$'
+        feedback: >-
+          זה העיגול ברדיוס 1 סביב **הראשית**. הקוטביות מרוכזות בראשית, וכאן הראשית נמצאת על השפה.
+        misconception: MC-c5-polar-off-centre
+      - text: '$0\le\theta\le2\pi$, $0\le r\le2\cos\theta$'
+        feedback: >-
+          כקבוצה זה אכן אותו עיגול, כי כש-$\frac\pi2<\theta<\frac{3\pi}2$ אין אף $r\ge0$ עם $r\le2\cos\theta$. אבל
+          כגבולות אינטגרציה זה שגוי: שם האינטגרל הפנימי $\int_0^{2\cos\theta}r\,dr=2\cos^2\theta$ עדיין חיובי, וכך
+          סופרים את העיגול פעמיים ומקבלים $2\pi$. הטווח של $\theta$ הוא רק הכיוונים שבהם העיגול נמצא.
+        misconception: MC-c5-polar-off-centre
+      - text: '$-\frac\pi2\le\theta\le\frac\pi2$, $0\le r\le2$'
+        feedback: >-
+          זה חצי עיגול ברדיוס 2 סביב הראשית, ששטחו $2\pi$. הגבול של $r$ תלוי בכיוון: בכיוון $\theta$ יוצאים מהעיגול
+          ב-$r=2\cos\theta$.
+        misconception: MC-c5-polar-off-centre
+
+  - id: Q-5.2-ball
+    type: numeric
+    objectives: [OBJ-5.2-1, OBJ-5.2-2]
+    level: mid
+    prompt: >-
+      חשבו בקואורדינטות כדוריות את הנפח של הכדור $x^2+y^2+z^2\le4$.
+    answer: 33.510322
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{32\pi}{3}$:
+      $$\int_0^{2\pi}\int_0^\pi\int_0^2\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta=\frac83\cdot2\cdot2\pi.$$
+    wrongFeedback: >-
+      התחום הוא $[0,2]\times[0,\pi]\times[0,2\pi]$ והיעקוביאן $\rho^2\sin\varphi$. בדקו מול $\frac43\pi R^3$.
+    commonWrong:
+      - value: 25.132741
+        feedback: >-
+          זה $8\pi$, עם היעקוביאן $\rho\sin\varphi$. חסר עוד $\rho$: שתי צלעות של התיבה הקטנה מתארכות עם $\rho$.
+        misconception: MC-c5-spherical-jacobian
+      - value: 52.63789
+        feedback: >-
+          זה $\frac{16\pi^2}{3}$, בלי $\sin\varphi$. ליד הקטבים מעגלי הרוחב קטנים, וזה מה ש-$\sin\varphi$ מבטא.
+        misconception: MC-c5-spherical-jacobian
+      - value: 0
+        feedback: >-
+          כך יוצא עם $0\le\varphi\le2\pi$: $\int_0^{2\pi}\sin\varphi\,d\varphi=0$. הזווית מציר $z$ רצה רק עד $\pi$;
+          טווח עד $2\pi$ מכסה את הכדור פעמיים, ובחצי מהפעמים עם יעקוביאן שלילי.
+        misconception: MC-c5-non-injective-ok
+
+  - id: Q-5.2-cylinder
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    level: mid
+    prompt: >-
+      חשבו את $\iiint_Ez\sqrt{x^2+y^2}\,dV$, כאשר $E=\{x^2+y^2\le1,\ 0\le z\le2\}$.
+    answer: 4.18879
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{4\pi}{3}$. בגליליות האינטגרנד הוא $zr$ והיעקוביאן $r$:
+      $\int_0^{2\pi}d\theta\int_0^1r^2\,dr\int_0^2z\,dz=2\pi\cdot\frac13\cdot2$.
+    wrongFeedback: >-
+      $E$ הוא גליל: בגליליות הוא התיבה $[0,1]\times[0,2\pi]\times[0,2]$, $\sqrt{x^2+y^2}=r$, ו-$dV=r\,dr\,d\theta\,dz$.
+    commonWrong:
+      - value: 6.283185
+        feedback: >-
+          זה $2\pi=2\pi\cdot\frac12\cdot2$, בלי היעקוביאן $r$: האינטגרנד $zr$ לבדו.
+        misconception: MC-c5-forgot-jacobian
+
+  - id: Q-5.2-cone
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    level: mid
+    prompt: >-
+      חשבו את הנפח של "גביע הגלידה": הקבוצה שבתוך הכדור $x^2+y^2+z^2\le1$ ומעל החרוט $z\ge\sqrt{x^2+y^2}$.
+    answer: 0.613434
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{2\pi}{3}\left(1-\frac{\sqrt2}{2}\right)\approx0.6134$. החרוט הוא $\varphi=\frac\pi4$, ולכן
+      $$V=\int_0^{2\pi}\int_0^{\pi/4}\int_0^1\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta=2\pi\cdot\left(1-\cos\frac\pi4\right)\cdot\frac13.$$
+    wrongFeedback: >-
+      בכדוריות החרוט $z=\sqrt{x^2+y^2}$ הוא $\cos\varphi=\sin\varphi$, כלומר $\varphi=\frac\pi4$, והתחום הוא תיבה.
+    commonWrong:
+      - value: 0.920151
+        feedback: >-
+          זה $\pi\left(1-\frac{\sqrt2}2\right)$, עם היעקוביאן $\rho\sin\varphi$: $\int_0^1\rho\,d\rho=\frac12$ במקום
+          $\frac13$.
+        misconception: MC-c5-spherical-jacobian
+      - value: 1.644934
+        feedback: >-
+          זה $\frac{\pi^2}{6}=2\pi\cdot\frac\pi4\cdot\frac13$, בלי $\sin\varphi$ ביעקוביאן.
+        misconception: MC-c5-spherical-jacobian
+
+  - id: Q-5.2-gauss-half
+    type: numeric
+    objectives: [OBJ-5.2-3]
+    level: mid
+    prompt: >-
+      חשבו את $\int_0^\infty e^{-x^2}\,dx$.
+    answer: 0.886227
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{\sqrt\pi}{2}$: הפונקציה זוגית, ולכן זה חצי מ-$\int_{-\infty}^\infty e^{-x^2}dx=\sqrt\pi$.
+    wrongFeedback: >-
+      התחילו מ-$\int_{-\infty}^\infty e^{-x^2}dx=\sqrt\pi$ (אינטגרל גאוס) והשתמשו בזוגיות.
+    commonWrong:
+      - value: 1.570796
+        feedback: >-
+          זה $\frac\pi2$. החישוב בקוטביות נותן $\pi$ עבור **הריבוע** של האינטגרל על כל הישר; את השורש צריך להוציא
+          לפני שמחלקים ב-2.
+        misconception: MC-c5-gauss-forget-root
+      - value: 0.785398
+        feedback: >-
+          זה $\frac\pi4$, האינטגרל של $e^{-(x^2+y^2)}$ על הרביע הראשון. זה ריבוע התשובה: $\left(\frac{\sqrt\pi}2\right)^2=\frac\pi4$.
+        misconception: MC-c5-gauss-forget-root
+
+  - id: Q-5.2-exhaustion
+    type: twotier
+    objectives: [OBJ-5.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחה ש-$\int_{-\infty}^\infty e^{-x^2}dx=\sqrt\pi$, פוביני נותן את
+      $\lim_{R\to\infty}\iint_{[-R,R]^2}e^{-(x^2+y^2)}$, אבל בקוטביות מחשבים את הגבול על העיגולים $D_R$ ברדיוס $R$
+      סביב הראשית. האם מותר להחליף ריבועים בעיגולים?
+    choices:
+      - text: כן, כאן מותר
+        correct: true
+        feedback: >-
+          נכון, אבל רק בזכות תכונה של האינטגרנד הזה. ראו את הנימוק.
+      - text: לא, הגבול הוגדר על ריבועים ולכן אסור לחשב אותו על עיגולים
+        feedback: >-
+          מותר כשמוכיחים ששני הגבולות שווים, וכאן זה נובע מכריך פשוט. הצורה של התחומים משנה רק לאינטגרנד שמחליף
+          סימן.
+        misconception: MC-c5-improper-exhaustion
+    reasons:
+      - text: 'האינטגרנד חיובי, ו-$D_R\subseteq[-R,R]^2\subseteq D_{R\sqrt2}$; לכן האינטגרל על הריבוע כלוא בין $\pi(1-e^{-R^2})$ ל-$\pi(1-e^{-2R^2})$, ששניהם שואפים ל-$\pi$'
+        correct: true
+        feedback: >-
+          בדיוק. החיוביות מבטיחה שאינטגרל על תחום גדול יותר גדול יותר, וזה כל מה שהכריך צריך.
+      - text: 'לכל אינטגרנד רציף, הגבול של האינטגרלים על משפחה עולה של תחומים שממצה את המישור אינו תלוי במשפחה'
+        feedback: >-
+          לא לכל אינטגרנד. כשהאינטגרנד מחליף סימן, חלקים חיוביים ושליליים עלולים להתבטל אחרת בריבועים ובעיגולים,
+          והגבולות יכולים להיות שונים. החיוביות היא חלק מההוכחה.
+        misconception: MC-c5-improper-exhaustion
+      - text: 'מסימטריה סיבובית של האינטגרנד, האינטגרל על $[-R,R]^2$ שווה לאינטגרל על $D_R$ לכל $R$'
+        feedback: >-
+          הריבוע מכיל ממש את העיגול, והאינטגרנד חיובי, ולכן האינטגרל על הריבוע **גדול ממש**. רק הגבולות שווים.
+        misconception: MC-c5-improper-exhaustion
+
+  - id: Q-5.2-gauss-steps
+    type: rank
+    objectives: [OBJ-5.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה ש-$I=\int_{-\infty}^\infty e^{-x^2}\,dx=\sqrt\pi$. נסמן $Q_R=[-R,R]^2$ ו-$D_R$ העיגול
+      ברדיוס $R$ סביב הראשית.
+    help: סדרו מהשלב הראשון לאחרון. שני שלבים שאינם תלויים זה בזה יכולים לבוא בכל סדר.
+    items:
+      - id: fubini
+        label: 'לפי פוביני: $\left(\int_{-R}^Re^{-x^2}dx\right)^2=\iint_{Q_R}e^{-(x^2+y^2)}\,dx\,dy$'
+      - id: polar
+        label: 'בקוטביות: $\iint_{D_R}e^{-(x^2+y^2)}\,dx\,dy=\int_0^{2\pi}\int_0^Re^{-r^2}r\,dr\,d\theta=\pi\left(1-e^{-R^2}\right)$'
+      - id: squeeze
+        label: 'כי $D_R\subseteq Q_R\subseteq D_{R\sqrt2}$ והאינטגרנד חיובי: $\pi(1-e^{-R^2})\le\left(\int_{-R}^Re^{-x^2}dx\right)^2\le\pi(1-e^{-2R^2})$'
+      - id: limit
+        label: '$I$ מתכנס, כי $0<e^{-x^2}\le e^{1-|x|}$; לכן כש-$R\to\infty$ שני צדי הכריך נותנים $I^2=\pi$, וכי $I>0$ מתקבל $I=\sqrt\pi$'
+    order: [[fubini, polar], squeeze, limit]
+    correctFeedback: >-
+      נכון. שימו לב לשלב הכריך: פוביני נותן ריבועים, הקוטביות נותנות עיגולים, והחיוביות של האינטגרנד מחברת
+      ביניהם. השורש בסוף מוצדק כי $I>0$.
+    wrongFeedback: >-
+      הכריך משתמש גם בתוצאה של פוביני וגם בזו של הקוטביות, והגבול בא רק אחריו. ההתכנסות של $I$ נחוצה רק בשלב
+      הגבול: היא מה שמאפשר לכתוב את הגבול של אגף האמצע כ-$I^2$.
+
+  - id: Q-5.2-moment
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    level: exam
+    prompt: >-
+      "גביע הגלידה" $G$ הוא הקבוצה שבתוך הכדור $x^2+y^2+z^2\le1$ ומעל החרוט $z\ge\sqrt{x^2+y^2}$, הומוגני
+      (צפיפות 1). חשבו את מומנט ההתמד שלו סביב ציר $z$, $\iiint_G(x^2+y^2)\,dV$.
+    answer: 0.097278
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{4\pi}{15}-\frac{\sqrt2\,\pi}{6}\approx0.0973$. בכדוריות החרוט הוא $\varphi=\frac\pi4$, ריבוע המרחק
+      מציר $z$ הוא $\rho^2\sin^2\varphi$, ועם היעקוביאן
+      $$\int_0^{2\pi}\int_0^{\pi/4}\int_0^1\rho^4\sin^3\varphi\,d\rho\,d\varphi\,d\theta=\frac{2\pi}{5}\int_0^{\pi/4}\sin^3\varphi\,d\varphi.$$
+      עם $\sin^3\varphi=\sin\varphi\,(1-\cos^2\varphi)$:
+      $\int_0^{\pi/4}\sin^3\varphi\,d\varphi=\left[-\cos\varphi+\frac{\cos^3\varphi}{3}\right]_0^{\pi/4}=\frac23-\frac{5\sqrt2}{12}$.
+    wrongFeedback: >-
+      שלושה שלבים: תארו את $G$ כתיבה בכדוריות (באיזו זווית $\varphi$ נמצא החרוט?), כתבו את $x^2+y^2$, ריבוע המרחק
+      מציר $z$, בכדוריות, והוסיפו את היעקוביאן $\rho^2\sin\varphi$.
+    commonWrong:
+      - value: 0.36806
+        feedback: >-
+          זה $\frac{2\pi}{5}\left(1-\frac{\sqrt2}2\right)=\iiint_G\rho^2\,dV$: לקחתם את ריבוע המרחק מהראשית. המרחק
+          מציר $z$ הוא $\rho\sin\varphi$.
+        misconception: MC-c5-distance-to-axis
+      - value: 0.121597
+        feedback: >-
+          זה $\frac\pi2\left(\frac23-\frac{5\sqrt2}{12}\right)$, עם היעקוביאן $\rho\sin\varphi$ במקום
+          $\rho^2\sin\varphi$.
+        misconception: MC-c5-spherical-jacobian
+      - value: 1.675516
+        feedback: >-
+          זה $\frac{8\pi}{15}$, מומנט ההתמד של כדור היחידה כולו ($0\le\varphi\le\pi$). הגביע הוא רק $0\le\varphi\le\frac\pi4$.
+        misconception: MC-c5-image-guess

@@ -1,0 +1,409 @@
+# Lesson 6.3 — flux through an oriented surface.
+# Objectives (src/course.ts):
+#   OBJ-6.3-1  define and compute the flux of a vector field through an oriented surface
+#   OBJ-6.3-2  read the direction of the normal from the parametrization and fix the sign when it is the wrong one
+#   OBJ-6.3-3  tell flux from the integral of a function by area, and use symmetry to get a flux without computing
+# Convention: ∬_S F·dS = ∬_D F(σ)·(σ_u × σ_v) du dv when σ_u × σ_v points the way S is oriented. No Gauss (chapter 7).
+# Keys recomputed with flux / surfaceArea (src/math/vectorcalc.ts, geometry.ts).
+chapter: 6
+questions:
+  - id: Q-6.3-def
+    type: mc
+    objectives: [OBJ-6.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $S$ משטח עם פרמטריזציה רגולרית $\sigma:D\to\mathbb{R}^3$, מכוון לפי נורמל היחידה
+      $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$, ו-$\mathbf F$ שדה רציף. **השטף** של
+      $\mathbf F$ דרך $S$ מוגדר כ-$\iint_S\mathbf F\cdot d\mathbf S=\iint_S(\mathbf F\cdot\hat{\mathbf N})\,dS$, אינטגרל
+      של הפונקציה $\mathbf F\cdot\hat{\mathbf N}$ לפי שטח, עם אלמנט השטח $dS=\|\sigma_u\times\sigma_v\|\,du\,dv$ (שיעור
+      5.3). איזה ביטוי שווה לו?
+    choices:
+      - text: '$\iint_D\mathbf F(\sigma(u,v))\cdot(\sigma_u\times\sigma_v)\,du\,dv$'
+        correct: true
+        feedback: >-
+          נכון. $\hat{\mathbf N}\,dS=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}\,\|\sigma_u\times\sigma_v\|\,du\,dv=(\sigma_u\times\sigma_v)\,du\,dv$:
+          הנורמל הלא מנורמל כבר נושא את אלמנט השטח. ומכאן גם אי-התלות בפרמטריזציה: אם $\tau=\sigma\circ\psi$ עם
+          $\psi$ חח״ע ורגולרית, אז $\tau_s\times\tau_t=\det(D\psi)\,(\sigma_u\times\sigma_v)\circ\psi$. כש-$\det(D\psi)>0$
+          (הכיוון נשמר) נוסחת החלפת המשתנים (שיעור 5.1) נותנת אותו שטף; כש-$\det(D\psi)<0$ הנורמל מתהפך והשטף מחליף
+          סימן.
+      - text: '$\iint_D\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)\,\|\sigma_u\times\sigma_v\|\,du\,dv$'
+        feedback: >-
+          אלמנט השטח נספר כאן פעמיים: פעם בתוך $\sigma_u\times\sigma_v$ ופעם בנורמה. התוצאה גם תלויה בפרמטריזציה.
+        misconception: MC-c6-extra-norm
+      - text: '$\iint_D\mathbf F(\sigma)\cdot\hat{\mathbf N}\,du\,dv$'
+        feedback: >-
+          חסר אלמנט השטח $\|\sigma_u\times\sigma_v\|$. עם נורמל יחידה צריך $dS$, לא $du\,dv$.
+        misconception: MC-c6-unit-normal-no-area
+      - text: '$\iint_D\|\mathbf F(\sigma)\|\,\|\sigma_u\times\sigma_v\|\,du\,dv$'
+        feedback: >-
+          זה $\iint_S\|\mathbf F\|\,dS$, אינטגרל של פונקציה לפי שטח. שטף סופר רק את הרכיב הנורמלי $\mathbf F\cdot\hat{\mathbf N}$,
+          עם סימן: שדה משיק למשטח נותן שטף אפס.
+        misconception: MC-c6-field-vs-scalar
+
+  - id: Q-6.3-sphere-normal
+    type: mc
+    objectives: [OBJ-6.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      ספרת היחידה בפרמטריזציה $\sigma(u,v)=(\cos u\cos v,\ \sin u\cos v,\ \sin v)$, $u\in[0,2\pi]$, $v\in[-\frac\pi2,\frac\pi2]$.
+      מהו $\sigma_u\times\sigma_v$?
+    choices:
+      - text: '$\cos v\cdot\sigma(u,v)$, כלומר כלפי חוץ'
+        correct: true
+        feedback: >-
+          נכון. $\sigma_u=(-\sin u\cos v,\ \cos u\cos v,\ 0)$, $\sigma_v=(-\cos u\sin v,\ -\sin u\sin v,\ \cos v)$, והמכפלה
+          $(\cos u\cos^2v,\ \sin u\cos^2v,\ \sin v\cos v)=\cos v\,\sigma$. כי $\cos v\ge0$, זה כיוון וקטור המקום: החוצה.
+      - text: '$\sigma_u\times\sigma_v=-\cos v\cdot\sigma(u,v)$, כלומר כלפי פנים'
+        feedback: >-
+          בדקו את רכיב ה-$z$: $(-\sin u\cos v)(-\sin u\sin v)-(\cos u\cos v)(-\cos u\sin v)=\sin v\cos v$, באותו סימן כמו
+          $z=\sin v$. כלפי פנים מתקבל מ-$\sigma_v\times\sigma_u$.
+        misconception: MC-c6-cross-order
+      - text: '$\sigma(u,v)$'
+        feedback: >-
+          זה נורמל היחידה $\hat{\mathbf N}$. האורך של $\sigma_u\times\sigma_v$ הוא $\cos v$, אלמנט השטח של הספרה, והוא חלק מ-$d\mathbf S$.
+        misconception: MC-c6-unit-normal-no-area
+      - text: '$(0,0,1)$'
+        feedback: >-
+          $(0,0,1)$ ניצב לספרה רק בקוטב הצפוני. הנורמל של הספרה בכל נקודה הוא בכיוון וקטור המקום.
+        misconception: MC-c6-cross-order
+
+  - id: Q-6.3-graph-normal
+    type: mc
+    objectives: [OBJ-6.3-2]
+    level: basic
+    prompt: >-
+      $S$ הגרף של $z=f(x,y)$, בפרמטריזציה $\sigma(x,y)=(x,\ y,\ f(x,y))$. מהו $\sigma_x\times\sigma_y$, ולאן הוא מצביע?
+    choices:
+      - text: '$(-f_x,\ -f_y,\ 1)$, כלפי מעלה'
+        correct: true
+        feedback: >-
+          נכון. $(1,0,f_x)\times(0,1,f_y)=(0\cdot f_y-f_x\cdot1,\ f_x\cdot0-1\cdot f_y,\ 1\cdot1-0)=(-f_x,-f_y,1)$. רכיב
+          ה-$z$ הוא 1, ולכן הנורמל של הפרמטריזציה הזו תמיד כלפי מעלה.
+      - text: '$(f_x,\ f_y,\ -1)$, כלפי מטה'
+        feedback: >-
+          זה $\sigma_y\times\sigma_x$, הסדר ההפוך. בסדר $\sigma_x\times\sigma_y$ רכיב ה-$z$ הוא $1\cdot1-0\cdot0=1$.
+        misconception: MC-c6-cross-order
+      - text: '$(f_x,\ f_y,\ 1)$, כלפי מעלה'
+        feedback: >-
+          הסימנים של שני הרכיבים הראשונים הפוכים. בדקו ב-$f=x$: המישור $z=x$ עולה בכיוון $+x$, ולכן הנורמל שלו כלפי
+          מעלה נוטה לכיוון $-x$: הוא $(-1,0,1)$, לא $(1,0,1)$.
+        misconception: MC-c6-cross-order
+      - text: '$\frac{(-f_x,\ -f_y,\ 1)}{\sqrt{1+f_x^2+f_y^2}}$'
+        feedback: >-
+          זה נורמל היחידה $\hat{\mathbf N}$, לא $\sigma_x\times\sigma_y$. השורש $\sqrt{1+f_x^2+f_y^2}$ הוא
+          $\|\sigma_x\times\sigma_y\|$, הגורם שהופך את $dx\,dy$ ל-$dS$. במכפלה $\hat{\mathbf N}\,dS$ הוא מצטמצם, ולכן בשטף
+          עם $\sigma_x\times\sigma_y$ אין שורש.
+        misconception: MC-c6-unit-normal-no-area
+
+  - id: Q-6.3-sphere-radial
+    type: numeric
+    objectives: [OBJ-6.3-1]
+    level: basic
+    prompt: >-
+      חשבו את השטף של $\mathbf F(x,y,z)=(x,\ y,\ z)$ דרך הספרה שרדיוסה 2 סביב הראשית, עם הנורמל כלפי חוץ. אפשר
+      להיעזר בפרמטריזציה $\sigma(u,v)=(2\cos u\cos v,\ 2\sin u\cos v,\ 2\sin v)$, $u\in[0,2\pi]$,
+      $v\in[-\frac\pi2,\frac\pi2]$ (כמו בשאלה הקודמת, ברדיוס 2), או בגאומטריה של הספרה ישירות.
+    answer: 100.53096
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $32\pi$. על הספרה $\hat{\mathbf N}=\frac{(x,y,z)}{2}$, ולכן $\mathbf F\cdot\hat{\mathbf N}=\frac{x^2+y^2+z^2}{2}=2$
+      בכל נקודה, והשטף הוא $2\cdot4\pi\cdot2^2=32\pi$. בפרמטריזציה: $\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)=8\cos v$.
+    wrongFeedback: >-
+      על ספרה סביב הראשית השדה $(x,y,z)$ ניצב למשטח. חשבו את $\mathbf F\cdot\hat{\mathbf N}$ וכפלו בשטח $4\pi r^2$.
+    commonWrong:
+      - value: -100.53096
+        feedback: >-
+          מינוס $32\pi$ הוא השטף כלפי פנים. השדה $(x,y,z)$ יוצא מהספרה, והשטף כלפי חוץ חיובי.
+        misconception: MC-c6-param-normal-trusted
+      - value: 315.82734
+        feedback: >-
+          זה $32\pi^2$: הכפילו את $\mathbf F\cdot(\sigma_u\times\sigma_v)=8\cos v$ גם ב-$\|\sigma_u\times\sigma_v\|=4\cos v$.
+          אלמנט השטח כבר בתוך $\sigma_u\times\sigma_v$.
+        misconception: MC-c6-extra-norm
+      - value: 39.478418
+        feedback: >-
+          זה $4\pi^2=\iint 2\,du\,dv$: הכפילו בנורמל היחידה ושכחו את אלמנט השטח $4\cos v$.
+        misconception: MC-c6-unit-normal-no-area
+
+  - id: Q-6.3-cylinder
+    type: numeric
+    objectives: [OBJ-6.3-1, OBJ-6.3-2]
+    level: mid
+    prompt: >-
+      $S$ הדופן של הגליל $x^2+y^2=1$, $0\le z\le2$ (בלי מכסים), בפרמטריזציה $\sigma(u,v)=(\cos u,\ \sin u,\ v)$,
+      $u\in[0,2\pi]$, $v\in[0,2]$. חשבו את השטף של $\mathbf F(x,y,z)=(x,\ 0,\ z)$ דרך $S$ עם הנורמל כלפי חוץ (הרחק מציר
+      $z$).
+    answer: 6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi$. $\sigma_u\times\sigma_v=(-\sin u,\cos u,0)\times(0,0,1)=(\cos u,\ \sin u,\ 0)$, כלפי חוץ. אז
+      $\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)=\cos^2u$, ו-$\int_0^2\int_0^{2\pi}\cos^2u\,du\,dv=2\pi$. הרכיב $z$ של
+      השדה משיק לדופן ולא תורם.
+    wrongFeedback: >-
+      חשבו את $\sigma_u\times\sigma_v$, בדקו שהוא כלפי חוץ, והציבו. האינטגרל של $\cos^2u$ על $[0,2\pi]$ הוא $\pi$.
+    commonWrong:
+      - value: -6.2831853
+        feedback: >-
+          מינוס $2\pi$ מתקבל עם הנורמל $\sigma_v\times\sigma_u=(-\cos u,-\sin u,0)$, כלפי פנים. בסדר $\sigma_u\times\sigma_v$
+          הנורמל כלפי חוץ, כמו שנדרש.
+        misconception: MC-c6-cross-order
+      - value: 0
+        feedback: >-
+          אפס יוצא אם מחשבים את האינטגרל של $F_1=\cos u$ לבדו, בלי המכפלה הסקלרית בנורמל.
+          השטף סופר את $\mathbf F\cdot(\sigma_u\times\sigma_v)=\cos u\cdot\cos u$.
+        misconception: MC-c6-ds-is-dt
+
+  - id: Q-6.3-swap
+    type: twotier
+    objectives: [OBJ-6.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma:[a,b]\times[c,d]\to\mathbb{R}^3$ פרמטריזציה של משטח $S$, ו-$\tau(u,v)=\sigma(v,u)$ על $[c,d]\times[a,b]$: אותו
+      משטח, סדר הפרמטרים הפוך. האם $\iint\mathbf F(\tau)\cdot(\tau_u\times\tau_v)\,du\,dv=\iint\mathbf F(\sigma)\cdot(\sigma_u\times\sigma_v)\,du\,dv$?
+    choices:
+      - text: 'לא, הם נגדיים'
+        correct: true
+        feedback: נכון. החלפת סדר הפרמטרים הופכת את כיוון המשטח.
+      - text: 'כן, זה אותו משטח'
+        feedback: >-
+          השטף מוגדר על משטח **מכוון**, וכאן הכיוון התהפך. אותה קבוצת נקודות עם שני כיוונים נותנת שני שטפים נגדיים.
+        misconception: MC-c6-flux-orientation-free
+    reasons:
+      - text: 'בנקודה המתאימה $\tau_u\times\tau_v=\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$, והתחום רק מתחלף בסדר הקואורדינטות'
+        correct: true
+        feedback: >-
+          בדיוק. ההחלפה $(u,v)\mapsto(v,u)$ שומרת על השטח של התחום, אבל המכפלה הווקטורית אנטי-סימטרית.
+      - text: 'בנקודה המתאימה $\tau_u\times\tau_v=\sigma_u\times\sigma_v$, כי שניהם ניצבים לאותו מישור משיק ונקבעים על ידי הנקודה בלבד'
+        feedback: >-
+          הכיוון של $\sigma_u\times\sigma_v$ תלוי בסדר הפרמטרים, והאורך שלו תלוי בפרמטריזציה. רק הישר שהוא פורש,
+          הנורמל למשטח, אינו תלוי בה.
+        misconception: MC-c6-flux-orientation-free
+      - text: 'השטף מחליף סימן רק כשהתחום של $\tau$ שונה מהתחום של $\sigma$, ולכן ב-$[a,b]=[c,d]$ השטפים שווים'
+        feedback: >-
+          גם כש-$[a,b]=[c,d]$ השטף מחליף סימן. מה שקובע הוא הסדר במכפלה הווקטורית, לא צורת התחום.
+        misconception: MC-c6-cross-order
+
+  - id: Q-6.3-paraboloid
+    type: numeric
+    objectives: [OBJ-6.3-1, OBJ-6.3-3]
+    level: mid
+    prompt: >-
+      $S$ החלק של הפרבולואיד $z=x^2+y^2$ שמעל $x^2+y^2\le1$, עם הנורמל כלפי מעלה. חשבו את השטף של השדה הקבוע
+      $\mathbf F=(0,0,1)$ דרך $S$.
+    answer: 3.1415927
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi$. בפרמטריזציה כגרף $\sigma_x\times\sigma_y=(-2x,-2y,1)$, כלפי מעלה, ו-$\mathbf F\cdot(\sigma_x\times\sigma_y)=1$:
+      השטף הוא שטח העיגול שמתחת, $\pi$. השטף של שדה אנכי קבוע "רואה" רק את ההיטל.
+    wrongFeedback: >-
+      כתבו את $S$ כגרף, $\sigma(x,y)=(x,y,x^2+y^2)$, חשבו את $\sigma_x\times\sigma_y$ ואת המכפלה הסקלרית עם $\mathbf F$.
+    commonWrong:
+      - value: 5.3304135
+        feedback: >-
+          זה שטח הפרבולואיד, $\frac\pi6(5\sqrt5-1)$ (שיעור 5.3), כלומר $\iint_S\|\mathbf F\|\,dS$. השטף סופר רק את הרכיב
+          הנורמלי: $\mathbf F\cdot\hat{\mathbf N}=\frac{1}{\sqrt{1+4x^2+4y^2}}<1$ על רוב המשטח.
+        misconception: MC-c6-field-vs-scalar
+      - value: -3.1415927
+        feedback: >-
+          מינוס $\pi$ הוא השטף עם הנורמל כלפי מטה. ל-$\sigma_x\times\sigma_y$ של גרף רכיב $z$ חיובי, כמו שנדרש.
+        misconception: MC-c6-cross-order
+
+  - id: Q-6.3-hemisphere
+    type: numeric
+    objectives: [OBJ-6.3-2, OBJ-6.3-1]
+    level: mid
+    prompt: >-
+      חצי ספרת היחידה העליון ($z\ge0$) בפרמטריזציה $\sigma(u,v)=(\cos u\sin v,\ \sin u\sin v,\ \cos v)$, $u\in[0,2\pi]$,
+      $v\in[0,\frac\pi2]$. חשבו את השטף של $\mathbf F=(0,0,z)$ דרך חצי הספרה, **עם הנורמל כלפי חוץ**. (שימו לב לסדר
+      הפרמטרים.)
+    answer: 2.0943951
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{2\pi}3$. כאן $\sigma_u\times\sigma_v=-\sin v\,\sigma$, כלפי **פנים** (רכיב ה-$z$ שלו שלילי: $(\sigma_u\times\sigma_v)_z=-\sin v\cos v\le0$).
+      הפרמטריזציה נותנת $\iint\cos v\cdot(-\sin v\cos v)\,du\,dv=-2\pi\cdot\frac13$, ומחליפים סימן.
+    wrongFeedback: >-
+      חשבו את $\sigma_u\times\sigma_v$ בנקודה אחת ובדקו את סימן רכיב ה-$z$. אם הוא כלפי פנים, השטף כלפי חוץ הוא מינוס
+      מה שהפרמטריזציה נותנת.
+    commonWrong:
+      - value: -2.0943951
+        feedback: >-
+          מינוס $\frac{2\pi}{3}$ הוא מה שהפרמטריזציה נותנת, עם הנורמל שלה, שהוא כלפי פנים. השדה $(0,0,z)$ יוצא מחצי הספרה העליון,
+          ולכן השטף כלפי חוץ חיובי: מחליפים סימן.
+        misconception: MC-c6-param-normal-trusted
+
+  - id: Q-6.3-symmetry
+    type: multi
+    objectives: [OBJ-6.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לאילו מהשדות הבאים השטף דרך ספרת היחידה, עם הנורמל כלפי חוץ, הוא **אפס**, לפי סימטריה בלבד? סמנו את כולם. (על ספרת
+      היחידה $\hat{\mathbf N}=(x,y,z)$.)
+    choices:
+      - text: '$(1,0,0)$'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf F\cdot\hat{\mathbf N}=x$, פונקציה אי-זוגית ב-$x$, והספרה סימטרית להחלפה $x\mapsto-x$. מה שנכנס בצד
+          אחד יוצא בצד השני.
+      - text: '$(0,0,z^2)$'
+        correct: true
+        feedback: >-
+          נכון, אף שהשדה מצביע כלפי מעלה בכל נקודה. $\mathbf F\cdot\hat{\mathbf N}=z^3$, אי-זוגי ב-$z$: בחצי העליון השטף
+          יוצא ובתחתון נכנס, באותה מידה.
+      - text: '$(y,0,0)$'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf F\cdot\hat{\mathbf N}=xy$, אי-זוגי ב-$x$ (וגם ב-$y$).
+      - text: '$(x,0,0)$'
+        feedback: >-
+          $\mathbf F\cdot\hat{\mathbf N}=x^2\ge0$, וחיובי חוץ מהמעגל $x=0$. השטף חיובי: $\iint x^2\,dS=\frac{4\pi}{3}$ (שליש
+          מ-$\iint(x^2+y^2+z^2)\,dS=4\pi$, לפי סימטריה בין הצירים). הרכיב $x$ של השדה אי-זוגי, אבל מה שנכנס לאינטגרל הוא
+          $\mathbf F\cdot\hat{\mathbf N}=x\cdot x$, והוא זוגי.
+        misconception: MC-c6-symmetry-of-field
+      - text: '$(x,y,z)$'
+        feedback: >-
+          השדה אי-זוגי, $\mathbf F(-p)=-\mathbf F(p)$, אבל גם הנורמל מתהפך בנקודה הנגדית, ולכן
+          $\mathbf F\cdot\hat{\mathbf N}=x^2+y^2+z^2=1$ בכל נקודה: השדה יוצא מכל מקום, והשטף הוא השטח, $4\pi$.
+        misconception: MC-c6-symmetry-of-field
+    explanation: >-
+      הכלל: אם המשטח סימטרי להחלפת סימן של קואורדינטה, ו-$\mathbf F\cdot\hat{\mathbf N}$ אי-זוגית בה, השטף אפס. הסימטריה
+      צריכה לחול על $\mathbf F\cdot\hat{\mathbf N}$, לא על $\mathbf F$ לבדו.
+
+  - id: Q-6.3-scalar
+    type: twotier
+    objectives: [OBJ-6.3-3, OBJ-6.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      השטף הוא $\iint_S(\mathbf F\cdot\hat{\mathbf N})\,dS$, כלומר $\iint_S\rho\,dS$ עם $\rho=\mathbf F\cdot\hat{\mathbf N}$. ולפי
+      שיעור 5.4, $\iint_S\rho\,dS$ אינו תלוי בכיוון. האם מכאן שגם השטף אינו תלוי בכיוון המשטח?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. שתי הטענות שבשאלה נכונות, אבל $\rho$ עצמה נבנית מהכיוון.
+      - text: כן
+        feedback: >-
+          אז השטף של $(x,y,z)$ דרך ספרת היחידה היה $4\pi$ גם עם הנורמל כלפי פנים, אבל אז $\mathbf F\cdot\hat{\mathbf N}=-1$
+          והשטף מינוס $4\pi$.
+        misconception: MC-c6-flux-orientation-free
+    reasons:
+      - text: 'החלפת הכיוון היא $\hat{\mathbf N}\mapsto-\hat{\mathbf N}$, ולכן $\rho\mapsto-\rho$; $dS$ אינו משתנה'
+        correct: true
+        feedback: >-
+          בדיוק. אי-התלות של $\iint\rho\,dS$ היא לפונקציה $\rho$ שנתונה מראש. כאן הפונקציה תלויה בבחירת הנורמל.
+      - text: 'החלפת הכיוון הופכת את $dS$ לשלילי, כי $\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$, ו-$\rho$ נשארת כפי שהייתה'
+        feedback: >-
+          $dS=\|\sigma_u\times\sigma_v\|\,du\,dv\ge0$ בכל כיוון: הנורמה של $-\sigma_u\times\sigma_v$ שווה לנורמה של
+          $\sigma_u\times\sigma_v$, ושטח אינו שלילי. הסימן בא מ-$\hat{\mathbf N}$.
+        misconception: MC-c6-scalar-changes-sign
+      - text: 'השוויון $\iint_S\mathbf F\cdot d\mathbf S=\iint_S(\mathbf F\cdot\hat{\mathbf N})\,dS$ נכון רק כש-$\sigma_u\perp\sigma_v$, ולכן הטיעון נופל כבר בצעד הראשון'
+        feedback: >-
+          $(\sigma_u\times\sigma_v)\,du\,dv=\hat{\mathbf N}\,\|\sigma_u\times\sigma_v\|\,du\,dv=\hat{\mathbf N}\,dS$ בכל
+          פרמטריזציה רגולרית. ניצבות, $\sigma_u\cdot\sigma_v=0$, רק מפשטת את החישוב:
+          $\|\sigma_u\times\sigma_v\|=\|\sigma_u\|\,\|\sigma_v\|$.
+        misconception: MC-c6-unit-normal-no-area
+
+  - id: Q-6.3-zero-flux
+    type: twotier
+    objectives: [OBJ-6.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      השטף של שדה רציף $\mathbf F$ דרך משטח מכוון $S$ הוא אפס. האם בהכרח $\mathbf F\cdot\hat{\mathbf N}=0$ בכל נקודה של $S$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. אינטגרל אפס אינו אינטגרנד אפס.
+      - text: כן
+        feedback: >-
+          זה היה נכון אילו $\mathbf F\cdot\hat{\mathbf N}\ge0$ בכל נקודה. בלי סימן קבוע, חלקים חיוביים ושליליים מתבטלים.
+        misconception: MC-c6-zero-flux-means-tangent
+    reasons:
+      - text: '$\mathbf F=(0,0,x)$ דרך הריבוע $[-1,1]^2$ במישור $z=0$, עם $\hat{\mathbf N}=(0,0,1)$: השטף $\iint x\,dx\,dy=0$, ו-$\mathbf F\cdot\hat{\mathbf N}=x\ne0$'
+        correct: true
+        feedback: >-
+          בדיוק. השדה עובר את הריבוע כלפי מעלה בחצי $x>0$ וכלפי מטה בחצי $x<0$, באותה מידה.
+      - text: 'השטף הוא $\iint_S\|\mathbf F\|\,dS$, אינטגרל של פונקציה רציפה ואי-שלילית, ולכן הוא אפס רק כש-$\mathbf F=0$ על כל $S$'
+        feedback: >-
+          שטף אינו $\iint\|\mathbf F\|\,dS$. הוא סופר את הרכיב הנורמלי, עם סימן.
+        misconception: MC-c6-field-vs-scalar
+      - text: 'אם $\mathbf F\cdot\hat{\mathbf N}\ne0$ בנקודה, אז ברציפות הוא שונה מאפס בסביבה, והשטף שונה מאפס'
+        feedback: >-
+          הרציפות נותנת סביבה עם סימן קבוע, אבל במקום אחר הסימן יכול להיות הפוך ולקזז. הטיעון הזה עובד רק כשהאינטגרנד
+          אינו שלילי בכל המשטח.
+        misconception: MC-c6-zero-flux-means-tangent
+
+  - id: Q-6.3-mobius
+    type: twotier
+    objectives: [OBJ-6.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      רצועת מביוס $M$ היא התמונה של
+      $$\sigma(u,v)=\Big(\big(2+v\cos\tfrac u2\big)\cos u,\ \big(2+v\cos\tfrac u2\big)\sin u,\ v\sin\tfrac u2\Big),\qquad u\in[\alpha,\alpha+2\pi],\ v\in[-1,1].$$
+      לכל $\alpha$ זו אותה רצועה, ו-$\sigma$ חד-חד-ערכית פרט לקטע $u=\alpha$, שבו $\sigma(\alpha,v)=\sigma(\alpha+2\pi,-v)$
+      (החיתוך). האם אפשר להגדיר את השטף של $\mathbf F=(0,0,1)$ דרך $M$?
+    choices:
+      - text: 'לא, השטף אינו מוגדר'
+        correct: true
+        feedback: >-
+          נכון. שטף מוגדר רק על משטח מכוון. ואפשר לראות את הבעיה במספרים: $(\sigma_u\times\sigma_v)_z=-\cos\frac u2\,(2+v\cos\frac u2)$,
+          והאינטגרל $\int_\alpha^{\alpha+2\pi}\int_{-1}^1(\sigma_u\times\sigma_v)_z\,dv\,du=16\sin\frac\alpha2$ תלוי במקום
+          החיתוך: אין מספר אחד שהוא "השטף דרך $M$".
+      - text: 'כן, מחשבים אותו עם $\sigma_u\times\sigma_v$ של הפרמטריזציה הנתונה, כי היא רגולרית ומכסה את כל $M$'
+        feedback: >-
+          הפרמטריזציה מכסה את הרצועה, אבל בשני צדי החיתוך $\sigma_u\times\sigma_v$ מצביע לשני צדדים מנוגדים. חשבו:
+          $(\sigma_u\times\sigma_v)_z=-\cos\frac u2\,(2+v\cos\frac u2)$, והאינטגרל יוצא $16\sin\frac\alpha2$. התוצאה
+          תלויה במקום החיתוך $\alpha$, ולכן אינה שטף של משטח.
+        misconception: MC-c6-nonorientable-flux
+    reasons:
+      - text: 'אין על רצועת מביוס בחירה רציפה של נורמל יחידה (שיעור 3.3), ושטף דורש בחירה כזו'
+        correct: true
+        feedback: >-
+          בדיוק. מי שהולך פעם אחת לאורך קו האמצע וגורר את הנורמל ברציפות חוזר עם הנורמל ההפוך.
+      - text: 'השטף אפס, כי לרצועה "שני צדדים" שתרומותיהם מתבטלות זו בזו'
+        feedback: >-
+          לרצועת מביוס יש רק צד אחד, וזו הבעיה. "ביטול" דורש לדעת מה חיובי ומה שלילי, כלומר כיוון. וגם במספרים: ב-$\alpha=\pi$
+          הפרמטריזציה נותנת 16, לא אפס.
+        misconception: MC-c6-nonorientable-flux
+      - text: 'ב-$u=\pi$ מתקבל $\cos\frac u2=0$, ושם $\sigma$ אינה רגולרית ואין נורמל'
+        feedback: >-
+          ב-$u=\pi$ מתאפס רק רכיב ה-$z$ של $\sigma_u\times\sigma_v$, לא כל הווקטור: רצועת מביוס היא משטח חלק בכל נקודה.
+          הבעיה גלובלית, לא מקומית: מקומית יש בה נורמל, אבל אי אפשר לבחור אותו ברציפות על כל הרצועה.
+        misconception: MC-c3-nonorientable-means-singular
+
+  - id: Q-6.3-saddle
+    type: numeric
+    objectives: [OBJ-6.3-1, OBJ-6.3-2]
+    level: exam
+    prompt: >-
+      $S$ החלק של משטח האוכף $z=xy$ שמעל העיגול $x^2+y^2\le1$, מכוון עם הנורמל **כלפי מטה**. חשבו את השטף של
+      $\mathbf F(x,y,z)=(y,\ x,\ z)$ דרך $S$. (בחרו פרמטריזציה בעצמכם, וקבעו את כיוון הנורמל שלה.)
+    answer: 1.5707963
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac\pi2$. כגרף, $\sigma(x,y)=(x,y,xy)$: $\sigma_x\times\sigma_y=(-y,-x,1)$, כלפי **מעלה**, ו-$\mathbf F(\sigma)\cdot(-y,-x,1)=xy-x^2-y^2$.
+      בקואורדינטות קוטביות (עם היעקוביאן $r$): $\int_0^{2\pi}\int_0^1(r^2\cos\theta\sin\theta-r^2)\,r\,dr\,d\theta=0-\frac{2\pi}4=-\frac\pi2$
+      (האיבר $xy$ אי-זוגי ב-$x$ על העיגול). זה השטף כלפי מעלה; הנורמל המבוקש כלפי מטה, ולכן השטף $+\frac\pi2$.
+    wrongFeedback: >-
+      שלושה צעדים: (1) פרמטריזציה כגרף והנורמל $(-f_x,-f_y,1)$, שהוא כלפי מעלה; (2) המכפלה הסקלרית עם $\mathbf F(\sigma)$
+      ואינטגרל על העיגול בקואורדינטות קוטביות, עם היעקוביאן; (3) תיקון הסימן לנורמל כלפי מטה.
+    commonWrong:
+      - value: -1.5707963
+        feedback: >-
+          מינוס $\frac\pi2$ הוא השטף עם הנורמל של הפרמטריזציה, $(-y,-x,1)$, שהוא כלפי מעלה. השאלה ביקשה נורמל כלפי מטה:
+          מחליפים סימן.
+        misconception: MC-c6-param-normal-trusted
+      - value: 2.0943951
+        feedback: >-
+          $\frac{2\pi}3$ מתקבל אם עוברים לקואורדינטות קוטביות בלי היעקוביאן $r$: $\int_0^1r^2\,dr=\frac13$ במקום
+          $\int_0^1r^3\,dr=\frac14$.
+        misconception: MC-c5-forgot-jacobian
+      - value: 0
+        feedback: >-
+          אפס מתקבל עם הנורמל $(0,0,-1)$, כאילו המשטח אופקי: $-\iint xy=0$. אבל $(0,0,-1)$ אינו ניצב לאוכף; הנורמל
+          כלפי מטה הוא $(y,x,-1)$.
+        misconception: MC-c6-cross-order

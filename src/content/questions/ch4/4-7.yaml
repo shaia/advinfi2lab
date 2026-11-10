@@ -1,0 +1,364 @@
+# Lesson 4.7 — the Theorema Egregium.
+# Objectives (src/course.ts):
+#   OBJ-4.7-1  state it: K depends only on the first fundamental form and its derivatives
+#   OBJ-4.7-2  no distance-preserving map of the Earth; paper rolls into a cylinder, not onto a sphere
+#   OBJ-4.7-3  compute K from Q₁ when F = 0
+# With F = 0:  K = −1/(2√(EG)) [ (E_v/√(EG))_v + (G_u/√(EG))_u ];  with E = 1, G = G(u):  K = −(√G)″/√G.
+chapter: 4
+questions:
+  - id: Q-4.7-statement
+    type: mc
+    objectives: [OBJ-4.7-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה אומר המשפט המופלא של גאוס?
+    choices:
+      - text: 'עקמומיות גאוס נקבעת על ידי $E,F,G$ ונגזרותיהם, בלי $L,M,N$'
+        correct: true
+        feedback: >-
+          נכון. לכן איזומטריה מקומית, ששומרת על $Q_1$, שומרת גם על $K$: יצור שחי על המשטח ומודד רק אורכים יכול לחשב את
+          $K$.
+      - text: 'כל העקמומיויות של משטח, $K$, $H$, $\kappa_1$ ו-$\kappa_2$, נקבעות על ידי $Q_1$'
+        feedback: >-
+          רק $K$. למישור ולגליל אותה $Q_1$ (בפרמטריזציות מתאימות), אבל $H=0$ במישור ו-$|H|=\frac1{2r}$ בגליל.
+        misconception: MC-c4-H-intrinsic
+      - text: 'עקמומיות גאוס נקבעת על ידי $L,M,N$ בלבד'
+        feedback: >-
+          $L,M,N$ לבדם לא מספיקים: $K=\frac{LN-M^2}{EG-F^2}$ צריכה גם את המכנה. ההפתעה של המשפט היא בכיוון ההפוך: אפשר
+          לוותר על $L,M,N$.
+        misconception: MC-c4-K-numerator-only
+      - text: 'אי אפשר לחשב את $K$ בלי לדעת איך המשטח יושב במרחב'
+        feedback: >-
+          זה מה שהמשפט **שולל**. $LN-M^2$ נראה כמו גודל חיצוני, אבל אפשר לבטא אותו דרך $E,F,G$ ונגזרותיהם.
+        misconception: MC-c4-K-needs-Q2
+
+  - id: Q-4.7-planecyl
+    type: twotier
+    objectives: [OBJ-4.7-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      המישור והגליל $x^2+y^2=1$ איזומטריים מקומית (שיעור 3.5). האם ייתכנו שני משטחים איזומטריים מקומית עם עקמומיות ממוצעת
+      שונה בנקודות מתאימות?
+    choices:
+      - text: 'כן'
+        correct: true
+        feedback: 'נכון. המישור והגליל עצמם: $H=0$ מול $|H|=\frac12$.'
+      - text: 'לא, לפי המשפט המופלא'
+        feedback: 'המשפט המופלא מדבר רק על $K$. ל-$H$ אין משפט כזה, והמישור והגליל מראים שאי אפשר שיהיה.'
+        misconception: MC-c4-H-intrinsic
+    reasons:
+      - text: 'לשניהם $K=0$, כמו שהמשפט דורש, אבל בגליל $\kappa_1=0$, $\kappa_2=\pm1$, ולכן $|H|=\frac12$, ובמישור $H=0$'
+        correct: true
+        feedback: 'בדיוק. $K$ פנימית, $H$ חיצונית: היא תלויה באופן שבו הדף מגולגל במרחב.'
+      - text: '$H$ היא ממוצע של עקמומיויות נורמליות, וכל עקמומיות נורמלית נקבעת על ידי $Q_1$ לבדה'
+        feedback: >-
+          $\kappa_n=\frac{Q_2}{Q_1}$ תלויה ב-$Q_2$. גלגול הדף לא משנה אורכים, אבל משנה את $\kappa_n$ בכיוון המעגלים מ-0 ל-$\pm1$.
+        misconception: MC-c4-H-intrinsic
+      - text: 'איזומטריה מקומית שומרת על $K$, ו-$H^2=K$ בכל נקודה של כל משטח, ולכן גם $|H|$ נשמרת'
+        feedback: '$H^2=K$ רק בנקודות טבוריות. בגליל $H^2=\frac14$ ו-$K=0$.'
+        misconception: MC-c4-H-intrinsic
+
+  - id: Q-4.7-paper
+    type: multi
+    objectives: [OBJ-4.7-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהמשטחים הבאים אפשר לקבל (חלק קטן מהם) מדף נייר שטוח בכיפוף, בלי למתוח ובלי לקמט? סמנו את כולם.
+    choices:
+      - text: 'חלק של גליל'
+        correct: true
+        feedback: 'נכון. $K=0$, והגליל איזומטרי מקומית למישור.'
+      - text: 'חלק של חרוט, הרחק מהקודקוד'
+        correct: true
+        feedback: 'נכון. גם לחרוט $K=0$, ופורשים אותו למישור כגזרה של עיגול (שיעור 3.5).'
+      - text: 'חלק של ספרה'
+        feedback: >-
+          כיפוף בלי מתיחה שומר על $Q_1$, ולכן על $K$. לדף $K=0$ ולספרה $K>0$. לכן קליפת תפוז קרועה כשמשטחים אותה.
+        misconception: MC-c4-paper-sphere
+      - text: 'חלק של האוכף $z=xy$ סביב הראשית'
+        feedback: >-
+          לאוכף $K<0$ (בראשית $K=-1$). הדף היה צריך להימתח בשוליים, כמו בעלה של חסה מסולסלת.
+        misconception: MC-c4-paper-sphere
+
+  - id: Q-4.7-exp
+    type: numeric
+    objectives: [OBJ-4.7-3]
+    level: basic
+    prompt: >-
+      למשטח יש תבנית יסודית ראשונה $Q_1=du^2+e^{2u}\,dv^2$. חשבו את עקמומיות גאוס שלו מהתבנית הראשונה. (מהמשפט
+      המופלא: כש-$E=1$, $F=0$ ו-$G=G(u)$ תלוי רק ב-$u$, $K=-\frac{(\sqrt G)_{uu}}{\sqrt G}$.)
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $E=1$, $F=0$, $G=e^{2u}$, ולכן $K=-\frac{(\sqrt G)_{uu}}{\sqrt G}=-\frac{e^u}{e^u}=-1$, בכל נקודה.
+    wrongFeedback: >-
+      עם $E=1$ ו-$F=0$ הנוסחה היא $K=-\frac{(\sqrt G)_{uu}}{\sqrt G}$.
+    commonWrong:
+      - value: -4
+        feedback: >-
+          $-\frac{G_{uu}}{G}=-\frac{4e^{2u}}{e^{2u}}$: הצבתם את $G$ במקום $\sqrt G$.
+        misconception: MC-c4-egregium-G-not-sqrt
+      - value: 1
+        feedback: >-
+          חסר הסימן מינוס. בדיקה על ספרת היחידה, $Q_1=du^2+\sin^2u\,dv^2$: $-\frac{(\sin u)''}{\sin u}=1$.
+        misconception: MC-c4-egregium-sign
+
+  - id: Q-4.7-polar
+    type: numeric
+    objectives: [OBJ-4.7-3]
+    level: basic
+    prompt: >-
+      למשטח יש $Q_1=du^2+u^2\,dv^2$ ($u>0$). חשבו את $K$ בנקודה עם $u=1$, בנוסחה של השאלה הקודמת.
+    answer: 0
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sqrt G=u$, ו-$(\sqrt G)_{uu}=0$, ולכן $K=0$. זו התבנית הראשונה של המישור בקואורדינטות קוטביות (וגם של
+      חרוט, בקואורדינטות מתאימות).
+    wrongFeedback: >-
+      עם $E=1$, $F=0$: $K=-\frac{(\sqrt G)_{uu}}{\sqrt G}$.
+    commonWrong:
+      - value: -2
+        feedback: >-
+          $-\frac{G_{uu}}{G}=-\frac{2}{u^2}$ ב-$u=1$: הצבתם את $G$ במקום $\sqrt G$. עם השורש מקבלים 0, כמו שמצפים מהמישור.
+        misconception: MC-c4-egregium-G-not-sqrt
+
+  - id: Q-4.7-intrinsic
+    type: multi
+    objectives: [OBJ-4.7-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהגדלים הבאים נקבעים על ידי התבנית הראשונה $Q_1$ ונגזרותיה בלבד? סמנו את כולם.
+    choices:
+      - text: 'עקמומיות גאוס $K$'
+        correct: true
+        feedback: 'נכון: זה המשפט המופלא.'
+      - text: 'אורך של מסילה על המשטח'
+        correct: true
+        feedback: 'נכון: $\int\sqrt{Q_1(\dot u,\dot v)}\,dt$ (שיעור 3.4).'
+      - text: 'הזווית בין שתי מסילות שנחתכות'
+        correct: true
+        feedback: 'נכון: הקוסינוס שלה הוא המכפלה לפי $Q_1$ של וקטורי המהירות, חלקי האורכים.'
+      - text: 'העקמומיות הממוצעת $H$'
+        feedback: 'לא: המישור והגליל איזומטריים מקומית, עם $H=0$ ו-$|H|=\frac12$.'
+        misconception: MC-c4-H-intrinsic
+      - text: 'העקמומיות הראשית $\kappa_1$'
+        feedback: >-
+          לא: גם כאן המישור והגליל. $\kappa_1\kappa_2$ נקבעת, אבל כל אחת לחוד לא.
+        misconception: MC-c4-H-intrinsic
+
+  - id: Q-4.7-map
+    type: twotier
+    objectives: [OBJ-4.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם יש מפה של אזור קטן של כדור הארץ (מודל: ספרה ברדיוס $R$) על דף שטוח ששומרת על כל המרחקים, אם האזור קטן מספיק?
+    choices:
+      - text: 'לא, גם לא לאזור קטן ככל שנרצה'
+        correct: true
+        feedback: 'נכון. כל מפה של כל חלק פתוח מעוותת מרחקים, ומה שבוחרים הוא רק אילו מרחקים לעוות.'
+      - text: 'כן, באזור קטן מספיק כדור הארץ כמעט שטוח'
+        feedback: >-
+          "כמעט" אינו "בדיוק". השאלה היא על מפה ששומרת על המרחקים **בדיוק**, ושם $K$ מכריעה: היא לא תלויה בגודל האזור.
+        misconception: MC-c4-distance-map
+    reasons:
+      - text: 'מפה כזו הייתה איזומטריה מקומית, ולפי המשפט המופלא שומרת על $K$; אבל $\frac1{R^2}\neq0$'
+        correct: true
+        feedback: 'בדיוק. העקמומיות נמדדת בכל נקודה, ולכן גם בכל אזור קטן.'
+      - text: 'הספרה סגורה וחסומה, והמישור לא, ולכן אין ביניהם העתקה ששומרת על מרחקים'
+        feedback: >-
+          זה מונע מפה של **כל** הספרה, לא של אזור קטן. כאן צריך טיעון מקומי.
+        misconception: MC-c3-global-argument-for-local-claim
+      - text: 'בספרה $H\neq0$ ובמישור $H=0$, ומפה ששומרת על מרחקים הייתה שומרת על $H$'
+        feedback: >-
+          $H$ לא נשמרת באיזומטריות (המישור והגליל), ולכן ההבדל ב-$H$ לא מוכיח דבר. רק $K$ נשמרת.
+        misconception: MC-c4-H-intrinsic
+
+  - id: Q-4.7-torus
+    type: numeric
+    objectives: [OBJ-4.7-3, OBJ-4.7-1]
+    level: mid
+    prompt: >-
+      לטורוס $\sigma(u,v)=((2+\cos v)\cos u,\,(2+\cos v)\sin u,\,\sin v)$ יש $Q_1=(2+\cos v)^2\,du^2+dv^2$. חשבו את $K$
+      במשווה החיצוני $v=0$ מ-$Q_1$ בלבד, בנוסחה של המקרה $F=0$:
+      $K=-\frac{1}{2\sqrt{EG}}\left[\left(\frac{E_v}{\sqrt{EG}}\right)_v+\left(\frac{G_u}{\sqrt{EG}}\right)_u\right]$.
+    answer: 0.3333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sqrt{EG}=2+\cos v$, $\frac{E_v}{\sqrt{EG}}=-2\sin v$, $\left(\frac{E_v}{\sqrt{EG}}\right)_v=-2\cos v$, $G_u=0$. לכן
+      $K=-\frac{-2\cos v}{2(2+\cos v)}=\frac{\cos v}{2+\cos v}$, ו-$K(0)=\frac13$: אותו ערך כמו מ-$\frac{LN-M^2}{EG-F^2}$.
+    wrongFeedback: >-
+      כאן $E$ תלוי ב-$v$ ו-$G=1$, ולכן הנוסחה מצטמצמת ל-$K=-\frac{(\sqrt E)_{vv}}{\sqrt E}$ (התפקידים של $u$ ו-$v$ התחלפו
+      לעומת המקרה $E=1$).
+    commonWrong:
+      - value: -0.3333333
+        feedback: >-
+          חסר המינוס שבנוסחה: $K=-\frac{(\sqrt E)_{vv}}{\sqrt E}$ ו-$(\sqrt E)_{vv}=-\cos v$.
+        misconception: MC-c4-egregium-sign
+      - value: 0.6666667
+        feedback: >-
+          $-\frac{E_{vv}}{E}=\frac{6}{9}$: הצבתם את $E$ במקום $\sqrt E$.
+        misconception: MC-c4-egregium-G-not-sqrt
+
+  - id: Q-4.7-cylsphere
+    type: twotier
+    objectives: [OBJ-4.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם יש איזומטריה מקומית מחלק פתוח של הגליל $x^2+y^2=1$ לחלק פתוח של ספרת היחידה?
+    choices:
+      - text: 'לא'
+        correct: true
+        feedback: 'נכון. וזה נכון לכל חלק, קטן ככל שיהיה.'
+      - text: 'כן, כי לשניהם עקמומיות 1 בכיוון המעגלים'
+        feedback: >-
+          עקמומיות נורמלית בכיוון אחד היא לא תכונה פנימית, וגם לא $K$. לגליל $K=1\cdot0=0$ ולספרה $K=1\cdot1=1$.
+        misconception: MC-c4-K-is-principal
+    reasons:
+      - text: 'איזומטריה מקומית שומרת על $K$, ולגליל $K=0$ ולספרה $K=1$'
+        correct: true
+        feedback: 'בדיוק: הגליל "שטוח מבפנים", כמו דף נייר, והספרה לא.'
+      - text: 'לגליל ולספרה $H$ שונה, ואיזומטריה מקומית שומרת על $H$'
+        feedback: '$H$ אינה נשמרת באיזומטריה, ולכן ההבדל בה לא מוכיח שאין איזומטריה.'
+        misconception: MC-c4-H-intrinsic
+      - text: 'הגליל אינו חסום והספרה חסומה, ולכן אין ביניהם איזומטריה'
+        feedback: 'השאלה על חלקים פתוחים קטנים, ושניהם חסומים. צריך טיעון מקומי.'
+        misconception: MC-c3-global-argument-for-local-claim
+
+  - id: Q-4.7-flat
+    type: twotier
+    objectives: [OBJ-4.7-3, OBJ-4.7-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על משטח $M$ יש פרמטריזציה שבה $Q_1=du^2+dv^2$ בכל התחום. לא ידוע דבר על $Q_2$. האם אפשר לדעת את $K$?
+    choices:
+      - text: 'כן: $K=0$ בכל נקודה'
+        correct: true
+        feedback: 'נכון. המשטח יכול להיות חלק של מישור או של גליל, ובשני המקרים $K=0$.'
+      - text: 'לא, צריך את $L,M,N$'
+        feedback: >-
+          זה בדיוק מה שהמשפט המופלא חוסך: $K$ נקבעת מ-$Q_1$. ההבדל בין מישור לגליל יופיע ב-$H$, לא ב-$K$.
+        misconception: MC-c4-K-needs-Q2
+    reasons:
+      - text: 'בנוסחה למקרה $F=0$ כל הנגזרות של $E=G=1$ מתאפסות, ולכן $K=0$'
+        correct: true
+        feedback: 'בדיוק. חישוב פנימי לחלוטין.'
+      - text: '$Q_1=du^2+dv^2$ פירושו שהמשטח הוא מישור, ולכן $Q_2=0$'
+        feedback: >-
+          הגליל $(\cos u,\sin u,v)$ מקיים $Q_1=du^2+dv^2$ ואינו מישור; שם $Q_2=-du^2\neq0$. רק $K$ נקבעת, לא $Q_2$.
+        misconception: MC-c3-q1-determines-shape
+      - text: 'בלי $Q_2$ אפשר רק לחסום את $K$ מלמעלה'
+        feedback: 'אין צורך בחסם: הערך עצמו נקבע מ-$Q_1$.'
+        misconception: MC-c4-K-needs-Q2
+
+  - id: Q-4.7-mapproof
+    type: rank
+    objectives: [OBJ-4.7-2, OBJ-4.7-1]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה שאין העתקה מחלק פתוח $U$ של ספרה ברדיוס $R$ למישור ששומרת על אורכים של מסילות.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון.
+    items:
+      - id: assume
+        label: 'נניח בשלילה ש-$f:U\to\mathbb R^2$ חלקה ושומרת על אורך של כל מסילה ב-$U$'
+      - id: q1
+        label: 'שמירה על אורכי כל המסילות גוררת שמירה על $Q_1$: ל-$\sigma$ ול-$f\circ\sigma$ אותם $E,F,G$ (מגזרים את האורך לפי הקצה העליון)'
+      - id: egregium
+        label: 'לפי המשפט המופלא $K$ מחושבת מ-$E,F,G$ ונגזרותיהם, ולכן $K$ שווה בנקודות מתאימות'
+      - id: contra
+        label: 'אבל לספרה $K=\frac1{R^2}$ בכל נקודה, ולמישור $K=0$: סתירה, ולכן אין העתקה כזו, אפילו לא על $U$ קטן'
+    order: [assume, q1, egregium, contra]
+    correctFeedback: >-
+      נכון. רעיון ההוכחה: שמירה על אורכים היא שמירה על $Q_1$, ו-$Q_1$ קובעת את $K$. ערך אחד של $K$ שונה מספיק כדי לשלול.
+    wrongFeedback: >-
+      הוכחה בשלילה: קודם ההנחה, אחר כך מה היא גוררת על $Q_1$, ואז המשפט המופלא והסתירה.
+
+  - id: Q-4.7-scale
+    type: twotier
+    objectives: [OBJ-4.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נכון או לא: יש מפה של חלק פתוח של ספרת היחידה על המישור שמכפילה כל מרחק בקבוע $c=10^{-6}$ (כמו "קנה מידה 1:1,000,000"
+      בדיוק).
+    choices:
+      - text: 'לא נכון'
+        correct: true
+        feedback: 'נכון. "קנה מידה מדויק" במפה של כדור הארץ אפשרי רק לאורך קווים מסוימים, לא בכל הכיוונים.'
+      - text: 'נכון: המשפט המופלא אוסר רק שמירה על המרחקים עצמם'
+        feedback: >-
+          מתיחה של המישור פי $c^{-1}$ היא איזומטריה של המישור עם מישור מוגדל. הרכבה שלה עם מפה כזו הייתה נותנת מפה ששומרת על
+          מרחקים.
+        misconception: MC-c4-distance-map
+    reasons:
+      - text: 'אם $f$ מכפילה מרחקים ב-$c$, אז $\frac1cf$ שומרת על אורכים; אז לספרה ולמישור אותה $K$, אבל $1\neq0$'
+        correct: true
+        feedback: >-
+          בדיוק. אפשר לומר זאת גם כך: $f$ היא איזומטריה מקומית מהספרה ברדיוס $c$ (ספרת היחידה מוקטנת פי $c$, עם
+          $K=\frac1{c^2}$) למישור, עם $K=0$. כל קנה מידה נותן אותה סתירה.
+      - text: 'הכפלה של מרחקים ב-$c$ משנה את $K$ פי $c$, ולכן אפשר לבחור $c$ שיתאים'
+        feedback: >-
+          הכפלה של המשטח ב-$c$ מכפילה את $K$ ב-$\frac1{c^2}$, ולכן $K=0$ נשאר 0 ו-$K=1$ לא נעשה 0 לאף $c$.
+        misconception: MC-c4-distance-map
+      - text: 'מפה כזו לא שומרת על $H$'
+        feedback: '$H$ לא נשמרת אפילו באיזומטריות, ולכן היא לא יכולה להיות הנימוק.'
+        misconception: MC-c4-H-intrinsic
+
+  - id: Q-4.7-converse
+    type: twotier
+    objectives: [OBJ-4.7-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\sigma_1(u,v)=(u\cos v,\,u\sin v,\,v)$ (הליקואיד) ו-$\sigma_2(u,v)=(u\cos v,\,u\sin v,\,\ln u)$, $u>0$. בשניהם
+      $K(u,v)=-\frac{1}{(1+u^2)^2}$. האם ההתאמה $\sigma_1(u,v)\mapsto\sigma_2(u,v)$ היא איזומטריה מקומית?
+    choices:
+      - text: 'לא'
+        correct: true
+        feedback: >-
+          נכון. המשפט המופלא נותן תנאי **הכרחי** ($K$ שווה), לא מספיק. הדוגמה הזו מראה שההפך שלו שגוי.
+      - text: 'כן, לפי המשפט המופלא'
+        feedback: >-
+          המשפט אומר "איזומטריה $\Rightarrow$ אותה $K$", לא להפך. צריך להשוות את $Q_1$ עצמה.
+        misconception: MC-c4-same-K-isometric
+    reasons:
+      - text: 'ב-$\sigma_1$: $E=1$, $G=1+u^2$; ב-$\sigma_2$: $E=1+\frac1{u^2}$, $G=u^2$. התבניות הראשונות שונות'
+        correct: true
+        feedback: >-
+          בדיוק. ($F=0$ בשתיהן.) למשל המסילה $v=0$, $u\in[1,2]$ באורך 1 על ההליקואיד, ובאורך
+          $\int_1^2\sqrt{1+u^{-2}}\,du>1$ על המשטח השני.
+      - text: 'שני המשטחים אינם מינימליים, ולכן אין ביניהם איזומטריה'
+        feedback: >-
+          ההליקואיד מינימלי, וממילא $H$ אינה נשמרת באיזומטריה. הקריטריון הוא $Q_1$.
+        misconception: MC-c4-H-intrinsic
+      - text: 'אותה $K$ בנקודות מתאימות מספיקה לאיזומטריה'
+        feedback: 'זה ההפך של המשפט, והוא שגוי, כפי שמראה ההשוואה של $Q_1$.'
+        misconception: MC-c4-same-K-isometric
+
+  - id: Q-4.7-stereo
+    type: numeric
+    objectives: [OBJ-4.7-3]
+    level: exam
+    prompt: >-
+      למשטח יש $Q_1=\lambda(u,v)\,(du^2+dv^2)$ עם $\lambda=\frac{4}{(1+u^2+v^2)^2}$. חשבו את $K$ בנקודה $(u,v)=(1,0)$.
+      (הדרכה: כש-$E=G=\lambda$ ו-$F=0$, הנוסחה למקרה $F=0$ מצטמצמת ל-$K=-\frac{\Delta(\ln\lambda)}{2\lambda}$, כש-$\Delta$
+      הוא הלפלסיאן ב-$u,v$.)
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\ln\lambda=\ln4-2\ln(1+r^2)$ עם $r^2=u^2+v^2$, ו-$\Delta\ln(1+r^2)=\frac{4}{(1+r^2)^2}$, ולכן
+      $\Delta\ln\lambda=-\frac{8}{(1+r^2)^2}=-2\lambda$ ו-$K=1$ בכל נקודה. זו התבנית הראשונה של ספרת היחידה בהטלה
+      סטריאוגרפית: המשפט המופלא מזהה את הספרה מבפנים.
+    wrongFeedback: >-
+      חשבו $\Delta\ln(1+u^2+v^2)$: גזרו פעמיים לפי $u$ ופעמיים לפי $v$ וחברו. אחר כך הציבו בנוסחה.
+    commonWrong:
+      - value: -1
+        feedback: >-
+          חסר המינוס שבנוסחה: $\Delta\ln\lambda<0$ כאן, ולכן $K>0$.
+        misconception: MC-c4-egregium-sign

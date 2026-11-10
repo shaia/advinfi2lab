@@ -1,0 +1,40 @@
+# Misconceptions first detected in lesson 2.3 (the Frenet–Serret equations).
+- id: MC-c2-fs-matrix-symmetric
+  title: טועים בסימנים של מטריצת פרנה-סרה
+  belief: >-
+    $\mathbf n'=\kappa\mathbf t+\tau\mathbf b$, כלומר המטריצה שמבטאת את נגזרות השלשה בשלשה עצמה סימטרית; או שהמבנה שלה
+    הוא מקרה מיוחד של הסליל.
+  truth: >-
+    $$\frac{d}{ds}\begin{pmatrix}\mathbf t\\ \mathbf n\\ \mathbf b\end{pmatrix}=\begin{pmatrix}0&\kappa&0\\ -\kappa&0&\tau\\ 0&-\tau&0\end{pmatrix}\begin{pmatrix}\mathbf t\\ \mathbf n\\ \mathbf b\end{pmatrix}$$
+    המטריצה אנטי-סימטרית לכל מסילה, כי השלשה נשארת אורתונורמלית: גזירת $\mathbf t\cdot\mathbf n=0$ נותנת
+    $\mathbf t'\cdot\mathbf n=-\mathbf t\cdot\mathbf n'$, ולכן $\mathbf n'\cdot\mathbf t=-\kappa$.
+  remedy: { lesson: '2.3', label: 'משוואות פרנה-סרה והמטריצה האנטי-סימטרית' }
+
+- id: MC-c2-fs-general-param
+  title: מפעילים את משוואות פרנה-סרה בפרמטר שאינו אורך הקשת
+  belief: >-
+    $\frac{d\mathbf t}{dt}=\kappa\mathbf n$ ו-$\frac{d\mathbf b}{dt}=-\tau\mathbf n$ בכל פרמטר $t$, ולכן
+    $\gamma''=\kappa\mathbf n$.
+  truth: >-
+    המשוואות הן לפי $s$. בפרמטר כללי עם מהירות $v=\frac{ds}{dt}$, כלל השרשרת נותן $\frac{d\mathbf t}{dt}=v\kappa\mathbf n$,
+    $\frac{d\mathbf b}{dt}=-v\tau\mathbf n$, ו-$\gamma''=v'\mathbf t+\kappa v^2\mathbf n$.
+  remedy: { lesson: '2.3', label: 'הנגזרות של המסילה בבסיס של פרנה' }
+
+- id: MC-c2-fs-dropped-term
+  title: שוכחים רכיב בפירוק של נגזרת לפי השלשה
+  belief: >-
+    $\mathbf n'=\tau\mathbf b$, או $\gamma'''=\kappa\tau\mathbf b$ בפרמטר אורך הקשת: לכל נגזרת יש רכיב אחד.
+  truth: >-
+    בפרמטר אורך הקשת $\gamma'''=(\kappa\mathbf n)'=-\kappa^2\mathbf t+\kappa'\mathbf n+\kappa\tau\mathbf b$: גוזרים
+    גם את המקדם $\kappa$ וגם את $\mathbf n$, ו-$\mathbf n'=-\kappa\mathbf t+\tau\mathbf b$ תורם שני רכיבים. רק הרכיב
+    לאורך $\mathbf b$ נכנס לנוסחת הפיתול.
+  remedy: { lesson: '2.3', label: 'הנגזרות של המסילה בבסיס של פרנה' }
+
+- id: MC-c2-helix-radius-1-over-kappa
+  title: חושבים שהרדיוס של סליל הוא אחד חלקי העקמומיות
+  belief: >-
+    לסליל עם עקמומיות $\kappa$ יש רדיוס $\frac1\kappa$, כמו למעגל.
+  truth: >-
+    $\frac1\kappa$ הוא רדיוס העקמומיות, הרדיוס של המעגל המנשק. הרדיוס של הגליל שעליו מונח הסליל הוא
+    $a=\frac{\kappa}{\kappa^2+\tau^2}$, קטן מ-$\frac1\kappa$ כש-$\tau\ne0$: המעגל המנשק של סליל אינו החתך האופקי שלו.
+  remedy: { lesson: '2.3', label: 'מסילות עם עקמומיות ופיתול קבועים' }

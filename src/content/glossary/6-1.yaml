@@ -1,0 +1,33 @@
+# Terms first defined in lesson 6.1 (the line integral of a vector field).
+- id: vector-field
+  term: שדה וקטורי
+  en: vector field
+  symbol: '\mathbf F:U\to\mathbb R^n'
+  definition: >-
+    פונקציה $\mathbf F:U\to\mathbb R^n$ על קבוצה $U\subseteq\mathbb R^n$, שמצמידה לכל נקודה וקטור. במישור כותבים
+    $\mathbf F=(P,Q)$, ובמרחב $\mathbf F=(P,Q,R)$ או $(F_1,F_2,F_3)$. דוגמאות: שדה כוח, שדה מהירות, גרדיאנט של פונקציה.
+  lesson: '6.1'
+- id: line-integral-of-field
+  term: אינטגרל קווי של שדה וקטורי
+  en: line integral of a vector field
+  symbol: '\int_\gamma\mathbf F\cdot d\mathbf s'
+  definition: >-
+    למסילה חלקה $\gamma:[a,b]\to U$ ולשדה רציף $\mathbf F$:
+    $\int_\gamma\mathbf F\cdot d\mathbf s=\int_a^b\mathbf F(\gamma(t))\cdot\gamma'(t)\,dt=\int_\gamma(\mathbf F\cdot\mathbf t)\,ds$.
+    אינו תלוי בהחלפת פרמטר ששומרת כיוון, ומחליף סימן בהיפוך הכיוון. כש-$\mathbf F$ כוח, זו העבודה שלו לאורך המסילה.
+  lesson: '6.1'
+- id: orientation-preserving-reparametrization
+  term: החלפת פרמטר ששומרת כיוון
+  en: orientation-preserving reparametrization
+  definition: >-
+    החלפת פרמטר $\delta=\gamma\circ\varphi$ עם $\varphi'>0$: אותה תמונה, עוברים עליה באותו כיוון (אולי במהירות אחרת). כש-$\varphi'<0$
+    החלפת הפרמטר הופכת כיוון.
+  lesson: '6.1'
+- id: reversed-curve
+  term: המסילה ההפוכה
+  en: reversed curve
+  symbol: '-\gamma'
+  definition: >-
+    למסילה $\gamma:[a,b]\to\mathbb R^n$, המסילה $(-\gamma)(t)=\gamma(a+b-t)$: אותה תמונה, בכיוון ההפוך. מתקיים
+    $\int_{-\gamma}\mathbf F\cdot d\mathbf s=-\int_\gamma\mathbf F\cdot d\mathbf s$ ו-$\int_{-\gamma}\rho\,ds=\int_\gamma\rho\,ds$.
+  lesson: '6.1'

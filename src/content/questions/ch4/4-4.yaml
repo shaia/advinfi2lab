@@ -1,0 +1,389 @@
+# Lesson 4.4 — principal curvatures and principal directions.
+# Objectives (src/course.ts):
+#   OBJ-4.4-1  principal curvatures as max and min of κₙ; eigenvalues of the shape operator
+#   OBJ-4.4-2  principal directions; orthogonal at a non-umbilic point
+#   OBJ-4.4-3  Euler's formula κₙ(θ) = κ₁cos²θ + κ₂sin²θ
+# The shape operator S has the matrix (Q₁)⁻¹(Q₂) in the basis σ_u, σ_v, and Q₂(v) = ⟨Sv, v⟩.
+chapter: 4
+questions:
+  - id: Q-4.4-def
+    type: mc
+    objectives: [OBJ-4.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      **העקמומיויות הראשיות** $\kappa_1\ge\kappa_2$ של משטח בנקודה $P$ (ביחס לנורמל $\hat{\mathbf N}$) הן המקסימום
+      והמינימום של העקמומיות הנורמלית $\kappa_n(v)=\frac{Q_2(v)}{Q_1(v)}$ על פני הכיוונים $v\neq0$ במישור המשיק. איזו
+      טענה עליהן נכונה?
+    choices:
+      - text: 'הן הערכים העצמיים של המטריצה $Q_1^{-1}Q_2$, כלומר הפתרונות של $\det(Q_2-\lambda Q_1)=0$'
+        correct: true
+        feedback: >-
+          נכון. $\kappa_n$ רציפה על מעגל הכיוונים (קבוצה קומפקטית), ולכן מקבלת מקסימום ומינימום. בנקודת קיצון של המנה
+          $\frac{Q_2(v)}{Q_1(v)}$ (כופלי לגרנז׳) מתקיים $Q_2v=\lambda Q_1v$. המטריצה $Q_1^{-1}Q_2$ היא **אופרטור הצורה**
+          $S$ בבסיס $\sigma_u,\sigma_v$, ו-$Q_2(v)=\langle Sv,v\rangle$.
+      - text: 'הן גם המקסימום והמינימום של העקמומיות $\kappa$ של כל המסילות במשטח שעוברות ב-$P$'
+        feedback: >-
+          ל-$\kappa$ של מסילות דרך $P$ אין מקסימום: על ספרת היחידה יש דרך כל נקודה מעגלים קטנים כרצוננו, עם $\kappa$
+          גדולה כרצוננו. בכל כיוון נקבע רק $\kappa_n$.
+        misconception: MC-c4-principal-from-curves
+      - text: 'הן הערכים העצמיים של המטריצה $\begin{pmatrix}L&M\\M&N\end{pmatrix}$, כלומר הפתרונות של $\det(Q_2-\lambda I)=0$'
+        feedback: >-
+          חסרה $Q_1$. בגליל ברדיוס 3, $\sigma(u,v)=(3\cos u,3\sin u,v)$ עם הנורמל החוצה, $Q_2=\mathrm{diag}(-3,0)$ ו-$Q_1=\mathrm{diag}(9,1)$:
+          העקמומיויות הראשיות הן $0$ ו-$-\frac13$, לא $0$ ו-$-3$.
+        misconception: MC-c4-eigen-of-Q2
+      - text: 'הן $\frac LE$ ו-$\frac NG$, העקמומיות הנורמלית בשני כיווני הפרמטרים $\sigma_u$ ו-$\sigma_v$'
+        feedback: >-
+          כיווני הפרמטרים לא חייבים להיות כיוונים ראשיים. באוכף $z=xy$ בראשית $L=N=0$ ו-$E=G=1$, אבל
+          $\kappa_n$ בכיוון $(1,1)$ היא $\frac{2M}{2}=1$: העקמומיויות הראשיות הן $\pm1$, לא $0$.
+        misconception: MC-c4-principal-coordinate-dirs
+
+  - id: Q-4.4-flip
+    type: mc
+    objectives: [OBJ-4.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בנקודה $P$, ביחס לנורמל $\hat{\mathbf N}$, $\kappa_1=3$ ו-$\kappa_2=-1$. מהן העקמומיויות הראשיות $\kappa_1\ge\kappa_2$
+      ביחס לנורמל $-\hat{\mathbf N}$?
+    choices:
+      - text: '$\kappa_1=1$, $\kappa_2=-3$'
+        correct: true
+        feedback: >-
+          נכון. כל $\kappa_n(v)$ מחליפה סימן, והטווח $[-1,3]$ הופך ל-$[-3,1]$. המקסימום החדש הוא $-\kappa_2$.
+      - text: '$\kappa_1=-3$, $\kappa_2=1$'
+        feedback: >-
+          זה מפר את המוסכמה $\kappa_1\ge\kappa_2$. הגדולה היא $-\kappa_2=1$: הסדר מתהפך יחד עם הסימן.
+        misconception: MC-c4-flip-keeps-order
+      - text: '$\kappa_1=3$, $\kappa_2=-1$, ללא שינוי'
+        feedback: >-
+          $\kappa_n=\frac{Q_2}{Q_1}$, ו-$Q_2$ מחליפה סימן עם הנורמל. העקמומיויות הראשיות מחליפות סימן יחד איתה.
+        misconception: MC-c4-Q2-orientation-free
+
+  - id: Q-4.4-euler
+    type: numeric
+    objectives: [OBJ-4.4-3]
+    level: basic
+    prompt: >-
+      **הכיוון הראשי** של $\kappa_1$ הוא כיוון שבו $\kappa_n=\kappa_1$ (וקטור עצמי של $S$). **נוסחת אוילר**: אם $\theta$
+      היא הזווית (במישור המשיק) בין כיוון $v$ לכיוון הראשי של $\kappa_1$, אז
+      $\kappa_n(v)=\kappa_1\cos^2\theta+\kappa_2\sin^2\theta$. בנקודה $P$ $\kappa_1=3$ ו-$\kappa_2=-1$. מהי העקמומיות
+      הנורמלית בכיוון שיוצר זווית $\theta=\frac\pi3$ עם הכיוון הראשי של $\kappa_1$?
+    answer: 0
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $3\cos^2\frac\pi3+(-1)\sin^2\frac\pi3=\frac34-\frac34=0$. הכיוון הזה הוא כיוון שבו $\kappa_n=0$; הוא קיים כי
+      ל-$\kappa_1$ ול-$\kappa_2$ סימנים הפוכים.
+    wrongFeedback: >-
+      הציבו בנוסחת אוילר $\kappa_n=\kappa_1\cos^2\theta+\kappa_2\sin^2\theta$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $3\sin^2\frac\pi3-\cos^2\frac\pi3=2$: מדדתם את הזווית מהכיוון של $\kappa_2$. הזווית נמדדת מהכיוון של $\kappa_1$,
+          ולכן $\cos^2$ צמוד ל-$\kappa_1$.
+        misconception: MC-c4-euler-angle-swap
+      - value: 0.6339746
+        feedback: >-
+          $3\cos\frac\pi3-\sin\frac\pi3\approx0.634$: חסרים הריבועים. $\kappa_n$ היא תבנית **ריבועית** בווקטור הכיוון.
+        misconception: MC-c4-euler-linear
+
+  - id: Q-4.4-cyl
+    type: numeric
+    objectives: [OBJ-4.4-1]
+    level: basic
+    prompt: >-
+      הגליל $\sigma(u,v)=(2\cos u,\,2\sin u,\,v)$ עם הנורמל החוצה: $E=4$, $F=0$, $G=1$, $L=-2$, $M=N=0$. מהי העקמומיות
+      הראשית הקטנה $\kappa_2$?
+    answer: -0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $Q_1^{-1}Q_2=\begin{pmatrix}\frac14&0\\0&1\end{pmatrix}\begin{pmatrix}-2&0\\0&0\end{pmatrix}=\begin{pmatrix}-\frac12&0\\0&0\end{pmatrix}$,
+      ולכן $\kappa_1=0$ (לאורך הישרים) ו-$\kappa_2=-\frac12$ (לאורך המעגלים): אחד חלקי הרדיוס, בסימן שלילי בגלל הנורמל החוצה.
+    wrongFeedback: >-
+      אופרטור הצורה הוא $Q_1^{-1}Q_2$. כאן שתי המטריצות אלכסוניות.
+    commonWrong:
+      - value: -2
+        feedback: >-
+          זה הערך העצמי של $Q_2$ לבדה. חסרה החלוקה ב-$E=4$: הווקטור $\sigma_u$ אינו וקטור יחידה.
+        misconception: MC-c4-eigen-of-Q2
+      - value: 0.5
+        feedback: >-
+          הגודל נכון, הסימן לא: עם הנורמל החוצה הגליל מתעקם הרחק מ-$\hat{\mathbf N}$.
+        misconception: MC-c4-Q2-orientation-free
+
+  - id: Q-4.4-graph
+    type: numeric
+    objectives: [OBJ-4.4-1]
+    level: mid
+    prompt: >-
+      הגרף $z=x^2+3xy-y^2$ בראשית, עם $\hat{\mathbf N}=(0,0,1)$. שם $Q_1=dx^2+dy^2$ ו-$L=2$, $M=3$, $N=-2$. מהי העקמומיות
+      הראשית $\kappa_1$?
+    answer: 3.6055513
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\sqrt{13}$. כאן $Q_1=I$, ולכן אופרטור הצורה הוא $\begin{pmatrix}2&3\\3&-2\end{pmatrix}$, עם פולינום אופייני
+      $\lambda^2-13$. $\kappa_{1,2}=\pm\sqrt{13}$.
+    wrongFeedback: >-
+      כש-$Q_1=I$, העקמומיויות הראשיות הן הערכים העצמיים של $\begin{pmatrix}L&M\\M&N\end{pmatrix}$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          2 הוא $L$, העקמומיות הנורמלית בכיוון ציר $x$. בגלל $M\neq0$ הצירים אינם כיוונים ראשיים, ובכיוון אחר $\kappa_n$
+          גדולה יותר.
+        misconception: MC-c4-principal-coordinate-dirs
+      - value: 1.8027756
+        feedback: >-
+          זה $\frac{\sqrt{13}}2$, הערך העצמי של מטריצת המקדמים של הפולינום, $\begin{pmatrix}1&1.5\\1.5&-1\end{pmatrix}$. התבנית
+          השנייה בנויה מהנגזרות השניות, שגדולות פי 2.
+        misconception: MC-c4-taylor-coefficient
+
+  - id: Q-4.4-orth
+    type: twotier
+    objectives: [OBJ-4.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בנקודה $P$ שאינה טבורית ($\kappa_1>\kappa_2$). האם שני הכיוונים הראשיים, כווקטורים במישור המשיק, ניצבים זה לזה?
+    choices:
+      - text: 'כן, תמיד'
+        correct: true
+        feedback: 'נכון. זו הסיבה שאפשר לכתוב את נוסחת אוילר עם $\cos^2\theta$ ו-$\sin^2\theta$.'
+      - text: 'לא בהכרח; זה תלוי בפרמטריזציה'
+        feedback: >-
+          הכיוונים הראשיים הם תכונה של המשטח, לא של הפרמטריזציה. אם הם נראים לא ניצבים, כנראה בדקתם ניצבות במישור
+          הפרמטרים במקום עם $Q_1$.
+        misconception: MC-c4-orthogonal-in-coordinates
+    reasons:
+      - text: '$\langle Sv,w\rangle=Q_2(v,w)$ סימטרית ב-$v,w$, ולכן $S$ צמוד לעצמו ב-$T_pM$; וקטורים עצמיים של אופרטור צמוד לעצמו עם ערכים עצמיים שונים ניצבים'
+        correct: true
+        feedback: >-
+          בדיוק. $\kappa_1\langle v_1,v_2\rangle=\langle Sv_1,v_2\rangle=\langle v_1,Sv_2\rangle=\kappa_2\langle v_1,v_2\rangle$,
+          ו-$\kappa_1\neq\kappa_2$ מכריח $\langle v_1,v_2\rangle=0$.
+      - text: 'המטריצה $Q_1^{-1}Q_2$ סימטרית, ולכן הווקטורים העצמיים שלה ב-$\mathbb R^2$ ניצבים'
+        feedback: >-
+          $Q_1^{-1}Q_2$ בדרך כלל **אינה** סימטרית (עם $Q_1=\begin{pmatrix}1&1\\1&2\end{pmatrix}$ ו-$Q_2=\mathrm{diag}(0,1)$
+          מקבלים $\begin{pmatrix}0&-1\\0&1\end{pmatrix}$). הניצבות היא ביחס ל-$Q_1$, כלומר במישור המשיק.
+        misconception: MC-c4-orthogonal-in-coordinates
+      - text: 'המקסימום והמינימום של כל פונקציה על המעגל נמצאים תמיד במרחק רבע סיבוב'
+        feedback: >-
+          לא לכל פונקציה: הטענה נכונה כאן רק בגלל הצורה המיוחדת של $\kappa_n$, תבנית ריבועית. זה מה שצריך להוכיח, לא נימוק.
+        misconception: MC-c4-euler-linear
+
+  - id: Q-4.4-dirs
+    type: multi
+    objectives: [OBJ-4.4-2]
+    level: mid
+    prompt: >-
+      הגרף $z=x^2+3xy-y^2$ בראשית, עם $Q_1=dx^2+dy^2$ ו-$Q_2=2\,dx^2+6\,dx\,dy-2\,dy^2$. אילו מהכיוונים $(dx,dy)$ הבאים
+      הם כיוונים ראשיים? סמנו את כולם.
+    choices:
+      - text: '$(3,\ \sqrt{13}-2)$'
+        correct: true
+        feedback: >-
+          נכון: $\begin{pmatrix}2&3\\3&-2\end{pmatrix}\begin{pmatrix}3\\\sqrt{13}-2\end{pmatrix}=\sqrt{13}\begin{pmatrix}3\\\sqrt{13}-2\end{pmatrix}$.
+          זה הכיוון של $\kappa_1=\sqrt{13}$.
+      - text: '$(2-\sqrt{13},\ 3)$'
+        correct: true
+        feedback: >-
+          נכון: זה הכיוון של $\kappa_2=-\sqrt{13}$, וניצב לראשון: $3(2-\sqrt{13})+3(\sqrt{13}-2)=0$ (כאן $Q_1=I$, ולכן הניצבות
+          האוקלידית היא הנכונה).
+      - text: '$(1,0)$'
+        feedback: >-
+          $\begin{pmatrix}2&3\\3&-2\end{pmatrix}\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}2\\3\end{pmatrix}$, לא כפולה של
+          $(1,0)$. כיווני הצירים ראשיים רק כש-$M=0$ (ו-$F=0$).
+        misconception: MC-c4-principal-coordinate-dirs
+      - text: '$(0,1)$'
+        feedback: >-
+          $\begin{pmatrix}2&3\\3&-2\end{pmatrix}\begin{pmatrix}0\\1\end{pmatrix}=\begin{pmatrix}3\\-2\end{pmatrix}$, לא כפולה של
+          $(0,1)$. המקדם $M=3$ "מסובב" את הכיוונים הראשיים מהצירים.
+        misconception: MC-c4-principal-coordinate-dirs
+
+  - id: Q-4.4-umbilic
+    type: twotier
+    objectives: [OBJ-4.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נקודה **טבורית** היא נקודה שבה $\kappa_1=\kappa_2$. מהם הכיוונים הראשיים בנקודה של ספרת היחידה?
+    choices:
+      - text: 'כל כיוון במישור המשיק הוא כיוון ראשי'
+        correct: true
+        feedback: 'נכון. כל נקודה של הספרה טבורית.'
+      - text: 'כיוון קו הרוחב וכיוון קו האורך, ורק הם'
+        feedback: >-
+          אלה כיווני הפרמטרים בקואורדינטות רוחב ואורך, לא תכונה של הספרה. סובבו את הספרה, וקווי הרוחב יעברו למקום אחר.
+        misconception: MC-c4-always-two-principal-dirs
+    reasons:
+      - text: '$Q_2=-Q_1$ (עם הנורמל החוצה), ולכן $S=-\mathrm{id}$ ו-$\kappa_n=-1$ בכל כיוון: כל וקטור הוא וקטור עצמי'
+        correct: true
+        feedback: >-
+          בדיוק. בנקודה טבורית המקסימום והמינימום של $\kappa_n$ שווים, ולכן כל כיוון משיג אותם.
+      - text: 'בכל נקודה יש בדיוק שני כיוונים ראשיים, והם ניצבים'
+        feedback: 'זה נכון רק בנקודה שאינה טבורית. בנקודה טבורית $S$ היא כפולה של הזהות.'
+        misconception: MC-c4-always-two-principal-dirs
+      - text: 'בקואורדינטות רוחב ואורך $F=M=0$, ולכן הכיוונים הראשיים הם כיווני הפרמטרים בלבד'
+        feedback: >-
+          $F=M=0$ אומר שכיווני הפרמטרים **הם** ראשיים, לא שהם היחידים. כאן כל כיוון ראשי.
+        misconception: MC-c4-principal-coordinate-dirs
+
+  - id: Q-4.4-sum
+    type: mc
+    objectives: [OBJ-4.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מה שווה $\kappa_n(\theta)+\kappa_n(\theta+\frac\pi2)$, סכום העקמומיויות הנורמליות בשני כיוונים ניצבים?
+    choices:
+      - text: '$\kappa_1+\kappa_2$, לכל $\theta$'
+        correct: true
+        feedback: >-
+          נכון. $\kappa_1(\cos^2\theta+\sin^2\theta)+\kappa_2(\sin^2\theta+\cos^2\theta)=\kappa_1+\kappa_2$. הסכום על כל זוג
+          כיוונים ניצבים הוא העקבה של $S$.
+      - text: 'זה תלוי ב-$\theta$'
+        feedback: >-
+          עם הנוסחה השגויה $\kappa_1\cos\theta+\kappa_2\sin\theta$ היה יוצא שזה תלוי. עם הריבועים, $\cos^2(\theta+\frac\pi2)=\sin^2\theta$,
+          והתלות נעלמת.
+        misconception: MC-c4-euler-linear
+      - text: '$\kappa_1-\kappa_2$, לכל $\theta$'
+        feedback: >-
+          בכיוון השני $\cos^2$ ו-$\sin^2$ מתחלפים, אבל המקדמים $\kappa_1,\kappa_2$ נשארים עם הסימן שלהם. אין כאן הפרש.
+        misconception: MC-c4-euler-angle-swap
+
+  - id: Q-4.4-saddle
+    type: numeric
+    objectives: [OBJ-4.4-3]
+    level: mid
+    prompt: >-
+      בנקודה של משטח $\kappa_1=2$ ו-$\kappa_2=-2$. באיזו זווית $\theta\in[0,\frac\pi2]$ מהכיוון הראשי של $\kappa_1$
+      העקמומיות הנורמלית שווה ל-1? (תנו את $\theta$ ברדיאנים.)
+    answer: 0.5235988
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\theta=\frac\pi6$. לפי אוילר $\kappa_n(\theta)=2\cos^2\theta-2\sin^2\theta=2\cos2\theta$, ו-$2\cos2\theta=1$ נותן
+      $2\theta=\frac\pi3$. (בתחום $[0,\pi)$ של כל הכיוונים יש עוד פתרון, $\theta=\frac{5\pi}6$, הכיוון הסימטרי ביחס לכיוון הראשי.)
+    wrongFeedback: >-
+      כתבו $\kappa_n(\theta)=\kappa_1\cos^2\theta+\kappa_2\sin^2\theta$ והשוו ל-1. הזהות $\cos^2\theta-\sin^2\theta=\cos2\theta$
+      מקצרת את הדרך.
+    commonWrong:
+      - value: 1.0471976
+        feedback: >-
+          $\frac\pi3$ פותר $2\sin^2\theta-2\cos^2\theta=1$: מדדתם את הזווית מהכיוון של $\kappa_2$. הזווית נמדדת מהכיוון
+          של $\kappa_1$, ולכן $\cos^2$ צמוד ל-$\kappa_1$.
+        misconception: MC-c4-euler-angle-swap
+      - value: 0.424031
+        feedback: >-
+          זה הפתרון של $2\cos\theta-2\sin\theta=1$: חסרים הריבועים. $\kappa_n$ היא תבנית **ריבועית** בווקטור הכיוון.
+        misconception: MC-c4-euler-linear
+
+  - id: Q-4.4-skew
+    type: numeric
+    objectives: [OBJ-4.4-1]
+    level: mid
+    prompt: >-
+      בנקודה של משטח $E=2$, $F=1$, $G=1$ ו-$L=-2$, $M=-1$, $N=-1$. מהי העקמומיות הראשית $\kappa_1$?
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. כאן $Q_2=-Q_1$, ולכן $Q_1^{-1}Q_2=-I$ ו-$\kappa_1=\kappa_2=-1$: הנקודה טבורית. בדיקה: $\det(Q_2-\lambda Q_1)=(1+\lambda)^2\det Q_1$.
+    wrongFeedback: >-
+      הערכים העצמיים של אופרטור הצורה הם הפתרונות של $\det(Q_2-\lambda Q_1)=0$. השוו את שתי המטריצות לפני שאתם מחשבים.
+    commonWrong:
+      - value: -0.381966
+        feedback: >-
+          זה הערך העצמי הגדול של $\begin{pmatrix}-2&-1\\-1&-1\end{pmatrix}$ לבדה, $\frac{-3+\sqrt5}2$. בלי $Q_1^{-1}$ זו
+          לא העקמומיות: $\sigma_u,\sigma_v$ אינם בסיס אורתונורמלי.
+        misconception: MC-c4-eigen-of-Q2
+      - value: -2.618034
+        feedback: >-
+          זה הערך העצמי הקטן של $Q_2$ לבדה, $\frac{-3-\sqrt5}2$. צריך את $Q_1^{-1}Q_2$, וכאן היא $-I$.
+        misconception: MC-c4-eigen-of-Q2
+
+  - id: Q-4.4-qorth
+    type: twotier
+    objectives: [OBJ-4.4-2, OBJ-4.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בנקודה של משטח $E=2$, $F=1$, $G=1$, $L=1$, $M=N=0$. מחשבים $Q_1^{-1}Q_2=\begin{pmatrix}1&0\\-1&0\end{pmatrix}$, עם
+      הווקטורים העצמיים $(1,-1)$ (ערך עצמי 1) ו-$(0,1)$ (ערך עצמי 0). אבל $(1,-1)\cdot(0,1)=-1\neq0$. האם זו סתירה למשפט
+      שהכיוונים הראשיים בנקודה שאינה טבורית ניצבים?
+    choices:
+      - text: 'לא, אין סתירה'
+        correct: true
+        feedback: 'נכון. הווקטורים המשיקים עצמם, $\sigma_u-\sigma_v$ ו-$\sigma_v$, ניצבים.'
+      - text: 'כן, יש טעות בחישוב'
+        feedback: >-
+          החישוב נכון: $\begin{pmatrix}1&0\\-1&0\end{pmatrix}\begin{pmatrix}1\\-1\end{pmatrix}=\begin{pmatrix}1\\-1\end{pmatrix}$.
+          הטעות היא במבחן הניצבות.
+        misconception: MC-c4-orthogonal-in-coordinates
+    reasons:
+      - text: 'הניצבות נבדקת עם $Q_1$: $(1,-1)\begin{pmatrix}2&1\\1&1\end{pmatrix}(0,1)^T=0$, כלומר $(\sigma_u-\sigma_v)\cdot\sigma_v=F-G=0$'
+        correct: true
+        feedback: >-
+          בדיוק. $(a,b)$ במישור הפרמטרים מייצג את $a\sigma_u+b\sigma_v$, והמכפלה הפנימית שלהם היא $Q_1$, לא המכפלה
+          האוקלידית של $\mathbb R^2$.
+      - text: 'המשפט נכון רק כש-$F=0$'
+        feedback: >-
+          המשפט לא תלוי בפרמטריזציה. מה שתלוי בה הוא איך כותבים את המכפלה הפנימית בקואורדינטות: עם $F\neq0$ צריך את
+          האיבר $F(ad+bc)$.
+        misconception: MC-c4-orthogonal-in-coordinates
+      - text: 'הנקודה טבורית, ולכן כל שני כיוונים ראשיים'
+        feedback: >-
+          הערכים העצמיים הם 1 ו-0, שונים, ולכן הנקודה **אינה** טבורית, ויש בדיוק שני כיוונים ראשיים.
+        misconception: MC-c4-always-two-principal-dirs
+
+  - id: Q-4.4-eulerproof
+    type: rank
+    objectives: [OBJ-4.4-3, OBJ-4.4-2]
+    level: exam
+    prompt: >-
+      סדרו את שלבי ההוכחה של נוסחת אוילר $\kappa_n(\theta)=\kappa_1\cos^2\theta+\kappa_2\sin^2\theta$, ושל המסקנה
+      ש-$\kappa_1,\kappa_2$ הם המקסימום והמינימום של $\kappa_n$.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון. שני שלבים שאפשר לכתוב בכל סדר מסומנים כשקולים.
+    items:
+      - id: quad
+        label: 'לכל וקטור יחידה $v\in T_pM$: $\kappa_n(v)=Q_2(v)=\langle Sv,v\rangle$'
+      - id: basis
+        label: '$S$ צמוד לעצמו, ולכן יש בסיס אורתונורמלי $e_1,e_2$ של $T_pM$ עם $Se_i=\kappa_ie_i$ (המשפט הספקטרלי)'
+      - id: expand
+        label: 'וקטור יחידה כללי הוא $v=\cos\theta\,e_1+\sin\theta\,e_2$, ולכן $\langle Sv,v\rangle=\langle\kappa_1\cos\theta\,e_1+\kappa_2\sin\theta\,e_2,\ \cos\theta\,e_1+\sin\theta\,e_2\rangle=\kappa_1\cos^2\theta+\kappa_2\sin^2\theta$'
+      - id: extreme
+        label: 'כי $\kappa_n(\theta)=\kappa_2+(\kappa_1-\kappa_2)\cos^2\theta$ ו-$0\le\cos^2\theta\le1$: $\kappa_2\le\kappa_n\le\kappa_1$, עם הקיצון בכיווני $e_1$ ו-$e_2$'
+    order: [[quad, basis], expand, extreme]
+    correctFeedback: >-
+      נכון. רעיון ההוכחה: בבסיס של וקטורים עצמיים אורתונורמליים התבנית הריבועית אלכסונית, ואז $\kappa_n$ היא ממוצע
+      משוקלל של $\kappa_1$ ו-$\kappa_2$ במשקלות $\cos^2\theta$, $\sin^2\theta$.
+    wrongFeedback: >-
+      קודם שתי עובדות כלליות (ש-$\kappa_n$ היא $\langle Sv,v\rangle$, ושיש בסיס עצמי אורתונורמלי), אחר כך כותבים וקטור
+      כללי, מחשבים, ומסיקים.
+
+  - id: Q-4.4-three
+    type: twotier
+    objectives: [OBJ-4.4-3, OBJ-4.4-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      נכון או לא: אם העקמומיות הנורמלית בנקודה $P$ מקבלת אותו ערך בשלושה כיוונים שונים זה מזה (שאף שניים מהם לא על אותו
+      ישר), אז $P$ טבורית.
+    choices:
+      - text: 'נכון'
+        correct: true
+        feedback: 'נכון. שני כיוונים לא מספיקים, אבל שלושה כן.'
+      - text: 'לא נכון'
+        feedback: >-
+          בנקודה שאינה טבורית כל ערך של $\kappa_n$ מתקבל לכל היותר בשני כיוונים, הסימטריים ביחס לכיוון הראשי. נסו
+          למצוא שלושה בנוסחת אוילר.
+        misconception: MC-c4-euler-linear
+    reasons:
+      - text: 'לפי אוילר $\kappa_n(\theta)=\kappa_2+(\kappa_1-\kappa_2)\cos^2\theta$. אם $\kappa_1\neq\kappa_2$, המשוואה $\cos^2\theta=c$ פתורה רק על ידי $\theta\equiv\pm\theta_0\pmod\pi$: לכל היותר שני כיוונים'
+        correct: true
+        feedback: >-
+          בדיוק. כיוון הוא $\theta$ מודולו $\pi$, ו-$\cos^2$ מזדהה רק בין $\theta_0$ ל-$-\theta_0$ בתחום הזה.
+      - text: 'שלושה כיוונים עם אותה $\kappa_n$ כוללים בהכרח שני כיוונים ניצבים, ובכיוונים ניצבים $\kappa_n$ שווה רק בנקודה טבורית'
+        feedback: >-
+          שלושה כיוונים לא חייבים לכלול זוג ניצב, וגם בנקודה שאינה טבורית יש זוגות ניצבים עם אותה $\kappa_n$ (ב-$\theta=\pm\frac\pi4$).
+        misconception: MC-c4-euler-angle-swap
+      - text: 'העקמומיות הנורמלית היא $\kappa_1\cos\theta+\kappa_2\sin\theta$, פונקציה שמקבלת כל ערך פעם אחת'
+        feedback: >-
+          הנוסחה חסרה את הריבועים, ועם הנוסחה הזו $\kappa_n(\theta+\pi)=-\kappa_n(\theta)$, אף שזה אותו כיוון.
+        misconception: MC-c4-euler-linear

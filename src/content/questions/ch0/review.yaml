@@ -1,0 +1,442 @@
+# Chapter 0 review — what the course brings from Advanced Calculus 1 and linear algebra (lessons 0.1–0.6), easy to hard.
+# Every lesson is touched; most questions combine two lessons. Each hint names the lesson to go back to.
+chapter: 0
+questions:
+  - id: Q-0-review-01
+    type: mc
+    objectives: [OBJ-0.1-1, OBJ-0.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\gamma(t)=(t^2,\ t^3)$. מהו $\gamma'(0)$, ומה הוא אומר על התמונה ליד הראשית?
+    choices:
+      - text: '$\gamma''(0)=(0,0)$: המסילה נעצרת בראשית, ולתמונה יש שם חוד'
+        correct: true
+        feedback: >-
+          נכון. $\gamma'(t)=(2t,\ 3t^2)$. כשהמהירות מתאפסת, המסילה יכולה להגיע מכיוון אחד ולצאת לכיוון אחר; כאן שני הענפים
+          $y=\pm x^{3/2}$ נפגשים בחוד.
+      - text: '$\gamma''(0)=(0,0)$, ולכן ליד $t=0$ התמונה היא נקודה אחת'
+        feedback: >-
+          מהירות אפס **ברגע אחד** לא אומרת שהמסילה עומדת במקום: $\gamma(\pm0.1)=(0.01,\ \pm0.001)$ אינן הראשית. רק $\gamma'\equiv0$ על
+          קטע היה נותן נקודה.
+        misconception: MC-c0-curve-is-image
+      - text: '$\gamma''(0)=(1,0)$, כי התמונה יוצאת מהראשית לאורך ציר $x$'
+        feedback: >-
+          הישר שלאורכו התמונה יוצאת מהראשית הוא אכן ציר $x$, אבל זו תכונה של התמונה; וקטור המהירות הוא $\gamma'(0)=(2\cdot0,\ 3\cdot0^2)=(0,0)$.
+        misconception: MC-c0-curve-is-image
+    hints:
+      - 'חזרו לשיעור 0.1 (המסילה עם החוד) ולשיעור 0.3 (מטריצת יעקובי של מסילה היא עמודה אחת, $\gamma''(t)$).'
+
+  - id: Q-0-review-02
+    type: numeric
+    objectives: [OBJ-0.2-1, OBJ-0.3-1]
+    level: basic
+    prompt: >-
+      $\sigma(u,v)=(u,\ v,\ 2u+3v)$ היא פרמטריזציה של מישור. חשבו את $\|\sigma_u\times\sigma_v\|$.
+    answer: 3.7416574
+    tolerance: 0.0003
+    correctFeedback: >-
+      נכון: $\sqrt{14}\approx3.742$. $\sigma_u=(1,0,2)$ ו-$\sigma_v=(0,1,3)$ הן עמודות $D\sigma$, ו-$\sigma_u\times\sigma_v=(-2,\ -3,\ 1)$.
+      זה הנורמל למישור $z=2x+3y$, כמו $(h_x,\ h_y,\ -1)$ עד כדי סימן.
+    wrongFeedback: >-
+      $\sigma_u$ ו-$\sigma_v$ הן הנגזרות החלקיות של $\sigma$, העמודות של מטריצת יעקובי. חשבו את המכפלה הווקטורית ואת אורכה.
+    commonWrong:
+      - value: 14
+        feedback: >-
+          $14$ הוא $\|\sigma_u\times\sigma_v\|^2$. האורך הוא השורש.
+        misconception: MC-c0-norm-without-root
+    hints:
+      - 'חזרו לשיעור 0.3 (העמודות של מטריצת יעקובי) ולשיעור 0.2 (מכפלה וקטורית ואורכה).'
+
+  - id: Q-0-review-03
+    type: numeric
+    objectives: [OBJ-0.5-2]
+    level: basic
+    prompt: >-
+      חשבו את $\displaystyle\int_0^1\int_0^x xy\,dy\,dx$.
+    answer: 0.125
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\frac18$. $\int_0^x xy\,dy=\frac{x^3}2$, ו-$\int_0^1\frac{x^3}{2}dx=\frac18$.
+    wrongFeedback: >-
+      הגבול העליון של האינטגרל הפנימי הוא $x$: מציבים אותו אחרי האינטגרציה לפי $y$, ורק אז מבצעים את האינטגרל החיצוני.
+    commonWrong:
+      - value: 0.25
+        feedback: >-
+          $\frac14$ הוא האינטגרל על כל הריבוע $[0,1]^2$. התחום כאן הוא המשולש $0\le y\le x\le1$.
+        misconception: MC-c0-fubini-wrong-region
+    hints:
+      - 'חזרו לשיעור 0.5: משפט פוביני על תחום פשוט.'
+
+  - id: Q-0-review-04
+    type: mc
+    objectives: [OBJ-0.6-2, OBJ-0.1-1]
+    level: basic
+    prompt: >-
+      $X$ הפתרון של $X'=\begin{pmatrix}0&-1\\1&0\end{pmatrix}X$ עם $X(0)=(2,0)$. מהי התמונה של המסילה $t\mapsto X(t)$, $t\in\mathbb R$?
+    choices:
+      - text: 'מעגל ברדיוס $2$ סביב הראשית, שעוברים עליו נגד כיוון השעון'
+        correct: true
+        feedback: >-
+          נכון. $X(t)=(2\cos t,\ 2\sin t)$: בדיקה, $x_1'=-2\sin t=-x_2$ ו-$x_2'=2\cos t=x_1$. הרדיוס הוא $\|X(0)\|$.
+      - text: 'ספירלה שמתרחקת מהראשית'
+        feedback: >-
+          המטריצה אנטי-סימטרית, ולכן $\|X(t)\|$ קבוע: אין התרחקות.
+        misconception: MC-c0-antisym-growth
+      - text: 'מעגל ברדיוס $2$ סביב הראשית, שעוברים עליו בכיוון השעון'
+        feedback: >-
+          ב-$X=(2,0)$ המשוואה נותנת $X'=(0,2)$, כלומר למעלה: נגד כיוון השעון.
+        misconception: MC-c0-rotation-direction
+      - text: 'מעגל היחידה'
+        feedback: >-
+          הפתרון מתחיל ב-$(2,0)$, והאורך נשמר, כך שהרדיוס $2$.
+        misconception: MC-c0-param-coefficient-scale
+    hints:
+      - 'חזרו לשיעור 0.6 (מערכת הסיבוב) ולשיעור 0.1 (קריאת פרמטריזציה).'
+
+  - id: Q-0-review-05
+    type: twotier
+    objectives: [OBJ-0.4-3, OBJ-0.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $S$ ספרת היחידה ו-$p\in S$. האם המרחב המשיק ל-$S$ ב-$p$ הוא $\{v\in\mathbb R^3:\ v\cdot p=0\}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. בספרה שמרכזה בראשית הנורמל בכיוון $p$, והמרחב המשיק ניצב לו.
+      - text: לא
+        feedback: >-
+          חשבו את $DF(p)$ ל-$F=x^2+y^2+z^2$: זה $2p^{T}$, והגרעין שלו הוא $\{v:\ p\cdot v=0\}$.
+        misconception: MC-c0-tangent-is-gradient-span
+    reasons:
+      - text: '$S=\{F=1\}$ עם $\nabla F(p)=2p\ne0$, והמרחב המשיק הוא $\ker DF(p)=\{v:\ 2p\cdot v=0\}$'
+        correct: true
+        feedback: >-
+          בדיוק. $1$ ערך רגולרי (על $S$, $p\ne0$), והמרחב המשיק הוא הגרעין, כלומר המשלים האורתוגונלי של הגרדיאנט.
+      - text: 'לכל קבוצת רמה הנורמל בנקודה $p$ הוא $p$ עצמו'
+        feedback: >-
+          זה נכון לספרות שמרכזן בראשית בלבד. לאליפסה $x^2+4y^2=8$ ב-$(2,1)$ הנורמל בכיוון $(1,2)$. הנימוק הנכון עובר דרך $\nabla F$.
+        misconception: MC-c0-normal-is-position
+      - text: 'המרחב המשיק הוא הישר שפורש $p$'
+        feedback: >-
+          הישר שפורש $p$ הוא ישר הנורמל. המרחב המשיק הוא המישור הניצב לו.
+        misconception: MC-c0-tangent-is-gradient-span
+    hints:
+      - 'חזרו לשיעור 0.3 (גרדיאנט ניצב לקבוצת רמה) ולשיעור 0.4 (המרחב המשיק כגרעין).'
+
+  - id: Q-0-review-06
+    type: twotier
+    objectives: [OBJ-0.2-3, OBJ-0.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x,y)=x^2+4xy+y^2$. הראשית נקודה קריטית, ומטריצת הנגזרות השניות (ההסיאן) בה היא
+      $H=\begin{pmatrix}2&4\\4&2\end{pmatrix}$. האם הראשית נקודת מינימום מקומי?
+    choices:
+      - text: 'לא, זו נקודת אוכף'
+        correct: true
+        feedback: >-
+          נכון. לאורך הישר $y=-x$: $f(t,-t)=t^2-4t^2+t^2=-2t^2<0$, ולאורך $y=x$: $f(t,t)=6t^2>0$.
+      - text: 'כן, כי שני האיברים באלכסון חיוביים'
+        feedback: >-
+          האלכסון מראה רק את הכיוונים של הצירים. בכיוון $(1,-1)$ הפונקציה יורדת.
+        misconception: MC-c0-eigen-diagonal
+    reasons:
+      - text: 'הערכים העצמיים של $H$ הם $6$ ו-$-2$, בסימנים מנוגדים, ולכן התבנית $x^{T}Hx$ מקבלת ערכים חיוביים ושליליים'
+        correct: true
+        feedback: >-
+          בדיוק. $H$ סימטרית, ולפי המשפט הספקטרלי, בקואורדינטות $y_1,y_2$ של בסיס אורתונורמלי של וקטורים עצמיים (בכיוונים
+          $(1,1)$ ו-$(1,-1)$) התבנית $x^{T}Hx$ היא $6y_1^2-2y_2^2$.
+      - text: 'האיברים באלכסון, $2$ ו-$2$, הם הערכים העצמיים, ולכן $H$ מוגדרת חיובית והראשית מינימום'
+        feedback: >-
+          ל-$H$ איברים מחוץ לאלכסון, ולכן האלכסון אינו הערכים העצמיים. $\det(H-\lambda I)=(2-\lambda)^2-16$, ולכן $\lambda=6$ או $\lambda=-2$.
+        misconception: MC-c0-eigen-diagonal
+      - text: 'הדטרמיננטה של $H$ חיובית ו-$h_{11}>0$, ולכן $H$ מוגדרת חיובית והראשית מינימום'
+        feedback: >-
+          $\det H=4-16=-12<0$: האיברים שמחוץ לאלכסון מורידים את הדטרמיננטה, ומכפלת האלכסון לבדה ($4$) אינה הדטרמיננטה.
+          דטרמיננטה שלילית פירושה ערכים עצמיים בסימנים מנוגדים.
+        misconception: MC-c0-eigen-diagonal
+    hints:
+      - 'חזרו לשיעור 0.2 (המשפט הספקטרלי ותבניות ריבועיות) ולשיעור 0.3 (הדיפרנציאל ונגזרות מסדר שני).'
+
+  - id: Q-0-review-07
+    type: multi
+    objectives: [OBJ-0.4-2, OBJ-0.1-2]
+    level: mid
+    prompt: >-
+      באילו מהמקרים הבאים הערך הנתון הוא **ערך רגולרי** של הפונקציה? סמנו את כולם.
+    choices:
+      - text: 'הגליל: $F=x^2+y^2$ על $\mathbb R^3$, הערך $1$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla F=(2x,\ 2y,\ 0)$, ועל הגליל $x^2+y^2=1$ לא שני הרכיבים הראשונים אפס.
+      - text: 'האוכף: $F=xy-z$, הערך $0$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla F=(y,\ x,\ -1)$, והרכיב השלישי לעולם אינו אפס.
+      - text: 'הספרה: $F=x^2+y^2+z^2$, הערך $4$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla F=2(x,y,z)$ מתאפס רק בראשית, שאינה על הספרה ברדיוס $2$.
+      - text: 'החרוט: $F=x^2+y^2-z^2$, הערך $0$'
+        feedback: >-
+          הראשית על החרוט, ושם $\nabla F=0$. מספיקה נקודה אחת כזו כדי שהערך לא יהיה רגולרי.
+        misconception: MC-c0-regular-value-local
+      - text: '$F=x^2-y^2$ על $\mathbb R^2$, הערך $0$'
+        feedback: >-
+          קבוצת הרמה היא זוג הישרים $y=\pm x$, ובראשית $\nabla F=0$. הערך לא רגולרי, וגם הקבוצה אינה עקום חלק שם.
+        misconception: MC-c0-level-set-always-smooth
+    hints:
+      - 'חזרו לשיעור 0.4 (ערך רגולרי) ולשיעור 0.1 (אובייקטי המבחן: גליל, ספרה, אוכף).'
+
+  - id: Q-0-review-08
+    type: twotier
+    objectives: [OBJ-0.2-2, OBJ-0.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $F(x)=Ax+b$ תנועה קשיחה ($A$ אורתוגונלית) ו-$\gamma$ מסילה גזירה ב-$\mathbb R^3$. האם $\|(F\circ\gamma)'(t)\|=\|\gamma'(t)\|$
+      לכל $t$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. תנועה קשיחה לא משנה מהירות, ולכן גם לא אורך של מסילה. זו הסיבה שאורך קשת ועקמומיות יהיו גדלים גאומטריים.
+      - text: 'רק כש-$\det A=1$'
+        feedback: >-
+          שיקוף שומר אורכים בדיוק כמו סיבוב: $\|Av\|=\|v\|$ לכל $A$ אורתוגונלית. הסימן של הדטרמיננטה ישפיע רק על גדלים עם
+          כיוון, כמו הבינורמל.
+        misconception: MC-c0-orthogonal-is-rotation
+    reasons:
+      - text: 'לפי כלל השרשרת $(F\circ\gamma)''(t)=DF(\gamma(t))\gamma''(t)=A\gamma''(t)$, ו-$\|Av\|=\|v\|$'
+        correct: true
+        feedback: >-
+          בדיוק. $DF=A$ בכל נקודה (ההזזה $b$ נעלמת בגזירה), ו-$\|Av\|^2=\langle A^{T}Av,v\rangle=\|v\|^2$.
+      - text: '$(F\circ\gamma)''(t)=\gamma''(t)$, כי $F$ רק מזיזה את המסילה'
+        feedback: >-
+          $F$ גם מסובבת: $(F\circ\gamma)'=A\gamma'$, לא $\gamma'$. האורך שווה, הווקטור לא.
+        misconception: MC-c0-rigid-is-translation
+      - text: 'רק בסיבוב הכיוון נשמר, ולכן רק בו המהירות נשמרת'
+        feedback: >-
+          המהירות היא אורך, וכל מטריצה אורתוגונלית שומרת אורכים. כיוון (ימני או שמאלי) הוא עניין אחר.
+        misconception: MC-c0-orthogonal-is-rotation
+    hints:
+      - 'חזרו לשיעור 0.2 (תנועה קשיחה) ולשיעור 0.3 (כלל השרשרת למסילה).'
+
+  - id: Q-0-review-09
+    type: twotier
+    objectives: [OBJ-0.5-1, OBJ-0.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $D$ העיגול הסגור $x^2+y^2\le1$ ו-$D^\circ$ העיגול הפתוח $x^2+y^2<1$. האם לשניהם אותו שטח?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ההפרש ביניהם הוא המעגל $x^2+y^2=1$, ושטחו אפס.
+      - text: לא
+        feedback: >-
+          ההפרש הוא המעגל, ולעקום כזה שטח אפס: מכסים אותו במלבנים שסכום שטחיהם קטן כרצוננו.
+        misconception: MC-c0-jordan-boundary
+    reasons:
+      - text: 'המעגל הוא איחוד של שני גרפים של פונקציות רציפות על $[-1,1]$, ולכן שטחו אפס'
+        correct: true
+        feedback: >-
+          בדיוק: $y=\pm\sqrt{1-x^2}$. לכן $\iint_D1=\iint_{D^\circ}1$, ובאופן כללי שינוי על קבוצה בעלת שטח אפס לא משנה
+          אינטגרל.
+      - text: 'למעגל יש אורך חיובי, $2\pi$, ולכן גם שטח חיובי'
+        feedback: >-
+          אורך ושטח הם גדלים שונים. קטע באורך $1$ במישור שטחו אפס: מכסים אותו במלבן ברוחב $\varepsilon$ כרצוננו.
+        misconception: MC-c0-jordan-boundary
+      - text: 'לקבוצה פתוחה אין שטח, כי היא לא מכילה את השפה שלה'
+        feedback: >-
+          שטח מוגדר לכל קבוצה חסומה שהשפה שלה בעלת שטח אפס, פתוחה או סגורה. לעיגול הפתוח ולסגור אותה שפה, המעגל.
+        misconception: MC-c0-jordan-boundary
+    hints:
+      - 'חזרו לשיעור 0.5: תחום בעל שטח (מדיד ז׳ורדן) ושטח כאינטגרל של 1.'
+
+  - id: Q-0-review-10
+    type: mc
+    objectives: [OBJ-0.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      נכשלתם בשאלת חזרה, והרמז שלה אומר "חזרו לשיעור 0.4". מה הצעד הבא?
+    choices:
+      - text: 'חוזרים לשיעור 0.4 ולשאלות ההבנה שלו, ורק אחר כך חוזרים לשאלת החזרה'
+        correct: true
+        feedback: >-
+          נכון. שאלת חזרה מערבבת שיעורים; הרמז מצביע על החלק שחסר. שאלות ההבנה של השיעור מפרקות אותו לצעדים קטנים.
+      - text: 'עוברים לשאלות המבחן, שם החומר יחזור בצורה מלאה'
+        feedback: >-
+          שאלות המבחן קשות משאלות החזרה ונשענות עליהן. פער שלא נסגר יחזור שם בצורה קשה יותר.
+        misconception: MC-c0-jump-to-exam
+      - text: 'קוראים את התשובה הנכונה וממשיכים: הפעם הבאה תצליח'
+        feedback: >-
+          קריאת התשובה לא מתקנת את מה שגרם לטעות, במיוחד אם הייתם בטוחים בה. זו בדיוק ההזדמנות לתקן.
+        misconception: MC-c0-confidence-irrelevant
+    hints:
+      - 'חזרו לשיעור 0.1: מסלול הלימוד העצמי.'
+
+  - id: Q-0-review-11
+    type: twotier
+    objectives: [OBJ-0.6-3, OBJ-0.2-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $A(t)$ רציפה ואנטי-סימטרית על $\mathbb R$, ו-$\Phi(t)$ פותרת $\Phi'=A(t)\Phi$ עם $\Phi(0)=I$ (מטריצה $3\times3$). האם ייתכן
+      ש-$\det\Phi(t_1)=-1$ לאיזה $t_1$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $\Phi(t)$ סיבוב לכל $t$.
+      - text: כן
+        feedback: >-
+          $\Phi(t)$ אורתוגונלית לכל $t$, ולכן $\det\Phi(t)=\pm1$; אבל הדטרמיננטה רציפה ומתחילה ב-$1$, ולכן אינה יכולה לקפוץ
+          ל-$-1$.
+        misconception: MC-c0-det-jumps
+    reasons:
+      - text: 'העמודות של $\Phi$ פותרות $X''=AX$, ולכן $\Phi^{T}\Phi\equiv I$ ו-$\det\Phi=\pm1$; $\det\Phi$ רציפה ו-$\det\Phi(0)=1$, ולפי ערך הביניים היא קבועה'
+        correct: true
+        feedback: >-
+          בדיוק. פונקציה רציפה על $\mathbb R$ שמקבלת רק את הערכים $1$ ו-$-1$ קבועה. בפרק 2 זה יבטיח שהשלשה של פרנה-סרה
+          נשארת ימנית.
+      - text: '$\Phi(t)$ אורתוגונלית, ומטריצה אורתוגונלית יכולה להיות שיקוף, ולכן זה ייתכן'
+        feedback: >-
+          מטריצה אורתוגונלית **בודדת** יכולה להיות שיקוף, אבל משפחה רציפה שמתחילה ב-$I$ לא יכולה לעבור לשיקוף בלי לעבור
+          בדטרמיננטה שאינה $\pm1$.
+        misconception: MC-c0-det-jumps
+      - text: '$\det\Phi(t)$ יכולה להיות כל מספר שונה מאפס, כי $\Phi$ הפיכה'
+        feedback: >-
+          $\Phi$ הפיכה, אבל יותר מזה: היא אורתוגונלית, כי המכפלות הפנימיות בין העמודות נשמרות. לכן $\det\Phi=\pm1$.
+        misconception: MC-c0-orthogonal-any-invertible
+    hints:
+      - 'חזרו לשיעור 0.6 (אנטי-סימטרית שומרת מכפלות פנימיות) ולשיעור 0.2 (הדטרמיננטה של מטריצה אורתוגונלית).'
+
+  - id: Q-0-review-12
+    type: numeric
+    objectives: [OBJ-0.5-2, OBJ-0.5-1]
+    level: mid
+    prompt: >-
+      חשבו את $\displaystyle\int_0^1\int_{\sqrt y}^{1}\sqrt{1+x^3}\,dx\,dy$.
+    answer: 0.4063171
+    tolerance: 0.0002
+    correctFeedback: >-
+      נכון: $\frac29\left(2\sqrt2-1\right)\approx0.4063$. התחום $0\le y\le1$, $\sqrt y\le x\le1$ הוא $0\le x\le1$, $0\le y\le x^2$.
+      לכן $\int_0^1x^2\sqrt{1+x^3}\,dx=\frac29\left[(1+x^3)^{3/2}\right]_0^1=\frac29(2\sqrt2-1)$.
+    wrongFeedback: >-
+      לאינטגרל הפנימי בסדר הנתון אין פונקציה קדומה אלמנטרית. שרטטו את התחום, תארו אותו עם $x$ בחוץ, והאינטגרל הפנימי
+      לפי $y$ ייתן גורם שמאפשר הצבה.
+    commonWrong:
+      - value: 0.7051308
+        feedback: >-
+          זה $\int_0^1(1-x^2)\sqrt{1+x^3}\,dx$, האינטגרל על החלק **המשלים** של הריבוע. התנאי $\sqrt y\le x$ שקול ל-$y\le x^2$.
+        misconception: MC-c0-fubini-wrong-region
+      - value: 1.1114480
+        feedback: >-
+          זה $\int_0^1\sqrt{1+x^3}\,dx$, כאילו $y$ נע על קטע באורך $1$. לכל $x$, $y$ נע מ-$0$ עד $x^2$.
+        misconception: MC-c0-fubini-wrong-region
+    hints:
+      - 'חזרו לשיעור 0.5: החלפת סדר האינטגרציה בעזרת שרטוט התחום.'
+
+  - id: Q-0-review-13
+    type: mc
+    objectives: [OBJ-0.4-3, OBJ-0.2-1]
+    level: mid
+    prompt: >-
+      העקום $C$ הוא החיתוך של הספרה $x^2+y^2+z^2=3$ והאוכף $z=xy$. הנקודה $p=(1,1,1)$ על $C$. איזה וקטור משיק ל-$C$ ב-$p$?
+    choices:
+      - text: '$(1,-1,0)$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla F=(2,2,2)$ ל-$F=x^2+y^2+z^2$ ו-$\nabla G=(1,1,-1)$ ל-$G=xy-z$. הם בלתי תלויים, והמרחב המשיק הוא הגרעין של
+          שניהם, ישר שפורש $\nabla F\times\nabla G=(-4,4,0)$, כלומר הכיוון $(1,-1,0)$.
+      - text: '$(1,1,-1)$'
+        feedback: >-
+          זה $\nabla G$, הנורמל לאוכף. הוא ניצב למרחב המשיק, לא בתוכו: $\nabla G\cdot(1,1,-1)=3\ne0$.
+        misconception: MC-c0-tangent-is-gradient-span
+      - text: '$(1,0,1)$'
+        feedback: >-
+          $(1,0,1)$ משיק לאוכף ($\nabla G\cdot v=1-1=0$) אבל לא לספרה ($\nabla F\cdot v=4$). משיק לחיתוך צריך להיות בגרעין של
+          שתי השורות.
+        misconception: MC-c0-kernel-one-row
+      - text: '$(1,1,1)$'
+        feedback: >-
+          זה $p$ עצמו, בכיוון $\nabla F$: הנורמל לספרה.
+        misconception: MC-c0-normal-is-position
+    hints:
+      - 'חזרו לשיעור 0.4 (המרחב המשיק לחיתוך של קבוצות רמה) ולשיעור 0.2 (המכפלה הווקטורית ניצבת לשני הגורמים).'
+
+  - id: Q-0-review-14
+    type: multi
+    objectives: [OBJ-0.6-3, OBJ-0.2-1]
+    level: exam
+    prompt: >-
+      $A=\begin{pmatrix}0&-3&2\\3&0&-1\\-2&1&0\end{pmatrix}$ מקיימת $Ax=\omega\times x$ לכל $x$, עם $\omega=(1,2,3)$. $X$ פתרון של
+      $X'=AX$, כלומר $X'=\omega\times X$. אילו מהגדלים הבאים **קבועים** בזמן? סמנו את כולם.
+    choices:
+      - text: '$\|X(t)\|$'
+        correct: true
+        feedback: >-
+          נכון. $A$ אנטי-סימטרית; או ישירות: $X\cdot X'=X\cdot(\omega\times X)=0$.
+      - text: '$\langle X(t),\ \omega\rangle$'
+        correct: true
+        feedback: >-
+          נכון. $\omega$ עצמו פתרון קבוע ($\omega\times\omega=0$), ולכן המכפלה הפנימית בין שני הפתרונות $X$ ו-$\omega$ נשמרת.
+          גם ישירות: $\omega\cdot(\omega\times X)=0$.
+      - text: '$\|X''(t)\|$'
+        correct: true
+        feedback: >-
+          נכון. $\|\omega\times X\|^2=\|\omega\|^2\|X\|^2-(\omega\cdot X)^2$, ושני האיברים קבועים. גם: $X'$ עצמו פתרון ($X''=AX'$).
+      - text: '$\langle X(t),\ X(0)\rangle$'
+        feedback: >-
+          $X(0)$ הוא וקטור קבוע, אבל אינו פתרון (אלא אם $\omega\times X(0)=0$). הפתרון מסתובב סביב $\omega$, והזווית שלו עם
+          $X(0)$ משתנה.
+        misconception: MC-c0-preserve-fixed-vector
+      - text: '$X(t)$ עצמו'
+        feedback: >-
+          $X'=\omega\times X$ שונה מאפס כש-$X$ אינו מקביל ל-$\omega$. הפתרון מסתובב סביב הציר של $\omega$ על מעגל.
+        misconception: MC-c0-preserve-fixed-vector
+    explanation: >-
+      בדיקה ש-$Ax=\omega\times x$: $\omega\times x=(2x_3-3x_2,\ 3x_1-x_3,\ x_2-2x_1)$, וזו בדיוק $Ax$. כל מטריצה אנטי-סימטרית
+      $3\times3$ היא מכפלה וקטורית בווקטור קבוע.
+    hints:
+      - 'חזרו לשיעור 0.6 (שמירת מכפלות פנימיות בין פתרונות) ולשיעור 0.2 (המכפלה הווקטורית).'
+
+  - id: Q-0-review-15
+    type: twotier
+    objectives: [OBJ-0.4-1, OBJ-0.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $F:\mathbb R^2\to\mathbb R^2$ גזירה ברציפות, חד-חד-ערכית ועל, וגם ההפכית $G=F^{-1}$ דיפרנציאבילית בכל נקודה. האם $DF(p)$
+      בהכרח הפיכה בכל $p$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. כשגם ההפכית גזירה, כלל השרשרת מכריח את $DF$ להיות הפיכה.
+      - text: 'לא, כמו $x^3$'
+        feedback: >-
+          ל-$f(x)=x^3$ ההפכית $\sqrt[3]{x}$ **אינה** גזירה ב-$0$, ולכן היא לא מקיימת את ההנחה כאן. הדוגמה הזו מראה רק שהפיכות
+          של $F$ לבדה אינה מספיקה.
+        misconception: MC-c0-ift-converse
+    reasons:
+      - text: 'מ-$G\circ F=\mathrm{id}$ ומכלל השרשרת: $DG(F(p))\,DF(p)=I$, ולכן $DF(p)$ הפיכה'
+        correct: true
+        feedback: >-
+          בדיוק, ו-$DG(F(p))=DF(p)^{-1}$. זה ההפך של משפט הפונקציה ההפוכה, והוא נכון כשמניחים שההפכית גזירה.
+      - text: 'לפי משפט הפונקציה ההפוכה, כי $F$ הפיכה'
+        feedback: >-
+          משפט הפונקציה ההפוכה מניח ש-$DF(p)$ הפיכה ומסיק שיש הפכית; כאן מבקשים את הכיוון ההפוך. הכלי הוא כלל השרשרת.
+        misconception: MC-c0-ift-converse
+      - text: '$D(F^{-1})=DF$, ולכן היא הפיכה'
+        feedback: >-
+          הנגזרת של ההפכית היא **המטריצה ההפכית** $DF(p)^{-1}$, לא $DF$.
+        misconception: MC-c0-inverse-derivative-confusion
+    hints:
+      - 'חזרו לשיעור 0.4 (משפט הפונקציה ההפוכה) ולשיעור 0.3 (כלל השרשרת להרכבת העתקות).'

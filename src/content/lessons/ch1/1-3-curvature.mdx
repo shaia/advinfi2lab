@@ -1,0 +1,574 @@
+---
+id: '1.3'
+chapter: 1
+order: 3
+title: המשיק היחידה, העקמומיות והנורמל הראשי
+subtitle: מספר אחד שמודד כמה מסילה מתעקלת, בלי קשר למהירות שבה עוברים עליה
+minutes: 90
+objectives:
+  - id: OBJ-1.3-1
+    text: להגדיר עקמומיות כאורך הנגזרת של המשיק היחידה לפי אורך הקשת, ולחשב אותה למעגל ולישר
+  - id: OBJ-1.3-2
+    text: לחשב עקמומיות בפרמטר כללי בנוסחה עם מכפלה וקטורית ולהסביר מאיפה באה החזקה השלישית במכנה
+  - id: OBJ-1.3-3
+    text: להגדיר את הנורמל הראשי כשהעקמומיות חיובית ולהוכיח שהוא ניצב למשיק
+prerequisites: ['1.1', '1.2']
+videos: [v-1-3-haifa-curvature, v-1-3-curvature-derivation]
+figures: [fig-1-3a, fig-1-3b]
+---
+
+import PlaneCurve from '~/sims/PlaneCurve.astro';
+
+<Spread
+  fig="fig-1-3a"
+  n="1.3א"
+  caption="מסילה במישור ונקודה $\gamma(t)$ עליה. החץ האפור הוא וקטור המהירות $\gamma'(t)$ בגודלו האמיתי, החץ הכתום הוא המשיק היחידה $\mathbf t$ (תמיד באורך 1), והחץ הירוק הוא הנורמל הראשי $\mathbf n$, כשהעקמומיות חיובית. חיצים קטנים על המסילה מראים את כיוון התנועה. מתחת לאיור: $\kappa$, העקמומיות בנקודה. האיור מראה נקודה אחת בכל פעם: זו עדות, וההגדרות וההוכחות שבטקסט הן מה שקובע."
+  figure={PlaneCurve}
+  figureProps={{ curve: 'circle', curves: ['circle', 'circle-fast', 'ellipse', 'cubic'], t: 0.6, layers: ['velocity', 'unit', 'normal'], toggles: ['velocity', 'unit', 'normal'], tasks: ['circle-curvature', 'ellipse-max-k'] }}
+>
+
+<Hook title="אותו כביש, שני נהגים">
+
+שני נהגים נוסעים באותו כביש מעגלי ברדיוס 2. הראשון נוסע לפי $\gamma(t)=(2\cos t,\ 2\sin t)$, והשני לפי $\delta(t)=(2\cos 3t,\ 2\sin 3t)$, פי שלושה מהר. התאוצה של השני גדולה פי תשעה: $\|\gamma''\|=2$ ו-$\|\delta''\|=18$. ובכל זאת זה **אותו כביש**, והוא מתעקל בדיוק באותה מידה.
+
+נהג שלישי נוסע על כביש ישר ולוחץ על הגז: $(e^t,\ 2e^t)$. גם לו יש תאוצה, אבל הכביש לא מתעקל בכלל.
+
+אנחנו רוצים מספר שמתאר את **הכביש** ולא את הנהיגה: כמה הוא מתעקל בכל נקודה. בשיעור הזה נבנה אותו בעזרת אורך הקשת מ<LessonLink id="1.2" />, ונגלה למה בנוסחה שלו מופיעה דווקא חזקה שלישית.
+
+</Hook>
+
+<Predict
+  id="pred-1-3"
+  prompt="המסילה $\delta(t)=(2\cos 3t,\ 2\sin 3t)$ עוברת על מעגל ברדיוס $2$. המהירות שלה היא $\|\delta'\|=6$ והתאוצה $\|\delta''\|=18$. איזה מספר מתאר הכי טוב כמה המעגל הזה מתעקל?"
+  choices={[
+    '$18$, אורך התאוצה: ככל שהתאוצה גדולה יותר, המסילה מתעקלת יותר.',
+    '$3$, היחס בין התאוצה למהירות, שמבטל את קצב הנסיעה.',
+    '$2$, הרדיוס של המעגל.',
+    '$\\tfrac12$, ההופכי של הרדיוס.',
+  ]}
+  answer={3}
+>
+
+נחזור לשאלה הזו אחרי שנגדיר עקמומיות ונחשב אותה למעגל ברדיוס $r$, ושוב אחרי הנוסחה בפרמטר כללי.
+
+</Predict>
+
+<Explore title="כמה מהר המשיק מסתובב">
+
+<Step fig="fig-1-3a" set={{ curve: 'circle', t: 0.6, layers: ['velocity', 'unit', 'normal'] }}>
+
+באיור המעגל $(\cos t,\ \sin t)$. גררו את הנקודה סביבו ועקבו אחרי החץ הכתום, המשיק היחידה $\mathbf t$: הוא מסתובב, ואורכו תמיד 1. כשהנקודה עוברת קשת באורך $\Delta s$, הכיוון שלו מסתובב בזווית $\Delta s$ בדיוק (ברדיאנים). זה הרעיון של העקמומיות: **כמה הכיוון מסתובב ליחידת אורך**.
+
+</Step>
+
+<Step fig="fig-1-3a" set={{ curve: 'circle-fast', t: 0.6, layers: ['velocity', 'unit', 'normal'] }}>
+
+עכשיו אותו מעגל, אבל במסילה $(\cos 2t,\ \sin 2t)$. החץ האפור, וקטור המהירות, ארוך פי שניים. החץ הכתום **לא השתנה**: המשיק היחידה תלוי רק בכיוון, לא במהירות. גם העקמומיות שמתחת לאיור לא השתנתה.
+
+</Step>
+
+<Step fig="fig-1-3a" set={{ curve: 'ellipse', t: 1.2, layers: ['unit', 'normal'] }}>
+
+באליפסה $(2\cos t,\ \sin t)$ העקמומיות משתנה מנקודה לנקודה. חפשו את הנקודה שבה המשיק מסתובב הכי מהר ליחידת אורך, ואת הנקודה שבה הוא כמעט לא מסתובב. שימו לב לאן מצביע החץ הירוק, הנורמל הראשי: תמיד אל הצד הקעור, אל "פנים" העיקול.
+
+</Step>
+
+<Step fig="fig-1-3a" set={{ curve: 'cubic', t: 0.4, layers: ['unit', 'normal'] }}>
+
+ובגרף של $x^3$, המסילה $(t,\ t^3)$, הזיזו את הנקודה דרך הראשית. מימין לראשית הנורמל הירוק מצביע למעלה, משמאל למטה, ובראשית עצמה הוא נעלם: שם העקמומיות אפס, והקעירות מתחלפת. נחזור לנקודה הזו בסוף השיעור.
+
+</Step>
+
+</Explore>
+
+<Explain title="המשיק היחידה והעקמומיות" id="curvature-def">
+
+<Step fig="fig-1-3a" set={{ curve: 'circle', t: 0.6, layers: ['velocity', 'unit'] }} id="unit-tangent">
+
+**הגדרה.** תהי $\gamma:I\to\mathbb R^n$ <Term id="regular-curve">מסילה רגולרית</Term> מסדר $C^1$, כלומר $\gamma'(t)\ne0$ לכל $t$. <Term id="unit-tangent">וקטור המשיק היחידה</Term> הוא
+
+$$
+\mathbf t(t)=\frac{\gamma'(t)}{\|\gamma'(t)\|}.
+$$
+
+ב<Term id="arc-length-parameter">פרמטר אורך הקשת</Term> $s$ מתקיים $\|\gamma'(s)\|=1$ (שיעור 1.2), ולכן שם פשוט $\mathbf t(s)=\gamma'(s)$.
+
+**אי-תלות בפרמטריזציה.** אם $\delta=\gamma\circ\varphi$ היא <Term id="reparametrization">החלפת פרמטר</Term> עם $\varphi'>0$, אז לפי כלל השרשרת $\delta'(u)=\varphi'(u)\,\gamma'(\varphi(u))$, וכשמחלקים באורך הגורם החיובי $\varphi'(u)$ מתבטל: ל-$\delta$ ול-$\gamma$ אותו $\mathbf t$ באותה נקודה. אם $\varphi'<0$ (היפוך כיוון), $\mathbf t$ מתהפך ל-$-\mathbf t$.
+
+</Step>
+
+<Step fig="fig-1-3a" set={{ curve: 'circle', t: 0.6, layers: ['velocity', 'unit'] }}>
+
+**על אובייקטי המבחן.**
+- **מעגל** ברדיוס $r$, $(r\cos t,\ r\sin t)$: $\mathbf t=(-\sin t,\ \cos t)$, ולא תלוי ב-$r$.
+- **סליל** $(a\cos t,\ a\sin t,\ bt)$: $\|\gamma'\|=\sqrt{a^2+b^2}$, ולכן $\mathbf t=\frac{1}{\sqrt{a^2+b^2}}(-a\sin t,\ a\cos t,\ b)$. הרכיב האנכי $\frac{b}{\sqrt{a^2+b^2}}$ קבוע: הסליל עולה בשיפוע קבוע.
+- **מסילה עם חוד** $(t^2,\ t^3)$: $\gamma'(t)=t\,(2,\ 3t)$, ו-$\gamma'(0)=0$. ב-$t=0$ אין משיק יחידה. כש-$t\to0^+$, $\mathbf t(t)\to(1,0)$, וכש-$t\to0^-$, $\mathbf t(t)\to(-1,0)$: המסילה נכנסת לחוד ויוצאת ממנו הפוך.
+
+</Step>
+
+<Step fig="fig-1-3a" set={{ curve: 'circle', t: 2, layers: ['unit', 'normal'] }} id="lemma-perp">
+
+לפני ההגדרה של העקמומיות נצטרך עובדה אחת, שנשתמש בה שלוש פעמים בשיעור.
+
+**למה.** אם $\mathbf u:I\to\mathbb R^n$ גזירה ו-$\|\mathbf u(t)\|$ קבוע, אז $\mathbf u(t)\cdot\mathbf u'(t)=0$ לכל $t$.
+
+**רעיון.** וקטור שאורכו קבוע יכול רק להסתובב, לא להתארך, ולכן השינוי שלו ניצב אליו.
+
+**הוכחה.** $\mathbf u\cdot\mathbf u=c$ קבוע. גוזרים לפי כלל המכפלה: $\mathbf u'\cdot\mathbf u+\mathbf u\cdot\mathbf u'=0$, כלומר $2\,\mathbf u\cdot\mathbf u'=0$. $\blacksquare$
+
+</Step>
+
+<Step fig="fig-1-3a" set={{ curve: 'circle', t: 2, layers: ['unit', 'normal'] }} id="kappa-def">
+
+**הגדרה.** תהי $\gamma$ מסילה רגולרית מסדר $C^2$ בפרמטר אורך הקשת $s$. ה<Term id="curvature">עקמומיות</Term> שלה ב-$s$ היא
+
+$$
+\kappa(s)=\Big\|\frac{d\mathbf t}{ds}(s)\Big\|=\|\gamma''(s)\|.
+$$
+
+$\mathbf t$ הוא וקטור יחידה, ולכן לפי הלמה $\frac{d\mathbf t}{ds}$ ניצב ל-$\mathbf t$: הוא מודד רק **סיבוב** של הכיוון, ליחידת אורך. אין בו שום מידע על מהירות, כי בפרמטר אורך הקשת המהירות תמיד 1. מסילה בפרמטר כללי מעבירים קודם לפרמטר אורך הקשת (שיעור 1.2), ובעוד רגע נראה איך לחשב בלי לעשות את זה במפורש.
+
+</Step>
+
+<Step fig="fig-1-3a" set={{ curve: 'circle', t: 2, layers: ['unit', 'normal'] }} id="circle">
+
+**המעגל.** מעגל ברדיוס $r$ בפרמטר אורך הקשת הוא $\gamma(s)=\big(r\cos\frac sr,\ r\sin\frac sr\big)$ (בדקו: $\|\gamma'(s)\|=1$). אז
+
+$$
+\mathbf t(s)=\Big(-\sin\frac sr,\ \cos\frac sr\Big),\qquad \frac{d\mathbf t}{ds}=-\frac1r\Big(\cos\frac sr,\ \sin\frac sr\Big),\qquad \kappa=\frac1r.
+$$
+
+העקמומיות היא **ההופכי** של הרדיוס: מעגל גדול כמעט ישר בכל קטע קצר. וזו התשובה לשאלת החיזוי: המעגל ברדיוס $2$ מתעקל במידה $\frac12$, איך שלא נוסעים עליו. התאוצה $18$ והיחס $3$ תלויים בנהיגה.
+
+**הישר.** $\gamma(s)=p+s\,\mathbf v$ עם $\|\mathbf v\|=1$: $\mathbf t\equiv\mathbf v$ קבוע, ולכן $\kappa\equiv0$.
+
+</Step>
+
+<Step fig="fig-1-3a" set={{ curve: 'cubic', t: 0, layers: ['unit', 'normal'] }} id="kappa-zero">
+
+**משפט.** אם $\kappa\equiv0$ על קטע $J$, אז $\gamma(J)$ הוא קטע של ישר.
+
+**רעיון.** עקמומיות אפס פירושה שהמשיק לא מסתובב בכלל; משיק קבוע נותן ישר.
+
+**הוכחה.** $\|\frac{d\mathbf t}{ds}\|=0$ על $J$, ולכן $\mathbf t\equiv\mathbf t_0$ קבוע (פונקציה שנגזרתה אפס על קטע קבועה). אז $\gamma'(s)=\mathbf t_0$, ומאינטגרציה $\gamma(s)=\gamma(s_0)+(s-s_0)\,\mathbf t_0$. $\blacksquare$
+
+**אבל לא בנקודה אחת.** ב-$(t,\ t^3)$ העקמומיות מתאפסת ב-$t=0$ בלבד (נחשב אותה בעוד רגע), והמסילה מתעקלת משני צדי הראשית: שם הקעירות מתחלפת. "$\kappa=0$ בנקודה" אינו "ישר בסביבה". באיור המצב הזה בדיוק: המסילה $(t,\ t^3)$ בנקודה $t=0$.
+
+</Step>
+
+<Step fig="fig-1-3a" set={{ curve: 'ellipse', t: 0, layers: ['unit', 'normal'], reverse: false }} id="kappa-orientation">
+
+**היפוך כיוון.** אם עוברים על המסילה בכיוון ההפוך, $\tilde\gamma(s)=\gamma(-s)$, אז $\tilde{\mathbf t}(s)=-\mathbf t(-s)$, ובגזירה לפי $s$ הסימן מתהפך שוב: $\frac{d\tilde{\mathbf t}}{ds}(s)=\frac{d\mathbf t}{ds}(-s)$. לכן $\kappa$ זהה בכל נקודה של התמונה. העקמומיות $\kappa\ge0$ אינה מרגישה בכיוון. (במסילה מישורית נגדיר ב<LessonLink id="1.5" /> עקמומיות **מסומנת**, שכן מרגישה בו.)
+
+</Step>
+
+</Explain>
+
+</Spread>
+
+<Spread
+  fig="fig-1-3b"
+  n="1.3ב"
+  caption="מסילה במישור, המשיק היחידה $\mathbf t$ (כתום) והנורמל הראשי $\mathbf n$ (ירוק). החץ האפור הוא הנגזרת השנייה $\gamma''(t)$, ושני החצים המקווקווים הם הרכיבים שלה: $v'\mathbf t$ לאורך המשיק ו-$\kappa v^2\mathbf n$ לאורך הנורמל, כאשר $v=\|\gamma'\|$. כש-$\kappa=0$ אין נורמל ראשי והוא לא מצויר. עדות בנקודה אחת; הזהות $\gamma''=v'\mathbf t+\kappa v^2\mathbf n$ מוכחת בטקסט."
+  figure={PlaneCurve}
+  figureProps={{ curve: 'parabola', curves: ['parabola', 'cubic', 'exp'], t: 0.5, layers: ['unit', 'normal', 'accel'], toggles: ['unit', 'normal', 'accel'], tasks: ['inflection'] }}
+>
+
+<Explain title="העקמומיות בפרמטר כללי" id="formula">
+
+<Step fig="fig-1-3b" set={{ curve: 'parabola', t: 0.5, layers: ['unit', 'accel'] }} id="kappa-formula">
+
+כדי לחשב עקמומיות לא צריך להעביר את המסילה לפרמטר אורך הקשת. במסילה $(t,\ t^2)$, למשל, פונקציית אורך הקשת היא $\int_0^t\sqrt{1+4u^2}\,du$, ואת ההופכית שלה אי אפשר לכתוב בנוסחה פשוטה.
+
+**משפט.** תהי $\gamma:I\to\mathbb R^3$ מסילה רגולרית מסדר $C^2$, בפרמטר כלשהו $t$. אז
+
+$$
+\kappa(t)=\frac{\|\gamma'(t)\times\gamma''(t)\|}{\|\gamma'(t)\|^3}.
+$$
+
+**רעיון.** כותבים $\gamma'=v\,\mathbf t$, כאשר $v=\|\gamma'\|=\frac{ds}{dt}$ הוא אורך המהירות. בנגזרת השנייה יש שני חלקים: שינוי של **אורך** המהירות, לאורך $\mathbf t$, ושינוי של **הכיוון**, ניצב ל-$\mathbf t$. המכפלה הווקטורית עם $\gamma'$ מוחקת את החלק הראשון ומשאירה את השני.
+
+</Step>
+
+<Step fig="fig-1-3b" set={{ curve: 'parabola', t: 0.5, layers: ['unit', 'normal', 'accel'] }} id="kappa-proof">
+
+**הוכחה.** נסמן $v(t)=\|\gamma'(t)\|>0$, ונחשוב על $\mathbf t$ כפונקציה של $t$ דרך אורך הקשת $s(t)$.
+
+1. מההגדרה של $\mathbf t$: $\gamma'=v\,\mathbf t$.
+2. גוזרים לפי $t$, בכלל המכפלה: $\gamma''=v'\,\mathbf t+v\,\frac{d\mathbf t}{dt}$.
+3. לפי כלל השרשרת, $\frac{d\mathbf t}{dt}=\frac{d\mathbf t}{ds}\frac{ds}{dt}=v\,\frac{d\mathbf t}{ds}$. לכן
+
+$$
+\gamma''=v'\,\mathbf t+v^2\,\frac{d\mathbf t}{ds}.
+$$
+
+4. מכפילים וקטורית ב-$\gamma'=v\,\mathbf t$ משמאל. $\mathbf t\times\mathbf t=0$, ולכן המחובר הראשון נעלם: $\gamma'\times\gamma''=v^3\,\mathbf t\times\frac{d\mathbf t}{ds}$.
+5. לפי הלמה $\frac{d\mathbf t}{ds}\perp\mathbf t$. לשני וקטורים ניצבים $\|\mathbf a\times\mathbf b\|=\|\mathbf a\|\,\|\mathbf b\|$ (זהות לגראנז׳ לאורך של מכפלה וקטורית, שיעור 0.2, כש-$\mathbf a\cdot\mathbf b=0$), ו-$\|\mathbf t\|=1$, ולכן $\big\|\mathbf t\times\frac{d\mathbf t}{ds}\big\|=\big\|\frac{d\mathbf t}{ds}\big\|=\kappa$.
+6. לכן $\|\gamma'\times\gamma''\|=v^3\kappa$, ומחלקים ב-$v^3>0$. $\blacksquare$
+
+</Step>
+
+<Step fig="fig-1-3b" set={{ curve: 'parabola', t: 0.5, layers: ['unit', 'normal', 'accel'] }} id="why-cube">
+
+**מאיפה החזקה השלישית.** גורם $v$ אחד בא מ-$\gamma'=v\,\mathbf t$, ושניים באים מ-$\gamma''$: אחד מכלל השרשרת ($\frac{ds}{dt}=v$) ואחד מכך ש-$\mathbf t$ עצמו נגזר דרך $\gamma'=v\,\mathbf t$. בדרך אחרת: אם $\delta=\gamma\circ\varphi$, אז $\delta'=\varphi'\,\gamma'$ ו-$\delta''=\varphi''\,\gamma'+\varphi'^2\,\gamma''$, ולכן $\delta'\times\delta''=\varphi'^3\,\gamma'\times\gamma''$. כדי שהמנה לא תהיה תלויה בפרמטריזציה, גם המכנה חייב להיות מוכפל ב-$|\varphi'|^3$, ומבין החזקות של $\|\gamma'\|$ רק השלישית עושה זאת.
+
+**במישור.** מסילה $(x(t),\ y(t))$ כותבים כ-$(x,\ y,\ 0)$. אז $\gamma'\times\gamma''=(0,\ 0,\ x'y''-y'x'')$, ו-
+
+$$
+\kappa=\frac{|x'y''-y'x''|}{(x'^2+y'^2)^{3/2}}.
+$$
+
+**בחזרה לשאלת החיזוי.** במסילה $\delta(t)=(2\cos 3t,\ 2\sin 3t)$:
+
+$$
+x'y''-y'x''=108\sin^2 3t+108\cos^2 3t=108,\qquad (x'^2+y'^2)^{3/2}=6^3=216.
+$$
+
+לכן $\kappa=\frac{108}{216}=\frac12$, כמו שקיבלנו מההגדרה. היחס $3$ טועה פעמיים: המונה צריך להיות $\|\delta'\times\delta''\|=108$ ולא $\|\delta''\|$, והמכנה $\|\delta'\|^3$. (במהירות קבועה, וכאן רק במהירות קבועה, זה $\frac{\|\delta''\|}{\|\delta'\|^2}=\frac{18}{36}=\frac12$.)
+
+</Step>
+
+<Step fig="fig-1-3b" set={{ curve: 'parabola', t: 0.5, layers: ['unit', 'accel'] }}>
+
+**על אובייקטי המבחן.**
+- **סליל** $(a\cos t,\ a\sin t,\ bt)$, $a>0$: $\gamma'\times\gamma''=(ab\sin t,\ -ab\cos t,\ a^2)$, באורך $a\sqrt{a^2+b^2}$, ולכן $\kappa=\frac{a\sqrt{a^2+b^2}}{(a^2+b^2)^{3/2}}=\frac{a}{a^2+b^2}$. כש-$b\ne0$ זה **פחות** מ-$\frac1a$, העקמומיות של מעגל החתך של הגליל: העלייה "מיישרת" את הסליל. כש-$b=0$ חוזרים למעגל.
+- **אליפסה** $(2\cos t,\ \sin t)$: $x'y''-y'x''=2(\sin^2t+\cos^2t)$, כלומר $2$, ולכן $\kappa(t)=\frac{2}{(4\sin^2t+\cos^2t)^{3/2}}$. ב-$(2,0)$, קצה הציר הארוך, $\kappa=2$; ב-$(0,1)$, קצה הציר הקצר, $\kappa=\frac14$. באיור 1.3א, נסו למצוא את שתי הנקודות.
+- **$(t,\ t^3)$**: $x'y''-y'x''=6t$, ולכן $\kappa(t)=\frac{6|t|}{(1+9t^4)^{3/2}}$, שמתאפסת ב-$t=0$ בלבד.
+
+</Step>
+
+</Explain>
+
+<Explain title="הנורמל הראשי" id="principal-normal">
+
+<Step fig="fig-1-3b" set={{ curve: 'parabola', t: 0.5, layers: ['unit', 'normal'] }} id="normal-def">
+
+**הגדרה.** בנקודה שבה $\kappa(s)>0$, ה<Term id="principal-normal">נורמל הראשי</Term> הוא וקטור היחידה בכיוון שאליו המשיק פונה:
+
+$$
+\mathbf n(s)=\frac{1}{\kappa(s)}\,\frac{d\mathbf t}{ds}(s),\qquad \frac{d\mathbf t}{ds}=\kappa\,\mathbf n.
+$$
+
+**משפט.** $\mathbf n(s)\perp\mathbf t(s)$.
+
+**רעיון.** $\mathbf n$ הוא כפולה חיובית של $\frac{d\mathbf t}{ds}$, והלמה כבר אומרת ש-$\frac{d\mathbf t}{ds}\perp\mathbf t$.
+
+**הוכחה.** $\|\mathbf t\|\equiv1$, ולכן לפי הלמה $\mathbf t\cdot\frac{d\mathbf t}{ds}=0$. כש-$\kappa(s)>0$, $\mathbf n(s)$ הוא $\frac{d\mathbf t}{ds}(s)$ כפול המספר החיובי $\frac{1}{\kappa(s)}$, ולכן גם $\mathbf t(s)\cdot\mathbf n(s)=0$. $\blacksquare$
+
+במישור יש רק שני כיווני יחידה שניצבים ל-$\mathbf t$, ו-$\mathbf n$ הוא זה שפונה אל הצד הקעור. במרחב יש מישור שלם של כיוונים ניצבים ל-$\mathbf t$, ו-$\mathbf n$ הוא אחד מסוים מהם: הכיוון שבו המסילה מתעקלת.
+
+</Step>
+
+<Step fig="fig-1-3b" set={{ curve: 'parabola', t: 0.5, layers: ['unit', 'normal'] }} id="helix-normal">
+
+**הסליל.** $\frac{d\mathbf t}{dt}=\frac{1}{\sqrt{a^2+b^2}}(-a\cos t,\ -a\sin t,\ 0)$ ו-$\frac{ds}{dt}=\sqrt{a^2+b^2}$, ולכן
+
+$$
+\frac{d\mathbf t}{ds}=\frac{d\mathbf t/dt}{ds/dt}=\frac{a}{a^2+b^2}\,(-\cos t,\ -\sin t,\ 0),\qquad \mathbf n(t)=(-\cos t,\ -\sin t,\ 0).
+$$
+
+הנורמל אופקי ומצביע **פנימה**, אל ציר הגליל, לא החוצה. ובמעגל: $\mathbf n=-\big(\cos\frac sr,\ \sin\frac sr\big)$, מהנקודה אל המרכז.
+
+</Step>
+
+<Step fig="fig-1-3b" set={{ curve: 'parabola', t: 0.5, layers: ['unit', 'normal', 'accel'] }} id="normal-accel">
+
+**הנורמל אינו כיוון התאוצה.** בשלב 3 של ההוכחה קיבלנו $\gamma''=v'\,\mathbf t+v^2\frac{d\mathbf t}{ds}$, ועכשיו $\frac{d\mathbf t}{ds}=\kappa\,\mathbf n$:
+
+$$
+\gamma''=v'\,\mathbf t+\kappa v^2\,\mathbf n.
+$$
+
+לנגזרת השנייה יש רכיב **משיק** $v'$, שינוי באורך המהירות, ורכיב **נורמלי** $\kappa v^2$, שינוי בכיוון. $\mathbf n$ הוא הכיוון של הרכיב הנורמלי בלבד, ו-$\gamma''\parallel\mathbf n$ רק בנקודות שבהן $v'=0$.
+
+באיור הפרבולה $(t,\ t^2)$ ב-$t=\frac12$: $v=\sqrt{1+4t^2}=\sqrt2$, $v'=\frac{4t}{\sqrt{1+4t^2}}=\sqrt2$, $\kappa=\frac{2}{(1+4t^2)^{3/2}}=\frac{1}{\sqrt2}$ ו-$\kappa v^2=\sqrt2$. ואכן
+
+$$
+\sqrt2\cdot\tfrac{1}{\sqrt2}(1,\ 1)+\sqrt2\cdot\tfrac{1}{\sqrt2}(-1,\ 1)=(0,\ 2)=\gamma''.
+$$
+
+גררו את הנקודה לקודקוד: שם $v'=0$ ו-$\gamma''$ כולו נורמלי. בכל נקודה אחרת יש לו רכיב משיק.
+
+</Step>
+
+<Step fig="fig-1-3b" set={{ curve: 'cubic', t: 0.3, layers: ['unit', 'normal'] }} id="inflection">
+
+**כש-$\kappa=0$ אין נורמל ראשי.** במסילה $(t,\ t^3)$, $\kappa(0)=0$, ו-$\mathbf n(0)$ אינו מוגדר. אפשר היה לקוות להגדיר אותו "ברציפות", אבל אי אפשר: מימין לראשית הגרף קעור כלפי מעלה ו-$\mathbf n(t)\to(0,\ 1)$, ומשמאל קעור כלפי מטה ו-$\mathbf n(t)\to(0,\ -1)$. באיור, הזיזו את הנקודה מ-$t=0.3$ אל $t=-0.3$ דרך הראשית. במסילות מישוריות נפתור את זה ב<LessonLink id="1.5" />: נורמל שמסובב את $\mathbf t$ ברבע סיבוב תמיד, ועקמומיות עם סימן.
+
+</Step>
+
+</Explain>
+
+</Spread>
+
+<Page>
+
+<Example id="ex-1-3-1" title="מעגל במרחב">
+
+יהיו $\mathbf c\in\mathbb R^3$, $r>0$, ו-$\mathbf e_1,\ \mathbf e_2$ שני וקטורי יחידה ניצבים זה לזה ב-$\mathbb R^3$. נתונה המסילה $\gamma(s)=\mathbf c+r\cos\frac sr\,\mathbf e_1+r\sin\frac sr\,\mathbf e_2$.
+
+(א) הראו ש-$s$ הוא פרמטר אורך הקשת.
+
+(ב) חשבו את $\mathbf t$, $\kappa$ ו-$\mathbf n$, והראו ש-$\mathbf n$ מצביע מהנקודה אל $\mathbf c$.
+
+<Solution>
+
+**נתון**: מעגל ברדיוס $r$ סביב $\mathbf c$, במישור שנפרש על ידי $\mathbf e_1,\ \mathbf e_2$.
+
+**צריך להוכיח**: $\|\gamma'(s)\|=1$; לחשב $\mathbf t$, $\kappa$, $\mathbf n$.
+
+**רעיון**: בפרמטר אורך הקשת $\mathbf t=\gamma'$ ו-$\kappa=\|\gamma''\|$. אורכים של צירופים של $\mathbf e_1,\ \mathbf e_2$ מחשבים כמו במישור, כי הם אורתונורמליים.
+
+**חישוב**:
+- $\gamma'(s)=-\sin\frac sr\,\mathbf e_1+\cos\frac sr\,\mathbf e_2$. כי $\mathbf e_1\cdot\mathbf e_2=0$ ו-$\|\mathbf e_i\|=1$: $\|\gamma'(s)\|^2=\sin^2\frac sr+\cos^2\frac sr=1$. לכן $s$ הוא פרמטר אורך הקשת, ו-$\mathbf t(s)=\gamma'(s)$.
+- $\frac{d\mathbf t}{ds}=-\frac1r\big(\cos\frac sr\,\mathbf e_1+\sin\frac sr\,\mathbf e_2\big)$, שאורכו $\frac1r$. לכן $\kappa\equiv\frac1r$.
+- הנורמל הראשי:
+
+$$
+\mathbf n=\frac{1}{\kappa}\frac{d\mathbf t}{ds}=-\Big(\cos\frac sr\,\mathbf e_1+\sin\frac sr\,\mathbf e_2\Big)=\frac{\mathbf c-\gamma(s)}{r}.
+$$
+
+**בדיקה**: $\mathbf t\cdot\mathbf n=\sin\frac sr\cos\frac sr-\cos\frac sr\sin\frac sr=0$, כמו שהמשפט מבטיח. ועם $\mathbf c=0$, $\mathbf e_1=(1,0,0)$, $\mathbf e_2=(0,1,0)$ חוזרים למעגל של השיעור.
+
+**מסקנה**: $\kappa=\frac1r$ בכל נקודה, ו-$\mathbf n$ הוא וקטור היחידה מהנקודה אל המרכז. העקמומיות לא תלויה במיקום המעגל במרחב ולא במישור שבו הוא נמצא.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-1-3-2" title="הציקלואידה: התאוצה קבועה, העקמומיות לא">
+
+הציקלואידה $\gamma(t)=(t-\sin t,\ 1-\cos t)$, $0<t<2\pi$, היא המסלול של נקודה על גלגל ברדיוס 1 שמתגלגל על ציר ה-$x$.
+
+(א) חשבו את $\kappa(t)$.
+
+(ב) חשבו את $\|\gamma''(t)\|$, והשוו ל-$\kappa$ בנקודה העליונה, $t=\pi$.
+
+<Solution>
+
+**נתון**: $x=t-\sin t$, $y=1-\cos t$.
+
+**צריך למצוא**: $\kappa(t)$ ו-$\|\gamma''(t)\|$.
+
+**רעיון**: הנוסחה של המישור, $\kappa=\frac{|x'y''-y'x''|}{(x'^2+y'^2)^{3/2}}$, עם הזהויות $1-\cos t=2\sin^2\frac t2$.
+
+**חישוב**:
+- $x'=1-\cos t$, $y'=\sin t$, $x''=\sin t$, $y''=\cos t$.
+- המונה:
+
+$$
+x'y''-y'x''=(1-\cos t)\cos t-\sin^2t=\cos t-1=-2\sin^2\tfrac t2.
+$$
+- סכום הריבועים:
+
+$$
+x'^2+y'^2=2-2\cos t=4\sin^2\tfrac t2,\qquad (x'^2+y'^2)^{3/2}=8\big|\sin\tfrac t2\big|^3.
+$$
+
+ב-$0<t<2\pi$, $\sin\frac t2>0$, ולכן
+
+$$
+\kappa(t)=\frac{2\sin^2\frac t2}{8\sin^3\frac t2}=\frac{1}{4\sin\frac t2}.
+$$
+
+ולבסוף $\gamma''(t)=(\sin t,\ \cos t)$, ולכן $\|\gamma''(t)\|=1$ לכל $t$.
+
+**בדיקה**: ב-$t=\pi$, $\kappa=\frac14$, ו-$\|\gamma''\|=1$: התאוצה קבועה, אבל העקמומיות משתנה, וליד הקצוות ($t\to0$) היא שואפת לאינסוף, כי שם המסילה יוצרת חוד. גם $\kappa(\frac\pi2)=\frac{1}{4\sin\frac\pi4}\approx0.3536$ תואם חישוב מספרי (עדות, לא הוכחה).
+
+**מסקנה**: $\kappa(t)=\frac{1}{4\sin(t/2)}$; בנקודה העליונה $\frac14$, ולא $1=\|\gamma''\|$.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-1-3-3" title="נכון או לא: מה משנה את העקמומיות">
+
+$\gamma$ מסילה רגולרית מסדר $C^2$ ב-$\mathbb R^3$. קבעו אם כל טענה נכונה, ונמקו: הוכחה או דוגמה נגדית.
+
+(א) אם $A$ מטריצה אורתוגונלית ו-$\mathbf p\in\mathbb R^3$, למסילה $A\gamma+\mathbf p$ אותה עקמומיות כמו ל-$\gamma$ בכל $t$.
+
+(ב) אם $c>0$, העקמומיות של $c\gamma$ ב-$t$ היא $c\,\kappa(t)$.
+
+(ג) אם $\|\gamma''(t)\|=1$ לכל $t$, אז $\kappa\equiv1$.
+
+<Solution>
+
+**צריך להכריע**: שלוש טענות על איך העקמומיות מגיבה לשינויים.
+
+**רעיון**: בנוסחה $\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}$ רואים מיד מה קורה למונה ולמכנה. ולטענה שגויה מחפשים דוגמה נגדית בין המסילות שכבר חישבנו.
+
+**הוכחה**:
+- (א) **נכון.** $(A\gamma+\mathbf p)'=A\gamma'$ ו-$(A\gamma+\mathbf p)''=A\gamma''$. מטריצה אורתוגונלית שומרת אורכים: $\|A\gamma'\|=\|\gamma'\|$. ולמכפלה הווקטורית $A\mathbf u\times A\mathbf v$ שווה ל-$(\det A)\,A(\mathbf u\times\mathbf v)$ (שיעור 0.2), עם $\det A=\pm1$, ולכן $\|A\gamma'\times A\gamma''\|=\|\gamma'\times\gamma''\|$. המונה והמכנה לא השתנו.
+- (ב) **לא נכון.** $(c\gamma)'\times(c\gamma)''=c^2\,\gamma'\times\gamma''$ ו-$\|(c\gamma)'\|^3=c^3\|\gamma'\|^3$, ולכן העקמומיות היא $\frac{\kappa(t)}{c}$. מעגל ברדיוס $2$ מעוקם **חצי** ממעגל ברדיוס $1$.
+- (ג) **לא נכון.** בציקלואידה (דוגמה 2) $\|\gamma''\|\equiv1$, אבל $\kappa(\pi)=\frac14$. רק בפרמטר אורך הקשת $\kappa=\|\gamma''\|$.
+
+**בדיקה**: (א) מתאים לאינטואיציה: הזזה, סיבוב ושיקוף לא משנים את צורת המסילה. ב-(ב) מעגלים: $\gamma$ ברדיוס $1$ עם $\kappa=1$, ו-$c\gamma$ ברדיוס $c$ עם $\kappa=\frac1c$.
+
+**מסקנה**: (א) נכון; (ב) לא נכון, העקמומיות מתחלקת ב-$c$; (ג) לא נכון.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-1-3-4" title="עקמומיות ונורמל של מסילה במרחב">
+
+נתונה $\gamma(t)=(\cosh t,\ \sinh t,\ t)$, $t\in\mathbb R$.
+
+(א) חשבו את $\kappa(t)$ בנוסחה עם המכפלה הווקטורית. איפה העקמומיות מקסימלית?
+
+(ב) חשבו את $\mathbf n(t)$ ובדקו שהוא ניצב ל-$\mathbf t(t)$.
+
+<Solution>
+
+**נתון**: $\gamma'=(\sinh t,\ \cosh t,\ 1)$, $\gamma''=(\cosh t,\ \sinh t,\ 0)$.
+
+**צריך למצוא**: $\kappa(t)$, המקסימום שלה, ו-$\mathbf n(t)$.
+
+**רעיון**: ל-(א) הנוסחה $\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}$. ל-(ב) $\frac{d\mathbf t}{ds}=\frac{d\mathbf t/dt}{ds/dt}$, ואז מחלקים באורך. הזהות $\cosh^2t-\sinh^2t=1$ תפשט הכול.
+
+**חישוב (א)**:
+האורך: $\|\gamma'\|^2=\sinh^2t+\cosh^2t+1$, וכי $\sinh^2t+1=\cosh^2t$, זה $2\cosh^2t$. לכן $v=\sqrt2\cosh t$.
+
+המכפלה הווקטורית, רכיב אחר רכיב (ברכיב השלישי שוב $\sinh^2t-\cosh^2t=-1$):
+
+$$
+\gamma'\times\gamma''=(-\sinh t,\ \cosh t,\ -1),\qquad \|\gamma'\times\gamma''\|=\sqrt2\cosh t.
+$$
+
+לכן
+
+$$
+\kappa(t)=\frac{\sqrt2\cosh t}{(\sqrt2\cosh t)^3}=\frac{1}{2\cosh^2t}.
+$$
+
+העקמומיות מקסימלית כש-$\cosh t$ מינימלי, כלומר ב-$t=0$, שם $\kappa=\frac12$.
+
+**חישוב (ב)**:
+מחלקים את $\gamma'$ באורכו, גוזרים לפי $t$, ומחלקים ב-$v=\frac{ds}{dt}$:
+
+$$
+\mathbf t=\frac{1}{\sqrt2}\Big(\tanh t,\ 1,\ \frac{1}{\cosh t}\Big),\qquad
+\frac{d\mathbf t}{dt}=\frac{1}{\sqrt2}\Big(\frac{1}{\cosh^2t},\ 0,\ -\frac{\sinh t}{\cosh^2t}\Big),
+$$
+
+$$
+\frac{d\mathbf t}{ds}=\frac{1}{v}\,\frac{d\mathbf t}{dt}=\frac{1}{2\cosh^2t}\Big(\frac{1}{\cosh t},\ 0,\ -\tanh t\Big).
+$$
+
+הווקטור שבסוגריים הוא וקטור יחידה, כי $\frac{1}{\cosh^2t}+\tanh^2t=\frac{1+\sinh^2t}{\cosh^2t}=1$. לכן הוא $\mathbf n(t)$, והמקדם שלפניו הוא שוב $\kappa=\frac{1}{2\cosh^2t}$.
+
+**בדיקה**: $\sqrt2\,\mathbf t\cdot\mathbf n=\frac{\tanh t}{\cosh t}+0-\frac{\tanh t}{\cosh t}=0$. שתי הדרכים של (א) ו-(ב) נותנות אותה $\kappa$. ובדיקה מספרית: $\kappa(1)\approx0.20999$ ו-$\mathbf n(1)\approx(0.6481,\ 0,\ -0.7616)$, כמו בנוסחאות.
+
+**מסקנה**: $\kappa(t)=\frac{1}{2\cosh^2t}$, מקסימלית ב-$t=0$; $\mathbf n(t)=\big(\frac{1}{\cosh t},\ 0,\ -\tanh t\big)$.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-1-3-5" title="מתי הנגזרת השנייה מקבילה לנורמל">
+
+תהי $\gamma$ מסילה רגולרית מסדר $C^2$ עם $\kappa>0$ בכל נקודה, ונסמן $v=\|\gamma'\|$.
+
+(א) הוכיחו: $\gamma''(t)\parallel\mathbf n(t)$ לכל $t$ אם ורק אם $v$ קבועה.
+
+(ב) באליפסה $(2\cos t,\ \sin t)$ ב-$t=\frac\pi4$, חשבו את הרכיב של $\gamma''$ לאורך $\mathbf t$. האם $\gamma''\parallel\mathbf n$ שם?
+
+<Solution>
+
+**נתון**: $\gamma''=v'\,\mathbf t+\kappa v^2\,\mathbf n$, הזהות מהשיעור, עם $\mathbf t\perp\mathbf n$ וקטורי יחידה.
+
+**צריך להוכיח**: (א) שקילות; (ב) לחשב $\gamma''\cdot\mathbf t$.
+
+**רעיון**: $\mathbf t$ ו-$\mathbf n$ אורתונורמליים, ולכן הרכיב של $\gamma''$ לאורך $\mathbf t$ הוא בדיוק $v'$. "מקביל ל-$\mathbf n$" פירושו שהרכיב הזה אפס.
+
+**הוכחה (א)**: כופלים את הזהות פנימית ב-$\mathbf t$: $\gamma''\cdot\mathbf t=v'$, כי $\mathbf t\cdot\mathbf t=1$ ו-$\mathbf n\cdot\mathbf t=0$.
+- ($\Leftarrow$) אם $v$ קבועה, $v'\equiv0$, ו-$\gamma''=\kappa v^2\,\mathbf n$, כפולה של $\mathbf n$.
+- ($\Rightarrow$) אם $\gamma''=\lambda\,\mathbf n$, אז $v'=\gamma''\cdot\mathbf t=\lambda\,\mathbf n\cdot\mathbf t=0$ בכל $t$, ולכן $v$ קבועה על הקטע. $\blacksquare$
+
+**חישוב (ב)**: $\gamma'=(-2\sin t,\ \cos t)$ ו-$\gamma''=(-2\cos t,\ -\sin t)$. $v^2=4\sin^2t+\cos^2t$ ו-$\gamma''\cdot\gamma'=3\sin t\cos t$, ולכן
+
+$$
+v'=\frac{\gamma''\cdot\gamma'}{v}=\frac{3\sin t\cos t}{v},\qquad v'\big(\tfrac\pi4\big)=\frac{3/2}{\sqrt{5/2}}=\frac{3}{\sqrt{10}}\approx0.949\ne0.
+$$
+
+לכן $\gamma''$ **אינו** מקביל ל-$\mathbf n$ שם.
+
+**בדיקה**: ב-$t=0$ וב-$t=\frac\pi2$, קצות הצירים, $\sin t\cos t=0$, ולכן $v'=0$ ו-$\gamma''\parallel\mathbf n$: באליפסה, כמו בקודקוד הפרבולה באיור 1.3ב, זה קורה רק בנקודות שבהן המהירות מינימלית או מקסימלית. והנחנו $\kappa>0$ רק כדי ש-$\mathbf n$ יהיה מוגדר.
+
+**מסקנה**: $\gamma''\parallel\mathbf n$ בכל מקום בדיוק כשהמהירות קבועה. באליפסה ב-$t=\frac\pi4$ הרכיב המשיק של $\gamma''$ הוא $\frac{3}{\sqrt{10}}$, ולכן אין הקבלה.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-1-3-6" title="מסילה סגורה בתוך כדור מתעקלת לפחות כמו השפה שלו">
+
+תהי $\gamma:\mathbb R\to\mathbb R^n$ מסילה מסדר $C^2$ בפרמטר אורך הקשת, **סגורה**: $\gamma(s+L)=\gamma(s)$ לכל $s$, לאיזה $L>0$. נניח שהתמונה שלה בתוך הכדור הסגור $\{\|x\|\le R\}$. הוכיחו שיש $s_0$ עם $\kappa(s_0)\ge\frac1R$. תנו דוגמה שמראה שבלי "סגורה" הטענה לא נכונה.
+
+<Solution>
+
+**נתון**: $\|\gamma'\|\equiv1$, $\gamma$ מחזורית, $\|\gamma(s)\|\le R$.
+
+**צריך להוכיח**: קיים $s_0$ עם $\kappa(s_0)\ge\frac1R$.
+
+**רעיון**: בנקודה הרחוקה ביותר מהראשית המסילה חייבת "להסתובב חזרה" פנימה, ולכן להתעקל לפחות כמו הספרה שעוברת שם. מנסחים את זה עם הנגזרת השנייה של $f(s)=\|\gamma(s)\|^2$.
+
+**הוכחה**:
+1. $f(s)=\gamma(s)\cdot\gamma(s)$ רציפה ומחזורית, ולכן על הקטע הסגור $[0,L]$ יש לה מקסימום (ויירשטראס), והוא המקסימום שלה על כל $\mathbb R$. נסמן את המקום $s_0$. $f$ גזירה פעמיים, ו-$s_0$ נקודה פנימית של $\mathbb R$, ולכן $f'(s_0)=0$ ו-$f''(s_0)\le0$.
+2. $f'=2\gamma\cdot\mathbf t$, ובגזירה נוספת $f''=2(1+\gamma\cdot\mathbf t')$, כי $\gamma'=\mathbf t$ ו-$\mathbf t\cdot\mathbf t=1$.
+3. מ-$f''(s_0)\le0$: $\gamma(s_0)\cdot\mathbf t'(s_0)\le-1$, ולכן $|\gamma(s_0)\cdot\mathbf t'(s_0)|\ge1$.
+4. לפי קושי-שוורץ, ובגלל $\|\gamma(s_0)\|\le R$:
+
+$$
+1\le\|\gamma(s_0)\|\,\|\mathbf t'(s_0)\|=\|\gamma(s_0)\|\,\kappa(s_0)\le R\,\kappa(s_0).
+$$
+
+   בפרט $\|\gamma(s_0)\|>0$, ו-$\kappa(s_0)\ge\frac1R$. $\blacksquare$
+
+**דוגמה נגדית בלי סגירות**: הקטע $\gamma(s)=(s,\ 0)$, $|s|<R$, נמצא בכדור ועקמומיותו $0$ בכל נקודה. מה נשבר? למסילה הזו אין מקסימום של $\|\gamma\|$ בנקודה פנימית של התחום שלה.
+
+**בדיקה**: המעגל ברדיוס $R$ סביב הראשית מקיים $\kappa\equiv\frac1R$: שוויון, ולכן אי אפשר לשפר את החסם. השתמשנו בכל הנחה: מחזוריות (מקסימום פנימי), $C^2$ (הנגזרת השנייה של $f$), ופרמטר אורך הקשת ($\mathbf t\cdot\mathbf t=1$).
+
+**מסקנה**: עקמומיות היא גודל מקומי, אבל מסילה סגורה בכדור ברדיוס $R$ לא יכולה להיות שטוחה יותר מ-$\frac1R$ בכל נקודה.
+
+</Solution>
+
+</Example>
+
+<Check
+  title="שאלות הבנה על השיעור"
+  ids={['Q-1.3-circle', 'Q-1.3-fastcircle', 'Q-1.3-ellipse', 'Q-1.3-helix-normal', 'Q-1.3-normal-proof']}
+/>
+
+<Watch id="v-1-3-haifa-curvature" title="עקמומיות של עקום רגולרי, הרצאה מאוניברסיטת חיפה (רשות)">
+
+קטע בן כרבע שעה מקורס בגאומטריה דיפרנציאלית. הקטע נעצר לפני הפיתול, שנלמד רק בפרק 2. בהרצאה המסילה נקראת "עקום"; בקורס הזה "מסילה". כשהמרצה מגיעה לנוסחה בפרמטר כללי, השוו לשישה השלבים של ההוכחה בשיעור: מאיפה בא כל אחד משלושת הגורמים של $\|\gamma'\|$ במכנה?
+
+</Watch>
+
+<Watch id="v-1-3-curvature-derivation" title="עקמומיות: אינטואיציה וגזירה, באנגלית (רשות)">
+
+סרטון קצר שמגדיר עקמומיות קודם למסילה במהירות יחידה ואחר כך למסילה רגולרית כללית. השוו את ההגדרה שלו ל-$\kappa=\|\frac{d\mathbf t}{ds}\|$ של השיעור, ואת הנורמל שבסרטון לנורמל הראשי $\mathbf n$.
+
+</Watch>
+
+<Summary title="מה למדנו">
+
+- **המשיק היחידה:** $\mathbf t=\frac{\gamma'}{\|\gamma'\|}$ בנקודה רגולרית; בפרמטר אורך הקשת $\mathbf t=\gamma'(s)$. לא תלוי בפרמטריזציה, ומתהפך בהיפוך כיוון.
+- **למה:** אם $\|\mathbf u\|$ קבוע אז $\mathbf u\perp\mathbf u'$.
+- **עקמומיות:** $\kappa(s)=\big\|\frac{d\mathbf t}{ds}\big\|$, קצב הסיבוב של המשיק ליחידת אורך. למעגל ברדיוס $r$: $\frac1r$; לישר: $0$. $\kappa\equiv0$ על קטע אם ורק אם המסילה ישרה שם; $\kappa=0$ בנקודה בודדת אינו גורר ישר. $\kappa$ לא משתנה בהיפוך כיוון ובתנועה קשיחה, ומתחלקת ב-$c$ בהגדלה פי $c$.
+- **בפרמטר כללי:** $\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}$, ובמישור $\frac{|x'y''-y'x''|}{(x'^2+y'^2)^{3/2}}$. החזקה השלישית: $\delta'\times\delta''=\varphi'^3\,\gamma'\times\gamma''$, ומבין החזקות של $\|\gamma'\|$ רק השלישית מבטלת את $|\varphi'|^3$.
+- **נורמל ראשי:** כש-$\kappa>0$, $\mathbf n=\frac1\kappa\frac{d\mathbf t}{ds}$; הוא ניצב ל-$\mathbf t$ ומצביע אל הצד הקעור. כש-$\kappa=0$ הוא לא מוגדר, ולפעמים אין לו המשך רציף.
+- **פירוק הנגזרת השנייה:** $\gamma''=v'\,\mathbf t+\kappa v^2\,\mathbf n$, עם $v=\|\gamma'\|$. $\gamma''\parallel\mathbf n$ רק כש-$v'=0$.
+
+<Formula tex="\kappa(s)=\Big\|\frac{d\mathbf t}{ds}\Big\|,\qquad \frac{d\mathbf t}{ds}=\kappa\,\mathbf n" label="עקמומיות ונורמל ראשי" />
+
+<Formula tex="\kappa=\frac{\|\gamma'\times\gamma''\|}{\|\gamma'\|^3}=\frac{|x'y''-y'x''|}{(x'^2+y'^2)^{3/2}}" label="עקמומיות בפרמטר כללי" />
+
+<Formula tex="\gamma''=v'\,\mathbf t+\kappa v^2\,\mathbf n,\qquad v=\|\gamma'\|" label="רכיב משיק ורכיב נורמלי של הנגזרת השנייה" />
+
+<Revisit id="pred-1-3" />
+
+</Summary>
+
+</Page>

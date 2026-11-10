@@ -1,0 +1,384 @@
+# Lesson 6.1 — the line integral of a vector field.
+# Objectives (src/course.ts):
+#   OBJ-6.1-1  define and compute the line integral of a vector field along a curve
+#   OBJ-6.1-2  show it is independent of an orientation-preserving reparametrization and changes sign on reversal
+#   OBJ-6.1-3  tell the line integral of a field from the integral of a function by arc length
+# Keys recomputed with lineIntegral / scalarLineIntegral (src/math/vectorcalc.ts).
+chapter: 6
+questions:
+  - id: Q-6.1-def
+    type: mc
+    objectives: [OBJ-6.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      תהי $\gamma:[a,b]\to\mathbb{R}^n$ מסילה חלקה ורגולרית, ו-$\mathbf F$ שדה וקטורי רציף על התמונה שלה. **האינטגרל
+      הקווי** של $\mathbf F$ לאורך $\gamma$ מוגדר כ-$\int_\gamma\mathbf F\cdot d\mathbf s=\int_\gamma(\mathbf F\cdot\mathbf t)\,ds$:
+      האינטגרל לפי אורך קשת (שיעור 5.4) של הרכיב המשיק $\mathbf F\cdot\mathbf t$, עם $\mathbf t=\frac{\gamma'}{\|\gamma'\|}$
+      ו-$ds=\|\gamma'(t)\|\,dt$. איזה ביטוי שווה לו?
+    choices:
+      - text: '$\int_a^b\mathbf F(\gamma(t))\cdot\gamma''(t)\,dt$'
+        correct: true
+        feedback: >-
+          נכון. $\mathbf t\,ds=\frac{\gamma'}{\|\gamma'\|}\,\|\gamma'\|\,dt=\gamma'(t)\,dt$, כלומר $d\mathbf s=\gamma'(t)\,dt$:
+          וקטור המהירות הלא מנורמל כבר נושא את גורם האורך.
+      - text: '$\int_a^b\mathbf F(\gamma(t))\cdot\gamma''(t)\,\|\gamma''(t)\|\,dt$'
+        feedback: >-
+          גורם האורך כבר נמצא בתוך $\gamma'(t)$, שאינו מנורמל. הכפלה נוספת ב-$\|\gamma'\|$ סופרת אותו פעמיים, והתוצאה
+          משתנה כשמחליפים את מהירות ההליכה.
+        misconception: MC-c6-extra-norm
+      - text: '$\int_a^b\|\mathbf F(\gamma(t))\|\,\|\gamma''(t)\|\,dt$'
+        feedback: >-
+          זה $\int_\gamma\|\mathbf F\|\,ds$, אינטגרל של פונקציה לפי אורך קשת. הוא לא רואה את הכיוון של השדה ביחס למסילה:
+          שדה ניצב למסילה נותן כאן ערך חיובי, ובאינטגרל הקווי אפס.
+        misconception: MC-c6-field-vs-scalar
+      - text: '$\int_a^b\mathbf F(\gamma(t))\cdot\frac{\gamma''(t)}{\|\gamma''(t)\|}\,dt$'
+        feedback: >-
+          כאן הכפילו ב-$\mathbf t$ אבל חישבו את האינטגרל לפי $dt$ ולא לפי $ds=\|\gamma'\|\,dt$. חסר גורם האורך, והתוצאה תלויה
+          במהירות שבה עוברים על המסילה.
+        misconception: MC-c6-ds-is-dt
+    explanation: >-
+      שתי הצורות השקולות: $\int_a^b\mathbf F(\gamma)\cdot\gamma'\,dt$ (הלא מנורמל, בלי $\|\cdot\|$) ו-$\int_\gamma(\mathbf F\cdot\mathbf t)\,ds$
+      (המנורמל, עם $ds$). מכפילים ב-$\|\gamma'\|$ בדיוק פעם אחת, או אף פעם אם לא מנרמלים.
+
+  - id: Q-6.1-segment
+    type: numeric
+    objectives: [OBJ-6.1-1]
+    level: basic
+    prompt: >-
+      חשבו את $\int_\gamma\mathbf F\cdot d\mathbf s$ עבור $\mathbf F(x,y)=(y,\ x^2)$ לאורך הקטע מ-$(0,0)$ ל-$(1,2)$,
+      בכיוון הזה.
+    answer: 1.6666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac53$. עם $\gamma(t)=(t,2t)$, $t\in[0,1]$: $\gamma'=(1,2)$ ו-$\mathbf F(\gamma)=(2t,\,t^2)$, ולכן
+      $\mathbf F\cdot\gamma'=2t+2t^2$ ו-$\int_0^1(2t+2t^2)\,dt=1+\frac23$.
+    wrongFeedback: >-
+      כתבו פרמטריזציה לקטע, הציבו אותה ב-$\mathbf F$, וכפלו סקלרית ב-$\gamma'(t)$ עם שני הרכיבים.
+    commonWrong:
+      - value: 1.3333333
+        feedback: >-
+          $\frac43=\int_0^1(2t+t^2)\,dt$: הרכיב השני של $\mathbf F$ לא הוכפל ב-2, הרכיב השני של $\gamma'$. המכפלה
+          הסקלרית היא עם $\gamma'(t)=(1,2)$ כולו.
+        misconception: MC-c6-ds-is-dt
+      - value: 3.7267800
+        feedback: >-
+          זה $\frac53\sqrt5$: הכפילו גם ב-$\|\gamma'\|=\sqrt5$. גורם האורך כבר נמצא בתוך $\gamma'$.
+        misconception: MC-c6-extra-norm
+      - value: -1.6666667
+        feedback: >-
+          זה האינטגרל בכיוון ההפוך, מ-$(1,2)$ ל-$(0,0)$. השאלה מבקשת מ-$(0,0)$ ל-$(1,2)$.
+        misconception: MC-c6-orientation-irrelevant
+
+  - id: Q-6.1-reverse
+    type: mc
+    objectives: [OBJ-6.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      ידוע ש-$\int_\gamma\mathbf F\cdot d\mathbf s=3$ עבור $\gamma:[a,b]\to\mathbb{R}^3$. נגדיר
+      $\tilde\gamma(t)=\gamma(a+b-t)$, $t\in[a,b]$: אותה תמונה, בכיוון ההפוך. מה ערכו של
+      $\int_{\tilde\gamma}\mathbf F\cdot d\mathbf s$?
+    choices:
+      - text: '$-3$'
+        correct: true
+        feedback: >-
+          נכון. $\tilde\gamma'(t)=-\gamma'(a+b-t)$, וההצבה $u=a+b-t$ מחזירה את האינטגרל המקורי עם מינוס.
+      - text: '$3$'
+        feedback: >-
+          התמונה אותה תמונה, אבל וקטור המהירות הפוך בכל נקודה, ולכן גם $\mathbf F\cdot\tilde\gamma'$. עבודה של כוח בהליכה
+          הלוך היא מינוס העבודה בחזרה.
+        misconception: MC-c6-orientation-irrelevant
+      - text: '$0$'
+        feedback: >-
+          אפס מתקבל מסכום ההליכה הלוך וחזור, $\int_\gamma+\int_{\tilde\gamma}$, לא מ-$\int_{\tilde\gamma}$ לבדו.
+        misconception: MC-c6-orientation-irrelevant
+      - text: אי אפשר לדעת בלי לדעת את $\mathbf F$
+        feedback: >-
+          אפשר: לכל שדה רציף, היפוך הכיוון מחליף את הסימן. זה נובע מהחלפת משתנה, בלי לדעת דבר על $\mathbf F$.
+        misconception: MC-c6-orientation-irrelevant
+
+  - id: Q-6.1-mass-or-work
+    type: mc
+    objectives: [OBJ-6.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      חוט מונח לאורך מסילה $\gamma$, עם צפיפות מסה $\rho$ (מסה ליחידת אורך), וחלקיק נע לאורך אותה מסילה בשדה כוח
+      $\mathbf F$. איזה משפט נכון?
+    choices:
+      - text: 'המסה היא $\int_\gamma\rho\,ds$ והעבודה היא $\int_\gamma\mathbf F\cdot d\mathbf s$; רק העבודה מחליפה סימן כשהופכים את כיוון התנועה'
+        correct: true
+        feedback: >-
+          נכון. במסה סופרים אורך, $ds=\|\gamma'\|\,dt\ge0$; בעבודה סופרים את הרכיב המשיק של הכוח, $\mathbf F\cdot\mathbf t$,
+          ו-$\mathbf t$ תלוי בכיוון.
+      - text: 'המסה היא $\int_\gamma\rho\,ds$ והעבודה היא $\int_\gamma\mathbf F\cdot d\mathbf s$; שתיהן מחליפות סימן כשהופכים את כיוון התנועה'
+        feedback: >-
+          המסה של חוט אינה תלויה בכיוון שבו מתארים אותו, והיא אינה שלילית. $\|\gamma'\|$ לא מושפע מהיפוך הכיוון.
+        misconception: MC-c6-scalar-changes-sign
+      - text: 'המסה היא $\int_\gamma\rho\,ds$ והעבודה היא $\int_\gamma\mathbf F\cdot d\mathbf s$; שתיהן אינן תלויות בכיוון, כי הן על אותה תמונה'
+        feedback: >-
+          התמונה אותה תמונה, אבל בעבודה וקטור המשיק מתהפך, ואיתו הסימן של $\mathbf F\cdot\mathbf t$.
+        misconception: MC-c6-orientation-irrelevant
+      - text: 'המסה היא $\int_\gamma\rho\,ds$ והעבודה היא $\int_\gamma\|\mathbf F\|\,ds$; שתיהן אינן תלויות בכיוון התנועה'
+        feedback: >-
+          כוח ניצב לתנועה אינו עושה עבודה, ובכל זאת $\|\mathbf F\|>0$. העבודה סופרת רק את הרכיב לאורך המסילה.
+        misconception: MC-c6-field-vs-scalar
+
+  - id: Q-6.1-circle
+    type: numeric
+    objectives: [OBJ-6.1-1]
+    level: mid
+    prompt: >-
+      חשבו את $\oint_\gamma\mathbf F\cdot d\mathbf s$ עבור $\mathbf F(x,y)=(-y,\ x)$, כאשר $\gamma$ המעגל שרדיוסו 2 סביב
+      הראשית, פעם אחת נגד כיוון השעון.
+    answer: 25.132741
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $8\pi$. עם $\gamma(t)=(2\cos t,\,2\sin t)$: $\mathbf F(\gamma)\cdot\gamma'=(-2\sin t)(-2\sin t)+(2\cos t)(2\cos t)=4$,
+      ו-$\int_0^{2\pi}4\,dt=8\pi$. בשפה של $\mathbf t$: השדה משיק למעגל, $\mathbf F\cdot\mathbf t=2$, והאורך $4\pi$.
+    wrongFeedback: >-
+      הציבו $\gamma(t)=(2\cos t,2\sin t)$, חשבו את $\mathbf F(\gamma(t))\cdot\gamma'(t)$ ואת האינטגרל שלו על $[0,2\pi]$.
+    commonWrong:
+      - value: -25.132741
+        feedback: >-
+          זה מינוס $8\pi$, האינטגרל עם כיוון השעון. נגד כיוון השעון השדה $(-y,x)$ והמשיק מצביעים לאותו כיוון, והמכפלה חיובית.
+        misconception: MC-c6-orientation-irrelevant
+      - value: 50.265482
+        feedback: >-
+          זה $16\pi$: הכפילו גם ב-$\|\gamma'\|=2$. גורם האורך כבר נמצא בתוך $\gamma'(t)$.
+        misconception: MC-c6-extra-norm
+      - value: 12.566371
+        feedback: >-
+          זה $4\pi$: השתמשו ב-$\mathbf F\cdot\mathbf t=2$ אבל חישבו את האינטגרל לפי $dt$ במקום לפי $ds=2\,dt$.
+        misconception: MC-c6-ds-is-dt
+
+  - id: Q-6.1-two-paths
+    type: numeric
+    objectives: [OBJ-6.1-1]
+    level: mid
+    prompt: >-
+      $\mathbf F(x,y)=(y,\ 0)$. נסמן ב-$I_1$ את האינטגרל הקווי שלו מ-$(0,0)$ ל-$(1,1)$ לאורך הישר $y=x$, וב-$I_2$ את
+      האינטגרל בין אותן נקודות, באותו כיוון, לאורך הפרבולה $y=x^2$. חשבו את $I_1-I_2$.
+    answer: 0.16666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac16$. על הישר $\gamma(t)=(t,t)$: $\mathbf F\cdot\gamma'=t$, ו-$I_1=\frac12$. על הפרבולה $\gamma(t)=(t,t^2)$:
+      $\mathbf F\cdot\gamma'=t^2\cdot1$, ו-$I_2=\frac13$. אותן נקודות קצה, ערכים שונים: האינטגרל תלוי במסלול.
+    wrongFeedback: >-
+      חשבו כל אינטגרל לבד, עם $x=t$ כפרמטר בשני המקרים, והחסירו.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          אפס היה יוצא אילו האינטגרל היה תלוי רק בנקודות הקצה. זה נכון לשדות מסוימים בלבד (שדות משמרים, שיעור 6.2), ולא
+          לשדה הזה: חשבו את שני האינטגרלים.
+        misconception: MC-c6-all-fields-path-independent
+      - value: 0.83333333
+        feedback: >-
+          $\frac56=\frac12+\frac13$: חיברו במקום לחסר, או הפכו את הכיוון של אחת המסילות. אם הולכים על הישר הלוך ועל
+          הפרבולה חזור, מקבלים מסילה סגורה ואינטגרל $I_1-I_2$, לא $I_1+I_2$.
+        misconception: MC-c6-orientation-irrelevant
+
+  - id: Q-6.1-reparam
+    type: twotier
+    objectives: [OBJ-6.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\gamma:[0,1]\to\mathbb{R}^3$ מסילה חלקה, ו-$\delta(s)=\gamma(s^2)$, $s\in[0,1]$: אותה תמונה, אותו כיוון, אבל
+      מהירות אחרת. האם $\int_\delta\mathbf F\cdot d\mathbf s=\int_\gamma\mathbf F\cdot d\mathbf s$ לכל שדה רציף $\mathbf F$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. $\varphi(s)=s^2$ עולה ממש מ-$[0,1]$ על $[0,1]$, והאינטגרל אינו תלוי בפרמטריזציה ששומרת כיוון. בדיקה
+          מספרית עם $\gamma(t)=(\cos t,\sin 2t,t)$ ו-$\mathbf F=(yz,x,xy)$ נותנת אותו ערך בשתי הפרמטריזציות.
+      - text: לא, כי $\delta'(s)\ne\gamma'(s)$
+        feedback: >-
+          וקטורי המהירות אכן שונים, אבל באינטגרל השינוי מתבטל: $\delta'(s)\,ds=\gamma'(\varphi(s))\,\varphi'(s)\,ds=\gamma'(t)\,dt$.
+        misconception: MC-c6-speed-matters
+    reasons:
+      - text: '$\delta''(s)=2s\,\gamma''(s^2)$, וההצבה $t=s^2$ הופכת את $\int_0^1\mathbf F(\gamma(s^2))\cdot\gamma''(s^2)\,2s\,ds$ ל-$\int_0^1\mathbf F(\gamma(t))\cdot\gamma''(t)\,dt$'
+        correct: true
+        feedback: >-
+          בדיוק: כלל השרשרת ואחריו החלפת משתנה במשתנה אחד. הגבולות $s=0,1$ עוברים ל-$t=0,1$ באותו סדר, כי $\varphi$ עולה.
+      - text: 'לשתי המסילות אותה תמונה ואותו אורך, $\int_0^1\|\delta''(s)\|\,ds=\int_0^1\|\gamma''(t)\|\,dt$, ולכן כל אינטגרל עליהן שווה'
+        feedback: >-
+          שוויון אורכים לא מספיק: מסילה הפוכה, $\gamma(1-s)$, היא בעלת אותו אורך, והאינטגרל שלה הוא מינוס האינטגרל.
+        misconception: MC-c6-orientation-irrelevant
+      - text: '$\varphi(s)=s^2$ מקיימת $\varphi''(0)=0$, ולכן הטענה נכשלת בנקודה $s=0$'
+        feedback: >-
+          $\varphi'(0)=0$ בנקודה אחת לא מפריע להחלפת המשתנה: $\varphi$ עולה ממש, רציפה וגזירה ברציפות, והאינטגרנד חסום.
+          ההוכחה עוברת.
+        misconception: MC-c6-speed-matters
+
+  - id: Q-6.1-radial
+    type: numeric
+    objectives: [OBJ-6.1-3, OBJ-6.1-1]
+    level: mid
+    prompt: >-
+      $\mathbf F(x,y)=(x,\ y)$ ו-$\gamma$ מעגל היחידה סביב הראשית, פעם אחת נגד כיוון השעון. חשבו את
+      $\oint_\gamma\mathbf F\cdot d\mathbf s$.
+    answer: 0
+    correctFeedback: >-
+      נכון. $\mathbf F(\gamma(t))\cdot\gamma'(t)=(\cos t,\sin t)\cdot(-\sin t,\cos t)=0$: השדה רדיאלי ולכן ניצב למעגל בכל
+      נקודה, והרכיב המשיק שלו אפס.
+    wrongFeedback: >-
+      הציבו $\gamma(t)=(\cos t,\sin t)$ וחשבו את $\mathbf F(\gamma(t))\cdot\gamma'(t)$. מה הזווית בין השדה למשיק?
+    commonWrong:
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא $\oint\|\mathbf F\|\,ds$: אורך השדה הוא 1 והיקף המעגל $2\pi$. באינטגרל הקווי סופרים רק את הרכיב לאורך
+          המסילה, וכאן הוא אפס.
+        misconception: MC-c6-field-vs-scalar
+
+  - id: Q-6.1-ds-meaning
+    type: twotier
+    objectives: [OBJ-6.1-3, OBJ-6.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אפשר לכתוב $\int_\gamma\mathbf F\cdot d\mathbf s=\int_\gamma\rho\,ds$ עם $\rho=\mathbf F\cdot\mathbf t$. ואינטגרל של
+      פונקציה לפי אורך קשת אינו תלוי בכיוון (שיעור 5.4). האם מכאן שגם $\int_\gamma\mathbf F\cdot d\mathbf s$ אינו תלוי בכיוון?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. שתי הטענות שבשאלה נכונות, אבל הפונקציה $\rho$ עצמה תלויה בכיוון.
+      - text: כן
+        feedback: >-
+          אז ל-$\mathbf F=(-y,x)$ על מעגל היחידה היינו מקבלים $2\pi$ בשני הכיוונים, אבל עם כיוון השעון מתקבל $\oint=-2\pi$.
+        misconception: MC-c6-orientation-irrelevant
+    reasons:
+      - text: 'בהיפוך הכיוון $\mathbf t\mapsto-\mathbf t$, ולכן $\rho=\mathbf F\cdot\mathbf t$ מתחלפת: $\rho\mapsto-\rho$; $ds$ עצמו לא משתנה'
+        correct: true
+        feedback: >-
+          בדיוק. האינטגרל לפי אורך קשת לא תלוי בכיוון לפונקציה **קבועה מראש**. כאן הפונקציה נבנית מהכיוון.
+      - text: 'בהיפוך הכיוון $ds$ הופך לשלילי, כי $\tilde\gamma''=-\gamma''$, ואילו $\rho$ נשארת כפי שהייתה'
+        feedback: >-
+          $ds=\|\gamma'\|\,dt$ אינו שלילי בשום כיוון: $\|-\gamma'\|=\|\gamma'\|$, ואורך הוא אורך. הסימן בא מ-$\mathbf t$.
+        misconception: MC-c6-scalar-changes-sign
+      - text: 'השוויון $\int_\gamma\mathbf F\cdot d\mathbf s=\int_\gamma(\mathbf F\cdot\mathbf t)\,ds$ נכון רק כש-$\gamma$ בפרמטר אורך הקשת, ולכן הטיעון נופל כבר בצעד הראשון'
+        feedback: >-
+          השוויון נכון בכל פרמטריזציה: $\gamma'\,dt=\mathbf t\,\|\gamma'\|\,dt=\mathbf t\,ds$. פרמטר אורך הקשת רק מפשט
+          את $\|\gamma'\|=1$.
+        misconception: MC-c6-speed-matters
+
+  - id: Q-6.1-which-sign
+    type: multi
+    objectives: [OBJ-6.1-3, OBJ-6.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מחליפים את $\gamma$ במסילה ההפוכה (אותה תמונה, כיוון הפוך). אילו מהגדלים הבאים **מחליפים סימן**? סמנו
+      את כולם. ($\rho$ פונקציה רציפה ו-$\mathbf F$ שדה רציף, שניהם קבועים מראש.)
+    choices:
+      - text: '$\int_\gamma\mathbf F\cdot d\mathbf s$'
+        correct: true
+        feedback: נכון. $\gamma'$ מתהפך, ואיתו האינטגרנד.
+      - text: '$\int_\gamma(\mathbf F\cdot\mathbf t)\,ds$, עם $\mathbf t$ המשיק היחידה בכיוון ההליכה'
+        correct: true
+        feedback: >-
+          נכון. זה אותו אינטגרל כמו הקודם, בכתיב אחר: $\mathbf t$ מתהפך עם הכיוון.
+      - text: '$\int_\gamma\rho\,ds$'
+        feedback: >-
+          לא. $ds=\|\gamma'\|\,dt$ והפונקציה $\rho$ לא תלויה בכיוון, ולכן גם האינטגרל לא.
+        misconception: MC-c6-scalar-changes-sign
+      - text: האורך של $\gamma$
+        feedback: >-
+          לא. האורך הוא $\int_\gamma1\,ds$, מקרה פרטי של $\int\rho\,ds$, ואינו שלילי.
+        misconception: MC-c6-scalar-changes-sign
+      - text: '$\int_\gamma\|\mathbf F\|\,ds$'
+        feedback: >-
+          לא. זה אינטגרל של הפונקציה $\|\mathbf F\|$ לפי אורך קשת. הוא לא תלוי בכיוון, ולכן גם אינו האינטגרל הקווי של השדה.
+        misconception: MC-c6-field-vs-scalar
+
+  - id: Q-6.1-helix
+    type: numeric
+    objectives: [OBJ-6.1-1]
+    level: mid
+    prompt: >-
+      חשבו את $\int_\gamma\mathbf F\cdot d\mathbf s$ עבור $\mathbf F(x,y,z)=(-y,\ x,\ z)$ לאורך הסליל
+      $\gamma(t)=(\cos t,\ \sin t,\ t)$, $t\in[0,2\pi]$, בכיוון של $t$ העולה.
+    answer: 26.022394
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi+2\pi^2$. $\gamma'=(-\sin t,\cos t,1)$ ו-$\mathbf F(\gamma)=(-\sin t,\cos t,t)$, ולכן
+      $\mathbf F\cdot\gamma'=\sin^2t+\cos^2t+t=1+t$, ו-$\int_0^{2\pi}(1+t)\,dt=2\pi+2\pi^2$.
+    wrongFeedback: >-
+      כפלו סקלרית את $\mathbf F(\gamma(t))$ ב-$\gamma'(t)$ עם שלושת הרכיבים. הרכיב השלישי תורם $t\cdot1$.
+    commonWrong:
+      - value: 36.801223
+        feedback: >-
+          זה $\sqrt2\,(2\pi+2\pi^2)$: הכפילו גם ב-$\|\gamma'\|=\sqrt2$. גורם האורך כבר בתוך $\gamma'$.
+        misconception: MC-c6-extra-norm
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא רק התרומה של שני הרכיבים הראשונים. הרכיב השלישי של $\gamma'$ הוא 1, והוא כופל את $z=t$.
+        misconception: MC-c6-ds-is-dt
+      - value: -26.022394
+        feedback: >-
+          הסימן הפוך: בכיוון של $t$ העולה האינטגרנד $1+t$ חיובי.
+        misconception: MC-c6-orientation-irrelevant
+
+  - id: Q-6.1-proof
+    type: rank
+    objectives: [OBJ-6.1-2]
+    level: exam
+    prompt: >-
+      הוכחה: אם $\delta=\gamma\circ\varphi$, כאשר $\varphi:[c,d]\to[a,b]$ גזירה ברציפות, על, ו-$\varphi'>0$, אז
+      $\int_\delta\mathbf F\cdot d\mathbf s=\int_\gamma\mathbf F\cdot d\mathbf s$.
+    help: סדרו את שלבי ההוכחה, מהראשון לאחרון.
+    items:
+      - id: def
+        label: 'לפי ההגדרה, $\int_\delta\mathbf F\cdot d\mathbf s=\int_c^d\mathbf F(\delta(s))\cdot\delta''(s)\,ds$.'
+      - id: chain
+        label: 'לפי כלל השרשרת, $\delta''(s)=\gamma''(\varphi(s))\,\varphi''(s)$.'
+      - id: plug
+        label: 'לכן האינטגרל הוא $\int_c^d\mathbf F(\gamma(\varphi(s)))\cdot\gamma''(\varphi(s))\,\varphi''(s)\,ds$.'
+      - id: subst
+        label: 'כי $\varphi$ עולה ועל, $\varphi(c)=a$ ו-$\varphi(d)=b$; לכן ההצבה $t=\varphi(s)$ באינטגרל הזה נותנת $\int_a^b\mathbf F(\gamma(t))\cdot\gamma''(t)\,dt=\int_\gamma\mathbf F\cdot d\mathbf s$.'
+    order: [[def, chain], plug, subst]
+    correctFeedback: >-
+      נכון. ההגדרה וכלל השרשרת אינם תלויים זה בזה, ולכן כל סדר ביניהם טוב. שימו לב איפה $\varphi'>0$ נכנס: רק בגבולות
+      של ההצבה. אילו $\varphi'<0$, היה $\varphi(c)=b$ ו-$\varphi(d)=a$, וההצבה הייתה נותנת $\int_b^a=-\int_a^b$.
+    wrongFeedback: >-
+      ההוכחה מתחילה בהגדרה של האינטגרל על $\delta$ ובכלל השרשרת (בכל סדר), מציבה את האחד בשני, ומסתיימת בהחלפת
+      משתנה במשתנה אחד, שבה צריך לדעת לאן עוברים הגבולות.
+
+  - id: Q-6.1-decreasing
+    type: twotier
+    objectives: [OBJ-6.1-2, OBJ-6.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      בהוכחה שאינטגרל קווי של שדה אינו תלוי בהחלפת פרמטר $\delta=\gamma\circ\varphi$ ששומרת כיוון, מחליפים את ההנחה
+      $\varphi'>0$ בהנחה $\varphi'<0$ (הפרמטריזציה הופכת כיוון). מה קורה
+      ל-$\int_\delta\mathbf F\cdot d\mathbf s$, ומה ההבדל לעומת $\int_\delta\rho\,ds$?
+    choices:
+      - text: '$\int_\delta\mathbf F\cdot d\mathbf s=-\int_\gamma\mathbf F\cdot d\mathbf s$, ואילו $\int_\delta\rho\,ds=\int_\gamma\rho\,ds$'
+        correct: true
+        feedback: >-
+          נכון. האינטגרל של השדה מחליף סימן, והאינטגרל לפי אורך קשת לא.
+      - text: '$\int_\delta\mathbf F\cdot d\mathbf s=\int_\gamma\mathbf F\cdot d\mathbf s$, וגם $\int_\delta\rho\,ds=\int_\gamma\rho\,ds$'
+        feedback: >-
+          ל-$\rho$ זה נכון, לשדה לא: $\delta'=\gamma'(\varphi)\,\varphi'$ בלי ערך מוחלט, וכש-$\varphi'<0$ הגבולות מתחלפים.
+        misconception: MC-c6-abs-derivative
+      - text: '$\int_\delta\mathbf F\cdot d\mathbf s=-\int_\gamma\mathbf F\cdot d\mathbf s$, וגם $\int_\delta\rho\,ds=-\int_\gamma\rho\,ds$'
+        feedback: >-
+          ב-$\int\rho\,ds$ מופיע $\|\delta'\|=\|\gamma'(\varphi)\|\,|\varphi'|$: הערך המוחלט מבטל את היפוך הגבולות.
+        misconception: MC-c6-scalar-changes-sign
+    reasons:
+      - text: 'בשדה מופיע $\varphi''$ והגבולות מתחלפים, $\varphi(c)=b$; באורך קשת מופיע $|\varphi''|=-\varphi''$, שמבטל את החילוף'
+        correct: true
+        feedback: >-
+          בדיוק. $\int_c^d g(\varphi(s))\,(-\varphi'(s))\,ds=\int_a^b g(t)\,dt$, בעוד $\int_c^d g(\varphi(s))\,\varphi'(s)\,ds=-\int_a^b g(t)\,dt$.
+      - text: 'כלל השרשרת נותן תמיד $\|\delta''\|$, ולכן בשני המקרים הסימן נשמר'
+        feedback: >-
+          כלל השרשרת נותן את הווקטור $\delta'=\gamma'(\varphi)\,\varphi'$, עם הסימן של $\varphi'$. הנורמה נכנסת רק
+          ב-$ds$, לא ב-$d\mathbf s$.
+        misconception: MC-c6-abs-derivative
+      - text: 'החלפת משתנה דורשת $\varphi''>0$, ולכן כש-$\varphi''<0$ אי אפשר לחשב את האינטגרל'
+        feedback: >-
+          החלפת משתנה במשתנה אחד עובדת גם עם $\varphi$ יורדת; פשוט הגבולות מתחלפים. האינטגרל קיים ומחושב.
+        misconception: MC-c6-speed-matters

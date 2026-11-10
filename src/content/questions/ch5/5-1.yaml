@@ -1,0 +1,411 @@
+# Lesson 5.1 — the change-of-variables formula.
+# Objectives (src/course.ts):
+#   OBJ-5.1-1  state the formula; |det J| as the local area factor
+#   OBJ-5.1-2  linear and non-linear substitutions that simplify a region or an integrand, with the image of the region
+#   OBJ-5.1-3  the hypotheses: injective, C¹, Jacobian ≠ 0, up to a set of area zero
+chapter: 5
+questions:
+  - id: Q-5.1-formula
+    type: mc
+    objectives: [OBJ-5.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      תהי $\varphi:D^*\to D$ העתקה חד-חד-ערכית ועל, גזירה ברציפות, עם יעקוביאן שונה מאפס (פרט לקבוצה בעלת
+      שטח אפס), ותהי $f$ רציפה על $D$. איזו מהנוסחאות היא נוסחת החלפת המשתנים?
+    choices:
+      - text: '$\iint_D f(x,y)\,dx\,dy=\iint_{D^*} f(\varphi(u,v))\,|\det D\varphi(u,v)|\,du\,dv$'
+        correct: true
+        feedback: >-
+          נכון. מציבים $x,y$ כפונקציות של $u,v$, ומלבן קטן $du\,dv$ ב-$D^*$ עובר בקירוב למקבילית ששטחה
+          $|\det D\varphi|\,du\,dv$ ב-$D$.
+      - text: '$\iint_D f(x,y)\,dx\,dy=\iint_{D^*} f(\varphi(u,v))\,\det D\varphi(u,v)\,du\,dv$'
+        feedback: >-
+          בלי ערך מוחלט. עם $\varphi(u,v)=(v,u)$ ו-$f=1$ אגף ימין יוצא מינוס השטח של $D$, ושטח אינו שלילי.
+          הדטרמיננטה אומרת אם הכיוון נשמר; מקדם השטח הוא הערך המוחלט שלה.
+        misconception: MC-c5-signed-jacobian
+      - text: '$\iint_D f(x,y)\,dx\,dy=\iint_{D^*} f(\varphi(u,v))\,\frac{1}{|\det D\varphi(u,v)|}\,du\,dv$'
+        feedback: >-
+          זה היעקוביאן בכיוון ההפוך. עם $\varphi(u,v)=(2u,2v)$ על $[0,1]^2$ ו-$f=1$ אגף שמאל הוא 4 (שטח $[0,2]^2$),
+          ואגף ימין $\frac14$. ההעתקה מגדילה שטחים פי $|\det D\varphi|$, ולכן כופלים בו.
+        misconception: MC-c5-inverse-jacobian
+      - text: '$\iint_D f(x,y)\,dx\,dy=\iint_{D^*} f(\varphi(u,v))\,du\,dv$'
+        feedback: >-
+          חסר מקדם שינוי השטח. עם $\varphi(u,v)=(2u,2v)$ ו-$f=1$ אגף ימין הוא 1 ואגף שמאל 4.
+        misconception: MC-c5-forgot-jacobian
+    explanation: >-
+      בכל נוסחה כזו בודקים קודם את $f=1$: שני האגפים חייבים לתת את שטח $D$. זה מבדיל מיד בין שלוש הטעויות.
+
+  - id: Q-5.1-area-factor
+    type: numeric
+    objectives: [OBJ-5.1-1]
+    level: basic
+    prompt: >-
+      מהו השטח של התמונה של ריבוע היחידה $[0,1]^2$ תחת ההעתקה הלינארית $\varphi(u,v)=(u+2v,\ 3u+v)$?
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\det D\varphi=\det\begin{pmatrix}1&2\\3&1\end{pmatrix}=1-6=-5$, והשטח הוא
+      $\iint_{[0,1]^2}|\det D\varphi|\,du\,dv=5$. התמונה היא המקבילית שנפרשת על ידי $(1,3)$ ו-$(2,1)$.
+    wrongFeedback: >-
+      התמונה היא מקבילית שנפרשת על ידי העמודות של מטריצת ההעתקה. שטחה הוא הערך המוחלט של הדטרמיננטה כפול
+      שטח הריבוע.
+    commonWrong:
+      - value: -5
+        feedback: >-
+          זו הדטרמיננטה עצמה. היא שלילית כי ההעתקה הופכת כיוון, אבל שטח הוא הערך המוחלט שלה: 5.
+        misconception: MC-c5-signed-jacobian
+      - value: 0.2
+        feedback: >-
+          $\frac15$ הוא מקדם השטח של ההעתקה ההפוכה. $\varphi$ שולחת את הריבוע **אל** המקבילית, ולכן השטח גדל
+          פי $|\det D\varphi|=5$.
+        misconception: MC-c5-inverse-jacobian
+      - value: 1
+        feedback: >-
+          ההעתקה משנה שטחים: שטח התמונה הוא $|\det D\varphi|$ כפול שטח הריבוע, לא שטח הריבוע עצמו.
+        misconception: MC-c5-forgot-jacobian
+
+  - id: Q-5.1-image-square
+    type: mc
+    objectives: [OBJ-5.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהי התמונה של ריבוע היחידה $[0,1]^2$ תחת $\varphi(u,v)=(u+v,\ u-v)$?
+    choices:
+      - text: 'הריבוע שקודקודיו $(0,0)$, $(1,1)$, $(2,0)$, $(1,-1)$, ששטחו 2'
+        correct: true
+        feedback: >-
+          נכון. העתקה לינארית שולחת קודקודים לקודקודים וצלעות לצלעות: $(1,0)\mapsto(1,1)$, $(0,1)\mapsto(1,-1)$,
+          $(1,1)\mapsto(2,0)$. השטח הוא $|\det D\varphi|=|{-1}-1|=2$.
+      - text: 'ריבוע היחידה עצמו'
+        feedback: >-
+          הנקודה $(1,1)$ נשלחת ל-$(2,0)$, שאינה בריבוע היחידה. התמונה מתקבלת מהפעלת ההעתקה על הקודקודים.
+        misconception: MC-c5-image-guess
+      - text: 'הריבוע $[0,2]\times[-1,1]$'
+        feedback: >-
+          זה הריבוע המלבני הקטן ביותר שמכיל את התמונה, ושטחו 4. הקודקוד $(2,1)$ שלו אינו תמונה של אף נקודה:
+          $u+v=2$ מחייב $u=v=1$, ואז $u-v=0$.
+        misconception: MC-c5-image-guess
+      - text: 'ריבוע מסובב בזווית של 45 מעלות ששטחו 1, כי העמודות של המטריצה ניצבות'
+        feedback: >-
+          העמודות $(1,1)$ ו-$(1,-1)$ אכן ניצבות, אבל אורך כל אחת $\sqrt2$, ולכן כל צלע מתארכת פי $\sqrt2$ והשטח
+          גדל פי 2.
+        misconception: MC-c5-image-guess
+
+  - id: Q-5.1-linear
+    type: numeric
+    objectives: [OBJ-5.1-2]
+    level: basic
+    prompt: >-
+      $D$ היא המקבילית שחסומה בין הישרים $x+y=0$, $x+y=2$, $x-2y=0$, $x-2y=3$. חשבו את
+      $\iint_D(x+y)\,dx\,dy$ בעזרת ההחלפה $u=x+y$, $v=x-2y$.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{\partial(u,v)}{\partial(x,y)}=\det\begin{pmatrix}1&1\\1&-2\end{pmatrix}=-3$, ולכן
+      $dx\,dy=\frac13\,du\,dv$. התחום החדש הוא $[0,2]\times[0,3]$, ו-
+      $$\iint_D(x+y)\,dx\,dy=\frac13\int_0^2\int_0^3u\,dv\,du=\frac13\cdot3\cdot2=2.$$
+    wrongFeedback: >-
+      ההחלפה נתונה בכיוון $(x,y)\mapsto(u,v)$. חשבו את היעקוביאן שלה, הפכו אותו, וקחו ערך מוחלט.
+    commonWrong:
+      - value: 6
+        feedback: >-
+          זה $\int_0^2\int_0^3u\,dv\,du$ בלי מקדם השטח. המקבילית קטנה פי 3 מהמלבן $[0,2]\times[0,3]$ שבמשתנים
+          החדשים.
+        misconception: MC-c5-forgot-jacobian
+      - value: 18
+        feedback: >-
+          כפלתם ב-$\left|\frac{\partial(u,v)}{\partial(x,y)}\right|=3$. בנוסחה מופיע היעקוביאן של $(u,v)\mapsto(x,y)$,
+          שהוא $\frac13$.
+        misconception: MC-c5-inverse-jacobian
+      - value: -2
+        feedback: >-
+          לקחתם את היעקוביאן עם הסימן שלו. מקדם השטח הוא $\left|\frac{1}{-3}\right|=\frac13$.
+        misconception: MC-c5-signed-jacobian
+
+  - id: Q-5.1-small-square
+    type: mc
+    objectives: [OBJ-5.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      למה דווקא $|\det D\varphi(u_0,v_0)|$ הוא מקדם שינוי השטח של $\varphi$ ליד הנקודה $(u_0,v_0)$?
+    choices:
+      - text: >-
+          התמונה של מלבן קטן $[u_0,u_0+h]\times[v_0,v_0+k]$ קרובה (דרך הדיפרנציאל) למקבילית שנפרשת על ידי
+          $h\,\varphi_u$ ו-$k\,\varphi_v$, ששטחה $|\det(\varphi_u,\varphi_v)|\,hk$
+        correct: true
+        feedback: >-
+          נכון. $\varphi(u_0+s,v_0+t)\approx\varphi(u_0,v_0)+s\varphi_u+t\varphi_v$, והשגיאה קטנה ביחס ל-$h,k$.
+          שטח מקבילית שנפרשת על ידי שני וקטורים במישור הוא הערך המוחלט של הדטרמיננטה שלהם (שיעור 0.2).
+      - text: >-
+          התמונה של מלבן קטן היא בקירוב מלבן שצלעותיו $h\|\varphi_u\|$ ו-$k\|\varphi_v\|$, ששטחו
+          $\|\varphi_u\|\,\|\varphi_v\|\,hk$
+        feedback: >-
+          התמונה קרובה למקבילית, לא למלבן: $\varphi_u$ ו-$\varphi_v$ אינם ניצבים בדרך כלל. מכפלת
+          האורכים מתעלמת מהזווית ביניהם; למשל ל-$\varphi(u,v)=(u+v,v)$ היא $\sqrt2$, אבל ההעתקה שומרת על שטחים.
+        misconception: MC-c5-image-guess
+      - text: >-
+          כי שטח מכוון הוא $\det(\varphi_u,\varphi_v)\,hk$ בלי ערך מוחלט, והערך המוחלט נוסף רק כדי לקבל מספר
+          חיובי בסוף
+        feedback: >-
+          הערך המוחלט אינו קישוט: הוא שטח המקבילית. אם מוותרים עליו, העתקה כמו $(u,v)\mapsto(v,u)$, ששומרת על
+          כל שטח, הייתה "מקטינה" אותו למינוס עצמו.
+        misconception: MC-c5-signed-jacobian
+      - text: >-
+          כי המלבן הקטן ב-$D$ הוא תמונה של מלבן גדול יותר ב-$D^*$, ולכן המקדם הוא $\frac{1}{|\det D\varphi|}$
+        feedback: >-
+          המלבן נמצא ב-$D^*$ ותמונתו ב-$D$, ולא להפך. שטח התמונה הוא $|\det D\varphi|$ כפול שטח המלבן; ההופכי
+          הוא המקדם של $\varphi^{-1}$.
+        misconception: MC-c5-inverse-jacobian
+
+  - id: Q-5.1-reflection
+    type: twotier
+    objectives: [OBJ-5.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ההעתקה $\varphi(u,v)=(v,u)$ שולחת את $D^*$ על $D$. סטודנט כותב: "כי $\det D\varphi=-1$, מתקיים
+      $\iint_Df(x,y)\,dx\,dy=-\iint_{D^*}f(v,u)\,du\,dv$". האם הוא צודק?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $|\det D\varphi|=1$, ולכן $\iint_Df=\iint_{D^*}f(v,u)\,du\,dv$, בלי מינוס.
+      - text: כן
+        feedback: >-
+          עם $f=1$ אגף שמאל הוא שטח $D$, חיובי, ואגף ימין שלילי. שיקוף אינו משנה שטח, רק כיוון.
+        misconception: MC-c5-signed-jacobian
+    reasons:
+      - text: 'בנוסחה מופיע $|\det D\varphi|$, ושיקוף שומר על שטחים; ל-$f=1$ שני האגפים הם שטח $D$'
+        correct: true
+        feedback: >-
+          בדיוק. הסימן של הדטרמיננטה מבחין בין שיקוף לסיבוב, אבל מקדם השטח הוא הערך המוחלט.
+      - text: 'שיקוף הופך את הכיוון, ולכן כל אינטגרל אחריו מחליף סימן'
+        feedback: >-
+          הכיוון אכן מתהפך, אבל אינטגרל כפול של פונקציה אינו תלוי בכיוון: הוא גבול של סכומים של ערכים כפול שטחים,
+          ושטחים אינם שליליים.
+        misconception: MC-c5-signed-jacobian
+      - text: 'צריך לחלק ב-$\det D\varphi$ ולא לכפול בו, ולכן הסימן מתבטל'
+        feedback: >-
+          חלוקה ב-$-1$ נותנת אותו מינוס. ומה שמופיע בנוסחה הוא $|\det D\varphi|$ של ההעתקה מ-$D^*$ ל-$D$: כופלים
+          בו.
+        misconception: MC-c5-inverse-jacobian
+
+  - id: Q-5.1-steps
+    type: rank
+    objectives: [OBJ-5.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $D$ הוא התחום ברביע הראשון שבין ההיפרבולות $xy=1$, $xy=2$ לבין הישרים $y=x$, $y=4x$. סדרו את שלבי
+      החישוב של $\iint_D1\,dx\,dy$ בעזרת $u=xy$, $v=\frac yx$.
+    help: סדרו את השלבים מהראשון לאחרון. שני שלבים שאינם תלויים זה בזה יכולים לבוא בכל סדר.
+    items:
+      - id: choose
+        label: 'בוחרים משתנים שבהם כל קו שפה נעשה קו קבוע: $u=xy$, $v=\frac yx$'
+      - id: image
+        label: 'מתרגמים כל קו שפה למשתנים החדשים ומקבלים $D^*=[1,2]\times[1,4]$'
+      - id: jac
+        label: 'מחשבים $\frac{\partial(u,v)}{\partial(x,y)}=\det\begin{pmatrix}y&x\\-\frac{y}{x^2}&\frac1x\end{pmatrix}=\frac{2y}{x}=2v$, ולפי כלל השרשרת $\left|\frac{\partial(x,y)}{\partial(u,v)}\right|=\frac{1}{2v}$'
+      - id: integrate
+        label: 'מחשבים את האינטגרל: $\int_1^2\int_1^4\frac{1}{2v}\,dv\,du=\ln2$'
+    order: [choose, [image, jac], integrate]
+    correctFeedback: >-
+      נכון. את התמונה ואת מקדם השטח אפשר לחשב בכל סדר, כי אף אחד מהם אינו משתמש בשני, ואת האינטגרל עושים
+      רק אחרי שיש גם תחום וגם מקדם.
+    wrongFeedback: >-
+      כל שלב משתמש בתוצאה של קודמו: אין תחום חדש לפני שבחרתם משתנים, ואין מקדם שטח לפני שחישבתם את היעקוביאן
+      והפכתם אותו.
+
+  - id: Q-5.1-hyperbolas
+    type: numeric
+    objectives: [OBJ-5.1-2]
+    level: mid
+    prompt: >-
+      חשבו את השטח של התחום $D$ ברביע הראשון שחסום בין $xy=1$, $xy=4$, $y=x$ ו-$y=3x$.
+    answer: 1.647918
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac32\ln3\approx1.6479$. עם $u=xy$, $v=\frac yx$: $\frac{\partial(u,v)}{\partial(x,y)}=2v$, ולכן
+      $$|D|=\int_1^4\int_1^3\frac{1}{2v}\,dv\,du=3\cdot\frac{\ln3}{2}.$$
+    wrongFeedback: >-
+      בחרו $u=xy$, $v=\frac yx$: אז $D^*=[1,4]\times[1,3]$. חשבו $\frac{\partial(u,v)}{\partial(x,y)}$ והפכו
+      אותו.
+    commonWrong:
+      - value: 6
+        feedback: >-
+          זה שטח המלבן $[1,4]\times[1,3]$ במשתנים החדשים. צריך לכפול במקדם השטח $\frac{1}{2v}$.
+        misconception: MC-c5-forgot-jacobian
+      - value: 24
+        feedback: >-
+          כפלתם ב-$2v=\frac{\partial(u,v)}{\partial(x,y)}$. בנוסחה מופיע היעקוביאן של $(u,v)\mapsto(x,y)$, ההופכי:
+          $\frac{1}{2v}$.
+        misconception: MC-c5-inverse-jacobian
+
+  - id: Q-5.1-double-cover
+    type: twotier
+    objectives: [OBJ-5.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ההעתקה $\varphi(u,v)=(u^2,v)$ גזירה ברציפות ושולחת את $D^*=[-1,1]\times[0,1]$ על $D=[0,1]^2$. האם
+      $$\iint_D1\,dx\,dy=\iint_{D^*}|\det D\varphi|\,du\,dv\ ?$$
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. אגף שמאל הוא 1 ואגף ימין $\int_{-1}^1|2u|\,du=2$.
+      - text: כן
+        feedback: >-
+          חשבו את שני האגפים: אגף שמאל הוא שטח $[0,1]^2$, כלומר 1, ואגף ימין הוא $\int_{-1}^{1}\int_0^1|2u|\,dv\,du=2$.
+        misconception: MC-c5-non-injective-ok
+    reasons:
+      - text: 'ההעתקה אינה חד-חד-ערכית: $(u,v)$ ו-$(-u,v)$ הולכות לאותה נקודה, ולכן כל נקודה של $D$ נספרת פעמיים'
+        correct: true
+        feedback: >-
+          בדיוק. הכשל הוא על קבוצה בעלת שטח חיובי (כל $D^*$), לא על קבוצה בעלת שטח אפס. על
+          $[0,1]\times[0,1]$ לבדה הנוסחה כן מתקיימת: $\int_0^1 2u\,du=1$.
+      - text: 'היעקוביאן $2u$ מתאפס על הקו $u=0$'
+        feedback: >-
+          הוא מתאפס רק על קטע, שהוא קבוצה בעלת שטח אפס, וזה מותר. הבעיה היא הכיסוי הכפול.
+        misconception: MC-c5-hypotheses-everywhere
+      - text: 'היעקוביאן $2u$ שלילי כש-$u<0$, ולכן צריך לכתוב $\det D\varphi$ בלי ערך מוחלט ואז האגפים שווים'
+        feedback: >-
+          בלי ערך מוחלט אגף ימין יוצא $\int_{-1}^1 2u\,du=0$, וגם זה אינו 1. השטח תמיד עם ערך מוחלט; מה שחסר
+          כאן הוא חד-חד-ערכיות.
+        misconception: MC-c5-signed-jacobian
+
+  - id: Q-5.1-which-maps
+    type: multi
+    objectives: [OBJ-5.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לאילו מההעתקות הבאות, על התחום $D^*$ שלצדן, מתקיימים תנאי נוסחת החלפת המשתנים (חד-חד-ערכית, גזירה
+      ברציפות, יעקוביאן שונה מאפס, פרט לקבוצה בעלת שטח אפס)? סמנו את כולן.
+    choices:
+      - text: '$\varphi(u,v)=(2u-v,\ u+v)$ על $[0,1]^2$'
+        correct: true
+        feedback: >-
+          נכון. לינארית עם $\det D\varphi=2+1=3\neq0$, ולכן חד-חד-ערכית על כל המישור.
+      - text: '$\varphi(u,v)=(u\cos v,\ u\sin v)$ על $[0,1]\times[0,2\pi]$'
+        correct: true
+        feedback: >-
+          נכון. החריגים, הצלע $u=0$ (שם היעקוביאן $u$ מתאפס וכל הצלע הולכת לראשית) והצלעות $v=0,\ v=2\pi$ (שהולכות
+          לאותו קטע), הם קטעים בעלי שטח אפס.
+      - text: '$\varphi(u,v)=(u^3,\ v)$ על $[-1,1]\times[0,1]$'
+        correct: true
+        feedback: >-
+          נכון. $u\mapsto u^3$ עולה ממש, ולכן $\varphi$ חד-חד-ערכית. היעקוביאן $3u^2$ מתאפס רק על הקטע $u=0$, שהוא
+          בעל שטח אפס.
+      - text: '$\varphi(u,v)=(u\cos v,\ u\sin v)$ על $[1,2]\times[0,3\pi]$'
+        feedback: >-
+          היעקוביאן $u\ge1$ אף פעם לא מתאפס, אבל $v$ ו-$v+2\pi$ נותנים אותה נקודה: חצי הטבעת העליון מכוסה
+          פעמיים, וזו קבוצה בעלת שטח חיובי.
+        misconception: MC-c5-local-to-global-injective
+      - text: '$\varphi(u,v)=(u^2,\ v)$ על $[-1,1]\times[0,1]$'
+        feedback: >-
+          $(u,v)$ ו-$(-u,v)$ הולכות לאותה נקודה: כל $[0,1]^2$ מכוסה פעמיים.
+        misconception: MC-c5-non-injective-ok
+      - text: '$\varphi(u,v)=(u+v,\ 2u+2v)$ על $[0,1]^2$'
+        feedback: >-
+          $\det D\varphi=2-2=0$ בכל נקודה, והתמונה היא קטע על הישר $y=2x$. ההעתקה אינה חד-חד-ערכית, והיעקוביאן
+          מתאפס על כל התחום, לא רק על קבוצה בעלת שטח אפס.
+        misconception: MC-c5-non-injective-ok
+
+  - id: Q-5.1-polar-origin
+    type: twotier
+    objectives: [OBJ-5.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סטודנטית טוענת: "אסור לחשב $\iint_{x^2+y^2\le1}f$ בקוטביות על $[0,1]\times[0,2\pi]$, כי ההעתקה
+      $(r,\theta)\mapsto(r\cos\theta,r\sin\theta)$ אינה חד-חד-ערכית ב-$r=0$, והיעקוביאן שלה מתאפס שם". האם
+      היא צודקת?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. הנוסחה מתקיימת, כי החריגים הם קבוצה בעלת שטח אפס.
+      - text: כן
+        feedback: >-
+          הנוסחה מרשה חריגים על קבוצה בעלת שטח אפס. אילו הייתה דורשת את התנאים בכל נקודה, קוטביות לא היו עובדות
+          על אף עיגול.
+        misconception: MC-c5-hypotheses-everywhere
+    reasons:
+      - text: 'הכשלים הם על הצלעות $r=0$, $\theta=0$, $\theta=2\pi$ של המלבן, שהן קבוצות בעלות שטח אפס, ועליהן ההעתקה אינה משנה את האינטגרל'
+        correct: true
+        feedback: >-
+          בדיוק. על פנים המלבן ההעתקה חד-חד-ערכית עם יעקוביאן $r>0$, ושינוי של אינטגרנד על קבוצה בעלת שטח אפס אינו
+          משנה אינטגרל.
+      - text: 'בנוסחה לא צריך חד-חד-ערכיות; מספיק שההעתקה תהיה על'
+        feedback: >-
+          צריך: עם $\theta\in[0,4\pi]$ ההעתקה עדיין על, אבל השטח יוצא $2\pi$ במקום $\pi$. מה שמותר הוא כשל על
+          קבוצה בעלת שטח אפס בלבד.
+        misconception: MC-c5-non-injective-ok
+      - text: 'היעקוביאן של הקוטביות ב-$r=0$ הוא 1, ולכן אינו מתאפס'
+        feedback: >-
+          היעקוביאן הוא $r$, והוא אכן מתאפס ב-$r=0$. הנוסחה נכונה למרות זאת, כי $r=0$ הוא קטע.
+        misconception: MC-c5-forgot-jacobian
+
+  - id: Q-5.1-rewrite
+    type: mc
+    objectives: [OBJ-5.1-2, OBJ-5.1-1]
+    level: mid
+    prompt: >-
+      $D=\{(x,y):\ 1\le x+y\le2,\ 0\le x^2-y^2\le3\}$ ו-$f$ רציפה על $D$. עם $u=x+y$, $v=x^2-y^2$ מתקיים
+      $x-y=\frac vu$, ולכן $x=\frac{u^2+v}{2u}$, $y=\frac{u^2-v}{2u}$. איזה ביטוי שווה ל-$\iint_Df\,dx\,dy$?
+    choices:
+      - text: '$\displaystyle\int_1^2\int_0^3 f\left(\frac{u^2+v}{2u},\frac{u^2-v}{2u}\right)\frac{1}{2u}\,dv\,du$'
+        correct: true
+        feedback: >-
+          נכון. $\frac{\partial(u,v)}{\partial(x,y)}=\det\begin{pmatrix}1&1\\2x&-2y\end{pmatrix}=-2(x+y)=-2u$, ולכן
+          $\left|\frac{\partial(x,y)}{\partial(u,v)}\right|=\frac{1}{2u}$ (כאן $u\ge1$). התחום החדש הוא
+          $[1,2]\times[0,3]$, וההעתקה חד-חד-ערכית כי $(u,v)$ קובעים את $x+y$ ואת $x-y$.
+      - text: '$\displaystyle\int_1^2\int_0^3 f\left(\frac{u^2+v}{2u},\frac{u^2-v}{2u}\right)2u\,dv\,du$'
+        feedback: >-
+          $2u$ הוא $\left|\frac{\partial(u,v)}{\partial(x,y)}\right|$, היעקוביאן של ההעתקה מ-$(x,y)$ ל-$(u,v)$. בנוסחה
+          צריך את ההופכי שלו.
+        misconception: MC-c5-inverse-jacobian
+      - text: '$\displaystyle\int_1^2\int_0^3 f\left(\frac{u^2+v}{2u},\frac{u^2-v}{2u}\right)\frac{-1}{2u}\,dv\,du$'
+        feedback: >-
+          זה היעקוביאן עם הסימן שלו. עם $f=1$ התוצאה הייתה שלילית, ושטח $D$ חיובי.
+        misconception: MC-c5-signed-jacobian
+      - text: '$\displaystyle\int_1^2\int_0^3 f\left(\frac{u^2+v}{2u},\frac{u^2-v}{2u}\right)dv\,du$'
+        feedback: >-
+          חסר מקדם השטח. עם $f=1$ זה נותן 3, אבל שטח $D$ הוא $\int_1^2\int_0^3\frac{1}{2u}\,dv\,du=\frac32\ln2$.
+        misconception: MC-c5-forgot-jacobian
+
+  - id: Q-5.1-sign
+    type: twotier
+    objectives: [OBJ-5.1-3, OBJ-5.1-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן ש-$\varphi$, גזירה ברציפות וחד-חד-ערכית על תחום פתוח וקשיר $D^*$, עם $\det D\varphi\neq0$ בכל
+      נקודה, מקיימת $\det D\varphi>0$ בנקודה אחת ו-$\det D\varphi<0$ בנקודה אחרת?
+    choices:
+      - text: לא ייתכן
+        correct: true
+        feedback: >-
+          נכון. לכן ב"מקדם השטח" של העתקה כזו, $|\det D\varphi|$, הסימן שהוסר הוא קבוע על כל התחום.
+      - text: ייתכן
+        feedback: >-
+          פונקציה רציפה שעוברת מערך חיובי לערך שלילי מתאפסת בדרך. כדי שהסימן יתחלף, היעקוביאן חייב להתאפס
+          בנקודה כלשהי.
+        misconception: MC-c5-jacobian-sign-flip
+    reasons:
+      - text: '$\det D\varphi$ רציפה (כי הנגזרות החלקיות רציפות); מחברים את שתי הנקודות במסילה ב-$D^*$ ומפעילים את משפט ערך הביניים על ההרכבה, ומקבלים נקודה שבה הדטרמיננטה אפס'
+        correct: true
+        feedback: >-
+          בדיוק. הקשירות היא חלק מהותי: על שני עיגולים זרים $\varphi$ יכולה להיות זהות על אחד ושיקוף על השני.
+      - text: 'ייתכן: למשל $\varphi(u,v)=(u,v^3)$, שבה $\det D\varphi=3v^2$'
+        feedback: >-
+          $3v^2$ אינו שלילי באף נקודה, ומתאפס על הקו $v=0$, כך שזו אינה דוגמה בשום מובן.
+        misconception: MC-c5-jacobian-sign-flip
+      - text: '$\det D\varphi$ רציפה, אבל משפט ערך הביניים חל רק על פונקציה של משתנה אחד, ולכן בתחום דו-ממדי הסימן יכול להתחלף בלי לעבור דרך אפס'
+        feedback: >-
+          משפט ערך הביניים מופעל על ההרכבה $t\mapsto\det D\varphi(c(t))$, כש-$c$ מסילה בין שתי הנקודות: זו פונקציה
+          רציפה של משתנה אחד. מסילה כזו קיימת כי תחום פתוח וקשיר הוא קשיר מסילתית.
+        misconception: MC-c5-jacobian-sign-flip

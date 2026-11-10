@@ -1,0 +1,364 @@
+# Lesson 6.4 — closed curves and closed surfaces.
+# Objectives (src/course.ts):
+#   OBJ-6.4-1  use the notation for closed curves and closed surfaces; fix the positive direction and the outward normal
+#   OBJ-6.4-2  compute the flux through a closed surface made of several smooth pieces, such as a cylinder with lids
+#   OBJ-6.4-3  compute a line integral over an oriented boundary of a plane region made of several curves
+# Conventions: the boundary of a plane region is positive with the region on the left; a closed surface gets the outward
+# normal. No Green or Gauss (chapter 7): every value is computed piece by piece. Keys recomputed with lineIntegral / flux.
+chapter: 6
+questions:
+  - id: Q-6.4-notation
+    type: mc
+    objectives: [OBJ-6.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $S$ השפה של גוף חסום $V\subset\mathbb{R}^3$ (למשל ספרה, או גליל עם מכסים). הכתיב $\oiint_S\mathbf F\cdot d\mathbf S$
+      מסמן שטף דרך המשטח הסגור $S$, וכשלא נאמר אחרת הוא מחושב עם **הנורמל החיצוני**: בכל נקודה הנורמל מצביע החוצה
+      מ-$V$. מחשבים אותו חלק אחרי חלק, כל חלק בפרמטריזציה $\sigma$ משלו. איזו טענה נכונה?
+    choices:
+      - text: 'בחלק שבו $\sigma_u\times\sigma_v$ פונה לתוך $V$, מחליפים את הסימן של התרומה של אותו חלק'
+        correct: true
+        feedback: >-
+          נכון. העיגול על סימן האינטגרל אומר רק שהמשטח סגור; הכיוון המוסכם הוא כלפי חוץ, וצריך לבדוק אותו בכל חלק של
+          המשטח בנפרד.
+      - text: 'בכל חלק משתמשים ב-$\sigma_u\times\sigma_v$ של הפרמטריזציה שבחרו, כי הוא תמיד מצביע החוצה מ-$V$'
+        feedback: >-
+          הפרמטריזציה לא קובעת את הכיוון: החלפת סדר הפרמטרים הופכת את $\sigma_u\times\sigma_v$. אם הוא פונה פנימה בחלק
+          כלשהו, מחליפים שם את הסימן.
+        misconception: MC-c6-param-normal-trusted
+      - text: 'עם הנורמל הפנימי בכל החלקים מתקבל אותו ערך, כי $S$ הוא אותה קבוצת נקודות'
+        feedback: >-
+          עם הנורמל הפנימי מתקבל מינוס השטף: $\mathbf F\cdot\hat{\mathbf N}$ מחליף סימן בכל נקודה. לכן המוסכמה נאמרת
+          במפורש.
+        misconception: MC-c6-flux-orientation-free
+      - text: 'הערך תמיד אפס, כי כל מה שנכנס ל-$V$ דרך חלק אחד יוצא דרך חלק אחר'
+        feedback: >-
+          הכתיב לא מבטיח דבר על הערך. השטף של $(x,y,z)$ החוצה דרך ספרת היחידה הוא $4\pi$: $\mathbf F\cdot\hat{\mathbf N}=1$
+          בכל נקודה.
+        misconception: MC-c6-closed-means-zero
+
+  - id: Q-6.4-lid
+    type: mc
+    objectives: [OBJ-6.4-1]
+    level: basic
+    prompt: >-
+      $V$ הגליל המלא $x^2+y^2\le1$, $0\le z\le1$. את המכסה **התחתון** ($z=0$) מתארים כ-$\sigma(r,\theta)=(r\cos\theta,\ r\sin\theta,\ 0)$,
+      $r\in[0,1]$, $\theta\in[0,2\pi]$. האם $\sigma_r\times\sigma_\theta$ הוא הנורמל החיצוני?
+    choices:
+      - text: 'לא: $\sigma_r\times\sigma_\theta=(0,0,r)$ פונה כלפי מעלה, לתוך $V$; בשטף החיצוני מחליפים את הסימן'
+        correct: true
+        feedback: >-
+          נכון. $(\cos\theta,\sin\theta,0)\times(-r\sin\theta,r\cos\theta,0)=(0,0,r)$. במכסה התחתון "החוצה" הוא כלפי מטה.
+      - text: 'כן: $(0,0,r)$ כלפי מעלה, והנורמל של מכסה אופקי תמיד כלפי מעלה'
+        feedback: >-
+          במכסה העליון כן. במכסה התחתון הגוף נמצא **מעל** המכסה, ולכן החוצה הוא כלפי מטה, $(0,0,-1)$.
+        misconception: MC-c6-lids-same-normal
+      - text: 'כן: $\sigma_r\times\sigma_\theta$ הוא תמיד הנורמל הנכון'
+        feedback: >-
+          $\sigma_r\times\sigma_\theta$ הוא הנורמל של הפרמטריזציה, לא הנורמל המבוקש. בודקים אותו מול "החוצה מ-$V$".
+        misconception: MC-c6-param-normal-trusted
+      - text: 'אין למכסה לבדו "חוץ", ולכן השאלה לא מוגדרת'
+        feedback: >-
+          "חוץ" מוגדר ביחס לגוף $V$ שהמשטח הסגור חוסם, וכל חלק של השפה מקבל ממנו כיוון: החוצה מ-$V$.
+        misconception: MC-c6-flux-orientation-free
+
+  - id: Q-6.4-triangle
+    type: numeric
+    objectives: [OBJ-6.4-3]
+    level: basic
+    prompt: >-
+      $T$ המשולש שקודקודיו $(0,0)$, $(1,0)$, $(0,1)$. חשבו את $\oint_{\partial T}\mathbf F\cdot d\mathbf s$ עבור
+      $\mathbf F(x,y)=(y,\ 0)$, כאשר $\partial T$ מכוונת בכיוון החיובי (התחום משמאל).
+    answer: -0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\oint_{\partial T}\mathbf F\cdot d\mathbf s=-\frac12$. הכיוון החיובי: $(0,0)\to(1,0)\to(0,1)\to(0,0)$. על הצלע התחתונה $y=0$ ולכן $\mathbf F=0$; על היתר
+      $\gamma(t)=(1-t,t)$, $\mathbf F\cdot\gamma'=t\cdot(-1)$, והתרומה $\int_0^1(-t)\,dt=-\frac12$; על הצלע השמאלית $\gamma'=(0,-1)$ ניצב
+      ל-$\mathbf F$, ולכן אפס.
+    wrongFeedback: >-
+      פרקו את השפה לשלוש צלעות, כל אחת בכיוון שבו המשולש משמאל, חשבו כל אינטגרל לבד, וחברו.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          $\frac12$ הוא האינטגרל עם כיוון השעון. בכיוון החיובי המשולש משמאל: מ-$(0,0)$ ימינה ל-$(1,0)$.
+        misconception: MC-c6-orientation-irrelevant
+      - value: 0
+        feedback: >-
+          אפס הוא סכום שתי הצלעות על הצירים בלבד. היתר מ-$(1,0)$ ל-$(0,1)$ הוא חלק מהשפה, ושם $\mathbf F\ne0$.
+        misconception: MC-c6-piece-forgotten
+
+  - id: Q-6.4-annulus-orient
+    type: mc
+    objectives: [OBJ-6.4-1, OBJ-6.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $A$ הטבעת $1\le x^2+y^2\le4$. מהי השפה $\partial A$ בכיוון החיובי?
+    choices:
+      - text: 'המעגל שרדיוסו 2 נגד כיוון השעון, והמעגל שרדיוסו 1 עם כיוון השעון'
+        correct: true
+        feedback: >-
+          נכון. הולכים על כל רכיב של השפה כך שהתחום משמאל: על המעגל החיצוני התחום פנימה, משמאל להליכה נגד כיוון השעון; על
+          המעגל הפנימי התחום החוצה, משמאל להליכה עם כיוון השעון.
+      - text: 'שני המעגלים נגד כיוון השעון'
+        feedback: >-
+          "נגד כיוון השעון" נכון למעגל החיצוני בלבד. מי שהולך נגד כיוון השעון על המעגל הפנימי רואה משמאלו את החור, לא את $A$.
+        misconception: MC-c6-all-circles-ccw
+      - text: 'המעגל שרדיוסו 2 עם כיוון השעון, והמעגל שרדיוסו 1 נגד כיוון השעון'
+        feedback: >-
+          זה בדיוק הכיוון ההפוך, שבו $A$ מימין. הכיוון החיובי הוא עם התחום משמאל.
+        misconception: MC-c6-orientation-irrelevant
+      - text: 'רק המעגל שרדיוסו 2, נגד כיוון השעון'
+        feedback: >-
+          השפה של $A$ היא כל הנקודות שבקצה התחום, וגם המעגל הפנימי הוא כזה. השפה כאן מורכבת משתי מסילות.
+        misconception: MC-c6-piece-forgotten
+
+  - id: Q-6.4-outward
+    type: multi
+    objectives: [OBJ-6.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $S$ השפה של הגליל המלא $x^2+y^2\le4$, $z\in[-1,3]$, עם הנורמל החיצוני. אילו מהמשפטים נכונים? סמנו את כולם.
+    choices:
+      - text: 'על המכסה $z=3$: $\hat{\mathbf N}=(0,0,1)$'
+        correct: true
+        feedback: נכון. הגוף מתחת למכסה העליון, והחוצה הוא כלפי מעלה.
+      - text: 'על המכסה $z=-1$: $\hat{\mathbf N}=(0,0,-1)$'
+        correct: true
+        feedback: נכון. הגוף מעל המכסה התחתון, והחוצה הוא כלפי מטה.
+      - text: 'על הדופן: $\hat{\mathbf N}=\frac{(x,\ y,\ 0)}{2}$'
+        correct: true
+        feedback: נכון. על הדופן הנורמל אופקי, הרחק מציר $z$, ואורכו 1 כי $x^2+y^2=4$.
+      - text: 'על המכסה $z=-1$: $\hat{\mathbf N}=(0,0,1)$'
+        feedback: >-
+          $(0,0,1)$ במכסה התחתון מצביע לתוך הגוף. לשני המכסים נורמלים חיצוניים מנוגדים.
+        misconception: MC-c6-lids-same-normal
+      - text: 'על הדופן: $\hat{\mathbf N}=\frac{(x,\ y,\ z)}{\sqrt{x^2+y^2+z^2}}$'
+        feedback: >-
+          זה הנורמל של ספרה סביב הראשית. על הדופן של גליל הנורמל ניצב לציר $z$, ואין לו רכיב $z$.
+        misconception: MC-c6-radial-normal-everywhere
+
+  - id: Q-6.4-cylinder
+    type: numeric
+    objectives: [OBJ-6.4-2]
+    level: mid
+    prompt: >-
+      $S$ השפה של הגליל המלא $x^2+y^2\le1$, $|z|\le1$: דופן ושני מכסים. חשבו את $\oiint_S\mathbf F\cdot d\mathbf S$ עבור
+      $\mathbf F(x,y,z)=(x,\ y,\ z)$, עם הנורמל החיצוני.
+    answer: 18.849556
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $6\pi$. דופן: $\hat{\mathbf N}=(x,y,0)$, $\mathbf F\cdot\hat{\mathbf N}=1$, שטח $2\pi\cdot2$, תרומה $4\pi$. מכסה
+      עליון: $z=1$, $\mathbf F\cdot(0,0,1)=1$, שטח $\pi$. מכסה תחתון: $z=-1$, $\mathbf F\cdot(0,0,-1)=1$, שטח $\pi$. סך הכול
+      $4\pi+\pi+\pi$.
+    wrongFeedback: >-
+      חשבו את השטף דרך כל אחד משלושת החלקים לבד, כל אחד עם הנורמל החיצוני שלו, וחברו.
+    commonWrong:
+      - value: 12.566371
+        feedback: >-
+          $4\pi$ הוא השטף דרך הדופן בלבד, או דופן עם מכסה תחתון שהנורמל שלו $(0,0,1)$ (אז $\pi-\pi=0$ מהמכסים). המכסים הם
+          חלק מהמשטח הסגור, והנורמל של התחתון הוא $(0,0,-1)$, שם $\mathbf F\cdot\hat{\mathbf N}=-z=1$.
+        misconception: MC-c6-piece-forgotten
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא השטף דרך שני המכסים בלבד. דרך הדופן השדה $(x,y,z)$ אינו משיק: הוא יוצא ממנה, ותורם $4\pi$.
+        misconception: MC-c6-piece-forgotten
+
+  - id: Q-6.4-cube
+    type: numeric
+    objectives: [OBJ-6.4-2]
+    level: mid
+    prompt: >-
+      $S$ השפה של הקובייה $[0,1]^3$, עם הנורמל החיצוני. חשבו את $\oiint_S\mathbf F\cdot d\mathbf S$ עבור
+      $\mathbf F(x,y,z)=(x+2,\ 0,\ z)$.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. פאה $x=1$, $\hat{\mathbf N}=(1,0,0)$: $\mathbf F\cdot\hat{\mathbf N}=3$, תרומה 3. פאה $x=0$, $\hat{\mathbf N}=(-1,0,0)$:
+      $\mathbf F\cdot\hat{\mathbf N}=-2$, תרומה מינוס 2. פאה $z=1$: תרומה 1. פאה $z=0$: $\mathbf F\cdot(0,0,-1)=-z=0$. פאות $y=0,1$: $F_2=0$. סך הכול $3-2+1=2$.
+    wrongFeedback: >-
+      לקובייה שש פאות. לכל פאה רשמו את הנורמל החיצוני ($\pm\mathbf e_i$) ואת $\mathbf F\cdot\hat{\mathbf N}$ עליה; השטח של כל
+      פאה 1.
+    commonWrong:
+      - value: 6
+        feedback: >-
+          6 מתקבל כשנותנים לפאה $x=0$ את הנורמל $(1,0,0)$, כמו לפאה $x=1$: אז היא תורמת 2 במקום מינוס 2. בפאה $x=0$ החוצה
+          הוא בכיוון $(-1,0,0)$.
+        misconception: MC-c6-lids-same-normal
+      - value: 1
+        feedback: >-
+          1 הוא השטף דרך שתי הפאות $x=0,1$ בלבד. גם הפאה $z=1$ תורמת: שם $\mathbf F\cdot(0,0,1)=z=1$.
+        misconception: MC-c6-piece-forgotten
+
+  - id: Q-6.4-constant
+    type: twotier
+    objectives: [OBJ-6.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbf F=(a,b,c)$ שדה קבוע, ו-$S$ השפה של הגליל המלא $x^2+y^2\le r^2$, $0\le z\le h$, עם הנורמל החיצוני. מהו
+      $\oiint_S\mathbf F\cdot d\mathbf S$? (חשבו ישירות, בלי משפטים מפרק 7.)
+    choices:
+      - text: '$0$'
+        correct: true
+        feedback: נכון. כל מה שנכנס בצד אחד יוצא בצד השני.
+      - text: '$2\pi r^2c$'
+        feedback: >-
+          זה מה שמתקבל כששני המכסים מקבלים את הנורמל $(0,0,1)$. במכסה התחתון הנורמל החיצוני $(0,0,-1)$, והתרומות $\pi r^2c$
+          ו-$(-\pi r^2c)$ מתבטלות.
+        misconception: MC-c6-lids-same-normal
+    reasons:
+      - text: 'דופן: $\int_0^h\int_0^{2\pi}(a\cos u+b\sin u)\,r\,du\,dz=0$; מכסים: $\pi r^2c$ למעלה ו-$(-\pi r^2c)$ למטה'
+        correct: true
+        feedback: >-
+          בדיוק, חלק אחרי חלק. על הדופן $\sigma_u\times\sigma_z=r(\cos u,\sin u,0)$, והאינטגרל של $\cos u$ ושל $\sin u$ על
+          מחזור שלם אפס.
+      - text: 'השדה מקביל לדופן בכל נקודה, ולכן השטף דרך הדופן אפס, והמכסים אינם תורמים כי הם שטוחים'
+        feedback: >-
+          השדה מקביל לדופן רק כש-$a=b=0$, וגם אז צריך לבדוק את המכסים, ששם השדה **אינו** מקביל. חלק שנשכח הוא בדיוק מקור
+          הטעויות כאן.
+        misconception: MC-c6-piece-forgotten
+      - text: 'שטף דרך כל משטח סגור הוא אפס, כי מה שנכנס לגוף דרך חלק אחד חייב לצאת דרך חלק אחר'
+        feedback: >-
+          לא: $(x,y,z)$ נותן $4\pi$ דרך ספרת היחידה. כאן התוצאה אפס בגלל חישוב, לא בגלל שהמשטח סגור.
+        misconception: MC-c6-closed-means-zero
+      - text: 'כש-$c>0$ השדה מצביע כלפי מעלה בכל נקודה, ולכן הוא יוצא מהגליל והשטף חיובי'
+        feedback: >-
+          דרך המכסה העליון השדה יוצא, אבל דרך המכסה התחתון הוא **נכנס** לגוף: שם $\mathbf F\cdot(0,0,-1)=-c<0$. שדה שמצביע
+          לאותו צד בכל נקודה נכנס בצד אחד ויוצא בצד השני.
+        misconception: MC-c6-one-direction-positive
+
+  - id: Q-6.4-annulus-winding
+    type: numeric
+    objectives: [OBJ-6.4-3]
+    level: mid
+    prompt: >-
+      $A$ הטבעת $1\le x^2+y^2\le4$, ו-$\mathbf W=\frac{(-y,\ x)}{x^2+y^2}$ שדה הסיבוב. חשבו את $\oint_{\partial A}\mathbf W\cdot d\mathbf s$,
+      כאשר $\partial A$ בכיוון החיובי.
+    answer: 0
+    correctFeedback: >-
+      נכון. על המעגל החיצוני, נגד כיוון השעון, האינטגרל $2\pi$ (לכל רדיוס, שיעור 6.2). על המעגל הפנימי, עם כיוון השעון,
+      הוא מינוס $2\pi$. סך הכול $0$.
+    wrongFeedback: >-
+      השפה בנויה משני מעגלים. כוונו כל אחד כך שהטבעת משמאל, חשבו כל אינטגרל לבד, וחברו.
+    commonWrong:
+      - value: 12.566371
+        feedback: >-
+          $4\pi$ מתקבל כששני המעגלים נגד כיוון השעון. על המעגל הפנימי הכיוון החיובי הוא עם כיוון השעון, והתרומה מינוס $2\pi$.
+        misconception: MC-c6-all-circles-ccw
+      - value: 6.2831853
+        feedback: >-
+          $2\pi$ הוא המעגל החיצוני לבדו. גם מעגל החור הוא חלק מ-$\partial A$.
+        misconception: MC-c6-piece-forgotten
+
+  - id: Q-6.4-annulus-rot
+    type: numeric
+    objectives: [OBJ-6.4-3]
+    level: mid
+    prompt: >-
+      $A$ הטבעת $1\le x^2+y^2\le4$. חשבו את $\oint_{\partial A}\mathbf F\cdot d\mathbf s$ עבור $\mathbf F(x,y)=(-y,\ x)$, כאשר
+      $\partial A$ בכיוון החיובי.
+    answer: 18.849556
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $6\pi$. על מעגל שרדיוסו $\rho$ נגד כיוון השעון $\mathbf F\cdot\gamma'=\rho^2$, והאינטגרל $2\pi\rho^2$. החיצוני
+      נותן $8\pi$; הפנימי, עם כיוון השעון, מינוס $2\pi$.
+    wrongFeedback: >-
+      חשבו את האינטגרל על מעגל שרדיוסו $\rho$ נגד כיוון השעון, הציבו $\rho=2$ ו-$\rho=1$, וזכרו את כיוון המעגל הפנימי.
+    commonWrong:
+      - value: 31.415927
+        feedback: >-
+          $10\pi=8\pi+2\pi$: המעגל הפנימי כוון נגד כיוון השעון. בכיוון החיובי הטבעת משמאל, ועל המעגל הפנימי זה עם כיוון השעון.
+        misconception: MC-c6-all-circles-ccw
+      - value: 25.132741
+        feedback: >-
+          $8\pi$ הוא המעגל החיצוני לבדו. השפה כוללת גם את המעגל הפנימי.
+        misconception: MC-c6-piece-forgotten
+
+  - id: Q-6.4-hemisphere-disk
+    type: numeric
+    objectives: [OBJ-6.4-2]
+    level: exam
+    prompt: >-
+      $V$ חצי כדור היחידה העליון, $x^2+y^2+z^2\le1$, $z\ge0$. השפה $S=\partial V$ בנויה מחצי הספרה העליון ומהעיגול
+      $x^2+y^2\le1$ במישור $z=0$. חשבו את $\oiint_S\mathbf F\cdot d\mathbf S$ עבור $\mathbf F=(0,\ 0,\ z+1)$, עם הנורמל החיצוני.
+    answer: 2.0943951
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{2\pi}{3}$. חצי הספרה: $\hat{\mathbf N}=(x,y,z)$ ו-$\mathbf F\cdot\hat{\mathbf N}=z^2+z$; לפי סימטריה
+      $\iint z^2\,dS=\frac{2\pi}3$ (חצי מ-$\frac{4\pi}{3}$), ו-$\iint z\,dS=\pi$ (בפרמטריזציה $(\cos u\cos v,\sin u\cos v,\sin v)$:
+      $\int_0^{2\pi}\int_0^{\pi/2}\sin v\cos v\,dv\,du$). העיגול:
+      $\hat{\mathbf N}=(0,0,-1)$ ו-$\mathbf F\cdot\hat{\mathbf N}=-1$, תרומה מינוס $\pi$. סך הכול $\frac{2\pi}3+\pi-\pi$.
+    wrongFeedback: >-
+      שני חלקים, כל אחד עם הנורמל החיצוני שלו: על חצי הספרה כלפי חוץ, ועל העיגול כלפי מטה.
+    commonWrong:
+      - value: 8.3775804
+        feedback: >-
+          $\frac{8\pi}{3}$ מתקבל כשהעיגול מקבל את הנורמל $(0,0,1)$. העיגול הוא "המכסה התחתון" של $V$, והחוצה ממנו הוא כלפי מטה.
+        misconception: MC-c6-lids-same-normal
+      - value: 5.2359878
+        feedback: >-
+          $\frac{5\pi}{3}$ הוא השטף דרך חצי הספרה בלבד. המשטח הסגור כולל גם את העיגול, והשדה $(0,0,1)$ בגובה $z=0$ אינו משיק לו.
+        misconception: MC-c6-piece-forgotten
+
+  - id: Q-6.4-square
+    type: numeric
+    objectives: [OBJ-6.4-3]
+    level: exam
+    prompt: >-
+      $Q=[-2,2]^2$. חשבו **ישירות** את $\oint_{\partial Q}\mathbf W\cdot d\mathbf s$ עבור שדה הסיבוב $\mathbf W=\frac{(-y,\ x)}{x^2+y^2}$,
+      כאשר $\partial Q$ בכיוון החיובי (ארבע צלעות). (רמז: חשבו צלע אחת וחשבו על סימטריה.)
+    answer: 6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi$. על הצלע הימנית $\gamma(t)=(2,t)$, $t\in[-2,2]$: $\mathbf W\cdot\gamma'=\frac{2}{4+t^2}$, ו-$\int_{-2}^{2}\frac{2\,dt}{4+t^2}=\left[\arctan\frac t2\right]_{-2}^{2}=\frac\pi2$.
+      סיבוב ב-$90^\circ$ מעביר צלע לצלע ושומר על $\mathbf W$, ולכן כל צלע תורמת $\frac\pi2$.
+    wrongFeedback: >-
+      תארו את הצלע הימנית מלמטה למעלה, $\gamma(t)=(2,t)$, חשבו את $\mathbf W\cdot\gamma'$ ואת האינטגרל שלו בעזרת $\arctan$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          אפס היה נכון לשדה משמר על התחום, אבל $\mathbf W$ אינו משמר ב-$\mathbb{R}^2\setminus\{0\}$, והריבוע מקיף את הראשית.
+          החישוב צלע אחרי צלע נותן $4\cdot\frac\pi2$.
+        misconception: MC-c6-closed-means-zero
+      - value: -6.2831853
+        feedback: >-
+          זה הכיוון עם כיוון השעון. בכיוון החיובי הריבוע משמאל: על הצלע הימנית עולים, $y$ גדל.
+        misconception: MC-c6-orientation-irrelevant
+      - value: 1.5707963
+        feedback: >-
+          $\frac\pi2$ היא התרומה של צלע אחת. לשפה ארבע צלעות.
+        misconception: MC-c6-piece-forgotten
+
+  - id: Q-6.4-hole
+    type: twotier
+    objectives: [OBJ-6.4-3, OBJ-6.4-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $R$ התחום שבין הריבוע $[-2,2]^2$ לעיגול היחידה: $R=[-2,2]^2\setminus\{x^2+y^2<1\}$. עבור שדה הסיבוב $\mathbf W$,
+      $\oint_{\partial R}\mathbf W\cdot d\mathbf s=0$ כאשר $\partial R$ בכיוון החיובי. האם מכאן ש-$\mathbf W$ משמר על $R$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. אפס על השפה המלאה הוא אפס על מסילה אחת (מורכבת), לא על כל מסילה סגורה ב-$R$.
+      - text: כן
+        feedback: >-
+          שדה משמר נותן אפס על **כל** מסילה סגורה ב-$R$. מספיקה מסילה סגורה אחת ב-$R$ עם ערך אחר כדי לשלול.
+        misconception: MC-c6-few-curves-suffice
+    reasons:
+      - text: 'הריבוע $\partial Q$ לבדו, נגד כיוון השעון, הוא מסילה סגורה ב-$R$, והאינטגרל עליו $2\pi\ne0$'
+        correct: true
+        feedback: >-
+          בדיוק. $0=2\pi+(-2\pi)$: הריבוע נגד כיוון השעון ומעגל היחידה עם כיוון השעון. כל רכיב לבדו אינו אפס.
+      - text: 'האינטגרל על $\partial R$, שהיא מסילה סגורה ב-$R$, הוא אפס, ואפס על מסילה סגורה אחת כזו מספיק לשדה משמר'
+        feedback: >-
+          החלק הראשון נכון, השני לא: מסילה סגורה אחת אינה מספיקה כדי להוכיח שדה משמר; ובאמת, רכיב אחד של השפה לבדו נותן $2\pi$.
+        misconception: MC-c6-few-curves-suffice
+      - text: '$\mathbf W$ אינו מוגדר בראשית, שנמצאת בתוך $R$'
+        feedback: >-
+          הראשית אינה ב-$R$: הוצאנו ממנו את כל עיגול היחידה הפתוח, ו-$\mathbf W$ מוגדר וחלק על כל $R$. וגם אילו הייתה
+          נקודה כזו, נקודה לא מוגדרת אינה מוכיחה ששדה אינו משמר; מסילה סגורה עם אינטגרל שונה מאפס מוכיחה.
+        misconception: MC-c6-singularity-means-nonconservative

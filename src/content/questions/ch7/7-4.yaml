@@ -1,0 +1,423 @@
+# Lesson 7.4 — Stokes' theorem.
+# Objectives (src/course.ts):
+#   OBJ-7.4-1  state Stokes on an oriented surface with boundary, with the right-hand rule between the normal and the boundary
+#   OBJ-7.4-2  prove Stokes for a surface that is a graph, using Green
+#   OBJ-7.4-3  replace a surface by another with the same boundary, or by the boundary, and compute the flux of a curl
+chapter: 7
+questions:
+  - id: Q-7.4-statement
+    type: mc
+    objectives: [OBJ-7.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      משפט סטוקס עוסק במשטח $S$ קומפקטי, מכוון וחלק למקוטעין, עם נורמל יחידה $\hat{\mathbf N}$ ועם שפה $\partial S$ שהיא
+      מסילה סגורה חלקה למקוטעין (או כמה מסילות כאלה), ובשדה $\mathbf F$ מסדר $C^1$ בקבוצה פתוחה שמכילה את $S$. מה המשפט
+      טוען?
+    choices:
+      - text: '$\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S=\oint_{\partial S}\mathbf F\cdot d\mathbf s$, עם $\partial S$ מכוונת לפי כלל יד ימין ביחס ל-$\hat{\mathbf N}$'
+        correct: true
+        feedback: >-
+          נכון. אגודל יד ימין לאורך $\hat{\mathbf N}$, והאצבעות מראות את כיוון השפה. במשטח במישור $xy$ עם $\hat{\mathbf N}=\mathbf e_3$
+          זה בדיוק משפט גרין. בשיעור הזה מוכיחים את המשפט כש-$S$ הוא גרף של פונקציה מסדר $C^2$ מעל תחום שגרין חל עליו. משטח
+          כללי מהסוג שבשאלה (חצי ספרה, פרבולואיד, ספרה עם חור) מחלקים לחתיכות שכל אחת גרף כזה מעל אחד ממישורי הקואורדינטות;
+          כל חתך פנימי נסרק פעמיים בכיוונים הפוכים, ולכן האינטגרלים עליו מתבטלים. ההוכחה הכללית תבוא בשיעור 8.5. לכן
+          מפעילים כאן את המשפט גם על חצי ספרה, ובהמשך הבנק נראה איך ההוכחה לגרפים מכסה אותה.
+      - text: '$\iint_S(\nabla\cdot\mathbf F)\,dS=\oint_{\partial S}\mathbf F\cdot d\mathbf s$, עם $\partial S$ מכוונת לפי כלל יד ימין ביחס ל-$\hat{\mathbf N}$'
+        feedback: >-
+          מימין סירקולציה, ולכן משמאל צריך את צפיפות הסירקולציה, הרוטור. הדיברגנץ הוא צפיפות שטף, והוא שייך למשפט גאוס.
+        misconception: MC-c7-stokes-statement
+      - text: '$\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S=\oint_{\partial S}\mathbf F\cdot d\mathbf s$, עם $\partial S$ בכל אחד משני הכיוונים שלה'
+        feedback: >-
+          היפוך כיוון השפה הופך את סימן האינטגרל הקווי, והשטף לא משתנה. השוויון נכון רק עם הכיוון המתואם.
+        misconception: MC-c7-right-hand-rule
+      - text: '$\iint_S\|\nabla\times\mathbf F\|\,dS=\oint_{\partial S}\|\mathbf F\|\,ds$, בלי תלות בכיוון של $\partial S$'
+        feedback: >-
+          שני הצדדים כאן לא תלויים בכיוון ואינם שווים בדרך כלל: עבור $\mathbf F=(-y,x,0)$ על עיגול היחידה במישור $xy$,
+          השמאל הוא $2\pi$ (כי $\|\nabla\times\mathbf F\|=2$) וגם הימין $2\pi$, אבל עבור $\mathbf F=(1,0,0)$ השמאל $0$ והימין $2\pi$.
+        misconception: MC-c7-stokes-statement
+
+  - id: Q-7.4-upper
+    type: mc
+    objectives: [OBJ-7.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $S$ הוא חצי ספרת היחידה העליון ($z\ge0$) עם הנורמל החיצוני. מהו הכיוון של השפה $\partial S$, מעגל היחידה במישור
+      $xy$, שמתאים לסטוקס?
+    choices:
+      - text: 'נגד כיוון השעון כשמסתכלים מלמעלה (מ-$z$ חיובי)'
+        correct: true
+        feedback: >-
+          נכון. בקוטב הצפוני $\hat{\mathbf N}=\mathbf e_3$: אגודל יד ימין כלפי מעלה, והאצבעות מקיפות לולאה קטנה סביב הקוטב
+          נגד כיוון השעון במבט מלמעלה. כשהלולאה מתרחבת ברציפות על המשטח עד קו המשווה, הכיוון לא יכול להתהפך. בדיקה בנקודה
+          $(1,0,0)$ של השפה, שם $\hat{\mathbf N}=\mathbf e_1$: בכיוון ההתקדמות הנכון $\mathbf t$, הווקטור
+          $\hat{\mathbf N}\times\mathbf t$ (ה"שמאל") מצביע אל תוך המשטח, כאן כלפי מעלה. ואכן
+          $\mathbf e_1\times\mathbf e_2=\mathbf e_3$, ולכן $\mathbf t=\mathbf e_2$: נגד כיוון השעון במבט מלמעלה.
+      - text: 'עם כיוון השעון כשמסתכלים מלמעלה'
+        feedback: >-
+          זה הכיוון המתאים לנורמל **הפנימי**. עם $\hat{\mathbf N}$ כלפי מעלה, אגודל יד ימין למעלה והאצבעות נגד כיוון השעון במבט מלמעלה.
+        misconception: MC-c7-right-hand-rule
+      - text: 'כל כיוון, כי לחצי ספרה אין "חוץ" ו"פנים" שקובעים כיוון'
+        feedback: >-
+          הנורמל נתון (החיצוני), והוא קובע כיוון אחד בלבד של השפה.
+        misconception: MC-c7-right-hand-rule
+      - text: 'תלוי בפרמטריזציה של חצי הספרה, גם כשהנורמל נתון'
+        feedback: >-
+          הפרמטריזציה משפיעה רק דרך הנורמל שהיא נותנת. כשהנורמל קבוע, כיוון השפה קבוע.
+        misconception: MC-c7-right-hand-rule
+
+  - id: Q-7.4-paraboloid
+    type: numeric
+    objectives: [OBJ-7.4-1, OBJ-7.4-3]
+    level: basic
+    prompt: >-
+      $S$ הוא הפרבולואיד $z=1-x^2-y^2$, $z\ge0$, עם הנורמל כלפי מעלה, ו-$\mathbf F=(-y,\ x,\ z)$. חשבו את
+      $\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S$ בעזרת סטוקס.
+    answer: 6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi$. השפה היא מעגל היחידה במישור $z=0$, נגד כיוון השעון מלמעלה. עם $\gamma(t)=(\cos t,\sin t,0)$:
+      $\oint(-y\,dx+x\,dy+z\,dz)=\int_0^{2\pi}(\sin^2t+\cos^2t)\,dt=2\pi$.
+    wrongFeedback: >-
+      מצאו את השפה של $S$ ואת הכיוון שלה לפי כלל יד ימין עם נורמל כלפי מעלה, וחשבו את האינטגרל הקווי.
+    commonWrong:
+      - value: -6.2831853
+        feedback: >-
+          זה הכיוון עם כיוון השעון, שמתאים לנורמל כלפי מטה.
+        misconception: MC-c7-right-hand-rule
+      - value: 3.1415927
+        feedback: >-
+          $\pi$ הוא השטח של עיגול היחידה. $\nabla\times\mathbf F=(0,0,2)$, ולכן השטף דרך העיגול הוא $2\cdot\pi$.
+
+  - id: Q-7.4-graph-normal
+    type: mc
+    objectives: [OBJ-7.4-2]
+    level: basic
+    prompt: >-
+      כשמחלקים משטח לחתיכות שהן גרפים, חלק מהחתיכות הן גרפים מעל מישור $yz$: $x=g(y,z)$ עם $g$ מסדר $C^1$, בפרמטריזציה
+      $\sigma(y,z)=(g(y,z),\ y,\ z)$. למה שווה $\sigma_y\times\sigma_z$, ולאן הוא מצביע?
+    choices:
+      - text: '$(1,\ -g_y,\ -g_z)$, תמיד לצד של $x$ חיובי'
+        correct: true
+        feedback: >-
+          נכון. $(g_y,1,0)\times(g_z,0,1)=(1\cdot1-0\cdot0,\ 0\cdot g_z-g_y\cdot1,\ g_y\cdot0-1\cdot g_z)=(1,-g_y,-g_z)$.
+          זה אותו מבנה כמו $(-f_x,-f_y,1)$ של גרף מעל מישור $xy$, עם הרכיב $1$ בכיוון של הציר שמעל המישור.
+      - text: '$(1,\ g_y,\ g_z)$, תמיד לצד של $x$ חיובי'
+        feedback: >-
+          הסימנים של שני הרכיבים האחרונים הפוכים. בדקו ב-$g=y$: המישור $x=y$ מכיל את $\sigma_y=(1,1,0)$, והנורמל חייב להיות
+          מאונך לו. $(1,1,0)$ אינו מאונך ל-$(1,1,0)$, אבל $(1,-1,0)$ כן.
+        misconception: MC-c7-graph-normal
+      - text: '$(-1,\ g_y,\ g_z)$, תמיד לצד של $x$ שלילי'
+        feedback: >-
+          זה מינוס התשובה הנכונה, $\sigma_z\times\sigma_y$: הסדר ההפוך. בסדר $\sigma_y\times\sigma_z$ הרכיב הראשון
+          $1\cdot1-0\cdot0=1$.
+        misconception: MC-c7-graph-normal
+      - text: '$\frac{(1,\ -g_y,\ -g_z)}{\sqrt{1+g_y^2+g_z^2}}$, תמיד לצד של $x$ חיובי'
+        feedback: >-
+          זה נורמל היחידה $\hat{\mathbf N}$, לא $\sigma_y\times\sigma_z$. האורך $\sqrt{1+g_y^2+g_z^2}$ הוא גורם השטח, והוא
+          נדרש ב-$d\mathbf S=(\sigma_y\times\sigma_z)\,dy\,dz$.
+        misconception: MC-c7-unit-normal-dA
+
+  - id: Q-7.4-lower
+    type: mc
+    objectives: [OBJ-7.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $S$ הוא חצי ספרת היחידה **התחתון** ($z\le0$) עם הנורמל החיצוני. איזה כיוון של מעגל היחידה במישור $xy$ מתאים
+      לסטוקס?
+    choices:
+      - text: 'עם כיוון השעון כשמסתכלים מלמעלה'
+        correct: true
+        feedback: >-
+          נכון. בקוטב הדרומי הנורמל החיצוני הוא $-\mathbf e_3$; אגודל יד ימין כלפי מטה והאצבעות עם כיוון השעון כשמסתכלים
+          מלמעלה. בדיקה ב-$(1,0,0)$: $\hat{\mathbf N}=\mathbf e_1$ והמשטח מתחת לנקודה. עם $\mathbf t=-\mathbf e_2$ מתקבל
+          $\hat{\mathbf N}\times\mathbf t=-\mathbf e_3$, אל תוך המשטח, כנדרש.
+      - text: 'נגד כיוון השעון כשמסתכלים מלמעלה, כמו בחצי העליון'
+        feedback: >-
+          לשני החצאים אותה שפה, אבל עם הנורמל החיצוני הם מקבלים ממנה כיוונים **הפוכים**. בזכות זה, כשמחברים את שני
+          החצאים לספרה, האינטגרלים על המעגל מתבטלים.
+        misconception: MC-c7-right-hand-rule
+      - text: 'אין כיוון קבוע: בוחרים את הכיוון שבו $\oint_{\partial S}\mathbf F\cdot d\mathbf s$ יוצא חיובי'
+        feedback: >-
+          הכיוון של השפה נקבע מהמשטח ומהנורמל בלבד, לפני שיודעים מהו השדה. כאן הנורמל בקוטב כלפי מטה, והכיוון עם כיוון
+          השעון מלמעלה, לכל $\mathbf F$.
+        misconception: MC-c7-right-hand-rule
+
+  - id: Q-7.4-graph-proof
+    type: rank
+    objectives: [OBJ-7.4-2]
+    level: mid
+    prompt: >-
+      $S$ הוא הגרף של $f\in C^2$ מעל תחום $D$ שגרין חל עליו, עם הנורמל כלפי מעלה, ו-$\mathbf F=(P,0,0)$. סדרו את שלבי
+      ההוכחה ש-$\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S=\oint_{\partial S}P\,dx$.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'השפה $\partial S$, בכיוון של כלל יד ימין עם הנורמל כלפי מעלה, היא התמונה תחת $\sigma$ של $\partial D$ בכיוון החיובי; על השפה $x$ זהה לזה של $\partial D$, ולכן $\oint_{\partial S}P\,dx=\oint_{\partial D}\tilde P\,dx$ עם $\tilde P(x,y)=P(x,y,f(x,y))$'
+      - id: b
+        label: 'לפי גרין על $D$ (מותר, כי $\tilde P$ מסדר $C^1$): $\oint_{\partial D}\tilde P\,dx=-\iint_D\tilde P_y\,dx\,dy$'
+      - id: c
+        label: 'לפי כלל השרשרת $\tilde P_y=P_y+P_z f_y$, ולכן $\oint_{\partial S}P\,dx=\iint_D(-P_y-P_z f_y)\,dx\,dy$'
+      - id: d
+        label: 'מצד השטף: $\nabla\times(P,0,0)=(0,\ P_z,\ -P_y)$ ו-$\sigma_x\times\sigma_y=(-f_x,-f_y,1)$, ולכן השטף הוא $\iint_D(-P_z f_y-P_y)\,dx\,dy$ (עם $P$ ב-$(x,y,f(x,y))$), בדיוק האינטגרל שקיבלנו לאינטגרל הקווי'
+    order: [a, b, c, d]
+    correctFeedback: >-
+      נכון. הרעיון: מורידים את הכול למישור ומפעילים את גרין. למה הכיוון בשלב הראשון נכון: לנורמל
+      $(-f_x,-f_y,1)$ יש רכיב שלישי חיובי, ולכן ההטלה $(x,y,z)\mapsto(x,y)$ שומרת על "המשטח משמאל": מי שהולך על
+      $\partial S$ כשהמשטח משמאלו (במבט מצד הנורמל, כלומר מלמעלה) הולך בהטלה על $\partial D$ כשהתחום $D$ משמאלו, וזה
+      הכיוון החיובי של גרין. אותו טיעון לרכיב $(0,Q,0)$. ברכיב $(0,0,R)$ מופיע על השפה $dz=f_x\,dx+f_y\,dy$, וגרין על
+      $\oint\tilde R f_x\,dx+\tilde R f_y\,dy$ גוזר את $f_x$ ואת $f_y$: מופיעים $\tilde R f_{yx}-\tilde R f_{xy}$, שמתבטלים
+      רק כי הנגזרות המעורבות שוות. בשביל זה (ובשביל ש-$\tilde Rf_x\in C^1$ וגרין חל) דורשים $f\in C^2$. בחיבור שלושת
+      הרכיבים מתקבל סטוקס לגרף.
+    wrongFeedback: >-
+      הורידו קודם את האינטגרל הקווי ל-$\partial D$, הפעילו גרין, והשתמשו בכלל השרשרת. השלב האחרון משווה לצד השטף, ולכן
+      הוא צריך את התוצאה של שלושת הקודמים.
+
+  - id: Q-7.4-chain
+    type: twotier
+    objectives: [OBJ-7.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחה של סטוקס לגרף, סטודנטית כתבה: "$\oint_{\partial D}P(x,y,f(x,y))\,dx=-\iint_D P_y(x,y,f(x,y))\,dx\,dy$". האם
+      השוויון נכון?
+    choices:
+      - text: 'לא, חסר מחובר'
+        correct: true
+        feedback: >-
+          נכון. גרין חל על הפונקציה $\tilde P(x,y)=P(x,y,f(x,y))$, והנגזרת שלה לפי $y$ כוללת גם את $P_z f_y$.
+      - text: 'כן, זה בדיוק גרין'
+        feedback: >-
+          גרין נותן $-\iint\frac{\partial}{\partial y}\big[P(x,y,f(x,y))\big]$, וזו לא $P_y$ בנקודה, כי גם הרכיב השלישי תלוי
+          ב-$y$. דוגמה: $P=z$, $f=y$: $\tilde P=y$, $\tilde P_y=1$, אבל $P_y=0$.
+        misconception: MC-c7-chain-rule-dropped
+    reasons:
+      - text: 'לפי כלל השרשרת $\frac{\partial}{\partial y}P(x,y,f(x,y))=P_y+P_z f_y$, והמחובר $P_z f_y$ מתאים לרכיב $-f_y$ של הנורמל'
+        correct: true
+        feedback: >-
+          בדיוק. בלי המחובר הזה צד השטף, $\iint(-P_z f_y-P_y)$, לא היה מתאים, וההוכחה הייתה נשברת.
+      - text: 'חסר המחובר $P_x f_x$'
+        feedback: >-
+          גוזרים לפי $y$, ו-$x$ לא תלוי ב-$y$. המחובר הנוסף בא מהתלות של הרכיב השלישי, $f(x,y)$, ב-$y$: $P_z f_y$.
+        misconception: MC-c7-chain-rule-dropped
+      - text: 'גרין לא חל, כי $P$ פונקציה של שלושה משתנים'
+        feedback: >-
+          גרין מופעל על $\tilde P$, שהיא פונקציה של $(x,y)$ בלבד. זה כל הטעם בהורדה למישור.
+
+  - id: Q-7.4-flat-direction
+    type: mc
+    objectives: [OBJ-7.4-2, OBJ-7.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחה לגרף עם הנורמל **כלפי מעלה** הפעלנו את גרין על $\partial D$ בכיוון החיובי (נגד כיוון השעון במבט מלמעלה). מה היה משתנה
+      אם הנורמל היה כלפי מטה?
+    choices:
+      - text: 'שני הצדדים מחליפים סימן: השטף בנורמל ההפוך, והשפה בכיוון ההפוך, כך שסטוקס עדיין נכון'
+        correct: true
+        feedback: >-
+          נכון. עם נורמל כלפי מטה, כלל יד ימין נותן לשפה כיוון עם כיוון השעון, וההיטל שלה הוא $\partial D$ בכיוון השלילי.
+          שני הצדדים מוכפלים ב-$-1$.
+      - text: 'רק השטף מחליף סימן, כי השפה נשארת ההיטל של $\partial D$ בכיוון החיובי, ולכן סטוקס נכשל לנורמל כלפי מטה'
+        feedback: >-
+          הכיוון של השפה **נקבע** מהנורמל לפי כלל יד ימין, ולכן גם הוא מתהפך. סטוקס נכון לכל אחד משני הכיוונים של המשטח.
+        misconception: MC-c7-right-hand-rule
+      - text: 'שום דבר: השטף לא תלוי בכיוון הנורמל, והשפה נשארת $\partial D$ בכיוון החיובי, כך ששני הצדדים לא משתנים'
+        feedback: >-
+          שטף של שדה וקטורי מחליף סימן כשהנורמל מתהפך (שיעור 6.3); רק אינטגרל של פונקציה לפי שטח, $\iint\rho\,dS$, לא תלוי בו.
+        misconception: MC-c7-right-hand-rule
+
+  - id: Q-7.4-scope
+    type: twotier
+    objectives: [OBJ-7.4-1, OBJ-7.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בשיעור הוכחנו את סטוקס למשטח שהוא גרף של פונקציה מסדר $C^2$ מעל תחום סגור $D$. חצי ספרת היחידה העליון $H$ הוא הגרף
+      של $f(x,y)=\sqrt{1-x^2-y^2}$ מעל עיגול היחידה הסגור, אבל $f_x,f_y$ לא חסומות ליד שפת העיגול. האם מותר להפעיל את
+      סטוקס על $H$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ההוכחה לגרפים לא חלה על $H$ כמו שהוא, אבל אפשר להגיע אליו ממנה, כפי שמראה הנימוק.
+      - text: 'לא, על $H$ צריך לחשב את השטף ישירות'
+        feedback: >-
+          המשפט חל על כל משטח קומפקטי, מכוון וחלק למקוטעין עם שפה, ו-$H$ כזה. ההוכחה לגרפים מגיעה אליו בשתי דרכים, כפי
+          שמראה הנימוק הנכון.
+        misconception: MC-c7-stokes-scope
+    reasons:
+      - text: 'מפעילים את המשפט על $H_r$, החלק של $H$ מעל העיגול ברדיוס $r<1$, שם $f$ חלקה, ומשאיפים $r\to1$: שני הצדדים מתכנסים לצדדים של $H$'
+        correct: true
+        feedback: >-
+          בדיוק. השטף דרך $H_r$ הוא אינטגרל של פונקציה רציפה על $H$ על חלק שהולך וגדל, והאינטגרל הקווי על המעגל של $H_r$
+          מתכנס לזה של קו המשווה, כי $\mathbf F$ רציף והמעגלים מתכנסים לקו המשווה עם הנגזרות. דרך אחרת: חותכים את $H$
+          לכיפה $z\ge\frac12$, שהיא גרף חלק מעל עיגול, ולארבע חתיכות של הרצועה $0\le z\le\frac12$, שכל אחת גרף חלק מעל
+          מישור $xz$ או $yz$; האינטגרלים על החתכים הפנימיים מתבטלים.
+      - text: 'מפעילים את ההוכחה לגרף ישירות על $f$, כי $f$ רציפה על העיגול הסגור, והוכחת הגרף משתמשת רק ברציפות של $f$'
+        feedback: >-
+          ההוכחה גוזרת את $f$: $\tilde P_y=P_y+P_zf_y$, ובנורמל מופיעים $f_x,f_y$. כאן הן לא חסומות ליד השפה, ולכן ההוכחה
+          לא חלה כמו שהיא, ורציפות לבדה לא מספיקה.
+        misconception: MC-c7-graph-continuity-enough
+      - text: 'מחליפים את $H$ בעיגול היחידה, שהוא גרף חלק עם אותה שפה, ולכן סטוקס על $H$ כלל לא נדרש'
+        feedback: >-
+          זה מעגלי: ההחלפה של $H$ בעיגול **נובעת** מסטוקס על $H$ ועל העיגול. בלי סטוקס על $H$ אין סיבה ששני השטפים שווים.
+        misconception: MC-c7-stokes-scope
+
+  - id: Q-7.4-hemisphere
+    type: numeric
+    objectives: [OBJ-7.4-3]
+    level: mid
+    prompt: >-
+      $S$ הוא חצי הספרה $x^2+y^2+z^2=4$, $z\ge0$, עם הנורמל החיצוני, ו-$\mathbf F=(z^2x-3y,\ x+\sin z,\ e^{xy})$. חשבו את
+      $\iint_S(\nabla\times\mathbf F)\cdot d\mathbf S$.
+    answer: 50.2654825
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $16\pi$. מחליפים את $S$ בעיגול $D$: $x^2+y^2\le4$ במישור $z=0$, עם הנורמל $\mathbf e_3$; לשניהם אותה שפה עם אותו
+      כיוון. על $D$: $(\nabla\times\mathbf F)_3=\partial_x(x+\sin z)-\partial_y(z^2x-3y)=1+3=4$, והשטף $4\cdot4\pi=16\pi$.
+      או ישירות על השפה, המעגל $x^2+y^2=4$ במישור $z=0$: שם $z^2x=0$ ו-$\sin z=0$, ו-$dz=0$ כי $z$ קבוע לאורך המסילה,
+      ולכן $e^{xy}\,dz$ נעלם. נשאר $\oint(-3y\,dx+x\,dy)$, ועם $\gamma(t)=(2\cos t,2\sin t,0)$ זה
+      $\int_0^{2\pi}(12\sin^2t+4\cos^2t)\,dt=12\pi+4\pi$.
+    wrongFeedback: >-
+      חישוב ישיר על חצי הספרה קשה. החליפו אותו במשטח פשוט עם אותה שפה ואותו כיוון, או חשבו על השפה.
+    commonWrong:
+      - value: -50.2654825
+        feedback: >-
+          הסימן הפוך: נורמל חיצוני על חצי הספרה העליון מתאים לנורמל $+\mathbf e_3$ על העיגול ולשפה נגד כיוון השעון מלמעלה.
+        misconception: MC-c7-right-hand-rule
+      - value: -25.1327412
+        feedback: >-
+          $-8\pi$: חישבתם $\partial_x F_2+\partial_y F_1=1-3$. הרכיב השלישי של הרוטור הוא $\partial_x F_2-\partial_y F_1=1-(-3)=4$.
+        misconception: MC-c7-curl-sign
+      - value: 12.5663706
+        feedback: >-
+          $4\pi$: השתמשתם בעיגול היחידה. השפה של חצי הספרה ברדיוס 2 היא המעגל ברדיוס 2, והעיגול שטחו $4\pi$.
+
+  - id: Q-7.4-any-field
+    type: twotier
+    objectives: [OBJ-7.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $H$ חצי ספרת היחידה העליון עם הנורמל החיצוני, ו-$D$ עיגול היחידה במישור $z=0$ עם הנורמל $\mathbf e_3$. האם לכל שדה
+      $\mathbf G$ מסדר $C^1$ מתקיים $\iint_H\mathbf G\cdot d\mathbf S=\iint_D\mathbf G\cdot d\mathbf S$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. עבור $\mathbf G=(x,y,z)$: דרך $H$ השטף $2\pi$ ($\mathbf G\cdot\hat{\mathbf N}=1$ ושטח חצי הספרה $2\pi$), ודרך $D$
+          הוא $0$ ($G_3=z=0$ שם).
+      - text: כן, כי לשני המשטחים אותה שפה
+        feedback: >-
+          אותה שפה מבטיחה אותו שטף רק לשדה שהוא רוטור. $\mathbf G=(x,y,z)$ אינו רוטור ($\nabla\cdot\mathbf G=3\ne0$), והשטפים
+          $2\pi$ ו-$0$.
+        misconception: MC-c7-flux-depends-only-on-boundary
+    reasons:
+      - text: 'החלפת משטח מותרת לשטף של רוטור, $\mathbf G=\nabla\times\mathbf F$, כי אז שני השטפים שווים ל-$\oint_{\partial H}\mathbf F\cdot d\mathbf s$; לשדה כללי אין סיבה'
+        correct: true
+        feedback: >-
+          בדיוק. הדוגמה $(x,y,z)$ מראה שהשוויון באמת נכשל.
+      - text: 'השוויון נכשל רק אם $\mathbf G$ לא חסום על אחד המשטחים; לשדה חסום מסדר $C^1$ אותה שפה נותנת אותו שטף'
+        feedback: >-
+          $(x,y,z)$ חסום על שני המשטחים, ובכל זאת השטפים שונים. מה שקובע הוא אם $\mathbf G$ רוטור.
+        misconception: MC-c7-flux-depends-only-on-boundary
+      - text: 'הנורמלים לא מתואמים: הנורמל החיצוני על $H$ מתאים לנורמל $-\mathbf e_3$ על $D$, ועם $-\mathbf e_3$ השוויון היה נכון'
+        feedback: >-
+          הם מתואמים: שניהם נותנים לשפה כיוון נגד כיוון השעון מלמעלה. הבעיה היא בשדה, לא בכיוונים.
+        misconception: MC-c7-right-hand-rule
+
+  - id: Q-7.4-closed
+    type: mc
+    objectives: [OBJ-7.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbf F$ מסדר $C^1$ ב-$\mathbb R^3$ ו-$S$ ספרת היחידה עם הנורמל החיצוני. מה אפשר לומר על
+      $\oiint_S(\nabla\times\mathbf F)\cdot d\mathbf S$?
+    choices:
+      - text: 'הוא תמיד $0$'
+        correct: true
+        feedback: >-
+          נכון. מחלקים את $S$ לחצי עליון ותחתון. לפי סטוקס כל חצי נותן אינטגרל על קו המשווה, אבל עם הנורמל החיצוני הכיוונים
+          הפוכים (נגד ועם כיוון השעון מלמעלה), והסכום $0$.
+      - text: 'אי אפשר לדעת, כי לספרה אין שפה ולכן סטוקס לא חל'
+        feedback: >-
+          סטוקס חל על כל חצי בנפרד, ולכל חצי יש שפה. החיבור נותן $0$.
+        misconception: MC-c7-closed-curl-flux
+      - text: 'הוא $4\pi\,\|(\nabla\times\mathbf F)(0,0,0)\|$, השטח של הספרה כפול גודל הרוטור במרכז'
+        feedback: >-
+          אין כאן תלות בערכי הרוטור. לדוגמה $\mathbf F=(-y,x,0)$, $\nabla\times\mathbf F=(0,0,2)$: הנוסחה הייתה נותנת $8\pi$,
+          אבל השטף של שדה קבוע דרך ספרה הוא $0$ (מה שנכנס מלמטה יוצא מלמעלה).
+        misconception: MC-c7-closed-curl-flux
+      - text: 'הוא שווה לשטף של $\mathbf F$ עצמו'
+        feedback: >-
+          אין קשר כזה. עבור $\mathbf F=(x,y,z)$ השטף של $\mathbf F$ הוא $4\pi$, והרוטור אפס.
+        misconception: MC-c7-stokes-statement
+
+  - id: Q-7.4-tilted
+    type: numeric
+    objectives: [OBJ-7.4-3, OBJ-7.4-1]
+    level: exam
+    prompt: >-
+      $C$ היא החיתוך של הגליל $x^2+y^2=1$ עם המישור $x+y+z=1$, נגד כיוון השעון כשמסתכלים מלמעלה. חשבו את
+      $\oint_C z\,dx+x\,dy+y\,dz$.
+    answer: 9.4247780
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $3\pi$. $\nabla\times(z,x,y)=(1,1,1)$. ניקח את $S$, החלק של המישור בתוך הגליל, כגרף של $f=1-x-y$ מעל עיגול
+      היחידה $D$, עם נורמל כלפי מעלה (מתאים לכיוון של $C$): $\sigma_x\times\sigma_y=(-f_x,-f_y,1)=(1,1,1)$. השטף
+      $\iint_D(1,1,1)\cdot(1,1,1)\,dx\,dy=3\pi$.
+    wrongFeedback: >-
+      חשבו את הרוטור, בחרו את המשטח השטוח בתוך המישור ששפתו $C$, וקבעו את הנורמל לפי הכיוון של $C$.
+    commonWrong:
+      - value: 5.4413981
+        feedback: >-
+          $\sqrt3\pi$: הכפלתם את הרוטור בנורמל היחידה $\frac{(1,1,1)}{\sqrt3}$ ושילבתם לפי השטח של העיגול $D$. מול נורמל היחידה
+          צריך את השטח של האליפסה במישור, $\sqrt3\pi$; עם $dx\,dy$ צריך $\sigma_x\times\sigma_y=(1,1,1)$.
+        misconception: MC-c7-unit-normal-dA
+      - value: 3.1415927
+        feedback: >-
+          $\pi$ מתקבל אם לוקחים רק את הרכיב השלישי של הרוטור, כאילו המשטח הוא העיגול האופקי. אבל $C$ אינה במישור $z=0$,
+          והעיגול האופקי אינו משטח ששפתו $C$.
+        misconception: MC-c7-flux-depends-only-on-boundary
+      - value: -9.4247780
+        feedback: >-
+          הסימן הפוך. נגד כיוון השעון מלמעלה מתאים לנורמל עם רכיב שלישי חיובי.
+        misconception: MC-c7-right-hand-rule
+
+  - id: Q-7.4-curl-on-surface
+    type: twotier
+    objectives: [OBJ-7.4-1, OBJ-7.4-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\mathbf F$ מסדר $C^1$ ב-$\mathbb R^3$, ו-$\nabla\times\mathbf F=0$ **בנקודות של חצי ספרת היחידה העליון** $H$ (ואולי
+      לא במקומות אחרים). האם בהכרח $\oint_{\partial H}\mathbf F\cdot d\mathbf s=0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. לפי סטוקס $\oint_{\partial H}\mathbf F\cdot d\mathbf s=\iint_H(\nabla\times\mathbf F)\cdot d\mathbf S$, ובאינטגרל
+          מופיעים רק ערכי הרוטור על $H$.
+      - text: 'לא, צריך שהרוטור יתאפס גם בחצי הכדור שמתחת ל-$H$'
+        feedback: >-
+          סטוקס הוא שוויון בין אינטגרל על המשטח לאינטגרל על השפה; הנפח שמתחת לא מופיע בו.
+        misconception: MC-c7-stokes-needs-solid
+    reasons:
+      - text: 'בשטף $\iint_H(\nabla\times\mathbf F)\cdot d\mathbf S$ האינטגרנד מחושב רק על $H$, ושם הוא אפס'
+        correct: true
+        feedback: >-
+          בדיוק. ומכאן גם: השטף של הרוטור דרך **כל** משטח אחר עם אותה שפה (ואותו כיוון) הוא אפס, אף שהרוטור שם אולי
+          שונה מאפס, כי גם הוא שווה לאותו אינטגרל קווי.
+      - text: 'כי שדה עם רוטור אפס הוא משמר'
+        feedback: >-
+          הרוטור אפס רק על $H$, לא בתחום פתוח, ולכן אין כאן שדה משמר. וגם רוטור אפס בתחום פתוח לא תמיד נותן שדה משמר
+          (שיעור 7.3).
+        misconception: MC-c6-mixed-partials-suffice
+      - text: 'כי השפה של $H$ היא מעגל, ועל מעגל האינטגרל תמיד אפס'
+        feedback: >-
+          על מעגל היחידה $\oint(-y\,dx+x\,dy)=2\pi\ne0$. מה שמאפס כאן הוא הנתון על הרוטור.
+        misconception: MC-c7-closed-curl-flux

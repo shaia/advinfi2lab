@@ -1,0 +1,380 @@
+# Lesson 7.3 — applications of Green's theorem and the winding field.
+# Objectives (src/course.ts):
+#   OBJ-7.3-1  compute the area of a region by a line integral over its boundary
+#   OBJ-7.3-2  apply Green on a region with a hole, and integrate the winding field over a closed curve around the origin
+#   OBJ-7.3-3  explain why curl 0 does not guarantee a conservative field on a region that is not simply connected
+# The winding field is ω = (−y, x)/(x² + y²) on ℝ² ∖ {0} (lesson 6.2).
+chapter: 7
+questions:
+  - id: Q-7.3-area-formulas
+    type: multi
+    objectives: [OBJ-7.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $D$ תחום חסום שהשפה שלו $\partial D$ מסילה סגורה פשוטה חלקה למקוטעין, בכיוון החיובי. אילו מהביטויים שווים
+      לשטח של $D$? סמנו את כולם.
+    choices:
+      - text: '$\oint_{\partial D}x\,dy$'
+        correct: true
+        feedback: >-
+          נכון. $P=0$, $Q=x$: $Q_x-P_y=1$, ולכן לפי גרין זה $\iint_D1$.
+      - text: '$-\oint_{\partial D}y\,dx$'
+        correct: true
+        feedback: >-
+          נכון. $P=y$, $Q=0$: $Q_x-P_y=-1$, ולכן $\oint y\,dx$ הוא מינוס השטח, וסימן המינוס מתקן.
+      - text: '$\frac12\oint_{\partial D}x\,dy-y\,dx$'
+        correct: true
+        feedback: >-
+          נכון. זה הממוצע של שתי הנוסחאות הקודמות, והוא נוח לאליפסות ולמסילות בקוטביות.
+      - text: '$\oint_{\partial D}x\,dy-y\,dx$'
+        feedback: >-
+          כאן $Q_x-P_y=1+1=2$, ולכן זה **פעמיים** השטח. בעיגול היחידה: $2\pi$, לא $\pi$.
+        misconception: MC-c7-area-double
+      - text: '$\oint_{\partial D}x\,dx+y\,dy$'
+        feedback: >-
+          זה $\oint\nabla\left(\frac{x^2+y^2}{2}\right)\cdot d\mathbf s$, אינטגרל של גרדיאנט על מסילה סגורה, ולכן אפס תמיד.
+          (מי שמציב בגרין את הדיברגנץ $P_x+Q_y=2$ במקום $Q_x-P_y=0$ מקבל בטעות פעמיים השטח.)
+        misconception: MC-c7-green-divergence-form
+
+  - id: Q-7.3-ellipse
+    type: numeric
+    objectives: [OBJ-7.3-1]
+    level: basic
+    prompt: >-
+      חשבו את השטח של האליפסה $\frac{x^2}{9}+\frac{y^2}{4}\le1$ בעזרת $\frac12\oint(x\,dy-y\,dx)$ והפרמטריזציה
+      $\gamma(t)=(3\cos t,\ 2\sin t)$, $0\le t\le2\pi$.
+    answer: 18.8495559
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $6\pi$. $x\,y'-y\,x'=3\cos t\cdot2\cos t+2\sin t\cdot3\sin t=6$, ולכן השטח $\frac12\int_0^{2\pi}6\,dt=6\pi$.
+      באופן כללי $\pi ab$.
+    wrongFeedback: >-
+      הציבו $x=3\cos t$, $y=2\sin t$, $dx=-3\sin t\,dt$, $dy=2\cos t\,dt$. הפרמטריזציה עוברת נגד כיוון השעון.
+    commonWrong:
+      - value: 37.6991118
+        feedback: >-
+          זה $12\pi$: שכחתם את החצי. $\oint x\,dy-y\,dx$ שווה לפעמיים השטח.
+        misconception: MC-c7-area-double
+      - value: -18.8495559
+        feedback: >-
+          הסימן הפוך: $t\mapsto(3\cos t,2\sin t)$ עוברת נגד כיוון השעון, הכיוון החיובי, והשטח חיובי. בדקו את הסימן של
+          $-y\,dx=+6\sin^2t\,dt$.
+        misconception: MC-c7-area-always-positive
+
+  - id: Q-7.3-hole-orientation
+    type: mc
+    objectives: [OBJ-7.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $D=\{1\le x^2+y^2\le4\}$. מהי השפה $\partial D$ בכיוון החיובי?
+    choices:
+      - text: 'המעגל ברדיוס 2 נגד כיוון השעון, והמעגל ברדיוס 1 עם כיוון השעון'
+        correct: true
+        feedback: >-
+          נכון. על המעגל הפנימי, כשהולכים עם כיוון השעון, הטבעת נמצאת משמאל (בחוץ, הרחק מהראשית).
+      - text: 'שני המעגלים נגד כיוון השעון'
+        feedback: >-
+          על המעגל הפנימי נגד כיוון השעון, משמאל נמצא החור, לא הטבעת. הכלל הוא "התחום משמאל", לא "נגד כיוון השעון".
+        misconception: MC-c7-hole-boundary
+      - text: 'רק המעגל ברדיוס 2, נגד כיוון השעון'
+        feedback: >-
+          גם המעגל הפנימי הוא חלק מהשפה: נקודות עליו קרובות גם לנקודות של $D$ וגם לנקודות מחוץ ל-$D$.
+        misconception: MC-c7-hole-boundary
+      - text: 'המעגל ברדיוס 2 עם כיוון השעון, והמעגל ברדיוס 1 נגד כיוון השעון'
+        feedback: >-
+          זה הכיוון השלילי, בשני המעגלים: הטבעת מימין לכל אחד מהם.
+        misconception: MC-c6-orientation-irrelevant
+
+  - id: Q-7.3-winding-circle
+    type: numeric
+    objectives: [OBJ-7.3-2]
+    level: basic
+    prompt: >-
+      חשבו את $\oint_C\frac{-y\,dx+x\,dy}{x^2+y^2}$ על המעגל $x^2+y^2=25$ נגד כיוון השעון.
+    answer: 6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $2\pi$. עם $\gamma(t)=(5\cos t,5\sin t)$: $\frac{25\sin^2t+25\cos^2t}{25}=1$, ולכן האינטגרל $\int_0^{2\pi}1\,dt$.
+      הרדיוס מצטמצם.
+    wrongFeedback: >-
+      הציבו את הפרמטריזציה של המעגל. שימו לב שהמכנה $x^2+y^2=25$ קבוע על המעגל.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          זה מה ש"גרין" נותן על העיגול, כי $Q_x-P_y=0$ מחוץ לראשית. אבל השדה לא מוגדר בראשית, שבתוך העיגול, ולכן
+          גרין לא חל כאן.
+        misconception: MC-c7-green-singularity
+      - value: 157.0796327
+        feedback: >-
+          $50\pi$: השמטתם את המכנה $x^2+y^2=25$, ושילבתם $25\,dt$. אחרי החלוקה בו האינטגרנד $1$, והאינטגרל לא תלוי ברדיוס.
+        misconception: MC-c7-winding-depends-on-curve
+      - value: -6.2831853
+        feedback: >-
+          נגד כיוון השעון נותן $+2\pi$. בדקו את הסימן של $-y\,dx=-5\sin t\cdot(-5\sin t)\,dt$.
+        misconception: MC-c6-orientation-irrelevant
+
+  - id: Q-7.3-simply-connected
+    type: mc
+    objectives: [OBJ-7.3-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      תחום $U$ במישור נקרא **פשוט קשר** אם כל מסילה סגורה פשוטה ב-$U$ חוסמת תחום שכולו מוכל ב-$U$. איזה מהתחומים
+      הבאים **אינו** פשוט קשר?
+    choices:
+      - text: 'הטבעת $1<x^2+y^2<4$'
+        correct: true
+        feedback: >-
+          נכון. המעגל ברדיוס $1.5$ נמצא בטבעת, אבל העיגול שהוא חוסם מכיל את הראשית, שאינה בטבעת.
+      - text: 'חצי המישור $x>0$'
+        feedback: >-
+          חצי מישור קמור, ולכן כל מסילה סגורה פשוטה בו חוסמת תחום שכולו בתוכו (התחום החסום מוכל בקמור שהמסילה בתוכו).
+      - text: 'המישור בלי חצי הישר $\{(x,0):x\le0\}$'
+        feedback: >-
+          זה כן פשוט קשר: אין מסילה סגורה פשוטה בתחום שמקיפה את הראשית, כי כל מסילה כזו הייתה חוצה את חצי הישר
+          שהוצא. יש בו "חתך", אבל אין חור.
+        misconception: MC-c7-slit-is-hole
+      - text: 'העיגול $x^2+y^2<1$'
+        feedback: >-
+          העיגול קמור, ולכן פשוט קשר.
+
+  - id: Q-7.3-astroid
+    type: numeric
+    objectives: [OBJ-7.3-1]
+    level: mid
+    prompt: >-
+      חשבו את השטח שחוסמת האסטרואידה $\gamma(t)=(\cos^3t,\ \sin^3t)$, $0\le t\le2\pi$.
+    answer: 1.1780972
+    tolerance: 0.001
+    hints:
+      - '$\sin^2t\cos^2t=\frac14\sin^2 2t$.'
+    correctFeedback: >-
+      נכון, $\frac{3\pi}{8}$. $x\,y'-y\,x'=\cos^3t\cdot3\sin^2t\cos t+\sin^3t\cdot3\cos^2t\sin t=3\sin^2t\cos^2t$, ולכן
+      השטח $\frac12\int_0^{2\pi}3\sin^2t\cos^2t\,dt=\frac32\cdot\frac\pi4=\frac{3\pi}8$.
+    wrongFeedback: >-
+      השתמשו ב-$\frac12\oint(x\,dy-y\,dx)$. אחרי הפישוט נשאר אינטגרל של $\sin^2t\cos^2t$ על מחזור שלם.
+    commonWrong:
+      - value: 2.3561945
+        feedback: >-
+          זה $\frac{3\pi}4$: שכחתם את החצי בנוסחה $\frac12\oint(x\,dy-y\,dx)$.
+        misconception: MC-c7-area-double
+      - value: 3.1415927
+        feedback: >-
+          $\pi$ הוא השטח של עיגול היחידה, שהאסטרואידה חסומה בתוכו. היא נוגעת במעגל רק ב-4 נקודות, ושטחה קטן בהרבה.
+
+  - id: Q-7.3-negative-area
+    type: twotier
+    objectives: [OBJ-7.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סטודנט חישב $\oint_C x\,dy$ על מסילה סגורה פשוטה $C$ וקיבל $-5$. האם בהכרח יש טעות בחישוב?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. אם $C$ עוברת עם כיוון השעון, $\oint_C x\,dy$ הוא מינוס השטח, והשטח שהיא חוסמת הוא $5$.
+      - text: כן, כי שטח הוא מספר חיובי
+        feedback: >-
+          השטח חיובי, אבל $\oint_C x\,dy$ שווה לו רק בכיוון החיובי. בכיוון ההפוך האינטגרל הקווי מחליף סימן.
+        misconception: MC-c7-area-always-positive
+    reasons:
+      - text: 'היפוך הכיוון הופך את סימן האינטגרל הקווי; עם כיוון השעון מקבלים מינוס השטח'
+        correct: true
+        feedback: >-
+          בדיוק. לכן בחישוב שטח בודקים קודם את כיוון הפרמטריזציה, או לוקחים ערך מוחלט כשהמסילה פשוטה.
+      - text: '$\oint x\,dy$ אינו קשור לשטח; רק $\frac12\oint(x\,dy-y\,dx)$ נותן שטח'
+        feedback: >-
+          גם $\oint x\,dy$ לבדו נותן את השטח בכיוון החיובי: $Q_x-P_y=1$. שלוש הנוסחאות שקולות.
+        misconception: MC-c7-area-only-symmetric
+      - text: 'אינטגרל של $x\,dy$ שלילי כשהמסילה בחצי המישור $x<0$'
+        feedback: >-
+          לא: מסילה סגורה בחצי המישור $x<0$ נגד כיוון השעון נותנת את השטח, מספר חיובי, אף ש-$x<0$ עליה. הסימן נקבע
+          מהכיוון.
+        misconception: MC-c7-area-sign-from-position
+
+  - id: Q-7.3-annulus
+    type: numeric
+    objectives: [OBJ-7.3-2]
+    level: mid
+    prompt: >-
+      $D=\{1\le x^2+y^2\le4\}$ ו-$\partial D$ בכיוון החיובי. חשבו את $\oint_{\partial D}-y^3\,dx+x^3\,dy$.
+    answer: 70.6858347
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{45\pi}{2}$. $Q_x-P_y=3x^2+3y^2$, ובקוטביות
+      $\iint_D3r^2\cdot r\,dr\,d\theta=3\cdot2\pi\cdot\frac{2^4-1^4}{4}=\frac{45\pi}2$. בדיקה: המעגל החיצוני נגד כיוון השעון
+      נותן $24\pi$, הפנימי נגד כיוון השעון $\frac{3\pi}{2}$, והשפה החיובית היא ההפרש.
+    wrongFeedback: >-
+      הפעילו את גרין על הטבעת: האינטגרל הכפול על $1\le r\le2$, בקוטביות עם $r\,dr\,d\theta$.
+    commonWrong:
+      - value: 80.1106127
+        feedback: >-
+          $\frac{51\pi}2=24\pi+\frac{3\pi}2$: חיברתם את המעגל הפנימי נגד כיוון השעון. בכיוון החיובי הוא עם כיוון השעון,
+          ולכן מחסירים.
+        misconception: MC-c7-hole-boundary
+      - value: 75.3982237
+        feedback: >-
+          $24\pi$ הוא רק המעגל החיצוני, כלומר העיגול המלא $r\le2$. לטבעת יש גם שפה פנימית.
+        misconception: MC-c7-hole-boundary
+      - value: 43.9822972
+        feedback: >-
+          $14\pi$: שכחתם את היעקוביאן $r$ ושילבתם $3r^2\,dr$ במקום $3r^3\,dr$.
+        misconception: MC-c5-forgot-jacobian
+
+  - id: Q-7.3-winding-square
+    type: numeric
+    objectives: [OBJ-7.3-2]
+    level: mid
+    prompt: >-
+      $C$ היא השפה של הריבוע עם הקודקודים $(\pm1,\pm1)$, **עם כיוון השעון**. חשבו את
+      $\oint_C\frac{-y\,dx+x\,dy}{x^2+y^2}$ בלי לחשב את האינטגרל על כל צלע.
+    answer: -6.2831853
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $-2\pi$. נגד כיוון השעון היה מתקבל $2\pi$: גרין על התחום שבין הריבוע למעגל קטן סביב הראשית נותן אפס,
+      ולכן האינטגרל על הריבוע שווה לזה על המעגל. עם כיוון השעון הסימן מתהפך.
+    wrongFeedback: >-
+      הריבוע מקיף את הראשית. השוו אותו למעגל קטן בעזרת גרין על התחום שביניהם, ואז תקנו לפי הכיוון.
+    commonWrong:
+      - value: 6.2831853
+        feedback: >-
+          זה הערך נגד כיוון השעון. הריבוע נתון עם כיוון השעון.
+        misconception: MC-c6-orientation-irrelevant
+      - value: 0
+        feedback: >-
+          $Q_x-P_y=0$ מחוץ לראשית, אבל הראשית בתוך הריבוע, ושם השדה לא מוגדר. גרין חל רק על התחום **שבין** הריבוע
+          למעגל קטן.
+        misconception: MC-c7-green-singularity
+      - value: -8
+        feedback: >-
+          8 הוא ההיקף של הריבוע. האינטגרל של שדה הסיבוב לא תלוי בצורת המסילה, רק בכמה פעמים ובאיזה כיוון היא מקיפה
+          את הראשית.
+        misconception: MC-c7-winding-depends-on-curve
+
+  - id: Q-7.3-green-fails
+    type: twotier
+    objectives: [OBJ-7.3-3, OBJ-7.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לשדה הסיבוב $Q_x-P_y=0$ בכל $\mathbb R^2\setminus\{0\}$. "לכן לפי גרין $\oint_{x^2+y^2=1}\frac{-y\,dx+x\,dy}{x^2+y^2}=\iint_{x^2+y^2\le1}0=0$."
+      האם הטיעון נכון?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון: בחישוב ישיר האינטגרל הוא $2\pi$. אחד מתנאי המשפט לא מתקיים.
+      - text: כן
+        feedback: >-
+          החישוב הישיר נותן $\int_0^{2\pi}(\sin^2t+\cos^2t)\,dt=2\pi\ne0$, ולכן הטיעון שגוי.
+        misconception: MC-c7-green-singularity
+    reasons:
+      - text: 'גרין דורש $P,Q\in C^1$ בקבוצה פתוחה שמכילה את כל העיגול, והשדה לא מוגדר בראשית, שבתוך העיגול'
+        correct: true
+        feedback: >-
+          בדיוק. הנקודה החסרה היא בדיוק החור שבגללו התחום $\mathbb R^2\setminus\{0\}$ אינו פשוט קשר.
+      - text: 'נקודה אחת לא משנה אינטגרל כפול, ולכן הטיעון נכון והחישוב הישיר שגוי'
+        feedback: >-
+          הנקודה לא משנה את $\iint0$, אבל היא שוברת את **ההנחה** של המשפט. בלי ההנחה אין שוויון, והחישוב הישיר הוא
+          הקובע: $2\pi$.
+        misconception: MC-c7-green-singularity
+      - text: 'המעגל אינו מסילה חלקה למקוטעין'
+        feedback: >-
+          המעגל חלק לגמרי. הבעיה בשדה, לא במסילה.
+
+  - id: Q-7.3-hole-proof
+    type: rank
+    objectives: [OBJ-7.3-2]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה ש-$\oint_C\frac{-y\,dx+x\,dy}{x^2+y^2}=2\pi$ לכל מסילה סגורה פשוטה $C$, חלקה למקוטעין, שמקיפה
+      את הראשית נגד כיוון השעון.
+    help: סדרו מהשלב הראשון של ההוכחה לאחרון.
+    items:
+      - id: a
+        label: 'בוחרים $\varepsilon>0$ קטן כך שהמעגל $C_\varepsilon$ ברדיוס $\varepsilon$ סביב הראשית נמצא בפנים של $C$'
+      - id: b
+        label: 'נסמן ב-$D$ את התחום שבין $C_\varepsilon$ ל-$C$; הראשית אינה ב-$D$ ולא על שפתו, ולכן השדה מסדר $C^1$ סביב $D$'
+      - id: c
+        label: 'גרין על $D$, עם $C$ נגד כיוון השעון ו-$C_\varepsilon$ עם כיוון השעון: $\oint_C-\oint_{C_\varepsilon}=\iint_D0=0$ (בשוויון הזה שתי המסילות נגד כיוון השעון)'
+      - id: e
+        label: 'לכן $\oint_C=\oint_{C_\varepsilon}$, וחישוב ישיר על $C_\varepsilon$ נותן $\int_0^{2\pi}\frac{\varepsilon^2\sin^2t+\varepsilon^2\cos^2t}{\varepsilon^2}\,dt=2\pi$'
+    order: [a, b, c, e]
+    correctFeedback: >-
+      נכון. הרעיון: מוציאים את הנקודה הבעייתית בעזרת חור קטן, ואז גרין חל. החור משאיר "עקבה": האינטגרל על שפתו.
+    wrongFeedback: >-
+      קודם בונים תחום שגרין חל עליו (עם חור סביב הראשית), אחר כך מפעילים את גרין עם הכיוונים הנכונים, ורק אז מחשבים
+      את המעגל הקטן ישירות.
+
+  - id: Q-7.3-regions
+    type: multi
+    objectives: [OBJ-7.3-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      על אילו מהתחומים הבאים שדה הסיבוב $\frac{(-y,x)}{x^2+y^2}$ **משמר**? סמנו את כולם.
+    choices:
+      - text: 'חצי המישור העליון $y>0$'
+        correct: true
+        feedback: >-
+          נכון. זווית הקוטב $\theta\in(0,\pi)$ היא פונקציה גזירה שם, ו-$\nabla\theta$ הוא שדה הסיבוב.
+      - text: 'המישור בלי חצי הישר $\{(x,0):x\le0\}$'
+        correct: true
+        feedback: >-
+          נכון. שם זווית הקוטב $\theta\in(-\pi,\pi)$ מוגדרת וגזירה, והיא פוטנציאל. אין שם מסילה סגורה שמקיפה את הראשית.
+      - text: 'העיגול שמרכזו $(3,0)$ ורדיוסו $1$'
+        correct: true
+        feedback: >-
+          נכון. העיגול נמצא בחצי המישור $x>0$, ושם $\arctan\frac yx$ הוא פוטנציאל.
+      - text: '$\mathbb R^2\setminus\{0\}$'
+        feedback: >-
+          לא: על מעגל היחידה האינטגרל $2\pi\ne0$, ושדה משמר נותן אפס על כל מסילה סגורה.
+        misconception: MC-c6-mixed-partials-suffice
+      - text: 'הטבעת $1<x^2+y^2<4$'
+        feedback: >-
+          הרוטור אפס בטבעת, אבל המעגל ברדיוס $1.5$ בתוכה נותן $2\pi$. התחום אינו פשוט קשר, והרוטור אפס לא מספיק.
+        misconception: MC-c6-mixed-partials-suffice
+      - text: 'החוץ של עיגול היחידה, $x^2+y^2>1$'
+        feedback: >-
+          המעגל ברדיוס 2 נמצא בתחום ומקיף את הראשית, והאינטגרל עליו $2\pi$. "רחוק מהראשית" לא מספיק: הרוטור אפס בתחום,
+          אבל התחום אינו פשוט קשר.
+        misconception: MC-c6-mixed-partials-suffice
+    explanation: >-
+      השדה משמר בדיוק על התחומים שבהם אין מסילה סגורה שמקיפה את הראשית. בכל תחום כזה ברשימה יש לזווית הקוטב ענף
+      רציף, וזה הפוטנציאל.
+
+  - id: Q-7.3-every-simple
+    type: twotier
+    objectives: [OBJ-7.3-3, OBJ-7.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\mathbf F=(P,Q)$ מסדר $C^1$ ב-$\mathbb R^2\setminus\{0\}$, עם $Q_x=P_y$ שם, ו-$\oint_{x^2+y^2=1}\mathbf F\cdot d\mathbf s=0$.
+      האם $\oint_C\mathbf F\cdot d\mathbf s=0$ **לכל** מסילה סגורה פשוטה $C$ ב-$\mathbb R^2\setminus\{0\}$, חלקה למקוטעין?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. מסילה כזו מקיפה את הראשית או לא, ובשני המקרים גרין נותן אפס.
+      - text: 'לא, כי $\mathbb R^2\setminus\{0\}$ אינו פשוט קשר'
+        feedback: >-
+          התחום אינו פשוט קשר, וזה אומר רק שרוטור אפס **לבדו** לא מספיק. כאן יש נתון נוסף, על מעגל היחידה, והוא סוגר
+          את הפער.
+        misconception: MC-c6-singularity-means-nonconservative
+    reasons:
+      - text: 'אם $C$ לא מקיפה את הראשית, גרין על הפנים שלה נותן $0$; אם היא מקיפה, גרין על התחום שבינה למעגל קטן משווה אותה למעגל היחידה (בכיוון המתאים), ושם האינטגרל $0$'
+        correct: true
+        feedback: >-
+          בדיוק. כל המעגלים סביב הראשית נותנים אותו ערך (גרין על הטבעת שביניהם), ולכן מספיק מעגל אחד.
+      - text: 'כי $Q_x=P_y$ גורר שהשדה משמר בכל תחום'
+        feedback: >-
+          לא נכון באופן כללי: שדה הסיבוב מקיים $Q_x=P_y$ ואינו משמר ב-$\mathbb R^2\setminus\{0\}$. מה שמציל כאן הוא
+          הנתון על מעגל היחידה.
+        misconception: MC-c6-mixed-partials-suffice
+      - text: 'רק למסילות שלא מקיפות את הראשית; מסילות שמקיפות אותה יכולות לתת כל ערך'
+        feedback: >-
+          מסילה שמקיפה את הראשית נותנת את אותו ערך כמו מעגל היחידה, לפי גרין על התחום שביניהן. הערך נקבע לכן מהנתון.
+        misconception: MC-c7-winding-depends-on-curve

@@ -1,0 +1,344 @@
+# Lesson 3.3 — tangent plane, unit normal and orientability. Understanding questions, basic → mid → exam.
+# Objectives (src/course.ts):
+#   OBJ-3.3-1  compute the tangent plane and the unit normal at a point of a parametrized surface and of a level surface
+#   OBJ-3.3-2  show that the tangent plane is the set of velocity vectors of curves in the surface
+#   OBJ-3.3-3  tell an orientable surface from a non-orientable one, and explain why the Möbius band is not orientable
+# The unit normal is always written with its hat, N̂: N (no hat) is a coefficient of the second form (chapter 4).
+chapter: 3
+questions:
+  - id: Q-3.3-normal-saddle
+    type: numeric
+    objectives: [OBJ-3.3-1]
+    level: basic
+    prompt: >-
+      $\sigma(x,y)=(x,\ y,\ x^2-y^2)$. חשבו את הרכיב השלישי של הנורמל היחידה
+      $\hat{\mathbf N}=\frac{\sigma_x\times\sigma_y}{\|\sigma_x\times\sigma_y\|}$ בנקודה $(x,y)=(1,2)$. (שימו לב: הנורמל
+      נכתב תמיד עם כובע, $\hat{\mathbf N}$; האות $N$ בלי כובע תשמש בפרק 4 למקדם של התבנית השנייה.)
+    answer: 0.2182179
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sigma_x\times\sigma_y=(-2x,\,2y,\,1)=(-2,4,1)$, שאורכו $\sqrt{4+16+1}=\sqrt{21}$, ולכן
+      $\hat{\mathbf N}=\frac{1}{\sqrt{21}}(-2,4,1)$ והרכיב השלישי $\frac{1}{\sqrt{21}}\approx0.2182$. הוא חיובי: בגרף
+      $\sigma_x\times\sigma_y$ מצביע תמיד "למעלה".
+    wrongFeedback: >-
+      חשבו את $\sigma_x\times\sigma_y=(-f_x,-f_y,1)$ בנקודה, ואז חלקו באורך (לא בריבוע האורך).
+    commonWrong:
+      - value: -0.2182179
+        feedback: >-
+          הסימן הפוך: זה הנורמל של $\sigma_y\times\sigma_x$. בקורס $\hat{\mathbf N}$ מוגדר לפי סדר הפרמטרים, $\sigma_x\times\sigma_y$.
+        misconception: MC-c3-normal-order-irrelevant
+      - value: 0.047619
+        feedback: >-
+          זה $\frac{1}{21}$: חילקתם בריבוע האורך. וקטור יחידה מקבלים בחלוקה ב-$\|w\|=\sqrt{21}$.
+        misconception: MC-c3-norm-vs-square
+      - value: 1
+        feedback: >-
+          זה הרכיב השלישי של $\sigma_x\times\sigma_y$ לפני הנרמול. אורכו $\sqrt{21}\ne1$, ולכן הוא אינו נורמל **יחידה**.
+        misconception: MC-c3-normal-not-normalized
+
+  - id: Q-3.3-plane-level
+    type: mc
+    objectives: [OBJ-3.3-1]
+    level: basic
+    prompt: >-
+      מהו המישור המשיק להיפרבולואיד $x^2+y^2-z^2=1$ בנקודה $p=(1,1,1)$?
+    choices:
+      - text: '$x+y-z=1$'
+        correct: true
+        feedback: >-
+          נכון. $\nabla F(p)=(2,2,-2)$ ניצב למשטח, והמישור $\nabla F(p)\cdot(x-p)=0$ הוא
+          $2(x-1)+2(y-1)-2(z-1)=0$, כלומר $x+y-z=1$. בדיקה: $p$ מקיימת $1+1-1=1$.
+      - text: '$x+y-z=0$'
+        feedback: >-
+          זה מישור מקביל שעובר בראשית, ו-$p$ אינה עליו ($1+1-1\ne0$). $\nabla F(p)^{\perp}$ הוא המרחב הווקטורי של וקטורי
+          המהירות; המישור המשיק הגאומטרי עובר ב-$p$.
+        misconception: MC-c3-tangent-plane-through-origin
+      - text: 'המישור שעובר ב-$p$ ונפרש על ידי $(2,2,-2)$ ו-$(1,1,1)$'
+        feedback: >-
+          $(2,2,-2)=\nabla F(p)$ **ניצב** למשטח, ולכן אינו כיוון במישור המשיק. גם $(1,1,1)$ אינו משיק: $(2,2,-2)\cdot(1,1,1)=2\ne0$.
+        misconception: MC-c3-gradient-in-plane
+
+  - id: Q-3.3-velocity
+    type: mc
+    objectives: [OBJ-3.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $S$ משטח חלק ו-$p\in S$. איזו טענה מתארת נכון את הקשר בין המישור המשיק $T_pS$ לבין מסילות במשטח?
+    choices:
+      - text: 'כל וקטור מהירות $\gamma''(0)$ של מסילה $\gamma$ ב-$S$ עם $\gamma(0)=p$ נמצא ב-$T_pS$, וכל וקטור ב-$T_pS$ הוא מהירות של מסילה כזו'
+        correct: true
+        feedback: >-
+          נכון. הכיוון הראשון הוא כלל השרשרת, $\gamma'=u'\sigma_u+v'\sigma_v$; השני בא מהמסילה $\sigma(u_0+at,\,v_0+bt)$,
+          שמהירותה $a\sigma_u+b\sigma_v$.
+      - text: 'רק $\sigma_u$ ו-$\sigma_v$ (וכפולות שלהם) הם מהירויות של מסילות במשטח דרך $p$'
+        feedback: >-
+          מסילה במשטח יכולה לעבור ב-$p$ בכל כיוון משיק: $\sigma(u_0+t,\,v_0+t)$ מהירותה $\sigma_u+\sigma_v$, שאינה כפולה של
+          אף אחד מהם בדרך כלל.
+        misconception: MC-c3-tangent-only-coordinate-directions
+      - text: 'למהירות של מסילה מעוקלת במשטח יכול להיות רכיב בכיוון $\hat{\mathbf N}$'
+        feedback: >-
+          המהירות תמיד משיקה. מה שיכול לצאת מהמישור הוא **התאוצה**: במעגל הגדול $(\cos t,\sin t,0)$ על ספרת היחידה המהירות
+          משיקה, והתאוצה $-(\cos t,\sin t,0)$ ניצבת לספרה.
+        misconception: MC-c3-velocity-leaves-plane
+
+  - id: Q-3.3-saddle-curve
+    type: mc
+    objectives: [OBJ-3.3-2]
+    level: basic
+    prompt: >-
+      המסילה $\gamma(t)=(t,\ t^2,\ t^3)$ נמצאת על המשטח $z=xy$, עם הפרמטריזציה $\sigma(x,y)=(x,y,xy)$. כתבו את $\gamma'(1)$
+      בעזרת $\sigma_x,\sigma_y$ בנקודה $(1,1)$.
+    choices:
+      - text: '$\gamma''(1)=\sigma_x+2\sigma_y$'
+        correct: true
+        feedback: >-
+          נכון. $\gamma(t)=\sigma(t,t^2)$, ולפי כלל השרשרת $\gamma'=1\cdot\sigma_x+2t\,\sigma_y$. בדיקה:
+          $\sigma_x=(1,0,y)=(1,0,1)$, $\sigma_y=(0,1,x)=(0,1,1)$, ו-$\sigma_x+2\sigma_y=(1,2,3)=\gamma'(1)$.
+      - text: 'אי אפשר: $\gamma''(1)=(1,2,3)$ אינו במישור הנפרש על ידי $\sigma_x,\sigma_y$, כי המסילה מתעקלת'
+        feedback: >-
+          $(1,2,3)=\sigma_x+2\sigma_y$, כפי שהחישוב מראה. מהירות של מסילה במשטח תמיד במישור המשיק, גם כשהמסילה מתעקלת.
+        misconception: MC-c3-velocity-leaves-plane
+      - text: '$\gamma''(1)=\sigma_x+2\sigma_y+3\hat{\mathbf N}$'
+        feedback: >-
+          הרכיב השלישי 3 של $\gamma'(1)$ כבר מתקבל מ-$\sigma_x+2\sigma_y=(1,2,3)$, ואין רכיב נורמלי. $(1,2,3)\cdot(-1,-1,1)=0$,
+          כש-$(-y,-x,1)=(-1,-1,1)$ הוא $\sigma_x\times\sigma_y$.
+        misconception: MC-c3-velocity-leaves-plane
+
+  - id: Q-3.3-orientable-def
+    type: mc
+    objectives: [OBJ-3.3-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מתי משטח חלק $S$ נקרא **מכוון**?
+    choices:
+      - text: 'כשיש פונקציה רציפה $p\mapsto\hat{\mathbf N}(p)$ על כל $S$ שבכל נקודה היא נורמל יחידה'
+        correct: true
+        feedback: >-
+          נכון. בכל נקודה יש שתי אפשרויות, $\pm\hat{\mathbf N}$; משטח מכוון אם אפשר לבחור ביניהן ברציפות על כל המשטח
+          בבת אחת.
+      - text: 'כשבכל נקודה של $S$ יש נורמל יחידה'
+        feedback: >-
+          זה נכון לכל משטח חלק, גם לרצועת מביוס: בכל נקודה יש בדיוק שני נורמלי יחידה. הדרישה היא שהבחירה תהיה **רציפה**.
+        misconception: MC-c3-orientable-pointwise
+      - text: 'כשפרמטריזציה רגולרית וחד-חד-ערכית אחת מכסה את כל $S$'
+        feedback: >-
+          זה מספיק אבל לא הכרחי: את הספרה לא מכסה פרמטריזציה כזו אחת, והיא מכוונת עם $\hat{\mathbf N}(p)=p$.
+        misconception: MC-c3-orientable-one-chart
+
+  - id: Q-3.3-sphere-two
+    type: twotier
+    objectives: [OBJ-3.3-1, OBJ-3.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לספרת היחידה, $\sigma(u,v)=(\sin u\cos v,\ \sin u\sin v,\ \cos u)$ ($0<u<\pi$) נותנת
+      $\sigma_u\times\sigma_v=\sin u\cdot\sigma(u,v)$, כלומר $\hat{\mathbf N}=\sigma$ מצביע החוצה. עכשיו
+      $\tilde\sigma(s,t)=(\sin t\cos s,\ \sin t\sin s,\ \cos t)$, כלומר $\tilde\sigma(s,t)=\sigma(t,s)$. לאן מצביע
+      $\hat{\mathbf N}$ של $\tilde\sigma$?
+    choices:
+      - text: פנימה, למרכז הספרה
+        correct: true
+        feedback: >-
+          נכון. אותה ספרה, אותה נקודה, נורמל יחידה הפוך. שתי הפרמטריזציות נותנות שני כיוונים שונים של הספרה.
+      - text: החוצה, כי הנורמל של ספרה מצביע תמיד החוצה
+        feedback: >-
+          "החוצה" הוא בחירה, לא חלק מההגדרה: $\hat{\mathbf N}$ נקבע מסדר הפרמטרים. החלפת הסדר הופכת אותו.
+        misconception: MC-c3-reparam-keeps-normal-direction
+    reasons:
+      - text: '$\tilde\sigma_s\times\tilde\sigma_t=\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$; ההחלפה $(s,t)\mapsto(t,s)$ היא בעלת דטרמיננטה $-1$'
+        correct: true
+        feedback: >-
+          בדיוק: $\tilde\sigma_s\times\tilde\sigma_t=\det(D\varphi)\,\sigma_u\times\sigma_v$ עם
+          $\det\begin{pmatrix}0&1\\1&0\end{pmatrix}=-1$.
+      - text: 'החלפת שמות של פרמטרים לא משנה דבר, ולכן מקבלים אותו נורמל'
+        feedback: >-
+          החלפת השמות משנה את **סדר** הגורמים במכפלה הווקטורית, והמכפלה הווקטורית אנטי-סימטרית.
+        misconception: MC-c3-normal-order-irrelevant
+      - text: 'לשתי הפרמטריזציות אותו מישור משיק, ולכן אותו נורמל יחידה'
+        feedback: >-
+          אותו מישור משיק נותן אותו **ישר** נורמלי, ועליו שני וקטורי יחידה. איזה מהם מתקבל תלוי בסימן של $\det(D\varphi)$.
+        misconception: MC-c3-reparam-keeps-normal-direction
+
+  - id: Q-3.3-level-velocity
+    type: twotier
+    objectives: [OBJ-3.3-2, OBJ-3.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $S=F^{-1}(c)$ משטח רמה של ערך רגולרי ו-$p\in S$. האם $T_pS=\nabla F(p)^{\perp}$ (כל הווקטורים הניצבים
+      ל-$\nabla F(p)$)?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ולכן המישור המשיק הגאומטרי הוא $\nabla F(p)\cdot(x-p)=0$, ו-$\hat{\mathbf N}=\pm\frac{\nabla F}{\|\nabla F\|}$.
+      - text: 'לא, $\nabla F(p)$ הוא עצמו כיוון במישור המשיק'
+        feedback: >-
+          הגרדיאנט ניצב לקבוצות רמה: על ספרת היחידה $F=x^2+y^2+z^2$ נותן $\nabla F(p)=2p$, הכיוון הרדיאלי, שניצב לספרה.
+        misconception: MC-c3-gradient-in-plane
+    reasons:
+      - text: 'לכל מסילה $\gamma$ ב-$S$ עם $\gamma(0)=p$: $F(\gamma(t))=c$, ולכן $\nabla F(p)\cdot\gamma''(0)=0$. לכן $T_pS\subseteq\nabla F(p)^{\perp}$, ושני המרחבים ממימד 2'
+        correct: true
+        feedback: >-
+          בדיוק. ההכלה באה מכלל השרשרת ומאפיון $T_pS$ כאוסף המהירויות; $\nabla F(p)\ne0$ (ערך רגולרי), ולכן
+          $\nabla F(p)^{\perp}$ ממימד 2, והכלה בין מרחבים ממימד 2 היא שוויון.
+      - text: 'על $S$ הפונקציה $F$ קבועה, ולכן $\nabla F=0$ על $S$, וכל וקטור ניצב לו'
+        feedback: >-
+          אז היה מתקבל $\nabla F(p)^{\perp}=\mathbb R^3$, לא מישור. $F$ קבועה רק **לאורך** $S$; בכיוון הניצב היא משתנה,
+          ו-$\nabla F(p)\ne0$ כי $c$ ערך רגולרי.
+        misconception: MC-c3-constant-on-set-zero-gradient
+      - text: 'כי $\nabla F(p)$ ו-$p$ פורשים את המישור המשיק'
+        feedback: >-
+          $\nabla F(p)$ ניצב למשטח, ו-$p$ הוא נקודה, לא כיוון משיק. במשטח רמה כללי אין קשר בין $p$ לבין $T_pS$.
+        misconception: MC-c3-gradient-in-plane
+
+  - id: Q-3.3-mobius
+    type: twotier
+    objectives: [OBJ-3.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      רצועת מביוס:
+      $$\sigma(u,v)=\Big(\big(2+v\cos\tfrac u2\big)\cos u,\ \big(2+v\cos\tfrac u2\big)\sin u,\ v\sin\tfrac u2\Big),\qquad u\in\mathbb R,\ |v|<1.$$
+      $\sigma$ רגולרית בכל נקודה ו-$\sigma(u+2\pi,-v)=\sigma(u,v)$. האם הרצועה מכוונת?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. לאורך המעגל האמצעי $v=0$ כל בחירה רציפה של נורמל יחידה חוזרת לנקודת ההתחלה עם סימן הפוך.
+      - text: כן, כי $\sigma$ רגולרית בכל נקודה
+        feedback: >-
+          רגולריות היא תנאי מקומי; כיווניות היא תנאי גלובלי. הנוסחה $\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$
+          מגדירה וקטור לכל $(u,v)$, אבל לנקודה אחת של הרצועה יש שני זוגות פרמטרים, $(u,v)$ ו-$(u+2\pi,-v)$, והם נותנים
+          נורמלים מנוגדים.
+        misconception: MC-c3-orientable-pointwise
+    reasons:
+      - text: '$\hat{\mathbf N}(0,0)=(0,0,-1)$ ו-$\hat{\mathbf N}(2\pi,0)=(0,0,1)$ באותה נקודה $(2,0,0)$; נורמל רציף לאורך המעגל האמצעי הוא $\pm\hat{\mathbf N}(u,0)$ עם סימן קבוע, ולכן היה צריך להיות שווה לשניהם'
+        correct: true
+        feedback: >-
+          בדיוק. אם $\mathbf n$ נורמל יחידה רציף על הרצועה, אז $\varepsilon(u)=\mathbf n(\sigma(u,0))\cdot\hat{\mathbf N}(u,0)$
+          רציפה ומקבלת רק $\pm1$, ולכן קבועה; אבל $\sigma(2\pi,0)=\sigma(0,0)$ ו-$\hat{\mathbf N}(2\pi,0)=-\hat{\mathbf N}(0,0)$
+          נותנים $\varepsilon(2\pi)=-\varepsilon(0)$. סתירה.
+      - text: 'יש ברצועה נקודות שבהן הפרמטריזציה אינה רגולרית'
+        feedback: >-
+          אין: $\|\sigma_u\times\sigma_v\|>1$ בכל נקודה עם $|v|<1$. אי-כיווניות אינה סינגולריות.
+        misconception: MC-c3-nonorientable-means-singular
+      - text: 'יש לה רק צד אחד, ולכן אין לה נורמל'
+        feedback: >-
+          בכל נקודה של הרצועה יש נורמל יחידה (שניים, למעשה). "צד אחד" הוא תיאור אינטואיטיבי של מה שצריך להוכיח, לא נימוק:
+          ההוכחה מראה שבחירה **רציפה** של נורמל אינה קיימת.
+        misconception: MC-c3-orientable-pointwise
+
+  - id: Q-3.3-mobius-dot
+    type: numeric
+    objectives: [OBJ-3.3-3]
+    level: mid
+    prompt: >-
+      ברצועת מביוס של השאלה הקודמת, $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$. חשבו את
+      $\hat{\mathbf N}(0,0)\cdot\hat{\mathbf N}(2\pi,0)$. (שתי הנקודות $\sigma(0,0)$ ו-$\sigma(2\pi,0)$ הן אותה נקודה
+      $(2,0,0)$.)
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ב-$v=0$: $\sigma_u=(-2\sin u,\,2\cos u,\,0)$ ו-$\sigma_v=(\cos\frac u2\cos u,\ \cos\frac u2\sin u,\ \sin\frac u2)$.
+      ב-$u=0$: $\sigma_u=(0,2,0)$, $\sigma_v=(1,0,0)$, $\sigma_u\times\sigma_v=(0,0,-2)$. ב-$u=2\pi$: $\sigma_u=(0,2,0)$,
+      $\sigma_v=(-1,0,0)$, $\sigma_u\times\sigma_v=(0,0,2)$. הנורמלים $(0,0,\mp1)$ מנוגדים, והמכפלה $-1$.
+    wrongFeedback: >-
+      הציבו $v=0$ בנגזרות, ושימו לב ש-$\cos\frac u2$ שווה ל-1 ב-$u=0$ ול-$-1$ ב-$u=2\pi$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          כאן הנחתם שבנקודה שחוזרים אליה הנורמל חוזר לערכו. אבל $\cos\frac u2$ מחליף סימן בין $u=0$ ל-$u=2\pi$, ולכן
+          $\sigma_v$ מתהפך, וגם $\hat{\mathbf N}$.
+        misconception: MC-c3-closed-loop-normal-returns
+
+  - id: Q-3.3-orientable-which
+    type: multi
+    objectives: [OBJ-3.3-3, OBJ-3.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהמשטחים הבאים **מכוונים**? סמנו את כולם.
+    choices:
+      - text: 'כל משטח רמה $F^{-1}(c)$ של ערך רגולרי'
+        correct: true
+        feedback: >-
+          נכון. $\hat{\mathbf N}=\frac{\nabla F}{\|\nabla F\|}$ מוגדר בכל נקודה (כי $\nabla F\ne0$), רציף, וניצב למשטח.
+      - text: 'כל גרף $z=f(x,y)$ של פונקציה חלקה'
+        correct: true
+        feedback: >-
+          נכון. $\hat{\mathbf N}=\frac{(-f_x,-f_y,1)}{\sqrt{1+f_x^2+f_y^2}}$ רציף על כל הגרף.
+      - text: 'ספרת היחידה'
+        correct: true
+        feedback: >-
+          נכון: $\hat{\mathbf N}(p)=p$. העובדה שהפרמטריזציה הכדורית אינה רגולרית בקטבים לא משנה דבר.
+      - text: 'ספרת היחידה אינה מכוונת, כי בקואורדינטות כדוריות הקטבים אינם רגולריים'
+        feedback: >-
+          כיווניות היא תכונה של המשטח: $\hat{\mathbf N}(p)=p$ הוא נורמל יחידה רציף על כל הספרה, כולל הקטבים.
+        misconception: MC-c3-nonorientable-means-singular
+      - text: 'רצועת מביוס'
+        feedback: >-
+          לאורך המעגל האמצעי הנורמל הרציף חוזר הפוך: $\hat{\mathbf N}(0,0)=-\hat{\mathbf N}(2\pi,0)$ באותה נקודה.
+        misconception: MC-c3-closed-loop-normal-returns
+
+  - id: Q-3.3-converse-rank
+    type: rank
+    objectives: [OBJ-3.3-2]
+    level: mid
+    help: >-
+      סדרו את שלבי ההוכחה מהשלב הראשון לאחרון.
+    prompt: >-
+      $\sigma:D\to\mathbb R^3$ פרמטריזציה רגולרית, $D$ פתוחה, ו-$p=\sigma(u_0,v_0)$. הוכיחו שכל וקטור
+      $w\in\operatorname{span}\{\sigma_u,\sigma_v\}$ הוא וקטור המהירות של מסילה ב-$\sigma(D)$ שעוברת ב-$p$.
+    items:
+      - id: write
+        label: 'כותבים $w=a\sigma_u(u_0,v_0)+b\sigma_v(u_0,v_0)$ עם $a,b\in\mathbb R$'
+      - id: domain
+        label: 'כי $D$ פתוחה, יש $\delta>0$ כך ש-$(u_0+at,\ v_0+bt)\in D$ לכל $|t|<\delta$'
+      - id: curve
+        label: 'מגדירים $\gamma(t)=\sigma(u_0+at,\ v_0+bt)$ ל-$|t|<\delta$; זו מסילה ב-$\sigma(D)$ עם $\gamma(0)=p$'
+      - id: chain
+        label: 'לפי כלל השרשרת $\gamma''(0)=a\sigma_u(u_0,v_0)+b\sigma_v(u_0,v_0)=w$'
+    order: [write, domain, curve, chain]
+    correctFeedback: >-
+      נכון. הרעיון: מסילה ישרה במישור הפרמטרים, בכיוון $(a,b)$, נשלחת למסילה במשטח שמהירותה $w$. הפתיחות של $D$ נחוצה
+      כדי שהמסילה תהיה מוגדרת בסביבה של $t=0$.
+    wrongFeedback: >-
+      קודם מבטאים את $w$ בבסיס, אחר כך בונים מסילה ישרה במישור הפרמטרים (ומוודאים שהיא בתוך $D$), ובסוף גוזרים.
+
+  - id: Q-3.3-mobius-level
+    type: twotier
+    objectives: [OBJ-3.3-3, OBJ-3.3-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם ייתכן שרצועת מביוס $M$ היא קבוצת רמה $F^{-1}(0)$ של פונקציה חלקה $F:U\to\mathbb R$, כש-$U\subset\mathbb R^3$ פתוחה
+      ומכילה את $M$, ו-0 ערך רגולרי של $F$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. כל משטח רמה של ערך רגולרי מכוון, ורצועת מביוס אינה מכוונת.
+      - text: כן, כל משטח חלק הוא מקומית קבוצת רמה של ערך רגולרי
+        feedback: >-
+          "מקומית" זה נכון: כל חתיכה קטנה של הרצועה היא קבוצת רמה כזו. אבל השאלה היא על **פונקציה אחת** על סביבה של כל
+          $M$, ואז הנורמל $\frac{\nabla F}{\|\nabla F\|}$ מוגדר ברציפות על כל $M$.
+        misconception: MC-c3-orientable-pointwise
+    reasons:
+      - text: 'אז $\frac{\nabla F}{\|\nabla F\|}$ היה נורמל יחידה רציף על כל $M$, ו-$M$ הייתה מכוונת'
+        correct: true
+        feedback: >-
+          בדיוק. $\nabla F\ne0$ על $M$ (ערך רגולרי), $\nabla F$ רציף, ו-$\nabla F(p)\perp T_pM$. זה סותר את אי-הכיווניות
+          של הרצועה.
+      - text: 'כי ברצועת מביוס יש נקודות סינגולריות, ושם $\nabla F$ היה מתאפס'
+        feedback: >-
+          לרצועה אין נקודות סינגולריות: הפרמטריזציה שלה רגולרית בכל נקודה. הסתירה באה מהכיווניות, לא מסינגולריות.
+        misconception: MC-c3-nonorientable-means-singular
+      - text: 'כי הנורמל $\frac{\nabla F}{\|\nabla F\|}$ היה חוזר לערכו אחרי סיבוב סביב המעגל האמצעי, וזה תמיד קורה'
+        feedback: >-
+          זה לא "תמיד קורה" לנורמל רציף כלשהו על משטח: ברצועת מביוס דווקא $\hat{\mathbf N}$ של הפרמטריזציה **לא** חוזר
+          לערכו. מה שמיוחד ב-$\frac{\nabla F}{\|\nabla F\|}$ הוא שהוא פונקציה של הנקודה ב-$\mathbb R^3$, ולכן מוגדר היטב
+          ורציף על כל $M$.
+        misconception: MC-c3-closed-loop-normal-returns

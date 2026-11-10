@@ -1,0 +1,77 @@
+# Misconceptions first detected in lesson 6.1 (the line integral of a vector field).
+- id: MC-c6-extra-norm
+  title: מכפילים גם באורך של וקטור המהירות או של הנורמל, אחרי שכבר הכפילו בו סקלרית
+  belief: >-
+    באינטגרל של שדה צריך "אלמנט אורך" או "אלמנט שטח", ולכן כותבים
+    $F(\gamma(t))\cdot\gamma'(t)\,\|\gamma'(t)\|\,dt$, או $F(\sigma)\cdot(\sigma_u\times\sigma_v)\,\|\sigma_u\times\sigma_v\|\,du\,dv$.
+  truth: >-
+    $d\mathbf s=\mathbf t\,ds=\gamma'(t)\,dt$ ו-$d\mathbf S=\hat{\mathbf N}\,dS=(\sigma_u\times\sigma_v)\,du\,dv$: הווקטור
+    הלא מנורמל כבר כולל את גורם האורך או השטח. אם מנרמלים ל-$\mathbf t$ או ל-$\hat{\mathbf N}$, מכפילים ב-$\|\gamma'\|$
+    או ב-$\|\sigma_u\times\sigma_v\|$ פעם אחת בלבד.
+  remedy: { lesson: '6.1', label: 'ההגדרה של אינטגרל קווי: מה כבר נמצא בתוך γ′(t)dt' }
+
+- id: MC-c6-ds-is-dt
+  title: מציבים את המסילה בשדה ושוכחים את וקטור המהירות
+  belief: >-
+    $\int_\gamma\mathbf F\cdot d\mathbf s$ מחשבים כך: מציבים $\gamma(t)$ בתוך $\mathbf F$ ומכפילים ב-$dt$, או מכפילים
+    רק בחלק מהרכיבים של $\gamma'(t)$.
+  truth: >-
+    $d\mathbf s$ אינו $dt$: $d\mathbf s=\gamma'(t)\,dt$, ולכן האינטגרנד הוא המכפלה הסקלרית המלאה
+    $\mathbf F(\gamma(t))\cdot\gamma'(t)$, עם כל רכיבי $\gamma'$.
+  remedy: { lesson: '6.1', label: 'חישוב אינטגרל קווי: הצבה ומכפלה סקלרית ב-γ′' }
+
+- id: MC-c6-orientation-irrelevant
+  title: חושבים שהאינטגרל הקווי של שדה לא תלוי בכיוון ההליכה
+  belief: >-
+    אותה קבוצת נקודות נותנת אותו אינטגרל קווי, בכל כיוון שעוברים עליה.
+  truth: >-
+    $\int_{-\gamma}\mathbf F\cdot d\mathbf s=-\int_\gamma\mathbf F\cdot d\mathbf s$: היפוך הכיוון הופך את $\gamma'$
+    ואת $\mathbf t$. רק אינטגרלים לפי אורך קשת, כמו אורך ומסה, לא תלויים בכיוון.
+  remedy: { lesson: '6.1', label: 'היפוך כיוון מחליף סימן' }
+
+- id: MC-c6-speed-matters
+  title: חושבים שהחלפת פרמטר שמשנה את המהירות משנה את האינטגרל הקווי
+  belief: >-
+    אם עוברים על אותה מסילה מהר יותר או לאט יותר, $\gamma'$ משתנה, ולכן גם $\int_\gamma\mathbf F\cdot d\mathbf s$ משתנה.
+  truth: >-
+    בהחלפת פרמטר $\delta=\gamma\circ\varphi$ עם $\varphi'>0$ מתקיים $\delta'(s)=\gamma'(\varphi(s))\varphi'(s)$, וההצבה
+    $t=\varphi(s)$ מבטלת את $\varphi'$: האינטגרל לא משתנה. רק הכיוון משנה, לא המהירות.
+  remedy: { lesson: '6.1', label: 'אי-תלות בפרמטריזציה ששומרת כיוון' }
+
+- id: MC-c6-abs-derivative
+  title: מכניסים ערך מוחלט על הנגזרת של החלפת הפרמטר באינטגרל קווי של שדה
+  belief: >-
+    כמו בנוסחת החלפת המשתנים (עם הערך המוחלט של היעקוביאן) וכמו ב-$\int\rho\,ds$, גם כאן מופיע $|\varphi'|$, ולכן
+    החלפת פרמטר בכיוון הפוך לא משנה את הסימן.
+  truth: >-
+    ב-$\int\rho\,ds$ מופיע $\|\delta'\|=\|\gamma'\|\,|\varphi'|$, ולכן אין סימן. ב-$\int\mathbf F\cdot d\mathbf s$ מופיע
+    $\delta'=\gamma'\varphi'$ בלי ערך מוחלט, וכש-$\varphi'<0$ הגבולות מתחלפים: הסימן מתהפך.
+  remedy: { lesson: '6.1', label: 'מה משתנה בהוכחה כשהפרמטריזציה הופכת כיוון' }
+
+- id: MC-c6-field-vs-scalar
+  title: מחליפים את האינטגרל של שדה באינטגרל של האורך שלו
+  belief: >-
+    $\int_\gamma\mathbf F\cdot d\mathbf s=\int_\gamma\|\mathbf F\|\,ds$ ו-$\iint_S\mathbf F\cdot d\mathbf S=\iint_S\|\mathbf F\|\,dS$:
+    "כמה שדה יש על המסילה או על המשטח".
+  truth: >-
+    באינטגרל של שדה נכנס רק הרכיב המשיק $\mathbf F\cdot\mathbf t$ (במסילה) או הרכיב הנורמלי $\mathbf F\cdot\hat{\mathbf N}$
+    (במשטח), עם סימן. שדה רדיאלי על מעגל נותן אינטגרל קווי אפס, אף ש-$\int\|\mathbf F\|\,ds>0$.
+  remedy: { lesson: '6.1', label: 'שדה מול פונקציה: F·t לעומת ρ' }
+
+- id: MC-c6-scalar-changes-sign
+  title: חושבים שגם אינטגרל לפי אורך קשת מחליף סימן בהיפוך כיוון
+  belief: >-
+    כל אינטגרל על מסילה מחליף סימן כשהופכים את כיוון ההליכה, כמו $\int_a^b=-\int_b^a$.
+  truth: >-
+    $\int_\gamma\rho\,ds$ משתמש ב-$\|\gamma'\|$, שאינו מושפע מהכיוון: אורך ומסה אינם שליליים. רק $\int\mathbf F\cdot d\mathbf s$,
+    שבו $\mathbf t$ תלוי בכיוון, מחליף סימן. כך גם במשטחים: $\iint_S\rho\,dS$ אינו תלוי בבחירת הנורמל, והשטף כן.
+  remedy: { lesson: '6.1', label: 'שדה מול פונקציה: מה תלוי בכיוון' }
+
+- id: MC-c6-all-fields-path-independent
+  title: חושבים שכל אינטגרל קווי תלוי רק בנקודות הקצה
+  belief: >-
+    כמו באינטגרל במשתנה אחד, $\int_\gamma\mathbf F\cdot d\mathbf s$ תלוי רק בנקודת ההתחלה ובנקודת הסוף.
+  truth: >-
+    זה נכון רק לשדות משמרים (שיעור 6.2). ל-$\mathbf F=(y,0)$ מ-$(0,0)$ ל-$(1,1)$ האינטגרל על הישר הוא $\frac12$ ועל
+    הפרבולה $y=x^2$ הוא $\frac13$.
+  remedy: { lesson: '6.1', label: 'עבודה לאורך שתי מסילות בין אותן נקודות' }
