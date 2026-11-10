@@ -7,7 +7,7 @@
     $\mathbf b=\mathbf t\times\mathbf n$, כך שהשלשה $(\mathbf t,\mathbf n,\mathbf b)$ ימנית ($\det=1$). החלפת הסדר
     הופכת את $\mathbf b$, ואיתו את סימן הפיתול: בסליל $(\cos t,\sin t,t)$ ב-$t=0$ מתקבל
     $\mathbf b=\frac{1}{\sqrt2}(0,-1,1)$, ולא הווקטור הנגדי.
-  remedy: { lesson: '2.1', label: 'השלשה של פרנה: הבינורמל כמכפלה וקטורית' }
+  remedy: { lesson: '2.1', anchor: 'binormal-def', label: 'השלשה של פרנה: הבינורמל כמכפלה וקטורית' }
 
 - id: MC-c2-frame-not-unit
   title: לוקחים את המכפלה הווקטורית של הנגזרות בלי לנרמל
@@ -17,7 +17,7 @@
     $\gamma'\times\gamma''$ מצביע בכיוון של $\mathbf b$, אבל אורכו $\kappa\|\gamma'\|^3$. מחלקים באורכו:
     $\mathbf b=\frac{\gamma'\times\gamma''}{\|\gamma'\times\gamma''\|}$. החלוקה ב-$\|\gamma'\|\,\|\gamma''\|$ נותנת וקטור
     יחידה רק כש-$\gamma''\perp\gamma'$.
-  remedy: { lesson: '2.1', label: 'השלשה של פרנה בפרמטר כללי' }
+  remedy: { lesson: '2.1', anchor: 'frame-general', label: 'השלשה של פרנה בפרמטר כללי' }
 
 - id: MC-c2-binormal-any-perp
   title: חושבים שכל וקטור יחידה ניצב למשיק הוא הנורמל או הבינורמל
@@ -27,7 +27,7 @@
     למשיק יש מעגל שלם של וקטורי יחידה ניצבים. המסילה בוחרת אחד מהם: $\mathbf n=\mathbf t'/\kappa$ (הכיוון שאליו
     המשיק פונה), ואז $\mathbf b=\mathbf t\times\mathbf n$ נקבע. בסליל $\mathbf n$ אופקי ומצביע אל הציר, ו-$\mathbf b$
     נוטה ממנו.
-  remedy: { lesson: '2.1', label: 'השלשה של פרנה: מאיפה בא הנורמל' }
+  remedy: { lesson: '2.1', anchor: 'binormal-def', label: 'השלשה של פרנה: מאיפה בא הנורמל' }
 
 - id: MC-c2-helix-binormal-axis
   title: חושבים שהבינורמל של סליל מצביע לאורך הציר שלו
@@ -36,7 +36,7 @@
   truth: >-
     $\mathbf b=\frac{1}{\sqrt{a^2+b^2}}(b\sin t,-b\cos t,a)$: רכיב ה-$z$ שלו קבוע, אבל הוא מסתובב סביב הציר. הוא מקביל
     לציר רק כש-$b=0$, כלומר במעגל. בינורמל קבוע פירושו מסילה מישורית (שיעור 2.2).
-  remedy: { lesson: '2.1', label: 'השלשה של פרנה לסליל' }
+  remedy: { lesson: '2.1', anchor: 'test-objects', label: 'השלשה של פרנה לסליל' }
 
 - id: MC-c2-n-is-gamma2
   title: חושבים שהנורמל הראשי הוא הכיוון של הנגזרת השנייה בכל פרמטר
@@ -46,7 +46,7 @@
     $\gamma''=v'\mathbf t+\kappa v^2\mathbf n$ כאשר $v=\|\gamma'\|$. רק כשהמהירות קבועה ($v'=0$) הנגזרת השנייה מקבילה
     ל-$\mathbf n$. במסילה המעוקבת ב-$t=1$ הרכיב המשיקי של $\gamma''$ הוא $\frac{22}{\sqrt{14}}\approx5.88$, גדול מהרכיב
     הנורמלי.
-  remedy: { lesson: '2.1', label: 'השלשה של פרנה בפרמטר כללי' }
+  remedy: { lesson: '2.1', anchor: 'frame-general', label: 'השלשה של פרנה בפרמטר כללי' }
 
 - id: MC-c2-plane-mixup
   title: מבלבלים בין המישור המנשק, המישור הנורמלי והמישור המיישר
@@ -56,7 +56,7 @@
     שלושת המישורים עוברים דרך $\gamma(t_0)$: המנשק נפרש על ידי $\mathbf t,\mathbf n$ (הנורמל שלו $\mathbf b$), הנורמלי
     על ידי $\mathbf n,\mathbf b$ (הנורמל שלו $\mathbf t$), והמיישר על ידי $\mathbf t,\mathbf b$ (הנורמל שלו $\mathbf n$).
     מבין כל המישורים שמכילים את הישר המשיק, המנשק הוא היחיד שמכיל גם את $\gamma''$.
-  remedy: { lesson: '2.1', label: 'המישור המנשק ומשוואתו' }
+  remedy: { lesson: '2.1', anchor: 'planes-def', label: 'המישור המנשק ומשוואתו' }
 
 - id: MC-c2-frame-at-inflection
   title: חושבים שאפשר להשלים את השלשה ברציפות בנקודה שבה העקמומיות אפס
@@ -65,7 +65,7 @@
   truth: >-
     הגבולות מהצדדים יכולים להיות שונים. ב-$(t,t^3,0)$ הנורמל הוא בערך $(0,-1,0)$ משמאל לאפס ו-$(0,1,0)$ מימין, וכך גם
     $\mathbf b$ קופץ מ-$(0,0,-1)$ ל-$(0,0,1)$. במסילה החלקה שמודבקת ממישור $xy$ למישור $xz$ המישור המנשק עצמו קופץ.
-  remedy: { lesson: '2.1', label: 'למה השלשה דורשת עקמומיות חיובית' }
+  remedy: { lesson: '2.1', anchor: 'kappa-zero', label: 'למה השלשה דורשת עקמומיות חיובית' }
 
 - id: MC-c2-kappa-zero-singular
   title: מבלבלים בין עקמומיות אפס לבין נקודה לא רגולרית
@@ -74,7 +74,7 @@
   truth: >-
     רגולריות היא $\gamma'\ne0$, ואז $\mathbf t$ מוגדר. $\kappa=0$ פירושו ש-$\mathbf t'=0$, כלומר אין כיוון פנייה,
     ולכן רק $\mathbf n$ ו-$\mathbf b$ לא מוגדרים. הישר $(t,0,0)$ רגולרי בכל נקודה, ו-$\kappa\equiv0$ בו.
-  remedy: { lesson: '2.1', label: 'למה השלשה דורשת עקמומיות חיובית' }
+  remedy: { lesson: '2.1', anchor: 'independence', label: 'למה השלשה דורשת עקמומיות חיובית' }
 
 - id: MC-c2-frame-needs-third
   title: חושבים שהשלשה של פרנה תלויה בנגזרת השלישית
@@ -83,7 +83,7 @@
   truth: >-
     השלשה נקבעת מ-$\gamma'$ ו-$\gamma''$ בלבד: $\mathbf t$ בכיוון $\gamma'$, $\mathbf b$ בכיוון $\gamma'\times\gamma''$, ו-$\mathbf n=\mathbf b\times\mathbf t$.
     הנגזרת השלישית נכנסת רק לפיתול (שיעור 2.2).
-  remedy: { lesson: '2.1', label: 'השלשה של פרנה בפרמטר כללי' }
+  remedy: { lesson: '2.1', anchor: 'frame-general', label: 'השלשה של פרנה בפרמטר כללי' }
 
 - id: MC-c2-osc-plane-param
   title: חושבים שהמישור המנשק תלוי בפרמטריזציה
@@ -92,4 +92,4 @@
   truth: >-
     בהחלפת פרמטר $\gamma'\times\gamma''$ מוכפל בסקלר שונה מאפס ($\varphi'^3$), ולכן הנורמל למישור המנשק, ואיתו המישור,
     לא משתנה. מחשבים אותו בכל פרמטר נוח.
-  remedy: { lesson: '2.1', label: 'המישור המנשק' }
+  remedy: { lesson: '2.1', anchor: 'frame-invariance', label: 'המישור המנשק' }

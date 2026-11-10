@@ -7,7 +7,7 @@
     סליל מוכלל מוגדר בכך שהמשיק יוצר זווית קבועה עם כיוון קבוע. לפי משפט לנקרה זה שקול לכך שהיחס $\frac\tau\kappa$ קבוע,
     לא כל אחד מהם. $(\cosh t,\sinh t,t)$ מקיימת $\kappa=\tau=\frac{1}{2\cosh^2t}$, לא קבועות, והיא סליל מוכלל עם הציר
     $(0,1,0)$.
-  remedy: { lesson: '2.5', label: 'משפט לנקרה' }
+  remedy: { lesson: '2.5', anchor: 'lancret-hyp', label: 'משפט לנקרה: שניהם משתנים, המנה קבועה' }
 
 - id: MC-c2-lancret-ratio-is-cos
   title: מבלבלים בין היחס של הפיתול לעקמומיות לבין הקוסינוס של הזווית
@@ -16,7 +16,16 @@
   truth: >-
     $\mathbf u=\cos\theta\,\mathbf t+\sin\theta\,\mathbf b$, וגזירה נותנת $\kappa\cos\theta=\tau\sin\theta$, כלומר
     $\frac\tau\kappa=\cot\theta$. לכן $\cos\theta=\frac{\tau}{\sqrt{\kappa^2+\tau^2}}$; כש-$\tau=\kappa$ הזווית $45^\circ$.
-  remedy: { lesson: '2.5', label: 'משפט לנקרה: הציר והזווית' }
+  remedy: { lesson: '2.5', anchor: 'lancret', label: 'משפט לנקרה: הציר והזווית' }
+
+- id: MC-c2-lancret-ratio-inverted
+  title: הופכים את היחס ומחשבים עקמומיות חלקי פיתול
+  belief: >-
+    המנה הקבועה במשפט לנקרה היא $\frac\kappa\tau$, ובסליל $(a\cos t,\ a\sin t,\ bt)$ היא $\frac ab$.
+  truth: >-
+    המנה במשפט היא $\frac\tau\kappa=\cot\theta$, הפיתול במונה. בסליל $\kappa=\frac{a}{a^2+b^2}$ ו-$\tau=\frac{b}{a^2+b^2}$, ולכן
+    $\frac\tau\kappa=\frac ba$; המנה ההפוכה $\frac ab$ היא $\tan\theta$.
+  remedy: { lesson: '2.5', anchor: 'lancret', label: 'משפט לנקרה: המנה והזווית' }
 
 - id: MC-c2-spherical-kappa-any
   title: חושבים שמסילה על ספרה יכולה להיות בעלת עקמומיות קטנה כרצוננו
@@ -25,4 +34,4 @@
   truth: >-
     גזירה כפולה של $\|\gamma-c\|^2=R^2$ נותנת $\kappa\,\mathbf n\cdot(\gamma-c)=-1$, ולכן
     $\kappa=\frac{1}{|\mathbf n\cdot(\gamma-c)|}\ge\frac1R$. על הספרה, המעגלים הגדולים, עם $\kappa=\frac1R$, הם המסילות הכי פחות עקומות.
-  remedy: { lesson: '2.5', label: 'מסילות על ספרה' }
+  remedy: { lesson: '2.5', anchor: 'sphere-kappa', label: 'טענה 2.5.4: על ספרה κ ≥ 1/R' }

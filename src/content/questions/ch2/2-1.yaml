@@ -376,7 +376,7 @@ questions:
           המישור הנורמלי ניצב למשיק, אבל כל $P_h$ מכיל את המשיק, ולכן גם הגבול מכיל אותו.
         misconception: MC-c2-plane-mixup
     reasons:
-      - text: 'לפי טיילור $\gamma(t_0+h)-\gamma(t_0)=h\gamma''+\frac{h^2}{2}\gamma''''+o(h^2)$, ו-$P_h$ נפרש על ידי $\gamma''$ ו-$\gamma''''+o(1)$'
+      - text: 'לפי טיילור, $\gamma(t_0+h)-\gamma(t_0)$ שווה ל-$h\gamma''+\frac{h^2}{2}\gamma''''+o(h^2)$, ו-$P_h$ נפרש על ידי $\gamma''$ ו-$\gamma''''+o(1)$'
         correct: true
         feedback: >-
           בדיוק. מחסירים מהווקטור את הרכיב $h\gamma'$, שכבר במישור, ומחלקים ב-$\frac{h^2}{2}$: נשאר $\gamma''(t_0)+o(1)$.

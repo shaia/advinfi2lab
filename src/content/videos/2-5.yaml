@@ -1,0 +1,26 @@
+- id: v-2-5-general-helices
+  youtubeId: z8dCH6Vo_Y0
+  title: General Helices
+  channel: Mike, the Mathematician
+  lang: en
+  captions: [en]
+  start: 0
+  minutes: 13
+  why: >-
+    לפי תיאור הסרטון: ארבעה תנאים שקולים לסליל (מוכלל): וקטור יחידה קבוע שיוצר זווית קבועה עם המשיק, נורמל ראשי
+    שניצב לכיוון הקבוע, יחס קבוע בין העקמומיות לפיתול, ומכפלה משולשת של הנגזרות השנייה, השלישית והרביעית שמתאפסת. זה
+    משפט 2.5.2 של השיעור ותרגיל 8 בחוברת. מוסכמת הסימן של הפיתול בסרטון עשויה להיות שונה מ-$\mathbf b'=-\tau\mathbf n$; קביעות
+    המנה לא תלויה בה.
+  verified: '2026-11-10'
+- id: v-2-5-spherical
+  youtubeId: pfbf9aFBnsU
+  title: A Relationship Between Curvature and Torsion for Curves that Lie on a Sphere
+  channel: Mike, the Mathematician
+  lang: en
+  captions: [en]
+  start: 0
+  minutes: 6
+  why: >-
+    לפי הכותרת והתיאור: הוכחה של קשר דיפרנציאלי בין העקמומיות לפיתול של מסילה שמונחת על ספרה. זה הכיוון "כדורית גוררת את
+    התנאי" של משפט 2.5.5; השוו את שלבי הגזירה לשלבים בשיעור.
+  verified: '2026-11-10'

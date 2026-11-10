@@ -487,7 +487,8 @@ for (const { file, data } of workbooks) {
       const keys = (numbers.length ? numbers : [item.source.problem.toLowerCase().replace(/[^a-z0-9()]/g, '')]).map((n) => `${item.source!.url} ${n}`);
       // one exam is often hosted at several URLs (a sibling course once cited two PDFs of PhysicsBowl 2018 for Q37):
       // also key on the competition, the year and the question number
-      const exam = item.source.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+      // keep every letter and digit (Hebrew too): "…דף תרגיל 1" and "…דף תרגיל 3" are different papers
+      const exam = item.source.name.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
       for (const n of numbers) keys.push(`#${exam} ${item.source.year} ${n}`);
       // a web page usually holds one problem, so a shared page URL is the same problem; a PDF holds a whole paper,
       // and so does a page whose citation names a problem number (an exercise sheet: HUJI 80316's infimb02-ex01.html)

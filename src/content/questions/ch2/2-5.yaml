@@ -25,7 +25,7 @@ questions:
       - text: '$\frac\tau\kappa=\frac ab$, והציר $(0,0,1)$'
         feedback: >-
           זה היחס ההפוך, $\frac\kappa\tau$. בפיתול המונה הוא $b$.
-        misconception: MC-c2-lancret-ratio-is-cos
+        misconception: MC-c2-lancret-ratio-inverted
       - text: '$\frac\tau\kappa=\frac{b}{\sqrt{a^2+b^2}}$'
         feedback: >-
           זה $\cos\theta$, הקוסינוס של הזווית בין המשיק לציר. היחס $\frac\tau\kappa$ הוא $\cot\theta$.
@@ -80,7 +80,7 @@ questions:
       - value: 0.6666667
         feedback: >-
           זה $\frac\kappa\tau$, היחס ההפוך.
-        misconception: MC-c2-lancret-ratio-is-cos
+        misconception: MC-c2-lancret-ratio-inverted
       - value: 6
         feedback: >-
           זו המכפלה $\kappa\tau$, לא היחס.

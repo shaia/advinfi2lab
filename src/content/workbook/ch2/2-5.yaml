@@ -1,0 +1,475 @@
+# Workbook of lesson 2.5 (enrichment) — Lancret's theorem and spherical curves.
+# Objectives (src/course.ts):
+#   OBJ-2.5-1  generalized helix ⇔ τ/κ constant (Lancret)
+#   OBJ-2.5-2  a condition on κ and τ for a curve on a sphere
+# Every number recomputed on 2026-11-10 with src/math/spacecurves.ts (kappa, tau, frame, rebuildFromKT) and the
+# closed forms below; W-2.5-08 checked by finite differences on a rebuilt unit-speed curve, W-2.5-10 by RK4.
+lesson: '2.5'
+practice:
+  - id: W-2.5-01
+    level: basic
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      תהי $\gamma(t)=\big(\sin t-t,\ 1-\cos t,\ -4\cos\frac t2\big)$, $t\in(0,2\pi)$: מסילה מעל ציקלואידה.
+
+
+      (א) הוכיחו ש-$\gamma$ רגולרית וש-$\mathbf t\cdot\mathbf e_z\equiv\frac{1}{\sqrt2}$.
+
+
+      (ב) מצאו את $\mathbf n$ ואת $\mathbf b$, קבעו איזה מבין $\pm\mathbf e_z$ הוא הציר המנורמל של משפט 2.5.2, והסיקו את
+      $\frac\tau\kappa$. בדקו על ידי חישוב ישיר של $\kappa$ ושל $\tau$.
+    answer: >-
+      (א) $\|\gamma'\|=2\sqrt2\sin\frac t2>0$ ו-$\mathbf t\cdot\mathbf e_z=\frac1{\sqrt2}$. (ב) $\mathbf u=\mathbf e_z$, $\theta=\frac\pi4$,
+      $\frac\tau\kappa=1$; ישירות $\kappa=\tau=\frac{1}{8\sin(t/2)}$.
+    solution:
+      - kind: computation
+        text: >-
+          עם $h=\frac t2$: $\cos t-1=-2\sin^2h$ ו-$\sin t=2\sin h\cos h$, ולכן
+          $$\gamma'=\big(\cos t-1,\ \sin t,\ 2\sin h\big)=2\sin h\,\big(-\sin h,\ \cos h,\ 1\big).$$
+      - kind: step
+        text: >-
+          על $(0,2\pi)$, $h\in(0,\pi)$ ו-$\sin h>0$, ולכן $\|\gamma'\|=2\sqrt2\sin h>0$: $\gamma$ רגולרית, ו-
+          $\mathbf t=\frac{1}{\sqrt2}(-\sin h,\ \cos h,\ 1)$, כלומר $\mathbf t\cdot\mathbf e_z=\frac{1}{\sqrt2}$ קבוע: סליל מוכלל עם
+          $\mathbf u=\pm\mathbf e_z$ (הגדרה 2.5.1).
+      - kind: computation
+        text: >-
+          $\frac{d\mathbf t}{dt}=\frac{1}{2\sqrt2}(-\cos h,\ -\sin h,\ 0)$, ולכן $\mathbf n=(-\cos h,\ -\sin h,\ 0)$ ו-
+          $$\kappa=\frac{\|d\mathbf t/dt\|}{\|\gamma'\|}=\frac{1/(2\sqrt2)}{2\sqrt2\sin h}=\frac{1}{8\sin h}.$$
+      - kind: computation
+        text: >-
+          $\mathbf b=\mathbf t\times\mathbf n=\frac{1}{\sqrt2}(\sin h,\ -\cos h,\ 1)$, ו-$\mathbf b\cdot\mathbf e_z=\frac1{\sqrt2}>0$: הציר המנורמל
+          הוא $\mathbf u=\mathbf e_z$, $\cos\theta=\frac1{\sqrt2}$, $\theta=\frac\pi4$, ולפי משפט 2.5.2(א) $\frac\tau\kappa=\cot\frac\pi4=1$.
+      - kind: check
+        text: >-
+          ישירות: $\frac{d\mathbf b}{dt}=\frac{1}{2\sqrt2}(\cos h,\ \sin h,\ 0)=-\frac{1}{2\sqrt2}\mathbf n$, ולחלק ב-$\|\gamma'\|$:
+          $\mathbf b'=-\frac{1}{8\sin h}\mathbf n$, כלומר $\tau=\frac{1}{8\sin h}=\kappa$. מספרית ב-$t=1$: $\kappa=\tau\approx0.2607$.
+          ובדיקת הנרמול: $\cos\frac\pi4\,\mathbf t+\sin\frac\pi4\,\mathbf b=\frac12(0,0,2)=\mathbf e_z$.
+      - kind: result
+        text: >-
+          סליל מוכלל עם הציר $\mathbf e_z$ ו-$\theta=\frac\pi4$; $\kappa=\tau=\frac{1}{8\sin(t/2)}$, $\frac\tau\kappa=1$.
+
+  - id: W-2.5-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      על הספרה $x^2+y^2+z^2=R^2$ נתון קו הרוחב בגובה $h$, $|h|<R$: המעגל $\gamma(t)=(r\cos t,\ r\sin t,\ h)$ עם
+      $r=\sqrt{R^2-h^2}$. חשבו את $\kappa$ ואת $\tau$, בדקו את טענה 2.5.4 ואת מקרה השוויון שלה, והסבירו למה אי אפשר להפעיל כאן
+      את משפט 2.5.5.
+    answer: >-
+      $\kappa=\frac1r=\frac{1}{\sqrt{R^2-h^2}}\ge\frac1R$, שוויון רק ב-$h=0$ (קו המשווה, מעגל גדול); $\tau\equiv0$, ולכן $\sigma$ אינו
+      מוגדר ומשפט 2.5.5 לא חל (טענה 2.5.6א חלה).
+    solution:
+      - kind: computation
+        text: >-
+          מעגל ברדיוס $r$: $\kappa=\frac1r$ (שיעור 1.3). הוא במישור $z=h$, ולכן $\tau\equiv0$ (משפט 2.2.6).
+      - kind: step
+        text: >-
+          $r=\sqrt{R^2-h^2}\le R$, ולכן $\kappa=\frac1r\ge\frac1R$, כמו בטענה 2.5.4, עם שוויון אם ורק אם $h=0$.
+      - kind: check
+        text: >-
+          מקרה השוויון של טענה 2.5.4: $\gamma-\mathbf c=-R\mathbf n$. כאן $\mathbf c=0$, $\mathbf n=(-\cos t,-\sin t,0)$, ו-
+          $\gamma=(r\cos t,r\sin t,h)$ שווה ל-$-R\mathbf n$ אם ורק אם $r=R$ ו-$h=0$ ✓.
+      - kind: step
+        text: >-
+          משפט 2.5.5 דורש $\tau\ne0$ בכל נקודה, כדי ש-$\sigma=\frac1\tau$ יוגדר; כאן $\tau\equiv0$. המקרה הזה מכוסה בטענה 2.5.6א:
+          מסילה כדורית בלי פיתול היא קשת של מעגל.
+      - kind: result
+        text: >-
+          $\kappa=\frac{1}{\sqrt{R^2-h^2}}\ge\frac1R$ עם שוויון רק בקו המשווה; $\tau\equiv0$, ולכן רק טענה 2.5.6א חלה.
+
+  - id: W-2.5-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      הסליל השמאלי $\gamma(t)=(\cos t,\ \sin t,\ -\frac t2)$ מקיים $\kappa=0.8$ ו-$\tau=-0.4$. הוא סליל מוכלל עם ציר $\pm\mathbf e_z$.
+      איזה מהשניים הוא הציר המנורמל של משפט 2.5.2 (זה עם $\mathbf u\cdot\mathbf b>0$), מהי הזווית $\theta$, ובדקו ש-$\frac\tau\kappa=\cot\theta$.
+    answer: >-
+      $\mathbf u=\mathbf e_z$, $\cos\theta=-\frac{1}{\sqrt5}$, $\theta\approx116.57^\circ$, $\cot\theta=-\frac12=\frac\tau\kappa$.
+    solution:
+      - kind: computation
+        text: >-
+          $\gamma'=(-\sin t,\ \cos t,\ -\frac12)$ באורך $\frac{\sqrt5}{2}$, ולכן $\mathbf t\cdot\mathbf e_z=-\frac{1}{\sqrt5}$.
+      - kind: computation
+        text: >-
+          $\gamma''=(-\cos t,\ -\sin t,\ 0)$ ו-$\gamma'\times\gamma''=(-\frac12\sin t,\ \frac12\cos t,\ 1)$, באורך $\frac{\sqrt5}{2}$;
+          לכן $\mathbf b\cdot\mathbf e_z=\frac{2}{\sqrt5}>0$ (טענה 2.1.3).
+      - kind: step
+        text: >-
+          הנרמול $\mathbf u\cdot\mathbf b>0$ בוחר $\mathbf u=\mathbf e_z$, ואז $\cos\theta=\mathbf t\cdot\mathbf u=-\frac1{\sqrt5}$ ו-
+          $\sin\theta=\frac{2}{\sqrt5}$, $\theta\approx116.57^\circ$.
+      - kind: check
+        text: >-
+          $\cot\theta=\frac{-1/\sqrt5}{2/\sqrt5}=-\frac12$, ו-$\frac\tau\kappa=\frac{-0.4}{0.8}=-\frac12$ ✓. הזווית קהה כי המסילה יורדת
+          לאורך $\mathbf e_z$ בכיוון התנועה; בסליל הימני $\theta\approx63.43^\circ$, ו-$\theta+\theta'=\pi$ לא במקרה: שיקוף הופך
+          את סימן $\tau$ (טענה 2.2.5).
+      - kind: result
+        text: >-
+          $\mathbf u=\mathbf e_z$, $\theta=\arccos(-\frac1{\sqrt5})\approx116.57^\circ$, $\frac\tau\kappa=\cot\theta=-\frac12$.
+
+  - id: W-2.5-04
+    level: mid
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      תהי $\gamma$ מסדר $C^3$ בפרמטר אורך הקשת על קטע, עם $\kappa>0$. המסילה $s\mapsto\mathbf t(s)$ נמצאת על ספרת היחידה.
+      הוכיחו: $\gamma$ סליל מוכלל אם ורק אם התמונה של $\mathbf t$ מוכלת במעגל שמונח על ספרת היחידה. מה הרדיוס של המעגל?
+    answer: >-
+      נכון בשני הכיוונים; המעגל הוא $\{\mathbf x:\|\mathbf x\|=1,\ \mathbf x\cdot\mathbf u=\cos\theta\}$, שמרכזו $\cos\theta\,\mathbf u$
+      ורדיוסו $\sin\theta$.
+    solution:
+      - kind: idea
+        text: >-
+          "המשיק בזווית קבועה עם $\mathbf u$" פירושו ש-$\mathbf t$ במישור $\mathbf x\cdot\mathbf u=\cos\theta$, ומישור חותך את
+          ספרת היחידה במעגל. בכיוון ההפוך, מעגל מונח במישור.
+      - kind: step
+        text: >-
+          $(\Rightarrow)$ $\mathbf t\cdot\mathbf u\equiv\cos\theta$ ו-$\|\mathbf t\|=1$. לכל $\mathbf x$ עם $\mathbf x\cdot\mathbf u=\cos\theta$,
+          לפי פיתגורס $\|\mathbf x\|^2=\cos^2\theta+\|\mathbf x-\cos\theta\,\mathbf u\|^2$ (כי $\mathbf x-\cos\theta\,\mathbf u\perp\mathbf u$).
+          לכן $\|\mathbf t-\cos\theta\,\mathbf u\|^2=1-\cos^2\theta=\sin^2\theta$: $\mathbf t(s)$ על המעגל שמרכזו $\cos\theta\,\mathbf u$
+          ורדיוסו $\sin\theta>0$, במישור $\mathbf x\cdot\mathbf u=\cos\theta$.
+      - kind: step
+        text: >-
+          $(\Leftarrow)$ מעגל הוא קבוצת הנקודות במישור $\{\mathbf x:\mathbf x\cdot\mathbf m=d\}$ ($\|\mathbf m\|=1$) שבמרחק קבוע
+          ממרכז. לכן $\mathbf t(s)\cdot\mathbf m=d$ לכל $s$: זו הגדרה 2.5.1 עם $\mathbf u=\mathbf m$, בתנאי ש-$d\in(-1,1)$.
+      - kind: step
+        text: >-
+          $d=\pm1$ אי אפשר: אז לפי שוויון בקושי-שוורץ $\mathbf t\equiv\pm\mathbf m$ קבוע ו-$\kappa\equiv0$, בסתירה ל-$\kappa>0$ (הערה
+          1 אחרי הגדרה 2.5.1). לכן $d=\cos\theta$ עם $\theta\in(0,\pi)$.
+      - kind: check
+        text: >-
+          בסליל $(\cos t,\sin t,\frac t2)$: $\mathbf t=\frac{2}{\sqrt5}(-\sin t,\cos t,\frac12)$ רץ על המעגל $z=\frac{1}{\sqrt5}$ ברדיוס
+          $\frac{2}{\sqrt5}=\sin\theta$ ✓. במסילה מישורית ($\theta=\frac\pi2$) $\mathbf t$ רץ על מעגל גדול.
+      - kind: result
+        text: >-
+          סליל מוכלל אם ורק אם $\mathbf t$ רץ על מעגל של ספרת היחידה; המעגל ברדיוס $\sin\theta$ סביב $\cos\theta\,\mathbf u$.
+
+  - id: W-2.5-05
+    level: mid
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      יהי $\gamma$ סליל מוכלל (מסדר $C^3$, בפרמטר אורך הקשת, $\kappa>0$, על קטע) עם ציר $\mathbf u$ וזווית $\theta\in(0,\pi)$,
+      ותהי $\beta=\gamma-(\gamma\cdot\mathbf u)\,\mathbf u$ ההטלה שלו על המישור הניצב ל-$\mathbf u$ דרך הראשית. הוכיחו ש-$\beta$
+      מסילה מישורית רגולרית עם עקמומיות
+      $$\kappa_\beta=\frac{\kappa}{\sin^2\theta}.$$
+      בדקו על הסליל $(\cos t,\sin t,\frac t2)$.
+    answer: >-
+      $\|\beta'\|=\sin\theta>0$, $\beta''=\kappa\mathbf n$, ו-$\kappa_\beta=\frac{\kappa\sin\theta}{\sin^3\theta}=\frac{\kappa}{\sin^2\theta}$.
+      בסליל: $\frac{0.8}{4/5}=1$, העקמומיות של מעגל היחידה.
+    solution:
+      - kind: idea
+        text: >-
+          מחשבים $\beta'$ ו-$\beta''$ ומציבים בנוסחה $\kappa=\frac{\|\beta'\times\beta''\|}{\|\beta'\|^3}$ (שיעור 1.3). המפתח: $\mathbf n\perp\mathbf u$
+          (שלב 1 בהוכחת משפט 2.5.2).
+      - kind: step
+        text: >-
+          $\beta\cdot\mathbf u=\gamma\cdot\mathbf u-(\gamma\cdot\mathbf u)\|\mathbf u\|^2=0$: $\beta$ במישור $\mathbf x\cdot\mathbf u=0$.
+      - kind: computation
+        text: >-
+          $\beta'=\mathbf t-\cos\theta\,\mathbf u$, ו-$\|\beta'\|^2=1-2\cos^2\theta+\cos^2\theta=\sin^2\theta$. כי $\theta\in(0,\pi)$,
+          $\|\beta'\|=\sin\theta>0$: $\beta$ רגולרית.
+      - kind: computation
+        text: >-
+          $\beta''=\mathbf t'=\kappa\mathbf n$. לפי שלב 1 בהוכחת משפט 2.5.2, $\mathbf n\cdot\mathbf u=0$, ולכן $\beta'\cdot\mathbf n=\mathbf t\cdot\mathbf n-\cos\theta\,\mathbf u\cdot\mathbf n=0$.
+      - kind: step
+        text: >-
+          $\beta'\perp\mathbf n$ ו-$\|\mathbf n\|=1$, ולכן $\|\beta'\times\beta''\|=\kappa\|\beta'\|\,\|\mathbf n\|=\kappa\sin\theta$, ו-
+          $$\kappa_\beta=\frac{\kappa\sin\theta}{\sin^3\theta}=\frac{\kappa}{\sin^2\theta}.$$
+      - kind: check
+        text: >-
+          בסליל $\mathbf u=\mathbf e_z$, $\kappa=0.8$ ו-$\cos\theta=\frac1{\sqrt5}$, $\sin^2\theta=\frac45$: $\kappa_\beta=1$, וההטלה היא מעגל
+          היחידה ✓. במעקה של המגדל $(t,\cosh t,\sinh t)$: ההטלה לאורך $\mathbf e_z$ היא השרשרת $(t,\cosh t)$, עם עקמומיות
+          $\frac{1}{\cosh^2t}=\frac{1/(2\cosh^2t)}{1/2}$ ✓.
+      - kind: result
+        text: >-
+          $\beta$ מישורית ורגולרית עם $\|\beta'\|=\sin\theta$ ו-$\kappa_\beta=\frac{\kappa}{\sin^2\theta}$.
+
+  - id: W-2.5-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      הוכיחו או הפריכו: מסילה מסדר $C^3$ בפרמטר אורך הקשת על קטע $I$, שמונחת על ספרה ושהעקמומיות שלה קבועה, מוכלת במעגל.
+      (שימו לב: משפט 2.5.5 צריך $C^4$ ו-$\tau\ne0$.)
+    answer: >-
+      נכון. אם $\tau(s_0)\ne0$, אז ליד $s_0$: $(\gamma-\mathbf c)\cdot\mathbf b=0$, $\gamma-\mathbf c=-\rho\mathbf n$, וגזירה נותנת $\tau=0$:
+      סתירה. לכן $\tau\equiv0$, ולפי טענה 2.5.6א המסילה במעגל.
+    solution:
+      - kind: idea
+        text: >-
+          חוזרים על הגזירות של משפט 2.5.5, שצריכות רק $C^3$: $\rho$ קבוע מאפס את הרכיב לאורך $\mathbf b$, ואז הנקודה שווה למרכז
+          פחות $\rho\mathbf n$, וזה מכריח $\tau=0$.
+      - kind: step
+        text: >-
+          לפי למה 2.5.3ב, $\kappa>0$ ו-$(\gamma-\mathbf c)\cdot\mathbf n=-\rho$, כאן $\rho\equiv\rho_0$ קבוע. גזירה (מותרת, $C^3$) כמו בשלב 2
+          של משפט 2.5.5: $\tau\,(\gamma-\mathbf c)\cdot\mathbf b=-\rho'=0$.
+      - kind: step
+        text: >-
+          נניח $\tau(s_0)\ne0$. $\tau$ רציפה, ולכן $\tau\ne0$ על קטע פתוח $J\ni s_0$ (ב-$I$), ושם $(\gamma-\mathbf c)\cdot\mathbf b=0$. עם
+          $(\gamma-\mathbf c)\cdot\mathbf t=0$: על $J$, $\gamma-\mathbf c=-\rho_0\mathbf n$.
+      - kind: step
+        text: >-
+          גזירה על $J$ לפי משפט 2.3.2: $\mathbf t=-\rho_0(-\kappa\mathbf t+\tau\mathbf b)=\mathbf t-\rho_0\tau\,\mathbf b$, ולכן $\tau=0$ על $J$:
+          סתירה ל-$\tau(s_0)\ne0$. לכן $\tau\equiv0$ על $I$.
+      - kind: theorem
+        text: >-
+          לפי טענה 2.5.6א, מסילה כדורית עם $\tau\equiv0$ מוכלת במעגל.
+      - kind: check
+        text: >-
+          היכן השתמשנו בהנחות: $\kappa$ קבועה (כדי ש-$\rho'=0$), $C^3$ (גזירת $\mathbf n$), הקטע (בטענה 2.5.6א). בלי "על ספרה" הטענה
+          שקרית: לסליל $\kappa$ קבועה. ובלי $\kappa$ קבועה: ויויאני.
+      - kind: result
+        text: >-
+          נכון: עקמומיות קבועה על ספרה גוררת $\tau\equiv0$, והמסילה מוכלת במעגל (ברדיוס $\rho_0$).
+
+  - id: W-2.5-07
+    level: mid
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      לסליל $\gamma(t)=(a\cos t,\ a\sin t,\ bt)$, $a>0$, $b\ne0$, חשבו את המרכז $\mathbf m(t)$ ואת הרדיוס של הספרה המנשקת
+      (הגדרה 2.5.6ב). הראו ש-$\mathbf m(t)$ רץ על סליל אחר עם אותו ציר, והסבירו איך זה מתיישב עם משפט 2.5.5 ומסקנה 2.5.6.
+    answer: >-
+      $\rho=\frac{a^2+b^2}{a}$ קבוע, ולכן $\mathbf m=\gamma+\rho\mathbf n=\big(-\frac{b^2}{a}\cos t,\ -\frac{b^2}{a}\sin t,\ bt\big)$ ברדיוס
+      $\rho$; המרכז זז, ולכן הסליל אינו כדורית.
+    solution:
+      - kind: computation
+        text: >-
+          משיעור 2.2: $\kappa=\frac{a}{a^2+b^2}$ ו-$\tau=\frac{b}{a^2+b^2}$ קבועים, ולכן $\rho=\frac{a^2+b^2}{a}$ ו-$\rho'=0$.
+      - kind: computation
+        text: >-
+          $\mathbf n=(-\cos t,\ -\sin t,\ 0)$ (מצביע אל הציר), ולכן
+          $$\mathbf m=\gamma+\rho\mathbf n+0\cdot\mathbf b=\Big(\big(a-\tfrac{a^2+b^2}{a}\big)\cos t,\ \big(a-\tfrac{a^2+b^2}{a}\big)\sin t,\ bt\Big),$$
+          ו-$a-\frac{a^2+b^2}{a}=-\frac{b^2}{a}$. הרדיוס $\sqrt{\rho^2+0}=\rho$.
+      - kind: step
+        text: >-
+          $\mathbf m(t)$ הוא סליל ברדיוס $\frac{b^2}{a}$ סביב ציר $z$, באותו גובה $bt$, בצד הנגדי של הציר. הוא לא קבוע, ולכן לפי משפט
+          2.5.5 (בניסוח "המרכז של הספרה המנשקת לא זז") הסליל אינו כדורית.
+      - kind: check
+        text: >-
+          הרדיוס $\rho$ **קבוע**, ובכל זאת אין ספרה: זה בדיוק למה מסקנה 2.5.6 דורשת $\rho'\ne0$. מספרית, $a=1$, $b=\frac12$: $\rho=1.25$,
+          והמרכז ב-$t=0$ הוא $(-0.25,\ 0,\ 0)$, כמו באיור 2.5ב.
+      - kind: result
+        text: >-
+          $\mathbf m(t)=\big(-\frac{b^2}{a}\cos t,\ -\frac{b^2}{a}\sin t,\ bt\big)$, רדיוס $\frac{a^2+b^2}{a}$; המרכז זז על סליל, והסליל אינו כדורית.
+
+  - id: W-2.5-08
+    level: exam
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      תהי $\gamma$ מסדר $C^4$ בפרמטר אורך הקשת על קטע, עם $\kappa>0$.
+
+
+      (א) הוכיחו ש-$\det(\gamma'',\gamma''',\gamma'''')=\kappa^5\big(\frac\tau\kappa\big)'$.
+
+
+      (ב) הסיקו: $\gamma$ סליל מוכלל אם ורק אם $\det(\gamma'',\gamma''',\gamma'''')\equiv0$.
+    answer: >-
+      בבסיס $(\mathbf t,\mathbf n,\mathbf b)$: $\gamma''=(0,\kappa,0)$, $\gamma'''=(-\kappa^2,\kappa',\kappa\tau)$, $\gamma''''=(-3\kappa\kappa',\ \ast,\ 2\kappa'\tau+\kappa\tau')$,
+      והדטרמיננטה $\kappa^3(\kappa\tau'-\kappa'\tau)=\kappa^5(\tau/\kappa)'$; (ב) ממשפט 2.5.2.
+    solution:
+      - kind: idea
+        text: >-
+          כותבים את שלוש הנגזרות בבסיס של פרנה בעזרת משפט 2.3.2. הבסיס אורתונורמלי וחיובי, ולכן הדטרמיננטה של הקואורדינטות שווה
+          לדטרמיננטה של הווקטורים.
+      - kind: computation
+        text: >-
+          $\gamma''=\kappa\mathbf n$, ולפי טענה 2.3.4 $\gamma'''=-\kappa^2\mathbf t+\kappa'\mathbf n+\kappa\tau\mathbf b$ ($\kappa\in C^2$,
+          $\tau\in C^1$ כי $\gamma\in C^4$).
+      - kind: computation
+        text: >-
+          גזירה נוספת לפי משפט 2.3.2:
+          $$\gamma''''=-2\kappa\kappa'\mathbf t-\kappa^3\mathbf n+\kappa''\mathbf n+\kappa'(-\kappa\mathbf t+\tau\mathbf b)+(\kappa\tau)'\mathbf b-\kappa\tau^2\mathbf n,$$
+          כלומר $\gamma''''=-3\kappa\kappa'\,\mathbf t+(\kappa''-\kappa^3-\kappa\tau^2)\,\mathbf n+(2\kappa'\tau+\kappa\tau')\,\mathbf b$.
+      - kind: computation
+        text: >-
+          $F=(\mathbf t,\mathbf n,\mathbf b)$ אורתוגונלית עם $\det F=1$, ולכן הדטרמיננטה היא של מטריצת הקואורדינטות. פיתוח לפי
+          השורה הראשונה $(0,\kappa,0)$:
+          $$\det=-\kappa\big[(-\kappa^2)(2\kappa'\tau+\kappa\tau')-(\kappa\tau)(-3\kappa\kappa')\big]=\kappa^3(\kappa\tau'-\kappa'\tau).$$
+      - kind: step
+        text: >-
+          $\big(\frac\tau\kappa\big)'=\frac{\kappa\tau'-\kappa'\tau}{\kappa^2}$, ולכן $\det=\kappa^5\big(\frac\tau\kappa\big)'$, וזה (א).
+      - kind: step
+        text: >-
+          (ב) $\kappa^5>0$, ולכן $\det\equiv0$ אם ורק אם $\big(\frac\tau\kappa\big)'\equiv0$, ועל קטע זה אם ורק אם $\frac\tau\kappa$ קבוע
+          (משפט הערך הממוצע), כלומר לפי משפט 2.5.2, אם ורק אם $\gamma$ סליל מוכלל.
+      - kind: check
+        text: >-
+          בשחזור מספרי של מסילה עם $\kappa\equiv1.3$, $\tau=\sin s$, הפרשים סופיים נותנים ב-$s=1$ דטרמיננטה $\approx1.5430$ מול
+          $\kappa^4\cos1\approx1.5432$, וב-$s=3$: $\approx-2.8273$ מול $-2.8275$ ✓. הנוסחה נכונה רק בפרמטר אורך הקשת.
+      - kind: result
+        text: >-
+          $\det(\gamma'',\gamma''',\gamma'''')=\kappa^5(\tau/\kappa)'$, ולכן סליל מוכלל אם ורק אם הדטרמיננטה מתאפסת זהותית.
+
+  - id: W-2.5-09
+    level: exam
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      תהי $\gamma$ מסדר $C^4$ בפרמטר אורך הקשת על קטע $I\ni s_0$, עם $\kappa>0$ ו-$\tau\ne0$, ו-$\varphi(s)=\int_{s_0}^s\tau$.
+      הוכיחו: $\gamma$ כדורית אם ורק אם יש קבועים $A,B$ כך ש-
+      $$\rho(s)=A\cos\varphi(s)+B\sin\varphi(s),$$
+      ואז רדיוס הספרה הוא $\sqrt{A^2+B^2}$.
+    answer: >-
+      $\varphi$ הפיכה מסדר $C^2$; עם $P(\varphi)=\rho(s)$: $\frac{dP}{d\varphi}=\rho'\sigma$ ו-$\frac{d^2P}{d\varphi^2}=\sigma(\rho'\sigma)'$, והתנאי של משפט 2.5.5
+      הוא $P''+P=0$.
+    solution:
+      - kind: idea
+        text: >-
+          מחליפים משתנה ל-$\varphi$, "הזווית המצטברת של הפיתול". בו $\sigma\frac{d}{ds}=\frac{d}{d\varphi}$, והתנאי של משפט 2.5.5 הופך
+          למשוואת המתנד ההרמוני.
+      - kind: step
+        text: >-
+          $\varphi'=\tau$ רציפה ואינה מתאפסת על הקטע, ולכן (ערך הביניים) בעלת סימן קבוע, ו-$\varphi$ מונוטונית ממש מסדר $C^2$ ($\tau\in C^1$)
+          עם הפכית $s(\varphi)$ מסדר $C^2$ (משפט הפונקציה ההפוכה במשתנה אחד). נגדיר $P(\varphi)=\rho(s(\varphi))$, מסדר $C^2$.
+      - kind: computation
+        text: >-
+          לפי כלל השרשרת, $\frac{ds}{d\varphi}=\frac1\tau=\sigma$, ולכן $\frac{dP}{d\varphi}=\rho'\sigma$ ו-$\frac{d^2P}{d\varphi^2}=(\rho'\sigma)'\sigma$.
+      - kind: step
+        text: >-
+          לפי משפט 2.5.5, $\gamma$ כדורית אם ורק אם $\frac\rho\sigma+(\rho'\sigma)'=0$; כפל ב-$\sigma\ne0$ נותן תנאי שקול,
+          $\rho+\sigma(\rho'\sigma)'=0$, כלומר $P+\frac{d^2P}{d\varphi^2}=0$.
+      - kind: theorem
+        text: >-
+          הפתרונות של $P''+P=0$ על קטע הם בדיוק $A\cos\varphi+B\sin\varphi$ (מערכת לינארית עם מקדמים קבועים, שיעור 0.6: קיום ויחידות
+          עם $P$ ו-$P'$ נתונים בנקודה).
+      - kind: step
+        text: >-
+          הרדיוס לפי משפט 2.5.5: $R^2=\rho^2+(\rho'\sigma)^2=P^2+\big(\frac{dP}{d\varphi}\big)^2=(A\cos\varphi+B\sin\varphi)^2+(-A\sin\varphi+B\cos\varphi)^2=A^2+B^2$.
+      - kind: check
+        text: >-
+          בדוגמה 4 של השיעור, $\tau\equiv1$, $\varphi=s$ ו-$\rho=\cos s$: $A=1$, $B=0$, $R=1$ ✓. ולסליל ($\rho$ קבוע, $\tau$ קבוע): $\rho$
+          קבוע אינו מהצורה $A\cos\varphi+B\sin\varphi$ עם $\varphi=\tau s$ על קטע (אלא אם $A=B=0$), ולכן אינו כדורית ✓.
+      - kind: result
+        text: >-
+          כדורית אם ורק אם $\rho=A\cos\varphi+B\sin\varphi$ עם $\varphi=\int\tau$; הרדיוס $\sqrt{A^2+B^2}$.
+
+  - id: W-2.5-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.5-1, OBJ-2.5-2]
+    prompt: >-
+      האם יש סליל מוכלל לא מישורי שמונח על ספרת היחידה? אם כן, בנו אחד דרך העקמומיות והפיתול שלו: חפשו $\frac\tau\kappa\equiv\lambda\ne0$
+      ו-$\rho(s)$ שמקיימים את התנאי של משפט 2.5.5 עם $R=1$.
+    answer: >-
+      כן. לכל $\lambda>0$: $\kappa(s)=\frac{1}{\sqrt{1-\lambda^2s^2}}$ ו-$\tau=\lambda\kappa$ על $|s|<\frac1\lambda$ נותנים (משפט 2.4.3) מסילה, והיא
+      על ספרה ברדיוס 1 וסליל מוכלל עם $\cot\theta=\lambda$.
+    solution:
+      - kind: idea
+        text: >-
+          כש-$\tau=\lambda\kappa$, $\sigma=\frac\rho\lambda$ והתנאי $\frac\rho\sigma+(\rho'\sigma)'=0$ הופך ל-$\lambda+\frac{(\rho^2)''}{2\lambda}=0$: משוואה
+          ל-$\rho^2$ שאפשר לפתור במפורש.
+      - kind: computation
+        text: >-
+          $\frac\rho\sigma=\lambda$ ו-$\rho'\sigma=\frac{\rho\rho'}{\lambda}=\frac{(\rho^2)'}{2\lambda}$. התנאי: $(\rho^2)''=-2\lambda^2$, למשל
+          $\rho^2=1-\lambda^2s^2$, כלומר $\rho=\sqrt{1-\lambda^2s^2}$ על $|s|<\frac1\lambda$.
+      - kind: theorem
+        text: >-
+          $\kappa=\frac1\rho$ חיובית ו-$C^\infty$ על הקטע, ו-$\tau=\lambda\kappa$ רציפה וחיובית. לפי משפט 2.4.3 יש מסילה $\gamma$ בפרמטר אורך
+          הקשת עם העקמומיות והפיתול האלה, וכמו בדוגמה 4 היא מסדר $C^4$.
+      - kind: step
+        text: >-
+          $\frac\tau\kappa\equiv\lambda$, ולכן לפי משפט 2.5.2 $\gamma$ סליל מוכלל עם $\cot\theta=\lambda$; $\tau\ne0$, ולכן לא מישורית
+          (משפט 2.2.6).
+      - kind: step
+        text: >-
+          $\rho'=-\frac{\lambda^2s}{\rho}$ ו-$\rho'\sigma=-\lambda s$, ולכן $\frac\rho\sigma+(\rho'\sigma)'=\lambda-\lambda=0$: לפי משפט 2.5.5 $\gamma$
+          כדורית, עם $R^2=\rho^2+(\rho'\sigma)^2=1-\lambda^2s^2+\lambda^2s^2=1$.
+      - kind: check
+        text: >-
+          RK4 עם $\lambda=\frac12$ על $[0,1.8]$: המרכז $\gamma+\rho\mathbf n+\rho'\sigma\mathbf b$ הוא $(0,1,0)$ בכל הדגימות, המרחק $1$, והציר
+          $\frac{\lambda\mathbf t+\mathbf b}{\sqrt{1+\lambda^2}}=(0.4472,\ 0,\ 0.8944)=\frac{1}{\sqrt5}(1,0,2)$ קבוע ✓. המסילה מסתיימת כש-$\rho\to0$,
+          כלומר $\kappa\to\infty$. זה נכון לכל סליל מוכלל כדורי עם $\tau=\lambda\kappa$, $\lambda\ne0$ (בהנחות משפט 2.5.5): $\sigma=\frac\rho\lambda$,
+          והתנאי $\lambda+\big(\frac{\rho\rho'}{\lambda}\big)'=0$ נותן $(\rho^2)''=-2\lambda^2$. לכן $\rho^2$ פרבולה הפוכה, שנעשית שלילית אחרי
+          אורך סופי: על ספרה סליל מוכלל לא יכול להמשיך לנצח.
+      - kind: result
+        text: >-
+          כן: $\kappa=\frac{1}{\sqrt{1-\lambda^2s^2}}$, $\tau=\frac{\lambda}{\sqrt{1-\lambda^2s^2}}$ נותנים סליל מוכלל על ספרת היחידה.
+
+challenge:
+  - id: W-2.5-c1
+    stars: 1
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      תהי $\gamma:(0,\infty)\to\mathbb R^3$, $\gamma(t)=\big(t\cos(\ln t),\ t\sin(\ln t),\ 2t\big)$. הוכיחו ש-$\frac{\kappa(t)}{\tau(t)}$ קבוע. מצאו
+      בנוסף את הציר של הסליל המוכלל ואת הזווית בין המשיק לציר.
+    answer: >-
+      $\kappa=\frac{\sqrt2}{6t}$, $\tau=\frac{1}{3t}$, $\frac\kappa\tau=\frac{1}{\sqrt2}$; הציר $\mathbf e_z$, $\cos\theta=\sqrt{\frac23}$, $\cot\theta=\sqrt2$.
+    solution:
+      - kind: idea
+        text: >-
+          נוסחאות $\kappa$ ו-$\tau$ בפרמטר כללי (טענות 2.1.3 ו-2.2.4). כדאי לסמן $L=\ln t$, $c=\cos L$, $s=\sin L$, ולשים לב שכל גזירה
+          של $c$ או $s$ מוציאה גורם $\frac1t$.
+      - kind: computation
+        text: >-
+          $\gamma'=(c-s,\ s+c,\ 2)$, $\|\gamma'\|^2=(c-s)^2+(s+c)^2+4=6$; $\gamma''=\frac1t(-s-c,\ c-s,\ 0)$;
+          $\gamma'''=\frac{1}{t^2}(2s,\ -2c,\ 0)$.
+      - kind: computation
+        text: >-
+          $$\gamma'\times\gamma''=\frac1t\big(-2(c-s),\ -2(s+c),\ (c-s)^2+(s+c)^2\big)=\frac1t\big(-2(c-s),\ -2(s+c),\ 2\big),$$
+          באורך $\frac{\sqrt{8+4}}{t}=\frac{2\sqrt3}{t}$.
+      - kind: computation
+        text: >-
+          $\kappa=\frac{2\sqrt3/t}{6\sqrt6}=\frac{\sqrt2}{6t}$. $(\gamma'\times\gamma'')\cdot\gamma'''=\frac{1}{t^3}\big(-4s(c-s)+4c(s+c)\big)=\frac{4}{t^3}$, ולכן
+          $\tau=\frac{4/t^3}{12/t^2}=\frac{1}{3t}$.
+      - kind: step
+        text: >-
+          $\frac{\kappa}{\tau}=\frac{\sqrt2/6}{1/3}=\frac{1}{\sqrt2}$ קבוע. לפי משפט 2.5.2(ב), עם $\lambda=\frac\tau\kappa=\sqrt2$, הציר הוא
+          $\mathbf u=\frac{\sqrt2\,\mathbf t+\mathbf b}{\sqrt3}$ ו-$\cos\theta=\frac{\sqrt2}{\sqrt3}$.
+      - kind: check
+        text: >-
+          ישירות: $\mathbf t\cdot\mathbf e_z=\frac{2}{\sqrt6}=\sqrt{\frac23}$ ✓, ו-$\mathbf b\cdot\mathbf e_z=\frac{2/t}{2\sqrt3/t}=\frac{1}{\sqrt3}=\sin\theta>0$ ✓,
+          ולכן $\mathbf u=\mathbf e_z$. מספרית ב-$t=1$: $\kappa\approx0.2357$, $\tau\approx0.3333$, $\frac\tau\kappa\approx1.4142$. המסילה
+          על החרוט $z=2\sqrt{x^2+y^2}$: ספירלה לוגריתמית על חרוט.
+      - kind: result
+        text: >-
+          $\frac{\kappa}{\tau}\equiv\frac{1}{\sqrt2}$; סליל מוכלל עם הציר $\mathbf e_z$ ו-$\cos\theta=\sqrt{2/3}$ ($\theta\approx35.26^\circ$).
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 3'
+      year: 2002
+      problem: 'תרגיל 2'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex03.html
+      verified: '2026-11-10'
+      adapted: true
+
+  - id: W-2.5-c2
+    stars: 1
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      תהי $\gamma:I\to\mathbb R^3$ מסילה רגולרית מסדר $C^2$ שמונחת על ספרה שמרכזה $\mathbf c$. הוכיחו שבכל נקודה $\gamma(t)$, מרכז
+      המעגל המנשק הוא רגל האנך מ-$\mathbf c$ אל המישור המנשק ב-$\gamma(t)$.
+    answer: >-
+      $\mathbf c-\gamma=\rho\,\mathbf n+\beta\,\mathbf b$ (למה 2.5.3ב), ולכן רגל האנך $\mathbf c-\beta\mathbf b=\gamma+\rho\mathbf n$, מרכז העקמומיות.
+    solution:
+      - kind: idea
+        text: >-
+          המישור המנשק עובר דרך $\gamma$ ונפרש על ידי $\mathbf t,\mathbf n$; רגל האנך מ-$\mathbf c$ מתקבלת כשמוחקים מ-$\mathbf c-\gamma$ את
+          הרכיב לאורך $\mathbf b$. את הרכיבים לאורך $\mathbf t$ ו-$\mathbf n$ נותנת למה 2.5.3ב.
+      - kind: step
+        text: >-
+          המעגל המנשק והמישור המנשק לא תלויים בפרמטריזציה (שיעור 1.4, טענה 2.1.5), ולכן אפשר לעבור לפרמטר אורך הקשת. לפי
+          למה 2.5.3ב, $\kappa>0$ (אז השלשה מוגדרת), $(\mathbf c-\gamma)\cdot\mathbf t=0$ ו-$(\mathbf c-\gamma)\cdot\mathbf n=\rho$.
+      - kind: step
+        text: >-
+          פירוק בבסיס האורתונורמלי: $\mathbf c-\gamma=\rho\,\mathbf n+\beta\,\mathbf b$ עם $\beta=(\mathbf c-\gamma)\cdot\mathbf b$.
+      - kind: step
+        text: >-
+          המישור המנשק הוא $\Pi=\{\gamma+x\mathbf t+y\mathbf n\}$ עם נורמל $\mathbf b$ (הגדרה 2.1.6). רגל האנך מ-$\mathbf c$ היא
+          $\mathbf q=\mathbf c-\big((\mathbf c-\gamma)\cdot\mathbf b\big)\mathbf b=\mathbf c-\beta\mathbf b$: היא ב-$\Pi$ כי $\mathbf q-\gamma=\rho\mathbf n$,
+          ו-$\mathbf c-\mathbf q\parallel\mathbf b\perp\Pi$.
+      - kind: step
+        text: >-
+          לכן $\mathbf q=\gamma+\rho\,\mathbf n$, שהוא מרכז העקמומיות, מרכז המעגל המנשק (שיעור 1.4).
+      - kind: check
+        text: >-
+          לא השתמשנו ב-$\tau$, ולכן $C^2$ מספיק. בוויויאני ב-$t=0$: $\gamma=(2,0,0)$, $\mathbf n=(-1,0,0)$, $\rho=2$, ו-$\mathbf q=(0,0,0)=\mathbf c$:
+          המישור המנשק עובר דרך המרכז (מעגל גדול, טענה 2.5.4). כשגם $\tau\ne0$, $\beta=\rho'\sigma$ (משפט 2.5.5), והמרחק מ-$\mathbf c$ למישור הוא
+          $|\rho'\sigma|$; לפי פיתגורס רדיוס המעגל המנשק $\rho=\sqrt{R^2-(\rho'\sigma)^2}\le R$.
+      - kind: result
+        text: >-
+          מרכז המעגל המנשק $\gamma+\rho\mathbf n$ הוא רגל האנך מ-$\mathbf c$ על המישור המנשק.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 4'
+      year: 2002
+      problem: 'תרגיל 1, סעיף ב'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex04.html
+      verified: '2026-11-10'
+      adapted: true

@@ -1,0 +1,7 @@
+---
+/** Lesson 2.4 figure: <Spread figure={SpaceFromCurvature} figureProps={{ law, laws, c1, c2, len, rotatable, mirrorable, yaw, pitch, tasks }}>. */
+import SpaceFromCurvature, { type SpaceFromCurvatureProps } from './SpaceFromCurvature';
+type Props = SpaceFromCurvatureProps;
+---
+
+<SpaceFromCurvature client:visible {...Astro.props} />

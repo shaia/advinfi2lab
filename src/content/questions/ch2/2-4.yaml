@@ -1,6 +1,7 @@
 # Lesson 2.4 — the existence and uniqueness theorem.
 # Objectives (src/course.ts):
-#   OBJ-2.4-1  state the theorem: for continuous κ > 0 and τ there is a curve, unique up to a rigid motion
+#   OBJ-2.4-1  state the theorem: for κ > 0 of class C¹ and continuous τ there is a C³ curve, unique up to a proper rigid motion
+#              (Corollary 2.4.4; with κ only continuous the curve is C², Remark 2.4.3א)
 #   OBJ-2.4-2  go through the uniqueness proof: the inner products of the two frames are conserved, so the frames coincide
 #   OBJ-2.4-3  see what the theorem does not say: the parameter must be arc length, and κ must be positive
 # Every number and counterexample below was recomputed with src/math/geometry.ts (curvature, torsion, curveFromCurvature).
@@ -12,9 +13,9 @@ questions:
     qualitative: true
     level: basic
     prompt: >-
-      $I$ קטע, $\kappa:I\to(0,\infty)$ ו-$\tau:I\to\mathbb R$ רציפות. מה אומר משפט הקיום והיחידות?
+      $I$ קטע, $\kappa:I\to(0,\infty)$ מסדר $C^1$ ו-$\tau:I\to\mathbb R$ רציפה. מה אומר משפט הקיום והיחידות?
     choices:
-      - text: 'קיימת מסילה $\gamma:I\to\mathbb R^3$ בפרמטר אורך הקשת שהעקמומיות והפיתול שלה הם $\kappa$ ו-$\tau$, וכל שתי מסילות כאלה נבדלות בתנועה $x\mapsto Ax+c$ עם $A$ סיבוב ($A^TA=I$, $\det A=1$)'
+      - text: 'קיימת מסילה $\gamma:I\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת שהעקמומיות והפיתול שלה הם $\kappa$ ו-$\tau$, וכל שתי מסילות כאלה נבדלות בתנועה $x\mapsto Ax+c$ עם $A$ סיבוב ($A^TA=I$, $\det A=1$)'
         correct: true
         feedback: >-
           נכון. הקיום והיחידות הם שני חלקים: הקיום מפתרון מערכת לינארית, והיחידות מההשוואה בין שתי השלשות. בחירת
@@ -96,24 +97,24 @@ questions:
     prompt: >-
       איך מוכיחים את חלק הקיום של המשפט?
     choices:
-      - text: 'פותרים את המערכת הלינארית $F''=A(s)F$ (עם מטריצת פרנה-סרה) עם שלשה התחלתית אורתונורמלית ימנית, ומגדירים $\gamma(s)=\gamma_0+\int_{s_0}^{s}\mathbf t$'
+      - text: 'פותרים את המערכת הלינארית $F''=FK(s)$ (עמודות $F$ הן השלשה, $K$ מטריצת פרנה-סרה) עם שלשה התחלתית אורתונורמלית ימנית, ומגדירים $\gamma(s)=\gamma_0+\int_{s_0}^{s}\mathbf t$'
         correct: true
         feedback: >-
-          נכון. למערכת לינארית עם מקדמים רציפים יש פתרון יחיד (שיעור 0.6). כי $A$ אנטי-סימטרית, השלשה נשארת אורתונורמלית,
+          נכון. למערכת לינארית עם מקדמים רציפים יש פתרון יחיד (שיעור 0.6). כי $K$ אנטי-סימטרית, השלשה נשארת אורתונורמלית (למה 2.4.1),
           והדטרמיננטה, רציפה ושווה ל-$\pm1$, נשארת 1. אז $\gamma'=\mathbf t$ יחידה, $\gamma''=\kappa\mathbf n$, ולכן העקמומיות
           היא $\kappa$ והפיתול $\tau$.
-      - text: 'פותרים את $F''=A(s)F$, ובכל $s$ מתקנים את הפתרון בגרם-שמידט כדי שיהיה אורתונורמלי'
+      - text: 'פותרים את $F''=FK(s)$, ובכל $s$ מתקנים את הפתרון בגרם-שמידט כדי שיהיה אורתונורמלי'
         feedback: >-
-          אין צורך, וזה גם היה מקלקל את המשוואות: מכפלות פנימיות של פתרונות נשמרות מעצמן כש-$A$ אנטי-סימטרית.
+          אין צורך, וזה גם היה מקלקל את המשוואות: מכפלות פנימיות של פתרונות נשמרות מעצמן כש-$K$ אנטי-סימטרית.
         misconception: MC-c2-orthonormality-imposed
       - text: 'מבצעים אינטגרציה כפולה של $\kappa$, כמו במסילה מישורית'
         feedback: >-
           במישור זווית המשיק היא $\int k$, ומשם עוד אינטגרציה. במרחב אין זווית אחת שקובעת את המשיק, ו-$\tau$ חייב להשתתף.
         misconception: MC-c2-kappa-alone-determines
-      - text: 'פותרים את $F''=A(s)F$ עם שלשה התחלתית אורתונורמלית כלשהי, ימנית או שמאלית, ומגדירים $\gamma(s)=\gamma_0+\int_{s_0}^{s}\mathbf t$'
+      - text: 'פותרים את $F''=FK(s)$ עם שלשה התחלתית אורתונורמלית כלשהי, ימנית או שמאלית, ומגדירים $\gamma(s)=\gamma_0+\int_{s_0}^{s}\mathbf t$'
         feedback: >-
-          עם שלשה התחלתית שמאלית השורה השלישית נשארת $-\mathbf t\times\mathbf n$, ולכן הבינורמל האמיתי של המסילה שנבנית הוא
-          מינוס השורה השלישית, והפיתול שלה $-\tau$: מתקבלת תמונת המראה. השלשה ההתחלתית חייבת להיות ימנית.
+          עם שלשה התחלתית שמאלית העמודה השלישית נשארת $-\mathbf t\times\mathbf n$, ולכן הבינורמל האמיתי של המסילה שנבנית הוא
+          מינוס העמודה השלישית, והפיתול שלה $-\tau$: מתקבלת תמונת המראה. השלשה ההתחלתית חייבת להיות ימנית.
         misconception: MC-c2-mirror-is-rigid
 
   - id: Q-2.4-f
@@ -188,7 +189,8 @@ questions:
       - text: 'כי שתי השלשות ב-$s_0$ אורתונורמליות וימניות ($\mathbf b=\mathbf t\times\mathbf n$), והמטריצה שמעבירה בסיס אורתונורמלי ימני לבסיס כזה היא סיבוב'
         correct: true
         feedback: >-
-          נכון. אם שורות $F_0$ ו-$\tilde F_0$ הן השלשות, $A=F_0^T\tilde F_0$ אורתוגונלית ו-$\det A=\det F_0\cdot\det\tilde F_0=1$.
+          נכון. אם עמודות $F_0$ ו-$\tilde F_0$ הן השלשות, $A=F_0\tilde F_0^T$ (כמו במשפט 2.4.2) מקיימת $A\tilde F_0=F_0$, היא
+          אורתוגונלית, ו-$\det A=\det F_0\cdot\det\tilde F_0=1$.
           כאן המשפט משתמש בכך ש-$\mathbf b$ מוגדר כ-$\mathbf t\times\mathbf n$ ולא כווקטור ניצב כלשהו.
       - text: 'כי לכל מטריצה אורתוגונלית $\det=1$'
         feedback: >-
@@ -316,11 +318,13 @@ questions:
           אותה מסילה, אף שהפונקציות שונות.
         misconception: MC-c2-any-parameter
     reasons:
-      - text: 'החלפת פרמטר $s\mapsto\pm s+s_0$ שומרת אורך קשת; לכן מסילות חופפות אם ורק אם יש $s_0$ וסימן שבהם $\kappa$ ו-$\tau$ מתאימות'
+      - text: 'החלפת פרמטר $s\mapsto\pm s+s_0$ שומרת אורך קשת; מסילות חופפות **עד כדי החלפת פרמטר** אם ורק אם יש $s_0$ וסימן שבהם $\kappa$ ו-$\tau$ מתאימות, וכאן $s_0=1$'
         correct: true
         feedback: >-
-          בדיוק. בהיפוך כיוון, $s\mapsto-s$, גם $\kappa$ וגם $\tau$ לא משנים ערך בנקודה (שיעור 2.2), ולכן התנאי הוא
-          $\tilde\kappa(s)=\kappa(\pm s+s_0)$ ו-$\tilde\tau(s)=\tau(\pm s+s_0)$.
+          בדיוק (טענה 2.4.4א). בהיפוך כיוון, $s\mapsto-s$, גם $\kappa$ וגם $\tau$ לא משנים ערך בנקודה (טענות 1.3.7 ו-2.2.5),
+          ולכן התנאי הוא $\tilde\kappa(s)=\kappa(\pm s+s_0)$ ו-$\tilde\tau(s)=\tau(\pm s+s_0)$. חפיפה עד כדי החלפת פרמטר
+          גוררת שהתמונות חופפות; ההפך לא תמיד נכון (מסילה שעוברת פעמיים על מעגל), אבל כאן ממילא $\tilde\gamma$ היא $\gamma$
+          אחרי החלפת פרמטר.
       - text: 'הפיתול תלוי בפרמטריזציה, ולכן אפשר להתעלם ממנו'
         feedback: >-
           הפיתול בנקודה לא תלוי בפרמטריזציה; תלויה רק הפונקציה $s\mapsto\tau(s)$, דרך השאלה איזו נקודה נקראת $s$.

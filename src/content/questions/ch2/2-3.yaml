@@ -39,22 +39,22 @@ questions:
     qualitative: true
     level: basic
     prompt: >-
-      כותבים את המשוואות כ-$F'(s)=A(s)F(s)$, כאשר שורות $F$ הן $\mathbf t,\mathbf n,\mathbf b$. למה $A(s)$ אנטי-סימטרית בכל
-      מסילה?
+      כמו במשפט 2.3.2, כותבים את המשוואות כ-$F'(s)=F(s)A(s)$, כאשר **עמודות** $F$ הן $\mathbf t,\mathbf n,\mathbf b$. למה
+      $A(s)$ אנטי-סימטרית בכל מסילה?
     choices:
-      - text: 'כי $FF^{T}=I$ לכל $s$, וגזירה נותנת $A+A^{T}=0$'
+      - text: 'כי $F^{T}F=I$ לכל $s$, וגזירה נותנת $A^{T}+A=0$'
         correct: true
         feedback: >-
-          נכון. $(FF^T)'=F'F^T+F(F')^T=AFF^T+FF^TA^T=A+A^T$, והוא אפס כי $FF^T$ קבוע. במילים: כל מכפלה פנימית בין שני
-          וקטורי השלשה קבועה, ולכן $\mathbf u'\cdot\mathbf w=-\mathbf u\cdot\mathbf w'$.
+          נכון (למה 2.3.1). $(F^TF)'=(F')^TF+F^TF'=A^TF^TF+F^TFA=A^T+A$, והוא אפס כי $F^TF$ קבוע. במילים: כל מכפלה
+          פנימית בין שני וקטורי השלשה קבועה, ולכן $\mathbf u'\cdot\mathbf w=-\mathbf u\cdot\mathbf w'$.
       - text: 'היא אנטי-סימטרית רק כש-$\kappa$ ו-$\tau$ קבועים'
         feedback: >-
           האנטי-סימטריות לא תלויה בערכים של $\kappa$ ו-$\tau$, אלא רק באורתונורמליות של השלשה בכל $s$.
         misconception: MC-c2-fs-matrix-symmetric
       - text: 'היא בעצם סימטרית: $A_{12}=A_{21}=\kappa$'
         feedback: >-
-          $A_{21}$ הוא המקדם של $\mathbf t$ ב-$\mathbf n'$, והוא $-\kappa$: כש-$\mathbf t$ פונה אל $\mathbf n$, הנורמל פונה
-          הרחק מ-$\mathbf t$.
+          $A_{21}=\kappa$ הוא המקדם של $\mathbf n$ ב-$\mathbf t'$ (העמודה הראשונה), אבל $A_{12}$ הוא המקדם של $\mathbf t$
+          ב-$\mathbf n'$ (העמודה השנייה), והוא $-\kappa$: כש-$\mathbf t$ פונה אל $\mathbf n$, הנורמל פונה הרחק מ-$\mathbf t$.
         misconception: MC-c2-fs-matrix-symmetric
       - text: 'כי $\det F=1$'
         feedback: >-
@@ -133,7 +133,7 @@ questions:
         feedback: נכון, מגזירת $\mathbf n\cdot\mathbf b=0$ ו-$\mathbf b'=-\tau\mathbf n$.
       - text: '$\mathbf t''\cdot\mathbf b=0$'
         correct: true
-        feedback: 'נכון: $\mathbf t''=\kappa\mathbf n$ ניצב ל-$\mathbf b$. לכן במטריצה הפינה $A_{13}$ אפס.'
+        feedback: 'נכון: $\mathbf t''=\kappa\mathbf n$ ניצב ל-$\mathbf b$. לכן במטריצה $A$ של משפט 2.3.2 (עמודות: הנגזרות) $A_{31}=\mathbf b\cdot\mathbf t''=0$, ולפי האנטי-סימטריה גם $A_{13}=0$.'
       - text: '$\mathbf b''\cdot\mathbf t=\tau$'
         feedback: >-
           $\mathbf b'=-\tau\mathbf n$ ניצב ל-$\mathbf t$, ולכן המכפלה אפס. זה גם נובע מאנטי-סימטריה: $\mathbf b'\cdot\mathbf t=-\mathbf b\cdot\mathbf t'=-\kappa\,\mathbf b\cdot\mathbf n=0$.
@@ -328,7 +328,7 @@ questions:
       - id: cross
         label: '$\gamma''\times\gamma''''=\kappa v^3\,\mathbf t\times\mathbf n=\kappa v^3\mathbf b$'
       - id: g3
-        label: 'גזירת $\gamma''''$ שוב: הרכיב של $\gamma''''''$ לאורך $\mathbf b$ בא רק מ-$\kappa v^2\cdot v\,\mathbf n''$, והוא $\kappa\tau v^3$'
+        label: 'גזירת $\gamma''''$ שוב: הרכיב של $\gamma''''''$ לאורך $\mathbf b$ בא רק מ-$\kappa v^2\,\mathbf n''$, כש-$\mathbf n''=v(-\kappa\mathbf t+\tau\mathbf b)$, והוא $\kappa\tau v^3$'
       - id: num
         label: '$(\gamma''\times\gamma'''')\cdot\gamma''''''=\kappa v^3\cdot\kappa\tau v^3=\kappa^2\tau v^6$'
       - id: den
@@ -394,7 +394,7 @@ questions:
           הנקודה $c(s)$ קרובה יותר, על הציר.
         misconception: MC-c2-helix-radius-1-over-kappa
     reasons:
-      - text: '$c''=(1-a\kappa_0)\mathbf t+a\tau_0\mathbf b=\frac{\tau_0}{\kappa_0^2+\tau_0^2}(\tau_0\mathbf t+\kappa_0\mathbf b)$, ו-$\tau_0\mathbf t+\kappa_0\mathbf b$ קבוע'
+      - text: '$c''=(1-a\kappa_0)\mathbf t+a\tau_0\mathbf b$, כלומר $c''=\frac{\tau_0}{\kappa_0^2+\tau_0^2}(\tau_0\mathbf t+\kappa_0\mathbf b)$, ו-$\tau_0\mathbf t+\kappa_0\mathbf b$ קבוע'
         correct: true
         feedback: >-
           בדיוק. $(\tau_0\mathbf t+\kappa_0\mathbf b)'=\tau_0\kappa_0\mathbf n-\kappa_0\tau_0\mathbf n=0$, ולכן $c'$ הוא

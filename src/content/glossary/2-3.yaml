@@ -14,3 +14,34 @@
     הווקטור $\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$, שהשלשה של פרנה מסתובבת סביבו: כל וקטור $\mathbf u$ בשלשה מקיים
     $\mathbf u'=\boldsymbol\omega\times\mathbf u$. בסליל מעגלי הוא קבוע ומקביל לציר.
   lesson: '2.3'
+- id: circular-helix
+  term: סליל מעגלי
+  en: circular helix
+  definition: >-
+    מסילה שחופפת (בתנועה קשיחה) ל-$(a\cos\theta,\ a\sin\theta,\ b\theta)$ עם $a>0$ ו-$b\ne0$: היא מונחת על גליל מעגלי ברדיוס $a$
+    ומתקדמת לאורך הציר ב-$2\pi|b|$ בכל סיבוב. העקמומיות והפיתול שלה קבועים, $\kappa=\frac{a}{a^2+b^2}$ ו-$\tau=\frac{b}{a^2+b^2}$,
+    ולהפך: כל מסילה עם $\kappa>0$ ו-$\tau\ne0$ קבועים היא סליל מעגלי.
+  lesson: '2.3'
+- id: local-canonical-form
+  term: הצורה הקנונית המקומית
+  en: local canonical form
+  definition: >-
+    פיתוח טיילור מסדר שלישי של מסילה בפרמטר אורך הקשת, בקואורדינטות של השלשה של פרנה בנקודה:
+    $x\approx s-\frac{\kappa^2s^3}{6}$, $y\approx\frac{\kappa s^2}{2}+\frac{\kappa's^3}{6}$, $z\approx\frac{\kappa\tau s^3}{6}$.
+    ממנו קוראים את צורת ההיטלים של המסילה על המישור המנשק, הנורמלי והמיישר.
+  lesson: '2.3'
+- id: frenet-curve
+  term: מסילת פרנה
+  en: Frenet curve
+  definition: >-
+    מסילה $\gamma:I\to\mathbb R^n$ מסדר $C^n$ שבכל נקודה הנגזרות $\gamma',\gamma'',\dots,\gamma^{(n-1)}$ בלתי תלויות לינארית. ב-$\mathbb R^3$
+    זו בדיוק מסילה רגולרית עם $\kappa>0$; לכל מסילת פרנה יש שלשה (מסגרת) של פרנה מתהליך גרם-שמידט.
+  lesson: '2.3'
+- id: generalized-curvatures
+  term: עקמומיויות מוכללות
+  en: generalized curvatures
+  symbol: '\kappa_1,\dots,\kappa_{n-1}'
+  definition: >-
+    המקדמים $\kappa_i=\mathbf e_{i+1}\cdot\mathbf e_i'$ במשוואות פרנה-סרה של מסילת פרנה ב-$\mathbb R^n$, שבהן מטריצת המקדמים אנטי-סימטרית
+    ותלת-אלכסונית. $\kappa_1,\dots,\kappa_{n-2}>0$, ו-$\kappa_{n-1}$ מסומנת. ב-$\mathbb R^3$: $\kappa_1=\kappa$, $\kappa_2=\tau$.
+  lesson: '2.3'

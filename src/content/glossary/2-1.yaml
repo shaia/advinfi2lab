@@ -44,3 +44,18 @@
     המסילה $\gamma(t)=(t,t^2,t^3)$, הדוגמה הבסיסית למסילה שאינה מישורית: $\kappa(0)=2$, $\tau(0)=3$, והשלשה של פרנה בראשית
     היא הבסיס הסטנדרטי.
   lesson: '2.1'
+- id: right-handed-basis
+  term: בסיס ימני
+  en: positively oriented (right-handed) basis
+  definition: >-
+    בסיס $(\mathbf u,\mathbf v,\mathbf w)$ של $\mathbb R^3$ עם $\det(\mathbf u,\mathbf v,\mathbf w)>0$. בסיס אורתונורמלי $(\mathbf u,\mathbf v,\mathbf w)$
+    הוא ימני בדיוק כש-$\mathbf w=\mathbf u\times\mathbf v$; השלשה של פרנה היא בסיס כזה.
+  lesson: '2.1'
+- id: divided-difference
+  term: הפרש מחולק
+  en: divided difference
+  symbol: '\gamma[t_0,t_1],\ \gamma[t_0,t_1,t_2]'
+  definition: >-
+    לנקודות שונות $t_0,t_1,t_2$: $\gamma[t_0,t_1]=\frac{\gamma(t_1)-\gamma(t_0)}{t_1-t_0}$ (שיפוע המיתר), ו-$\gamma[t_0,t_1,t_2]=\frac{\gamma[t_0,t_2]-\gamma[t_0,t_1]}{t_2-t_1}$.
+    למסילה מסדר $C^2$ הם שואפים ל-$\gamma'(t_0)$ ול-$\frac12\gamma''(t_0)$ כשהנקודות מתכנסות ל-$t_0$.
+  lesson: '2.1'

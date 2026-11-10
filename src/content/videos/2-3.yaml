@@ -1,0 +1,25 @@
+- id: v-2-3-wildberger-fs
+  youtubeId: 1HUpNAS81PY
+  title: 'The Frenet Serret equations | Differential Geometry 18'
+  channel: Insights into Mathematics (NJ Wildberger)
+  lang: en
+  captions: []
+  start: 0
+  minutes: 51
+  why: >-
+    לפי תיאור ההרצאה: מצמידים לכל נקודה של מסילה במהירות יחידה את השלשה T, N, B של וקטורי יחידה ניצבים, ומחשבים את
+    הנגזרות שלהם לפי אורך הקשת, שבהן מופיעים העקמומיות והפיתול. זה התוכן של משפט 2.3.2; השוו את הגזירה בהרצאה לגזירה
+    בשיעור דרך המטריצה האנטי-סימטרית, ובדקו את מוסכמת הסימן של הפיתול.
+  verified: 2026-11-10
+- id: v-2-3-khan-fs
+  youtubeId: ZrixRt-JTo8
+  title: 'The Frenet-Serret Formulas | Differential Geometry'
+  channel: Faculty of Khan
+  lang: en
+  captions: []
+  start: 0
+  minutes: 9
+  why: >-
+    לפי תיאור הסרטון: הצגה וגזירה של משוואות פרנה-סרה, ודוגמה שמפעילה אותן על מסילה במרחב. סרטון קצר, כחזרה אחרי
+    משפט 2.3.2 ולפני הדוגמאות של השיעור.
+  verified: 2026-11-10

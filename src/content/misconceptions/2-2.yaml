@@ -7,7 +7,7 @@
     בקורס $\mathbf b'=-\tau\mathbf n$, ולכן $\tau=\frac{(\gamma'\times\gamma'')\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}$ והסליל
     הימני $(a\cos t,a\sin t,bt)$, $b>0$, מקיים $\tau=\frac{b}{a^2+b^2}>0$. ספרים אחרים בוחרים את הסימן ההפוך; בכל שאלה
     בודקים איזו מוסכמה בשימוש.
-  remedy: { lesson: '2.2', label: 'הגדרת הפיתול והסימן של הקורס' }
+  remedy: { lesson: '2.2', anchor: 'def-torsion', label: 'הגדרת הפיתול והסימן של הקורס' }
 
 - id: MC-c2-torsion-denominator
   title: טועים במכנה של נוסחת הפיתול
@@ -16,7 +16,7 @@
   truth: >-
     $\tau=\frac{(\gamma'\times\gamma'')\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}$. המונה הוא $\kappa^2\tau v^6$ והמכנה
     $\kappa^2v^6$ (כאן $v=\|\gamma'\|$), ולכן החזקות של $v$ מתבטלות. $\|\gamma'\|^6$ במכנה שווה למכנה הנכון רק כש-$\kappa=1$.
-  remedy: { lesson: '2.2', label: 'נוסחת הפיתול בפרמטר כללי' }
+  remedy: { lesson: '2.2', anchor: 'general-proof', label: 'נוסחת הפיתול בפרמטר כללי (טענה 2.2.4)' }
 
 - id: MC-c2-torsion-nonnegative
   title: חושבים שהפיתול תמיד אי-שלילי, כמו העקמומיות
@@ -25,7 +25,7 @@
   truth: >-
     $\|\mathbf b'\|=|\tau|$, אבל $\tau$ עצמו מסומן: הוא חיובי כשהמסילה מתפתלת כמו בורג ימני ושלילי כשהיא מתפתלת כמו
     בורג שמאלי. ל-$(2\cos t,-2\sin t,t)$ יש $\tau=-\frac15$.
-  remedy: { lesson: '2.2', label: 'סליל ימני מול סליל שמאלי' }
+  remedy: { lesson: '2.2', anchor: 'helix-hand', label: 'סליל ימני מול סליל שמאלי' }
 
 - id: MC-c2-torsion-flips-with-orientation
   title: חושבים שהיפוך הכיוון על המסילה הופך את סימן הפיתול
@@ -34,7 +34,7 @@
   truth: >-
     בהיפוך כיוון $\mathbf t\mapsto-\mathbf t$, $\mathbf n\mapsto\mathbf n$, $\mathbf b\mapsto-\mathbf b$, וגם הגזירה לפי
     אורך הקשת מחליפה סימן. שני הסימנים מתבטלים: $\tau$ לא משתנה. בורג ימני נשאר ימני כשמסתכלים עליו מהצד השני.
-  remedy: { lesson: '2.2', label: 'הפיתול ושינוי כיוון' }
+  remedy: { lesson: '2.2', anchor: 'invariance', label: 'הפיתול והיפוך כיוון (טענה 2.2.5)' }
 
 - id: MC-c2-torsion-mirror-invariant
   title: חושבים שהפיתול לא משתנה בשיקוף
@@ -43,7 +43,7 @@
   truth: >-
     שיקוף $R$ ($\det R=-1$) מקיים $R\mathbf t\times R\mathbf n=-R(\mathbf t\times\mathbf n)$, ולכן הבינורמל של המסילה
     המשוקפת הוא $-R\mathbf b$ והפיתול מחליף סימן. העקמומיות נשמרת. סיבוב ($\det=1$) שומר גם את הפיתול.
-  remedy: { lesson: '2.2', label: 'סליל ימני מול סליל שמאלי' }
+  remedy: { lesson: '2.2', anchor: 'invariance', label: 'הפיתול ושיקוף (טענה 2.2.5)' }
 
 - id: MC-c2-torsion-scale
   title: טועים בהשפעה של הגדלה על הפיתול
@@ -53,7 +53,7 @@
     $\tau$ הוא קצב הסיבוב של $\mathbf b$ ליחידת אורך, ולכן יחידתו אחת חלקי אורך, כמו $\kappa$. במסילה $\lambda\gamma$
     ($\lambda>0$) מתקבל $\frac{\tau}{\lambda}$: בנוסחה המונה $(\gamma'\times\gamma'')\cdot\gamma'''$ גדל פי $\lambda^3$,
     והמכנה $\|\gamma'\times\gamma''\|^2$ גדל פי $\lambda^4$.
-  remedy: { lesson: '2.2', label: 'נוסחת הפיתול בפרמטר כללי' }
+  remedy: { lesson: '2.2', anchor: 'invariance', label: 'הפיתול והגדלה (טענה 2.2.5)' }
 
 - id: MC-c2-torsion-depends-on-speed
   title: חושבים שהפיתול תלוי במהירות שבה עוברים על המסילה
@@ -62,7 +62,7 @@
   truth: >-
     הפיתול מוגדר בפרמטר אורך הקשת, ולכן הוא תכונה של המסילה ולא של הקצב. בנוסחה, ב-$\gamma(ct)$ המונה גדל פי $c^6$
     והמכנה פי $(c^3)^2=c^6$.
-  remedy: { lesson: '2.2', label: 'נוסחת הפיתול בפרמטר כללי' }
+  remedy: { lesson: '2.2', anchor: 'invariance', label: 'הפיתול והחלפת פרמטר (טענה 2.2.5)' }
 
 - id: MC-c2-planar-without-kappa
   title: מסיקים שמסילה מישורית מפיתול אפס גם כשהעקמומיות מתאפסת
@@ -71,7 +71,7 @@
   truth: >-
     המשפט "$\tau\equiv0$ אם ורק אם המסילה מישורית" דורש $\kappa>0$ בכל נקודה. המסילה החלקה שעוברת ממישור $xy$
     (כש-$t<0$) למישור $xz$ (כש-$t>0$) דרך נקודה עם $\kappa=0$ מקיימת $\tau=0$ בכל מקום אחר, ואינה מוכלת בשום מישור.
-  remedy: { lesson: '2.2', label: 'פיתול אפס ומסילות מישוריות' }
+  remedy: { lesson: '2.2', anchor: 'kappa-needed', label: 'בלי עקמומיות חיובית המשפט נכשל (2.2.7)' }
 
 - id: MC-c2-planar-coordinate-plane
   title: חושבים שמסילה מישורית היא מסילה שאחת הקואורדינטות שלה קבועה
@@ -80,16 +80,16 @@
   truth: >-
     מישורית פירושו מוכלת במישור כלשהו, $(\gamma-p)\cdot\mathbf e=0$. המסילה $(\cos t,\sin t,\sin t)$ משנה את שלוש
     הקואורדינטות ומוכלת במישור $z=y$; הפיתול שלה אפס.
-  remedy: { lesson: '2.2', label: 'פיתול אפס ומסילות מישוריות' }
+  remedy: { lesson: '2.2', anchor: 'planar-def', label: 'מסילה מישורית: מישור כלשהו' }
 
 - id: MC-c2-planar-means-circle
   title: חושבים שמסילה מישורית חייבת עקמומיות קבועה
   belief: >-
     מסילה עם פיתול אפס שהעקמומיות שלה משתנה אינה מישורית: רק מעגל (עקמומיות קבועה) מוכל במישור.
   truth: >-
-    עקמומיות קבועה ופיתול אפס נותנים מעגל, אבל מישוריות דורשת רק $\tau\equiv0$ (עם $\kappa>0$). אליפסה, פרבולה וכל גרף
-    במישור הן מסילות מישוריות שעקמומיותן משתנה.
-  remedy: { lesson: '2.2', label: 'פיתול אפס ומסילות מישוריות' }
+    עקמומיות קבועה ופיתול אפס נותנים מעגל, אבל מישוריות דורשת רק $\tau\equiv0$ (עם $\kappa>0$). אליפסה, פרבולה, והגרף
+    של $y=x^3$ הן מסילות מישוריות שעקמומיותן משתנה.
+  remedy: { lesson: '2.2', anchor: 'planar-theorem', label: 'פיתול אפס ומסילות מישוריות (משפט 2.2.6)' }
 
 - id: MC-c2-reversal-flips-frame
   title: חושבים שהיפוך הכיוון הופך את כל שלושת הווקטורים של השלשה
@@ -98,4 +98,4 @@
   truth: >-
     $\tilde{\mathbf t}=-\mathbf t$, אבל $\tilde{\mathbf n}=\mathbf n$: הנורמל הוא $\frac{d\mathbf t}{ds}$ מנורמל, ושני הסימנים
     (של $\mathbf t$ ושל $s$) מתבטלים; הוא מצביע אל הצד הקעור בשני הכיוונים. לכן $\tilde{\mathbf b}=-\mathbf t\times\mathbf n=-\mathbf b$.
-  remedy: { lesson: '2.2', label: 'פיתול והיפוך כיוון' }
+  remedy: { lesson: '2.2', anchor: 'invariance', label: 'השלשה בהיפוך כיוון (טענה 2.2.5)' }

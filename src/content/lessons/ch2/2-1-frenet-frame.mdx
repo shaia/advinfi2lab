@@ -1,0 +1,889 @@
+---
+id: '2.1'
+chapter: 2
+order: 1
+title: השלשה של פרנה והמישור המנשק
+subtitle: בסיס אורתונורמלי ימני שהמסילה בוחרת בעצמה, והמישור שהיא כמעט מונחת בו
+minutes: 120
+objectives:
+  - id: OBJ-2.1-1
+    text: להגדיר את הבינורמל כמכפלה הווקטורית של המשיק בנורמל, ולבנות את השלשה של פרנה לסליל
+  - id: OBJ-2.1-2
+    text: להגדיר את המישור המנשק ולחשב את משוואתו בנקודה
+  - id: OBJ-2.1-3
+    text: להסביר למה השלשה מוגדרת רק בנקודות שבהן העקמומיות חיובית, ולתת דוגמה שבה היא קופצת
+prerequisites: ['1.3', '1.4', '0.2']
+videos: [v-2-1-frame-tutorial-he, v-2-1-visual-frenet]
+figures: [fig-2-1a, fig-2-1b]
+---
+
+import FrenetFrame from '~/sims/FrenetFrame.astro';
+
+<Spread
+  fig="fig-2-1a"
+  n="2.1א"
+  caption="מסילה במרחב ונקודה עליה, במבט שאפשר לסובב: גררו את האיור, או השתמשו בחיצים במקלדת. החץ הכתום עם הראש המלא הוא המשיק היחידה $\mathbf t$, החץ הירוק עם הראש הפתוח הוא הנורמל הראשי $\mathbf n$, והחץ הכחול עם הפס הוא הבינורמל $\mathbf b$. כל מישור צבוע בצבע של הווקטור שניצב לו: המישור המנשק בכחול (ניצב ל-$\mathbf b$), המישור הנורמלי בכתום (ניצב ל-$\mathbf t$), והמישור המיישר בירוק (ניצב ל-$\mathbf n$). המעגל המקווקו הוא המעגל המנשק של שיעור 1.4. השלשה x, y, z בפינה מראה איך המבט מסובב, והמבט לעולם אינו משוקף, כך שבסיס ימני נראה ימני. מתחת לאיור: הפרמטר $t$ והעקמומיות $\kappa$. המספרים מחושבים מנגזרות מדויקות; האיור הוא עדות, וההוכחות שבטקסט הן מה שקובע."
+  figure={FrenetFrame}
+  figureProps={{ curve: 'helix', curves: ['helix', 'cubic', 'planar'], t: 0.6, show: ['frame'], layers: ['osculating', 'normal-plane', 'rectifying', 'circle'], transforms: true, noTorsion: true, tasks: ['top-view', 'edge-on'] }}
+>
+
+<Hook title="המסילה בוחרת לעצמה מערכת צירים">
+
+מטוס שטס לאורך מסלול מעוקל במרחב צריך לדעת בכל רגע לא רק לאן הוא טס, אלא גם איך להטות את הכנפיים. בשיעור 1.3 ראינו שהמסילה עצמה קובעת שני כיוונים: המשיק $\mathbf t$ והנורמל הראשי $\mathbf n$, הכיוון שאליו היא פונה. במרחב יש מקום לכיוון שלישי, ובשיעור הזה נראה שהוא נקבע גם הוא, בלי שום בחירה שלנו: בכל נקודה שבה $\kappa>0$ המסילה בונה בעצמה בסיס אורתונורמלי ימני של $\mathbb R^3$.
+
+ועוד שאלה, שנענה עליה במדויק בסוף השיעור. ב<Term id="twisted-cubic">מסילה המעוקבת</Term> $(t,t^2,t^3)$ יש בכל נקודה מישור אחד שהמסילה "כמעט מונחת בו". דרך כמה מהמישורים האלה עוברת נקודה כלשהי במרחב: אחד, אינסוף, או מספר סופי?
+
+</Hook>
+
+<Predict
+  id="pred-2-1"
+  prompt="בסליל $(\cos t,\ \sin t,\ t)$, הבינורמל הוא וקטור יחידה שניצב גם למשיק וגם לנורמל הראשי. לאן הוא מצביע?"
+  choices={[
+    'לאורך ציר הסליל, $(0,0,1)$, באותו כיוון בכל נקודה.',
+    'אופקית, מהנקודה אל ציר הסליל.',
+    'בזווית קבועה עם הציר, משיק לגליל שהסליל מונח עליו, ומסתובב סביב הציר יחד עם הנקודה.',
+    'בכיוון המשיק, כי המשיק ניצב לנורמל.',
+  ]}
+  answer={2}
+>
+
+נחזור לשאלה אחרי שנחשב את השלשה של הסליל, בשלב "על אובייקטי המבחן", ושוב בדוגמה 1.
+
+</Predict>
+
+<Explore title="שלושה חצים שנעים עם המסילה">
+
+<Step fig="fig-2-1a" set={{ curve: 'helix', t: 0.6, show: ['frame'], reverse: false, mirror: false }}>
+
+באיור הסליל $(\cos t,\ \sin t,\ \frac t2)$. הזיזו את הנקודה בעזרת המחוון, וגררו את האיור כדי לסובב את המבט. שימו לב לחץ הירוק $\mathbf n$: באיזה כיוון הוא מצביע תמיד? ולחץ הכחול $\mathbf b$: האם הוא מקביל לציר?
+
+</Step>
+
+<Step fig="fig-2-1a" set={{ curve: 'helix', t: 0.6, show: ['frame', 'osculating', 'circle'], reverse: false, mirror: false }}>
+
+עכשיו מוצגים גם המישור המנשק (כחול) והמעגל המנשק. ליד הנקודה המסילה כמעט מונחת במישור הכחול. סובבו את המבט עד שהמישור נראה כקו ישר (משימה 2): המסילה חוצה אותו, ולא נשארת בצד אחד שלו. את קצב העזיבה של המישור ימדוד הפיתול, בשיעור 2.2.
+
+</Step>
+
+<Step fig="fig-2-1a" set={{ curve: 'cubic', t: 0, show: ['frame', 'osculating', 'normal-plane', 'rectifying'], reverse: false, mirror: false }}>
+
+המסילה המעוקבת $(t,t^2,t^3)$ בראשית, עם שלושת המישורים. כאן השלשה היא הבסיס הסטנדרטי: $\mathbf t=e_1$, $\mathbf n=e_2$, $\mathbf b=e_3$, והמישורים הם מישורי הצירים: המנשק $z=0$, הנורמלי $x=0$, המיישר $y=0$. נוכיח את כל זה בהמשך.
+
+</Step>
+
+<Step fig="fig-2-1a" set={{ curve: 'helix', t: 0.6, show: ['frame'], reverse: false, mirror: false }}>
+
+נסו את המתגים "כיוון הפוך" ו"שיקוף במישור z = 0". רשמו לעצמכם, לכל אחד מהם, אילו מהחצים $\mathbf t$, $\mathbf n$, $\mathbf b$ התהפכו. בטענה 2.1.5 נוכיח מה שראיתם.
+
+</Step>
+
+</Explore>
+
+<Explain title="הבינורמל והשלשה של פרנה" id="frame">
+
+<Step fig="fig-2-1a" set={{ curve: 'helix', t: 0.6, show: ['frame'], reverse: false, mirror: false }} id="binormal-def">
+
+**הסכמות לכל השיעור.** $I$ קטע פתוח, ו-$\gamma:I\to\mathbb R^3$ מסילה. נסמן $v=\|\gamma'\|$. משיעור 1.3 אנחנו לוקחים, עם ההוכחות שלהן שם:
+- $\mathbf t=\gamma'/v$ למסילה רגולרית מסדר $C^1$ (הגדרה 1.3.1);
+- $\kappa=\|\gamma'\times\gamma''\|/v^3$ למסילה רגולרית מסדר $C^2$ ב-$\mathbb R^3$ (מסקנה 1.3.11);
+- כש-$\kappa(t)>0$: הנורמל הראשי $\mathbf n$ (הגדרה 1.3.12) הוא וקטור יחידה ניצב ל-$\mathbf t$ (משפט 1.3.13), ו-$\gamma''=v'\,\mathbf t+\kappa v^2\,\mathbf n$ (מסקנה 1.3.14).
+
+**הגדרה 2.1.1.** תהי $\gamma:I\to\mathbb R^3$ מסילה רגולרית מסדר $C^k$, $k\ge2$, ו-$t\in I$ נקודה שבה $\kappa(t)>0$. ה<Term id="binormal">בינורמל</Term> בנקודה $t$ הוא
+
+$$
+\mathbf b(t)=\mathbf t(t)\times\mathbf n(t),
+$$
+
+והשלשה $(\mathbf t,\mathbf n,\mathbf b)$ נקראת <Term id="frenet-frame">השלשה של פרנה</Term> של $\gamma$ בנקודה $t$. אם $\kappa(t)>0$ **לכל** $t\in I$, נאמר בקיצור ש-$\gamma$ היא **מסילה רגולרית עם עקמומיות חיובית**; אז השלשה מוגדרת לאורך כל $I$ (טענות 2.1.4 ו-2.1.5 עוסקות במסילות כאלה).
+
+סדר הגורמים הוא חלק מההגדרה: $\mathbf n\times\mathbf t=-\mathbf b$. ויש כאן **אפס בחירות**: $\mathbf t$ נקבע מהכיוון של $\gamma'$, $\mathbf n$ מהכיוון שאליו $\mathbf t$ פונה, ו-$\mathbf b$ מהשניים. מבין כל וקטורי היחידה שניצבים ל-$\mathbf t$ (מעגל שלם של כאלה), המסילה בוחרת את $\mathbf n$, ו-$\mathbf b$ נקבע ממנו.
+
+</Step>
+
+<Step fig="fig-2-1a" set={{ curve: 'cubic', t: 0, show: ['frame'], reverse: false, mirror: false }} id="independence">
+
+**למה 2.1.2.** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, ו-$t_0\in I$. אז $\kappa(t_0)>0$ אם ורק אם $\gamma'(t_0)$ ו-$\gamma''(t_0)$ בלתי תלויים לינארית.
+
+**רעיון.** לפי מסקנה 1.3.11, $\kappa>0$ בדיוק כשהמכפלה הווקטורית $\gamma'\times\gamma''$ אינה אפס, ומכפלה וקטורית מתאפסת בדיוק על זוגות תלויים.
+
+**הוכחה.** נכתוב $\mathbf u=\gamma'(t_0)$, $\mathbf w=\gamma''(t_0)$; לפי הרגולריות $\mathbf u\ne0$.
+
+**(1)** לפי מסקנה 1.3.11, $\kappa(t_0)=\|\mathbf u\times\mathbf w\|/\|\mathbf u\|^3$, והמכנה חיובי. לכן $\kappa(t_0)>0$ אם ורק אם $\mathbf u\times\mathbf w\ne0$.
+
+**(2)** אם $\mathbf u,\mathbf w$ תלויים, אז כי $\mathbf u\ne0$ יש $\lambda$ עם $\mathbf w=\lambda\mathbf u$, ומהביליניאריות והאנטי-חילופיות של המכפלה הווקטורית (שיעור 0.2), $\mathbf u\times\mathbf w=\lambda\,\mathbf u\times\mathbf u=0$.
+
+**(3)** אם $\mathbf u,\mathbf w$ בלתי תלויים, נשתמש בזהות של לגרנז׳ (שיעור 0.2; בדיקה ישירה בקואורדינטות):
+
+$$
+\|\mathbf u\times\mathbf w\|^2=\|\mathbf u\|^2\|\mathbf w\|^2-(\mathbf u\cdot\mathbf w)^2 .
+$$
+
+לפי אי-שוויון קושי-שוורץ, אגף ימין אי-שלילי, ושוויון בו מתקיים רק כשהווקטורים תלויים. לכן אגף ימין חיובי, ו-$\mathbf u\times\mathbf w\ne0$.
+
+**(4)** מ-(2) ו-(3): $\mathbf u\times\mathbf w\ne0$ אם ורק אם $\mathbf u,\mathbf w$ בלתי תלויים; עם (1) זו הטענה. $\blacksquare$
+
+**היכן השתמשנו בהנחות:** הרגולריות נותנת מכנה חיובי ב-(1) ואת $\mathbf u\ne0$ ב-(2); $C^2$ נדרש כדי ש-$\gamma''$ ומסקנה 1.3.11 יהיו מוגדרים.
+
+שימו לב: $\kappa=0$ **אינו** אי-רגולריות. הישר $(t,0,0)$ רגולרי בכל נקודה, ו-$\gamma''\equiv0$ בו; המשיק מוגדר, רק $\mathbf n$ לא.
+
+</Step>
+
+<Step fig="fig-2-1a" set={{ curve: 'cubic', t: 0.5, show: ['frame'], reverse: false, mirror: false }} id="frame-general">
+
+**טענה 2.1.3 (השלשה בפרמטר כללי).** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, ו-$\kappa(t_0)>0$. אז בנקודה $t_0$:
+
+(א) $\gamma''=v'\,\mathbf t+\kappa v^2\,\mathbf n$;
+
+(ב) $\gamma'\times\gamma''=\kappa v^3\,\mathbf b$;
+
+(ג) $\mathbf b=\dfrac{\gamma'\times\gamma''}{\|\gamma'\times\gamma''\|}$ ו-$\mathbf n=\mathbf b\times\mathbf t$.
+
+**רעיון.** ב-$\gamma''$ יש רכיב לאורך $\mathbf t$, אבל המכפלה הווקטורית עם $\gamma'$ מוחקת אותו, ומשאירה כפולה חיובית של $\mathbf t\times\mathbf n$.
+
+**הוכחה.**
+
+**(א)** זו מסקנה 1.3.14.
+
+**(ב)** $\gamma'=v\,\mathbf t$. מהביליניאריות ומ-$\mathbf t\times\mathbf t=0$:
+
+$$
+\gamma'\times\gamma''=v\,\mathbf t\times\big(v'\,\mathbf t+\kappa v^2\,\mathbf n\big)=vv'\,(\mathbf t\times\mathbf t)+\kappa v^3\,(\mathbf t\times\mathbf n)=\kappa v^3\,\mathbf b .
+$$
+
+**(ג)** $\mathbf t,\mathbf n$ וקטורי יחידה ניצבים, ולכן לפי זהות לגרנז׳ $\|\mathbf b\|^2=1\cdot1-0=1$. מ-(ב), $\|\gamma'\times\gamma''\|=\kappa v^3$, כי $\kappa v^3>0$; מחלקים את (ב) בו. לבסוף, לפי זהות המכפלה הווקטורית הכפולה (שיעור 0.2),
+
+$$
+(\mathbf a\times\mathbf c)\times\mathbf d=(\mathbf a\cdot\mathbf d)\,\mathbf c-(\mathbf c\cdot\mathbf d)\,\mathbf a,
+$$
+
+ולכן
+
+$$
+\mathbf b\times\mathbf t=(\mathbf t\times\mathbf n)\times\mathbf t=(\mathbf t\cdot\mathbf t)\,\mathbf n-(\mathbf n\cdot\mathbf t)\,\mathbf t=\mathbf n .\qquad\blacksquare
+$$
+
+**היכן השתמשנו בהנחות:** $\kappa(t_0)>0$ כדי ש-$\mathbf n$ יוגדר ושהמכנה ב-(ג) לא יתאפס; רגולריות ו-$C^2$ דרך מסקנה 1.3.14.
+
+שלוש מסקנות מיידיות, שכל אחת מהן היא טעות נפוצה הפוכה:
+- **השלשה תלויה רק ב-$\gamma'(t_0)$ וב-$\gamma''(t_0)$.** הנגזרת השלישית לא נכנסת; היא תופיע רק בפיתול (שיעור 2.2).
+- **חייבים לנרמל.** $\|\gamma'\times\gamma''\|=\kappa v^3$, ולא 1. גם $\|\gamma'\|\,\|\gamma''\|$ אינו המכנה הנכון, אלא אם $\gamma''\perp\gamma'$.
+- **$\mathbf n$ אינו $\gamma''/\|\gamma''\|$ בפרמטר כללי.** לפי (א) זה נכון בדיוק כש-$v'(t_0)=0$. במסילה המעוקבת ב-$t=1$ הרכיב המשיקי של $\gamma''$ הוא $\frac{22}{\sqrt{14}}\approx5.88$, והרכיב הנורמלי $\kappa v^2=\frac{2\sqrt{19}}{\sqrt{14}}\approx2.33$.
+
+</Step>
+
+<Step fig="fig-2-1a" set={{ curve: 'helix', t: 1.5, show: ['frame'], reverse: false, mirror: false }} id="frame-basis">
+
+**טענה 2.1.4.** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^k$, $k\ge2$, עם $\kappa>0$ על $I$.
+
+(א) לכל $t\in I$, $(\mathbf t,\mathbf n,\mathbf b)$ הוא בסיס אורתונורמלי של $\mathbb R^3$, והוא <Term id="right-handed-basis">בסיס ימני</Term>: $\det(\mathbf t,\mathbf n,\mathbf b)=1$.
+
+(ב) $\mathbf t$ היא מסדר $C^{k-1}$ על $I$, ו-$\mathbf n,\mathbf b$ מסדר $C^{k-2}$ (עבור $k=2$: רציפות).
+
+**רעיון.** (א) הוא אלגברה של המכפלה הווקטורית. ל-(ב) משתמשים בנוסחאות של טענה 2.1.3, שבהן הכול בנוי מ-$\gamma'$ ומ-$\gamma''$ בפעולות חלקות, והחלוקה היא תמיד בנורמה של וקטור שאינו אפס.
+
+**הוכחה.**
+
+**(א)** $\mathbf t,\mathbf n$ אורתונורמליים (משפט 1.3.13), $\|\mathbf b\|=1$ (טענה 2.1.3(ג)), ו-$\mathbf b=\mathbf t\times\mathbf n$ ניצב ל-$\mathbf t$ ול-$\mathbf n$ (תכונת המכפלה הווקטורית, שיעור 0.2). שלושה וקטורי יחידה ניצבים זה לזה הם בלתי תלויים, ולכן בסיס. המכפלה המשולשת היא הדטרמיננטה (שיעור 0.2):
+
+$$
+\det(\mathbf t,\mathbf n,\mathbf b)=(\mathbf t\times\mathbf n)\cdot\mathbf b=\mathbf b\cdot\mathbf b=1 .
+$$
+
+**(ב)** **(1)** $\gamma'$ מסדר $C^{k-1}$ ו-$\gamma'\times\gamma''$ מסדר $C^{k-2}$: הרכיבים שלה הם סכומים של מכפלות של רכיבי $\gamma'$ ו-$\gamma''$.
+
+**(2)** הנורמה $N(\mathbf x)=\sqrt{\mathbf x\cdot\mathbf x}$ היא $C^\infty$ על $\mathbb R^3\setminus\{0\}$, כהרכבה של פולינום חיובי שם עם $\sqrt{\cdot}$, שהיא $C^\infty$ על $(0,\infty)$.
+
+**(3)** $\gamma'\ne0$ (רגולריות) ו-$\gamma'\times\gamma''\ne0$ (למה 2.1.2, כי $\kappa>0$). לכן $\mathbf t=\gamma'/N(\gamma')$ מסדר $C^{k-1}$ ו-$\mathbf b=(\gamma'\times\gamma'')/N(\gamma'\times\gamma'')$ מסדר $C^{k-2}$: מנה של פונקציות כאלה עם מכנה חיובי.
+
+**(4)** $\mathbf n=\mathbf b\times\mathbf t$ (טענה 2.1.3(ג)) מסדר $C^{k-2}$, כמכפלה וקטורית של פונקציות מסדר $C^{k-2}$ לפחות. $\blacksquare$
+
+**היכן השתמשנו בהנחות:** $\kappa>0$ בכל נקודה ב-(ב)(3), כדי לחלק בנורמה שאינה אפס; רגולריות ב-(3) עבור $\mathbf t$.
+
+**טענה 2.1.4א (ההפסד של שתי נגזרות הוא אמיתי).** המסילה $\gamma(t)=\big(t,\ \frac{t^2}{2},\ \frac{|t|^3}{6}\big)$ היא רגולרית מסדר $C^2$ על $\mathbb R$ עם $\kappa>0$ בכל מקום, ו-$\mathbf b$ שלה רציפה אבל אינה גזירה ב-$0$.
+
+**הוכחה.** **(1)** $g(t)=\frac{|t|^3}6$ מקיימת $g'(t)=\frac{t|t|}2$ ו-$g''(t)=|t|$, רציפה; לכן $\gamma\in C^2$, עם
+
+$$
+\gamma'=\Big(1,\ t,\ \frac{t|t|}{2}\Big),\qquad \gamma''=(0,\ 1,\ |t|),\qquad \gamma'\times\gamma''=\Big(\frac{t|t|}{2},\ -|t|,\ 1\Big).
+$$
+
+**(2)** הרכיב השלישי של $\mathbf w=\gamma'\times\gamma''$ הוא 1, ולכן $\mathbf w\ne0$ ו-$\kappa>0$ (למה 2.1.2). **(3)** $\mathbf b=\mathbf w/\|\mathbf w\|$, ולכן $\mathbf w=\mathbf b/b_3$, כאשר $b_3=1/\|\mathbf w\|>0$ הוא הרכיב השלישי של $\mathbf b$. אילו $\mathbf b$ הייתה גזירה ב-$0$, גם $\mathbf w$ הייתה גזירה שם (מנה של גזירות עם מכנה חיובי). אבל $w_2=-|t|$ אינה גזירה ב-$0$. $\blacksquare$
+
+</Step>
+
+<Step fig="fig-2-1a" set={{ curve: 'helix', t: 0, show: ['frame'], reverse: false, mirror: false, yaw: 0.9, pitch: 0.35 }} id="test-objects">
+
+**על אובייקטי המבחן.**
+
+**מעגל** $(r\cos t,\ r\sin t,\ 0)$: $\gamma'\times\gamma''=(0,0,r^2)$, ולכן $\mathbf b\equiv e_3$, הנורמל הקבוע של המישור שבו המעגל מונח.
+
+**סליל** $(a\cos t,\ a\sin t,\ bt)$ עם $a>0$ (החישוב המלא בדוגמה 1): $\mathbf n=(-\cos t,\ -\sin t,\ 0)$, אופקי ומצביע אל הציר, ו-
+
+$$
+\mathbf b=\frac{1}{\sqrt{a^2+b^2}}\,\big(b\sin t,\ -b\cos t,\ a\big).
+$$
+
+ל-$\mathbf b$ רכיב $z$ קבוע, $\frac{a}{\sqrt{a^2+b^2}}$; הוא ניצב לכיוון הרדיאלי $(\cos t,\sin t,0)$, ולכן משיק לגליל $x^2+y^2=a^2$; והוא מסתובב סביב הציר יחד עם הנקודה. הוא מקביל לציר רק כש-$b=0$, כלומר במעגל. בסליל $(\cos t,\sin t,t)$ ב-$t=0$: $\mathbf b=\frac{1}{\sqrt2}(0,-1,1)$. וזו התשובה לשאלת החיזוי: **בזווית קבועה עם הציר, משיק לגליל, ומסתובב סביב הציר** (תשובה ג). סובבו את המבט באיור עד שאתם מסתכלים לאורך הציר (משימה 1), וראו את $\mathbf n$ מצביע אל המרכז.
+
+**המסילה המעוקבת** $(t,t^2,t^3)$ ב-$t=0$: $\gamma'(0)=e_1$, $\gamma''(0)=2e_2$, $\gamma'\times\gamma''=2e_3$. לכן $\mathbf t=e_1$, $\mathbf b=e_3$, $\mathbf n=\mathbf b\times\mathbf t=e_2$, ו-$\kappa(0)=2$.
+
+**ישר** $\mathbf p+t\mathbf u$: $\gamma''\equiv0$, ולכן $\kappa\equiv0$ ואין שלשה בשום נקודה. **מסילה עם חוד** $(t^2,t^3,0)$: ב-$t=0$, $\gamma'=0$; היא אינה רגולרית שם, וההגדרה לא חלה כלל.
+
+</Step>
+
+<Step fig="fig-2-1a" set={{ curve: 'cubic', t: 0.4, show: ['frame'], reverse: false, mirror: false }} id="frame-invariance">
+
+**טענה 2.1.5 (מה משנה את השלשה ומה לא).** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$ עם $\kappa>0$.
+
+(א) תהי $\varphi:J\to I$ מסדר $C^2$, על, $J$ קטע פתוח, ו-$\varphi'\ne0$ על $J$, ותהי $\delta=\gamma\circ\varphi$. אז $\varepsilon=\operatorname{sgn}\varphi'$ קבוע על $J$, ולכל $u\in J$, עם $t=\varphi(u)$:
+
+$$
+\big(\mathbf t_\delta,\ \mathbf n_\delta,\ \mathbf b_\delta\big)(u)=\big(\varepsilon\,\mathbf t_\gamma,\ \mathbf n_\gamma,\ \varepsilon\,\mathbf b_\gamma\big)(t).
+$$
+
+בפרט החלפת פרמטר ששומרת כיוון לא משנה דבר, והיפוך כיוון הופך את $\mathbf t$ ואת $\mathbf b$ ומשאיר את $\mathbf n$.
+
+(ב) תהי $A$ מטריצה אורתוגונלית $3\times3$, $\mathbf c\in\mathbb R^3$, ו-$\beta=A\gamma+\mathbf c$. אז לכל $t$:
+
+$$
+\big(\mathbf t_\beta,\ \mathbf n_\beta,\ \mathbf b_\beta\big)=\big(A\mathbf t_\gamma,\ A\mathbf n_\gamma,\ (\det A)\,A\mathbf b_\gamma\big).
+$$
+
+בתנועה קשיחה ששומרת כיוון ($\det A=1$) השלשה פשוט מסתובבת; בשיקוף ($\det A=-1$) הבינורמל מקבל סימן נוסף.
+
+**למה 2.1.5א.** אם $A$ אורתוגונלית, אז לכל $\mathbf u,\mathbf w\in\mathbb R^3$:
+
+$$
+(A\mathbf u)\times(A\mathbf w)=(\det A)\,A(\mathbf u\times\mathbf w).
+$$
+
+**רעיון.** וקטור נקבע לפי המכפלות הפנימיות שלו עם כל הווקטורים; את המכפלה הפנימית עם $A\mathbf z$ מחשבים כדטרמיננטה, ו-$\det(AB)=\det A\det B$.
+
+**הוכחה של הלמה.** **(1)** לכל $\mathbf z$, לפי "מכפלה משולשת היא דטרמיננטה" (שיעור 0.2) ומכפליות הדטרמיננטה:
+
+$$
+\big((A\mathbf u)\times(A\mathbf w)\big)\cdot A\mathbf z=\det\big(A[\mathbf u\ \mathbf w\ \mathbf z]\big)=\det A\cdot(\mathbf u\times\mathbf w)\cdot\mathbf z .
+$$
+
+**(2)** $A$ אורתוגונלית ולכן שומרת מכפלות פנימיות: $(\mathbf u\times\mathbf w)\cdot\mathbf z=A(\mathbf u\times\mathbf w)\cdot A\mathbf z$. **(3)** לכן הווקטור
+
+$$
+\mathbf d=(A\mathbf u)\times(A\mathbf w)-\det A\cdot A(\mathbf u\times\mathbf w)
+$$
+
+מקיים $\mathbf d\cdot A\mathbf z=0$ לכל $\mathbf z$. $A$ הפיכה, ולכן $A\mathbf z$ עובר על כל $\mathbb R^3$; בפרט $\mathbf d\cdot\mathbf d=0$, ו-$\mathbf d=0$. $\blacksquare$
+
+**רעיון ההוכחה של הטענה.** בשני המקרים מחשבים את $\delta'$, $\delta''$ (או $\beta'$, $\beta''$) ומציבים בנוסחאות של טענה 2.1.3, שתקפות בכל פרמטר.
+
+**הוכחה של 2.1.5.**
+
+**(א)** **(1)** $\varphi'$ רציפה על הקטע $J$ ואינה מתאפסת, ולכן לפי משפט ערך הביניים יש לה סימן קבוע $\varepsilon$. **(2)** $\delta$ רגולרית מסדר $C^2$, ולפי כלל השרשרת
+
+$$
+\delta'(u)=\varphi'(u)\,\gamma'(t),\qquad \delta''(u)=\varphi''(u)\,\gamma'(t)+\varphi'(u)^2\,\gamma''(t).
+$$
+
+**(3)** מכאן $\delta'\times\delta''=\varphi'^3\,\gamma'\times\gamma''$, ובפרט $\kappa_\delta(u)=\kappa_\gamma(t)>0$ (מסקנה 1.3.11; זו גם טענה 1.3.7). **(4)** לפי טענה 2.1.3(ג), $\mathbf b_\delta=\operatorname{sgn}(\varphi'^3)\,\mathbf b_\gamma=\varepsilon\,\mathbf b_\gamma$, ו-$\mathbf t_\delta=\varepsilon\,\mathbf t_\gamma$ (טענה 1.3.2). **(5)** $\mathbf n_\delta=\mathbf b_\delta\times\mathbf t_\delta=\varepsilon^2\,\mathbf b_\gamma\times\mathbf t_\gamma=\mathbf n_\gamma$.
+
+**(ב)** **(1)** $\beta'=A\gamma'$, $\beta''=A\gamma''$, ו-$\|A\mathbf x\|=\|\mathbf x\|$; לכן $\beta$ רגולרית, $\mathbf t_\beta=A\mathbf t_\gamma$ ו-$\kappa_\beta=\kappa_\gamma>0$ (טענה 1.3.7(ב)). **(2)** לפי למה 2.1.5א, $\beta'\times\beta''=\det A\cdot A(\gamma'\times\gamma'')$, שאורכו $\|\gamma'\times\gamma''\|$. לפי טענה 2.1.3(ג), $\mathbf b_\beta=\det A\cdot A\mathbf b_\gamma$. **(3)** שוב לפי הלמה, עם $(\det A)^2=1$:
+
+$$
+\mathbf n_\beta=\mathbf b_\beta\times\mathbf t_\beta=\det A\,\big(A\mathbf b_\gamma\times A\mathbf t_\gamma\big)=(\det A)^2\,A(\mathbf b_\gamma\times\mathbf t_\gamma)=A\mathbf n_\gamma .\qquad\blacksquare
+$$
+
+**היכן השתמשנו בהנחות:** $\varphi'\ne0$ על **קטע** כדי שהסימן יהיה קבוע; $\varphi\in C^2$ כדי ש-$\delta''$ יהיה קיים; $A$ אורתוגונלית כדי לשמור אורכים ובלמה.
+
+מכאן שהשלשה, והמישורים שנגדיר מיד, הם תכונות של **התמונה עם כיוון התנועה**, ולא של הפרמטריזציה: מחשבים אותם בכל פרמטר נוח. ושלוש דוגמאות לסימנים, במסילה המעוקבת ב-$t=0.4$ (עדות מספרית מ-`spacecurves.ts`): בהיפוך כיוון מתקבל $(-\mathbf t,\mathbf n,-\mathbf b)$; בשיקוף במישור $z=0$ מתקבל $(A\mathbf t,A\mathbf n,-A\mathbf b)$; ובשיקוף הנקודתי $\mathbf x\mapsto-\mathbf x$, שגם הוא בעל דטרמיננטה $-1$, מתקבל $(-\mathbf t,-\mathbf n,\mathbf b)$: הבינורמל **לא** מתהפך (דוגמה 3). באיור, הפעילו את שני המתגים ובדקו.
+
+</Step>
+
+</Explain>
+
+</Spread>
+
+<Spread
+  fig="fig-2-1b"
+  n="2.1ב"
+  caption="אותה מסילה ושלושת המישורים, ושתי מסילות נוספות לבחירה. בגרף של $t^3$ במישור $z=0$ העקמומיות מתאפסת ב-$t=0$: שם $\mathbf n$ ו-$\mathbf b$ מתהפכים, אבל המישור המנשק נשאר $z=0$. המסילה המודבקת, שמשמאל ל-$t=0$ היא הגרף של $t^4$ במישור $z=0$ ומימין הגרף של $t^4$ במישור $y=0$. בה $\kappa(0)=0$, וכשמעבירים את הנקודה דרך $t=0$ הבינורמל קופץ מ-$e_3$ ל-$-e_2$, והמישור המנשק קופץ ממישור אחד לאחר. ב-$t=0$ עצמו מצויר רק המשיק, כי שם אין נורמל. המספרים מחושבים מנגזרות מדויקות; זו עדות, וההוכחות בטקסט."
+  figure={FrenetFrame}
+  figureProps={{ curve: 'cubic', curves: ['cubic', 'planar-cubic', 'glued', 'helix'], t: 0, show: ['frame', 'osculating'], layers: ['osculating', 'normal-plane', 'rectifying', 'circle'], noTorsion: true, tasks: ['jump'] }}
+>
+
+<Explain title="המישור המנשק" id="osculating">
+
+<Step fig="fig-2-1b" set={{ curve: 'cubic', t: 0, show: ['frame', 'osculating', 'normal-plane', 'rectifying'] }} id="planes-def">
+
+**הגדרה 2.1.6.** תהי $\gamma$ רגולרית מסדר $C^2$ ו-$\kappa(t_0)>0$, ונכתוב $\mathbf p=\gamma(t_0)$ ואת השלשה בנקודה $t_0$. שלושת המישורים דרך $\mathbf p$:
+- ה<Term id="osculating-plane">מישור המנשק</Term>: $\mathbf p+\operatorname{span}(\mathbf t,\mathbf n)$, הניצב ל-$\mathbf b$;
+- ה<Term id="normal-plane">מישור הנורמלי</Term>: $\mathbf p+\operatorname{span}(\mathbf n,\mathbf b)$, הניצב ל-$\mathbf t$;
+- ה<Term id="rectifying-plane">מישור המיישר</Term>: $\mathbf p+\operatorname{span}(\mathbf t,\mathbf b)$, הניצב ל-$\mathbf n$.
+
+השלשה בסיס אורתונורמלי (טענה 2.1.4), ולכן כל מישור כזה הוא קבוצת הנקודות $\mathbf x$ שבהן $(\mathbf x-\mathbf p)\cdot\mathbf e=0$, כאשר $\mathbf e$ הוא הווקטור השלישי. לפי טענה 2.1.5 שלושתם לא תלויים בפרמטריזציה: וקטור שמשנה סימן קובע את אותו מישור. המעגל המנשק של שיעור 1.4 מונח במישור המנשק.
+
+מבין אינסוף המישורים שמכילים את הישר המשיק, למה דווקא $\operatorname{span}(\mathbf t,\mathbf n)$ "מנשק"? שלושת המשפטים הבאים עונים: הוא הגבול של מישורים דרך נקודות קרובות על המסילה.
+
+</Step>
+
+<Step fig="fig-2-1b" set={{ curve: 'cubic', t: 0, show: ['frame', 'osculating'] }} id="osc-limit">
+
+**משפט 2.1.7 (המישור דרך הישר המשיק ונקודה קרובה).** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, ו-$t_0\in I$ עם $\kappa(t_0)>0$. אז יש $\eta>0$ כך שלכל $0<|h|<\eta$ הווקטורים $\gamma'(t_0)$ ו-$\gamma(t_0+h)-\gamma(t_0)$ בלתי תלויים, ולכן קובעים מישור $\Pi_h$ דרך $\gamma(t_0)$ שמכיל את הישר המשיק ואת $\gamma(t_0+h)$. וקטור היחידה הניצב לו
+
+$$
+\nu(h)=\frac{\gamma'(t_0)\times\big(\gamma(t_0+h)-\gamma(t_0)\big)}{\big\|\gamma'(t_0)\times\big(\gamma(t_0+h)-\gamma(t_0)\big)\big\|}
+$$
+
+מקיים $\nu(h)\to\mathbf b(t_0)$ כש-$h\to0$, משני הצדדים. במילים: המישורים $\Pi_h$ שואפים למישור המנשק.
+
+**רעיון.** לפי טיילור, $\gamma(t_0+h)-\gamma(t_0)$ הוא $h\gamma'+\frac{h^2}2\gamma''$ ועוד שגיאה קטנה מ-$h^2$. במכפלה הווקטורית עם $\gamma'$ האיבר הראשון נעלם, והשני הוא $\frac{h^2}{2}\gamma'\times\gamma''$, כפולה **חיובית** של $\mathbf b$ גם כש-$h<0$.
+
+**הוכחה.** נכתוב $\mathbf u=\gamma'(t_0)$, $\mathbf a=\gamma''(t_0)$.
+
+**(1)** לפי משפט טיילור עם שארית פאנו (אינפי 1), לכל רכיב, ולכן לווקטור:
+
+$$
+\gamma(t_0+h)=\gamma(t_0)+h\,\mathbf u+\frac{h^2}{2}\,\mathbf a+\mathbf r(h),\qquad \frac{\mathbf r(h)}{h^2}\xrightarrow[h\to0]{}0 .
+$$
+
+**(2)** נגדיר לכל $h\ne0$ את הווקטור
+
+$$
+\mathbf w(h)=\frac{2}{h^2}\,\mathbf u\times\big(\gamma(t_0+h)-\gamma(t_0)\big).
+$$
+
+מהביליניאריות ומ-$\mathbf u\times\mathbf u=0$:
+
+$$
+\mathbf w(h)=\mathbf u\times\mathbf a+\frac{2}{h^2}\,\mathbf u\times\mathbf r(h).
+$$
+
+**(3)** $\|\mathbf u\times\mathbf r\|\le\|\mathbf u\|\,\|\mathbf r\|$ (זהות לגרנז׳), ולכן $\mathbf w(h)\to\mathbf u\times\mathbf a$. לפי טענה 2.1.3(ב), $\mathbf u\times\mathbf a=\kappa v^3\mathbf b(t_0)\ne0$.
+
+**(4)** הנורמה רציפה, ולכן יש $\eta>0$ כך ש-$\|\mathbf w(h)\|>\frac12\|\mathbf u\times\mathbf a\|>0$ לכל $0<|h|<\eta$. אז $\mathbf u\times(\gamma(t_0+h)-\gamma(t_0))\ne0$, ולפי למה 2.1.2 (שלביה 2–3) הווקטורים בלתי תלויים.
+
+**(5)** $\frac{2}{h^2}>0$, ולכן $\nu(h)=\mathbf w(h)/\|\mathbf w(h)\|$. הפונקציה $\mathbf x\mapsto\mathbf x/\|\mathbf x\|$ רציפה על $\mathbb R^3\setminus\{0\}$, ולכן $\nu(h)\to\frac{\mathbf u\times\mathbf a}{\|\mathbf u\times\mathbf a\|}=\mathbf b(t_0)$. $\blacksquare$
+
+**היכן השתמשנו בהנחות:** $C^2$ בטיילור עם שארית מסדר $o(h^2)$; $\kappa(t_0)>0$ בשלב 3, כדי שהגבול לא יהיה אפס.
+
+**בלי $\kappa(t_0)>0$ המשפט נכשל.** במסילה המודבקת של האיור, $\gamma(t)=(t,\ t^4,\ 0)$ כש-$t\le0$ ו-$(t,\ 0,\ t^4)$ כש-$t>0$ (מסדר $C^3$, ראו משפט 2.1.11), ב-$t_0=0$: $\gamma'(0)=e_1$, ו-
+
+$$
+e_1\times(h,\ h^4,\ 0)=(0,\ 0,\ h^4)\quad(h<0),\qquad e_1\times(h,\ 0,\ h^4)=(0,\ -h^4,\ 0)\quad(h>0).
+$$
+
+לכן $\nu(h)=e_3$ משמאל ו-$\nu(h)=-e_2$ מימין: אין גבול, אפילו לא עד כדי סימן.
+
+</Step>
+
+<Step fig="fig-2-1b" set={{ curve: 'cubic', t: 0, show: ['frame', 'osculating'] }} id="divided-difference">
+
+כדי לקחת גבול של מישורים דרך **שלוש** נקודות על המסילה, צריך כלי שמחליף את טיילור כשאף אחת מהנקודות אינה קבועה.
+
+**למה 2.1.8 (<Term id="divided-difference">הפרש מחולק</Term> שני).** תהי $\gamma:I\to\mathbb R^3$ מסדר $C^2$ על קטע $I$, ויהיו $t_0,t_1,t_2\in I$ שונים זה מזה. נגדיר
+
+$$
+\gamma[t_0,t_1]=\frac{\gamma(t_1)-\gamma(t_0)}{t_1-t_0},\qquad \gamma[t_0,t_1,t_2]=\frac{\gamma[t_0,t_2]-\gamma[t_0,t_1]}{t_2-t_1}.
+$$
+
+אז:
+
+(א) ההפרש המחולק הראשון הוא ממוצע של $\gamma'$:
+
+$$
+\gamma[t_0,t_1]=\int_0^1\gamma'\big(t_0+u(t_1-t_0)\big)\,du ;
+$$
+
+(ב) עם הנקודות
+
+$$
+\xi(u,w)=t_0+u(t_1-t_0)+uw(t_2-t_1),
+$$
+
+ההפרש המחולק השני הוא
+
+$$
+\gamma[t_0,t_1,t_2]=\int_0^1\!\!\int_0^1 u\,\gamma''\big(\xi(u,w)\big)\,dw\,du ;
+$$
+
+(ג) נסמן $\delta=\max_i|t_i-t_0|$ ואת מודולוס הרציפות של $\gamma''$ ב-$t_0$,
+
+$$
+\omega(\delta)=\sup\big\{\|\gamma''(\xi)-\gamma''(t_0)\|:\ \xi\in I,\ |\xi-t_0|\le\delta\big\}.
+$$
+
+אז
+
+$$
+\Big\|\gamma[t_0,t_1,t_2]-\tfrac12\gamma''(t_0)\Big\|\le\tfrac12\,\omega(\delta),
+$$
+
+ו-$\omega(\delta)\to0$ כש-$\delta\to0$. באותו אופן, $\gamma[t_0,t_1]\to\gamma'(t_0)$ כש-$t_1\to t_0$.
+
+**רעיון.** המשפט היסודי של החשבון האינפיניטסימלי, פעמיים: פעם על $\gamma$ לאורך הקטע מ-$t_0$ ל-$t_1$, ופעם על $\gamma'$. ההפרש המחולק השני יוצא ממוצע משוקלל של $\gamma''$, עם משקל כולל $\frac12$.
+
+**הוכחה.**
+
+**(א)** נגדיר $g(u)=\gamma\big(t_0+u(t_1-t_0)\big)$ על $[0,1]$. לפי כלל השרשרת $g$ גזירה ברציפות, עם
+
+$$
+g'(u)=(t_1-t_0)\,\gamma'\big(t_0+u(t_1-t_0)\big).
+$$
+
+לפי המשפט היסודי, לכל רכיב, $\gamma(t_1)-\gamma(t_0)$ שווה ל-$g(1)-g(0)=\int_0^1g'$; מחלקים ב-$t_1-t_0$.
+
+**(ב)** **(1)** נסמן $p_u=t_0+u(t_1-t_0)$ ו-$q_u=t_0+u(t_2-t_0)$. לפי (א) פעמיים,
+
+$$
+\gamma[t_0,t_2]-\gamma[t_0,t_1]=\int_0^1\big(\gamma'(q_u)-\gamma'(p_u)\big)\,du .
+$$
+
+**(2)** $q_u-p_u=u(t_2-t_1)$. $\gamma'$ מסדר $C^1$, ולפי המשפט היסודי לאורך הקטע מ-$p_u$ ל-$q_u$ (כמו ב-(א)):
+
+$$
+\gamma'(q_u)-\gamma'(p_u)=u(t_2-t_1)\int_0^1\gamma''\big(p_u+w\,u(t_2-t_1)\big)\,dw .
+$$
+
+**(3)** $p_u+wu(t_2-t_1)=\xi(u,w)$. מציבים ב-(1) ומחלקים ב-$t_2-t_1$.
+
+**(ג)** **(1)** כתיבה מחדש של $\xi$:
+
+$$
+\xi(u,w)=(1-u)\,t_0+u(1-w)\,t_1+uw\,t_2 ,
+$$
+
+צירוף קמור (המקדמים אי-שליליים וסכומם 1). לכן $\xi\in I$ (קטע הוא קבוצה קמורה), ו-$|\xi-t_0|\le\delta$, כי $|\xi-t_0|$ קטן או שווה ל-$u(1-w)|t_1-t_0|+uw|t_2-t_0|$. **(2)** $\int_0^1\!\int_0^1u\,dw\,du=\frac12$, ולכן
+
+$$
+\gamma[t_0,t_1,t_2]-\tfrac12\gamma''(t_0)=\int_0^1\!\!\int_0^1 u\,\big(\gamma''(\xi)-\gamma''(t_0)\big)\,dw\,du .
+$$
+
+**(3)** הנורמה של אינטגרל וקטורי קטנה או שווה לאינטגרל של הנורמה (אינפי מתקדם 1), ולכן הנורמה חסומה על ידי $\int\!\int u\,\omega(\delta)=\frac12\omega(\delta)$. **(4)** $\gamma''$ רציפה ב-$t_0$: לכל $\varepsilon>0$ יש $\eta>0$ כך ש-$|\xi-t_0|\le\eta$ גורר $\|\gamma''(\xi)-\gamma''(t_0)\|<\varepsilon$; לכן $\omega(\delta)\le\varepsilon$ לכל $\delta\le\eta$. החסם ל-$\gamma[t_0,t_1]$ זהה, מ-(א) ומהרציפות של $\gamma'$. $\blacksquare$
+
+**היכן השתמשנו בהנחות:** $C^2$ בשלב (ב)(2) ובשלב (ג)(4); $I$ קטע בשלב (ג)(1), כדי ש-$\xi$ יישאר בתחום.
+
+</Step>
+
+<Step fig="fig-2-1b" set={{ curve: 'cubic', t: 0, show: ['frame', 'osculating'], yaw: 0.9, pitch: 0.12 }} id="three-points">
+
+**משפט 2.1.9 (המישור דרך שלוש נקודות).** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, ו-$t_0\in I$ עם $\kappa(t_0)>0$. אז יש $\eta>0$ כך שלכל $t_1,t_2\in I$ שונים זה מזה ומ-$t_0$, עם $|t_1-t_0|,|t_2-t_0|<\eta$, הנקודות $\gamma(t_0),\gamma(t_1),\gamma(t_2)$ אינן על ישר אחד, ולמישור $\Pi(t_1,t_2)$ שעובר דרכן יש וקטור יחידה ניצב $\hat\nu(t_1,t_2)$ כך ש-
+
+$$
+\hat\nu(t_1,t_2)\longrightarrow\mathbf b(t_0)
+$$
+
+כש-$(t_1,t_2)\to(t_0,t_0)$.
+
+**רעיון.** שני הווקטורים שפורשים את המישור הם, עד כדי מקדמים סקלריים, ההפרש המחולק הראשון והשני; לפי למה 2.1.8 הם שואפים ל-$\gamma'$ ול-$\frac12\gamma''$.
+
+**הוכחה.**
+
+**(1)** מההגדרה של ההפרשים המחולקים:
+
+$$
+\gamma(t_1)-\gamma(t_0)=(t_1-t_0)\,\gamma[t_0,t_1],\qquad \gamma(t_2)-\gamma(t_0)=(t_2-t_0)\big(\gamma[t_0,t_1]+(t_2-t_1)\,\gamma[t_0,t_1,t_2]\big).
+$$
+
+**(2)** נגדיר
+
+$$
+\mathbf U=\gamma[t_0,t_1]\times\gamma[t_0,t_1,t_2].
+$$
+
+מהביליניאריות, ומ-$\mathbf x\times\mathbf x=0$:
+
+$$
+\big(\gamma(t_1)-\gamma(t_0)\big)\times\big(\gamma(t_2)-\gamma(t_0)\big)=(t_1-t_0)(t_2-t_0)(t_2-t_1)\,\mathbf U .
+$$
+
+**(3)** לפי למה 2.1.8, $\gamma[t_0,t_1]\to\gamma'(t_0)$ ו-$\gamma[t_0,t_1,t_2]\to\frac12\gamma''(t_0)$. המכפלה הווקטורית רציפה, ולכן $\mathbf U\to\mathbf U_0=\frac12\gamma'(t_0)\times\gamma''(t_0)$, ו-$\mathbf U_0\ne0$ לפי למה 2.1.2.
+
+**(4)** לכן יש $\eta>0$ שעבורו $\|\mathbf U-\mathbf U_0\|<\frac12\|\mathbf U_0\|$, ובפרט $\mathbf U\ne0$. המקדם ב-(2) אינו אפס (הנקודות שונות), ולכן המכפלה הווקטורית של שני ההפרשים אינה אפס: הם בלתי תלויים, והנקודות אינן על ישר אחד. המכפלה הזו ניצבת למישור $\Pi(t_1,t_2)$, ולכן גם $\mathbf U$ ניצב לו; נגדיר $\hat\nu=\mathbf U/\|\mathbf U\|$.
+
+**(5)** מרציפות $\mathbf x\mapsto\mathbf x/\|\mathbf x\|$ ב-$\mathbf U_0\ne0$, $\hat\nu\to\mathbf U_0/\|\mathbf U_0\|=\mathbf b(t_0)$ (טענה 2.1.3(ג)). $\blacksquare$
+
+**היכן השתמשנו בהנחות:** $C^2$ בלמה 2.1.8; $\kappa(t_0)>0$ בשלב 3, כדי ש-$\mathbf U_0\ne0$. שימו לב ש-$C^3$ **לא** נדרש: למה 2.1.8 צריכה רק רציפות של $\gamma''$.
+
+הסימן: הנורמל "הטבעי", המכפלה הווקטורית של שני ההפרשים בשלב 2, שווה ל-$\mathbf U$ כפול מקדם שהסימן שלו תלוי בסדר של $t_0,t_1,t_2$. לכן הוא שואף ל-$\pm\mathbf b$, והמישורים עצמם שואפים למישור המנשק. בלי $\kappa(t_0)>0$, שוב במסילה המודבקת: שלוש נקודות עם $t_1,t_2<0$ נמצאות במישור $z=0$, ושלוש עם $t_1,t_2>0$ במישור $y=0$, ולכן אין גבול.
+
+</Step>
+
+<Step fig="fig-2-1b" set={{ curve: 'helix', t: 1, show: ['frame', 'osculating'] }} id="osc-equation">
+
+**טענה 2.1.10 (משוואות המישורים).** תהי $\gamma$ רגולרית מסדר $C^2$ בפרמטר כלשהו, ו-$\kappa(t_0)>0$. אז, עם הנגזרות ב-$t_0$ ו-$\mathbf p=\gamma(t_0)$:
+- המישור המנשק: $(\mathbf x-\mathbf p)\cdot(\gamma'\times\gamma'')=0$, ובאופן שקול $\det(\mathbf x-\mathbf p,\ \gamma',\ \gamma'')=0$;
+- המישור הנורמלי: $(\mathbf x-\mathbf p)\cdot\gamma'=0$;
+- המישור המיישר: $(\mathbf x-\mathbf p)\cdot\mathbf m=0$, כאשר $\mathbf m=(\gamma'\times\gamma'')\times\gamma'$.
+
+**רעיון.** מחליפים כל וקטור יחידה בכפולה **חיובית** שלו שמחשבים ישירות מהנגזרות.
+
+**הוכחה.** לפי הגדרה 2.1.6 הנורמלים הם $\mathbf b$, $\mathbf t$, $\mathbf n$, וכל כפולה שאינה אפס של נורמל קובעת אותו מישור. **(1)** $\gamma'\times\gamma''=\kappa v^3\mathbf b$ (טענה 2.1.3(ב)), והצורה עם הדטרמיננטה היא אותה מכפלה משולשת. **(2)** $\gamma'=v\,\mathbf t$. **(3)** לפי טענה 2.1.3:
+
+$$
+(\gamma'\times\gamma'')\times\gamma'=\kappa v^3\,\mathbf b\times v\,\mathbf t=\kappa v^4\,\mathbf n .\qquad\blacksquare
+$$
+
+**היכן השתמשנו בהנחות:** $\kappa(t_0)>0$, כדי שהכפולות $\kappa v^3$ ו-$\kappa v^4$ לא יתאפסו.
+
+לדוגמה, בסליל $(\cos t,\ \sin t,\ t)$ ב-$t=\frac\pi2$: $\gamma'=(-1,0,1)$, $\gamma''=(0,-1,0)$, $\gamma'\times\gamma''=(1,0,1)$, והמישור המנשק דרך $(0,1,\frac\pi2)$ הוא $x+z=\frac\pi2$. ובמסילה המעוקבת, בכל $t$: $\gamma'\times\gamma''=2(3t^2,\ -3t,\ 1)$, ולכן המישור המנשק בנקודה $\gamma(t)$ הוא
+
+$$
+3t^2x-3ty+z=t^3
+$$
+
+(דוגמה 4). זה המפתח לשאלה מהפתיחה (דוגמה 5).
+
+</Step>
+
+</Explain>
+
+<Explain title="כשהעקמומיות מתאפסת" id="kappa-zero-part">
+
+<Step fig="fig-2-1b" set={{ curve: 'glued', t: -0.3, show: ['frame', 'osculating'] }} id="kappa-zero">
+
+**משפט 2.1.11 (השלשה בנקודה שבה $\kappa=0$).**
+
+(א) במסילה $\gamma(t)=(t,\ t^3,\ 0)$, $t\in\mathbb R$: $\kappa(0)=0$ ו-$\kappa(t)>0$ לכל $t\ne0$; לכל $t\ne0$, $\mathbf b(t)=\operatorname{sgn}(t)\,e_3$ ו-
+
+$$
+\mathbf n(t)=\frac{\operatorname{sgn}(t)}{\sqrt{1+9t^4}}\,\big(-3t^2,\ 1,\ 0\big).
+$$
+
+לכן ל-$\mathbf n$ ול-$\mathbf b$ אין הרחבה רציפה ל-$t=0$, אבל המישור המנשק הוא $z=0$ בכל $t\ne0$, ובמובן הזה **המישור** כן מתרחב.
+
+(ב) המסילה המודבקת
+
+$$
+\gamma(t)=\begin{cases}(t,\ t^4,\ 0) & t\le0\\ (t,\ 0,\ t^4) & t>0\end{cases}
+$$
+
+היא רגולרית מסדר $C^3$ על $\mathbb R$, $\kappa(0)=0$ ו-$\kappa>0$ בכל $t\ne0$, $\mathbf b=e_3$ כש-$t<0$ ו-$\mathbf b=-e_2$ כש-$t>0$. אין פונקציה רציפה $\nu$ על קטע $(-\eta,\eta)$ עם $\nu(t)=\pm\mathbf b(t)$ לכל $t\ne0$: גם **המישור המנשק** קופץ.
+
+**רעיון.** בנקודה שבה $\kappa=0$, $\gamma''$ מקביל ל-$\gamma'$ (למה 2.1.2), ואין שם מידע על כיוון הפנייה. הכיוון נקבע רק מהצדדים, והצדדים לא חייבים להסכים.
+
+**הוכחה.**
+
+**(א)** $\gamma'=(1,\ 3t^2,\ 0)$, $\gamma''=(0,\ 6t,\ 0)$, $\gamma'\times\gamma''=(0,0,6t)$. לפי מסקנה 1.3.11, $\kappa=\frac{6|t|}{(1+9t^4)^{3/2}}$, שמתאפסת רק ב-$0$. לפי טענה 2.1.3(ג), כש-$t\ne0$: $\mathbf b=\frac{(0,0,6t)}{6|t|}$, כלומר $\operatorname{sgn}(t)\,e_3$, ו-$\mathbf n=\mathbf b\times\mathbf t$ נותן את הנוסחה. הגבולות כש-$t\to0^\pm$ הם $\mathbf n\to(0,\pm1,0)$ ו-$\mathbf b\to\pm e_3$. אילו הייתה הרחבה רציפה, הערך ב-$0$ היה שווה לשני הגבולות החד-צדדיים, והם שונים. מצד שני $\nu\equiv e_3$ רציפה ו-$\nu=\pm\mathbf b$.
+
+**(ב)** **(1)** נסמן $y(t)=t^4$ כש-$t\le0$ ו-$y(t)=0$ כש-$t>0$. מחוץ ל-$0$ הנגזרות של $y$ עד סדר 3 הן $4t^3,12t^2,24t$ משמאל ו-$0$ מימין, וכולן שואפות ל-$0$ משני הצדדים. לפי הלמה מאינפי 1 (פונקציה רציפה, גזירה מחוץ לנקודה, שלנגזרת שלה יש גבול בנקודה, גזירה גם בנקודה עם אותו ערך; משפט לגראנז׳), $y\in C^3$, ובאותו אופן הרכיב השלישי. $\gamma'=(1,\ldots)\ne0$, ולכן $\gamma$ רגולרית.
+
+**(2)** משמאל $\gamma'=(1,4t^3,0)$ ו-$\gamma''=(0,12t^2,0)$; מימין $\gamma'=(1,0,4t^3)$ ו-$\gamma''=(0,0,12t^2)$. לכן
+
+$$
+\gamma'\times\gamma''=\begin{cases}(0,\ 0,\ 12t^2) & t<0,\\ (0,\ -12t^2,\ 0) & t>0.\end{cases}
+$$
+
+ב-$0$: $\gamma''(0)=0$. לכן $\kappa(0)=0$, $\kappa(t)>0$ כש-$t\ne0$, ו-$\mathbf b=e_3$ משמאל, $\mathbf b=-e_2$ מימין (טענה 2.1.3(ג)).
+
+**(3)** נניח בשלילה ש-$\nu$ רציפה על $(-\eta,\eta)$ ו-$\nu(t)=\pm\mathbf b(t)$ לכל $t\ne0$. על $(-\eta,0)$ הפונקציה $\nu\cdot e_3$ רציפה ומקבלת רק את הערכים $\pm1$, ולכן לפי משפט ערך הביניים היא קבועה, $\varepsilon_1$; לכן $\nu=\varepsilon_1e_3$ על $(-\eta,0)$, ומהרציפות $\nu(0)=\varepsilon_1e_3$. באותו אופן $\nu(0)=\varepsilon_2(-e_2)$. אבל $e_3\ne\pm e_2$, סתירה. $\blacksquare$
+
+**היכן השתמשנו בהנחות:** בשום מקום לא הנחנו $\kappa(0)>0$, וזו בדיוק הנקודה: משפטים 2.1.7 ו-2.1.9 צריכים אותה, וכאן רואים מה קורה בלעדיה.
+
+באיור, הזיזו את הנקודה במסילה המודבקת מ-$t<0$ ל-$t>0$ (משימה): $\mathbf b$ מסתובב ברבע סיבוב בבת אחת. הקפיצה אינה תוצאה של חלקות חלקית: גם הגרסה עם $e^{-1/t^2}$ במקום $t^4$, שהיא $C^\infty$, מתנהגת כך ליד $0$, על $|t|<\sqrt{2/3}$ (שם $\kappa(t)>0$ לכל $t\ne0$; ב-$t=\pm\sqrt{2/3}$ העקמומיות שלה מתאפסת שוב), בעיית האתגר השנייה בחוברת העבודה.
+
+</Step>
+
+<Step fig="fig-2-1b" set={{ curve: 'glued', t: 0.3, show: ['frame', 'osculating'] }} id="why-kappa">
+
+**למה השלשה דורשת $\kappa>0$: סיכום.**
+1. **אין ממה לקחת את $\mathbf n$.** $\mathbf n=\mathbf t'/\kappa$ בפרמטר אורך הקשת, וכש-$\kappa=0$ גם $\mathbf t'=0$.
+2. **אין מישור מועדף.** כש-$\kappa(t_0)=0$, כל מישור שמכיל את הישר המשיק מקיים $d=o(h^2)$, כלומר מגע מסדר שני (דוגמה 6), ולכן מגע מסדר שני כבר לא מייחד מישור מנשק אחד.
+3. **הגבולות מהצדדים יכולים להיות שונים.** משפט 2.1.11: לפעמים השלשה קופצת והמישור לא (א), ולפעמים גם המישור קופץ (ב). ולפעמים אין קפיצה בכלל (דוגמה 2). הנקודה שבה $\kappa=0$ פשוט אינה מכילה את המידע.
+
+עם $\kappa>0$ אין שום בעיה, והשלשה חלקה (טענה 2.1.4). לכן כל משפט בפרק 2 מניח $\kappa>0$, ובשיעור 2.4 נראה שבלי ההנחה הזו גם משפט היחידות של המסילות נכשל.
+
+</Step>
+
+</Explain>
+
+</Spread>
+
+<Page>
+
+<Example id="ex-2-1-1" title="השלשה של הסליל">
+
+יהיו $a>0$ ו-$b\in\mathbb R$, ו-$\gamma(t)=(a\cos t,\ a\sin t,\ bt)$.
+
+(א) חשבו את $\mathbf t$, $\mathbf n$, $\mathbf b$ ו-$\kappa$ בכל נקודה.
+
+(ב) הראו ש-$\mathbf n$ אופקי ומצביע אל ציר הסליל, ש-$\mathbf b\cdot e_3$ קבוע, ושמתי ש-$b\ne0$, $\mathbf b$ אינו קבוע.
+
+<Solution>
+
+**נתון**: סליל ברדיוס $a$ ובקצב עלייה $b$.
+
+**צריך למצוא**: השלשה ו-$\kappa$; שלוש תכונות גאומטריות.
+
+**רעיון**: המהירות קבועה, ולכן $\gamma''\perp\gamma'$ ו-$\mathbf n$ הוא הכיוון של $\gamma''$; $\mathbf b$ מהנוסחה של טענה 2.1.3(ג).
+
+**חישוב**:
+- $\gamma'=(-a\sin t,\ a\cos t,\ b)$, ו-$v=\sqrt{a^2+b^2}$ קבוע; $\mathbf t=\gamma'/v$.
+- $\gamma''=(-a\cos t,\ -a\sin t,\ 0)$. כי $v'=0$, לפי טענה 2.1.3(א) $\gamma''=\kappa v^2\mathbf n$. לכן $\mathbf n=\gamma''/\|\gamma''\|$, כלומר $\mathbf n=(-\cos t,\ -\sin t,\ 0)$, ו-$\kappa=\frac{a}{a^2+b^2}$.
+- המכפלה הווקטורית:
+
+$$
+\gamma'\times\gamma''=\big(ab\sin t,\ -ab\cos t,\ a^2\big),\qquad \|\gamma'\times\gamma''\|=a\sqrt{a^2+b^2},
+$$
+
+ולכן
+
+$$
+\mathbf b=\frac{1}{\sqrt{a^2+b^2}}\,\big(b\sin t,\ -b\cos t,\ a\big).
+$$
+
+- (ב): $\mathbf n$ הוא $-\frac1a$ כפול ההיטל האופקי $(a\cos t,a\sin t,0)$ של הנקודה, כלומר הכיוון מהנקודה אל הנקודה $(0,0,bt)$ על הציר. $\mathbf b\cdot e_3=\frac{a}{\sqrt{a^2+b^2}}$ לכל $t$. ואם $b\ne0$, $\mathbf b(0)$ ו-$\mathbf b(\pi)$ שונים ברכיב השני ($-b$ מול $b$, חלקי $\sqrt{a^2+b^2}$).
+
+**בדיקה**: $a=b=1$, $t=0$: $\mathbf b=\frac1{\sqrt2}(0,-1,1)$, כמו בטקסט. ועם $a=2$, $b=-3$, $t=0.7$ הנוסחה נותנת $\mathbf b\approx(-0.536,0.636,0.555)$ ו-$\kappa=\frac2{13}\approx0.1538$, כמו החישוב המספרי מהנגזרות. וגם $\det(\mathbf t,\mathbf n,\mathbf b)=1$: $\mathbf t\times\mathbf n$ נותן בדיוק את $\mathbf b$.
+
+**מסקנה**: $\mathbf b$ נוטה מהציר בזווית קבועה ומסתובב סביבו; הוא מקביל לציר רק כש-$b=0$, במעגל.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-2-1-2" title="הוכיחו או הפריכו: בנקודה שבה κ = 0 השלשה תמיד קופצת">
+
+**הוכיחו או הפריכו:** אם $\gamma:\mathbb R\to\mathbb R^3$ רגולרית מסדר $C^\infty$, $\kappa(0)=0$ ו-$\kappa(t)>0$ לכל $t\ne0$, אז ל-$(\mathbf t,\mathbf n,\mathbf b)$ אין הרחבה רציפה ל-$t=0$.
+
+<Solution>
+
+**נתון**: נקודה מבודדת שבה העקמומיות מתאפסת.
+
+**צריך להוכיח או להפריך**: שאין הרחבה רציפה.
+
+**רעיון**: הקפיצה במשפט 2.1.11(א) נובעת מכך שהמסילה **מחליפה צד** ב-$0$. מסילה שמתאפסת לה העקמומיות בלי להחליף צד, כמו $y=x^4$, לא תקפוץ.
+
+**הוכחה** (הפרכה): ניקח $\gamma(t)=(t,\ t^4,\ 0)$.
+1. $\gamma'=(1,\ 4t^3,\ 0)\ne0$ ו-$\gamma''=(0,\ 12t^2,\ 0)$, ולכן $\gamma'\times\gamma''=(0,0,12t^2)$: $\kappa(0)=0$ ו-$\kappa(t)>0$ לכל $t\ne0$ (מסקנה 1.3.11).
+2. לפי טענה 2.1.3(ג), לכל $t\ne0$: $\mathbf b(t)=e_3$, $\mathbf t=\gamma'/\|\gamma'\|$, ו-
+
+$$
+\mathbf n(t)=\mathbf b\times\mathbf t=\frac{(-4t^3,\ 1,\ 0)}{\sqrt{1+16t^6}} .
+$$
+
+3. כש-$t\to0$, משני הצדדים: $\mathbf t\to e_1$, $\mathbf n\to e_2$, $\mathbf b=e_3$. לכן ההגדרה $(e_1,e_2,e_3)$ ב-$t=0$ נותנת הרחבה רציפה. $\blacksquare$
+
+**בדיקה**: באותה דרך, ב-$(t,t^3,0)$ (משפט 2.1.11(א)) הגורם $\operatorname{sgn}(t)$ מופיע, כי $\gamma''=(0,6t,0)$ מחליף סימן; כאן $\gamma''=(0,12t^2,0)$ אינו מחליף סימן. ההרחבה ב-$0$ אינה "השלשה של פרנה ב-$0$": ההגדרה לא חלה שם, ו-$\gamma''(0)=0$ לא נותן שום כיוון.
+
+**מסקנה**: הטענה שגויה. $\kappa=0$ בנקודה אומר שהנקודה לא קובעת את השלשה, ולא שהשלשה חייבת לקפוץ.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-2-1-3" title="מתיחה, וההיפוך x ↦ −x">
+
+תהי $\gamma$ רגולרית מסדר $C^2$ עם $\kappa>0$, ויהי $\lambda\ne0$. **הוכיחו:** השלשה של $\lambda\gamma$ בנקודה $t$ היא $(\mathbf t,\mathbf n,\mathbf b)(t)$ כש-$\lambda>0$, ו-$(-\mathbf t,-\mathbf n,\mathbf b)(t)$ כש-$\lambda<0$. האם זה סותר את הטענה "שיקוף הופך את $\mathbf b$"?
+
+<Solution>
+
+**נתון**: $\beta=\lambda\gamma$.
+
+**צריך להוכיח**: הנוסחה לשלשה של $\beta$; ולהכריע בשאלת הסתירה.
+
+**רעיון**: הנוסחאות של טענה 2.1.3 בפרמטר כללי. ב-$\gamma'\times\gamma''$ הגורם $\lambda$ מופיע **בריבוע**.
+
+**הוכחה**:
+1. $\beta'=\lambda\gamma'\ne0$ ו-$\beta''=\lambda\gamma''$; לכן $\beta'\times\beta''=\lambda^2\,\gamma'\times\gamma''\ne0$, ו-$\kappa_\beta>0$ (למה 2.1.2).
+2. $\mathbf t_\beta=\frac{\lambda\gamma'}{|\lambda|\|\gamma'\|}=\operatorname{sgn}(\lambda)\,\mathbf t$.
+3. לפי טענה 2.1.3(ג), $\mathbf b_\beta=\frac{\lambda^2\gamma'\times\gamma''}{\lambda^2\|\gamma'\times\gamma''\|}=\mathbf b$, לכל סימן של $\lambda$.
+4. $\mathbf n_\beta=\mathbf b_\beta\times\mathbf t_\beta$, ולפי 2–3 זה $\operatorname{sgn}(\lambda)\,\mathbf b\times\mathbf t=\operatorname{sgn}(\lambda)\,\mathbf n$. $\blacksquare$
+
+**אין סתירה.** $\lambda=-1$ הוא השיקוף הנקודתי $A=-I$, אורתוגונלי עם $\det A=-1$. לפי טענה 2.1.5(ב), $\mathbf b_\beta=\det A\cdot A\mathbf b=(-1)(-\mathbf b)=\mathbf b$. מה שנכון תמיד הוא $\mathbf b\mapsto(\det A)A\mathbf b$, ולא "$\mathbf b\mapsto-\mathbf b$": $\mathbf b$ מתהפך **ביחס ל-$A\mathbf b$**, התמונה של $\mathbf b$.
+
+**בדיקה**: במסילה המעוקבת ב-$t=0.4$, החישוב המספרי של השלשה של $-\gamma$ נותן
+
+$$
+\mathbf t\approx(-0.731,\ -0.585,\ -0.351),\qquad \mathbf b\approx(0.294,\ -0.734,\ 0.612),
+$$
+
+כלומר $-\mathbf t$ ו-$\mathbf b$ של $\gamma$. וכש-$\lambda>0$ הכול בגודל: מתיחה לא משנה כיוונים.
+
+**מסקנה**: מתיחה חיובית לא משנה את השלשה; $\mathbf x\mapsto-\mathbf x$ הופך את $\mathbf t$ ואת $\mathbf n$ ומשאיר את $\mathbf b$.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-2-1-4" title="שלושת המישורים של המסילה המעוקבת">
+
+$\gamma(t)=(t,t^2,t^3)$.
+
+(א) מצאו את המישור המנשק בנקודה $\gamma(t)$, לכל $t$.
+
+(ב) מצאו את שלושת המישורים ב-$t=0$.
+
+(ג) מצאו וקטור בכיוון $\mathbf n(t)$, וממנו את $\mathbf n(1)$.
+
+<Solution>
+
+**נתון**: המסילה המעוקבת.
+
+**צריך למצוא**: המישורים, ו-$\mathbf n(t)$.
+
+**רעיון**: טענה 2.1.10: הנורמלים הם $\gamma'\times\gamma''$, $\gamma'$ ו-$(\gamma'\times\gamma'')\times\gamma'$, ואין צורך לנרמל.
+
+**חישוב**:
+נגזרות: $\gamma'=(1,\ 2t,\ 3t^2)$ ו-$\gamma''=(0,\ 2,\ 6t)$, ולכן
+
+$$
+\gamma'\times\gamma''=(6t^2,\ -6t,\ 2)=2\,(3t^2,\ -3t,\ 1)\ne0 ,
+$$
+
+ו-$\kappa>0$ בכל נקודה.
+
+(א) המישור דרך $(t,t^2,t^3)$ עם הנורמל $(3t^2,-3t,1)$ הוא
+
+$$
+3t^2(x-t)-3t(y-t^2)+(z-t^3)=0,
+$$
+
+כלומר
+
+$$
+3t^2x-3ty+z=t^3 .
+$$
+
+- (ב) ב-$t=0$: המנשק $z=0$; הנורמלי $(\mathbf x-0)\cdot e_1=0$, כלומר $x=0$; ו-$\mathbf n(0)=e_2$ (בטקסט), ולכן המיישר $y=0$.
+- (ג) לפי טענה 2.1.10, $\mathbf n$ הוא הכיוון של $(\gamma'\times\gamma'')\times\gamma'$:
+
+$$
+(6t^2,\ -6t,\ 2)\times(1,\ 2t,\ 3t^2)=\big(-18t^3-4t,\ \ 2-18t^4,\ \ 12t^3+6t\big),
+$$
+
+כלומר $\mathbf n(t)$ בכיוון
+
+$$
+(-9t^3-2t,\ \ 1-9t^4,\ \ 6t^3+3t).
+$$
+
+ב-$t=1$ זה $(-11,-8,9)$, באורך $\sqrt{266}$.
+
+**בדיקה**: ב-$t=0$ הכיוון ב-(ג) הוא $(0,1,0)=e_2$, כמו בטקסט. הנקודה $\gamma(t)$ מקיימת את (א): $3t^3-3t^3+t^3=t^3$. ו-$(-11,-8,9)$ ניצב גם ל-$\gamma'(1)=(1,2,3)$ וגם ל-$(3,-3,1)$: $-11-16+27=0$ ו-$-33+24+9=0$. החישוב המספרי של $\mathbf n(1)$ נותן $(-0.674,-0.491,0.552)$, שהוא $\frac{1}{\sqrt{266}}(-11,-8,9)$.
+
+**מסקנה**: המישור המנשק בנקודה $\gamma(t)$ הוא $3t^2x-3ty+z=t^3$.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-2-1-5" title="כמה מישורים מנשקים עוברים דרך נקודה">
+
+**הוכיחו:** דרך כל נקודה $\mathbf p\in\mathbb R^3$ עובר לפחות מישור מנשק אחד של המסילה המעוקבת $(t,t^2,t^3)$, ולכל היותר שלושה. דרך נקודה **על** המסילה עובר בדיוק אחד. כמה עוברים דרך $(1,0,0)$, ודרך $(0,-\frac13,0)$?
+
+<Solution>
+
+**נתון**: לפי דוגמה 4, המישור המנשק ב-$t$ הוא $3t^2x-3ty+z=t^3$.
+
+**צריך להוכיח**: לפחות אחד, לכל היותר שלושה; בדיוק אחד דרך נקודה של המסילה.
+
+**רעיון**: הנקודה $\mathbf p=(x,y,z)$ נמצאת במישור של $t$ בדיוק כש-$t$ שורש של פולינום ממעלה שלוש. צריך רק לוודא ש-$t$ שונים נותנים מישורים שונים.
+
+**הוכחה**:
+1. לפי דוגמה 4, $\mathbf p$ במישור המנשק של $t$ אם ורק אם $P_{\mathbf p}(t)=0$, כאשר
+
+$$
+P_{\mathbf p}(t)=t^3-3x\,t^2+3y\,t-z .
+$$
+
+2. **ערכים שונים של $t$ נותנים מישורים שונים.** הנורמלים $(3t^2,-3t,1)$ ו-$(3s^2,-3s,1)$ פרופורציונליים רק אם המקדם הוא 1 (הרכיב השלישי), ואז $-3t=-3s$. לכן מספר המישורים המנשקים דרך $\mathbf p$ שווה למספר השורשים הממשיים **השונים** של $P_{\mathbf p}$.
+3. **לפחות אחד.** $P_{\mathbf p}$ רציף, ו-$P_{\mathbf p}(t)\to\pm\infty$ כש-$t\to\pm\infty$ (המקדם המוביל 1). לפי משפט ערך הביניים יש לו שורש.
+4. **לכל היותר שלושה.** פולינום שאינו אפס ממעלה 3 מתחלק ב-$(t-t_i)$ לכל שורש $t_i$, ולכן אין לו יותר משלושה שורשים (אלגברה).
+5. **נקודה על המסילה.** אם $\mathbf p=\gamma(t_0)$, אז לפי נוסחת הבינום $P_{\mathbf p}(t)=(t-t_0)^3$, והשורש היחיד הוא $t_0$. $\blacksquare$
+
+**חישוב**: ל-$(1,0,0)$: $P=t^3-3t^2=t^2(t-3)$, שני שורשים שונים: המישורים $z=0$ (ב-$t=0$) ו-$27x-9y+z=27$ (ב-$t=3$), ושניהם מכילים את $(1,0,0)$. ל-$(0,-\frac13,0)$: $P=t^3-t=t(t-1)(t+1)$, שלושה מישורים, למשל ב-$t=1$: $3x-3y+z=1$, ו-$0+1+0=1$.
+
+**בדיקה**: דרך נקודה של המסילה עובר מישור מנשק אחד, אבל גם מישורים מנשקים של נקודות **אחרות** עלולים לעבור דרכה; שלב 5 מראה שבמסילה הזו זה לא קורה. מבחינת ההנחות: השתמשנו בכך ש-$\kappa>0$ בכל נקודה (דוגמה 4), אחרת היה מספר $t$ בלי מישור מנשק.
+
+**מסקנה**: בין אחד לשלושה, ובדיוק אחד דרך כל נקודה של המסילה. זו התשובה לשאלה מהפתיחה.
+
+</Solution>
+
+</Example>
+
+<Example id="ex-2-1-6" title="המישור המנשק כמישור המגע מסדר שני">
+
+תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, $t_0$ פנימית, ו-$\Pi$ מישור דרך $\gamma(t_0)$ עם נורמל יחידה $\nu$. נגדיר את המרחק המסומן של $\gamma(t_0+h)$ מ-$\Pi$,
+
+$$
+d(h)=\big(\gamma(t_0+h)-\gamma(t_0)\big)\cdot\nu .
+$$
+
+**הוכיחו:**
+
+(א) $d(h)=o(h)$ אם ורק אם $\nu\perp\gamma'(t_0)$, כלומר $\Pi$ מכיל את הישר המשיק.
+
+(ב) $d(h)=o(h^2)$ אם ורק אם $\nu\perp\gamma'(t_0)$ וגם $\nu\perp\gamma''(t_0)$.
+
+(ג) אם $\kappa(t_0)>0$, המישור המנשק הוא המישור **היחיד** דרך $\gamma(t_0)$ עם $d=o(h^2)$. אם $\kappa(t_0)=0$, **כל** מישור שמכיל את הישר המשיק מקיים $d=o(h^2)$.
+
+<Solution>
+
+**נתון**: $\gamma\in C^2$ רגולרית, ומישור $\Pi$ דרך $\gamma(t_0)$.
+
+**צריך להוכיח**: (א), (ב), (ג).
+
+**רעיון**: לפי טיילור מסדר שני, $d(h)$ הוא $h\,\gamma'\cdot\nu+\frac{h^2}{2}\,\gamma''\cdot\nu$ ועוד $o(h^2)$. המקדם הראשון שאינו אפס קובע את סדר הגודל.
+
+**הוכחה**:
+1. לפי משפט טיילור עם שארית פאנו, עם $\mathbf r(h)=o(h^2)$ כמו בהוכחת משפט 2.1.7:
+
+$$
+d(h)=h\,(\gamma'\cdot\nu)+\frac{h^2}{2}\,(\gamma''\cdot\nu)+\mathbf r(h)\cdot\nu ,\qquad |\mathbf r\cdot\nu|\le\|\mathbf r\|
+$$
+
+(קושי-שוורץ). מכאן:
+
+2. **חלק (א).** אם $\gamma'\cdot\nu=0$, אז $\frac{d(h)}{h}=\frac h2\gamma''\cdot\nu+\frac{\mathbf r\cdot\nu}{h}\to0$. בכיוון השני, $\frac{d(h)}{h}\to\gamma'\cdot\nu$ תמיד, ולכן אם $d=o(h)$, אז $\gamma'\cdot\nu=0$.
+3. **חלק (ב).** אם $\gamma'\cdot\nu=0$, אז $\frac{d(h)}{h^2}\to\frac12\gamma''\cdot\nu$; לכן $d=o(h^2)$ אם ורק אם $\gamma''\cdot\nu=0$. ואם $\gamma'\cdot\nu\ne0$, אז לפי (א) אפילו לא $d=o(h)$, ובוודאי לא $o(h^2)$.
+4. **חלק (ג), כש-$\kappa(t_0)>0$.** לפי למה 2.1.2, $\gamma',\gamma''$ בלתי תלויים, ולכן הם פורשים מישור, והווקטורים הניצבים לשניהם הם בדיוק $\mathbb R\,(\gamma'\times\gamma'')=\mathbb R\,\mathbf b$ (טענה 2.1.3(ב)). לכן התנאי ב-(ב) שקול ל-$\nu=\pm\mathbf b$, כלומר $\Pi$ הוא המישור המנשק.
+5. **חלק (ג), כש-$\kappa(t_0)=0$.** לפי למה 2.1.2, $\gamma''(t_0)=\lambda\gamma'(t_0)$ לאיזה $\lambda$. לכן $\nu\perp\gamma'$ גורר $\nu\perp\gamma''$, ולפי (ב) $d=o(h^2)$. $\blacksquare$
+
+**בדיקה**: במסילה המעוקבת ב-$t_0=0$: $\gamma(h)=(h,h^2,h^3)$. המרחק מהמישור המנשק $z=0$ הוא $h^3=o(h^2)$; מהמישור המיישר $y=0$ הוא $h^2=\frac{\kappa}{2}h^2$ (כי $\kappa(0)=2$ ו-$v=1$), כמו שנותן החישוב: $\frac{d}{h^2}\to\frac12\gamma''\cdot\mathbf n=\frac12\kappa v^2$; ומהמישור הנורמלי $x=0$ הוא $h$.
+
+**מסקנה**: "מנשק" פירושו מגע מסדר שני, והמישור הזה יחיד בדיוק כש-$\kappa>0$. זו הסיבה השנייה ש-$\kappa>0$ הכרחית לשלשה.
+
+</Solution>
+
+</Example>
+
+<Check
+  title="שאלות הבנה על השיעור"
+  ids={['Q-2.1-bdef', 'Q-2.1-tc-frame0', 'Q-2.1-bgeneral', 'Q-2.1-oscz', 'Q-2.1-jump']}
+/>
+
+<Watch id="v-2-1-frame-tutorial-he" title="עקומות מרחביות: משיק, נורמל ובינורמל, תרגול בעברית (רשות)">
+
+תרגול ארוך בעברית מקורס בגאומטריה. לפי הכותרת, הוא עוסק במשיק, בנורמל ובבינורמל של עקומות מרחביות, במשוואות פרנה-סרה ובתרגיל על עקומה על ספירת היחידה. בשיעור הזה הקטע הרלוונטי הוא בניית השלשה; משוואות פרנה-סרה הן שיעור 2.3, ועקומות על ספירה הן שיעור 2.5. בתרגול המסילה נקראת "עקומה"; בקורס הזה "מסילה". בדקו בכל דוגמה את סדר הגורמים ב-$\mathbf b=\mathbf t\times\mathbf n$.
+
+</Watch>
+
+<Watch id="v-2-1-visual-frenet" title="מבוא חזותי לשלשה של פרנה, באנגלית (רשות)">
+
+קטע של כשלוש וחצי דקות, מהפרק "Moving into the Third Dimension and the Frenet Frame" בסרטון. השוו את בניית $\mathbf b$ בסרטון לטענה 2.1.3. ההמשך של הסרטון עוסק במשוואות פרנה-סרה ובפיתול, של שיעורים 2.2–2.4; שם בדקו את סימן הפיתול, כי ספרים שונים משתמשים בסימנים שונים.
+
+</Watch>
+
+<Summary title="מה למדנו">
+
+- **הגדרה 2.1.1:** למסילה רגולרית מסדר $C^k$, $k\ge2$, עם $\kappa>0$: $\mathbf b=\mathbf t\times\mathbf n$, והשלשה של פרנה $(\mathbf t,\mathbf n,\mathbf b)$.
+- **למה 2.1.2:** $\kappa(t_0)>0$ אם ורק אם $\gamma'(t_0),\gamma''(t_0)$ בלתי תלויים.
+- **טענה 2.1.3:** $\gamma'\times\gamma''=\kappa v^3\mathbf b$; לכן $\mathbf b=\frac{\gamma'\times\gamma''}{\|\gamma'\times\gamma''\|}$ ו-$\mathbf n=\mathbf b\times\mathbf t$ בכל פרמטר. השלשה תלויה רק ב-$\gamma',\gamma''$.
+- **טענה 2.1.4:** השלשה בסיס אורתונורמלי ימני; $\mathbf t\in C^{k-1}$, $\mathbf n,\mathbf b\in C^{k-2}$, וההפסד אמיתי (2.1.4א).
+- **טענה 2.1.5:** החלפת פרמטר עם סימן $\varepsilon$: $(\varepsilon\mathbf t,\mathbf n,\varepsilon\mathbf b)$; תנועה $A\mathbf x+\mathbf c$: $(A\mathbf t,A\mathbf n,(\det A)A\mathbf b)$.
+- **הגדרה 2.1.6:** המישור המנשק ($\perp\mathbf b$), הנורמלי ($\perp\mathbf t$) והמיישר ($\perp\mathbf n$).
+- **משפט 2.1.7, למה 2.1.8, משפט 2.1.9:** המישורים דרך הישר המשיק ונקודה קרובה, ודרך שלוש נקודות קרובות, שואפים למישור המנשק; מספיק $C^2$ ו-$\kappa(t_0)>0$.
+- **טענה 2.1.10:** המישור המנשק: $(\mathbf x-\gamma)\cdot(\gamma'\times\gamma'')=0$.
+- **משפט 2.1.11:** בנקודה שבה $\kappa=0$ השלשה יכולה לקפוץ, ואפילו המישור המנשק.
+
+<Formula tex="\mathbf b=\mathbf t\times\mathbf n=\frac{\gamma'\times\gamma''}{\|\gamma'\times\gamma''\|},\qquad \mathbf n=\mathbf b\times\mathbf t" label="הבינורמל והנורמל בפרמטר כללי" />
+
+<Formula tex="\gamma'\times\gamma''=\kappa v^3\,\mathbf b,\qquad (\gamma'\times\gamma'')\times\gamma'=\kappa v^4\,\mathbf n" label="כפולות חיוביות של b ושל n" />
+
+<Formula tex="(\mathbf x-\gamma(t_0))\cdot\big(\gamma'(t_0)\times\gamma''(t_0)\big)=0" label="המישור המנשק" />
+
+<Formula tex="(\mathbf t,\mathbf n,\mathbf b)\ \mapsto\ (A\mathbf t,\ A\mathbf n,\ (\det A)\,A\mathbf b)" label="השלשה תחת תנועה x ↦ Ax + c" />
+
+<Revisit id="pred-2-1" />
+
+</Summary>
+
+</Page>

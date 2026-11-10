@@ -1,0 +1,469 @@
+# Workbook of lesson 2.1 — the Frenet frame and the osculating plane.
+# Objectives (src/course.ts):
+#   OBJ-2.1-1  the binormal t × n and the Frenet frame of the helix
+#   OBJ-2.1-2  the osculating plane and its equation at a point
+#   OBJ-2.1-3  why the frame needs κ > 0, with an example where it jumps
+# Every number recomputed on 2026-11-10 with src/math/spacecurves.ts (frame, kappa) on the curves below
+# (scratchpad c21.ts): the exponential curve, the helix at π/2, the cubic, the saddle curve, the HUJI curve
+# (2t, ln t, t²), the three-point planes, the Möbius point.
+lesson: '2.1'
+practice:
+  - id: W-2.1-01
+    level: basic
+    objectives: [OBJ-2.1-1]
+    prompt: >-
+      נתונה $\gamma(t)=\big(e^t,\ e^{-t},\ \sqrt2\,t\big)$. חשבו את $\mathbf t(0)$, $\mathbf n(0)$, $\mathbf b(0)$ ואת $\kappa(0)$.
+    answer: >-
+      $\mathbf t=\frac12(1,-1,\sqrt2)$, $\mathbf n=\frac{1}{\sqrt2}(1,1,0)$, $\mathbf b=\frac12(-1,1,\sqrt2)$,
+      $\kappa(0)=\frac{\sqrt2}{4}$.
+    solution:
+      - kind: idea
+        text: >-
+          טענה 2.1.3: $\mathbf t=\gamma'/\|\gamma'\|$, $\mathbf b$ בכיוון $\gamma'\times\gamma''$, ו-$\mathbf n=\mathbf b\times\mathbf t$; העקמומיות
+          ממסקנה 1.3.11.
+      - kind: computation
+        text: >-
+          $\gamma'(0)=(1,-1,\sqrt2)$, שאורכו $\sqrt{1+1+2}=2$, ולכן $\mathbf t(0)=\frac12(1,-1,\sqrt2)$.
+          $\gamma''(0)=(1,1,0)$.
+      - kind: computation
+        text: >-
+          $$\gamma'\times\gamma''=\big((-1)\cdot0-\sqrt2\cdot1,\ \ \sqrt2\cdot1-1\cdot0,\ \ 1\cdot1-(-1)\cdot1\big)=(-\sqrt2,\ \sqrt2,\ 2),$$
+          שאורכו $\sqrt{2+2+4}=2\sqrt2$. לכן $\mathbf b(0)=\frac12(-1,1,\sqrt2)$.
+      - kind: computation
+        text: >-
+          $$\mathbf n=\mathbf b\times\mathbf t=\tfrac14\,(-1,1,\sqrt2)\times(1,-1,\sqrt2)=\tfrac14\,(2\sqrt2,\ 2\sqrt2,\ 0)=\tfrac{1}{\sqrt2}(1,1,0).$$
+          ו-$\kappa(0)=\frac{2\sqrt2}{2^3}=\frac{\sqrt2}4$.
+      - kind: check
+        text: >-
+          $\gamma'(0)\cdot\gamma''(0)=1-1+0=0$, ולכן $v'(0)=0$ ו-$\mathbf n$ חייב להיות $\gamma''/\|\gamma''\|=\frac1{\sqrt2}(1,1,0)$
+          (טענה 2.1.3(א)), כמו שיצא. $\det(\mathbf t,\mathbf n,\mathbf b)=1$, והחישוב המספרי נותן את אותם וקטורים ו-$\kappa\approx0.3536$.
+      - kind: result
+        text: >-
+          $\mathbf t=\frac12(1,-1,\sqrt2)$, $\mathbf n=\frac1{\sqrt2}(1,1,0)$, $\mathbf b=\frac12(-1,1,\sqrt2)$, $\kappa(0)=\frac{\sqrt2}4$.
+
+  - id: W-2.1-02
+    level: basic
+    objectives: [OBJ-2.1-2]
+    prompt: >-
+      בסליל $\gamma(t)=(\cos t,\ \sin t,\ t)$ מצאו את משוואות המישור המנשק, המישור הנורמלי והמישור המיישר בנקודה
+      $t=\frac\pi2$.
+    answer: >-
+      מנשק: $x+z=\frac\pi2$; נורמלי: $z-x=\frac\pi2$; מיישר: $y=1$.
+    solution:
+      - kind: theorem
+        text: >-
+          טענה 2.1.10: הנורמלים של שלושת המישורים הם $\gamma'\times\gamma''$, $\gamma'$ ו-$(\gamma'\times\gamma'')\times\gamma'$.
+      - kind: computation
+        text: >-
+          $\gamma(\frac\pi2)=(0,1,\frac\pi2)$, $\gamma'=(-1,0,1)$, $\gamma''=(0,-1,0)$, ו-$\gamma'\times\gamma''=(1,0,1)$.
+      - kind: computation
+        text: >-
+          מנשק: $x+(z-\frac\pi2)=0$. נורמלי: $-x+(z-\frac\pi2)=0$. מיישר:
+          $$(1,0,1)\times(-1,0,1)=(0,-2,0)$$, ולכן $-2(y-1)=0$, כלומר $y=1$.
+      - kind: check
+        text: >-
+          המהירות קבועה, ולכן $\mathbf n=\gamma''/\|\gamma''\|=(0,-1,0)$, אופקי ומצביע אל הציר מהנקודה $(0,1)$: המישור המיישר
+          ניצב לו, $y=1$, כמו שיצא. שלושת הנורמלים $(1,0,1)$, $(-1,0,1)$, $(0,1,0)$ ניצבים זה לזה.
+      - kind: result
+        text: >-
+          $x+z=\frac\pi2$, $z-x=\frac\pi2$, $y=1$.
+
+  - id: W-2.1-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.1-1]
+    prompt: >-
+      תהי $\gamma$ רגולרית מסדר $C^2$ ו-$\kappa(t_0)>0$. **הוכיחו:** אם $\gamma'(t_0)\perp\gamma''(t_0)$, אז
+      $\mathbf n(t_0)=\gamma''(t_0)/\|\gamma''(t_0)\|$. הראו בדוגמה שבלי הניצבות זה לא נכון.
+    answer: >-
+      $v'=\frac{\gamma'\cdot\gamma''}{v}=0$, ולכן $\gamma''=\kappa v^2\mathbf n$. דוגמה נגדית: המסילה המעוקבת ב-$t=1$.
+    solution:
+      - kind: idea
+        text: >-
+          טענה 2.1.3(א): $\gamma''=v'\mathbf t+\kappa v^2\mathbf n$. הניצבות מאפסת את הרכיב המשיקי.
+      - kind: step
+        text: >-
+          $v^2=\gamma'\cdot\gamma'$; גוזרים: $2vv'=2\gamma'\cdot\gamma''$, ולכן $v'(t_0)=\frac{\gamma'\cdot\gamma''}{v}(t_0)=0$ (כאן $v>0$
+          מהרגולריות).
+      - kind: step
+        text: >-
+          לכן $\gamma''(t_0)=\kappa v^2\,\mathbf n(t_0)$ עם $\kappa v^2>0$, וחלוקה באורך נותנת $\mathbf n=\gamma''/\|\gamma''\|$.
+      - kind: computation
+        text: >-
+          דוגמה נגדית: $(t,t^2,t^3)$ ב-$t=1$: $\gamma'=(1,2,3)$, $\gamma''=(0,2,6)$, $\gamma'\cdot\gamma''=22\ne0$. כאן
+          $\gamma''/\|\gamma''\|=\frac1{\sqrt{10}}(0,1,3)$, אבל לפי דוגמה 4 של השיעור $\mathbf n(1)=\frac{1}{\sqrt{266}}(-11,-8,9)$.
+      - kind: check
+        text: >-
+          $\frac1{\sqrt{10}}(0,1,3)$ אינו ניצב ל-$\mathbf t(1)$: המכפלה עם $(1,2,3)$ היא $11\ne0$, ואילו $\mathbf n\perp\mathbf t$ תמיד.
+      - kind: result
+        text: >-
+          כש-$\gamma'\perp\gamma''$, $\mathbf n=\gamma''/\|\gamma''\|$; בלי זה, כמו במסילה המעוקבת ב-$t=1$, הכיוונים שונים.
+
+  - id: W-2.1-04
+    level: mid
+    objectives: [OBJ-2.1-1, OBJ-2.1-2]
+    prompt: >-
+      תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$ על קטע $I$, עם $\kappa>0$, שמוכלת במישור $P=\{\mathbf x:(\mathbf x-\mathbf p)\cdot\mathbf e=0\}$,
+      $\|\mathbf e\|=1$. **הוכיחו:** המישור המנשק בכל נקודה הוא $P$, ויש $\varepsilon\in\{1,-1\}$ קבוע כך ש-$\mathbf b(t)=\varepsilon\,\mathbf e$ לכל
+      $t\in I$.
+    answer: >-
+      $\gamma'\cdot\mathbf e=\gamma''\cdot\mathbf e=0$, ולכן $\gamma'\times\gamma''\parallel\mathbf e$; הסימן קבוע לפי משפט ערך הביניים.
+    solution:
+      - kind: given
+        text: >-
+          $(\gamma(t)-\mathbf p)\cdot\mathbf e=0$ לכל $t\in I$.
+      - kind: step
+        text: >-
+          גוזרים פעמיים (המכפלה הפנימית עם וקטור קבוע): $\gamma'\cdot\mathbf e=0$ ו-$\gamma''\cdot\mathbf e=0$ על $I$. כלומר
+          $\gamma',\gamma''$ במישור הדו-ממדי $\mathbf e^\perp$.
+      - kind: step
+        text: >-
+          לפי למה 2.1.2 הם בלתי תלויים, ולכן פורשים את $\mathbf e^\perp$. המכפלה הווקטורית שלהם ניצבת לשניהם, כלומר
+          ל-$\mathbf e^\perp$ כולו, ולכן היא כפולה של $\mathbf e$. לפי טענה 2.1.3(ג), $\mathbf b(t)\in\{\mathbf e,-\mathbf e\}$ לכל $t$.
+      - kind: step
+        text: >-
+          לפי טענה 2.1.4(ב) עם $k=2$, $\mathbf b$ רציפה, ולכן גם $\mathbf b\cdot\mathbf e$, שמקבלת רק את הערכים $\pm1$. על הקטע
+          $I$, לפי משפט ערך הביניים, היא קבועה: $\mathbf b\equiv\varepsilon\,\mathbf e$.
+      - kind: step
+        text: >-
+          המישור המנשק ב-$t$ עובר דרך $\gamma(t)\in P$ וניצב ל-$\mathbf b=\pm\mathbf e$, ולכן הוא $P$.
+      - kind: check
+        text: >-
+          המסילה הנטויה $(\cos t,\sin t,\cos t+\sin t)$ מונחת במישור $z=x+y$, והחישוב המספרי נותן בכל נקודה
+          $\mathbf b=\pm\frac1{\sqrt3}(1,1,-1)$ עם סימן אחד לאורך כל המסילה. איפה נדרש קטע: בלי קשירות, על שני קטעים זרים הסימן יכול להיות
+          שונה.
+      - kind: result
+        text: >-
+          המישור המנשק הוא $P$ בכל נקודה, ו-$\mathbf b\equiv\varepsilon\,\mathbf e$ עם $\varepsilon$ קבוע.
+
+  - id: W-2.1-05
+    level: mid
+    objectives: [OBJ-2.1-1]
+    prompt: >-
+      יהיו $a>0$, $c\ne0$, ו-$\gamma(t)=(a\cos t,\ a\sin t,\ ct)$. יהי $R_\alpha$ הסיבוב בזווית $\alpha$ סביב ציר $z$. **הוכיחו**, בלי
+      לחשב את השלשה בנקודה כללית: $\mathbf b(t+\alpha)=R_\alpha\mathbf b(t)$ לכל $t,\alpha$, והסיקו ש-$\mathbf b(t)\cdot e_3$ קבוע.
+      חשבו אותו.
+    answer: >-
+      $R_\alpha\gamma(t)+c\alpha\,e_3=\gamma(t+\alpha)$, ולפי טענה 2.1.5 שני האגפים נותנים את אותה שלשה; $\mathbf b\cdot e_3=\frac{a}{\sqrt{a^2+c^2}}$.
+    solution:
+      - kind: idea
+        text: >-
+          הסליל עובר לעצמו בתנועה קשיחה ששומרת כיוון (סיבוב ועלייה). טענה 2.1.5 אומרת איך השלשה מגיבה לתנועה ולהזזת
+          פרמטר, וכך מקבלים את $\mathbf b(t+\alpha)$ מ-$\mathbf b(t)$.
+      - kind: step
+        text: >-
+          $$R_\alpha(a\cos t,a\sin t,ct)=(a\cos(t+\alpha),\ a\sin(t+\alpha),\ ct)$$, ולכן עם $M(\mathbf x)=R_\alpha\mathbf x+c\alpha\,e_3$:
+          $M\circ\gamma=\delta$, כאשר $\delta(t)=\gamma(t+\alpha)$.
+      - kind: step
+        text: >-
+          $\delta=\gamma\circ\varphi$ עם $\varphi(t)=t+\alpha$, $\varphi'=1>0$; לפי טענה 2.1.5(א), $\mathbf b_\delta(t)=\mathbf b(t+\alpha)$.
+      - kind: step
+        text: >-
+          $R_\alpha$ אורתוגונלית עם $\det R_\alpha=1$; לפי טענה 2.1.5(ב), $\mathbf b_{M\circ\gamma}(t)=R_\alpha\mathbf b(t)$. כי $M\circ\gamma=\delta$,
+          $\mathbf b(t+\alpha)=R_\alpha\mathbf b(t)$.
+      - kind: step
+        text: >-
+          $R_\alpha e_3=e_3$ ו-$R_\alpha$ שומרת מכפלות פנימיות, ולכן
+          $$\mathbf b(t+\alpha)\cdot e_3=R_\alpha\mathbf b(t)\cdot R_\alpha e_3=\mathbf b(t)\cdot e_3$$: הפונקציה קבועה.
+      - kind: computation
+        text: >-
+          בנקודה $t=0$: $\gamma'=(0,a,c)$, $\gamma''=(-a,0,0)$, $\gamma'\times\gamma''=(0,-ac,a^2)$, ולכן
+          $\mathbf b(0)=\frac{1}{\sqrt{a^2+c^2}}(0,-c,a)$ ו-$\mathbf b\cdot e_3=\frac{a}{\sqrt{a^2+c^2}}$.
+      - kind: check
+        text: >-
+          זה מתאים לנוסחה של דוגמה 1 בשיעור, $$\mathbf b=\frac{(c\sin t,\ -c\cos t,\ a)}{\sqrt{a^2+c^2}}$$, שהיא אכן $R_t\mathbf b(0)$.
+      - kind: result
+        text: >-
+          $\mathbf b(t+\alpha)=R_\alpha\mathbf b(t)$, ו-$\mathbf b\cdot e_3\equiv\frac{a}{\sqrt{a^2+c^2}}$.
+
+  - id: W-2.1-06
+    level: mid
+    objectives: [OBJ-2.1-2]
+    prompt: >-
+      במסילה המעוקבת $\gamma(t)=(t,t^2,t^3)$, ולכל $h>0$, יהי $\Pi_h$ המישור דרך $\gamma(-h)$, $\gamma(0)$, $\gamma(h)$. מצאו את
+      משוואתו, את הווקטור $\hat\nu$ של משפט 2.1.9 (עם $t_0=0$, $t_1=-h$, $t_2=h$), ואת הגבול כש-$h\to0$.
+    answer: >-
+      $\Pi_h:\ h^2x-z=0$; $$\hat\nu=\frac{(-h^2,\,0,\,1)}{\sqrt{1+h^4}}\to e_3=\mathbf b(0)$$, ו-$\Pi_h\to\{z=0\}$.
+    solution:
+      - kind: computation
+        text: >-
+          ההפרשים המחולקים: $\gamma[0,-h]=\frac{\gamma(-h)}{-h}=(1,-h,h^2)$, $\gamma[0,h]=(1,h,h^2)$, ולכן
+          $$\gamma[0,-h,h]=\frac{(1,h,h^2)-(1,-h,h^2)}{2h}=(0,1,0).$$
+      - kind: computation
+        text: >-
+          $$\mathbf U=(1,-h,h^2)\times(0,1,0)=(-h^2,\ 0,\ 1),\qquad \hat\nu=\frac{(-h^2,\ 0,\ 1)}{\sqrt{1+h^4}} .$$
+      - kind: step
+        text: >-
+          המישור עובר דרך הראשית עם הנורמל $\mathbf U$: $-h^2x+z=0$. בדיקה: $\gamma(\pm h)=(\pm h,h^2,\pm h^3)$ מקיימות
+          $-h^2(\pm h)\pm h^3=0$.
+      - kind: step
+        text: >-
+          כש-$h\to0$, $\hat\nu\to e_3$, שהוא $\mathbf b(0)$ (השיעור, על אובייקטי המבחן), כמו שמשפט 2.1.9 מבטיח, כולל הסימן.
+      - kind: check
+        text: >-
+          $\gamma[0,-h,h]=(0,1,0)$ שווה בדיוק ל-$\frac12\gamma''(0)$, כמו שלמה 2.1.8(ג) מבטיחה בגבול; כאן השוויון מדויק כי
+          הרכיב השלישי של המסילה אי-זוגי. החישוב המספרי עם $h=0.5$ נותן את הנורמל $\pm(0.2425,0,-0.9701)$, שהוא $\pm\frac{(-0.25,0,1)}{\sqrt{1.0625}}$.
+      - kind: result
+        text: >-
+          $\Pi_h:\ z=h^2x$, ו-$\Pi_h\to\{z=0\}$, המישור המנשק בראשית.
+
+  - id: W-2.1-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.1-3, OBJ-2.1-1]
+    prompt: >-
+      $\delta(t)=(t^3,\ t^6,\ t^9)$. האם השלשה של פרנה של $\delta$ מוגדרת ב-$t=0$? האם יש לה הרחבה רציפה ל-$t=0$? הוכיחו.
+    answer: >-
+      לא מוגדרת, כי $\delta'(0)=0$; אבל יש הרחבה רציפה: $(e_1,e_2,e_3)$.
+    solution:
+      - kind: step
+        text: >-
+          $\delta'(t)=(3t^2,\ 6t^5,\ 9t^8)$, ו-$\delta'(0)=0$: $\delta$ אינה רגולרית ב-$0$, והגדרה 2.1.1 לא חלה שם.
+      - kind: step
+        text: >-
+          $\delta=\gamma\circ\varphi$, כאשר $\gamma(s)=(s,s^2,s^3)$ ו-$\varphi(t)=t^3$. על הקטע $(0,\infty)$, $\varphi$ היא $C^2$, על
+          $(0,\infty)$, ו-$\varphi'=3t^2>0$; אותו דבר על $(-\infty,0)$.
+      - kind: step
+        text: >-
+          לפי טענה 2.1.5(א), לכל $t\ne0$ השלשה של $\delta$ ב-$t$ היא השלשה של $\gamma$ ב-$t^3$ (הכיוון נשמר).
+      - kind: step
+        text: >-
+          ל-$\gamma$ יש $\kappa>0$ בכל נקודה ($\gamma'\times\gamma''=2(3s^2,-3s,1)\ne0$), ולפי טענה 2.1.4(ב) השלשה שלה רציפה. לכן
+          כש-$t\to0$ משני הצדדים, השלשה של $\delta$ שואפת לשלשה של $\gamma$ ב-$0$, שהיא $(e_1,e_2,e_3)$.
+      - kind: check
+        text: >-
+          הכשל ב-$0$ הוא של **הפרמטריזציה**, לא של התמונה: התמונה היא המסילה המעוקבת, והשלשה היא תכונה של התמונה עם
+          הכיוון (טענה 2.1.5). להבדיל, במשפט 2.1.11 המסילות רגולריות והכשל הוא של התמונה ($\kappa=0$).
+      - kind: result
+        text: >-
+          לא מוגדרת ב-$0$ ($\delta'(0)=0$), אבל ההרחבה $(e_1,e_2,e_3)$ רציפה.
+
+  - id: W-2.1-08
+    level: exam
+    objectives: [OBJ-2.1-1]
+    prompt: >-
+      יהי $H\mathbf x=\mathbf x-2(\mathbf x\cdot\mathbf e)\mathbf e$ השיקוף במישור $\mathbf e^\perp$ ($\|\mathbf e\|=1$), ותהי
+      $\gamma:(-r,r)\to\mathbb R^3$ רגולרית מסדר $C^2$ עם $\kappa>0$ על $(-r,r)$, כך ש-$\gamma(-t)=H\gamma(t)$ לכל $t$. **הוכיחו:**
+      $\mathbf t(0)=\pm\mathbf e$, ו-$\mathbf n(0)\perp\mathbf e$, $\mathbf b(0)\perp\mathbf e$. בדקו על $(\cos t,\ \sin t,\ \cos2t)$.
+    answer: >-
+      שתי הדרכים לחשב את השלשה של $\gamma(-t)$ ב-$0$ נותנות $H\mathbf t=-\mathbf t$, $H\mathbf n=\mathbf n$, $H\mathbf b=\mathbf b$.
+      בדוגמה: $\mathbf t(0)=e_2$, ו-$\mathbf n,\mathbf b$ במישור $y=0$.
+    solution:
+      - kind: idea
+        text: >-
+          את המסילה $\delta(t)=\gamma(-t)$ אפשר לראות פעמיים: כהיפוך כיוון של $\gamma$, וכתמונה של $\gamma$ בשיקוף. טענה 2.1.5
+          נותנת לשלשה של $\delta$ ב-$0$ שני ביטויים, ומשווים.
+      - kind: step
+        text: >-
+          לפי טענה 2.1.5(א) עם $\varphi(t)=-t$ ($\varepsilon=-1$): השלשה של $\delta$ ב-$0$ היא $(-\mathbf t,\ \mathbf n,\ -\mathbf b)$, השלשה של
+          $\gamma$ ב-$\varphi(0)=0$.
+      - kind: step
+        text: >-
+          $H$ אורתוגונלית ($H^2=I$, $H=H^T$) עם $\det H=-1$ (ערכים עצמיים $-1$ על $\mathbf e$ ו-$1,1$ על $\mathbf e^\perp$). לפי טענה
+          2.1.5(ב), השלשה של $H\circ\gamma$ ב-$0$ היא $(H\mathbf t,\ H\mathbf n,\ -H\mathbf b)$.
+      - kind: step
+        text: >-
+          $\delta=H\circ\gamma$, ולכן $H\mathbf t=-\mathbf t$, $H\mathbf n=\mathbf n$, $H\mathbf b=\mathbf b$.
+      - kind: step
+        text: >-
+          $H\mathbf x=-\mathbf x$ פירושו $\mathbf x-2(\mathbf x\cdot\mathbf e)\mathbf e=-\mathbf x$, כלומר $\mathbf x=(\mathbf x\cdot\mathbf e)\mathbf e$:
+          $\mathbf t\parallel\mathbf e$, ו-$\|\mathbf t\|=1$ נותן $\mathbf t=\pm\mathbf e$. $H\mathbf x=\mathbf x$ פירושו $\mathbf x\cdot\mathbf e=0$: $\mathbf n,\mathbf b\perp\mathbf e$.
+      - kind: check
+        text: >-
+          $(\cos t,\sin t,\cos2t)$ מקיימת $$\gamma(-t)=(\cos t,-\sin t,\cos2t)=H\gamma(t)$$ עם $\mathbf e=e_2$. ב-$0$: $\gamma'=(0,1,0)=e_2$,
+          ו-$\gamma''=(-1,0,-4)$ במישור $y=0$; החישוב המספרי נותן $\mathbf n\approx(-0.2425,0,-0.9701)$ ו-$\mathbf b\approx(-0.9701,0,0.2425)$.
+          ובאותה שיטה, לסיבוב בזווית $\pi$ סביב ציר: $\mathbf t,\mathbf b$ ניצבים לציר ו-$\mathbf n$ מקביל לו, כמו בסליל
+          $(\cos t,\sin t,\frac t2)$ ב-$0$, שבו $\mathbf n=(-1,0,0)$.
+      - kind: result
+        text: >-
+          המסילה חוצה את מישור הסימטריה בניצב, והמישור המנשק שלה שם ניצב למישור הסימטריה.
+
+  - id: W-2.1-09
+    level: exam
+    objectives: [OBJ-2.1-2]
+    prompt: >-
+      יהיו $t_1,t_2,t_3$ שונים, ו-$e_1=t_1+t_2+t_3$, $e_2=t_1t_2+t_1t_3+t_2t_3$, $e_3=t_1t_2t_3$. **הוכיחו:** המישורים המנשקים של
+      המסילה המעוקבת בשלוש הנקודות $\gamma(t_i)$ נחתכים בנקודה אחת בדיוק,
+      $$\mathbf q=\Big(\frac{e_1}3,\ \frac{e_2}3,\ e_3\Big),$$
+      ו-$\mathbf q$ מונחת במישור שעובר דרך $\gamma(t_1),\gamma(t_2),\gamma(t_3)$.
+    answer: >-
+      $\mathbf q$ בשלושת המישורים בדיוק כש-$P_{\mathbf q}(t)=t^3-3xt^2+3yt-z$ שווה ל-$(t-t_1)(t-t_2)(t-t_3)$; המישור דרך שלוש
+      הנקודות הוא $e_2x-e_1y+z=e_3$.
+    solution:
+      - kind: theorem
+        text: >-
+          לפי דוגמה 4 בשיעור, המישור המנשק ב-$t$ הוא $3t^2x-3ty+z=t^3$; כלומר $\mathbf q=(x,y,z)$ בו בדיוק כש-$P_{\mathbf q}(t)=0$.
+      - kind: step
+        text: >-
+          אם $\mathbf q$ בשלושת המישורים, ל-$P_{\mathbf q}$ (פולינום מתוקן ממעלה 3) יש שלושה שורשים שונים $t_i$. ההפרש
+          $$P_{\mathbf q}(t)-(t-t_1)(t-t_2)(t-t_3)$$ הוא פולינום ממעלה $\le2$ עם שלושה שורשים, ולכן אפס.
+      - kind: step
+        text: >-
+          משווים מקדמים: $$(t-t_1)(t-t_2)(t-t_3)=t^3-e_1t^2+e_2t-e_3$$, ולכן $3x=e_1$, $3y=e_2$, $z=e_3$: הנקודה היחידה האפשרית היא
+          $\mathbf q$. ולהפך, ל-$\mathbf q$ הזו $P_{\mathbf q}$ הוא המכפלה, שמתאפסת בשלושת ה-$t_i$: $\mathbf q$ בשלושת המישורים.
+      - kind: step
+        text: >-
+          הנקודה $\gamma(t)=(t,t^2,t^3)$ מקיימת את המשוואה $e_2x-e_1y+z=e_3$ בדיוק כש-$e_2t-e_1t^2+t^3-e_3=0$, ואגף שמאל הוא
+          $(t-t_1)(t-t_2)(t-t_3)$; לכן שלוש הנקודות $\gamma(t_i)$ במישור הזה (המקדם של $z$ הוא 1, אז זו אכן משוואת מישור). הוא המישור
+          **היחיד** דרכן, כי הן אינן על ישר: חישוב ישיר נותן
+          $$\big(\gamma(t_2)-\gamma(t_1)\big)\times\big(\gamma(t_3)-\gamma(t_1)\big)=(t_2-t_1)(t_3-t_1)(t_3-t_2)\,(e_2,\ -e_1,\ 1)\ne0.$$
+      - kind: computation
+        text: >-
+          הצבה: $e_2\cdot\frac{e_1}3-e_1\cdot\frac{e_2}3+e_3=e_3$. לכן $\mathbf q$ במישור.
+      - kind: check
+        text: >-
+          $t_i=-1,\ \frac12,\ 2$: $e_1=1.5$, $e_2=-1.5$, $e_3=-1$, $\mathbf q=(0.5,-0.5,-1)$. הצבה בשלושת המישורים המנשקים ובמישור
+          $-1.5x-1.5y+z=-1$ נותנת אפס בכולם, גם בחישוב המספרי.
+      - kind: result
+        text: >-
+          המישורים נחתכים בנקודה היחידה $\mathbf q=(\frac{e_1}3,\frac{e_2}3,e_3)$, והיא במישור $e_2x-e_1y+z=e_3$ של שלוש הנקודות.
+
+  - id: W-2.1-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.1-3, OBJ-2.1-2]
+    prompt: >-
+      **הוכיחו או הפריכו:** אם $\gamma$ רגולרית מסדר $C^\infty$ ו-$\kappa(0)=0$, אז למישורים $\Pi_h$ של משפט 2.1.7 (דרך הישר המשיק
+      ב-$0$ ודרך $\gamma(h)$) אין גבול כש-$h\to0$. היעזרו ב-$\gamma(t)=(t,\ t^3,\ t^4)$, וקבעו גם אם ל-$\mathbf b$ שלה יש הרחבה רציפה ל-$0$.
+    answer: >-
+      הפרכה: ב-$(t,t^3,t^4)$ המישורים $\Pi_h$ שואפים ל-$z=0$, אף ש-$\mathbf b(t)\to\pm e_3$ קופץ, ואין ל-$\mathbf b$ הרחבה רציפה.
+    solution:
+      - kind: step
+        text: >-
+          $\gamma'=(1,3t^2,4t^3)$, $\gamma''=(0,6t,12t^2)$, ו-$\gamma''(0)=0$, ולכן $\kappa(0)=0$. בנוסף
+          $$\gamma'\times\gamma''=(12t^4,\ -12t^2,\ 6t)=6t\,(2t^3,\ -2t,\ 1),$$
+          שאינו אפס כש-$t\ne0$: שם $\kappa>0$.
+      - kind: step
+        text: >-
+          $\gamma'(0)=e_1$ ו-$$e_1\times(h,h^3,h^4)=(0,-h^4,h^3)=h^3(0,-h,1)$$. לכן הנורמל של $\Pi_h$ הוא בכיוון $(0,-h,1)$, ונורמל
+          היחידה $\frac{(0,-h,1)}{\sqrt{1+h^2}}\to e_3$ משני הצדדים: $\Pi_h\to\{z=0\}$. הטענה מופרכת.
+      - kind: step
+        text: >-
+          לעומת זאת, לפי טענה 2.1.3(ג), לכל $t\ne0$:
+          $$\mathbf b(t)=\operatorname{sgn}(t)\,\frac{(2t^3,\ -2t,\ 1)}{\sqrt{1+4t^2+4t^6}},$$
+          ולכן $\mathbf b\to e_3$ מימין ו-$\mathbf b\to-e_3$ משמאל: אין הרחבה רציפה.
+      - kind: check
+        text: >-
+          הווקטור $\nu(h)$ של משפט 2.1.7 כאן הוא $\operatorname{sgn}(h)\frac{(0,-h,1)}{\sqrt{1+h^2}}$: **הוא** קופץ, אבל המישור $\Pi_h$ לא.
+          ובמסילה המודבקת (משפט 2.1.11(ב)) גם המישורים $\Pi_h$ קופצים. כלומר, כש-$\kappa(0)=0$, כל אחת מהאפשרויות קורית.
+      - kind: result
+        text: >-
+          הטענה שגויה: ב-$(t,t^3,t^4)$ המישורים $\Pi_h$ שואפים ל-$z=0$, אבל ל-$\mathbf b$ אין הרחבה רציפה ל-$0$.
+
+challenge:
+  - id: W-2.1-c1
+    stars: 1
+    objectives: [OBJ-2.1-1, OBJ-2.1-2]
+    prompt: >-
+      תהי $c:(0,\infty)\to\mathbb R^3$, $c(t)=(2t,\ \ln t,\ t^2)$.
+
+      (א) הוכיחו ש-$c'(t)$ ו-$c''(t)$ בלתי תלויים לכל $t>0$.
+
+      (ב) חשבו את השלשה של פרנה בכל נקודה ואת $\kappa(t)$.
+
+      (ג) מצאו את המישור המנשק בנקודה $t=1$.
+    answer: >-
+      $\mathbf t=\frac{(2t,\,1,\,2t^2)}{2t^2+1}$, $\mathbf n=\frac{(1-2t^2,\,-2t,\,2t)}{2t^2+1}$, $\mathbf b=\frac{(2t,\,-2t^2,\,-1)}{2t^2+1}$,
+      $\kappa=\frac{2t}{(2t^2+1)^2}$; המישור המנשק ב-$t=1$: $2x-2y-z=3$.
+    solution:
+      - kind: computation
+        text: >-
+          $c'=(2,\ \frac1t,\ 2t)$ ו-$$\|c'\|^2=4+\frac1{t^2}+4t^2=\big(2t+\frac1t\big)^2$$, ולכן $v=\frac{2t^2+1}{t}$.
+          $c''=(0,\ -\frac{1}{t^2},\ 2)$.
+      - kind: computation
+        text: >-
+          $$c'\times c''=\Big(\frac4t,\ -4,\ -\frac{2}{t^2}\Big)=\frac{2}{t^2}\,\big(2t,\ -2t^2,\ -1\big),$$
+          ו-$$\|(2t,-2t^2,-1)\|^2=4t^2+4t^4+1=(2t^2+1)^2$$. לכן $\|c'\times c''\|=\frac{2(2t^2+1)}{t^2}>0$.
+      - kind: step
+        text: >-
+          (א) $c'\times c''\ne0$, ולכן (שלבים 2–3 בהוכחת למה 2.1.2) $c',c''$ בלתי תלויים, ו-$\kappa>0$ בכל נקודה.
+      - kind: computation
+        text: >-
+          (ב) $\mathbf t=c'/v=\frac{(2t,\ 1,\ 2t^2)}{2t^2+1}$ ו-$\mathbf b=\frac{(2t,\ -2t^2,\ -1)}{2t^2+1}$ (טענה 2.1.3(ג)). אז
+          $$\mathbf n=\mathbf b\times\mathbf t=\frac{(1-4t^4,\ -2t-4t^3,\ 2t+4t^3)}{(2t^2+1)^2}=\frac{(1-2t^2,\ -2t,\ 2t)}{2t^2+1}.$$
+      - kind: computation
+        text: >-
+          $$\kappa=\frac{\|c'\times c''\|}{v^3}=\frac{2(2t^2+1)}{t^2}\cdot\frac{t^3}{(2t^2+1)^3}=\frac{2t}{(2t^2+1)^2}$$.
+      - kind: computation
+        text: >-
+          (ג) ב-$t=1$: $c(1)=(2,0,1)$ ו-$\mathbf b\parallel(2,-2,-1)$, ולכן $2(x-2)-2y-(z-1)=0$, כלומר $2x-2y-z=3$.
+      - kind: check
+        text: >-
+          $$\|(1-2t^2,-2t,2t)\|^2=(1+2t^2)^2$$, אז $\mathbf n$ וקטור יחידה; $\mathbf n\cdot\mathbf t=2t(1-2t^2)-2t+4t^3=0$. ב-$t=1$:
+          $\mathbf t=\frac13(2,1,2)$, $\mathbf n=\frac13(-1,-2,2)$, $\mathbf b=\frac13(2,-2,-1)$, ו-$\mathbf t\times\mathbf n=\mathbf b$; $\kappa(1)=\frac29$.
+          החישוב המספרי מאשר את הנוסחאות ב-$t=0.5,\ 1,\ 2.3$.
+      - kind: result
+        text: >-
+          $\mathbf t=\frac{(2t,1,2t^2)}{2t^2+1}$, $\mathbf n=\frac{(1-2t^2,-2t,2t)}{2t^2+1}$, $\mathbf b=\frac{(2t,-2t^2,-1)}{2t^2+1}$,
+          $\kappa=\frac{2t}{(2t^2+1)^2}$; המישור $2x-2y-z=3$.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 3'
+      year: 2002
+      problem: 'תרגיל 1, סעיף ב, וסעיף ג (ו-κ מסעיף ד)'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex03.html
+      verified: '2026-11-10'
+      adapted: true
+
+  - id: W-2.1-c2
+    stars: 1
+    objectives: [OBJ-2.1-3, OBJ-2.1-2]
+    prompt: >-
+      תהי $f(x)=e^{-1/x^2}$ כש-$x>0$ ו-$f(x)=0$ כש-$x\le0$, ו-$\alpha(t)=\big(t,\ f(-t),\ f(t)\big)$; כלומר $\alpha(t)=(t,0,e^{-1/t^2})$
+      כש-$t>0$ ו-$\alpha(t)=(t,e^{-1/t^2},0)$ כש-$t<0$.
+
+      (א) הוכיחו ש-$f\in C^\infty(\mathbb R)$ ו-$f^{(n)}(0)=0$ לכל $n$, והסיקו ש-$\alpha$ מסדר $C^\infty$.
+
+      (ב) הוכיחו ש-$\alpha$ רגולרית, ש-$\kappa(0)=0$, ושלכל $t\ne0$: $\kappa(t)=0$ אם ורק אם $t=\pm\sqrt{2/3}$.
+
+      (ג) הוכיחו שהמישור המנשק שואף למישור $y=0$ כש-$t\to0^+$ ולמישור $z=0$ כש-$t\to0^-$, והסיקו של-$\mathbf n$ אין הרחבה רציפה ל-$0$.
+    answer: >-
+      (א) $f^{(n)}(x)=P_n(\frac1x)e^{-1/x^2}$ כש-$x>0$, ו-$x^{-m}e^{-1/x^2}\to0$. (ב) $\alpha'=(1,\ldots)$; $\kappa=0$ בדיוק
+      כש-$t=0$ או כש-$f''(\pm t)=\frac{4-6t^2}{t^6}e^{-1/t^2}=0$. (ג) המישורים הם $z=0$ משמאל ו-$y=0$ מימין, ו-$\mathbf n\to e_2$ משמאל,
+      $\mathbf n\to e_3$ מימין.
+    solution:
+      - kind: step
+        text: >-
+          (א) **צורת הנגזרות.** באינדוקציה, כש-$x>0$: $f^{(n)}(x)=P_n(\frac1x)\,e^{-1/x^2}$ עם $P_n$ פולינום: $P_0=1$, וגזירה נותנת
+          $$P_{n+1}(u)=-u^2P_n'(u)+2u^3P_n(u)$$.
+      - kind: step
+        text: >-
+          **הלמה.** לכל $m\ge0$, $x^{-m}e^{-1/x^2}\to0$ כש-$x\to0^+$. עם $u=\frac1x\to\infty$: $e^{u^2}\ge\frac{u^{2m}}{m!}$ (איבר
+          אחד בטור של האקספוננט, שכל איבריו חיוביים), ולכן $u^me^{-u^2}\le\frac{m!}{u^m}\to0$ (עבור $m=0$ ישירות).
+      - kind: step
+        text: >-
+          **אינדוקציה על $n$:** $f^{(n)}$ קיימת על $\mathbb R$, שווה ל-$0$ על $(-\infty,0]$ ולצורה שלמעלה על $(0,\infty)$. מהלמה,
+          $f^{(n)}(x)\to0$ כש-$x\to0^+$ (רציפות ב-$0$), והנגזרת הימנית ב-$0$ היא הגבול של $\frac1xP_n(\frac1x)e^{-1/x^2}$, שגם הוא $0$
+          לפי הלמה. השמאלית $0$. לכן $f^{(n+1)}(0)=0$, וכך גם הצעד. רכיבי $\alpha$ הם $t$, $f(-t)$, $f(t)$, ולכן $\alpha\in C^\infty$.
+      - kind: step
+        text: >-
+          (ב) הרכיב הראשון של $\alpha'$ הוא $1$: $\alpha$ רגולרית. $$\alpha''(0)=(0,f''(0),f''(0))=0$$, ולפי מסקנה 1.3.11 $\kappa(0)=0$.
+      - kind: computation
+        text: >-
+          כש-$t<0$: $\alpha=(t,g(t),0)$ עם $g(t)=e^{-1/t^2}$, $g'=\frac{2}{t^3}e^{-1/t^2}$ ו-
+          $$g''(t)=\frac{4-6t^2}{t^6}\,e^{-1/t^2}.$$
+          $$\alpha'\times\alpha''=(1,g',0)\times(0,g'',0)=(0,0,g'')$$, ולכן $\kappa=0$ בדיוק כש-$g''=0$, כלומר $t^2=\frac23$. כש-$t>0$
+          אותו חישוב ברכיב $z$, עם $\alpha'\times\alpha''=(0,-h'',0)$, כאשר $h(t)=e^{-1/t^2}$ ו-$h''$ מאותה נוסחה.
+      - kind: step
+        text: >-
+          (ג) כש-$-\sqrt{2/3}<t<0$, $g''>0$, ולכן $\mathbf b=e_3$ והמישור המנשק דרך $\alpha(t)$ (שבמישור $z=0$) הוא $z=0$. כש-$0<t<\sqrt{2/3}$,
+          $h''>0$, $\mathbf b=-e_2$, והמישור הוא $y=0$. המישורים קבועים בכל צד, ולכן הגבולות הם $z=0$ ו-$y=0$.
+      - kind: step
+        text: >-
+          $\mathbf n=\mathbf b\times\mathbf t$, ו-$\mathbf t(t)\to\alpha'(0)=e_1$ (רציפות). משמאל $\mathbf n\to e_3\times e_1=e_2$, ומימין
+          $\mathbf n\to(-e_2)\times e_1=e_3$: הגבולות שונים, ואין הרחבה רציפה.
+      - kind: check
+        text: >-
+          המקור מסמן את הפיתול בסימן ההפוך לשלנו ($\mathbf b'=\tau\mathbf n$), ויש בו סעיף (ד) על הפיתול, שהושמט כאן (שיעור 2.2).
+          אפסי $g''$: $\pm\sqrt{2/3}\approx\pm0.8165$. זו הגרסה החלקה לגמרי של המסילה המודבקת במשפט 2.1.11(ב): חלקות $C^\infty$ לא
+          מצילה את השלשה.
+      - kind: result
+        text: >-
+          $\alpha\in C^\infty$ ורגולרית; $\kappa=0$ רק ב-$0,\pm\sqrt{2/3}$; המישורים המנשקים שואפים ל-$z=0$ משמאל ול-$y=0$ מימין, ו-$\mathbf n$
+          קופץ מ-$e_2$ ל-$e_3$.
+    source:
+      name: 'do Carmo, Differential Geometry of Curves and Surfaces, §1-5 (as stated in "Solutions to Exercises in Do Carmo", Introduction to Geometry, Fall 2025)'
+      year: 1976
+      problem: '1-5, exercise 10 (numbered Exercise 12 in the notes)'
+      url: https://jonathan-huang.github.io/files/geometry/chap1.pdf
+      verified: '2026-11-10'
+      adapted: true

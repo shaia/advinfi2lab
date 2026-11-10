@@ -1,0 +1,7 @@
+---
+/** Lessons 2.1–2.3, 2.5 figure: <Spread figure={FrenetFrame} figureProps={{ curve, curves, t, show, layers, transforms, yaw, pitch, tasks }}>. */
+import FrenetFrame, { type FrenetFrameProps } from './FrenetFrame';
+type Props = FrenetFrameProps;
+---
+
+<FrenetFrame client:visible {...Astro.props} />

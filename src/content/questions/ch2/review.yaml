@@ -1,5 +1,5 @@
 # Chapter 2 review questions: they mix the lessons of the chapter and reach back to chapters 0–1, never forward.
-# Lesson 2.5 is enrichment: one light question touches it, and no other question depends on it.
+# Lesson 2.5 is enrichment: no review question uses it (no OBJ-2.5 objective here); its own bank covers it.
 # Every number below was recomputed with src/math/geometry.ts.
 chapter: 2
 questions:

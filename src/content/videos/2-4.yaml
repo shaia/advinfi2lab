@@ -1,0 +1,27 @@
+- id: v-2-4-visual-frenet
+  youtubeId: LwOorOh6Wt4
+  title: 'A Visual Intro to Curves and the Frenet Frame'
+  channel: Daniel Walsh
+  lang: en
+  captions: [en]
+  start: 1016
+  minutes: 3
+  why: >-
+    לפי פרקי הסרטון, הפרק האחרון (16:56) עוסק ב"משפט היסודי של מסילות במרחב", אחרי גזירת משוואות פרנה-סרה והמחשה
+    של השלשה. הסרטון ויזואלי ולא מוכיח; השוו את מה שנאמר בו לניסוח המדויק של מסקנה 2.4.4, ובדקו באיזה סימן של הפיתול
+    הוא משתמש לפני שמשווים נוסחאות.
+  verified: '2026-11-10'
+
+- id: v-2-4-sukkur-lecture
+  youtubeId: N1_p6dEgfqc
+  title: 'Differential Geometry Lecture 6 (Part 1): Fundamental Theorem of Space curves; Frenent approximation'
+  channel: Sukkur IBA University- Mathematics
+  lang: en
+  captions: []
+  start: 0
+  minutes: 30
+  why: >-
+    הרצאה אוניברסיטאית מקורס בגאומטריה דיפרנציאלית של מסילות ומשטחים; לפי הכותרת היא עוסקת במשפט היסודי למסילות במרחב
+    ובקירוב של מסילה ליד נקודה בעזרת השלשה של פרנה (הצורה הקנונית של שיעור 2.3). השוו את ההוכחה בהרצאה לשתי ההוכחות של
+    משפט 2.4.2, ושימו לב באיזה סימן של הפיתול משתמשים.
+  verified: '2026-11-10'

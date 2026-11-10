@@ -1,0 +1,26 @@
+- id: v-2-2-bazett-torsion
+  youtubeId: VIqA8U9ozIA
+  title: 'Torsion: How curves twist in space, and the TNB or Frenet Frame'
+  channel: Dr. Trefor Bazett
+  lang: en
+  captions: []
+  start: 0
+  minutes: 11
+  why: >-
+    לפי תיאור הסרטון: השלשה t, n, b, הבינורמל כווקטור חדש, והפיתול כמדד לקצב שבו המישור שפורשים t ו-n משתנה לאורך
+    המסילה. זה בדיוק הפירוש של טענה 2.2.8 בשיעור. בתיאור מצוינת טעות דפוס בתחילת הסרטון: הנורמל הוא
+    $\frac{1}{\kappa}\frac{d\mathbf t}{ds}$.
+  verified: '2026-11-10'
+- id: v-2-2-wildberger-space-curves
+  youtubeId: vhTpLvkpEss
+  title: 'Geometric and algebraic aspects of space curves | Differential Geometry 20'
+  channel: Insights into Mathematics (N J Wildberger)
+  lang: en
+  captions: []
+  start: 0
+  minutes: 55
+  why: >-
+    לפי תיאור ההרצאה: המישור הנורמלי והמישור המנשק, נוסחאות לעקמומיות ולפיתול בעזרת המהירות והתאוצה בפרמטר שאינו
+    אורך הקשת, ואינווריאנטים כגדלים שאינם משתנים בהחלפת פרמטר. השוו לטענות 2.2.4 ו-2.2.5. לפני שמשווים נוסחה, בדקו
+    באיזו מוסכמת סימן ההרצאה משתמשת.
+  verified: '2026-11-10'

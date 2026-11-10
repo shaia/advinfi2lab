@@ -15,3 +15,17 @@
     הסליל $(a\cos t,a\sin t,bt)$ עם $a>0$ ו-$b>0$: הוא עולה בכיוון הציר כשמסתובבים נגד כיוון השעון במבט מלמעלה (מ-$+z$), כמו בורג רגיל, ו-$\tau=\frac{b}{a^2+b^2}>0$.
     כש-$b<0$ הסליל שמאלי ו-$\tau<0$; כל אחד מהם הוא תמונת המראה של השני.
   lesson: '2.2'
+- id: left-handed-helix
+  term: סליל שמאלי
+  en: left-handed helix
+  definition: >-
+    הסליל $(a\cos t,a\sin t,bt)$ עם $a>0$ ו-$b<0$: תמונת המראה של סליל ימני, עם $\tau=\frac{b}{a^2+b^2}<0$. אין תנועה קשיחה
+    ששומרת כיוון (סיבוב והזזה) שמעבירה אותו לסליל ימני.
+  lesson: '2.2'
+- id: planar-curve
+  term: מסילה מישורית
+  en: planar curve
+  definition: >-
+    מסילה $\gamma:I\to\mathbb R^3$ שכל התמונה שלה מוכלת במישור אחד: יש נקודה $\mathbf p$ ווקטור יחידה $\mathbf e$ כך
+    ש-$(\gamma(t)-\mathbf p)\cdot\mathbf e=0$ לכל $t\in I$. המישור אינו חייב להיות מישור קואורדינטות.
+  lesson: '2.2'

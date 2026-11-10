@@ -128,7 +128,7 @@ questions:
       - id: unit
         label: 'מ-$\mathbf b\cdot\mathbf b=1$ גזירה נותנת $\mathbf b''\cdot\mathbf b=0$'
       - id: product
-        label: '$\mathbf b''=\mathbf t''\times\mathbf n+\mathbf t\times\mathbf n''=\kappa\,\mathbf n\times\mathbf n+\mathbf t\times\mathbf n''=\mathbf t\times\mathbf n''$, ולכן $\mathbf b''$ ניצב ל-$\mathbf t$'
+        label: '$\mathbf b''=\mathbf t''\times\mathbf n+\mathbf t\times\mathbf n''$, והמחובר הראשון הוא $\kappa\,\mathbf n\times\mathbf n=0$; לכן $\mathbf b''=\mathbf t\times\mathbf n''$ ניצב ל-$\mathbf t$'
       - id: conclude
         label: 'וקטור שניצב ל-$\mathbf t$ ול-$\mathbf b$ הוא כפולה של $\mathbf n$, ולכן יש מספר יחיד $\tau(s)$ עם $\mathbf b''=-\tau\mathbf n$'
     order: [[unit, product], conclude]

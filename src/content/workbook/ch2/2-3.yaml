@@ -1,0 +1,436 @@
+# Workbook of lesson 2.3 — the Frenet–Serret equations.
+# Objectives (src/course.ts):
+#   OBJ-2.3-1  derive the Frenet–Serret equations; the antisymmetric matrix
+#   OBJ-2.3-2  the second and third derivatives of the curve in the Frenet basis
+#   OBJ-2.3-3  constant curvature and torsion: circular helices, radius and pitch
+# Every number recomputed on 2026-11-10 with src/math/spacecurves.ts (kappa, tau, frame, darboux) on the closed forms
+# below; the tangent-indicatrix curvature (W-10) by difference quotients of the exact frame.
+lesson: '2.3'
+practice:
+  - id: W-2.3-01
+    level: basic
+    objectives: [OBJ-2.3-1, OBJ-2.3-3]
+    prompt: >-
+      לסליל $\gamma(t)=(\cos t,\ \sin t,\ -t)$: חשבו את $\mathbf t,\mathbf n,\mathbf b$, כתבו את מטריצת פרנה-סרה $A$ (עמודות
+      $\mathbf t,\mathbf n,\mathbf b$, כמו במשפט 2.3.2), ומצאו את וקטור דרבו $\boldsymbol\omega$.
+    answer: >-
+      $\kappa=\frac12$, $\tau=-\frac12$; $A$ עם $A_{21}=\frac12$, $A_{12}=-\frac12$, $A_{23}=\frac12$, $A_{32}=-\frac12$ ושאר הרכיבים אפס;
+      $\boldsymbol\omega=\big(0,0,\tfrac{1}{\sqrt2}\big)$.
+    solution:
+      - kind: computation
+        text: >-
+          $\|\gamma'\|=\sqrt2$, ולכן $s=\sqrt2\,t$. $\mathbf t=\frac{1}{\sqrt2}(-\sin t,\ \cos t,\ -1)$,
+          $\mathbf n=(-\cos t,\ -\sin t,\ 0)$, $\mathbf b=\mathbf t\times\mathbf n=\frac{1}{\sqrt2}(-\sin t,\ \cos t,\ 1)$.
+      - kind: computation
+        text: >-
+          לפי $s$ (כופלים ב-$\frac{1}{\sqrt2}$): $\mathbf t'=\frac12(-\cos t,\ -\sin t,\ 0)=\frac12\mathbf n$, ו-$\mathbf b'=\frac12(-\cos t,\ -\sin t,\ 0)=\frac12\mathbf n$.
+      - kind: step
+        text: >-
+          מ-$\mathbf t'=\kappa\mathbf n$: $\kappa=\frac12$. מ-$\mathbf b'=-\tau\mathbf n$: $\tau=-\frac12$, כמו שמתאים לסליל שמאלי. לכן
+          $$A=\begin{pmatrix}0&-\frac12&0\\ \frac12&0&\frac12\\ 0&-\frac12&0\end{pmatrix}.$$
+      - kind: computation
+        text: >-
+          $\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b=\frac{1}{2\sqrt2}\big((\sin t,\ -\cos t,\ 1)+(-\sin t,\ \cos t,\ 1)\big)=\big(0,0,\tfrac{1}{\sqrt2}\big)$.
+      - kind: check
+        text: >-
+          $\|\boldsymbol\omega\|=\frac{1}{\sqrt2}=\sqrt{\kappa^2+\tau^2}$ (טענה 2.3.7). $\boldsymbol\omega$ מקביל לציר ומצביע למעלה גם בסליל
+          השמאלי: בכל סליל $(a\cos t,a\sin t,bt)$ מתקבל $\boldsymbol\omega=\big(0,0,\frac{1}{\sqrt{a^2+b^2}}\big)$. ולפי משפט 2.3.8,
+          $\frac{\kappa}{\kappa^2+\tau^2}=1=a$ ו-$\frac{\tau}{\kappa^2+\tau^2}=-1=b$.
+      - kind: result
+        text: >-
+          $\kappa=\frac12$, $\tau=-\frac12$, $\boldsymbol\omega=(0,0,\frac{1}{\sqrt2})$.
+
+  - id: W-2.3-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.3-3]
+    prompt: >-
+      מסילה בפרמטר אורך הקשת מקיימת $\kappa\equiv2$ ו-$\tau\equiv-1$. מה הרדיוס של הגליל שעליו היא מונחת, כמה היא מתקדמת לאורך
+      הציר בסיבוב שלם ובאיזה כיוון, האם היא סליל ימני או שמאלי, ומה רדיוס המעגל המנשק שלה? הסבירו למה שני הרדיוסים שונים.
+    answer: >-
+      רדיוס $a=0.4$; התקדמות $\frac{2\pi}{5}\approx1.2566$ בכל סיבוב; סליל שמאלי ($b=-0.2$); רדיוס המעגל המנשק $0.5$.
+    solution:
+      - kind: theorem
+        text: >-
+          לפי משפט 2.3.8 המסילה היא סליל מעגלי עם $a=\frac{\kappa}{\kappa^2+\tau^2}$ ו-$b=\frac{\tau}{\kappa^2+\tau^2}$, עד כדי תנועה קשיחה
+          עם $\det Q=1$.
+      - kind: computation
+        text: >-
+          $\kappa^2+\tau^2=5$, ולכן $a=\frac25=0.4$ ו-$b=-\frac15$. בסיבוב שלם ($\theta$ גדל ב-$2\pi$) ההתקדמות לאורך הציר היא
+          $2\pi|b|=\frac{2\pi}{5}\approx1.2566$.
+      - kind: step
+        text: >-
+          $b<0$: הסליל שמאלי (כש-$\theta$ גדל, הוא מסתובב נגד כיוון השעון במבט מ-$+\mathbf e_3$ ויורד). תנועה עם $\det Q=1$ לא הופכת
+          כיוון סיבוב, ולכן זה נכון לכל מסילה עם הנתונים.
+      - kind: step
+        text: >-
+          המעגל המנשק ברדיוס $\frac1\kappa=0.5$. הוא גדול מ-$a$ כי $\frac1\kappa=\frac{a^2+b^2}{a}=a+\frac{b^2}{a}$: המעגל המנשק נמצא
+          במישור המנשק, שנוטה ביחס לציר, ולא בחתך הניצב לציר.
+      - kind: check
+        text: >-
+          בכיוון ההפוך: $\frac{a}{a^2+b^2}=\frac{0.4}{0.2}=2=\kappa$ ו-$\frac{b}{a^2+b^2}=-1=\tau$.
+      - kind: result
+        text: >-
+          $a=0.4$, התקדמות $\frac{2\pi}{5}\approx1.2566$ כלפי מטה בכל סיבוב, סליל שמאלי, רדיוס עקמומיות $0.5>a$.
+
+  - id: W-2.3-03
+    level: basic
+    objectives: [OBJ-2.3-1]
+    prompt: >-
+      תהי $\gamma$ מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$. הוכיחו ש-$\|\mathbf t'\|=\kappa$, $\|\mathbf b'\|=|\tau|$ ו-$\|\mathbf n'\|=\sqrt{\kappa^2+\tau^2}$,
+      והסיקו שהנורמל הראשי אף פעם לא "עומד": $\mathbf n'(s)\ne0$ לכל $s$.
+    answer: >-
+      ממשוואות פרנה-סרה ופיתגורס בבסיס אורתונורמלי; $\|\mathbf n'\|\ge\kappa>0$.
+    solution:
+      - kind: theorem
+        text: >-
+          משפט 2.3.2: $\mathbf t'=\kappa\mathbf n$, $\mathbf n'=-\kappa\mathbf t+\tau\mathbf b$, $\mathbf b'=-\tau\mathbf n$.
+      - kind: step
+        text: >-
+          $\|\mathbf t'\|=\kappa\|\mathbf n\|=\kappa$ ו-$\|\mathbf b'\|=|\tau|\,\|\mathbf n\|=|\tau|$, כי $\mathbf n$ וקטור יחידה ו-$\kappa>0$.
+      - kind: step
+        text: >-
+          $\mathbf t$ ו-$\mathbf b$ אורתונורמליים, ולכן לפי פיתגורס $\|-\kappa\mathbf t+\tau\mathbf b\|^2=\kappa^2+\tau^2$.
+      - kind: step
+        text: >-
+          $\|\mathbf n'\|=\sqrt{\kappa^2+\tau^2}\ge\kappa>0$, ולכן $\mathbf n'(s)\ne0$ בכל נקודה, גם כש-$\tau(s)=0$.
+      - kind: check
+        text: >-
+          בסליל של השיעור, $\kappa=0.8$ ו-$\tau=0.4$: $\|\mathbf n'\|=\sqrt{0.8}\approx0.894$, וזה גם $\|\boldsymbol\omega\|$, כי
+          $\mathbf n'=\boldsymbol\omega\times\mathbf n$ ו-$\boldsymbol\omega\perp\mathbf n$. במעגל ($\tau=0$) $\|\mathbf n'\|=\kappa$: הנורמל מסתובב
+          יחד עם המשיק.
+      - kind: result
+        text: >-
+          $\|\mathbf t'\|=\kappa$, $\|\mathbf b'\|=|\tau|$, $\|\mathbf n'\|=\sqrt{\kappa^2+\tau^2}>0$.
+
+  - id: W-2.3-04
+    level: mid
+    objectives: [OBJ-2.3-1]
+    prompt: >-
+      תהי $A(s)$ מטריצת פרנה-סרה (עמודות $\mathbf t,\mathbf n,\mathbf b$) של מסילה עם $\kappa>0$.
+      (א) הוכיחו ש-$A(s)$ מדרגה 2 ושהגרעין שלה נפרש על ידי $(\tau,0,\kappa)^T$.
+      (ב) הוכיחו שלכל $\mathbf y\in\mathbb R^3$, $F A\mathbf y=\boldsymbol\omega\times(F\mathbf y)$, כאשר $F=(\mathbf t\ \mathbf n\ \mathbf b)$: $A$ היא המטריצה
+      של $\mathbf x\mapsto\boldsymbol\omega\times\mathbf x$ בבסיס של פרנה. הסיקו שהגרעין של (א) הוא הקואורדינטות של $\boldsymbol\omega$.
+    answer: >-
+      (א) $A(\tau,0,\kappa)^T=0$ ושתי העמודות הראשונות בלתי תלויות. (ב) מספיק לבדוק על $\mathbf y=\mathbf e_j$; $F(\tau,0,\kappa)^T=\boldsymbol\omega$.
+    solution:
+      - kind: computation
+        text: >-
+          $$A=\begin{pmatrix}0&-\kappa&0\\ \kappa&0&-\tau\\ 0&\tau&0\end{pmatrix},\qquad A\begin{pmatrix}\tau\\0\\\kappa\end{pmatrix}=\begin{pmatrix}0\\ \kappa\tau-\tau\kappa\\ 0\end{pmatrix}=0.$$
+      - kind: step
+        text: >-
+          העמודות הראשונות $(0,\kappa,0)^T$ ו-$(-\kappa,0,\tau)^T$ בלתי תלויות כי $\kappa\ne0$, ולכן הדרגה לפחות 2. הגרעין לא טריוויאלי, ולכן
+          הדרגה בדיוק 2 והגרעין חד-ממדי: הוא נפרש על ידי $(\tau,0,\kappa)^T$, שאינו אפס כי $\kappa>0$.
+      - kind: step
+        text: >-
+          (ב): שני הצדדים לינאריים ב-$\mathbf y$, ולכן מספיק לבדוק על $\mathbf e_1,\mathbf e_2,\mathbf e_3$. $FA\mathbf e_j$ היא העמודה ה-$j$ של
+          $FA=F'$, כלומר $\mathbf t'$, $\mathbf n'$, $\mathbf b'$; ו-$F\mathbf e_j$ היא $\mathbf t$, $\mathbf n$, $\mathbf b$. לפי טענה 2.3.7(א)
+          $\mathbf t'=\boldsymbol\omega\times\mathbf t$ וכן הלאה.
+      - kind: step
+        text: >-
+          $F$ הפיכה, ולכן $A\mathbf y=0$ אם ורק אם $\boldsymbol\omega\times(F\mathbf y)=0$, כלומר $F\mathbf y$ מקביל ל-$\boldsymbol\omega$. ו-
+          $F(\tau,0,\kappa)^T=\tau\mathbf t+\kappa\mathbf b=\boldsymbol\omega$.
+      - kind: check
+        text: >-
+          לסליל של W-2.3-01 ($\kappa=\frac12$, $\tau=-\frac12$) הגרעין נפרש על ידי $(-\frac12,0,\frac12)^T$, ו-$-\frac12\mathbf t+\frac12\mathbf b=(0,0,\frac{1}{\sqrt2})$,
+          כמו שחישבנו שם.
+      - kind: result
+        text: >-
+          $\operatorname{rank}A=2$, $\ker A=\operatorname{span}\{(\tau,0,\kappa)^T\}$, ו-$A$ היא המטריצה של המכפלה הווקטורית ב-$\boldsymbol\omega$ בבסיס של
+          פרנה; הגרעין הוא ציר הסיבוב הרגעי.
+
+  - id: W-2.3-05
+    level: mid
+    objectives: [OBJ-2.3-2]
+    prompt: >-
+      תהי $\gamma(t)=(e^t,\ e^{-t},\ \sqrt2\,t)$. ב-$t=0$, חשבו את הרכיבים של $\gamma''(0)$ ושל $\gamma'''(0)$ בבסיס $\mathbf t,\mathbf n,\mathbf b$
+      בעזרת טענה 2.3.4(ב), ואת $\kappa(0)$ ו-$\tau(0)$. למה $\gamma''(0)$ ניצב ל-$\gamma'(0)$, אף ש-$t$ אינו אורך הקשת?
+    answer: >-
+      $\gamma''(0)=\sqrt2\,\mathbf n$; $\gamma'''(0)=\mathbf t-\mathbf b$; $\kappa(0)=\frac{\sqrt2}4$, $\tau(0)=-\frac{\sqrt2}4$. ניצב כי $v'(0)=0$.
+    solution:
+      - kind: computation
+        text: >-
+          $\gamma'=(e^t,\ -e^{-t},\ \sqrt2)$, $\gamma''=(e^t,\ e^{-t},\ 0)$, $\gamma'''=(e^t,\ -e^{-t},\ 0)$. $v^2=e^{2t}+e^{-2t}+2$,
+          כלומר $v=e^t+e^{-t}=2\cosh t$. ב-$0$: $v=2$, $v'=0$, $v''=2$.
+      - kind: computation
+        text: >-
+          $\gamma'(0)\times\gamma''(0)=(1,-1,\sqrt2)\times(1,1,0)=(-\sqrt2,\ \sqrt2,\ 2)$, באורך $2\sqrt2=\kappa v^3$; לכן
+          $\kappa(0)=\frac{2\sqrt2}{8}=\frac{\sqrt2}{4}$ ו-$\mathbf b=(-\tfrac12,\ \tfrac12,\ \tfrac{1}{\sqrt2})$.
+      - kind: step
+        text: >-
+          $\gamma''=v'\mathbf t+\kappa v^2\mathbf n$: ב-$0$, $v'=0$ ו-$\kappa v^2=\sqrt2$, ולכן $\gamma''(0)=\sqrt2\,\mathbf n$. הרכיב המשיקי של
+          $\gamma''$ הוא $v'$, קצב שינוי המהירות, והמהירות $2\cosh t$ מינימלית ב-$0$.
+      - kind: step
+        text: >-
+          $\gamma'''$: המקדם של $\mathbf t$ הוא $v''-\kappa^2v^3=2-\frac18\cdot8=1$. המקדם של $\mathbf n$ הוא $3\kappa vv'+\kappa'v^2=0$, כי
+          $v'(0)=0$ ו-$\kappa(t)=\frac{\sqrt2}{4\cosh^2t}$ זוגית. המקדם של $\mathbf b$: $\gamma'''(0)\cdot\mathbf b=-\frac12-\frac12=-1=\kappa\tau v^3$,
+          ולכן $\tau(0)=\frac{-1}{(\sqrt2/4)\cdot8}=-\frac{\sqrt2}{4}$.
+      - kind: check
+        text: >-
+          $\|\gamma'''(0)\|^2=2=1^2+0^2+(-1)^2$. ישירות לפי טענה 2.2.4: $(\gamma'\times\gamma'')\cdot\gamma'''=-\sqrt2-\sqrt2=-2\sqrt2$, חלקי $8$:
+          $-\frac{\sqrt2}{4}$. (ובכל $t$, $\tau=-\kappa$: זו המסילה של דוגמה 5 בשיעור אחרי הגדלה פי $\sqrt2$, סיבוב ושיקוף, והשיקוף הופך את סימן הפיתול.)
+      - kind: result
+        text: >-
+          $\gamma''(0)=\sqrt2\,\mathbf n$, $\gamma'''(0)=\mathbf t-\mathbf b$, $\kappa(0)=\frac{\sqrt2}{4}$, $\tau(0)=-\frac{\sqrt2}{4}$.
+
+  - id: W-2.3-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.3-2]
+    prompt: >-
+      הוכיחו או הפריכו: לכל מסילה רגולרית מסדר $C^3$ עם $\kappa>0$, בפרמטר **כלשהו** $t$, $\gamma''(t)\perp\gamma'''(t)$ לכל $t$ אם ורק אם
+      $\kappa$ קבועה. מהו התנאי הנכון?
+    answer: >-
+      לא נכון באף כיוון. $\gamma''\cdot\gamma'''=\frac12\big(\|\gamma''\|^2\big)'$, ולכן הניצבות שקולה ל-$\|\gamma''\|$ קבוע; בפרמטר אורך
+      הקשת, $\|\gamma''\|=\kappa$ והשקילות נכונה.
+    solution:
+      - kind: idea
+        text: >-
+          $\gamma''\cdot\gamma'''$ היא חצי הנגזרת של $\|\gamma''\|^2$, ו-$\|\gamma''\|=\kappa$ רק בפרמטר אורך הקשת.
+      - kind: step
+        text: >-
+          $(\gamma''\cdot\gamma'')'=2\gamma''\cdot\gamma'''$. על קטע, $\gamma''\perp\gamma'''$ בכל נקודה אם ורק אם $\|\gamma''\|$ קבוע (משפט הערך
+          הממוצע).
+      - kind: step
+        text: >-
+          הכיוון "קבועה ⟸ ניצבות" נכשל: הפרבולה $(t,\ \frac{t^2}{2},\ 0)$ מקיימת $\gamma''=(0,1,0)$ ו-$\gamma'''=0$, ולכן ניצבות בכל
+          נקודה, אבל $\kappa=\frac{1}{(1+t^2)^{3/2}}$ אינה קבועה.
+      - kind: step
+        text: >-
+          הכיוון ההפוך נכשל: המעגל $(\cos t^2,\ \sin t^2,\ 0)$, $t>0$, מקיים $\kappa\equiv1$, אבל לפי טענה 2.3.4(ב) עם $v=2t$, $v'=2$, $v''=0$:
+          $\gamma''\cdot\gamma'''=v'(v''-\kappa^2v^3)+\kappa v^2(3\kappa vv'+\kappa'v^2)=-16t^3+48t^3=32t^3\ne0$.
+      - kind: check
+        text: >-
+          ישירות: $\|\gamma''\|^2=v'^2+\kappa^2v^4=4+16t^4$, ונגזרתו $64t^3=2\cdot32t^3$. ובפרמטר אורך הקשת ($v\equiv1$) הנוסחה נותנת
+          $\gamma''\cdot\gamma'''=\kappa\kappa'$, ושם הניצבות שקולה ל-$\kappa$ קבועה (דוגמה 2 בשיעור).
+      - kind: result
+        text: >-
+          הטענה שגויה בשני הכיוונים; הנכון: $\gamma''\perp\gamma'''$ בכל נקודה $\iff$ $\|\gamma''\|$ קבוע, וזה $\kappa$ רק בפרמטר אורך הקשת.
+
+  - id: W-2.3-07
+    level: mid
+    objectives: [OBJ-2.3-3]
+    prompt: >-
+      יהי $h(\theta)=(a\cos\theta,\ a\sin\theta,\ b\theta)$ עם $a>0$, $b\ne0$. הוכיחו שמרכזי העקמומיות $h+\frac1\kappa\mathbf n$ מונחים על סליל
+      מעגלי עם אותו ציר ואותו $b$, ברדיוס $\frac{b^2}{a}$, ושהמרכז נמצא בצד השני של הציר.
+    answer: >-
+      $h+\frac1\kappa\mathbf n=\big(-\frac{b^2}{a}\cos\theta,\ -\frac{b^2}{a}\sin\theta,\ b\theta\big)$.
+    solution:
+      - kind: theorem
+        text: >-
+          משפט 2.3.8: $\kappa=\frac{a}{a^2+b^2}$, ולכן $\frac1\kappa=\frac{a^2+b^2}{a}$.
+      - kind: computation
+        text: >-
+          $h''=(-a\cos\theta,\ -a\sin\theta,\ 0)$ ניצב ל-$h'$ (המהירות קבועה), ולכן $\mathbf n=\frac{h''}{\|h''\|}=(-\cos\theta,\ -\sin\theta,\ 0)$.
+      - kind: computation
+        text: >-
+          $$h+\tfrac{1}{\kappa}\mathbf n=\Big(\big(a-\tfrac{a^2+b^2}{a}\big)\cos\theta,\ \big(a-\tfrac{a^2+b^2}{a}\big)\sin\theta,\ b\theta\Big)=\Big(-\tfrac{b^2}{a}\cos\theta,\ -\tfrac{b^2}{a}\sin\theta,\ b\theta\Big).$$
+      - kind: step
+        text: >-
+          כש-$b\ne0$, זה הסליל $(a'\cos\theta',\ a'\sin\theta',\ b\theta')$ עם $a'=\frac{b^2}{a}$ ו-$\theta'=\theta+\pi$, עד כדי הזזה ב-$-b\pi$ לאורך
+          הציר: אותו ציר, אותו $b$, והמרכז בזווית $\theta+\pi$, כלומר מול $h(\theta)$ ביחס לציר.
+      - kind: check
+        text: >-
+          בסליל של השיעור, $a=1$, $b=\frac12$: המרכזים במרחק $\frac14$ מהציר; החישוב המספרי ב-$\theta=0.3$ וב-$\theta=2$ נותן מרחק $0.25$. ו-$\frac{b^2}{a}<a$
+          בדיוק כש-$|b|<a$.
+      - kind: result
+        text: >-
+          המרכזים על סליל מעגלי עם אותו ציר ואותו $b$, ברדיוס $\frac{b^2}{a}$, מול הנקודה.
+
+  - id: W-2.3-08
+    level: exam
+    objectives: [OBJ-2.3-1, OBJ-2.3-3]
+    prompt: >-
+      תהי $\gamma:I\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת, $I$ קטע, עם $\kappa>0$, ונניח ש-$\kappa,\tau\in C^1$. הוכיחו:
+      $\boldsymbol\omega$ קבוע (כווקטור) אם ורק אם $\gamma$ היא קשת של סליל מעגלי או של מעגל; ובמקרה זה $\boldsymbol\omega$ מקביל לציר,
+      $\|\boldsymbol\omega\|=\frac{1}{\sqrt{a^2+b^2}}$.
+    answer: >-
+      $\boldsymbol\omega'=\tau'\mathbf t+\kappa'\mathbf b$, ולכן $\boldsymbol\omega$ קבוע $\iff$ $\kappa,\tau$ קבועים $\iff$ (משפט 2.3.8) סליל או מעגל.
+    solution:
+      - kind: computation
+        text: >-
+          לפי כלל המכפלה ומשפט 2.3.2,
+          $$\boldsymbol\omega'=\tau'\mathbf t+\tau\kappa\mathbf n+\kappa'\mathbf b+\kappa(-\tau\mathbf n)=\tau'\mathbf t+\kappa'\mathbf b.$$
+      - kind: step
+        text: >-
+          $\mathbf t,\mathbf b$ בלתי תלויים, ולכן $\boldsymbol\omega'\equiv0$ אם ורק אם $\tau'\equiv\kappa'\equiv0$; על הקטע $I$ זה שקול
+          ל-$\kappa,\tau$ קבועים, ו-$\boldsymbol\omega'\equiv0$ שקול ל-$\boldsymbol\omega$ קבוע (משפט הערך הממוצע).
+      - kind: theorem
+        text: >-
+          משפט 2.3.8: $\kappa\equiv\kappa_0>0$ ו-$\tau\equiv\tau_0$ אם ורק אם $\gamma$ קשת של סליל מעגלי ($\tau_0\ne0$) או של מעגל ($\tau_0=0$).
+      - kind: step
+        text: >-
+          בהוכחת המשפט, הציר הוא הישר שעליו נע $\mathbf c=\gamma+a\mathbf n$, בכיוון $\mathbf u=\frac{\boldsymbol\omega_0}{w}$; ו-$\|\boldsymbol\omega\|=w=\sqrt{\kappa^2+\tau^2}=\frac{1}{\sqrt{a^2+b^2}}$,
+          כי $\kappa^2+\tau^2=\frac{1}{a^2+b^2}$. במעגל $\boldsymbol\omega=\kappa\mathbf b$ ניצב למישור המעגל.
+      - kind: check
+        text: >-
+          בסליל $(\cos t,\ \sin t,\ \frac t2)$: $\boldsymbol\omega=(0,0,\frac{2}{\sqrt5})$ (חישוב מספרי), ו-$\frac{1}{\sqrt{1+1/4}}=\frac{2}{\sqrt5}$. דוגמה 5 בשיעור
+          מראה שכיוון קבוע לבדו אינו מספיק.
+      - kind: result
+        text: >-
+          $\boldsymbol\omega$ קבוע $\iff$ $\kappa,\tau$ קבועים $\iff$ סליל מעגלי או מעגל; אז $\boldsymbol\omega$ בכיוון הציר ובאורך
+          $\frac{1}{\sqrt{a^2+b^2}}$.
+
+  - id: W-2.3-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.3-1]
+    prompt: >-
+      יהיו $\gamma_1,\gamma_2:I\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת על קטע $I$, עם $\kappa_1,\kappa_2>0$ ו-$\mathbf b_1\equiv\mathbf b_2$.
+      (א) הוכיחו: אם $\tau_1(s)\ne0$ לכל $s$, אז $\gamma_2=\gamma_1+\mathbf c$ או $\gamma_2=-\gamma_1+\mathbf c$ לאיזה וקטור קבוע $\mathbf c$.
+      (ב) הראו ששתי האפשרויות קורות.
+      (ג) הראו שבלי $\tau_1\ne0$ המסקנה של (א) נכשלת.
+    answer: >-
+      (א) $\mathbf n_1=\varepsilon\mathbf n_2$ ו-$\mathbf t_1=\varepsilon\mathbf t_2$ עם $\varepsilon=\pm1$ קבוע. (ב) $\gamma$ ו-$-\gamma$ לסליל. (ג) שני מעגלים
+      ברדיוסים שונים במישורים מקבילים.
+    solution:
+      - kind: given
+        text: >-
+          $\mathbf b_1=\mathbf b_2=\mathbf b$ כפונקציות של אותו $s$; לפי משפט 2.3.2, $\mathbf b'=-\tau_1\mathbf n_1=-\tau_2\mathbf n_2$.
+      - kind: step
+        text: >-
+          $\tau_1\ne0$, ולכן $\mathbf b'\ne0$, ולכן גם $\tau_2\ne0$, ו-$\mathbf n_1=\frac{\tau_2}{\tau_1}\mathbf n_2$. שניהם וקטורי יחידה, ולכן
+          $\frac{\tau_2}{\tau_1}=\pm1$ בכל נקודה.
+      - kind: step
+        text: >-
+          $\frac{\tau_2}{\tau_1}$ רציפה על הקטע ומקבלת רק $\pm1$, ולכן לפי משפט ערך הביניים היא קבוע $\varepsilon\in\{1,-1\}$: $\mathbf n_1=\varepsilon\mathbf n_2$.
+      - kind: step
+        text: >-
+          בשלשה חיובית $\mathbf t=\mathbf n\times\mathbf b$, ולכן $\mathbf t_1=\varepsilon\,\mathbf n_2\times\mathbf b=\varepsilon\mathbf t_2$. אז
+          $(\gamma_1-\varepsilon\gamma_2)'=0$ על הקטע, ו-$\gamma_1=\varepsilon\gamma_2+\mathbf c_0$; כלומר $\gamma_2=\varepsilon\gamma_1-\varepsilon\mathbf c_0$.
+      - kind: step
+        text: >-
+          (ב): $\varepsilon=1$ מתקבל מהזזה. ל-$\varepsilon=-1$: אם $\gamma_2=-\gamma_1$, אז $\mathbf t_2=-\mathbf t_1$, $\mathbf n_2=-\mathbf n_1$ (כי $\gamma_2''=-\gamma_1''$),
+          ו-$\mathbf b_2=(-\mathbf t_1)\times(-\mathbf n_1)=\mathbf b_1$. למשל הסליל $(\cos t,\ \sin t,\ \frac t2)$ ו-$-\gamma_1$, שהפיתול שלו $-0.4$:
+          השיקוף בנקודה הוא בעל דטרמיננטה $-1$.
+      - kind: step
+        text: >-
+          (ג): המעגלים ברדיוס $1$ במישור $z=0$ וברדיוס $2$ במישור $z=1$, שניהם נגד כיוון השעון במבט מלמעלה ובפרמטר אורך הקשת, מקיימים
+          $\mathbf b\equiv(0,0,1)$ ו-$\tau\equiv0$. הם אינם $\pm\gamma_1+\mathbf c$, כי $\|\gamma''\|$ שלהם $1$ ו-$\frac12$, ו-$\pm\gamma_1+\mathbf c$
+          שומר על $\|\gamma''\|$.
+      - kind: check
+        text: >-
+          החישוב המספרי ב-$s$ המתאים ל-$t=0.5$ נותן אותו $\mathbf b\approx(0.2144,\ -0.3925,\ 0.8944)$ לסליל ול-$-\gamma$, ופיתול $0.4$ מול $-0.4$.
+          היכן השתמשנו בהנחות: $\tau_1\ne0$ בשלב 2; קטע בשלבים 3 ו-4.
+      - kind: result
+        text: >-
+          עם $\tau\ne0$, אותו בינורמל קובע את המסילה עד כדי הזזה ושיקוף בנקודה ($\gamma_2=\pm\gamma_1+\mathbf c$), ושתי האפשרויות קורות; עם $\tau\equiv0$ לא.
+
+  - id: W-2.3-10
+    level: exam
+    objectives: [OBJ-2.3-2, OBJ-2.3-1]
+    prompt: >-
+      תהי $\gamma$ מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$, ו-$T(s)=\mathbf t(s)$, "מסילת המשיקים" על ספרת היחידה. הוכיחו ש-$T$
+      רגולרית, שהמהירות שלה $\kappa$, ושהעקמומיות שלה (כמסילה במרחב) היא $\frac{\sqrt{\kappa^2+\tau^2}}{\kappa}$. בדקו על סליל.
+    answer: >-
+      $T'=\kappa\mathbf n$; $T'\times T''=\kappa^2\boldsymbol\omega$; עקמומיות $\frac{\kappa^2\sqrt{\kappa^2+\tau^2}}{\kappa^3}$.
+    solution:
+      - kind: step
+        text: >-
+          $\mathbf t\in C^2$ (טענה 2.1.4), ולכן $T$ מסדר $C^2$, ו-$T'=\mathbf t'=\kappa\mathbf n$ (משפט 2.3.2): $\|T'\|=\kappa>0$, $T$ רגולרית.
+      - kind: step
+        text: >-
+          $\kappa,\mathbf n\in C^1$ (טענה 2.3.4), ולכן $T''=\kappa'\mathbf n+\kappa\mathbf n'=-\kappa^2\mathbf t+\kappa'\mathbf n+\kappa\tau\mathbf b$.
+      - kind: computation
+        text: >-
+          $T'\times T''=\kappa\mathbf n\times(-\kappa^2\mathbf t+\kappa\tau\mathbf b)=\kappa^3\mathbf b+\kappa^2\tau\mathbf t=\kappa^2\boldsymbol\omega$,
+          כי $\mathbf n\times\mathbf t=-\mathbf b$, $\mathbf n\times\mathbf b=\mathbf t$ ו-$\mathbf n\times\mathbf n=0$.
+      - kind: theorem
+        text: >-
+          העקמומיות של מסילה רגולרית בפרמטר כללי היא $\frac{\|T'\times T''\|}{\|T'\|^3}$ (שיעור 1.3).
+      - kind: computation
+        text: >-
+          $\|T'\times T''\|=\kappa^2\sqrt{\kappa^2+\tau^2}$ (טענה 2.3.7(ג)), ולכן העקמומיות של $T$ היא $\frac{\sqrt{\kappa^2+\tau^2}}{\kappa}$.
+      - kind: check
+        text: >-
+          בסליל $(\cos t,\ \sin t,\ \frac t2)$ מסילת המשיקים היא מעגל קו רוחב על ספרת היחידה, ברדיוס $\frac{a}{\sqrt{a^2+b^2}}=\frac{2}{\sqrt5}$,
+          ולכן העקמומיות שלה $\frac{\sqrt5}{2}\approx1.1180$; והנוסחה נותנת $\frac{\sqrt{0.8}}{0.8}\approx1.1180$ (גם חישוב מספרי). מהנוסחה, העקמומיות של
+          $T$ תמיד לפחות $1$, ושווה ל-$1$ בדיוק כש-$\tau=0$: למסילה מישורית מסילת המשיקים היא קשת של מעגל גדול.
+      - kind: result
+        text: >-
+          $T$ רגולרית במהירות $\kappa$, עם עקמומיות $\frac{\sqrt{\kappa^2+\tau^2}}{\kappa}$.
+
+challenge:
+  - id: W-2.3-c1
+    stars: 1
+    objectives: [OBJ-2.3-3, OBJ-2.3-1]
+    prompt: >-
+      יהיו $a>0$, $b\ne0$, $c=\sqrt{a^2+b^2}$, ו-$\alpha(s)=\big(a\cos\frac sc,\ a\sin\frac sc,\ \frac{bs}{c}\big)$, $s\in\mathbb R$.
+      (א) הראו ש-$s$ הוא פרמטר אורך הקשת. (ב) חשבו את $\kappa$ ואת $\tau$ (בסימן של הקורס). (ג) מצאו את משוואת המישור המנשק ב-$\alpha(s)$.
+      (ד) הראו שהישרים $\alpha(s)+\lambda\mathbf n(s)$ חותכים את ציר $z$ בזווית ישרה. (ה) הראו שהישרים המשיקים יוצרים זווית קבועה עם ציר $z$.
+    answer: >-
+      (ב) $\kappa=\frac{a}{c^2}$, $\tau=\frac{b}{c^2}$. (ג) $b\sin\frac sc\,(x-a\cos\frac sc)-b\cos\frac sc\,(y-a\sin\frac sc)+a\,(z-\frac{bs}c)=0$.
+      (ד) ב-$(0,0,\frac{bs}{c})$, $\lambda=a$. (ה) $\cos\theta=\frac bc$.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $\alpha'=\frac1c(-a\sin\frac sc,\ a\cos\frac sc,\ b)$, ו-$\|\alpha'\|=\frac{\sqrt{a^2+b^2}}{c}=1$.
+      - kind: computation
+        text: >-
+          (ב) $\alpha''=-\frac{a}{c^2}(\cos\frac sc,\ \sin\frac sc,\ 0)$, ולכן $\kappa=\|\alpha''\|=\frac{a}{c^2}$ ו-$\mathbf n=(-\cos\frac sc,\ -\sin\frac sc,\ 0)$.
+          $\mathbf b=\mathbf t\times\mathbf n=\frac1c(b\sin\frac sc,\ -b\cos\frac sc,\ a)$, ו-$\mathbf b'=\frac{b}{c^2}(\cos\frac sc,\ \sin\frac sc,\ 0)=-\frac{b}{c^2}\mathbf n$,
+          ולכן $\tau=\frac{b}{c^2}$.
+      - kind: step
+        text: >-
+          (ג) המישור המנשק עובר ב-$\alpha(s)$ וניצב ל-$\mathbf b(s)$ (טענה 2.1.10); כופלים את $(\mathbf x-\alpha(s))\cdot\mathbf b(s)=0$ ב-$c$ ומקבלים את
+          המשוואה שבתשובה.
+      - kind: step
+        text: >-
+          (ד) $\alpha(s)+a\,\mathbf n(s)=(0,0,\frac{bs}c)$ נמצא על ציר $z$, ו-$\mathbf n(s)\cdot(0,0,1)=0$: הישר הנורמלי חותך את הציר וניצב לו.
+      - kind: step
+        text: >-
+          (ה) $\mathbf t\cdot(0,0,1)=\frac bc$ לכל $s$, ולכן הזווית $\theta$ בין המשיק לציר מקיימת $\cos\theta=\frac bc$, קבוע.
+      - kind: check
+        text: >-
+          עם $a=1$, $b=\frac12$: $\kappa=0.8$, $\tau=0.4$, כמו הסליל של השיעור; ו-$\frac{\kappa}{\kappa^2+\tau^2}=a$, $\frac{\tau}{\kappa^2+\tau^2}=b$ כמו
+          במשפט 2.3.8. (ד) הוא ההיפך של דוגמה 6 בשיעור, שמוכיחה שהתכונה הזו מאפיינת סלילים מעגליים. במקור (do Carmo) $\tau=-\frac{b}{c^2}$,
+          כי שם $\mathbf b'=\tau\mathbf n$; בקורס $\mathbf b'=-\tau\mathbf n$.
+      - kind: result
+        text: >-
+          $\kappa=\frac{a}{c^2}$, $\tau=\frac{b}{c^2}$; הנורמלים פוגשים את ציר $z$ בניצב; המשיקים בזווית $\arccos\frac bc$ לציר.
+    source:
+      name: 'do Carmo, Differential Geometry of Curves and Surfaces, §1-5 (as quoted in the Math 138A solutions, UC Riverside, 2019)'
+      year: 1976
+      problem: '1-5, exercise 1'
+      url: https://math.ucr.edu/~ryanta/teaching/math138a_winter2019/homework2.pdf
+      verified: '2026-11-10'
+      adapted: true
+
+  - id: W-2.3-c2
+    stars: 1
+    objectives: [OBJ-2.3-2]
+    prompt: >-
+      תהי $\alpha$ מסילה מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$.
+      (א) הוכיחו ממשוואות פרנה-סרה ש-$\tau=\frac{(\alpha'\times\alpha'')\cdot\alpha'''}{\kappa^2}$.
+      (ב) הוכיחו ש-$\|\alpha'''\|^2=\kappa^4+\kappa'^2+\kappa^2\tau^2$, והסיקו ש-$|\tau|<\frac{\|\alpha'''\|}{\kappa}$ בכל נקודה.
+    answer: >-
+      (א) $\alpha'\times\alpha''=\kappa\mathbf b$ ו-$\mathbf b\cdot\alpha'''=\kappa\tau$. (ב) פיתגורס בבסיס של פרנה; $\kappa^4>0$.
+    solution:
+      - kind: theorem
+        text: >-
+          טענה 2.3.4(א): $\alpha'=\mathbf t$, $\alpha''=\kappa\mathbf n$, $\alpha'''=-\kappa^2\mathbf t+\kappa'\mathbf n+\kappa\tau\mathbf b$.
+      - kind: step
+        text: >-
+          (א) $\alpha'\times\alpha''=\kappa\,\mathbf t\times\mathbf n=\kappa\mathbf b$. מכפלה פנימית עם $\alpha'''$ משאירה רק את רכיב ה-$\mathbf b$:
+          $\kappa\cdot\kappa\tau$. מחלקים ב-$\kappa^2>0$.
+      - kind: step
+        text: >-
+          (ב) $\mathbf t,\mathbf n,\mathbf b$ אורתונורמליים, ולכן $\|\alpha'''\|^2$ הוא סכום ריבועי המקדמים: $\kappa^4+\kappa'^2+\kappa^2\tau^2$.
+      - kind: step
+        text: >-
+          $\kappa^2\tau^2=\|\alpha'''\|^2-\kappa^4-\kappa'^2<\|\alpha'''\|^2$, כי $\kappa^4>0$. מחלקים ב-$\kappa^2$ ולוקחים שורש.
+      - kind: check
+        text: >-
+          בסליל $(\cos t,\ \sin t,\ \frac t2)$ בפרמטר אורך הקשת: $\|\alpha'''\|^2=0.8^4+0+0.64\cdot0.16=0.512$, וחישוב ישיר:
+          $\alpha'''=\frac{1}{c^3}(\sin t,\ -\cos t,\ 0)$, $\|\alpha'''\|^2=\frac{1}{c^6}=\frac{64}{125}=0.512$. במקור (do Carmo) הנוסחה מופיעה עם
+          מינוס, $\tau=-\frac{(\alpha'\wedge\alpha'')\cdot\alpha'''}{\kappa^2}$, כי שם $\mathbf b'=\tau\mathbf n$; סעיף (ב) נוסף כאן.
+      - kind: result
+        text: >-
+          $\tau=\frac{(\alpha'\times\alpha'')\cdot\alpha'''}{\kappa^2}$ ו-$\|\alpha'''\|^2=\kappa^4+\kappa'^2+\kappa^2\tau^2$, ולכן $|\tau|<\frac{\|\alpha'''\|}{\kappa}$.
+    source:
+      name: 'do Carmo, Differential Geometry of Curves and Surfaces, §1-5 (as quoted in "Solutions to Exercises in Do Carmo", Introduction to Geometry, Fall 2025)'
+      year: 1976
+      problem: '1-5, exercise 2 (numbered Exercise 4 in the notes)'
+      url: https://jonathan-huang.github.io/files/geometry/chap1.pdf
+      verified: '2026-11-10'
+      adapted: true
