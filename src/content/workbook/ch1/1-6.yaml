@@ -70,7 +70,7 @@ practice:
     solution:
       - kind: idea
         text: >-
-          כמו בהוכחת משפט היחידות: הסיבוב משווה את המשיק ההתחלתי, ההזזה את נקודת ההתחלה.
+          כמו בהוכחת משפט 1.6.4 (חפיפה): הסיבוב משווה את המשיק ההתחלתי, ההזזה את נקודת ההתחלה.
       - kind: step
         text: >-
           $\theta_1(0)=0$ ו-$\theta_2(0)=-\frac\pi2$, ולכן $R$ הסיבוב בזווית $-\frac\pi2$: $R(x,y)=(y,\ -x)$. בדיקה: $R(1,0)=(0,-1)$.
@@ -79,7 +79,7 @@ practice:
           $\mathbf c=\gamma_2(0)-R\gamma_1(0)=(3,4)$.
       - kind: theorem
         text: >-
-          ל-$R\gamma_1+\mathbf c$ אותה $k$ (סיבוב והזזה), אותה נקודה ואותו משיק ב-$s=0$ כמו ל-$\gamma_2$, ולכן לפי הלמה של השיעור היא $\gamma_2$.
+          ל-$R\gamma_1+\mathbf c$ אותה $k$ (משפט 1.6.4, כיוון $\Leftarrow$), אותה נקודה ואותו משיק ב-$s=0$ כמו ל-$\gamma_2$, ולכן לפי משפט 1.6.3 היא $\gamma_2$.
       - kind: result
         text: >-
           $\gamma_2(s)=(3+y_1(s),\ 4-x_1(s))$.
@@ -133,7 +133,7 @@ practice:
           $k_\delta(s)=k_1(L-s)=k_2(s)$.
       - kind: theorem
         text: >-
-          לפי משפט היחידות $\gamma_2=R\delta+\mathbf c$ עם $R$ סיבוב, כלומר $\gamma_2(s)=R\sigma\gamma_1(L-s)+\mathbf c$ לכל $s$, עם $Q=R\sigma$
+          לפי משפט 1.6.4 $\gamma_2=R\delta+\mathbf c$ עם $R$ סיבוב, כלומר $\gamma_2(s)=R\sigma\gamma_1(L-s)+\mathbf c$ לכל $s$, עם $Q=R\sigma$
           אורתוגונלית.
       - kind: step
         text: >-
@@ -169,7 +169,7 @@ practice:
           $\|\mathbf n_s\|=1$, ולכן $\mathbf m'(s)=0$ אם ורק אם $k'(s)=0$. על קטע: $\mathbf m$ קבועה אם ורק אם $k$ קבועה.
       - kind: check
         text: >-
-          כיוון אחד הוא המשפט של השיעור על עקמומיות קבועה. הכיוון השני: אם $k$ משתנה, מרכז העקמומיות זז, ובכיוון הנורמל
+          כיוון אחד הוא משפט 1.6.9 של השיעור. הכיוון השני: אם $k$ משתנה, מרכז העקמומיות זז, ובכיוון הנורמל
           (במקביל ל-$\mathbf n_s$), לא לאורך המשיק.
       - kind: result
         text: >-
@@ -183,17 +183,23 @@ practice:
 
       (א) מהו ה-$s>0$ הראשון שבו המשיק מצביע שמאלה, $\mathbf t=(-1,0)$?
 
-      (ב) בין $\theta=2\pi m$ ל-$\theta=2\pi(m+1)$ המשיק מסתובב סיבוב שלם. מה אורך הקטע הזה של המסילה, ומה קורה לו כש-$m\to\infty$?
+      (ב) בין $\theta=2\pi m$ ל-$\theta=2\pi(m+1)$ המשיק מסתובב סיבוב שלם. נסמן ב-$\ell_m$ את אורך הקטע הזה של המסילה. הוכיחו
+      ש-$\ell_m\to0$, ושבכל זאת $\sum_m\ell_m=\infty$.
     answer: >-
-      (א) $s=\sqrt{2\pi}\approx2.507$. (ב) $\sqrt{4\pi}\big(\sqrt{m+1}-\sqrt m\big)\to0$.
+      (א) $s=\sqrt{2\pi}\approx2.507$. (ב) $\ell_m=\sqrt{4\pi}\big(\sqrt{m+1}-\sqrt m\big)\to0$, והסכום הטלסקופי עד $M$ הוא $\sqrt{4\pi M}\to\infty$.
     solution:
       - kind: computation
         text: >-
           (א) $\theta=\frac{s^2}2$, ו-$\mathbf t=(-1,0)$ לראשונה כש-$\theta=\pi$: $s=\sqrt{2\pi}\approx2.507$.
       - kind: computation
         text: >-
-          (ב) $\theta=2\pi m$ כש-$s=\sqrt{4\pi m}$. לכן אורך הקטע הוא
-          $$\sqrt{4\pi(m+1)}-\sqrt{4\pi m}=\frac{\sqrt{4\pi}}{\sqrt{m+1}+\sqrt m}\to0.$$
+          (ב) $\theta=\frac{s^2}2$ עולה ממש ב-$s\ge0$, ולכן $\theta=2\pi m$ בדיוק ב-$s=\sqrt{4\pi m}$, והקטע הוא $\big[\sqrt{4\pi m},\ \sqrt{4\pi(m+1)}\big]$. בפרמטר
+          אורך הקשת אורכו הפרש הקצוות, ול-$m\ge1$:
+          $$\ell_m=\sqrt{4\pi(m+1)}-\sqrt{4\pi m}=\frac{\sqrt{4\pi}}{\sqrt{m+1}+\sqrt m}\le\frac{\sqrt{\pi}}{\sqrt m}\to0.$$
+      - kind: step
+        text: >-
+          הסכום טלסקופי: $\sum_{m=0}^{M-1}\ell_m=\sqrt{4\pi M}\to\infty$. לכן $\sum\ell_m=\infty$: כל סיבוב קצר מקודמו, ובכל זאת האורך הכולל
+          אינסופי, כמו שאמר משפט 1.6.11.
       - kind: check
         text: >-
           ב-$m=1,\ 2,\ 10$ האורכים בערך $1.468$, $1.127$, $0.547$. רדיוס העקמומיות בקטע הוא בערך $\frac1s\approx\frac1{\sqrt{4\pi m}}$, וסיבוב שלם
@@ -206,7 +212,7 @@ practice:
     level: exam
     objectives: [OBJ-1.6-2]
     prompt: >-
-      הוכחה של הלמה (יחידות עם נתוני התחלה) בלי זווית משיק, בדרך שתעבוד גם במרחב (פרק 2). ל-$\gamma_1,\gamma_2$ בפרמטר אורך הקשת
+      הוכחה שלישית של משפט 1.6.3 (יחידות עם נתוני התחלה), בלי זווית משיק ובלי משפט 0.6, בדרך שתעבוד גם במרחב (פרק 2). ל-$\gamma_1,\gamma_2$ בפרמטר אורך הקשת
       אותה $k$, ו-$\mathbf t_1(0)=\mathbf t_2(0)$. נגדיר
       $$f(s)=\mathbf t_1\cdot\mathbf t_2+\mathbf n_{s,1}\cdot\mathbf n_{s,2}.$$
 
@@ -235,7 +241,7 @@ practice:
           $(\gamma_1-\gamma_2)'=\mathbf t_1-\mathbf t_2=0$, ולכן $\gamma_1-\gamma_2$ קבועה, ואם $\gamma_1(0)=\gamma_2(0)$ היא אפס.
       - kind: result
         text: >-
-          הלמה מוכחת בלי זווית משיק. בפרק 2 אותו רעיון, עם שלושה וקטורים, יוכיח את משפט היחידות במרחב.
+          משפט 1.6.3 מוכח בלי זווית משיק. בפרק 2 אותו רעיון, עם שלושה וקטורים, יוכיח את משפט היחידות במרחב.
 
   - id: W-1.6-09
     level: exam
@@ -259,10 +265,10 @@ practice:
           (ב) עם $\gamma=C$: $k_\delta(s)=\frac1\mu\cdot\frac s\mu=\frac{s}{\mu^2}=2\lambda s$ כש-$\mu^2=\frac{1}{2\lambda}$.
       - kind: theorem
         text: >-
-          ל-$\delta=\mu C(\frac{\cdot}{\mu})$ ול-$\gamma_\lambda$ אותה $k$, ו-$\delta(0)=(0,0)$, $\mathbf t_\delta(0)=(1,0)$: לפי הלמה $\gamma_\lambda=\delta$.
+          ל-$\delta=\mu C(\frac{\cdot}{\mu})$ ול-$\gamma_\lambda$ אותה $k$, ו-$\delta(0)=(0,0)$, $\mathbf t_\delta(0)=(1,0)$: לפי משפט 1.6.3 $\gamma_\lambda=\delta$.
       - kind: computation
         text: >-
-          $C(s)\to\frac{\sqrt\pi}2(1,1)$, ולכן
+          לפי משפט 1.6.14, $C(s)\to\frac{\sqrt\pi}2(1,1)$, ולכן
           $$\gamma_\lambda(s)=\mu\,C\big(\tfrac s\mu\big)\to\frac{\sqrt\pi}{2\sqrt{2\lambda}}(1,1).$$
       - kind: check
         text: >-
@@ -287,7 +293,7 @@ practice:
     solution:
       - kind: computation
         text: >-
-          (א) $k\equiv1$ על $[0,4\pi]$ עם $\theta_0=0$, $\mathbf p=(0,0)$: לפי המתכון $\gamma(s)=(\sin s,\ 1-\cos s)$. אז $\gamma(4\pi)=\gamma(0)$,
+          (א) $k\equiv1$ על $[0,4\pi]$ עם $\theta_0=0$, $\mathbf p=(0,0)$: לפי הגדרה 1.6.1 ומשפט 1.6.2, $\gamma(s)=(\sin s,\ 1-\cos s)$. אז $\gamma(4\pi)=\gamma(0)$,
           $\mathbf t(4\pi)=\mathbf t(0)$ ו-$\int_0^{4\pi}1=4\pi$.
       - kind: step
         text: >-
@@ -295,7 +301,7 @@ practice:
       - kind: check
         text: >-
           במסילה סגורה הפנייה הכוללת היא כפולה של $2\pi$ (שיעור 1.5): $4\pi$ ב-(א) מותר. המסילה של (א) אינה חח״ע; מסילה סגורה
-          **פשוטה** עם $k>0$ יכולה להגיע רק ל-$2\pi$, אבל את זה לא נוכיח בקורס.
+          **פשוטה** (חח״ע על $[0,L)$) הפנייה הכוללת היא בדיוק $\pm2\pi$: זה משפט הסיבוב של הופף, שאינו בחומר הקורס, ואין כאן שום שימוש בו.
       - kind: result
         text: >-
           (א) נכון. (ב) לא נכון.

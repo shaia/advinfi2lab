@@ -43,7 +43,7 @@
   truth: >-
     $\kappa_{c\gamma}=\frac{\kappa_\gamma}{c}$ בנקודה המתאימה ($c>0$): המונה $\|\gamma'\times\gamma''\|$ גדל פי $c^2$ והמכנה
     פי $c^3$. מעגל ברדיוס $2$ מעוקם חצי ממעגל ברדיוס $1$. גם אורך הקשת גדל פי $c$.
-  remedy: { lesson: '1.3', anchor: ex-1-3-3, label: 'מה משנה את העקמומיות' }
+  remedy: { lesson: '1.3', anchor: kappa-invariance, label: 'מה משנה את העקמומיות' }
 
 - id: MC-c1-natural-circle
   title: חושבים שהמעגל המנשק הוא המעגל הטבעי של הצורה

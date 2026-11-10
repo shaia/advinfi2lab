@@ -60,7 +60,8 @@ test.describe('lesson 1.5: signed curvature of a plane curve', () => {
     await page.goto(LESSON);
     const fig = await ready(page, 'fig-1-5b');
     await fig.getByRole('button', { name: 'שמינייה' }).click();
-    await step(fig.locator('canvas'), 'ArrowRight', 420); // index 180 → 600, the end of the curve
+    // the parameter slider straight to grid index 600, the end of the curve (420 key presses timed out under load)
+    await fig.getByRole('slider', { name: /^הפרמטר t/ }).fill('600');
     await expect(fig.locator('[data-readout="angle"]')).toContainText('השינוי מתחילת המסילה 0,');
     await expect.poll(() => task(page, 'fig-1-5b:eight-total')).toBeTruthy();
   });
@@ -70,7 +71,8 @@ test.describe('lesson 1.5: signed curvature of a plane curve', () => {
     const fig = await ready(page, 'fig-1-5b');
     await fig.getByRole('button', { name: 'שמינייה' }).click();
     await fig.getByRole('button', { name: 'אליפסה' }).click();
-    await step(fig.locator('canvas'), 'ArrowRight', 420);
+    // the parameter slider straight to grid index 600, the end of the curve (420 key presses timed out under load)
+    await fig.getByRole('slider', { name: /^הפרמטר t/ }).fill('600');
     await expect(fig.locator('[data-readout="angle"]')).toContainText('השינוי מתחילת המסילה 6.28');
   });
 

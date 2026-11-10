@@ -3,7 +3,7 @@
 #   OBJ-1.2-1  length as the sup of inscribed polygons; the formula L = ∫‖γ′‖
 #   OBJ-1.2-2  length does not depend on the parametrization (monotone change of parameter)
 #   OBJ-1.2-3  pass to the arc-length parameter of a regular curve; there ‖γ′‖ = 1
-# Every number recomputed with src/math/geometry.ts (arcLength) and multivar.ts (simpson) on 2026-11-09.
+# Every number recomputed with src/math/geometry.ts (arcLength) and multivar.ts (simpson) on 2026-11-09/10 (W-09, W-10 rewritten for rigor).
 lesson: '1.2'
 practice:
   - id: W-1.2-01
@@ -40,23 +40,29 @@ practice:
 
       (א) חשבו את $\ell(P)$ לחלוקה $P=\{0,\ \frac\pi2\}$ ולחלוקה $P'=\{0,\ \frac\pi4,\ \frac\pi2\}$.
 
-      (ב) השוו ל-$L(\gamma)$, והסבירו בלי חישוב למה הסדר בין שלושת המספרים חייב להיות כזה.
+      (ב) הוכיחו, בלי לחשב את $L(\gamma)$, ש-$\ell(P)\le\ell(P')\le L(\gamma)$, וציינו בכל אי-שוויון על איזו טענה הוא נשען. אחר כך חשבו את $L(\gamma)$ ובדקו.
     answer: >-
-      (א) $\ell(P)=\sqrt2\approx1.4142$, $\ell(P')=4\sin\frac\pi8\approx1.5307$. (ב) $\ell(P)\le\ell(P')\le L=\frac\pi2\approx1.5708$.
+      (א) $\ell(P)=\sqrt2\approx1.4142$, $\ell(P')=4\sin\frac\pi8\approx1.5307$. (ב) למה 1.2.2 ולמה 1.2.3; $L=\frac\pi2\approx1.5708$.
     solution:
       - kind: computation
         text: >-
           (א) $\ell(P)=\|(0,1)-(1,0)\|=\sqrt2$. ב-$P'$ שני מיתרים שווים, כל אחד מול זווית $\frac\pi4$ במעגל היחידה, באורך $2\sin\frac\pi8$. לכן
           $\ell(P')=4\sin\frac\pi8\approx1.5307$.
+      - kind: theorem
+        text: >-
+          למה 1.2.2: אם $P\subseteq P'$ אז $\ell(P)\le\ell(P')$. למה 1.2.3: $\ell(Q)\le L(\gamma)$ לכל חלוקה $Q$.
       - kind: step
         text: >-
-          (ב) $P'$ מתקבלת מ-$P$ בהוספת נקודה, ולפי אי-שוויון המשולש עידון רק מאריך: $\ell(P)\le\ell(P')$.
+          (ב) $P\subseteq P'$, ולכן לפי למה 1.2.2 $\ell(P)\le\ell(P')$; ההוכחה שם היא אי-שוויון המשולש למיתר מ-$\gamma(0)$ ל-$\gamma(\frac\pi2)$ דרך $\gamma(\frac\pi4)$.
       - kind: step
         text: >-
-          $L$ הוא הסופרמום של כל $\ell(Q)$, ולכן $\ell(P')\le L$. ו-$L=\int_0^{\pi/2}1\,dt=\frac\pi2$.
+          לפי למה 1.2.3 (כלומר כי $L$ הוא חסם מלעיל של כל הקווים השבורים) $\ell(P')\le L(\gamma)$.
+      - kind: computation
+        text: >-
+          $\gamma$ גזירה ברציפות עם $\|\gamma'\|\equiv1$, ולכן לפי משפט 1.2.7 $L=\int_0^{\pi/2}1\,dt=\frac\pi2\approx1.5708$.
       - kind: result
         text: >-
-          $1.4142\le1.5307\le1.5708$: קווים שבורים מתקרבים לאורך מלמטה.
+          $1.4142\le1.5307\le1.5708$, כפי שהלמות מבטיחות.
 
   - id: W-1.2-03
     level: basic
@@ -96,7 +102,8 @@ practice:
           גוזרים: $$\gamma'(t)=3a\sin t\cos t\,(-\cos t,\ \sin t),$$ ולכן $\|\gamma'(t)\|=3a|\sin t\cos t|$.
       - kind: idea
         text: >-
-          הערך המוחלט חשוב: $\sin t\cos t$ מחליף סימן ברבעים. לפי הסימטריה מחשבים רבע ומכפילים בארבע.
+          הערך המוחלט חשוב: $\sin t\cos t$ מחליף סימן ברבעים. $\|\gamma'(t)\|=\frac{3a}2|\sin2t|$ מחזורית עם מחזור $\frac\pi2$, ולכן
+          האינטגרל על $[0,2\pi]$ הוא ארבע פעמים האינטגרל על $[0,\frac\pi2]$, שם $\sin t\cos t\ge0$ והערך המוחלט מתבטל.
       - kind: computation
         text: >-
           $$\int_0^{\pi/2}3a\sin t\cos t\,dt=\frac{3a}{2}\Big[\sin^2t\Big]_0^{\pi/2}=\frac{3a}2.$$
@@ -122,7 +129,7 @@ practice:
     solution:
       - kind: step
         text: >-
-          (א) הגרף הוא התמונה של $\gamma(x)=(x,\ f(x))$, שעוברת עליו פעם אחת. $\gamma'(x)=(1,\ f'(x))$, ולכן $\|\gamma'\|=\sqrt{1+f'^2}$, ולפי המשפט של השיעור $L=\int_a^b\sqrt{1+f'^2}$.
+          (א) הגרף הוא התמונה של $\gamma(x)=(x,\ f(x))$, שעוברת עליו פעם אחת. $\gamma'(x)=(1,\ f'(x))$, ולכן $\|\gamma'\|=\sqrt{1+f'^2}$, רציפה. $\gamma$ גזירה ברציפות על הקטע הסגור, ולפי משפט 1.2.7 $L=\int_a^b\sqrt{1+f'^2}$.
       - kind: computation
         text: >-
           (ב) $f'(x)=\frac32x^{1/2}$, $1+f'^2=1+\frac94x$. בהצבה $w=1+\frac94x$, $dw=\frac94dx$:
@@ -139,41 +146,72 @@ practice:
     qualitative: true
     objectives: [OBJ-1.2-2]
     prompt: >-
-      $\gamma(t)=(\cos t,\ \sin t)$, $0\le t\le2\pi$, באורך $2\pi$. בלי לחשב אינטגרל של $\|\delta'\|$ ישירות, מצאו את האורך של:
+      $\gamma(t)=(\cos t,\ \sin t)$, $0\le t\le2\pi$, באורך $2\pi$.
 
-      (א) $\delta_1(u)=\big(\cos u^3,\ \sin u^3\big)$, $0\le u\le(2\pi)^{1/3}$.
+      (א) בלי לחשב אינטגרל של $\|\delta_1'\|$, מצאו את האורך של $\delta_1(u)=\big(\cos u^3,\ \sin u^3\big)$, $0\le u\le(2\pi)^{1/3}$.
 
-      (ב) $$\delta_2(u)=\big(\cos(2\pi\sin^2u),\ \sin(2\pi\sin^2u)\big),\quad 0\le u\le\pi.$$
+      (ב) הוכיחו או הפריכו: לכל $\varphi:[0,\pi]\to[0,2\pi]$ גזירה ברציפות ועל, $L(\gamma\circ\varphi)=L(\gamma)$. (רמז: $\varphi(u)=2\pi\sin^2u$.)
     answer: >-
-      (א) $2\pi$. (ב) $4\pi$.
+      (א) $2\pi$. (ב) לא נכון: עם $\varphi(u)=2\pi\sin^2u$ האורך $4\pi\ne2\pi$.
     solution:
       - kind: idea
         text: >-
           $\delta_i=\gamma\circ\varphi_i$. בודקים אם $\varphi_i$ מונוטונית ועל $[0,2\pi]$; אם היא הולכת וחוזרת, מפצלים לקטעי מונוטוניות.
       - kind: step
         text: >-
-          (א) $\varphi_1(u)=u^3$ עולה ממש ועל $[0,2\pi]$, ולכן $L(\delta_1)=2\pi$. ($\varphi_1'(0)=0$, אבל ההצבה $t=u^3$ עדיין חוקית, כי $\varphi_1'\ge0$.)
+          (א) $\varphi_1(u)=u^3$ גזירה ברציפות, $\varphi_1'=3u^2\ge0$, ו-$\varphi_1$ על $[0,2\pi]$. לפי משפט 1.2.9, $L(\delta_1)=2\pi$. (המשפט מתיר $\varphi_1'(0)=0$.)
       - kind: step
         text: >-
-          (ב) $\varphi_2(u)=2\pi\sin^2u$ עולה מ-$0$ ל-$2\pi$ על $[0,\frac\pi2]$ ויורדת חזרה ל-$0$ על $[\frac\pi2,\pi]$. על כל חצי היא מונוטונית ועל, ולכן כל חצי תורם $2\pi$.
+          (ב) **הפרכה.** $\varphi_2(u)=2\pi\sin^2u$ גזירה ברציפות, ועל $[0,2\pi]$: היא עולה מ-$0$ ל-$2\pi$ על $[0,\frac\pi2]$
+          ($\varphi_2'=2\pi\sin2u\ge0$ שם) ויורדת חזרה ל-$0$ על $[\frac\pi2,\pi]$ ($\varphi_2'\le0$). נסמן $\delta_2=\gamma\circ\varphi_2$.
+      - kind: step
+        text: >-
+          לפי טענה 1.2.4 (חיבוריות), $L(\delta_2)=L(\delta_2|_{[0,\pi/2]})+L(\delta_2|_{[\pi/2,\pi]})$. על כל חצי $\varphi_2$ גזירה
+          ברציפות, מונוטונית ועל $[0,2\pi]$, ולכן לפי משפט 1.2.9 כל חצי תורם $L(\gamma)=2\pi$. לכן $L(\delta_2)=4\pi\ne2\pi$, והטענה שגויה.
       - kind: check
         text: >-
-          חישוב מספרי נותן $6.283185$ ו-$12.566371$. ב-(ב) התמונה היא מעגל היחידה, אבל $\delta_2$ מקיפה אותו הלוך וחזור.
+          חישוב מספרי נותן $6.283185$ ו-$12.566371$. ב-(ב) התמונה היא מעגל היחידה, אבל $\delta_2$ מקיפה אותו הלוך וחזור: בלי
+          מונוטוניות משפט 1.2.9 לא חל, וזו ההנחה שנכשלת.
       - kind: result
         text: >-
-          (א) $2\pi$. (ב) $4\pi$.
+          (א) $2\pi$. (ב) הטענה שגויה: $L(\gamma\circ\varphi_2)=4\pi$.
 
   - id: W-1.2-07
     level: mid
     objectives: [OBJ-1.2-3]
     prompt: >-
-      כתבו את הספירלה על החרוט $\gamma(t)=e^t(\cos t,\ \sin t,\ 1)$, $t\ge0$, בפרמטר אורך הקשת מ-$t=0$, ובדקו שהמהירות 1.
+      (א) תהי $\beta:J\to\mathbb R^n$ בפרמטר אורך הקשת על קטע $J$. הוכיחו שלכל $\sigma_1,\sigma_2\in J$
+      $$\|\beta(\sigma_2)-\beta(\sigma_1)\|\le|\sigma_2-\sigma_1|,$$
+      ושיש שוויון לכל $\sigma_1,\sigma_2$ אם ורק אם $\beta(\sigma)=\mathbf p+\sigma\mathbf u$ עם $\|\mathbf u\|=1$.
+
+      (ב) כתבו את הספירלה על החרוט $\gamma(t)=e^t(\cos t,\ \sin t,\ 1)$, $t\ge0$, בפרמטר אורך הקשת מ-$t=0$, ובדקו שהמהירות 1.
     answer: >-
-      $s=\sqrt3(e^t-1)$ ו-$t(s)=\ln\big(1+\frac{s}{\sqrt3}\big)$, ולכן $$\tilde\gamma(s)=\Big(1+\frac{s}{\sqrt3}\Big)\big(\cos t(s),\ \sin t(s),\ 1\big).$$
+      (א) למה 1.2.3 וטענה 1.2.12; שוויון בכל מקום מאלץ את המסילה להיות על ישר (שוויון במשולש). (ב) $s=\sqrt3(e^t-1)$ ו-$t(s)=\ln\big(1+\frac{s}{\sqrt3}\big)$, ולכן $$\tilde\gamma(s)=\Big(1+\frac{s}{\sqrt3}\Big)\big(\cos t(s),\ \sin t(s),\ 1\big).$$
     solution:
+      - kind: step
+        text: >-
+          (א) אי-השוויון: נניח $\sigma_1<\sigma_2$. לפי למה 1.2.3 על הקטע $[\sigma_1,\sigma_2]$,
+          $\|\beta(\sigma_2)-\beta(\sigma_1)\|\le L(\beta|_{[\sigma_1,\sigma_2]})$, ולפי טענה 1.2.12 האורך הזה הוא $\sigma_2-\sigma_1$.
+      - kind: step
+        text: >-
+          ($\Leftarrow$) אם $\beta(\sigma)=\mathbf p+\sigma\mathbf u$, אז $\|\beta'\|=\|\mathbf u\|=1$ ו-$\|\beta(\sigma_2)-\beta(\sigma_1)\|=|\sigma_2-\sigma_1|$.
+      - kind: step
+        text: >-
+          ($\Rightarrow$) נקבע $a<b$ ב-$J$, ונסמן $\mathbf u=\frac{\beta(b)-\beta(a)}{b-a}$, וקטור יחידה לפי ההנחה. יהי $\sigma\in J$, ונסדר
+          את שלוש הנקודות $x<y<z$ מבין $a,b,\sigma$. לפי ההנחה
+          $$\|\beta(y)-\beta(x)\|+\|\beta(z)-\beta(y)\|=(y-x)+(z-y)=\|\beta(z)-\beta(x)\|.$$
+      - kind: step
+        text: >-
+          שוויון באי-שוויון המשולש בנורמה האוקלידית קורה רק כששני הווקטורים כפולות אי-שליליות של אותו וקטור (מקרה השוויון
+          בקושי-שוורץ, שיעור 0.2). לכן $\beta(y)$ על הקטע מ-$\beta(x)$ ל-$\beta(z)$, במרחק $y-x$ מ-$\beta(x)$: שלוש הנקודות על
+          ישר, ועליו $\beta$ מתקדמת במרחק השווה להפרש הפרמטרים.
+      - kind: step
+        text: >-
+          בשלושת הסידורים האפשריים של $\sigma$ ביחס ל-$a<b$ זה נותן $\beta(\sigma)=\beta(a)+(\sigma-a)\mathbf u$: הכיוון מ-$\beta(a)$ ל-$\beta(b)$
+          הוא $\mathbf u$, ו-$\beta(\sigma)$ על אותו ישר, בצד הנכון ובמרחק $|\sigma-a|$. זו הצורה $\mathbf p+\sigma\mathbf u$ עם $\mathbf p=\beta(a)-a\mathbf u$.
       - kind: computation
         text: >-
-          גוזרים בכלל המכפלה: $$\gamma'(t)=e^t(\cos t-\sin t,\ \sin t+\cos t,\ 1),$$ ו-$\|\gamma'(t)\|^2=e^{2t}(2+1)$, ולכן $\|\gamma'(t)\|=\sqrt3e^t$.
+          (ב) גוזרים בכלל המכפלה: $$\gamma'(t)=e^t(\cos t-\sin t,\ \sin t+\cos t,\ 1),$$ ו-$\|\gamma'(t)\|^2=e^{2t}(2+1)$, ולכן $\|\gamma'(t)\|=\sqrt3e^t$.
       - kind: computation
         text: >-
           $$s(t)=\int_0^t\sqrt3e^\tau d\tau=\sqrt3(e^t-1).$$ ההפכית: $e^t=1+\frac{s}{\sqrt3}$, כלומר $t(s)=\ln\big(1+\frac{s}{\sqrt3}\big)$.
@@ -186,6 +224,7 @@ practice:
           $t'(s)=\frac{1}{\sqrt3+s}$ ו-$\|\gamma'(t(s))\|=\sqrt3+s$: המכפלה $1$. חישוב מספרי של האורך של $\tilde\gamma$ על $[0,2]$ נותן $2$.
       - kind: result
         text: >-
+          (א) $\beta$ היא 1-ליפשיצית, ושוויון בכל מקום רק בתנועה במהירות $1$ על ישר. (ב)
           $$\tilde\gamma(s)=\Big(1+\frac{s}{\sqrt3}\Big)\big(\cos t(s),\ \sin t(s),\ 1\big),$$ עם $t(s)=\ln\big(1+\frac{s}{\sqrt3}\big)$.
 
   - id: W-1.2-08
@@ -213,7 +252,7 @@ practice:
           לכן $\{\ell_{\gamma\circ\varphi}(Q)\}_Q=\{\ell_\gamma(P)\}_P$, אותה קבוצה של מספרים, ולשתי הקבוצות אותו סופרמום (גם אם הוא $\infty$).
       - kind: check
         text: >-
-          לא השתמשנו בגזירות כלל, ולכן הטענה נכונה גם למסילות רציפות בלבד. אם $\varphi$ יורדת ממש, אותו טיעון עם החלוקה בסדר הפוך. אם $\varphi$ אינה מונוטונית, $\varphi(Q)$ אינה חלוקה בכלל, וההתאמה נשברת.
+          לא השתמשנו בגזירות כלל, ולכן הטענה נכונה גם למסילות רציפות בלבד. אם $\varphi$ יורדת ממש, אותו טיעון עם החלוקה בסדר הפוך. אם $\varphi$ אינה מונוטונית, הנקודות $\varphi(u_i)$ אינן בסדר עולה, ולכן $\ell_{\gamma\circ\varphi}(Q)$ אינו $\ell_\gamma$ של שום חלוקה, וההתאמה נשברת.
       - kind: result
         text: >-
           $L(\gamma\circ\varphi)=L(\gamma)$ לכל $\varphi$ רציפה, מונוטונית ממש ועל.
@@ -223,70 +262,113 @@ practice:
     qualitative: true
     objectives: [OBJ-1.2-1]
     prompt: >-
-      תהי $\gamma(t)=\big(t,\ t\sin\frac1t\big)$ ל-$0<t\le1$, ו-$\gamma(0)=(0,0)$.
+      מסילות $\gamma_k,\gamma:[a,b]\to\mathbb R^n$ רציפות, ו-$\gamma_k(t)\to\gamma(t)$ לכל $t\in[a,b]$.
 
-      (א) הראו ש-$\gamma$ רציפה על $[0,1]$.
+      (א) הוכיחו ש-$L(\gamma)\le\liminf_{k\to\infty}L(\gamma_k)$ (חצי-רציפות מלרע של האורך).
 
-      (ב) הוכיחו שאין לה אורך: לכל $M$ יש חלוקה עם $\ell(P)>M$.
-
-      (ג) למה זה לא סותר את המשפט $L=\int\|\gamma'\|$?
+      (ב) הראו שאי-השוויון יכול להיות חזק. "מדרגות": $\gamma_k:[0,1]\to\mathbb R^2$ עוברת על כל קטע $[\frac jk,\frac{j+1}k]$
+      ($0\le j<k$) קודם אופקית מ-$(\frac jk,\frac jk)$ ל-$(\frac{j+1}k,\frac jk)$ ואחר כך אנכית ל-$(\frac{j+1}k,\frac{j+1}k)$, כל צלע
+      במהירות קבועה בחצי הקטע שלה. הוכיחו ש-$L(\gamma_k)=2$, ש-$\gamma_k$ מתכנסות במידה שווה לאלכסון $\gamma(t)=(t,t)$,
+      וש-$L(\gamma)=\sqrt2$.
     answer: >-
-      (ב) דרך הנקודות $t_k=\frac{1}{\pi(k+\frac12)}$, שבהן $|y|=t_k$: $\ell(P)\ge\sum_k t_k$, טור הרמוני מתבדר. (ג) $\gamma$ אינה גזירה ב-$0$, ו-$\gamma'$ אינה חסומה.
+      (א) לכל חלוקה $P$, $$\ell_\gamma(P)=\lim_k\ell_{\gamma_k}(P)\le\liminf_kL(\gamma_k),$$ ואז סופרמום על $P$.
+      (ב) $L(\gamma_k)=2$, $\sup_t\|\gamma_k(t)-\gamma(t)\|=\frac{1}{\sqrt2\,k}\to0$, ו-$\sqrt2<2$.
     solution:
-      - kind: step
-        text: >-
-          (א) ב-$t>0$ זו הרכבה של פונקציות רציפות. ב-$0$: $\big|t\sin\frac1t\big|\le t\to0$, ולכן $\gamma(t)\to(0,0)=\gamma(0)$.
       - kind: idea
         text: >-
-          הגרף מתנודד בין הישרים $y=t$ ו-$y=-t$ אינסוף פעמים ליד $0$. כל תנודה מוסיפה לפחות את גובה הקצה שלה, והגבהים האלה מתנהגים כמו $\frac1k$.
+          לחלוקה קבועה, $\ell(P)$ תלוי רק במספר סופי של נקודות, ולכן מתכנס כשהמסילות מתכנסות נקודתית. האורך הוא סופרמום של
+          גדלים כאלה, וסופרמום של גבולות לא יכול לעלות על הגבול התחתון של הסופרמומים. בכיוון ההפוך אין ערובה: מסילה
+          קרובה מאוד יכולה להתפתל.
       - kind: step
         text: >-
-          (ב) נגדיר $t_k=\frac{1}{\pi(k+\frac12)}$. אז $$\sin\frac{1}{t_k}=\sin\Big(\pi k+\frac\pi2\Big)=(-1)^k,$$ ולכן $y(t_k)=(-1)^kt_k$: הסימנים מתחלפים.
+          (א) תהי $P:\ a=t_0<\dots<t_m=b$ חלוקה קבועה. $\ell_{\gamma_k}(P)$ הוא סכום של $m$ מחוברים
+          $\|\gamma_k(t_i)-\gamma_k(t_{i-1})\|$, והנורמה רציפה, ולכן $\ell_{\gamma_k}(P)\to\ell_\gamma(P)$ כש-$k\to\infty$.
       - kind: step
         text: >-
-          ניקח את החלוקה $$0<t_K<t_{K-1}<\dots<t_1<t_0<1$$. מיתר בין $\gamma(t_{k+1})$ ל-$\gamma(t_k)$ ארוך לפחות כמו ההפרש בגובה: $$|y(t_k)-y(t_{k+1})|=t_k+t_{k+1}\ge t_k.$$ לכן
-          $$\ell(P)\ge\sum_{k=0}^{K-1}t_k=\frac1\pi\sum_{k=0}^{K-1}\frac{1}{k+\frac12}.$$
+          לפי למה 1.2.3, $\ell_{\gamma_k}(P)\le L(\gamma_k)$ לכל $k$. גבול תחתון שומר על אי-שוויון חלש, ולכן
+          $$\ell_\gamma(P)=\lim_{k}\ell_{\gamma_k}(P)\le\liminf_{k}L(\gamma_k).$$
       - kind: step
         text: >-
-          הטור $\sum\frac{1}{k+\frac12}$ מתבדר (השוואה ל-$\sum\frac1{k+1}$), ולכן לכל $M$ יש $K$ עם $\ell(P)>M$: $L(\gamma)=\infty$.
+          הצד הימני לא תלוי ב-$P$. לוקחים סופרמום על כל החלוקות: $L(\gamma)\le\liminf_kL(\gamma_k)$ (נכון גם כשהצד הימני
+          $\infty$).
+      - kind: computation
+        text: >-
+          (ב) במפורש, ל-$t\in[\frac jk,\frac{j+1/2}k]$ ול-$t\in[\frac{j+1/2}k,\frac{j+1}k]$ בהתאמה:
+          $$\gamma_k(t)=\Big(\tfrac jk+2\big(t-\tfrac jk\big),\ \tfrac jk\Big),\qquad \gamma_k(t)=\Big(\tfrac{j+1}k,\ \tfrac jk+2\big(t-\tfrac{j+1/2}k\big)\Big).$$
+          בנקודות המעבר שני הביטויים נותנים את אותה נקודה, ולכן $\gamma_k$ רציפה.
       - kind: step
         text: >-
-          (ג) המשפט דורש $\gamma$ גזירה ברציפות על הקטע **הסגור** $[0,1]$. כאן $y'(t)=\sin\frac1t-\frac1t\cos\frac1t$ אינה חסומה ליד $0$, ו-$\int_0^1\|\gamma'\|=\infty$ כאינטגרל לא אמיתי, בהתאמה לתוצאה.
+          כל צלע היא מסילה גזירה ברציפות במהירות קבועה $2$ על קטע באורך $\frac{1}{2k}$, ולכן לפי משפט 1.2.7 אורכה $\frac1k$.
+          לפי החיבוריות (טענה 1.2.4) על $2k$ הצלעות, $L(\gamma_k)=2k\cdot\frac1k=2$.
+      - kind: computation
+        text: >-
+          על הצלע האופקית ועל האנכית, בהתאמה,
+          $$\gamma_k(t)-(t,t)=\big(t-\tfrac jk\big)(1,-1),\qquad \gamma_k(t)-(t,t)=\big(\tfrac{j+1}k-t\big)(1,-1).$$
+          בשני המקרים המקדם בין $0$ ל-$\frac{1}{2k}$, ולכן
+          $$\sup_{t}\|\gamma_k(t)-(t,t)\|=\frac{\sqrt2}{2k}=\frac{1}{\sqrt2\,k}\to0:$$
+          התכנסות במידה שווה, ובפרט נקודתית.
+      - kind: step
+        text: >-
+          $\gamma(t)=(t,t)$ גזירה ברציפות עם $\|\gamma'\|=\sqrt2$, ולכן $L(\gamma)=\sqrt2$. אבל $\liminf_kL(\gamma_k)=2>\sqrt2$:
+          אי-השוויון של (א) חזק. האורך אינו רציף ביחס להתכנסות במידה שווה.
       - kind: check
         text: >-
-          חישוב מספרי של הקו השבור דרך $0,t_K,\dots,t_0,1$: עם $K=10$, $100$, $1000$, $10000$ האורך $2.69$, $4.09$, $5.55$, $7.01$. הוא גדל בכל פעם בערך ב-$\frac{2\ln10}{\pi}\approx1.47$, כמו לוגריתם.
+          חישוב מספרי: $L(\gamma_k)=2$, והמרחק המקסימלי מהאלכסון $0.7071,\ 0.1768,\ 0.0707$ ל-$k=1,\ 4,\ 10$, בדיוק
+          $\frac{1}{\sqrt2\,k}$. זה גם הפתרון ל"הוכחה" הידועה ש-$\sqrt2=2$: היא מניחה בשקט שאורך רציף.
       - kind: result
         text: >-
-          $\gamma$ רציפה ואין לה אורך. אין סתירה: היא אינה גזירה ברציפות על הקטע הסגור.
+          (א) $L(\gamma)\le\liminf_kL(\gamma_k)$. (ב) המדרגות באורך $2$ מתכנסות במידה שווה לאלכסון באורך $\sqrt2$.
 
   - id: W-1.2-10
     level: exam
     qualitative: true
-    objectives: [OBJ-1.2-3]
+    objectives: [OBJ-1.2-1]
     prompt: >-
-      $\gamma:I\to\mathbb R^n$ מסילה בפרמטר אורך הקשת, ו-$\beta=\gamma\circ\varphi:J\to\mathbb R^n$ החלפת פרמטר שגם היא בפרמטר אורך הקשת
-      ($\varphi$ גזירה ברציפות, על, $J$ קטע). הוכיחו ש-$\varphi(u)=u+c$ או $\varphi(u)=-u+c$ לאיזה קבוע $c$.
+      תהי $\gamma:[0,\infty)\to\mathbb R^n$ גזירה ברציפות, ונניח שהאינטגרל הלא אמיתי $\int_0^\infty\|\gamma'(t)\|\,dt$ מתכנס: המסילה
+      "באורך סופי".
+
+      (א) הוכיחו שהגבול $\lim_{t\to\infty}\gamma(t)$ קיים.
+
+      (ב) הוכיחו שהכיוון ההפוך שגוי: $\gamma(t)=\frac{1}{t+1}(\cos t,\ \sin t)$ שואפת ל-$0$, אבל $\int_0^\infty\|\gamma'\|=\infty$.
     answer: >-
-      $1=\|\beta'\|=|\varphi'|\,\|\gamma'\|=|\varphi'|$, ו-$\varphi'$ רציפה, ולכן $\varphi'\equiv1$ או $\varphi'\equiv-1$.
+      (א) $\|\gamma(t)-\gamma(u)\|\le\int_u^t\|\gamma'\|$, ותנאי קושי באינסוף. (ב) $\|\gamma'(t)\|\ge\frac{1}{t+1}$, שהאינטגרל שלה מתבדר.
     solution:
       - kind: idea
         text: >-
-          שתי המסילות במהירות 1, ולכן גם הפרמטר מתקדם במהירות 1 זה ביחס לזה. פרמטר אורך הקשת יחיד עד כדי נקודת התחלה וכיוון.
+          המרחק בין שתי נקודות על המסילה קטן מאורך הקשת ביניהן (למה 1.2.6). אם "הזנב" של האורך קטן, גם התזוזה בזנב
+          קטנה: זה תנאי קושי.
       - kind: step
         text: >-
-          כלל השרשרת: $\beta'(u)=\varphi'(u)\,\gamma'(\varphi(u))$, ולכן $1=\|\beta'(u)\|=|\varphi'(u)|\cdot1$, כלומר $|\varphi'(u)|=1$ לכל $u$.
+          (א) נסמן $S(t)=\int_0^t\|\gamma'\|$. ל-$0\le u<t$, לפי המשפט היסודי ברכיבים ולפי למה 1.2.6,
+          $$\|\gamma(t)-\gamma(u)\|=\Big\|\int_u^t\gamma'\Big\|\le\int_u^t\|\gamma'\|=S(t)-S(u).$$
       - kind: step
         text: >-
-          $\varphi'$ רציפה על הקטע $J$ ומקבלת רק את הערכים $\pm1$. לפי משפט ערך הביניים היא לא יכולה לעבור מ-$1$ ל-$-1$ בלי לעבור ב-$0$, ולכן $\varphi'\equiv1$ או $\varphi'\equiv-1$.
+          לפי ההנחה ל-$S$ יש גבול סופי כש-$t\to\infty$, ולכן היא מקיימת את תנאי קושי באינסוף (אינפי 1): לכל $\varepsilon>0$
+          יש $T$ כך ש-$|S(t)-S(u)|<\varepsilon$ לכל $t,u>T$.
       - kind: step
         text: >-
-          מאינטגרציה: $\varphi(u)=u+c$ או $\varphi(u)=-u+c$.
+          לכן $\|\gamma(t)-\gamma(u)\|<\varepsilon$ לכל $t,u>T$. ההפרש בכל רכיב חסום בנורמה:
+          $$|\gamma_j(t)-\gamma_j(u)|\le\|\gamma(t)-\gamma(u)\|,$$
+          ולפי תנאי קושי לפונקציה ממשית באינסוף לכל רכיב יש גבול. לכן $\lim_{t\to\infty}\gamma(t)$ קיים.
+      - kind: computation
+        text: >-
+          (ב) $\|\gamma(t)\|=\frac{1}{t+1}\to0$. בכלל המכפלה
+          $$\gamma'(t)=-\frac{1}{(t+1)^2}(\cos t,\ \sin t)+\frac{1}{t+1}(-\sin t,\ \cos t).$$
+          שני הווקטורים ניצבים זה לזה, ולכן
+          $$\|\gamma'(t)\|^2=\frac{1}{(t+1)^4}+\frac{1}{(t+1)^2}\ge\frac{1}{(t+1)^2}.$$
+      - kind: step
+        text: >-
+          לכן, כש-$T\to\infty$,
+          $$\int_0^T\|\gamma'\|\ge\int_0^T\frac{dt}{t+1}=\ln(T+1)\to\infty:$$
+          האינטגרל הלא אמיתי מתבדר.
       - kind: check
         text: >-
-          במעגל היחידה, $(\cos s,\sin s)$ ו-$(\cos(s+1),\sin(s+1))$ ו-$(\cos(-s),\sin(-s))$ כולן בפרמטר אורך הקשת: הזזה של נקודת ההתחלה והיפוך כיוון. לעומת זאת $(\cos2s,\sin2s)$ במהירות $2$.
+          חישוב מספרי: האורך על $[0,10]$ הוא $2.622$, מעל $\ln11\approx2.398$; על $[0,100]$ הוא $4.841$, מעל
+          $\ln101\approx4.615$. והספירלה של דוגמה 6 בשיעור, עם $\int_0^\infty\|\gamma'\|=\sqrt{26}$, אכן מתכנסת לראשית.
       - kind: result
         text: >-
-          $\varphi(u)=\pm u+c$: פרמטר אורך הקשת נקבע עד כדי בחירת נקודת התחלה וכיוון.
+          (א) אורך סופי גורר שהגבול באינסוף קיים. (ב) קיום הגבול אינו גורר אורך סופי.
+
 challenge:
   - id: W-1.2-c1
     stars: 1
@@ -340,12 +422,22 @@ challenge:
           **אורך מתחבר.** ל-$0\le u\le v\le1$ מתקיים $$L(\gamma|_{[0,v]})=L(\gamma|_{[0,u]})+L(\gamma|_{[u,v]}):$$ כל חלוקה של $[0,v]$ אפשר לעדן כך שתכיל את $u$ (וזה רק מאריך), ואז היא איחוד של חלוקה של $[0,u]$ וחלוקה של $[u,v]$; ולהפך.
       - kind: step
         text: >-
-          **$s$ רציפה.** $s$ עולה. נראה רציפות מימין ב-$t_0$ (משמאל באותו אופן). יהי $\varepsilon>0$; יש חלוקה $t_0<t_1<\dots<t_m=1$ עם $\ell>L(\gamma|_{[t_0,1]})-\varepsilon$, ומרציפות $\gamma$ אפשר להוסיף לה נקודה $t^*$ קרובה ל-$t_0$ עם $\|\gamma(t^*)-\gamma(t_0)\|<\varepsilon$. אז
-          $$L(\gamma|_{[t^*,1]})\ge\ell-\varepsilon>L(\gamma|_{[t_0,1]})-2\varepsilon,$$
-          ולפי החיבוריות $L(\gamma|_{[t_0,t^*]})<2\varepsilon$, וכך גם לכל $t\in(t_0,t^*)$.
+          **$s$ רציפה מימין.** $s$ לא יורדת (החיבוריות). יהיו $t_0<1$ ו-$\varepsilon>0$. יש חלוקה $t_0<t_1<\dots<t_m=1$ של $[t_0,1]$ עם
+          אורך $\ell>L(\gamma|_{[t_0,1]})-\varepsilon$, ומרציפות $\gamma$ יש $t^*\in(t_0,t_1)$ עם $\|\gamma(t^*)-\gamma(t_0)\|<\varepsilon$. החלוקה
+          $t^*<t_1<\dots<t_m$ של $[t^*,1]$ ארוכה, לפי אי-שוויון המשולש, לפחות $\ell-\|\gamma(t^*)-\gamma(t_0)\|$. לכן
+          $$L(\gamma|_{[t^*,1]})>\ell-\varepsilon>L(\gamma|_{[t_0,1]})-2\varepsilon,$$
+          ולפי החיבוריות $s(t^*)-s(t_0)=L(\gamma|_{[t_0,t^*]})<2\varepsilon$; ו-$s$ לא יורדת, ולכן גם $0\le s(t)-s(t_0)<2\varepsilon$ לכל $t\in(t_0,t^*)$.
       - kind: step
         text: >-
-          **חלוקה לחלקים שווים.** לפי משפט ערך הביניים יש $0=u_0<u_1<\dots<u_n=1$ עם $s(u_j)=\frac{jL}{n}$, ולכן כל קשת $\gamma|_{[u_{j-1},u_j]}$ באורך $\frac Ln$.
+          **$s$ רציפה משמאל.** יהיו $t_0>0$ ו-$\varepsilon>0$. יש חלוקה $0=t_0'<\dots<t_{m-1}'<t_m'=t_0$ של $[0,t_0]$ עם אורך
+          $\ell'>s(t_0)-\varepsilon$, ומרציפות $\gamma$ יש $t^*\in(t'_{m-1},t_0)$ עם $\|\gamma(t_0)-\gamma(t^*)\|<\varepsilon$. החלוקה
+          $t_0'<\dots<t'_{m-1}<t^*$ של $[0,t^*]$ ארוכה לפחות $\ell'-\|\gamma(t_0)-\gamma(t^*)\|>s(t_0)-2\varepsilon$, ולכן
+          $s(t^*)>s(t_0)-2\varepsilon$, וכך גם לכל $t\in(t^*,t_0)$, כי $s$ לא יורדת.
+      - kind: step
+        text: >-
+          **חלוקה לחלקים שווים.** $L>0$: התמונה היא הריבוע, ולכן $\gamma$ אינה קבועה, ויש $t$ עם $0<\|\gamma(t)-\gamma(0)\|\le L$.
+          $s$ רציפה ולא יורדת מ-$s(0)=0$ ל-$s(1)=L$, ולפי משפט ערך הביניים יש $0=u_0\le u_1\le\dots\le u_n=1$ עם $s(u_j)=\frac{jL}{n}$;
+          הערכים $\frac{jL}n$ שונים זה מזה, ולכן $u_0<u_1<\dots<u_n$, וכל קשת $\gamma|_{[u_{j-1},u_j]}$ באורך $\frac Ln$ (חיבוריות).
       - kind: step
         text: >-
           **כיסוי.** לכל $t\in[u_{j-1},u_j]$, החלוקה $\{u_{j-1},t,u_j\}$ נותנת $\|\gamma(t)-\gamma(u_{j-1})\|\le\frac Ln$. לכן התמונה של הקשת ה-$j$ בתוך העיגול הסגור ברדיוס $\frac Ln$ סביב $\gamma(u_{j-1})$, והריבוע כולו בתוך איחוד של $n$ עיגולים כאלה.

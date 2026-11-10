@@ -3,8 +3,8 @@ id: '1.5'
 chapter: 1
 order: 5
 title: עקמומיות מסומנת של מסילה מישורית
-subtitle: 'שמאלה או ימינה: עקמומיות עם סימן, וזווית המשיק שהיא קצב השינוי שלה'
-minutes: 85
+subtitle: 'שמאלה או ימינה: עקמומיות עם סימן, זווית המשיק, ואינדקס הסיבוב של מסילה סגורה'
+minutes: 100
 objectives:
   - id: OBJ-1.5-1
     text: להגדיר עקמומיות מסומנת לפי הנורמל המסובב ברבע סיבוב, ולקבוע את סימנה לפי כיוון הפנייה
@@ -27,7 +27,7 @@ import PlaneCurve from '~/sims/PlaneCurve.astro';
   figureProps={{ curve: 'ellipse', curves: ['ellipse', 'circle-cw', 'cubic', 'eight'], t: 0.6, layers: ['unit', 'normal', 'signed'], toggles: ['unit', 'normal', 'signed'], reversible: true, tasks: ['turn-right', 'reverse-sign'] }}
 >
 
-<Hook title="שתי מסילות, אותה עקמומיות, צורות שונות">
+<Hook title="אותה עקמומיות, צורות שונות">
 
 המסילות $(t,\ t^3)$ ו-$(t,\ |t|^3)$, $-1\le t\le1$, שתיהן מסדר $C^2$, ובשתיהן אותה עקמומיות בכל $t$:
 
@@ -35,9 +35,7 @@ $$
 \kappa(t)=\frac{6|t|}{(1+9t^4)^{3/2}}.
 $$
 
-ובכל זאת הראשונה היא צורת S, שפונה ימינה ואחר כך שמאלה, והשנייה היא ספל, שפונה שמאלה כל הזמן. העקמומיות $\kappa\ge0$ אומרת **כמה** המסילה מתעקלת, אבל לא **לאן**.
-
-נהג שמסתכל רק על ההגה יודע יותר: הוא יודע אם סובב שמאלה או ימינה. בשיעור הזה נוסיף לעקמומיות של מסילה מישורית סימן, ונגלה שהיא בדיוק קצב הסיבוב של זווית המשיק. ב<LessonLink id="1.6" /> נראה שהמידע הזה כבר מספיק כדי לשרטט מחדש את כל הכביש.
+הראשונה היא צורת S, השנייה ספל. העקמומיות $\kappa\ge0$ אומרת **כמה** המסילה מתעקלת, לא **לאן**. בשיעור הזה נבנה במישור עקמומיות עם סימן, נוכיח שהיא קצב הסיבוב של זווית המשיק, ונוכיח שבמסילה סגורה המשיק מסתובב מספר **שלם** של פעמים. ב<LessonLink id="1.6" /> נראה שהמידע הזה קובע את המסילה כולה.
 
 </Hook>
 
@@ -53,7 +51,7 @@ $$
   answer={1}
 >
 
-נחזור לשאלה הזו אחרי שנגדיר את העקמומיות המסומנת, ושוב כשנבדוק מה קורה לה בהיפוך כיוון.
+נחזור לשאלה הזו בטענה 1.5.15, על היפוך כיוון.
 
 </Predict>
 
@@ -61,25 +59,19 @@ $$
 
 <Step fig="fig-1-5a" set={{ curve: 'ellipse', t: 0.6, layers: ['unit', 'normal', 'signed'], reverse: false }}>
 
-באיור האליפסה $(2\cos t,\ \sin t)$, נעברת נגד כיוון השעון. החץ הירוק המקווקו $\mathbf n_s$ הוא המשיק מסובב **שמאלה** ברבע סיבוב. גררו את הנקודה סביב האליפסה: $\mathbf n_s$ מתלכד תמיד עם הנורמל הראשי $\mathbf n$, והמספר $k$ מתחת לאיור חיובי. המסילה פונה שמאלה כל הזמן.
+באליפסה $(2\cos t,\ \sin t)$ החץ המקווקו $\mathbf n_s$ הוא המשיק מסובב **שמאלה** ברבע סיבוב. גררו את הנקודה: $\mathbf n_s$ מתלכד עם הנורמל הראשי $\mathbf n$, ו-$k>0$.
 
 </Step>
 
 <Step fig="fig-1-5a" set={{ curve: 'cubic', t: 0.5, layers: ['unit', 'normal', 'signed'], reverse: false }}>
 
-עכשיו $(t,\ t^3)$. מימין לראשית הגרף פונה שמאלה ו-$\mathbf n_s=\mathbf n$. הזיזו את הנקודה שמאלה, דרך הראשית: $\mathbf n$ קופץ ב-$t=0$ לצד השני (ובראשית עצמה הוא לא קיים), אבל $\mathbf n_s$ ממשיך ברציפות. מה שמתהפך הוא הסימן של $k$: משמאל לראשית $k<0$, המסילה פונה ימינה.
-
-</Step>
-
-<Step fig="fig-1-5a" set={{ curve: 'circle-cw', t: 1, layers: ['unit', 'normal', 'signed'], reverse: false }}>
-
-המעגל $(\cos t,\ -\sin t)$ נעבר **בכיוון** השעון. כאן $\mathbf n_s$ מצביע החוצה, הפוך ל-$\mathbf n$, ו-$k=-1$ בכל נקודה. $|k|=1=\kappa$.
+ב-$(t,\ t^3)$ הזיזו את הנקודה שמאלה דרך הראשית: $\mathbf n$ קופץ לצד השני (ובראשית אינו קיים), $\mathbf n_s$ ממשיך ברציפות, והסימן של $k$ מתהפך.
 
 </Step>
 
 <Step fig="fig-1-5a" set={{ curve: 'ellipse', t: 0, layers: ['unit', 'normal', 'signed'], reverse: false }}>
 
-חזרו לאליפסה, לנקודה $(2,0)$, והפעילו את "כיוון הפוך". התמונה לא זזה, המשיק $\mathbf t$ מתהפך, וגם $\mathbf n_s$ (שנקבע מ-$\mathbf t$) מתהפך, אבל $\mathbf n$ נשאר במקומו, אל הצד הקעור. מה קרה ל-$k$?
+חזרו לאליפסה, לנקודה $(2,0)$, והפעילו את „כיוון הפוך”. $\mathbf t$ ו-$\mathbf n_s$ מתהפכים, $\mathbf n$ נשאר אל הצד הקעור. מה קרה ל-$k$?
 
 </Step>
 
@@ -89,54 +81,94 @@ $$
 
 <Step fig="fig-1-5a" set={{ curve: 'ellipse', t: 0.6, layers: ['unit', 'signed'], reverse: false }} id="ns-def">
 
-נסמן ב-$J$ את הסיבוב ברבע סיבוב נגד כיוון השעון: $J(a,b)=(-b,a)$. הוא שומר אורכים, ו-$J\mathbf w\perp\mathbf w$ לכל $\mathbf w$.
-
-**הגדרה.** תהי $\gamma$ מסילה מישורית רגולרית מסדר $C^2$ בפרמטר אורך הקשת. ה<Term id="rotated-normal">נורמל המסובב</Term> הוא $\mathbf n_s=J\mathbf t$. ה<Term id="signed-curvature">עקמומיות המסומנת</Term> $k(s)$ מוגדרת על ידי
+**הגדרה 1.5.1.** $J:\mathbb R^2\to\mathbb R^2$ הוא הסיבוב ברבע סיבוב נגד כיוון השעון, $J(a,b)=(-b,a)$. מתקיימים, בבדיקה ישירה על הרכיבים:
 
 $$
-\frac{d\mathbf t}{ds}=k\,\mathbf n_s,\qquad k=\frac{d\mathbf t}{ds}\cdot\mathbf n_s.
+J^2=-I,\qquad \|J\mathbf w\|=\|\mathbf w\|,\qquad J\mathbf w\cdot\mathbf w=0,\qquad J\mathbf u\cdot\mathbf w=\det(\mathbf u,\mathbf w).
 $$
 
-ההגדרה טובה: $\frac{d\mathbf t}{ds}\perp\mathbf t$ (הלמה של <LessonLink id="1.3" />), ובמישור הווקטורים הניצבים ל-$\mathbf t$ הם בדיוק הכפולות של $\mathbf n_s$. לכן $\frac{d\mathbf t}{ds}$ הוא כפולה של $\mathbf n_s$, והמקדם הוא $k$.
+(האחרונה: $J\mathbf u\cdot\mathbf w=-u_2w_1+u_1w_2$.) בפרט, לכל וקטור יחידה $\mathbf u$ הזוג $\mathbf u,\ J\mathbf u$ הוא בסיס אורתונורמלי של $\mathbb R^2$.
 
-אם $\mathbf t=(\cos\theta,\ \sin\theta)$, אז $\mathbf n_s=(-\sin\theta,\ \cos\theta)$.
+**הגדרה 1.5.2.** תהי $\gamma:I\to\mathbb R^2$ מסילה רגולרית מסדר $C^2$ בפרמטר אורך הקשת. ה<Term id="rotated-normal">נורמל המסובב</Term> הוא $\mathbf n_s=J\mathbf t$.
+
+**טענה 1.5.3.** יש פונקציה רציפה יחידה $k:I\to\mathbb R$ עם $\mathbf t'(s)=k(s)\,\mathbf n_s(s)$ לכל $s$, והיא $k=\mathbf t'\cdot\mathbf n_s$.
+
+**הוכחה.** **שלב 1.** $\|\mathbf t\|\equiv1$, ולכן $\mathbf t'\cdot\mathbf t=0$ (הלמה של <LessonLink id="1.3" />). **שלב 2.** נפרק את $\mathbf t'$ בבסיס האורתונורמלי $\mathbf t,\ \mathbf n_s$: המקדמים הם $\mathbf t'\cdot\mathbf t=0$ ו-$\mathbf t'\cdot\mathbf n_s$, ולכן $\mathbf t'=(\mathbf t'\cdot\mathbf n_s)\,\mathbf n_s$. **שלב 3 (יחידות).** אם $\mathbf t'=k_1\mathbf n_s=k_2\mathbf n_s$, אז $(k_1-k_2)\mathbf n_s=0$ ו-$\|\mathbf n_s\|=1$, ולכן $k_1=k_2$. **שלב 4.** $\mathbf t'$ ו-$\mathbf n_s$ רציפות ($\gamma\in C^2$), ולכן גם המכפלה הפנימית שלהן. $\blacksquare$
+
+**הגדרה 1.5.4.** הפונקציה $k$ של טענה 1.5.3 היא ה<Term id="signed-curvature">עקמומיות המסומנת</Term> של $\gamma$.
 
 </Step>
 
 <Step fig="fig-1-5a" set={{ curve: 'cubic', t: -0.5, layers: ['unit', 'normal', 'signed'], reverse: false }} id="ns-vs-n">
 
-**הקשר ל-$\kappa$ ול-$\mathbf n$.** $\mathbf n_s$ וקטור יחידה, ולכן $|k|=\big\|\frac{d\mathbf t}{ds}\big\|=\kappa$. כש-$k>0$: $\frac{d\mathbf t}{ds}$ הוא כפולה חיובית של $\mathbf n_s$, ולכן $\mathbf n=\mathbf n_s$, והמסילה פונה **שמאלה**, לצד של $\mathbf n_s$. כש-$k<0$: $\mathbf n=-\mathbf n_s$, והמסילה פונה **ימינה**. וכש-$k=0$ אין $\mathbf n$, אבל $\mathbf n_s$ עדיין מוגדר. ההבדל העיקרי: $\mathbf n_s$ תלוי רק ב-$\mathbf t$, ולכן רציף בכל מקום, ואילו $\mathbf n$ קופץ בנקודה שבה הקעירות מתחלפת.
+**טענה 1.5.5.** באותם תנאים, $|k(s)|=\kappa(s)$. אם $\kappa(s)>0$, אז $\mathbf n(s)=\mathbf n_s(s)$ כש-$k(s)>0$, ו-$\mathbf n(s)=-\mathbf n_s(s)$ כש-$k(s)<0$.
+
+**הוכחה.** $\kappa=\|\mathbf t'\|=\|k\,\mathbf n_s\|=|k|$, כי $\|\mathbf n_s\|=1$. כש-$\kappa>0$, לפי ההגדרה ב-1.3, $\mathbf n=\frac{\mathbf t'}{\kappa}=\frac{k}{|k|}\,\mathbf n_s$, והמקדם $\frac{k}{|k|}$ הוא $1$ או $-1$ לפי הסימן של $k$. $\blacksquare$
+
+**פירוש.** $\mathbf n_s$ מצביע שמאלה ממי שנע לאורך $\mathbf t$, ו-$\mathbf n$ מצביע לצד שאליו המסילה פונה. לכן $k>0$ פירושו פנייה **שמאלה**, $k<0$ פנייה **ימינה**. ההבדל בין השניים: $\mathbf n_s$ תלוי רק ב-$\mathbf t$, ולכן רציף בכל נקודה רגולרית; $\mathbf n$ מוגדר רק כש-$\kappa>0$, וב-$(t,\ t^3)$ אין לו המשך רציף דרך $t=0$ (שיעור 1.3).
 
 </Step>
 
 <Note kind="warn">
-**מוסכמת הסימן.** בקורס מסובבים ב-$+90^\circ$, נגד כיוון השעון: $(a,b)\mapsto(-b,a)$. מעגל שנעבר נגד כיוון השעון מקבל $k=\frac1r>0$. ספרים שמסובבים לכיוון השני מקבלים את כל הסימנים הפוכים; כשקוראים מקור אחר, בדקו קודם את המוסכמה שלו.
+**מוסכמת הסימן.** בקורס מסובבים ב-$+90^\circ$, נגד כיוון השעון. מעגל שנעבר נגד כיוון השעון מקבל $k=\frac1r>0$. ספרים שמסובבים לכיוון השני מקבלים את כל הסימנים הפוכים.
 </Note>
+
+<Step fig="fig-1-5a" set={{ curve: 'ellipse', t: 1.2, layers: ['unit', 'signed'], reverse: false }} id="k-general">
+
+**הגדרה 1.5.6 (פרמטר כללי).** תהי $\gamma:I\to\mathbb R^2$ רגולרית מסדר $C^2$, $t_0\in I$, ו-$\sigma(t)=\int_{t_0}^t\|\gamma'\|$. לפי <LessonLink id="1.2" />, $\sigma$ גזירה ברציפות פעמיים, $\sigma'=\|\gamma'\|>0$, ולהופכית $\tau=\sigma^{-1}$ אותה חלקות; $\tilde\gamma=\gamma\circ\tau$ היא $\gamma$ בפרמטר אורך הקשת. מגדירים
+
+$$
+k_\gamma(t)=k_{\tilde\gamma}\big(\sigma(t)\big).
+$$
+
+**טענה 1.5.7.** ההגדרה טובה:
+
+(א) $k_\gamma(t)$ לא תלוי בבחירת $t_0$.
+
+(ב) אם $\psi:I'\to I$ על, מסדר $C^2$ ו-$\psi'>0$, ו-$\delta=\gamma\circ\psi$, אז $k_\delta(u)=k_\gamma(\psi(u))$ לכל $u$.
+
+**הוכחה.** (א) אם מחליפים את $t_0$ ב-$t_1$, הפונקציה החדשה היא $\sigma_1=\sigma-c$ עם $c=\sigma(t_1)$, ולכן $\tilde\gamma_1(r)=\tilde\gamma(r+c)$. הזזה של הפרמטר מזיזה את $\mathbf t$ ואת $\mathbf t'$, ולכן $k_{\tilde\gamma_1}(r)=k_{\tilde\gamma}(r+c)$. בנקודה $r=\sigma_1(t)$ מקבלים $k_{\tilde\gamma}(\sigma(t))$, אותו ערך.
+
+(ב) נבחר את נקודת הבסיס של $\delta$ ב-$u_0$, ושל $\gamma$ ב-$\psi(u_0)$. לפי כלל השרשרת ונוסחת ההצבה, עם $\psi'>0$:
+
+$$
+\sigma_\delta(u)=\int_{u_0}^u\|\gamma'(\psi(r))\|\,\psi'(r)\,dr=\int_{\psi(u_0)}^{\psi(u)}\|\gamma'\|=\sigma_\gamma(\psi(u)).
+$$
+
+לכן $\tau_\delta=\psi^{-1}\circ\tau_\gamma$, ו-$\tilde\delta=\delta\circ\tau_\delta=\tilde\gamma$: לשתי המסילות אותה הצגה בפרמטר אורך הקשת. מכאן
+
+$$
+k_\delta(u)=k_{\tilde\gamma}\big(\sigma_\gamma(\psi(u))\big)=k_\gamma(\psi(u)),
+$$
+
+ולפי (א) הבחירה של נקודות הבסיס לא משנה. $\blacksquare$
+
+</Step>
 
 <Step fig="fig-1-5a" set={{ curve: 'ellipse', t: 1.2, layers: ['unit', 'signed'], reverse: false }} id="k-formula">
 
-**משפט.** אם $\gamma(t)=(x(t),\ y(t))$ רגולרית מסדר $C^2$ בפרמטר כלשהו, אז
+**משפט 1.5.8.** אם $\gamma=(x,y)$ רגולרית מסדר $C^2$ בפרמטר כלשהו $t$, אז
 
 $$
-k=\frac{x'y''-y'x''}{(x'^2+y'^2)^{3/2}}.
+k_\gamma=\frac{x'y''-y'x''}{(x'^2+y'^2)^{3/2}}=\frac{\det(\gamma',\gamma'')}{\|\gamma'\|^3}.
 $$
 
-**רעיון.** זו הנוסחה של $\kappa$ במישור בלי הערך המוחלט. כמו ב-1.3 מפרקים $\gamma''$ לרכיב לאורך $\mathbf t$ ולרכיב ניצב; הדטרמיננטה $x'y''-y'x''$ "רואה" רק את הרכיב הניצב, ועם הסימן שלו.
+**רעיון.** מפרקים את $\gamma''$ לרכיב לאורך $\mathbf t$ ולרכיב לאורך $\mathbf n_s$; הדטרמיננטה עם $\gamma'$ רואה רק את השני, עם הסימן שלו.
 
-**הוכחה.** נסמן $v=\|\gamma'\|$.
+**הוכחה.** נסמן $v=\|\gamma'\|=\sigma'$ ו-$\mathbf t(t)=\tilde{\mathbf t}(\sigma(t))$.
 
-**שלב 1.** $J\gamma'=(-y',\ x')$, ולכן הדטרמיננטה היא מכפלה פנימית: $x'y''-y'x''=(J\gamma')\cdot\gamma''$.
+**שלב 1.** $\gamma'=v\,\mathbf t$.
 
-**שלב 2.** מ-1.3, $\gamma'=v\,\mathbf t$, ולפי ההגדרה של $k$:
-
-$$
-\gamma''=v'\,\mathbf t+v^2\frac{d\mathbf t}{ds}=v'\,\mathbf t+v^2k\,\mathbf n_s.
-$$
-
-**שלב 3.** $J\gamma'=v\,J\mathbf t=v\,\mathbf n_s$. מכפילים פנימית ב-$\gamma''$, עם $\mathbf n_s\perp\mathbf t$ ו-$\|\mathbf n_s\|=1$:
+**שלב 2.** גוזרים בכלל המכפלה ובכלל השרשרת, ומשתמשים בהגדרה 1.5.6:
 
 $$
-(J\gamma')\cdot\gamma''=v\,v'\,(\mathbf n_s\cdot\mathbf t)+v^3k\,\|\mathbf n_s\|^2=v^3k.
+\gamma''=v'\,\mathbf t+v\,\sigma'\,\tilde{\mathbf t}'(\sigma)=v'\,\mathbf t+v^2k_\gamma\,\mathbf n_s.
+$$
+
+**שלב 3.** לפי הגדרה 1.5.1 ושלב 1, $\det(\gamma',\gamma'')=J\gamma'\cdot\gamma''$, וזה $v\,\mathbf n_s\cdot\gamma''$. משלב 2, עם $\mathbf n_s\perp\mathbf t$ ו-$\|\mathbf n_s\|=1$:
+
+$$
+\det(\gamma',\gamma'')=v\,v'\,(\mathbf n_s\cdot\mathbf t)+v^3k_\gamma=v^3k_\gamma.
 $$
 
 **שלב 4.** מחלקים ב-$v^3>0$. $\blacksquare$
@@ -145,25 +177,15 @@ $$
 
 <Step fig="fig-1-5a" set={{ curve: 'circle-cw', t: 1, layers: ['unit', 'normal', 'signed'], reverse: false }} id="k-test-objects">
 
-**על אובייקטי המבחן.**
+**על אובייקטי המבחן.** **מעגל** $(r\cos t,\ r\sin t)$: $\det(\gamma',\gamma'')=r^2$, ולכן $k=\frac1r$; בכיוון השעון, $(r\cos t,\ -r\sin t)$: $k=-\frac1r$.
 
-**מעגל** ברדיוס $r$ נגד כיוון השעון, $(r\cos t,\ r\sin t)$: $x'y''-y'x''=r^2$ ו-$v^3=r^3$, ולכן $k=\frac1r$. בכיוון השעון, $(r\cos t,\ -r\sin t)$: $x'y''-y'x''=-r^2$ ו-$k=-\frac1r$.
-
-**גרף** $y=f(x)$, שנעבר משמאל לימין, $(t,\ f(t))$: $x'y''-y'x''=f''$, ולכן
+**גרף** $(t,\ f(t))$, מסדר $C^2$:
 
 $$
-k=\frac{f''}{(1+f'^2)^{3/2}}.
+k=\frac{f''}{(1+f'^2)^{3/2}},
 $$
 
-הסימן של $k$ הוא הסימן של $f''$: קעור כלפי מעלה, פנייה שמאלה.
-
-**המסילה $(t,\ t^3)$**: $k(t)=\frac{6t}{(1+9t^4)^{3/2}}$, שלילית ל-$t<0$, חיובית ל-$t>0$, ורציפה, אפס בראשית. למשל
-
-$$
-k\big(\tfrac12\big)=\frac{3}{(25/16)^{3/2}}=\frac{192}{125}=1.536.
-$$
-
-והספל $(t,\ |t|^3)$ מהפתיחה: $f''=6|t|\ge0$, ולכן $k\ge0$ בכל מקום. הסימן מבחין בין שתי המסילות.
+והסימן של $k$ הוא הסימן של $f''$. ל-$(t,\ t^3)$: $k(t)=\frac{6t}{(1+9t^4)^{3/2}}$, שלילית ל-$t<0$ וחיובית ל-$t>0$; למשל $k(\frac12)=\frac{192}{125}=1.536$. לספל $(t,\ |t|^3)$: $f''=6|t|\ge0$. הסימן מבחין בין המסילות של הפתיחה.
 
 </Step>
 
@@ -174,82 +196,143 @@ $$
 <Spread
   fig="fig-1-5b"
   n="1.5ב"
-  caption="מסילה, המשיק היחידה $\mathbf t$ (כתום) והנורמל המסובב $\mathbf n_s$ (ירוק מקווקו). הקשת הכתומה ליד הנקודה מראה את זווית המשיק $\theta$, מהכיוון החיובי של ציר ה-$x$ אל $\mathbf t$. מתחת לאיור: $\theta(t)$ כפונקציה רציפה של הפרמטר (בלי לחזור ל-$[0,2\pi)$), השינוי שלה מתחילת המסילה, ואורך הקשת $s$. הזווית מחושבת מספרית לאורך המסילה: עדות, וההוכחה בטקסט."
+  caption="מסילה, המשיק היחידה $\mathbf t$ (כתום) והנורמל המסובב $\mathbf n_s$ (ירוק מקווקו). הקשת הכתומה ליד הנקודה מראה את זווית המשיק $\theta$, מהכיוון החיובי של ציר ה-$x$ אל $\mathbf t$. מתחת לאיור: $\theta(t)$ כפונקציה רציפה של הפרמטר (בלי לחזור ל-$[0,2\pi)$), השינוי שלה מתחילת המסילה, ואורך הקשת $s$. הזווית מחושבת מספרית לאורך המסילה: עדות, וההוכחות בטקסט."
   figure={PlaneCurve}
   figureProps={{ curve: 'ellipse', curves: ['ellipse', 'eight', 'circle-cw', 'logspiral'], t: 1, layers: ['unit', 'signed', 'angle'], toggles: ['signed', 'angle'], reversible: true, tasks: ['eight-total'] }}
 >
 
 <Explain title="זווית המשיק" id="tangent-angle">
 
-<Step fig="fig-1-5b" set={{ curve: 'ellipse', t: 1, layers: ['unit', 'angle'], reverse: false }} id="lift">
+<Step fig="fig-1-5b" set={{ curve: 'ellipse', t: 1, layers: ['unit', 'angle'], reverse: false }} id="angle-lemma">
 
-לכל $s$ יש מספר $\theta$ עם $\mathbf t(s)=(\cos\theta,\ \sin\theta)$, אבל הוא נקבע רק עד כדי $2\pi$. אם בוחרים אותו ב-$[0,2\pi)$, הוא קופץ מ-$2\pi$ ל-$0$ בכל סיבוב שלם. אנחנו רוצים לבחור אותו **ברציפות**.
+לכל $s$ יש מספר $\theta$ עם $\mathbf t(s)=(\cos\theta,\ \sin\theta)$, אבל רק עד כדי $2\pi$; בחירה ב-$[0,2\pi)$ קופצת בכל סיבוב שלם. נבנה בחירה **רציפה**. הכלי הראשון הוא נוסחה לזווית בין שני וקטורי יחידה שאינם הפוכים.
 
-**למה (זווית רציפה).** תהי $\mathbf t:[0,L]\to\mathbb R^2$ מסדר $C^1$ עם $\|\mathbf t\|\equiv1$, ויהי $\theta_0$ עם $\mathbf t(0)=(\cos\theta_0,\ \sin\theta_0)$. אז יש פונקציה <Term id="tangent-angle">זווית משיק</Term> $\theta$ מסדר $C^1$ עם $\theta(0)=\theta_0$ ו-$\mathbf t(s)=(\cos\theta(s),\ \sin\theta(s))$ לכל $s$. כל שתי פונקציות רציפות כאלה נבדלות בקבוע $2\pi m$.
+**למה 1.5.9.** יהיו $\mathbf u,\ \mathbf w$ וקטורי יחידה עם $\mathbf w\ne-\mathbf u$. יש $\varphi\in(-\pi,\pi)$ יחיד עם $\mathbf w=\cos\varphi\,\mathbf u+\sin\varphi\,J\mathbf u$, והוא
 
-**רעיון.** אם $\theta$ כזו קיימת, $\theta'$ חייבת להיות קצב הסיבוב של $\mathbf t$, $\mathbf t'\cdot J\mathbf t$. לכן מגדירים את $\theta$ כאינטגרל של הקצב הזה, ובודקים שהווקטור $(\cos\theta,\ \sin\theta)$ לא מתרחק מ-$\mathbf t$.
+$$
+\varphi=2\arctan\frac{\det(\mathbf u,\mathbf w)}{1+\mathbf u\cdot\mathbf w}.
+$$
+
+**הוכחה.** **שלב 1.** בבסיס האורתונורמלי $\mathbf u,\ J\mathbf u$: $\mathbf w=a\,\mathbf u+b\,J\mathbf u$ עם $a=\mathbf u\cdot\mathbf w$, $b=J\mathbf u\cdot\mathbf w=\det(\mathbf u,\mathbf w)$, ו-$a^2+b^2=1$. **שלב 2.** $a\ge-1$, ו-$a=-1$ גורר $b=0$, כלומר $\mathbf w=-\mathbf u$, שהוצא. לכן $1+a>0$. **שלב 3.** לנקודה $(a,b)$ על מעגל היחידה שאינה $(-1,0)$ יש זווית יחידה $\varphi\in(-\pi,\pi)$ עם $(\cos\varphi,\sin\varphi)=(a,b)$ (אינפי 1). **שלב 4.** לפי זהויות הזווית הכפולה, $\frac{\sin\varphi}{1+\cos\varphi}=\tan\frac\varphi2$, ו-$\frac\varphi2\in(-\frac\pi2,\frac\pi2)$, ולכן $\frac\varphi2=\arctan\frac{b}{1+a}$. $\blacksquare$
 
 </Step>
 
-<Step fig="fig-1-5b" set={{ curve: 'ellipse', t: 4, layers: ['unit', 'angle'], reverse: false }} id="lift-proof">
+<Step fig="fig-1-5b" set={{ curve: 'ellipse', t: 4, layers: ['unit', 'angle'], reverse: false }} id="lift">
 
-**הוכחה.** נגדיר $\omega(s)=\mathbf t'(s)\cdot J\mathbf t(s)$, פונקציה רציפה, ו-$\theta(s)=\theta_0+\int_0^s\omega$. לפי המשפט היסודי $\theta$ מסדר $C^1$ ו-$\theta'=\omega$. נסמן $\mathbf u(s)=(\cos\theta(s),\ \sin\theta(s))$.
+**למה 1.5.10 (זווית רציפה).** תהי $\mathbf e:[a,b]\to\mathbb R^2$ רציפה עם $\|\mathbf e\|\equiv1$, ויהי $\theta_0$ עם $\mathbf e(a)=(\cos\theta_0,\ \sin\theta_0)$.
 
-**שלב 1.** $\mathbf t'\perp\mathbf t$ (הלמה של 1.3), ולכן $\mathbf t'$ הוא כפולה של $J\mathbf t$, והמקדם הוא $\mathbf t'\cdot J\mathbf t=\omega$: $\mathbf t'=\omega\,J\mathbf t$.
+(א) **קיום:** יש $\theta:[a,b]\to\mathbb R$ רציפה עם $\theta(a)=\theta_0$ ו-$\mathbf e(s)=(\cos\theta(s),\ \sin\theta(s))$ לכל $s$.
 
-**שלב 2.** לפי כלל השרשרת $\mathbf u'=\theta'(-\sin\theta,\ \cos\theta)=\omega\,J\mathbf u$.
+(ב) **יחידות:** כל שתי פונקציות רציפות כאלה נבדלות בקבוע $2\pi m$, $m\in\mathbb Z$.
 
-**שלב 3.** לכן, כי $\mathbf w\cdot J\mathbf w=0$ לכל $\mathbf w$,
+(ג) **חלקות:** אם $\mathbf e$ מסדר $C^r$, $r\ge1$, גם $\theta$ מסדר $C^r$.
+
+**רעיון.** על קטע קצר $\mathbf e$ לא מספיק להגיע לכיוון ההפוך, ושם למה 1.5.9 נותנת את השינוי בזווית בנוסחה רציפה. מחברים קטעים קצרים, ובכל קטע ממשיכים מהערך שבסוף הקודם.
+
+</Step>
+
+<Step fig="fig-1-5b" set={{ curve: 'ellipse', t: 5.5, layers: ['unit', 'angle'], reverse: false }} id="lift-proof">
+
+**הוכחה.** נסמן $A(\mathbf u,\mathbf w)=2\arctan\frac{\det(\mathbf u,\mathbf w)}{1+\mathbf u\cdot\mathbf w}$, רציפה על הקבוצה $\{\mathbf w\ne-\mathbf u\}$.
+
+**(א) שלב 1.** $\mathbf e$ רציפה על הקטע הסגור, ולכן רציפה במידה שווה: יש $\delta>0$ כך ש-$|s-s'|<\delta$ גורר $\|\mathbf e(s)-\mathbf e(s')\|<2$. בפרט $\mathbf e(s)\ne-\mathbf e(s')$, כי $\|\mathbf e(s')-(-\mathbf e(s'))\|=2$.
+
+**שלב 2.** נבחר חלוקה $a=s_0<s_1<\dots<s_N=b$ עם $s_{i+1}-s_i<\delta$, ונגדיר באינדוקציה $\theta(s_0)=\theta_0$ ו-
 
 $$
-\frac{d}{ds}\|\mathbf t-\mathbf u\|^2=2(\mathbf t-\mathbf u)\cdot\omega\,J(\mathbf t-\mathbf u)=0.
+\theta(s)=\theta(s_i)+A\big(\mathbf e(s_i),\ \mathbf e(s)\big),\qquad s\in[s_i,\ s_{i+1}].
 $$
 
-**שלב 4.** $\|\mathbf t-\mathbf u\|^2$ קבועה, ושווה ל-$0$ ב-$s=0$. לכן $\mathbf t\equiv\mathbf u$.
+**שלב 3.** ההגדרה עקבית ב-$s_i$ (שם $A=0$), ו-$\theta$ רציפה על כל קטע כהרכבה של פונקציות רציפות, ולכן על $[a,b]$.
 
-**יחידות.** אם $\theta_1,\ \theta_2$ רציפות ושתיהן מתאימות, אז לכל $s$ ההפרש $\theta_1(s)-\theta_2(s)$ הוא כפולה של $2\pi$. הפונקציה $\frac{\theta_1-\theta_2}{2\pi}$ רציפה ומקבלת רק ערכים שלמים, ולכן לפי משפט ערך הביניים היא קבועה. $\blacksquare$
+**שלב 4.** באינדוקציה על $i$: נניח $\mathbf e(s_i)=(\cos\theta_i,\ \sin\theta_i)$ עם $\theta_i=\theta(s_i)$. לפי למה 1.5.9, עם $\varphi=A(\mathbf e(s_i),\mathbf e(s))$, ולפי נוסחאות החיבור,
+
+$$
+\mathbf e(s)=\cos\varphi\,\mathbf e(s_i)+\sin\varphi\,J\mathbf e(s_i)=\big(\cos(\theta_i+\varphi),\ \sin(\theta_i+\varphi)\big),
+$$
+
+וזה $(\cos\theta(s),\ \sin\theta(s))$.
+
+**(ב)** אם $\theta_1,\ \theta_2$ רציפות ושתיהן מתאימות, אז לכל $s$ יש להן אותו קוסינוס ואותו סינוס, ולכן $\frac{\theta_1-\theta_2}{2\pi}$ שלם. פונקציה רציפה על קטע שמקבלת רק ערכים שלמים קבועה: אחרת, לפי משפט ערך הביניים, היא מקבלת גם ערך לא שלם בין שני ערכיה.
+
+**(ג)** תהי $s^*\in[a,b]$. על קטע $U$ סביבה באורך פחות מ-$\delta$, הפונקציה $\theta^*=\theta(s^*)+A(\mathbf e(s^*),\mathbf e)$ רציפה ומתאימה, ושווה ל-$\theta$ ב-$s^*$; לפי (ב), על הקטע $U$ מתקיים $\theta=\theta^*$. אבל $\theta^*$ היא הרכבה של $\arctan$ עם מנה של פולינומים ברכיבי $\mathbf e$, שהמכנה שלה חיובי, ולכן מסדר $C^r$. $\blacksquare$
+
+**כל הנחה נחוצה.** בלי רציפות אין זווית רציפה: $\mathbf e=(1,0)$ על $[0,1)$ ו-$\mathbf e=(-1,0)$ על $[1,2]$. ובלי קטע אין יחידות: על $[0,1]\cup[2,3]$ אפשר להוסיף $2\pi$ על החלק השני בלבד.
+
+**מסקנה 1.5.10א (על קטע כללי).** יהי $I$ קטע כלשהו (פתוח, חצי פתוח, לא חסום, גם $\mathbb R$), $s_0\in I$, ו-$\mathbf e:I\to\mathbb R^2$ רציפה עם $\|\mathbf e\|\equiv1$ ו-$\mathbf e(s_0)=(\cos\theta_0,\ \sin\theta_0)$. אז יש $\theta:I\to\mathbb R$ רציפה **יחידה** עם $\theta(s_0)=\theta_0$ ו-$\mathbf e=(\cos\theta,\ \sin\theta)$; כל זווית רציפה אחרת נבדלת ממנה בקבוע $2\pi m$; ואם $\mathbf e$ מסדר $C^r$, גם $\theta$.
+
+**רעיון.** ההוכחה של למה 1.5.10 צריכה קטע סגור וחסום (רציפות במידה שווה, חלוקה סופית). ממצים את $I$ בקטעים סגורים וחסומים שמכילים את $s_0$, ומדביקים: היחידות מבטיחה שהזוויות על הקטעים מתלכדות.
+
+**הוכחה.**
+1. נבחר קטעים סגורים וחסומים $K_n=[a_n,b_n]\subseteq I$ עם $a_n\le s_0\le b_n$, $a_n$ יורדת, $b_n$ עולה ו-$\bigcup_nK_n=I$ (למשל $a_n\downarrow\inf I$ ו-$b_n\uparrow\sup I$ בתוך $I$, ואם קצה של $I$ שייך ל-$I$, מגיעים אליו).
+2. על $[s_0,b_n]$ נפעיל את למה 1.5.10(א) עם ערך התחלה $\theta_0$ ב-$s_0$. על $[a_n,s_0]$ נפעיל אותה על $\tilde{\mathbf e}(u)=\mathbf e(-u)$, $u\in[-s_0,-a_n]$, וחוזרים ל-$s$. מתקבלת $\theta_n$ רציפה על $K_n$ (שני החלקים מסכימים ב-$s_0$) עם $\theta_n(s_0)=\theta_0$.
+3. $\theta_{n+1}$ מצומצמת ל-$K_n$ היא זווית רציפה שם עם אותו ערך ב-$s_0$, ולכן לפי למה 1.5.10(ב) $\theta_{n+1}=\theta_n$ על $K_n$.
+4. נגדיר $\theta(s)=\theta_n(s)$ לכל $n$ עם $s\in K_n$; לפי 3 זה לא תלוי ב-$n$. כל $s\in I$ נמצאת ב-$K_n$ לכל $n$ גדול, ובקטע $K_n\cap(s-\eta,s+\eta)$ סביבה (יחסית ל-$I$) $\theta=\theta_n$; לכן $\theta$ רציפה, ומסדר $C^r$ כש-$\mathbf e$ כזו (למה 1.5.10(ג)).
+5. יחידות: שתי זוויות רציפות על $I$ נבדלות על כל $K_n$ בקבוע $2\pi m_n$; כי $K_n\subseteq K_{n+1}$, $m_n=m_{n+1}$, ולכן ההפרש קבוע על כל $I$. $\blacksquare$
+
+**הגדרה 1.5.11.** במסילה מישורית רגולרית מסדר $C^2$ על קטע $I$, <Term id="tangent-angle">זווית משיק</Term> היא פונקציה רציפה $\theta:I\to\mathbb R$ עם $\mathbf t=(\cos\theta,\ \sin\theta)$. לפי מסקנה 1.5.10א היא קיימת לכל ערך התחלה בכל נקודה של $I$, יחידה עד כדי $2\pi m$, ומסדר $C^1$, כי $\mathbf t=\frac{\gamma'}{\|\gamma'\|}$ מסדר $C^1$.
 
 </Step>
 
 <Step fig="fig-1-5b" set={{ curve: 'logspiral', t: 3, layers: ['unit', 'signed', 'angle'], reverse: false }} id="k-dtheta">
 
-**משפט.** $k(s)=\theta'(s)$: העקמומיות המסומנת היא קצב השינוי של זווית המשיק לפי אורך הקשת.
+**משפט 1.5.12.** במסילה רגולרית מסדר $C^2$ בפרמטר אורך הקשת, $k(s)=\theta'(s)$ לכל זווית משיק $\theta$. בפרמטר כללי $t$:
 
-**רעיון.** גוזרים את $\mathbf t=(\cos\theta,\ \sin\theta)$ ומזהים את התוצאה כ-$\theta'\,\mathbf n_s$.
+$$
+\frac{d\theta}{dt}=k_\gamma(t)\,\|\gamma'(t)\|.
+$$
 
 **הוכחה.** לפי כלל השרשרת,
 
 $$
-\frac{d\mathbf t}{ds}=\theta'\,(-\sin\theta,\ \cos\theta)=\theta'\,J\mathbf t=\theta'\,\mathbf n_s.
+\mathbf t'=\theta'\,(-\sin\theta,\ \cos\theta)=\theta'\,J\mathbf t=\theta'\,\mathbf n_s.
 $$
 
-מההגדרה $\frac{d\mathbf t}{ds}=k\,\mathbf n_s$, ו-$\mathbf n_s\ne0$, ולכן $k=\theta'$. $\blacksquare$
+ לפי היחידות בטענה 1.5.3, $k=\theta'$. בפרמטר כללי: $\theta\circ\tau$ היא זווית משיק של $\tilde\gamma$, ולכן $\frac{d}{dr}\theta(\tau(r))=k_{\tilde\gamma}(r)$; מציבים $r=\sigma(t)$ וכופלים ב-$\sigma'=\|\gamma'\|$. $\blacksquare$
 
-הבחירה של $\theta$ עד כדי $2\pi m$ לא משנה כלום: קבוע נעלם בגזירה. בפרמטר כללי $t$, לפי כלל השרשרת $\frac{d\theta}{dt}=k\,\frac{ds}{dt}=k\,\|\gamma'(t)\|$. באיור הספירלה הלוגריתמית $e^{-t/5}(\cos t,\ \sin t)$: שם $\theta(t)=t+\alpha$ עם $\alpha=\pi-\arctan5$ קבוע, ולכן $k=\frac{1}{\|\gamma'\|}$ (ראו דוגמה 3).
+באיור הספירלה הלוגריתמית $e^{-t/5}(\cos t,\ \sin t)$: זווית המשיק שם היא $t+\alpha$ עם $\alpha$ קבוע (דוגמה 3).
 
 </Step>
 
 <Step fig="fig-1-5b" set={{ curve: 'ellipse', t: 6.28, layers: ['unit', 'signed', 'angle'], reverse: false }} id="total-turning">
 
-**הפנייה הכוללת.** מהמשפט היסודי:
+**מסקנה 1.5.13.** במסילה $\gamma:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת, רגולרית ומסדר $C^2$,
 
 $$
-\int_0^Lk\,ds=\theta(L)-\theta(0).
+\int_0^Lk\,ds=\theta(L)-\theta(0),
 $$
 
-זו <Term id="total-turning">הפנייה הכוללת</Term>: הזווית שהמשיק הסתובב, פנייה שמאלה בחיוב וימינה בשלילה. אם $\mathbf t(L)=\mathbf t(0)$, למשל במסילה סגורה וחלקה, אז $\theta(L)-\theta(0)$ הוא כפולה של $2\pi$: המשיק חזר לכיוונו, אבל $\theta$ רציפה וזוכרת כמה סיבובים עשתה.
+והערך לא תלוי בבחירת $\theta$. זו <Term id="total-turning">הפנייה הכוללת</Term>.
 
-**אליפסה** נגד כיוון השעון: $k>0$ בכל מקום, ו-$\int k\,ds=2\pi$. באיור, הביאו את $t$ לסוף והסתכלו על "השינוי מתחילת המסילה". **מעגל בכיוון השעון:** $-2\pi$. **מעגל שמקיפים פעמיים:** $4\pi$.
+**הוכחה.** המשפט היסודי של החשבון האינטגרלי עם משפט 1.5.12; שתי זוויות משיק נבדלות בקבוע (למה 1.5.10(ב)), והוא מתבטל בהפרש. $\blacksquare$
 
-**$(t,\ t^3)$ על $[-1,1]$:** הזווית יורדת מ-$\arctan3$ ל-$0$ ועולה חזרה ל-$\arctan3$, ולכן $\int k\,ds=0$. אפס פנייה כוללת **אינו** מסילה ישרה: הפניות ימינה ושמאלה התקזזו. גם **השמינייה** $(\sin t,\ \sin t\cos t)$ פונה בסך הכול $0$. בחרו בה באיור והביאו את $t$ לסוף המסילה (דוגמה 6).
+בפרמטר כללי $\int k\,ds=\int k(t)\,\|\gamma'(t)\|\,dt$; למעגל $(2\cos t,\ 2\sin t)$ זה $\int_0^{2\pi}\frac12\cdot2\,dt=2\pi$, ולא $\pi$. **אליפסה** נגד כיוון השעון: $2\pi$; **מעגל בכיוון השעון:** $-2\pi$; **$(t,\ t^3)$ על $[-1,1]$:** הזווית יורדת מ-$\arctan3$ ל-$0$ וחוזרת, ולכן $0$. פנייה כוללת אפס **אינה** מסילה ישרה. גם **השמינייה** $(\sin t,\ \sin t\cos t)$ פונה בסך הכול $0$ (דוגמה 6).
 
-כשמחשבים בפרמטר כללי צריך את $ds=\|\gamma'(t)\|\,dt$:
+</Step>
+
+<Step fig="fig-1-5b" set={{ curve: 'eight', t: 6.28, layers: ['unit', 'signed', 'angle'], reverse: false }} id="rotation-index">
+
+**משפט 1.5.14 (אינדקס הסיבוב).** תהי $\gamma:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת, רגולרית ומסדר $C^2$, סגורה עם משיק שחוזר לכיוונו: $\gamma(0)=\gamma(L)$ ו-$\mathbf t(0)=\mathbf t(L)$. אז
 
 $$
-\int k\,ds=\int k(t)\,\|\gamma'(t)\|\,dt.
+\int_0^Lk\,ds=2\pi m,\qquad m\in\mathbb Z.
 $$
 
-למעגל $(2\cos t,\ 2\sin t)$: $\int_0^{2\pi}\frac12\cdot2\,dt=2\pi$, ולא $\pi$.
+המספר $m$ הוא <Term id="rotation-index">אינדקס הסיבוב</Term> של $\gamma$.
+
+**הוכחה.** לפי מסקנה 1.5.13 הפנייה הכוללת היא $\theta(L)-\theta(0)$. מההנחה,
+
+$$
+\big(\cos\theta(L),\ \sin\theta(L)\big)=\mathbf t(L)=\mathbf t(0)=\big(\cos\theta(0),\ \sin\theta(0)\big),
+$$
+
+ושני מספרים עם אותו קוסינוס ואותו סינוס נבדלים בכפולה שלמה של $2\pi$. $\blacksquare$
+
+ההוכחה השתמשה רק ב-$\mathbf t(0)=\mathbf t(L)$; ההנחה $\gamma(0)=\gamma(L)$ אינה נחוצה לה. היא חלק מההגדרה של **מסילה סגורה**, שלה מגדירים אינדקס סיבוב.
+
+**הנחת המשיק נחוצה.** הלולאה $\gamma(t)=(t^2-1,\ t^3-t)$, $-1\le t\le1$, רגולרית ($\gamma'=(2t,\ 3t^2-1)\ne0$) וסגורה, $\gamma(\pm1)=(0,0)$, אבל $\gamma'(-1)=(-2,2)$ ו-$\gamma'(1)=(2,2)$: יש לה פינה בראשית. זווית המשיק עולה מ-$\frac{3\pi}4$ ל-$\frac{9\pi}4$, והפנייה הכוללת $\frac{3\pi}2$ אינה כפולה של $2\pi$.
+
+**דוגמאות.** אליפסה נגד כיוון השעון: $m=1$; מעגל בכיוון השעון: $m=-1$; מעגל שמקיפים פעמיים: $m=2$; שמינייה: $m=0$. באיור, בחרו בשמינייה והביאו את $t$ לסוף.
 
 </Step>
 
@@ -259,51 +342,57 @@ $$
 
 <Step fig="fig-1-5b" set={{ curve: 'ellipse', t: 0, layers: ['unit', 'signed'], reverse: true }} id="reversal">
 
-**היפוך כיוון.** יהי $\delta(s)=\gamma(-s)$. אז $\mathbf t_\delta(s)=-\mathbf t_\gamma(-s)$, ולכן גם $\mathbf n_s$ מתהפך:
+**טענה 1.5.15 (החלפת פרמטר).** תהי $\gamma$ רגולרית מסדר $C^2$, ו-$\psi$ על, מסדר $C^2$, עם $\psi'\ne0$ בכל נקודה. אז
 
 $$
-\mathbf n_{s,\delta}(s)=J\mathbf t_\delta(s)=-\mathbf n_{s,\gamma}(-s).
+k_{\gamma\circ\psi}(u)=\operatorname{sign}\big(\psi'(u)\big)\,k_\gamma\big(\psi(u)\big).
 $$
 
-אבל בגזירה לפי $s$ הסימן מתהפך פעמיים, פעם מ-$\mathbf t$ ופעם מכלל השרשרת:
+בפרט, להיפוך הכיוון בפרמטר אורך הקשת, $\delta(s)=\gamma(-s)$: $k_\delta(s)=-k_\gamma(-s)$.
+
+**הוכחה.** נסמן $\delta=\gamma\circ\psi$. לפי כלל השרשרת
 
 $$
-\frac{d\mathbf t_\delta}{ds}(s)=\frac{d\mathbf t_\gamma}{ds}(-s)=k_\gamma(-s)\,\mathbf n_{s,\gamma}(-s)
+\delta'=\psi'\,(\gamma'\circ\psi),\qquad \delta''=\psi''\,(\gamma'\circ\psi)+\psi'^2\,(\gamma''\circ\psi).
 $$
 
-וזה $-k_\gamma(-s)\,\mathbf n_{s,\delta}(s)$. לכן
+הדטרמיננטה לינארית בכל עמודה ומתאפסת על וקטורים מקבילים, ולכן
 
 $$
-k_\delta(s)=-k_\gamma(-s).
+\det(\delta',\delta'')=\psi'^3\det(\gamma',\gamma'')\circ\psi,\qquad \|\delta'\|^3=|\psi'|^3\,\|\gamma'\|^3\circ\psi.
 $$
 
-באותה נקודה של התמונה, $\gamma(-s)$, הסימן מתהפך: מה שפנה שמאלה פונה עכשיו ימינה. זו התשובה לשאלת החיזוי: באליפסה בכיוון השעון $k=-2$ ב-$(2,0)$. באיור, המתג "כיוון הפוך" פועל, ו-$k=-2$. ($\kappa$, לעומת זאת, לא השתנתה: $|-2|=2$.)
+לפי משפט 1.5.8, $k_\delta$ היא המנה, כלומר $\frac{\psi'^3}{|\psi'|^3}\,k_\gamma\circ\psi$. $\blacksquare$
+
+באותה נקודה של התמונה, היפוך כיוון הופך את הסימן: מה שפנה שמאלה פונה ימינה. **זו התשובה לשאלת החיזוי:** באליפסה בכיוון השעון $k=-2$ ב-$(2,0)$; באיור המתג „כיוון הפוך” פועל. ($\kappa=|k|$ לא השתנתה.)
 
 </Step>
 
 <Step fig="fig-1-5b" set={{ curve: 'ellipse', t: 0, layers: ['unit', 'signed'], reverse: false }} id="rigid">
 
-**תנועות קשיחות.** תהי $\tilde\gamma=Q\gamma+\mathbf c$, עם $Q$ מטריצה אורתוגונלית $2\times2$ ו-$\mathbf c$ וקטור. היא עדיין בפרמטר אורך הקשת, $\tilde{\mathbf t}=Q\mathbf t$, ו-
+**למה 1.5.16.** לכל מטריצה אורתוגונלית $Q$ מסדר $2\times2$: $QJ=(\det Q)\,JQ$. בפרט סיבוב מתחלף עם $J$, ולכל שיקוף $S$: $SJ=-JS$.
+
+**הוכחה.** העמודה הראשונה של $Q$ היא וקטור יחידה $(a,b)$, והשנייה וקטור יחידה ניצב לה. הווקטורים ב-$\mathbb R^2$ שניצבים ל-$(a,b)\ne0$ הם הפתרונות של $ax+by=0$, מרחב חד-ממדי שמכיל את $(-b,a)\ne0$; לכן העמודה השנייה היא $\varepsilon(-b,a)$, ואורך $1$ מחייב $\varepsilon=\pm1$. אז $\det Q=\varepsilon(a^2+b^2)=\varepsilon$. מכפלה ישירה:
 
 $$
-\frac{d\tilde{\mathbf t}}{ds}=Q\frac{d\mathbf t}{ds}=k\,QJ\mathbf t.
+QJ=\begin{pmatrix}-\varepsilon b&-a\\ \varepsilon a&-b\end{pmatrix}=\varepsilon\begin{pmatrix}-b&-\varepsilon a\\ a&-\varepsilon b\end{pmatrix}=\varepsilon\,JQ.\qquad\blacksquare
 $$
 
-**הזזה** ($Q=I$): שום דבר לא משתנה, $\tilde k=k$.
+**טענה 1.5.17 (תנועות קשיחות).** תהי $\gamma$ בפרמטר אורך הקשת, $Q$ אורתוגונלית ו-$\mathbf c\in\mathbb R^2$. אז $k_{Q\gamma+\mathbf c}=(\det Q)\,k_\gamma$.
 
-**סיבוב** $R$: סיבוב מתחלף עם הסיבוב $J$, $RJ=JR$. לכן $\tilde{\mathbf n}_s=JR\mathbf t=RJ\mathbf t$, ו-$\frac{d\tilde{\mathbf t}}{ds}=k\,\tilde{\mathbf n}_s$: $\tilde k=k$.
-
-**שיקוף** $S$ בישר דרך הראשית: $SJ=-JS$. בדקו קודם על $S_0(a,b)=(a,-b)$: $S_0J(a,b)=(-b,-a)$ ו-$JS_0(a,b)=(b,a)$. כל שיקוף אחר הוא $S=S_0R$ עם $R$ סיבוב (כי $S_0S$ הוא אורתוגונלי עם דטרמיננטה $1$), וסיבוב מתחלף עם $J$, ולכן $SJ=S_0JR=-JS_0R=-JS$. לכן
+**הוכחה.** $\tilde\gamma=Q\gamma+\mathbf c$ עדיין בפרמטר אורך הקשת, כי $\|Q\mathbf t\|=\|\mathbf t\|=1$, ו-$\tilde{\mathbf t}=Q\mathbf t$. לפי למה 1.5.16:
 
 $$
-\frac{d\tilde{\mathbf t}}{ds}=k\,SJ\mathbf t=-k\,JS\mathbf t=-k\,\tilde{\mathbf n}_s,
+\tilde{\mathbf t}'=Q\mathbf t'=k\,QJ\mathbf t=(\det Q)\,k\,JQ\mathbf t=(\det Q)\,k\,\tilde{\mathbf n}_s,
 $$
 
-כלומר $\tilde k=-k$.
+ולפי היחידות בטענה 1.5.3, $k_{\tilde\gamma}=(\det Q)\,k_\gamma$. $\blacksquare$
 
-בקיצור $\tilde k=(\det Q)\,k$: סיבוב ($\det Q=1$) שומר את $k$, שיקוף ($\det Q=-1$) הופך אותו. מראה הופכת שמאל וימין. כל התנועות האלה שומרות את $\kappa=|k|$.
+הזזה וסיבוב ($\det Q=1$) שומרים את $k$; שיקוף ($\det Q=-1$) הופך אותה. **ההנחה $Q$ אורתוגונלית נחוצה:** ההעתקה $(x,y)\mapsto(x,2y)$ מעבירה את מעגל היחידה ($k\equiv1$) לאליפסה $(\cos t,\ 2\sin t)$, שבה $k(0)=\frac14$ ו-$k(\frac\pi2)=2$: אפילו $|k|$ לא נשמרת.
 
-**הגדלה.** $c\gamma$ עם $c>0$: כמו ב-1.3, $k$ מתחלקת ב-$c$ בנקודה המתאימה, והסימן נשמר.
+**טענה 1.5.18 (הגדלה).** לכל $\lambda\ne0$: $k_{\lambda\gamma}=\frac{1}{|\lambda|}\,k_\gamma$.
+
+**הוכחה.** במשפט 1.5.8 המונה מוכפל ב-$\lambda^2$ והמכנה ב-$|\lambda|^3$. $\blacksquare$ (ל-$\lambda<0$ הסימן נשמר: $\lambda\gamma=|\lambda|\,(-I)\gamma$, ו-$-I$ סיבוב בחצי סיבוב.)
 
 </Step>
 
@@ -327,7 +416,7 @@ $$
 
 **צריך למצוא**: $\mathbf t$, $\mathbf n_s=J\mathbf t$, $\mathbf n$, $k$.
 
-**רעיון**: גוזרים את $\mathbf t$ ומבטאים את התוצאה ככפולה של $\mathbf n_s$; המקדם הוא $k$. את $\mathbf n$ לוקחים מ-1.3: הוא מצביע אל המרכז בשני המקרים.
+**רעיון**: לפי טענה 1.5.3, $k$ הוא המקדם של $\mathbf t'$ לאורך $\mathbf n_s$. את $\mathbf n$ לוקחים מטענה 1.5.5.
 
 **חישוב (א)**: $\mathbf t=\big(-\sin\frac sr,\ \cos\frac sr\big)$. מסובבים ב-$J$:
 
@@ -338,10 +427,10 @@ $$
 מהנקודה אל המרכז. גוזרים:
 
 $$
-\frac{d\mathbf t}{ds}=-\frac1r\Big(\cos\frac sr,\ \sin\frac sr\Big)=\frac1r\,\mathbf n_s,
+\mathbf t'=-\frac1r\Big(\cos\frac sr,\ \sin\frac sr\Big)=\frac1r\,\mathbf n_s,
 $$
 
-ולכן $k=\frac1r$ ו-$\mathbf n=\mathbf n_s$.
+ולכן $k=\frac1r>0$ ו-$\mathbf n=\mathbf n_s$.
 
 **חישוב (ב)**: $\mathbf t=\big(-\sin\frac sr,\ -\cos\frac sr\big)$, ולכן
 
@@ -352,18 +441,12 @@ $$
 מהמרכז החוצה. גוזרים:
 
 $$
-\frac{d\mathbf t}{ds}=\frac1r\Big(-\cos\frac sr,\ \sin\frac sr\Big)=-\frac1r\,\mathbf n_s,
+\mathbf t'=\frac1r\Big(-\cos\frac sr,\ \sin\frac sr\Big)=-\frac1r\,\mathbf n_s,
 $$
 
 ולכן $k=-\frac1r$ ו-$\mathbf n=-\mathbf n_s$, שוב אל המרכז.
 
-**בדיקה**: הנוסחה הכללית עם $(r\cos t,\ -r\sin t)$:
-
-$$
-x'y''-y'x''=(-r\sin t)(r\sin t)-(-r\cos t)(-r\cos t)=-r^2,
-$$
-
-ולכן $k=-\frac{r^2}{r^3}=-\frac1r$. ובשני המקרים $|k|=\frac1r=\kappa$.
+**בדיקה**: $\delta(s)=\gamma(-s)$ כי $\cos$ זוגית ו-$\sin$ אי-זוגית, ולפי טענה 1.5.15 $k_\delta(s)=-k_\gamma(-s)=-\frac1r$. ובשני המקרים $|k|=\frac1r=\kappa$.
 
 **מסקנה**: נגד כיוון השעון $k=\frac1r$, בכיוון השעון $k=-\frac1r$. $\mathbf n$ מצביע פנימה בשניהם; $\mathbf n_s$ מצביע פנימה רק בראשון.
 
@@ -385,7 +468,7 @@ $$
 
 **צריך למצוא**: $k(t)$, הסימן שלה, ו-$\int_0^\pi k\,ds$.
 
-**רעיון**: לגרף $k=\frac{f''}{(1+f'^2)^{3/2}}$. ל-(ב) $\int k\,ds$ הוא השינוי בזווית המשיק, והזווית של משיק לגרף היא $\arctan f'$.
+**רעיון**: לגרף $k=\frac{f''}{(1+f'^2)^{3/2}}$ (משפט 1.5.8). ל-(ב), לפי מסקנה 1.5.13, $\int k\,ds$ הוא השינוי בזווית משיק רציפה, וצריך למצוא אחת כזו.
 
 **חישוב (א)**:
 
@@ -393,15 +476,15 @@ $$
 k(t)=\frac{-\sin t}{(1+\cos^2t)^{3/2}}.
 $$
 
-ב-$0<t<\pi$, $k<0$: הגרף קעור כלפי מטה, והמסילה פונה ימינה. ב-$\pi<t<2\pi$, $k>0$: פונה שמאלה. למשל $k(\frac\pi2)=-1$ ו-$k(\frac{3\pi}2)=1$. ב-$t=0,\ \pi,\ 2\pi$, $k=0$.
+ב-$0<t<\pi$, $k<0$: המסילה פונה ימינה. ב-$\pi<t<2\pi$, $k>0$: שמאלה. למשל $k(\frac\pi2)=-1$ ו-$k(\frac{3\pi}2)=1$.
 
-**חישוב (ב)**: $\mathbf t$ הוא $(1,\ \cos t)$ מחולק באורכו, ורכיב ה-$x$ שלו חיובי. לכן אפשר לבחור את הזווית הרציפה $\theta(t)=\arctan(\cos t)$, ו-
+**חישוב (ב)**: $\mathbf t=\frac{(1,\ \cos t)}{\sqrt{1+\cos^2t}}$. הפונקציה $\theta(t)=\arctan(\cos t)$ רציפה ומקיימת $\cos\theta=\frac{1}{\sqrt{1+\cos^2t}}$ ו-$\sin\theta=\frac{\cos t}{\sqrt{1+\cos^2t}}$ (כי $\theta\in(-\frac\pi2,\frac\pi2)$), כלומר היא זווית משיק. לכן
 
 $$
 \int_0^\pi k\,ds=\theta(\pi)-\theta(0)=-\frac\pi4-\frac\pi4=-\frac\pi2.
 $$
 
-**בדיקה**: הסימן מתאים: על $(0,\pi)$ המסילה פונה רק ימינה, ולכן הפנייה הכוללת שלילית. חישוב מספרי של $\int_0^\pi k(t)\sqrt{1+\cos^2t}\,dt$ נותן $-1.5708$.
+**בדיקה**: על $(0,\pi)$ המסילה פונה רק ימינה, ולכן הפנייה שלילית. חישוב מספרי של $\int_0^\pi k(t)\sqrt{1+\cos^2t}\,dt$ נותן $-1.5708$.
 
 **מסקנה**: פנייה ימינה על $(0,\pi)$ ושמאלה על $(\pi,2\pi)$; $\int_0^\pi k\,ds=-\frac\pi2$.
 
@@ -413,45 +496,45 @@ $$
 
 $\gamma(t)=e^{-t/5}(\cos t,\ \sin t)$, $t\ge0$.
 
-(א) הראו שזווית המשיק היא $\theta(t)=t+\alpha$ עם $\alpha$ קבוע, ומצאו את $\alpha$.
+(א) הוכיחו שזווית המשיק היא $\theta(t)=t+\alpha$ עם $\alpha$ קבוע, ומצאו את $\alpha$.
 
-(ב) הסיקו את $k(t)$ בלי הנוסחה של הדטרמיננטה.
+(ב) הסיקו את $k(t)$ ממשפט 1.5.12, בלי נוסחת הדטרמיננטה.
 
 <Solution>
 
-**נתון**: גוזרים בכלל המכפלה:
+**נתון**: בכלל המכפלה,
 
 $$
 \gamma'(t)=e^{-t/5}\Big(-\tfrac15\cos t-\sin t,\ \ -\tfrac15\sin t+\cos t\Big).
 $$
 
-**צריך למצוא**: $\theta(t)$ ו-$k(t)$.
+**צריך להוכיח**: $\theta(t)=t+\alpha$; למצוא $k(t)$.
 
-**רעיון**: $\gamma'$ הוא סיבוב של $(\cos t,\ \sin t)$ בזווית קבועה, כפול סקלר חיובי. אחר כך $k=\frac{d\theta}{ds}=\frac{d\theta/dt}{ds/dt}$.
+**רעיון**: $\gamma'$ הוא סיבוב של וקטור קבוע בזווית $t$, כפול סקלר חיובי. פונקציה רציפה שמתאימה היא זווית משיק (הגדרה 1.5.11).
 
-**חישוב (א)**: עם $a=-\frac15$ ו-$b=1$ הנגזרת היא
-
-$$
-\gamma'=e^{-t/5}\big(a\cos t-b\sin t,\ \ a\sin t+b\cos t\big),
-$$
-
-כלומר $(a,b)$ מסובב בזווית $t$, כפול $e^{-t/5}$. נכתוב $(a,b)=\sqrt{26}/5\cdot(\cos\alpha,\ \sin\alpha)$, עם $\cos\alpha=-\frac{1}{\sqrt{26}}$ ו-$\sin\alpha=\frac{5}{\sqrt{26}}$, כלומר $\alpha=\pi-\arctan5\approx1.768$. אז
+**הוכחה (א)**: עם $a=-\frac15$ ו-$b=1$,
 
 $$
-\gamma'=\tfrac{\sqrt{26}}{5}e^{-t/5}\big(\cos(t+\alpha),\ \sin(t+\alpha)\big),
+\gamma'=e^{-t/5}\big(a\cos t-b\sin t,\ \ a\sin t+b\cos t\big).
 $$
 
-ולכן $\theta(t)=t+\alpha$ היא זווית משיק רציפה.
-
-**חישוב (ב)**: $\frac{ds}{dt}=\|\gamma'\|=\frac{\sqrt{26}}{5}e^{-t/5}$ ו-$\frac{d\theta}{dt}=1$. לכן
+נכתוב $(a,b)=\frac{\sqrt{26}}{5}(\cos\alpha,\ \sin\alpha)$ עם $\cos\alpha=-\frac{1}{\sqrt{26}}$, $\sin\alpha=\frac{5}{\sqrt{26}}$, כלומר $\alpha=\pi-\arctan5\approx1.768$. מנוסחאות החיבור:
 
 $$
-k=\frac{d\theta/dt}{ds/dt}=\frac{5}{\sqrt{26}}\,e^{t/5}.
+\gamma'=\tfrac{\sqrt{26}}{5}e^{-t/5}\big(\cos(t+\alpha),\ \sin(t+\alpha)\big).
 $$
 
-**בדיקה**: ב-$t=0$, $k=\frac{5}{\sqrt{26}}\approx0.9806$, וכך גם נוסחת הדטרמיננטה. $k>0$: הספירלה מסתובבת נגד כיוון השעון, פנימה, והעקמומיות גדלה ככל שהיא מתקרבת לראשית.
+המקדם חיובי, ולכן $\mathbf t=(\cos(t+\alpha),\ \sin(t+\alpha))$, ו-$\theta(t)=t+\alpha$ רציפה: זווית משיק.
 
-**מסקנה**: $\theta(t)=t+\pi-\arctan5$ ו-$k(t)=\frac{5}{\sqrt{26}}e^{t/5}$. המשיק יוצר זווית קבועה עם הקרן מהראשית, ולכן מסתובב בדיוק כמו הנקודה עצמה.
+**חישוב (ב)**: לפי משפט 1.5.12, $\frac{d\theta}{dt}=k\,\|\gamma'\|$, כלומר
+
+$$
+k(t)=\frac{1}{\|\gamma'(t)\|}=\frac{5}{\sqrt{26}}\,e^{t/5}.
+$$
+
+**בדיקה**: ב-$t=0$, $k=\frac{5}{\sqrt{26}}\approx0.9806$, וכך גם משפט 1.5.8. $k>0$: הספירלה פונה שמאלה, פנימה.
+
+**מסקנה**: $\theta(t)=t+\pi-\arctan5$ ו-$k(t)=\frac{5}{\sqrt{26}}e^{t/5}$.
 
 </Solution>
 
@@ -461,35 +544,25 @@ $$
 
 $\gamma(t)=(2\cos t,\ \sin t)$, ו-$S(x,y)=(y,x)$ השיקוף בישר $y=x$.
 
-(א) הראו ש-$SJ=-JS$, והסיקו ש-$k_{S\circ\gamma}=-k_\gamma$ בכל $t$.
+(א) הסיקו מטענות 1.5.17 ו-1.5.7 ש-$k_{S\circ\gamma}=-k_\gamma$ בכל $t$, ובדקו ישירות ב-$t=0$.
 
-(ב) בדקו ישירות ב-$t=0$.
-
-(ג) האם יש תנועה קשיחה שאינה שיקוף, כלומר $R\mathbf x+\mathbf c$ עם $R$ סיבוב, שמעבירה את $\gamma(t)$ ל-$S\gamma(t)$ לכל $t$?
+(ב) הוכיחו: אין תנועה קשיחה $R\mathbf x+\mathbf c$ עם $R$ **סיבוב** שמעבירה את $\gamma(t)$ ל-$S\gamma(t)$ לכל $t$.
 
 <Solution>
 
-**נתון**: $J(a,b)=(-b,a)$, $S(a,b)=(b,a)$, $\det S=-1$.
+**נתון**: $S$ אורתוגונלית, $\det S=-1$.
 
-**צריך להוכיח**: (א) $SJ=-JS$ ו-$k_{S\gamma}=-k_\gamma$; (ב) בדיקה; (ג) להכריע.
+**צריך להוכיח**: (א) $k_{S\gamma}=-k_\gamma$; (ב) אין סיבוב והזזה כאלה.
 
-**רעיון**: סיבוב שומר את $k$ ושיקוף הופך אותה. כש-$k$ אינה אפס אי אפשר לקבל את אותה מסילה בשתי הדרכים.
+**רעיון**: סיבוב שומר את $k$ ושיקוף הופך אותה. אם שתי הדרכים נותנות אותה מסילה עם אותו פרמטר, $k$ שווה ל-$-k$, וזה בלתי אפשרי כש-$k\ne0$.
 
-**הוכחה (א)**: על וקטור $(a,b)$:
+**הוכחה (א)**: טענה 1.5.17 נוסחה בפרמטר אורך הקשת; $S$ שומרת אורכים, ולכן ל-$S\gamma$ ול-$\gamma$ אותה פונקציית אורך קשת, ולפי הגדרה 1.5.6 הטענה עוברת לפרמטר $t$: $k_{S\gamma}(t)=-k_\gamma(t)$. בדיקה: $S\gamma=(\sin t,\ 2\cos t)$, וב-$t=0$ הנגזרות שלה הן $(1,0)$ ו-$(0,-2)$. הדטרמיננטה $-2$ והמהירות $1$, ולכן $k_{S\gamma}(0)=-2=-k_\gamma(0)$.
 
-$$
-SJ(a,b)=(a,\ -b),\qquad JS(a,b)=(-a,\ b),
-$$
+**הוכחה (ב)**: נניח $R\gamma(t)+\mathbf c=S\gamma(t)$ לכל $t$. זו אותה מסילה עם אותו פרמטר, ולכן אותה עקמומיות מסומנת. לפי טענה 1.5.17 ($\det R=1$) השמאלית היא $k_\gamma$, ולפי (א) הימנית היא $-k_\gamma$. ב-$t=0$: $2=-2$, סתירה. $\blacksquare$
 
-ולכן $SJ=-JS$. כמו בשיעור, $\frac{d}{ds}(S\mathbf t)=k\,SJ\mathbf t$, וזה $-k\,J(S\mathbf t)$: לכן $k_{S\gamma}=-k_\gamma$. ($S$ שומר אורכים, ולכן ל-$S\gamma$ ול-$\gamma$ אותה מהירות, והטיעון עובר גם בפרמטר כללי.)
+**בדיקה**: התמונות כן חופפות: סיבוב ב-$90^\circ$ מעביר את האליפסה של $\gamma$ על האליפסה $x^2+\frac{y^2}{4}=1$. אבל ברוב ה-$t$ הוא מעביר את $\gamma(t)$ לנקודה אחרת מ-$S\gamma(t)$, ובכיוון הפוך. הטענה היא על מסילות, לא על תמונות.
 
-**חישוב (ב)**: $S\gamma(t)=(\sin t,\ 2\cos t)$, ולכן $x'=\cos t$, $y'=-2\sin t$, $x''=-\sin t$, $y''=-2\cos t$. ב-$t=0$: $x'y''-y'x''=-2$ ו-$\|\gamma'(0)\|=1$, ולכן $k=-2=-k_\gamma(0)$.
-
-**הוכחה (ג)**: **לא.** אם $R\gamma(t)+\mathbf c=S\gamma(t)$ לכל $t$, אז זו אותה מסילה עם אותו פרמטר, ולכן אותה $k$. מצד אחד $k_{R\gamma+\mathbf c}=k_\gamma$, ומצד שני $k_{S\gamma}=-k_\gamma$. ב-$t=0$ זה נותן $2=-2$: סתירה.
-
-**בדיקה**: התמונה $S\gamma([0,2\pi])$ היא האליפסה $x^2+\frac{y^2}{4}=1$, וסיבוב ב-$90^\circ$ **כן** מעביר את התמונה של $\gamma$ עליה. אבל ברוב ה-$t$ הוא מעביר את $\gamma(t)$ לנקודה אחרת מ-$S\gamma(t)$, ובכיוון הפוך. הטענה ב-(ג) היא על מסילות, לא על תמונות.
-
-**מסקנה**: (א) $k_{S\gamma}=-k_\gamma$; (ב) $-2$; (ג) אין תנועה כזו, כי $k$ אינה אפס.
+**מסקנה**: (א) $k_{S\gamma}=-k_\gamma$; (ב) אין תנועה כזו, כי $k_\gamma(0)\ne0$.
 
 </Solution>
 
@@ -497,19 +570,19 @@ $$
 
 <Example id="ex-1-5-5" title="פנייה כוללת קטנה מ-π מונעת חיתוך עצמי">
 
-$\gamma:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת, מסדר $C^2$, עם $k(s)\ge0$ לכל $s$ ו-$\int_0^Lk\,ds<\pi$. הוכיחו ש-$\gamma$ חד-חד-ערכית: היא לא חותכת את עצמה. הראו בדוגמה שאי אפשר להחליף את $\pi$ ב-$2\pi$.
+$\gamma:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת, מסדר $C^2$, עם $k(s)\ge0$ לכל $s$ ו-$\int_0^Lk\,ds<\pi$. הוכיחו ש-$\gamma$ חד-חד-ערכית. הראו בדוגמה שאי אפשר להחליף את $\pi$ ב-$2\pi$.
 
 <Solution>
 
-**נתון**: $k\ge0$, ו-$\Delta=\theta(L)-\theta(0)<\pi$.
+**נתון**: $k\ge0$, ו-$\Delta=\int_0^Lk\,ds<\pi$.
 
 **צריך להוכיח**: $s_1<s_2\Rightarrow\gamma(s_1)\ne\gamma(s_2)$.
 
-**רעיון**: הזווית עולה, ובסך הכול בפחות מ-$\pi$. לכן יש כיוון $\mathbf u$ שכל המשיקים יוצרים איתו זווית חדה, והמסילה "מתקדמת" כל הזמן בכיוון של $\mathbf u$.
+**רעיון**: הזווית עולה, ובסך הכול בפחות מ-$\pi$. לכן יש כיוון $\mathbf u$ שכל המשיקים יוצרים איתו זווית חדה, והמסילה מתקדמת כל הזמן בכיוון של $\mathbf u$.
 
 **הוכחה**:
 
-**שלב 1.** לפי הלמה יש זווית רציפה $\theta$, ו-$\theta'=k\ge0$, ולכן $\theta$ לא יורדת: $\theta(0)\le\theta(s)\le\theta(0)+\Delta$ לכל $s$.
+**שלב 1.** לפי למה 1.5.10 ומשפט 1.5.12 יש זווית משיק $\theta$ עם $\theta'=k\ge0$, ולכן $\theta$ לא יורדת, ולפי מסקנה 1.5.13 $\theta(0)\le\theta(s)\le\theta(0)+\Delta$.
 
 **שלב 2.** נבחר $\varphi=\theta(0)+\frac\Delta2$ ו-$\mathbf u=(\cos\varphi,\ \sin\varphi)$. אז $|\theta(s)-\varphi|\le\frac\Delta2<\frac\pi2$, ולכן
 
@@ -517,13 +590,19 @@ $$
 \mathbf t(s)\cdot\mathbf u=\cos\big(\theta(s)-\varphi\big)>0.
 $$
 
-**שלב 3.** $g(s)=\gamma(s)\cdot\mathbf u$ מקיימת $g'(s)=\mathbf t(s)\cdot\mathbf u>0$, ולכן היא עולה ממש.
+**שלב 3.** $g(s)=\gamma(s)\cdot\mathbf u$ מקיימת $g'=\mathbf t\cdot\mathbf u>0$, ולכן לפי משפט הערך הממוצע היא עולה ממש.
 
 **שלב 4.** אם $s_1<s_2$ אז $g(s_1)<g(s_2)$, ולכן $\gamma(s_1)\ne\gamma(s_2)$. $\blacksquare$
 
-**דוגמה עם $2\pi$**: המעגל ברדיוס 1, $s\in[0,2\pi]$: $k\equiv1$, $\int k\,ds=2\pi$, ו-$\gamma(0)=\gamma(2\pi)$. ואפילו פנייה כוללת בין $\pi$ ל-$2\pi$ לא מונעת חיתוך: מסילה שנוסעת ישר ימינה לאורך ציר ה-$x$ מ-$(-10,0)$ עד $(0,0)$, פונה שמאלה על קשת של מעגל היחידה שמרכזו $(0,1)$ בזווית $1.2\pi$, וממשיכה ישר, חוצה את הקטע ההתחלתי שלה ליד $(-3.08,\ 0)$ (המעברים בין הישרים לקשת הם כבר $C^1$; כדי לקבל $C^2$ מחליקים את הקפיצה של העקמומיות מ-$0$ ל-$1$ בקטעים קצרים, והפנייה הכוללת נשארת בין $\pi$ ל-$2\pi$ והחיתוך נשאר ליד $(-3.08,\ 0)$).
+**דוגמה עם $2\pi$**: הלולאה $\gamma(t)=(t^2-1,\ t^3-t)$, $-1\le t\le1$, של משפט 1.5.14, אחרי מעבר לפרמטר אורך הקשת (שלא משנה את הסימן של $k$ ואת הפנייה הכוללת, טענה 1.5.15). כאן
 
-**בדיקה**: איפה השתמשנו ב-$k\ge0$? בשלב 1. בלעדיו הזווית יכולה לרדת ולעלות, ו-$\theta(L)-\theta(0)$ קטן לא מגביל את $\theta$ באמצע. השמינייה, למשל, חוצה את עצמה עם $\int k\,ds=0$.
+$$
+\det(\gamma',\gamma'')=2t\cdot6t-(3t^2-1)\cdot2=6t^2+2>0,
+$$
+
+ולכן $k>0$; הפנייה הכוללת $\frac{3\pi}2<2\pi$; אבל $\gamma(-1)=\gamma(1)$. לכן "פחות מ-$2\pi$" אינו מספיק. (ו-$\pi$ הדוק: טיפה צרה שפונה ב-$\pi+\varepsilon$ חותכת את עצמה.)
+
+**בדיקה**: איפה השתמשנו ב-$k\ge0$? בשלב 1. בלעדיו $\theta$ יכולה לרדת ולעלות, ופנייה כוללת קטנה לא מגבילה אותה באמצע: השמינייה חוצה את עצמה עם $\int k\,ds=0$.
 
 **מסקנה**: מסילה שפונה רק שמאלה, ובסך הכול בפחות מחצי סיבוב, אינה חותכת את עצמה.
 
@@ -531,41 +610,41 @@ $$
 
 </Example>
 
-<Example id="ex-1-5-6" title="השמינייה: שתי אונות, פנייה כוללת אפס">
+<Example id="ex-1-5-6" title="השמינייה: שתי אונות, אינדקס סיבוב אפס">
 
 השמינייה $\gamma(t)=(\sin t,\ \sin t\cos t)$, $0\le t\le2\pi$.
 
 (א) חשבו את $k$ ב-$t=\frac\pi2$ וב-$t=\frac{3\pi}2$, וקבעו לאן המסילה פונה בכל אונה.
 
-(ב) הראו ש-$\gamma(t+\pi)$ היא השיקוף של $\gamma(t)$ בציר $y$, והסיקו שהפנייה הכוללת של השמינייה היא $0$.
+(ב) הוכיחו ש-$\gamma(t+\pi)=S\gamma(t)$ עם $S(x,y)=(-x,y)$, והסיקו שאינדקס הסיבוב של השמינייה הוא $0$.
 
 <Solution>
 
 **נתון**: $\sin t\cos t=\frac12\sin2t$, ולכן $\gamma'=(\cos t,\ \cos2t)$ ו-$\gamma''=(-\sin t,\ -2\sin2t)$.
 
-**צריך למצוא**: $k(\frac\pi2)$, $k(\frac{3\pi}2)$, והפנייה הכוללת.
+**צריך למצוא**: $k(\frac\pi2)$, $k(\frac{3\pi}2)$, ואת אינדקס הסיבוב.
 
-**רעיון**: (א) נוסחת הדטרמיננטה. (ב) שיקוף הופך את $k$; אם החצי השני של המסילה הוא השיקוף של הראשון, עם אותו כיוון פרמטר, הפניות שלהם מתקזזות.
+**רעיון**: (א) משפט 1.5.8. (ב) שיקוף הופך את $k$ ושומר את המהירות; אם החצי השני של המסילה הוא השיקוף של הראשון, הפניות מתקזזות.
 
-**חישוב (א)**: ב-$t=\frac\pi2$: $\gamma'=(0,-1)$ ו-$\gamma''=(-1,0)$, ולכן $x'y''-y'x''=-1$; $\|\gamma'\|=1$, ו-$k=-1$. ב-$t=\frac{3\pi}2$: $\gamma'=(0,-1)$ ו-$\gamma''=(1,0)$, ולכן $x'y''-y'x''=1$ ו-$k=1$. באונה הימנית ($0<t<\pi$, $x>0$) המסילה פונה ימינה, בכיוון השעון; בשמאלית שמאלה, נגדו.
+**חישוב (א)**: ב-$t=\frac\pi2$: $\gamma'=(0,-1)$, $\gamma''=(-1,0)$, $\det(\gamma',\gamma'')=-1$, $\|\gamma'\|=1$: $k=-1$. ב-$t=\frac{3\pi}2$: $\gamma'=(0,-1)$, $\gamma''=(1,0)$: $k=1$. באונה הימנית ($0<t<\pi$) המסילה פונה ימינה; בשמאלית שמאלה.
 
-**הוכחה (ב)**: מנוסחאות החיבור, $\sin(t+\pi)=-\sin t$ ו-$\cos(t+\pi)=-\cos t$. לכן
+**הוכחה (ב)**: מנוסחאות החיבור, $\sin(t+\pi)=-\sin t$ ו-$\cos(t+\pi)=-\cos t$, ולכן
 
 $$
-\gamma(t+\pi)=(-\sin t,\ \sin t\cos t)=S\gamma(t),
+\gamma(t+\pi)=(-\sin t,\ \sin t\cos t)=S\gamma(t).
 $$
 
-כאשר $S(x,y)=(-x,y)$. על $[\pi,2\pi]$ המסילה היא $S\circ\gamma$ עם הפרמטר מוזז, באותה מהירות ($S$ שומר אורכים). לפי השיעור $k(t+\pi)=-k(t)$ ו-$\|\gamma'(t+\pi)\|=\|\gamma'(t)\|$, ולכן
+$\gamma$ סגורה ו-$\gamma'(0)=\gamma'(2\pi)=(1,1)$, ולכן גם בפרמטר אורך הקשת המשיק חוזר לכיוונו, ומשפט 1.5.14 חל. לפי טענה 1.5.15 (הזזת פרמטר, $\psi'=1$) וטענה 1.5.17 ($\det S=-1$): $k(t+\pi)=-k(t)$, ו-$\|\gamma'(t+\pi)\|=\|\gamma'(t)\|$. לכן
 
 $$
 \int_\pi^{2\pi}k\,\|\gamma'\|\,dt=-\int_0^\pi k\,\|\gamma'\|\,dt,
 $$
 
-והסכום על $[0,2\pi]$ הוא $0$.
+והפנייה הכוללת על $[0,2\pi]$ היא $0$: $m=0$. $\blacksquare$
 
-**בדיקה**: חישוב מספרי: על $[0,\pi]$ הפנייה היא $-\frac{3\pi}2\approx-4.712$. אכן, המשיק יוצא מהראשית בכיוון $(1,1)$, זווית $\frac\pi4$, וחוזר אליה בכיוון $(-1,1)$, ובדרך הסתובב ימינה: מ-$\frac\pi4$ ל-$\frac{3\pi}4-2\pi$, שינוי של $-\frac{3\pi}{2}$. באיור 1.5ב, בחרו "שמינייה" והביאו את $t$ לסוף: השינוי בזווית $0$.
+**בדיקה**: חישוב מספרי: על $[0,\pi]$ הפנייה היא $-\frac{3\pi}2\approx-4.712$: המשיק יוצא מהראשית בכיוון $(1,1)$ וחוזר אליה בכיוון $(-1,1)$, אחרי פנייה ימינה מ-$\frac\pi4$ ל-$\frac{3\pi}4-2\pi$.
 
-**מסקנה**: $k(\frac\pi2)=-1$, $k(\frac{3\pi}2)=1$; הפנייה הכוללת של השמינייה $0$, אף שהיא מסילה סגורה שהמשיק שלה חוזר לכיוונו.
+**מסקנה**: $k(\frac\pi2)=-1$, $k(\frac{3\pi}2)=1$; אינדקס הסיבוב של השמינייה $0$, אף שהיא סגורה והמשיק חוזר לכיוונו.
 
 </Solution>
 
@@ -584,25 +663,27 @@ $$
 
 <Watch id="v-1-5-signed-turning" title="עקמומיות מסומנת וסיבוב המשיקים, באנגלית (רשות)">
 
-סרטון מונפש קצר מסדרה שמלווה ספר על גאומטריה דיפרנציאלית. השוו לשתי הדרכים של השיעור לעקמומיות המסומנת: דרך הנורמל המסובב, $\frac{d\mathbf t}{ds}=k\,\mathbf n_s$, ודרך זווית המשיק, $k=\frac{d\theta}{ds}$. בדקו מה קורה לסימן כשהופכים את כיוון התנועה.
+סרטון מונפש קצר מסדרה שמלווה ספר על גאומטריה דיפרנציאלית. השוו לשתי הדרכים של השיעור לעקמומיות המסומנת: דרך הנורמל המסובב, $\mathbf t'=k\,\mathbf n_s$, ודרך זווית המשיק, $k=\frac{d\theta}{ds}$. בדקו מה קורה לסימן כשהופכים את כיוון התנועה.
 
 </Watch>
 
 <Summary title="מה למדנו">
 
-- **נורמל מסובב:** $\mathbf n_s=J\mathbf t$, המשיק מסובב ב-$+90^\circ$; מוגדר ורציף בכל נקודה רגולרית.
-- **עקמומיות מסומנת:** $\frac{d\mathbf t}{ds}=k\,\mathbf n_s$, ו-$|k|=\kappa$. $k>0$ בפנייה שמאלה ($\mathbf n=\mathbf n_s$), $k<0$ בפנייה ימינה ($\mathbf n=-\mathbf n_s$). בפרמטר כללי נוסחת הדטרמיננטה (בכרטיס למטה), ולגרף $\frac{f''}{(1+f'^2)^{3/2}}$.
-- **זווית המשיק:** יש $\theta$ רציפה עם $\mathbf t=(\cos\theta,\sin\theta)$, יחידה עד כדי $2\pi m$, ו-$k=\frac{d\theta}{ds}$.
-- **פנייה כוללת:** $\int_0^Lk\,ds=\theta(L)-\theta(0)$; כשהמשיק חוזר לכיוונו זו כפולה של $2\pi$ (אליפסה $2\pi$, מעגל בכיוון השעון $-2\pi$, שמינייה $0$). פנייה כוללת אפס אינה ישר.
-- **מה משנה את $k$:** היפוך כיוון: $k_\delta(s)=-k_\gamma(-s)$. תנועה קשיחה $Q\mathbf x+\mathbf c$: $\tilde k=(\det Q)\,k$ — הזזה וסיבוב שומרים, שיקוף הופך. הגדלה פי $c>0$ מחלקת ב-$c$.
+- **הגדרות 1.5.1–1.5.4:** $\mathbf n_s=J\mathbf t$; העקמומיות המסומנת היא הפונקציה הרציפה היחידה עם $\mathbf t'=k\,\mathbf n_s$, כלומר $k=\mathbf t'\cdot\mathbf n_s$.
+- **טענה 1.5.5:** $|k|=\kappa$; כש-$\kappa>0$, $\mathbf n=\operatorname{sign}(k)\,\mathbf n_s$. $k>0$ פנייה שמאלה.
+- **הגדרה 1.5.6, טענה 1.5.7, משפט 1.5.8:** בפרמטר כללי $k$ מוגדרת דרך אורך הקשת, לא תלויה בהחלפת פרמטר ששומרת כיוון, ושווה ל-$\frac{\det(\gamma',\gamma'')}{\|\gamma'\|^3}$.
+- **למות 1.5.9–1.5.10:** לפונקציה רציפה $\mathbf e:[a,b]\to S^1$ יש זווית רציפה, יחידה עד כדי $2\pi m$, וחלקה כמו $\mathbf e$.
+- **משפט 1.5.12, מסקנה 1.5.13:** $k=\frac{d\theta}{ds}$; $\int_0^Lk\,ds=\theta(L)-\theta(0)$.
+- **משפט 1.5.14:** במסילה סגורה עם $\mathbf t(0)=\mathbf t(L)$ הפנייה הכוללת היא $2\pi m$, $m$ אינדקס הסיבוב; בלי $\mathbf t(0)=\mathbf t(L)$ לא (הלולאה עם פינה: $\frac{3\pi}2$).
+- **טענות 1.5.15–1.5.18:** $k_{\gamma\circ\psi}=\operatorname{sign}(\psi')\,k_\gamma\circ\psi$; $k_{Q\gamma+\mathbf c}=(\det Q)\,k_\gamma$ (מ-$QJ=(\det Q)JQ$); $k_{\lambda\gamma}=\frac{k_\gamma}{|\lambda|}$. העתקה לינארית שאינה אורתוגונלית לא שומרת אפילו את $|k|$.
 
-<Formula tex="\frac{d\mathbf t}{ds}=k\,\mathbf n_s,\qquad \mathbf n_s=J\mathbf t,\qquad |k|=\kappa" label="עקמומיות מסומנת" />
+<Formula tex="\mathbf t'=k\,\mathbf n_s,\qquad \mathbf n_s=J\mathbf t,\qquad |k|=\kappa" label="עקמומיות מסומנת" />
 
 <Formula tex="k=\frac{x'y''-y'x''}{(x'^2+y'^2)^{3/2}}" label="עקמומיות מסומנת בפרמטר כללי" />
 
-<Formula tex="k=\frac{d\theta}{ds},\qquad \int_0^Lk\,ds=\theta(L)-\theta(0)" label="זווית המשיק והפנייה הכוללת" />
+<Formula tex="k=\frac{d\theta}{ds},\qquad \int_0^Lk\,ds=\theta(L)-\theta(0)=2\pi m" label="זווית המשיק, הפנייה הכוללת, ואינדקס הסיבוב של מסילה סגורה" />
 
-<Formula tex="\delta(s)=\gamma(-s):\ \ k_\delta(s)=-k_\gamma(-s),\qquad k_{Q\gamma+\mathbf c}=(\det Q)\,k_\gamma" label="היפוך כיוון ותנועה קשיחה" />
+<Formula tex="k_{\gamma\circ\psi}=\operatorname{sign}(\psi')\,k_\gamma\circ\psi,\qquad k_{Q\gamma+\mathbf c}=(\det Q)\,k_\gamma" label="החלפת פרמטר ותנועה קשיחה" />
 
 <Revisit id="pred-1-5" />
 

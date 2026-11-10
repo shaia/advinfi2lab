@@ -148,7 +148,7 @@ practice:
           ל-$a<0$, $x(t)=t^3+|a|t$ עולה ממש, ולכן המסילה חד-חד-ערכית. (ג) $\gamma_0=(t^3,\ t^2)$: החוד של $(t^2,t^3)$ עם הצירים מוחלפים.
       - kind: result
         text: >-
-          (א) $a\ne0$. (ב) $a>0$, בנקודה $(0,a)$. (ג) לא רגולרית ב-$0$, עם חוד.
+          (א) $a\ne0$. (ב) $a>0$, בנקודה $(0,a)$. (ג) לא רגולרית ב-$0$, ו-$t=0$ נקודת חוד (טענה 1.1.8: $\gamma_0''(0)=(0,2)\ne0$).
 
   - id: W-1.1-06
     level: mid
@@ -157,14 +157,14 @@ practice:
     prompt: >-
       $\gamma(t)=(t,\ t^3)$ ו-$\delta(u)=(u^3,\ u^9)$, שתיהן על $\mathbb R$.
 
-      (א) הראו שלשתיהן אותה תמונה.
+      (א) הוכיחו שלשתיהן אותה תמונה.
 
       (ב) חשבו את $\delta'(1)$ ואת $\gamma'(1)$. מה הקשר, ומה עם הישרים המשיקים ב-$(1,1)$?
 
-      (ג) האם $\delta$ רגולרית? האם $\delta$ היא החלפת פרמטר של $\gamma$ לפי ההגדרה?
+      (ג) האם $\delta$ רגולרית? הוכיחו ש-$\delta$ אינה שקולה ל-$\gamma$ (הגדרה 1.1.2), בשום החלפת פרמטר.
     answer: >-
-      (א) $\delta=\gamma\circ\varphi$ עם $\varphi(u)=u^3$ על. (ב) $\delta'(1)=(3,9)=3\gamma'(1)$, אותו ישר $y=3x-2$. (ג) לא ולא:
-      $\varphi'(0)=0$.
+      (א) $\delta=\gamma\circ\varphi$ עם $\varphi(u)=u^3$ על. (ב) $\delta'(1)=(3,9)=3\gamma'(1)$, אותו ישר $y=3x-2$. (ג) לא
+      רגולרית ב-$0$; לפי טענה 1.1.7 מסילה ששקולה למסילה רגולרית היא רגולרית.
     solution:
       - kind: step
         text: >-
@@ -175,12 +175,12 @@ practice:
           $\varphi'(1)=3$. שני הישרים עוברים ב-$(1,1)$ בכיוון $(1,3)$: $y=3x-2$.
       - kind: step
         text: >-
-          (ג) $\delta'(0)=(0,0)$, ולכן $\delta$ אינה רגולרית, אף ש-$\gamma$ רגולרית ושתיהן מציירות את אותו גרף חלק. ו-$\varphi'(0)=0$,
-          ולכן $\varphi$ אינה החלפת פרמטר לפי ההגדרה, שדורשת $\varphi'\ne0$. וגם אין החלפת פרמטר אחרת שעושה זאת: החלפת
-          פרמטר של מסילה רגולרית היא רגולרית, כי $\delta'=\varphi'\cdot\gamma'\circ\varphi\ne0$, ואילו $\delta'(0)=0$.
+          (ג) $\delta'(0)=(0,0)$, ולכן $\delta$ אינה רגולרית, אף ש-$\gamma$ רגולרית ($\gamma'=(1,3t^2)\ne0$) ושתיהן מציירות את אותו גרף.
+          ה-$\varphi$ של (א) אינה החלפת פרמטר, כי $\varphi'(0)=0$. ואין שום החלפת פרמטר מתאימה: אילו $\delta=\gamma\circ\psi$ עם
+          $\psi$ כמו בהגדרה 1.1.2, לפי טענה 1.1.7 $\delta$ הייתה רגולרית, כי $\gamma$ רגולרית; אבל $\delta'(0)=0$.
       - kind: result
         text: >-
-          רגולריות היא תכונה של הפרמטריזציה: אותה תמונה, אחת רגולרית והשנייה לא.
+          לשתיהן אותה תמונה, אבל הן אינן שקולות: רגולריות היא תכונה של מחלקת השקילות, והתמונה אינה קובעת אותה.
 
   - id: W-1.1-07
     level: mid
@@ -188,7 +188,7 @@ practice:
     prompt: >-
       $E$ היא החיתוך של הגליל $x^2+y^2=1$ עם המישור $x+z=1$.
 
-      (א) הראו שהתמונה של $\gamma(t)=(\cos t,\ \sin t,\ 1-\cos t)$, $t\in[0,2\pi]$, היא בדיוק $E$.
+      (א) הוכיחו שהתמונה של $\gamma(t)=(\cos t,\ \sin t,\ 1-\cos t)$, $t\in[0,2\pi]$, היא בדיוק $E$.
 
       (ב) מצאו את הישר המשיק ב-$t=\frac\pi2$.
     answer: >-
@@ -213,34 +213,59 @@ practice:
 
   - id: W-1.1-08
     level: exam
-    objectives: [OBJ-1.1-2]
+    qualitative: true
+    objectives: [OBJ-1.1-3, OBJ-1.1-2]
     prompt: >-
-      (א) תהי $\gamma:I\to\mathbb R^n$ גזירה ברציפות ו-$\gamma'(t_0)\ne0$ בנקודה פנימית $t_0$. הוכיחו שיש $\varepsilon>0$ כך ש-$\gamma$
-      חד-חד-ערכית על $(t_0-\varepsilon,\ t_0+\varepsilon)$.
+      תהי $\gamma:I\to\mathbb R^n$ מסילה רגולרית מסדר $C^1$ על קטע $I$, ו-$\mathbf p\in\mathbb R^n$. נניח שכל הישרים המשיקים
+      של $\gamma$ עוברים דרך $\mathbf p$.
 
-      (ב) הראו בדוגמה שמסילה רגולרית על כל $\mathbb R$ אינה בהכרח חד-חד-ערכית.
+      (א) הוכיחו: על כל קטע $J\subseteq I$ שבו $\gamma(t)\ne\mathbf p$, הווקטור $\mathbf e(t)=\frac{\gamma(t)-\mathbf p}{\|\gamma(t)-\mathbf p\|}$
+      קבוע.
+
+      (ב) הוכיחו שהתמונה של $\gamma$ מוכלת בישר אחד שעובר דרך $\mathbf p$.
     answer: >-
-      (א) רכיב אחד עם נגזרת שאינה אפס מונוטוני ממש ליד $t_0$. (ב) $(t^3-t,\ t^2)$: $\gamma(-1)=\gamma(1)$.
+      (א) $\mathbf e'$ הוא הרכיב של $\gamma'$ הניצב ל-$\mathbf e$, חלקי המרחק, והוא אפס. (ב) בכל נקודה שבה $\gamma=\mathbf p$
+      הכיוון $\mathbf e$ מתהפך משני צדיה על אותו ישר, ומסקנה 1.1.10 מבטיחה שיש רק מספר סופי של נקודות כאלה בכל תת-קטע סגור.
     solution:
       - kind: idea
         text: >-
-          מספיק רכיב אחד חד-חד-ערכי: אם $x_k(t)\ne x_k(s)$ אז $\gamma(t)\ne\gamma(s)$. רכיב עם נגזרת שאינה אפס הוא מונוטוני ממש ליד הנקודה.
+          "הישר המשיק עובר ב-$\mathbf p$" פירושו ש-$\gamma(t)-\mathbf p$ מקביל ל-$\gamma'(t)$. אז הכיוון מ-$\mathbf p$ אל $\gamma(t)$
+          לא מסתובב, והנקודות שבהן $\gamma=\mathbf p$ הן מבודדות, ושם הכיוון רק מתהפך.
       - kind: step
         text: >-
-          $\gamma'(t_0)\ne0$, ולכן יש רכיב $k$ עם $x_k'(t_0)\ne0$. $x_k'$ רציפה, ולכן יש $\varepsilon>0$ שבו $x_k'\ne0$ על כל
-          $J=(t_0-\varepsilon,\ t_0+\varepsilon)$, ולפי ערך הביניים היא שומרת שם על סימן.
+          (א) $\mathbf p=\gamma(t)+\lambda\gamma'(t)$ לאיזה $\lambda$. על $J$, $\gamma(t)\ne\mathbf p$, ולכן $\lambda\ne0$ ו-$\gamma'(t)=\mu(t)\,\mathbf e(t)$
+          עם $\mu(t)$ ממשי.
+      - kind: computation
+        text: >-
+          נסמן $\rho=\|\gamma-\mathbf p\|>0$ על $J$. $\rho^2$ מסדר $C^1$, ולכן גם $\rho$, ומגזירת $\rho^2$: $\rho'=\mathbf e\cdot\gamma'$. לכן
+          $$\mathbf e'=\frac{\gamma'}{\rho}-\frac{(\gamma-\mathbf p)\,\rho'}{\rho^2}=\frac{\gamma'-(\mathbf e\cdot\gamma')\,\mathbf e}{\rho}.$$
       - kind: step
         text: >-
-          לכן $x_k$ מונוטונית ממש על $J$. אם $t\ne s$ ב-$J$, אז $x_k(t)\ne x_k(s)$, ולכן $\gamma(t)\ne\gamma(s)$.
+          מציבים $\gamma'=\mu\mathbf e$ ו-$\mathbf e\cdot\mathbf e=1$: המונה הוא $\mu\mathbf e-\mu\mathbf e=0$. אז $\mathbf e'\equiv0$ על הקטע $J$,
+          ו-$\mathbf e$ קבוע.
       - kind: step
         text: >-
-          (ב) $\gamma(t)=(t^3-t,\ t^2)$ רגולרית ($\gamma'=(3t^2-1,\ 2t)$ לא מתאפס), ו-$\gamma(-1)=\gamma(1)=(0,1)$.
+          (ב) תהי $Z=\{t\in I:\ \gamma(t)=\mathbf p\}$. לפי מסקנה 1.1.10 כל $t_1\in Z$ מבודדת ב-$Z$, ו-$Z$ סגורה ב-$I$ (רציפות);
+          לכן בכל תת-קטע סגור וחסום של $I$ יש רק מספר סופי של נקודות מ-$Z$ (אחרת הייתה להן נקודת הצטברות ב-$Z$, לפי
+          בולצאנו-ויירשטראס).
+      - kind: step
+        text: >-
+          תהי $t_1\in Z$ פנימית, ונסמן $\mathbf u=\frac{\gamma'(t_1)}{\|\gamma'(t_1)\|}$. כש-$t\to t_1$,
+          $\frac{\gamma(t)-\mathbf p}{t-t_1}\to\gamma'(t_1)\ne0$, ולכן $\mathbf e(t)\to\pm\mathbf u$ כש-$t\to t_1^{\pm}$. לפי (א)
+          $\mathbf e$ קבוע על הקטעים שמשני צדי $t_1$, ולכן הוא $-\mathbf u$ משמאל ו-$+\mathbf u$ מימין: שני הקטעים מצוירים על
+          הישר $\mathbf p+\mathbb R\mathbf u$.
+      - kind: step
+        text: >-
+          כל שני רכיבים של $I\setminus Z$ מופרדים במספר סופי של נקודות מ-$Z$, ולכן משרשרת הצעד הקודם כולם על אותו ישר;
+          ונקודות $Z$ עצמן הולכות ל-$\mathbf p$, שעל הישר. אם $Z=\emptyset$, $I$ הוא קטע אחד ו-(א) מספיק.
       - kind: check
         text: >-
-          (ב) לא סותרת את (א): (א) נותנת חד-חד-ערכיות רק על קטע קטן סביב כל נקודה, ו-$-1$, $1$ אינן באותו קטע כזה.
+          $\gamma(t)=(1+t+t^3,\ 2+2(t+t^3))$, $\mathbf p=(1,2)$: $\gamma'=(1+3t^2)(1,2)\ne0$, וכל הישרים המשיקים הם הישר
+          $y=2x$, שעובר ב-$\mathbf p$. $\gamma(0)=\mathbf p$, והכיוון מ-$\mathbf p$ מתהפך שם, כמו בצעד השני של (ב). מספרית, הדטרמיננטה
+          של $\gamma-\mathbf p$ ו-$\gamma'$ יוצאת $0$ ב-$t=-1,\ 0.5,\ 2$.
       - kind: result
         text: >-
-          רגולריות נותנת חד-חד-ערכיות מקומית, לא גלובלית.
+          (א) $\mathbf e$ קבוע על כל קטע שבו $\gamma\ne\mathbf p$. (ב) $\gamma(I)$ מוכלת בישר דרך $\mathbf p$.
 
   - id: W-1.1-09
     level: exam
@@ -262,6 +287,10 @@ practice:
       - kind: computation
         text: >-
           מפשטים: $-2s^2+ts+t^2=0$, כלומר $(2s+t)(s-t)=0$. כש-$s\ne t$: $s=-\frac t2$.
+      - kind: step
+        text: >-
+          מערכי פרמטר לנקודות: $\gamma$ חד-חד-ערכית, כי הרכיב $t^3$ חד-חד-ערכי. לכן כל נקודה של התמונה היא $\gamma(s)$ לערך
+          $s$ יחיד, וערך הפרמטר היחיד $s=-\frac t2\ne t$ נותן נקודה אחת בדיוק, שונה מ-$\gamma(t)$.
       - kind: check
         text: >-
           ב-$t=2$: הישר המשיק הוא $y=3x-4$, והנקודה השנייה היא $\gamma(-1)=(1,-1)$. אכן $3\cdot1-4=-1$.
@@ -274,29 +303,50 @@ practice:
     qualitative: true
     objectives: [OBJ-1.1-1]
     prompt: >-
-      (א) הוכיחו: אם $\delta=\gamma\circ\varphi$ החלפת פרמטר, אז לכל נקודה $P$ מספר ערכי $u$ עם $\delta(u)=P$ שווה למספר ערכי $t$ עם
-      $\gamma(t)=P$.
+      יהיו $\gamma:[a,b]\to\mathbb R^n$ ו-$\delta:[c,d]\to\mathbb R^n$ מסילות מסדר $C^1$ עם $\delta=\gamma\circ\varphi$ כמו בהגדרה 1.1.2.
 
-      (ב) הסיקו ש-$(\cos 2t,\ \sin 2t)$ על $[0,2\pi]$ אינה החלפת פרמטר של $(\cos t,\ \sin t)$ על $[0,2\pi]$, אף שלשתיהן אותה תמונה.
+      (א) הוכיחו: אם $\varphi'>0$ אז $\varphi(c)=a$ ו-$\varphi(d)=b$, ואם $\varphi'<0$ אז $\varphi(c)=b$ ו-$\varphi(d)=a$. הסיקו
+      ש-$\delta(c)\in\{\gamma(a),\ \gamma(b)\}$.
 
-      (ג) הראו ש-$(\cos t,\ -\sin t)$ על $[0,2\pi]$ כן החלפת פרמטר שלה.
+      (ב) $\gamma(t)=(\cos t,\ \sin t)$ ו-$\sigma(t)=(-\sin t,\ \cos t)$, שתיהן על $[0,2\pi]$. הוכיחו שלשתיהן אותה תמונה, וש-$\sigma$
+      אינה שקולה ל-$\gamma$.
+
+      (ג) האם $\sigma$ שקולה לצמצום של $(\cos t,\ \sin t)$ לקטע $[\frac\pi2,\ \frac{5\pi}2]$?
     answer: >-
-      (א) $\varphi$ חד-חד-ערכית ועל. (ב) $(0,1)$ מתקבלת פעמיים מול פעם אחת. (ג) $\varphi(u)=2\pi-u$.
+      (א) $\varphi$ מונוטונית ממש ועל $[a,b]$. (ב) מעגל היחידה; $\sigma(0)=(0,1)$ אבל $\gamma(0)=\gamma(2\pi)=(1,0)$. (ג) כן, עם
+      $\varphi(u)=u+\frac\pi2$.
     solution:
+      - kind: idea
+        text: >-
+          החלפת פרמטר היא מונוטונית ממש ועל, ולכן מעבירה קצוות לקצוות. נקודת ההתחלה של מסילה על קטע סגור היא חלק מהמסילה,
+          ומחלקת השקילות זוכרת אותה (עד כדי היפוך כיוון).
       - kind: step
         text: >-
-          (א) $\varphi:J\to I$ על, ו-$\varphi'\ne0$ גורר מונוטוניות ממש, ולכן היא חד-חד-ערכית. לכן $u\mapsto\varphi(u)$ היא התאמה חד-חד-ערכית ועל בין
-          $\{u: \delta(u)=P\}$ לבין $\{t: \gamma(t)=P\}$, כי $\delta(u)=P$ אם ורק אם $\gamma(\varphi(u))=P$.
-      - kind: computation
-        text: >-
-          (ב) $(\cos2t,\ \sin2t)=(0,1)$ כש-$2t\in\{\frac\pi2,\ \frac{5\pi}2\}$, כלומר ב-$t=\frac\pi4$ וב-$t=\frac{5\pi}4$: פעמיים.
-          ו-$(\cos t,\ \sin t)=(0,1)$ רק ב-$t=\frac\pi2$. לפי (א) אין החלפת פרמטר.
+          (א) לפי למה 1.1.3, $\varphi$ מונוטונית ממש. נניח $\varphi'>0$, כלומר $\varphi$ עולה ממש. $\varphi$ על $[a,b]$, ולכן יש $u_0$ עם
+          $\varphi(u_0)=a$; אבל $\varphi(c)\le\varphi(u_0)=a$, ו-$\varphi(c)\in[a,b]$, ולכן $\varphi(c)=a$. ויש $u_1$ עם $\varphi(u_1)=b$;
+          אבל $\varphi(d)\ge\varphi(u_1)=b$, ו-$\varphi(d)\in[a,b]$, ולכן $\varphi(d)=b$.
+          כש-$\varphi'<0$, $\varphi$ יורדת ממש: $\varphi(c)\ge\varphi(u_1)=b$ ו-$\varphi(d)\le\varphi(u_0)=a$, ולכן $\varphi(c)=b$ ו-$\varphi(d)=a$.
       - kind: step
         text: >-
-          (ג) $\varphi(u)=2\pi-u$ מעבירה את $[0,2\pi]$ על עצמו, עם $\varphi'=-1\ne0$, ו-$$(\cos(2\pi-u),\ \sin(2\pi-u))=(\cos u,\ -\sin u)$$.
+          לכן $\delta(c)=\gamma(\varphi(c))\in\{\gamma(a),\ \gamma(b)\}$.
+      - kind: step
+        text: >-
+          (ב) $\sigma(t)=\big(\cos(t+\frac\pi2),\ \sin(t+\frac\pi2)\big)$, ו-$t+\frac\pi2$ עובר על $[\frac\pi2,\ \frac{5\pi}2]$, קטע באורך $2\pi$:
+          כל זווית מתקבלת, ולכן $\sigma([0,2\pi])$ הוא מעגל היחידה, כמו $\gamma([0,2\pi])$.
+      - kind: step
+        text: >-
+          אילו $\sigma=\gamma\circ\varphi$, לפי (א) $\sigma(0)\in\{\gamma(0),\ \gamma(2\pi)\}=\{(1,0)\}$. אבל $\sigma(0)=(0,1)$: סתירה.
+      - kind: step
+        text: >-
+          (ג) כן: $\varphi(u)=u+\frac\pi2$ מעבירה את $[0,2\pi]$ על $[\frac\pi2,\ \frac{5\pi}2]$, חד-חד-ערכית, מסדר $C^\infty$, עם
+          $\varphi'=1$, ו-$\sigma(u)=(\cos\varphi(u),\ \sin\varphi(u))$.
+      - kind: check
+        text: >-
+          גם מספר המעברים (טענה 1.1.5) מפריד: $\gamma$ עוברת ב-$(1,0)$ פעמיים ו-$\sigma$ פעם אחת. ו-$\sigma(\frac\pi2)$ היא
+          $(-1,\ 0)$, כצפוי מסיבוב ברבע.
       - kind: result
         text: >-
-          מספר המעברים בכל נקודה נשמר בהחלפת פרמטר, ולכן "אותה תמונה" לא מספיק כדי להיות החלפת פרמטר.
+          (א) קצוות עוברים לקצוות. (ב) אותה תמונה, לא שקולות. (ג) שקולה לצמצום על $[\frac\pi2,\ \frac{5\pi}2]$.
 challenge:
   - id: W-1.1-c1
     stars: 1
@@ -368,7 +418,8 @@ challenge:
           שאורכו $1$.
       - kind: check
         text: >-
-          מספרית, ב-$t=0.4,\ 1.1,\ 2.5$ האורך יוצא $1$. ב-$t=\frac\pi2$ הנקודה $(1,0)$ היא חוד של הטרקטריקס, ושם אין ישר משיק.
+          מספרית, ב-$t=0.4,\ 1.1,\ 2.5$ האורך יוצא $1$. ב-$t=\frac\pi2$, $\alpha'=0$ ו-$\alpha''(\frac\pi2)=(-1,\ 0)\ne0$, ולכן לפי טענה 1.1.8
+          $t=\frac\pi2$ נקודת חוד, ב-$(1,0)$; שם אין ישר משיק.
       - kind: result
         text: >-
           (א) רגולרית פרט ל-$t=\frac\pi2$. (ב) קטע המשיק עד ציר ה-$y$ תמיד באורך $1$.

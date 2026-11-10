@@ -23,6 +23,14 @@
     מקיימת $\|\tilde\gamma'(s)\|=1$: כל קטע של הפרמטר באורך $\ell$ מתאים לקשת באורך $\ell$. נקרא גם הפרמטר
     הטבעי.
   lesson: '1.2'
+- id: partition-mesh
+  term: פרמטר החלוקה
+  en: mesh of a partition
+  symbol: '\lambda(P)=\max_i\,(t_i-t_{i-1})'
+  definition: >-
+    האורך של הקטע הארוך ביותר בחלוקה $P:\ a=t_0<\dots<t_m=b$. כש-$\lambda(P)\to0$, סכומי רימן של פונקציה רציפה שואפים
+    לאינטגרל שלה (אינפי 1), ואורכי הקווים השבורים במסילה גזירה ברציפות שואפים לאורך שלה.
+  lesson: '1.2'
 - id: rectifiable-curve
   term: מסילה בעלת אורך
   en: rectifiable curve

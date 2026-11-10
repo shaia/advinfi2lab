@@ -1,7 +1,7 @@
 # Workbook of lesson 1.3 — the unit tangent, curvature and the principal normal.
 # Objectives (src/course.ts):
 #   OBJ-1.3-1  curvature as ‖dt/ds‖; the circle and the line
-#   OBJ-1.3-2  the cross-product formula in a general parameter, and why the cube
+#   OBJ-1.3-2  the cross-product formula in a general parameter, and why the cube (the Rⁿ formula is now theorem 1.3.10 of the lesson)
 #   OBJ-1.3-3  the principal normal where κ > 0, and why it is perpendicular to t
 # Every number recomputed with src/math/geometry.ts (curvature, frenet, d1, d2) on 2026-11-09.
 lesson: '1.3'
@@ -125,9 +125,10 @@ practice:
 
       (ב) חשבו את $\kappa(t)$ בנקודות הרגולריות, ואת ערכה ב-$t=\frac\pi4$.
 
-      (ג) מה קורה ל-$\kappa$ כשמתקרבים לנקודה לא רגולרית?
+      (ג) הוכיחו ש-$\kappa(t)\ge\frac23$ בכל נקודה רגולרית, עם שוויון בדיוק כש-$t=\frac\pi4+\frac{k\pi}2$, ושבכל נקודה לא רגולרית
+      $t_0$ מתקיים $\kappa(t)\to\infty$ כש-$t\to t_0$ (מהצדדים שבתחום).
     answer: >-
-      (א) $t=0,\frac\pi2,\pi,\frac{3\pi}2,2\pi$. (ב) $\kappa(t)=\frac{2}{3|\sin2t|}$, ו-$\kappa(\frac\pi4)=\frac23$. (ג) $\kappa\to\infty$.
+      (א) $t=0,\frac\pi2,\pi,\frac{3\pi}2,2\pi$. (ב) $\kappa(t)=\frac{2}{3|\sin2t|}$, ו-$\kappa(\frac\pi4)=\frac23$. (ג) $|\sin2t|\le1$, ושוויון רק ב-$2t=\frac\pi2+k\pi$; ו-$\sin2t\to0$ בנקודות הלא רגולריות.
     solution:
       - kind: computation
         text: >-
@@ -144,13 +145,19 @@ practice:
           (ב) $$\kappa=\frac{9\sin^2t\cos^2t}{27|\sin t\cos t|^3}=\frac{1}{3|\sin t\cos t|}=\frac{2}{3|\sin2t|}$$. ב-$t=\frac\pi4$: $\frac23$.
       - kind: step
         text: >-
-          (ג) כש-$t\to\frac{k\pi}2$, $\sin2t\to0$ ו-$\kappa\to\infty$: המסילה מסתובבת בחדות סביב החוד.
+          (ג) **החסם.** בנקודה רגולרית $0<|\sin2t|\le1$, ולכן $\kappa(t)=\frac{2}{3|\sin2t|}\ge\frac23$. שוויון אם ורק אם $|\sin2t|=1$,
+          כלומר $2t=\frac\pi2+k\pi$, כלומר $t=\frac\pi4+\frac{k\pi}2$.
+      - kind: step
+        text: >-
+          (ג) **התבדרות.** בנקודה לא רגולרית $t_0=\frac{k\pi}2$ מתקיים $\sin2t_0=0$. $\sin2t$ רציפה, ולכן לכל $M>0$ יש $\eta>0$ עם
+          $0<|\sin2t|<\frac{2}{3M}$ ל-$0<|t-t_0|<\eta$ (בתוך התחום; האפסים של $\sin2t$ מבודדים, במרחק $\frac\pi2$ זה מזה), ושם
+          $\kappa(t)>M$. כלומר $\kappa(t)\to\infty$: המסילה מסתובבת בחדות סביב החוד.
       - kind: check
         text: >-
           חישוב מספרי: $\kappa(0.3)\approx1.1807=\frac{2}{3\sin0.6}$. העקמומיות המינימלית $\frac23$ באמצע כל קשת, ב-$t=\frac\pi4$ ובסימטריות.
       - kind: result
         text: >-
-          (א) ארבעת החודים. (ב) $\kappa(t)=\frac{2}{3|\sin2t|}$, $\kappa(\frac\pi4)=\frac23$. (ג) $\kappa\to\infty$.
+          (א) ארבעת החודים. (ב) $\kappa(t)=\frac{2}{3|\sin2t|}$, $\kappa(\frac\pi4)=\frac23$. (ג) $\kappa\ge\frac23$, שוויון באמצעי הקשתות, ו-$\kappa\to\infty$ בחודים.
 
   - id: W-1.3-06
     level: mid
@@ -186,9 +193,9 @@ practice:
     qualitative: true
     objectives: [OBJ-1.3-1]
     prompt: >-
-      נתונה $\gamma(t)=(2\cos t^3,\ 2\sin t^3)$, $0<t<2$.
+      נתונה $\gamma(t)=(2\cos t^3,\ 2\sin t^3)$, $0\le t<2$; היא רגולרית ל-$t>0$.
 
-      (א) מצאו את פונקציית אורך הקשת $s(t)=\int_0^t\|\gamma'\|$, כתבו את $\gamma$ בפרמטר $s$, וחשבו את העקמומיות מההגדרה.
+      (א) מצאו את פונקציית אורך הקשת $s(t)=\int_0^t\|\gamma'\|$, כתבו את $\gamma$ על $(0,2)$ בפרמטר $s$, וחשבו את העקמומיות מההגדרה.
 
       (ב) חשבו את $\|\gamma''(1)\|$. האם $\kappa(1)=\|\gamma''(1)\|$?
     answer: >-
@@ -214,42 +221,48 @@ practice:
 
   - id: W-1.3-08
     level: exam
-    objectives: [OBJ-1.3-2]
+    objectives: [OBJ-1.3-1]
     prompt: >-
-      במרחב $\mathbb R^n$ אין מכפלה וקטורית, אבל יש נוסחה בלעדיה.
+      העקמומיות היא "זווית לכל יחידת אורך". הוכיחו את זה. תהי $\gamma:I\to\mathbb R^n$ מסדר $C^2$ עם
+      $\|\gamma'\|\equiv1$, ויהי $s_0$ נקודה פנימית של $I$. לכל $h\ne0$ קטן, תהי $\theta(h)\in[0,\pi]$ הזווית
+      בין $\mathbf t(s_0)$ ל-$\mathbf t(s_0+h)$. הוכיחו:
 
-      (א) תהי $\gamma:I\to\mathbb R^n$ רגולרית מסדר $C^2$ ו-$v=\|\gamma'\|$. הוכיחו:
-      $\kappa^2=\frac{\|\gamma'\|^2\|\gamma''\|^2-(\gamma'\cdot\gamma'')^2}{\|\gamma'\|^6}$.
-
-      (ב) חשבו את העקמומיות של $\gamma(t)=(\cos t,\ \sin t,\ \cos t,\ \sin t)$ ב-$\mathbb R^4$, ופרשו את התוצאה.
+      $$\lim_{h\to0}\frac{\theta(h)}{|h|}=\kappa(s_0).$$
     answer: >-
-      (א) מהפירוק $\gamma''=v'\mathbf t+\kappa v^2\mathbf n$. (ב) $\kappa\equiv\frac{1}{\sqrt2}$: מעגל ברדיוס $\sqrt2$.
+      $\|\mathbf t(s_0+h)-\mathbf t(s_0)\|=2\sin\frac{\theta(h)}2$, וזה שואף ל-$|h|\,\kappa(s_0)$ עד כדי $o(h)$.
     solution:
       - kind: idea
         text: >-
-          הפירוק $\gamma''=v'\,\mathbf t+\kappa v^2\,\mathbf n$ נכון בכל $\mathbb R^n$ (ההוכחה בשיעור לא השתמשה במכפלה הווקטורית עד שלב 4).
-          $\mathbf t,\ \mathbf n$ אורתונורמליים, ולכן אפשר לחשב אורכים ומכפלות פנימיות כמו פיתגורס.
+          המרחק בין שני וקטורי יחידה הוא אורך המיתר במעגל היחידה, $2\sin\frac\theta2$, והמיתר והקשת שקולים כשהזווית קטנה.
+          המיתר, מחולק ב-$|h|$, הוא מנת ההפרשים של $\mathbf t$.
       - kind: step
         text: >-
-          (א) אם $\kappa=0$ אז $\gamma''=v'\mathbf t$ ו-$\gamma'=v\mathbf t$ מקבילים, והמונה אפס: הנוסחה נכונה. אחרת:
-          $\|\gamma''\|^2=v'^2+\kappa^2v^4$ ו-$$\gamma'\cdot\gamma''=v\mathbf t\cdot(v'\mathbf t+\kappa v^2\mathbf n)=vv'$$.
-      - kind: computation
+          לשני וקטורי יחידה $\mathbf a,\ \mathbf b$ עם זווית $\theta\in[0,\pi]$:
+          $$\|\mathbf b-\mathbf a\|^2=2-2\,\mathbf a\cdot\mathbf b=2-2\cos\theta=4\sin^2\tfrac\theta2,$$
+          ו-$\frac\theta2\in[0,\frac\pi2]$, כך ש-$\sin\frac\theta2\ge0$ ו-$\|\mathbf b-\mathbf a\|=2\sin\frac\theta2$.
+      - kind: step
         text: >-
-          לכן $$\|\gamma'\|^2\|\gamma''\|^2-(\gamma'\cdot\gamma'')^2=v^2(v'^2+\kappa^2v^4)-v^2v'^2=\kappa^2v^6$$, ומחלקים ב-$v^6$.
+          $\mathbf t=\gamma'$ גזירה ב-$s_0$ ($\gamma$ מסדר $C^2$), ולכן $\frac{\mathbf t(s_0+h)-\mathbf t(s_0)}{h}\to\mathbf t'(s_0)$, ומרציפות
+          הנורמה $\frac{\|\mathbf t(s_0+h)-\mathbf t(s_0)\|}{|h|}\to\|\mathbf t'(s_0)\|=\kappa(s_0)$.
+      - kind: step
+        text: >-
+          $\theta(h)\to0$: $\theta(h)=\arccos\big(\mathbf t(s_0)\cdot\mathbf t(s_0+h)\big)$, $\mathbf t$ רציפה, $\arccos$ רציפה על
+          $[-1,1]$, ו-$\arccos1=0$.
+      - kind: definition
+        text: >-
+          נגדיר $g(\theta)=\frac{\theta}{2\sin(\theta/2)}$ ל-$\theta\in(0,\pi]$ ו-$g(0)=1$. לפי $\lim_{x\to0}\frac{\sin x}{x}=1$, $g$ רציפה על $[0,\pi]$.
+      - kind: step
+        text: >-
+          לכל $h\ne0$ קטן:
+          $$\frac{\theta(h)}{|h|}=g(\theta(h))\cdot\frac{\|\mathbf t(s_0+h)-\mathbf t(s_0)\|}{|h|},$$
+          גם כש-$\theta(h)=0$ (אז שני האגפים אפס). לפי הרציפות של $g$ ב-$0$ והשלבים הקודמים, אגף ימין שואף ל-$1\cdot\kappa(s_0)$.
       - kind: check
         text: >-
-          ב-$\mathbb R^3$ זו בדיוק הנוסחה עם המכפלה הווקטורית, לפי הזהות $$\|\mathbf a\times\mathbf b\|^2=\|\mathbf a\|^2\|\mathbf b\|^2-(\mathbf a\cdot\mathbf b)^2$$.
-      - kind: computation
-        text: >-
-          (ב) $$\gamma'=(-\sin t,\cos t,-\sin t,\cos t)$$, $\|\gamma'\|^2=2$; $$\gamma''=-(\cos t,\sin t,\cos t,\sin t)$$, $\|\gamma''\|^2=2$; $\gamma'\cdot\gamma''=0$.
-          לכן $\kappa^2=\frac{2\cdot2-0}{8}=\frac12$.
-      - kind: step
-        text: >-
-          פירוש: $$\gamma(t)=\sqrt2\big(\cos t\,\mathbf e_1+\sin t\,\mathbf e_2\big)$$ עם $\mathbf e_1=\frac{1}{\sqrt2}(1,0,1,0)$ ו-$\mathbf e_2=\frac{1}{\sqrt2}(0,1,0,1)$ אורתונורמליים:
-          מעגל ברדיוס $\sqrt2$ במישור שהם פורשים, ו-$\kappa=\frac{1}{\sqrt2}$ כמו בדוגמה 1 של השיעור.
+          מעגל ברדיוס $r$ בפרמטר אורך הקשת: $\mathbf t$ מסתובב בזווית $\frac{|h|}r$ בדיוק (כש-$|h|<\pi r$), והמנה היא $\frac1r=\kappa$.
+          ובאליפסה $(2\cos t,\ \sin t)$ ליד $t=1$, חישוב מספרי של הזווית חלקי אורך הקשת נותן $0.36215$, כמו $\kappa$ שם (עדות, לא הוכחה).
       - kind: result
         text: >-
-          (א) הוכח. (ב) $\kappa\equiv\frac{1}{\sqrt2}$.
+          $\theta(h)/|h|\to\kappa(s_0)$: העקמומיות היא קצב הסיבוב של המשיק, ברדיאנים ליחידת אורך.
 
   - id: W-1.3-09
     level: exam
@@ -267,7 +280,8 @@ practice:
     solution:
       - kind: step
         text: >-
-          (א) $\mathbf n\cdot\mathbf t\equiv0$; גוזרים: $\mathbf n'\cdot\mathbf t+\mathbf n\cdot\mathbf t'=0$, ו-$\mathbf t'=\kappa\mathbf n$, ולכן $\mathbf n'\cdot\mathbf t=-\kappa\|\mathbf n\|^2=-\kappa$.
+          (א) $\gamma$ מסדר $C^3$ ו-$\kappa>0$, ולכן לפי טענה 1.3.15 $\mathbf n$ מסדר $C^1$, וגזירת $\mathbf n$ מוצדקת.
+          $\mathbf n\cdot\mathbf t\equiv0$; גוזרים: $\mathbf n'\cdot\mathbf t+\mathbf n\cdot\mathbf t'=0$, ו-$\mathbf t'=\kappa\mathbf n$, ולכן $\mathbf n'\cdot\mathbf t=-\kappa\|\mathbf n\|^2=-\kappa$.
           ו-$\|\mathbf n\|\equiv1$, ולכן לפי הלמה $\mathbf n'\cdot\mathbf n=0$.
       - kind: step
         text: >-

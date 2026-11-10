@@ -363,10 +363,8 @@ for (const m of misconceptions) {
 
 /* -------------------------------------------------------------- lessons */
 
-const BEYOND_SYLLABUS = new Set(chapters.filter((c) => c.beyondSyllabus).map((c) => c.n));
-/** A lesson fits one sitting of DEFAULT_CAP minutes, worked examples included; per-chapter exceptions by the user's decision only. */
-const DEFAULT_CAP = 90;
-const MINUTES_CAP: Record<number, number> = {};
+// No time cap on a lesson (the user's decision, 2026-11-10: "no need for caps in advanced courses"); `minutes`
+// is the honest estimate and the schema only bounds it to 5–180.
 const TEMPLATE = ['Hook', 'Predict', 'Explore', 'Explain', 'Example', 'Check', 'Watch', 'Summary'];
 /** A prose line of MDX: Markdown joins it with its neighbours into one paragraph. */
 const prose = (s: string) => s.trim() !== '' && !/^\s*(<|\$\$|\||-|\*|#)/.test(s) && !s.includes('="') && !s.includes('$$');
@@ -415,11 +413,7 @@ for (const l of lessons) {
       if (!seenQ.has(qid)) fail(l.file, `<Check> asks for unknown question ${qid}`, true);
     }
   }
-  // A lesson fits one sitting, worked examples included; a chapter beyond the syllabus has no cap.
-  // A chapter whose honest times run over gets an entry in MINUTES_CAP, by the user's decision only.
-  const [chapter, n] = l.id.split('.').map(Number);
-  const cap = MINUTES_CAP[chapter] ?? DEFAULT_CAP;
-  if (!BEYOND_SYLLABUS.has(chapter) && l.minutes > cap) fail(l.file, `minutes: ${l.minutes} is over the ${cap}-minute cap of chapter ${chapter}`);
+  const n = Number(l.id.split('.')[1]);
   // Lessons sort by `order`; a renumbering once changed ids and left the old orders behind.
   if (l.order !== n) fail(l.file, `order: ${l.order} does not match the lesson number ${l.id}`);
   // Every worked example states its idea before the proof or the computation: the habit the course exists to build.

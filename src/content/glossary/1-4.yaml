@@ -21,6 +21,20 @@
     $\mathbf t$ ו-$\mathbf n$. זה המעגל היחיד שמתלכד עם המסילה עד סדר שני.
   reject: [מעגל נושק, מעגל אוסקולטורי]
   lesson: '1.4'
+- id: contact-of-order-k
+  term: מגע מסדר k
+  en: contact of order k
+  definition: >-
+    שתי מסילות בפרמטר אורך הקשת, $\gamma$ סביב $s_0$ ו-$c$ סביב $0$, עם $c(0)=\gamma(s_0)$, נמצאות במגע מסדר $k$ לפחות אם
+    $\|\gamma(s_0+h)-c(h)\|=o(h^k)$. למסילות מסדר $C^k$ זה שקול לשוויון הנגזרות עד סדר $k$ בנקודה.
+  lesson: '1.4'
+- id: normal-line
+  term: ישר נורמלי
+  en: normal line
+  definition: >-
+    במסילה מישורית רגולרית: הישר שעובר דרך $\gamma(s)$ בכיוון שניצב למשיק $\mathbf t(s)$, כלומר
+    $\{x:\ (x-\gamma(s))\cdot\mathbf t(s)=0\}$.
+  lesson: '1.4'
 - id: second-order-contact
   term: מגע מסדר שני
   en: second-order contact

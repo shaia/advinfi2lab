@@ -67,16 +67,23 @@ practice:
     level: basic
     objectives: [OBJ-1.5-2]
     prompt: >-
-      חשבו את $\int k\,ds$ לאורך הפרבולה $y=-x^2$ מ-$(-1,-1)$ עד $(1,-1)$, כשעוברים עליה משמאל לימין, בלי לחשב אינטגרל.
+      (א) הוכיחו: אם $f\in C^2[a,b]$ והגרף $(x,\ f(x))$ נעבר משמאל לימין, אז $\int k\,ds=\arctan f'(b)-\arctan f'(a)$.
+
+      (ב) חשבו בעזרת (א) את $\int k\,ds$ לאורך הפרבולה $y=-x^2$ מ-$(-1,-1)$ עד $(1,-1)$, בלי לחשב אינטגרל.
     answer: >-
-      $-2\arctan2\approx-2.2143$.
+      (א) $\theta=\arctan f'$ היא זווית משיק. (ב) $-2\arctan2\approx-2.2143$.
     solution:
       - kind: idea
         text: >-
-          $\int k\,ds$ הוא זווית המשיק בסוף פחות זווית המשיק בהתחלה, וזווית המשיק של גרף שנעבר משמאל לימין היא $\arctan f'$.
+          $\int k\,ds$ הוא זווית המשיק בסוף פחות זווית המשיק בהתחלה (מסקנה 1.5.13), וצריך רק למצוא זווית משיק רציפה של הגרף.
+      - kind: step
+        text: >-
+          (א) $\gamma'=(1,\ f')$, ולכן $\mathbf t=\frac{(1,\ f')}{\sqrt{1+f'^2}}$. עם $\theta=\arctan f'$, שערכיה ב-$(-\frac\pi2,\frac\pi2)$:
+          $\cos\theta=\frac{1}{\sqrt{1+f'^2}}$ ו-$\sin\theta=\frac{f'}{\sqrt{1+f'^2}}$, כלומר $\mathbf t=(\cos\theta,\ \sin\theta)$. $\theta$ רציפה (הרכבה של
+          רציפות), ולכן היא זווית משיק (הגדרה 1.5.11), ולפי מסקנה 1.5.13 $\int k\,ds=\theta(b)-\theta(a)$.
       - kind: computation
         text: >-
-          $f'(x)=-2x$, ולכן $\theta(x)=\arctan(-2x)$, פונקציה רציפה. $\theta(-1)=\arctan2$ ו-$\theta(1)=-\arctan2$.
+          (ב) $f'(x)=-2x$, ולכן $\theta(-1)=\arctan2$ ו-$\theta(1)=-\arctan2$.
       - kind: step
         text: >-
           $$\int k\,ds=-\arctan2-\arctan2=-2\arctan2$$.
@@ -85,7 +92,7 @@ practice:
           הפרבולה קעורה כלפי מטה ונעברת משמאל לימין, ולכן פונה ימינה כל הזמן: הסימן שלילי. וחישוב מספרי של האינטגרל נותן $-2.2143$.
       - kind: result
         text: >-
-          $-2\arctan2\approx-2.2143$.
+          (א) הוכח: $\theta=\arctan f'$ היא זווית משיק. (ב) $-2\arctan2\approx-2.2143$.
 
   - id: W-1.5-04
     level: mid
@@ -120,37 +127,44 @@ practice:
     qualitative: true
     objectives: [OBJ-1.5-3]
     prompt: >-
-      $\gamma$ מסילה מישורית רגולרית מסדר $C^2$ ו-$\varphi$ החלפת פרמטר. קבעו אם כל טענה נכונה, ונמקו.
+      $\gamma$ מסילה מישורית רגולרית מסדר $C^2$ ו-$A$ מטריצה הפיכה $2\times2$. הוכיחו או הפריכו, לפי הטענות של השיעור או
+      בדוגמה נגדית.
 
-      (א) אם $\varphi'>0$, אז $k_{\gamma\circ\varphi}(u)=k_\gamma(\varphi(u))$.
+      (א) $|k_{A\gamma}(t)|=|k_\gamma(t)|$ לכל $A$ הפיכה ולכל $t$.
 
-      (ב) אם $\varphi'<0$, אז $k_{\gamma\circ\varphi}(u)=-k_\gamma(\varphi(u))$.
+      (ב) עם $A=2I$: $k_{A\gamma}=\frac12k_\gamma$.
 
-      (ג) הסיבוב בחצי סיבוב, $(x,y)\mapsto(-x,-y)$, שומר את $k$.
+      (ג) עם $A=-I$: $k_{A\gamma}=k_\gamma$.
 
-      (ד) ההעתקה $(x,y)\mapsto(y,x)$ שומרת את $k$.
+      (ד) עם $A(x,y)=(y,x)$: $k_{A\gamma}=k_\gamma$.
     answer: >-
-      (א) נכון. (ב) נכון. (ג) נכון. (ד) לא נכון: זה שיקוף, והוא הופך את $k$.
+      (א) לא נכון: $(x,y)\mapsto(x,2y)$ על מעגל היחידה נותנת $k(0)=\frac14\ne1$. (ב) נכון. (ג) נכון. (ד) לא נכון: $k\mapsto-k$.
     solution:
       - kind: idea
         text: >-
-          נוסחת הדטרמיננטה: בהחלפת פרמטר המונה מקבל $\varphi'^3$ והמכנה $|\varphi'|^3$. ולתנועה קשיחה $\tilde k=(\det Q)\,k$.
+          למטריצה אורתוגונלית $k_{Q\gamma}=(\det Q)\,k_\gamma$ (טענה 1.5.17), ולהגדלה $k_{\lambda\gamma}=\frac{k_\gamma}{|\lambda|}$ (טענה 1.5.18). מטריצה שאינה מהסוגים האלה
+          לא מקבלת שום הבטחה, ולכן מחפשים לה דוגמה נגדית.
       - kind: computation
         text: >-
-          (א), (ב): $(\gamma\circ\varphi)'=\varphi'\gamma'$ ו-$(\gamma\circ\varphi)''=\varphi''\gamma'+\varphi'^2\gamma''$. במונה המחובר עם $\varphi''$ נעלם
-          (דטרמיננטה של וקטורים מקבילים), ונשאר $\varphi'^3(x'y''-y'x'')$. המכנה הוא $|\varphi'|^3(x'^2+y'^2)^{3/2}$, ולכן המנה מוכפלת ב-$\operatorname{sign}\varphi'$.
+          (א) $A(x,y)=(x,2y)$ ו-$\gamma=(\cos t,\ \sin t)$ עם $k_\gamma\equiv1$. אז $A\gamma=(\cos t,\ 2\sin t)$, וב-$t=0$ הנגזרות הן $(0,2)$ ו-$(-1,0)$:
+          $$k_{A\gamma}(0)=\frac{0\cdot0-2\cdot(-1)}{2^3}=\frac14\ne1.$$
+          הטענה לא נכונה.
       - kind: step
         text: >-
-          (ג) זו המטריצה $-I$, עם $\det(-I)=1$: סיבוב ב-$180^\circ$, ולכן $k$ נשמרת.
+          (ב) לפי טענה 1.5.18 עם $\lambda=2$: $k_{2\gamma}=\frac{k_\gamma}{2}$. נכון.
       - kind: step
         text: >-
-          (ד) $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ אורתוגונלית עם דטרמיננטה $-1$: השיקוף בישר $y=x$, ולכן $k\mapsto-k$.
+          (ג) $-I$ אורתוגונלית עם $\det(-I)=1$, ולפי טענה 1.5.17 (שעוברת לפרמטר כללי דרך הגדרה 1.5.6, כי $-I$ שומרת אורכים): $k_{-\gamma}=k_\gamma$. נכון.
+      - kind: step
+        text: >-
+          (ד) $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ אורתוגונלית עם דטרמיננטה $-1$, ולכן $k_{A\gamma}=-k_\gamma$. זה שווה ל-$k_\gamma$ רק איפה ש-$k_\gamma=0$;
+          במעגל היחידה $k_\gamma=1$ ו-$k_{A\gamma}=-1$. הטענה לא נכונה.
       - kind: check
         text: >-
-          (ד) על המעגל $(\cos t,\ \sin t)$, עם $k=1$: ההעתקה נותנת $(\sin t,\ \cos t)$, שנעבר בכיוון השעון, $k=-1$.
+          (א) ב-$t=\frac\pi2$ אותה אליפסה נותנת $k=2$: העתקה לינארית שאינה אורתוגונלית משנה את העקמומיות בצורה שונה בנקודות שונות, ולא רק בגורם קבוע.
       - kind: result
         text: >-
-          (א) נכון; (ב) נכון; (ג) נכון; (ד) לא נכון.
+          (א) לא נכון; (ב) נכון; (ג) נכון; (ד) לא נכון.
 
   - id: W-1.5-06
     level: mid
@@ -198,7 +212,7 @@ practice:
     solution:
       - kind: step
         text: >-
-          המסילה מחזורית, ולכן גם $\mathbf t=\gamma'$: $\mathbf t(L)=\mathbf t(0)$. לפי השיעור $\int_0^Lk\,ds=\theta(L)-\theta(0)$ הוא כפולה של $2\pi$.
+          המסילה מחזורית, ולכן גם $\mathbf t=\gamma'$: $\mathbf t(L)=\mathbf t(0)$. לפי משפט 1.5.14, $\int_0^Lk\,ds$ הוא כפולה של $2\pi$.
       - kind: step
         text: >-
           (א) $\pi$ אינו כפולה של $2\pi$, ולכן לא ייתכן.
@@ -218,37 +232,47 @@ practice:
 
   - id: W-1.5-08
     level: exam
+    qualitative: true
     objectives: [OBJ-1.5-2]
     prompt: >-
-      $\gamma$ מסילה סגורה בפרמטר אורך הקשת, באורך $L$, שהמשיק שלה חוזר לכיוונו: $\mathbf t(L)=\mathbf t(0)$. נניח $|k(s)|\le\frac1R$ לכל $s$.
+      $\gamma:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת, רגולרית, מסדר $C^2$ וסגורה: $\gamma(0)=\gamma(L)$.
 
-      (א) הוכיחו: אם $\int_0^Lk\,ds\ne0$, אז $L\ge2\pi R$.
+      (א) הוכיחו שלכל וקטור יחידה $\mathbf u$ יש $s$ עם $\mathbf t(s)\perp\mathbf u$.
 
-      (ב) הראו שבלי ההנחה $\int_0^Lk\,ds\ne0$ אי אפשר להסיק את (א) מהטיעון הזה: מצאו מסילה סגורה עם פנייה כוללת $0$.
+      (ב) נניח גם $\mathbf t(0)=\mathbf t(L)$, ושאינדקס הסיבוב $m\ne0$. הוכיחו שלכל וקטור יחידה $\mathbf w$ יש $s$ עם $\mathbf t(s)=\mathbf w$.
+
+      (ג) הראו שהמסקנה של (ב) לא נכונה לשמינייה $(\sin t,\ \sin t\cos t)$: המשיק שלה אף פעם אינו $(0,1)$.
     answer: >-
-      (א) $2\pi\le\int|k|\,ds\le\frac LR$. (ב) השמינייה.
+      (א) $\int_0^L\mathbf t\cdot\mathbf u\,ds=0$ ומשפט ערך הביניים. (ב) $\theta$ עוברת על קטע באורך $2\pi|m|\ge2\pi$. (ג) $\mathbf t=(0,1)$ דורש $\cos t=0$, ואז $\cos2t=-1<0$.
     solution:
       - kind: idea
         text: >-
-          הפנייה הכוללת של מסילה סגורה היא $2\pi m$, ואם היא אינה אפס, היא לפחות $2\pi$ בערך מוחלט. מצד שני היא חסומה על ידי העקמומיות המקסימלית כפול האורך.
+          (א) הממוצע של $\mathbf t$ על מסילה סגורה הוא אפס, ולכן $\mathbf t\cdot\mathbf u$ לא יכולה להיות חיובית בכל מקום. (ב) זווית משיק רציפה שמשתנה ב-$2\pi m$
+          עוברת, לפי משפט ערך הביניים, על כל הזוויות בקטע באורך $2\pi$.
       - kind: step
         text: >-
-          (א) $\mathbf t(L)=\mathbf t(0)$, ולכן $\int_0^Lk\,ds=2\pi m$ עם $m$ שלם, ו-$m\ne0$ לפי ההנחה. לכן $2\pi\le|2\pi m|$.
+          (א) $g(s)=\mathbf t(s)\cdot\mathbf u$ רציפה, ולפי המשפט היסודי
+          $$\int_0^Lg\,ds=\big(\gamma(L)-\gamma(0)\big)\cdot\mathbf u=0.$$
+          אם $g$ לא מתאפסת, לפי משפט ערך הביניים יש לה סימן קבוע, ואז האינטגרל של פונקציה רציפה שאינה אפס ושומרת סימן אינו $0$: סתירה. לכן יש $s$ עם $g(s)=0$.
       - kind: step
         text: >-
-          לפי אי-שוויון המשולש לאינטגרלים:
-          $$2\pi\le\Big|\int_0^Lk\,ds\Big|\le\int_0^L|k|\,ds\le\frac LR.$$
-          מכאן $L\ge2\pi R$.
+          (ב) תהי $\theta$ זווית משיק (הגדרה 1.5.11). לפי משפט 1.5.14, $\theta(L)-\theta(0)=2\pi m$, ו-$|2\pi m|\ge2\pi$. נניח $m>0$ (המקרה $m<0$ סימטרי).
+          יהי $\psi$ הזווית של $\mathbf w$, נבחרת ב-$[\theta(0),\ \theta(0)+2\pi)$.
       - kind: step
         text: >-
-          (ב) לשמינייה $(\sin t,\ \sin t\cos t)$ פנייה כוללת $0$ (דוגמה 6 בשיעור), ולכן השלב הראשון נשבר. (המסקנה $L\ge2\pi R$ עצמה עדיין יכולה להתקיים;
-          רק הטיעון הזה לא מוכיח אותה.)
+          $\theta(0)\le\psi<\theta(0)+2\pi\le\theta(L)$, ולפי משפט ערך הביניים יש $s$ עם $\theta(s)=\psi$. אז
+          $$\mathbf t(s)=(\cos\psi,\ \sin\psi)=\mathbf w.$$
+      - kind: step
+        text: >-
+          (ג) $\gamma'(t)=(\cos t,\ \cos2t)$, ו-$\mathbf t$ הוא כפולה חיובית שלו. $\mathbf t=(0,1)$ דורש $\cos t=0$ ו-$\cos2t>0$. אבל $\cos t=0$ פירושו
+          $t=\frac\pi2$ או $\frac{3\pi}2$, ושם $\cos2t=-1<0$. לכן $\mathbf t\ne(0,1)$ בכל $t$; ואינדקס הסיבוב של השמינייה הוא $0$ (דוגמה 6).
       - kind: check
         text: >-
-          מעגל ברדיוס $R$: $|k|=\frac1R$ ו-$L=2\pi R$, שוויון. מעגל שמקיפים פעמיים: $L=4\pi R$, ו-$\int k\,ds=4\pi$.
+          (ג) מספרית: על השמינייה הזווית של $\mathbf t$ אף פעם לא בקטע $(\frac\pi4,\frac{3\pi}4)$, והמרחק המינימלי של $\mathbf t$ מ-$(0,1)$ הוא
+          $2\sin\frac\pi8\approx0.7654$, בראשית. ו-(א) עדיין נכון לה: $\mathbf t\perp(1,0)$ ב-$t=\frac\pi2$, שם $\mathbf t=(0,-1)$.
       - kind: result
         text: >-
-          (א) $L\ge2\pi R$. (ב) השמינייה מראה שבלי $\int k\,ds\ne0$ הטיעון לא עובד.
+          (א) כל מסילה סגורה ניצבת בנקודה כלשהי לכל כיוון. (ב) עם אינדקס סיבוב שונה מאפס, המשיק עובר על כל כיוון. (ג) בשמינייה לא: הכיוון $(0,1)$ חסר.
 
   - id: W-1.5-09
     level: exam
@@ -278,7 +302,7 @@ practice:
           משווים: $-k_\gamma(-s)=-k_\gamma(s)$, כלומר $k_\gamma(-s)=k_\gamma(s)$.
       - kind: computation
         text: >-
-          (ב) $(t,\ t^2)$ מקיימת $\gamma(-t)=(-t,\ t^2)=S\gamma(t)$. (הטענה נשארת נכונה גם בפרמטר $t$, כי $\|\gamma'(-t)\|=\|\gamma'(t)\|$.)
+          (ב) $(t,\ t^2)$ מקיימת $\gamma(-t)=(-t,\ t^2)=S\gamma(t)$. (כאן $t$ אינו אורך הקשת, אבל $\|\gamma'(-t)\|=\|\gamma'(t)\|$, ולכן אורך הקשת מ-$0$ אי-זוגי, $s(-t)=-s(t)$, והפרמטריזציה לפי אורך הקשת מקיימת אותה סימטריה.)
           $k(t)=\frac{2}{(1+4t^2)^{3/2}}$, ואכן $k(-t)=k(t)$; חישוב מספרי ב-$t=\pm0.7$ נותן $0.39273$ פעמיים.
       - kind: result
         text: >-
@@ -305,8 +329,10 @@ practice:
           לאליפסה: $x'=-a\sin t$, $y'=b\cos t$, $x''=-a\cos t$, $y''=-b\sin t$. המונה $x'y''-y'x''=ab$, והמכנה $a^2\sin^2t+b^2\cos^2t$.
       - kind: step
         text: >-
-          (ב) ב-$t=0$ המשיק הוא $(0,1)$, זווית $\frac\pi2$; ב-$t=\frac\pi2$ הוא $(-1,0)$, זווית $\pi$. $k>0$ לאורך הדרך, ולכן $\theta$ עולה,
-          ובקטע הזה המשיק נשאר ברביע השני; אין סיבוב שלם נוסף. לכן $\int_0^{\pi/2}k\,ds=\pi-\frac\pi2=\frac\pi2$.
+          (ב) על $[0,\frac\pi2]$, $\gamma'=(-a\sin t,\ b\cos t)$, ולכן $t_x\le0$ ו-$t_y\ge0$. נגדיר $\tilde\theta=\arccos(t_x)$: רציפה, עם ערכים
+          ב-$[\frac\pi2,\pi]$, ו-$\sin\tilde\theta=\sqrt{1-t_x^2}=t_y$ (כי $t_y\ge0$). לכן $\mathbf t=(\cos\tilde\theta,\ \sin\tilde\theta)$, ו-$\tilde\theta$ זווית
+          משיק. ב-$t=0$, $\mathbf t=(0,1)$ ו-$\tilde\theta=\frac\pi2$; ב-$t=\frac\pi2$, $\mathbf t=(-1,0)$ ו-$\tilde\theta=\pi$. לפי מסקנה 1.5.13,
+          $\int_0^{\pi/2}k\,ds=\pi-\frac\pi2=\frac\pi2$.
       - kind: step
         text: >-
           לפי (א), האינטגרל המבוקש שווה ל-$\int_0^{\pi/2}k\,ds=\frac\pi2$.
@@ -319,39 +345,67 @@ practice:
 challenge:
   - id: W-1.5-c1
     stars: 1
-    objectives: [OBJ-1.5-2]
+    objectives: [OBJ-1.5-2, OBJ-1.5-1]
     prompt: >-
-      $c:[0,L]\to\mathbb R^2$ מסילה חלקה וסגורה בפרמטר אורך הקשת: $c(0)=c(L)$ ו-$c'(0)=c'(L)$. הוכיחו שהאינטגרל של העקמומיות המסומנת,
-      $\int_0^Lk\,ds$, הוא כפולה שלמה של $2\pi$. האם התנאי $c'(0)=c'(L)$ נחוץ?
+      $\gamma:[0,L]\to\mathbb R^2$ בפרמטר אורך הקשת, רגולרית ומסדר $C^2$, סגורה עם משיק שחוזר לכיוונו: $\gamma(0)=\gamma(L)$ ו-$\mathbf t(0)=\mathbf t(L)$.
+      נניח $|k(s)|\le\frac1R$ לכל $s$. הוכיחו ש-$L\ge2\pi R$, ושיש שוויון אם ורק אם $\gamma$ מקיפה פעם אחת מעגל ברדיוס $R$.
     answer: >-
-      $\int_0^Lk\,ds$ הוא $\theta(L)-\theta(0)$, כפולה של $2\pi$. כן: בלי $c'(0)=c'(L)$ (מסילה סגורה עם פינה) הטענה יכולה להיכשל.
+      $\int|k|\,ds\ge2\pi$ תמיד (אם $m\ne0$ מהפנייה הכוללת, ואם $m=0$ כי טווח זווית המשיק באורך $\pi$ לפחות), ו-$\int|k|\,ds\le\frac LR$.
+      בשוויון $k\equiv\pm\frac1R$, ומרכז העקמומיות קבוע: מעגל.
     solution:
       - kind: idea
         text: >-
-          העקמומיות המסומנת היא הנגזרת של זווית משיק רציפה. כשהמשיק חוזר לכיוונו, שתי הזוויות בקצוות מתארות את אותו כיוון, ולכן נבדלות ב-$2\pi m$.
+          מראים ש-$\int_0^L|k|\,ds\ge2\pi$ לכל מסילה כזו, ואז $\frac LR\ge\int|k|\ge2\pi$. כשאינדקס הסיבוב $m\ne0$ זה מיידי. כש-$m=0$ הזווית חוזרת
+          לערכה, אבל לפי תרגיל 8(א) המשיק חייב להיות ניצב לכל כיוון, ולכן הזווית מכסה טווח באורך $\pi$ לפחות, הלוך וחזור.
       - kind: step
         text: >-
-          לפי הלמה של השיעור יש $\theta$ מסדר $C^1$ עם $\mathbf t(s)=(\cos\theta(s),\ \sin\theta(s))$, ולפי המשפט $\theta'=k$.
+          תהי $\theta$ זווית משיק (הגדרה 1.5.11). לפי משפט 1.5.12, $|k|=|\theta'|$, ולפי משפט 1.5.14 $\theta(L)-\theta(0)=2\pi m$ עם $m$ שלם.
+          לכל $a<b$ ב-$[0,L]$, לפי אי-שוויון המשולש לאינטגרלים, $\int_a^b|\theta'|\ge|\theta(b)-\theta(a)|$.
       - kind: step
         text: >-
-          לפי המשפט היסודי $\int_0^Lk\,ds=\theta(L)-\theta(0)$.
+          אם $m\ne0$: $$\int_0^L|k|\,ds\ge|\theta(L)-\theta(0)|=2\pi|m|\ge2\pi.$$
       - kind: step
         text: >-
-          $\mathbf t(L)=c'(L)$ ו-$c'(L)=c'(0)=\mathbf t(0)$, ולכן $\cos\theta(L)=\cos\theta(0)$ ו-$\sin\theta(L)=\sin\theta(0)$. שתי זוויות עם אותו קוסינוס ואותו סינוס נבדלות בכפולה שלמה של $2\pi$.
+          אם $m=0$: $\theta$ רציפה על $[0,L]$ ומקבלת מינימום $\theta(s_2)$ ומקסימום $\theta(s_1)$ (ויירשטראס). נטען ש-$\theta(s_1)-\theta(s_2)\ge\pi$.
+          אחרת, עם $\varphi=\frac{\theta(s_1)+\theta(s_2)}2$ ו-$\mathbf u=(\cos\varphi,\ \sin\varphi)$, $|\theta(s)-\varphi|<\frac\pi2$ לכל $s$, ולכן
+          $\mathbf t\cdot\mathbf u=\cos(\theta-\varphi)>0$ בכל נקודה, בסתירה לתרגיל 8(א), שלפיו $\mathbf t(s)\perp\mathbf u$ לאיזה $s$ (שם הנחנו רק
+          $\gamma(0)=\gamma(L)$).
       - kind: step
         text: >-
-          התנאי נחוץ. הלולאה $c(t)=(t^2-1,\ t^3-t)$, $-1\le t\le1$, רגולרית ($c'=(2t,\ 3t^2-1)\ne0$) ומקיימת $c(-1)=c(1)=(0,0)$, אבל
-          $c'(-1)=(-2,2)$ ו-$c'(1)=(2,2)$. זווית המשיק עולה מ-$\frac{3\pi}4$ ל-$\frac{9\pi}4$, ולכן $\int k\,ds=\frac{3\pi}2$, שאינו כפולה של $2\pi$.
+          נניח $s_1<s_2$ (המקרה ההפוך זהה). מחלקים את $[0,L]$ ב-$s_1,s_2$ ומשתמשים ב-$\theta(L)=\theta(0)$:
+          $$\int_0^L|\theta'|\ge\big(\theta(s_1)-\theta(0)\big)+\big(\theta(s_1)-\theta(s_2)\big)+\big(\theta(L)-\theta(s_2)\big)=2\big(\theta(s_1)-\theta(s_2)\big)\ge2\pi.$$
+      - kind: step
+        text: >-
+          בשני המקרים, לפי ההנחה $|k|\le\frac1R$:
+          $$2\pi\le\int_0^L|k|\,ds\le\frac LR,$$
+          ולכן $L\ge2\pi R$.
+      - kind: step
+        text: >-
+          נניח $L=2\pi R$. אז
+          $$\int_0^L\Big(\frac1R-|k|\Big)ds=\frac LR-\int_0^L|k|\,ds\le0,$$
+          והאינטגרנד רציף ואי-שלילי, ולכן $|k|\equiv\frac1R$.
+          $k$ רציפה ו-$|k|$ קבועה שונה מאפס, ולכן, לפי משפט ערך הביניים, $k\equiv\frac\varepsilon R$ עם $\varepsilon=\pm1$ קבוע.
+      - kind: step
+        text: >-
+          $\mathbf n_s'=J\mathbf t'=kJ\mathbf n_s=kJ^2\mathbf t=-k\,\mathbf t$. נגדיר $\mathbf c(s)=\gamma(s)+\frac1k\mathbf n_s(s)$, עם $\frac1k=\varepsilon R$ קבוע. אז
+          $$\mathbf c'=\mathbf t+\frac1k(-k\,\mathbf t)=0,$$
+          כלומר $\mathbf c$ קבוע, ו-$\|\gamma(s)-\mathbf c\|=\big\|\frac1k\mathbf n_s\big\|=R$: התמונה על המעגל ברדיוס $R$ סביב $\mathbf c$.
+      - kind: step
+        text: >-
+          באורך $2\pi R$ ובפרמטר אורך הקשת על מעגל ברדיוס $R$, $\int_0^Lk\,ds=\frac\varepsilon R\cdot2\pi R=2\pi\varepsilon$, כלומר $|m|=1$: המעגל
+          מוקף פעם אחת. ולהפך, מעגל ברדיוס $R$ שמוקף פעם אחת מקיים $|k|=\frac1R$ ו-$L=2\pi R$.
       - kind: check
         text: >-
-          אליפסה נגד כיוון השעון: $2\pi$; מעגל בכיוון השעון: $-2\pi$; שמינייה: $0$. כולן כפולות של $2\pi$. וללולאה שלמעלה חישוב מספרי נותן $1.5\pi$.
+          מעגל שמקיפים פעמיים: $L=4\pi R$ ו-$m=2$, אי-שוויון חזק. בשמינייה $(\sin t,\ \sin t\cos t)$, שבה $m=0$: חישוב מספרי נותן טווח זווית
+          $\frac{3\pi}2\ge\pi$, $\int|k|\,ds=3\pi\ge2\pi$, ו-$L\approx6.097\ge\frac{2\pi}{\max|k|}\approx1.312$. הגרסה במרחב, $\int|k|\,ds\ge2\pi$
+          לכל מסילה סגורה ב-$\mathbb R^3$, היא משפט פנשל: תרגיל 4 באותו דף תרגיל של 2002.
       - kind: result
         text: >-
-          $\int_0^Lk\,ds=2\pi m$, $m\in\mathbb Z$. המספר $m$ הוא מספר הסיבובים של המשיק.
+          $L\ge2\pi R$, ושוויון בדיוק כש-$\gamma$ מקיפה פעם אחת מעגל ברדיוס $R$.
     source:
       name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 2'
       year: 2002
-      problem: 'תרגיל 5, סעיף א'
+      problem: 'תרגיל 3'
       url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex02.html
       verified: '2026-11-09'
       adapted: true
