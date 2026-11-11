@@ -42,7 +42,7 @@ questions:
       כמו במשפט 2.3.2, כותבים את המשוואות כ-$F'(s)=F(s)A(s)$, כאשר **עמודות** $F$ הן $\mathbf t,\mathbf n,\mathbf b$. למה
       $A(s)$ אנטי-סימטרית בכל מסילה?
     choices:
-      - text: 'כי $F^{T}F=I$ לכל $s$, וגזירה נותנת $A^{T}+A=0$'
+      - text: 'כי $F^{T}F=\mathrm{Id}$ לכל $s$, וגזירה נותנת $A^{T}+A=0$'
         correct: true
         feedback: >-
           נכון (למה 2.3.1). $(F^TF)'=(F')^TF+F^TF'=A^TF^TF+F^TFA=A^T+A$, והוא אפס כי $F^TF$ קבוע. במילים: כל מכפלה
@@ -58,9 +58,8 @@ questions:
         misconception: MC-c2-fs-matrix-symmetric
       - text: 'כי $\det F=1$'
         feedback: >-
-          $\det F=1$ אומר שהשלשה ימנית, אבל דטרמיננטה קבועה נותנת רק $\operatorname{tr}A=0$. מטריצה כמו
-          $\begin{pmatrix}0&1\\ 0&0\end{pmatrix}$ היא בעלת עקבה אפס ואינה אנטי-סימטרית. מה שנחוץ הוא שכל המכפלות
-          הפנימיות נשמרות.
+          $\det F=1$ אומר שהשלשה ימנית, אבל דטרמיננטה קבועה לא מספיקה: למטריצה $H(s)$ של השיעור (אחרי למה 2.3.1)
+          $\det H\equiv1$, ו-$H^{-1}H'$ אינה אנטי-סימטרית. מה שנחוץ הוא שכל המכפלות הפנימיות בין העמודות נשמרות.
         misconception: MC-c0-trace-zero-preserves-length
 
   - id: Q-2.3-g3b
@@ -96,15 +95,15 @@ questions:
     objectives: [OBJ-2.3-3]
     level: basic
     prompt: >-
-      מסילה בפרמטר אורך הקשת מקיימת $\kappa\equiv3$ ו-$\tau\equiv4$. היא סליל מעגלי $(a\cos t,a\sin t,bt)$ עד כדי תנועה
-      קשיחה. מהו הרדיוס $a$?
+      מסילה בפרמטר אורך הקשת מקיימת $\kappa\equiv3$ ו-$\tau\equiv4$. היא סליל מעגלי $(a\cos\theta,a\sin\theta,h\theta)$ עד כדי
+      תנועה קשיחה. מהו הרדיוס $a$?
     answer: 0.12
     tolerance: 0.001
     correctFeedback: >-
-      נכון. לסליל $\kappa=\frac{a}{a^2+b^2}$ ו-$\tau=\frac{b}{a^2+b^2}$, ולכן $\kappa^2+\tau^2=\frac{1}{a^2+b^2}$ ו-
+      נכון. לסליל $\kappa=\frac{a}{a^2+h^2}$ ו-$\tau=\frac{h}{a^2+h^2}$, ולכן $\kappa^2+\tau^2=\frac{1}{a^2+h^2}$ ו-
       $a=\frac{\kappa}{\kappa^2+\tau^2}=\frac{3}{25}$.
     wrongFeedback: >-
-      הפכו את הנוסחאות של הסליל: חשבו קודם $\kappa^2+\tau^2$ באמצעות $a$ ו-$b$.
+      הפכו את הנוסחאות של הסליל: חשבו קודם $\kappa^2+\tau^2$ באמצעות $a$ ו-$h$.
     commonWrong:
       - value: 0.3333333
         feedback: >-
@@ -112,7 +111,7 @@ questions:
         misconception: MC-c2-helix-radius-1-over-kappa
       - value: 0.16
         feedback: >-
-          זה $b=\frac{\tau}{\kappa^2+\tau^2}$, הגובה (הקצב שבו הסליל עולה לאורך הציר), לא הרדיוס.
+          זה $h=\frac{\tau}{\kappa^2+\tau^2}$, הגובה (העלייה לאורך הציר לכל רדיאן של סיבוב), לא הרדיוס.
       - value: 0.6
         feedback: >-
           זה $\frac{\kappa}{\sqrt{\kappa^2+\tau^2}}$. המכנה הוא $\kappa^2+\tau^2$ בלי שורש.
@@ -149,41 +148,40 @@ questions:
     objectives: [OBJ-2.3-2]
     level: mid
     prompt: >-
-      באותה נקודה ($\kappa=2$, $\tau=3$, $\kappa'=5$, פרמטר אורך הקשת): מהו המקדם של $\mathbf t$ בפירוק של $\gamma'''(s_0)$?
-    answer: -4
+      באותה נקודה ($\kappa=2$, $\tau=3$, $\kappa'=5$, פרמטר אורך הקשת): מהו האורך $\|\gamma'''(s_0)\|$?
+    answer: 8.7749644
     tolerance: 0.001
     correctFeedback: >-
-      נכון: $-\kappa^2=-4$. בדיקה בלי פירוק: גזירת $\gamma'\cdot\gamma''=0$ נותנת
-      $\gamma'\cdot\gamma'''=-\|\gamma''\|^2=-\kappa^2$.
+      נכון. שני צעדים: הפירוק $\gamma'''=-\kappa^2\mathbf t+\kappa'\mathbf n+\kappa\tau\mathbf b=-4\mathbf t+5\mathbf n+6\mathbf b$ (טענה 2.3.4),
+      ופיתגורס בבסיס אורתונורמלי: $\|\gamma'''\|=\sqrt{16+25+36}=\sqrt{77}\approx8.775$.
     wrongFeedback: >-
-      הרכיב לאורך $\mathbf t$ בא מ-$\kappa\mathbf n'$, ו-$\mathbf n'\cdot\mathbf t=-\kappa$.
+      פרקו קודם את $\gamma'''$ בבסיס $\mathbf t,\mathbf n,\mathbf b$ (גזרו את $\gamma''=\kappa\mathbf n$ והציבו את $\mathbf n'$), ואז
+      האורך הוא שורש סכום ריבועי המקדמים, כי הבסיס אורתונורמלי.
     commonWrong:
-      - value: 4
+      - value: 6.4031242
         feedback: >-
-          הסימן: $\mathbf n'\cdot\mathbf t=-\kappa$, לא $+\kappa$. במעגל $\gamma'''=-\kappa^2\mathbf t$ מצביע נגד כיוון
-          התנועה.
-        misconception: MC-c2-fs-matrix-symmetric
-      - value: 0
-        feedback: >-
-          $\gamma'''$ אינו ניצב ל-$\mathbf t$. רק $\gamma''$ ניצב לו (בפרמטר אורך הקשת). שכחתם את הרכיב ש-$\mathbf n'$ תורם.
+          זה $\sqrt{16+25}$: חסר הרכיב לאורך $\mathbf b$, $\kappa\tau=6$, שבא מ-$\kappa\mathbf n'$.
         misconception: MC-c2-fs-dropped-term
-      - value: -2
+      - value: 6.164414
         feedback: >-
-          זה $-\kappa$, המקדם של $\mathbf t$ ב-$\mathbf n'$. ב-$\gamma'''=\kappa\mathbf n'+\dots$ הוא מוכפל עוד ב-$\kappa$.
+          זה $\sqrt{4+25+9}$: לקחתם את המקדמים של $\mathbf n'$ ($-\kappa$ ו-$\tau$) במקום של $\kappa\mathbf n'$; שניהם מוכפלים עוד ב-$\kappa$.
         misconception: MC-c2-fs-dropped-term
+      - value: 15
+        feedback: >-
+          זה $4+5+6$, סכום הגדלים של המקדמים. האורך של וקטור בבסיס אורתונורמלי הוא שורש סכום **הריבועים**.
 
   - id: Q-2.3-g2general
     type: mc
     objectives: [OBJ-2.3-2]
     level: mid
     prompt: >-
-      $\gamma$ בפרמטר כללי $t$, עם מהירות $v(t)=\|\gamma'(t)\|$. מהו $\gamma''(t)$ בבסיס של פרנה?
+      $\gamma$ בפרמטר כללי $u$, עם מהירות $v(u)=\|\gamma'(u)\|$. מהו $\gamma''(u)$ בבסיס של פרנה?
     choices:
       - text: '$\gamma''''=v''\,\mathbf t+\kappa v^2\,\mathbf n$'
         correct: true
         feedback: >-
-          נכון. $\gamma'=v\mathbf t$, ולכן $\gamma''=v'\mathbf t+v\frac{d\mathbf t}{dt}=v'\mathbf t+v\cdot v\kappa\mathbf n$, כי
-          $\frac{d\mathbf t}{dt}=\frac{ds}{dt}\frac{d\mathbf t}{ds}$. זו התאוצה המשיקית ועוד התאוצה הצנטריפטלית
+          נכון. $\gamma'=v\mathbf t$, ולכן $\gamma''=v'\mathbf t+v\frac{d\mathbf t}{du}=v'\mathbf t+v\cdot v\kappa\mathbf n$, כי
+          $\frac{d\mathbf t}{du}=\frac{ds}{du}\frac{d\mathbf t}{ds}$. זו התאוצה המשיקית ועוד התאוצה הצנטריפטלית
           $\frac{v^2}{\rho}$ מהפיזיקה.
       - text: '$\gamma''''=\kappa\,\mathbf n$'
         feedback: >-
@@ -192,7 +190,7 @@ questions:
       - text: '$\gamma''''=v''\,\mathbf t+\kappa v\,\mathbf n$'
         feedback: >-
           שכחתם את אחד משני הגורמים של $v$: אחד מגיע מ-$\gamma'=v\mathbf t$, והשני מכלל השרשרת
-          $\frac{d\mathbf t}{dt}=v\frac{d\mathbf t}{ds}$.
+          $\frac{d\mathbf t}{du}=v\frac{d\mathbf t}{ds}$.
         misconception: MC-c2-fs-general-param
       - text: '$\gamma''''=\kappa v^2\,\mathbf n$'
         feedback: >-
@@ -236,17 +234,17 @@ questions:
     answer: 1.0053096
     tolerance: 0.0005
     correctFeedback: >-
-      נכון. $b=\frac{\tau}{\kappa^2+\tau^2}=\frac{4}{25}$, ובסיבוב שלם ($t$ גדל ב-$2\pi$) הגובה עולה ב-$2\pi b=\frac{8\pi}{25}\approx1.005$.
-      שחזור נומרי של המסילה מ-$\kappa,\tau$ נותן את אותו מספר.
+      נכון. הגובה $h=\frac{\tau}{\kappa^2+\tau^2}=\frac{4}{25}$ הוא העלייה לכל רדיאן, ובסיבוב שלם ($\theta$ גדל ב-$2\pi$) הסליל
+      עולה $2\pi h=\frac{8\pi}{25}\approx1.005$. שחזור נומרי של המסילה מ-$\kappa,\tau$ נותן את אותו מספר.
     wrongFeedback: >-
-      מצאו את $b$ מ-$\kappa$ ו-$\tau$, ואחר כך את ההתקדמות כש-$t$ גדל ב-$2\pi$.
+      מצאו את $h$ מ-$\kappa$ ו-$\tau$, ואחר כך את ההתקדמות כש-$\theta$ גדל ב-$2\pi$.
     commonWrong:
       - value: 0.16
         feedback: >-
-          זה $b$, ההתקדמות ליחידת $t$ (ליחידת זווית). סיבוב שלם הוא $2\pi$ יחידות.
+          זה $h$, ההתקדמות לכל רדיאן. סיבוב שלם הוא $2\pi$ רדיאנים.
       - value: 1.2566371
         feedback: >-
-          זה $\frac{2\pi}{5}$, אורך הקשת של סיבוב אחד: $2\pi\sqrt{a^2+b^2}=\frac{2\pi}{\sqrt{\kappa^2+\tau^2}}$. השאלה היא על
+          זה $\frac{2\pi}{5}$, אורך הקשת של סיבוב אחד: $2\pi\sqrt{a^2+h^2}=\frac{2\pi}{\sqrt{\kappa^2+\tau^2}}$. השאלה היא על
           ההתקדמות לאורך הציר, שהיא קצרה יותר.
       - value: 0.7539822
         feedback: >-
@@ -263,11 +261,11 @@ questions:
       - text: 'סליל שמאלי ברדיוס $\frac12$, למשל $(\frac12\cos t,\ \frac12\sin t,\ -\frac12t)$'
         correct: true
         feedback: >-
-          נכון. $a=\frac{1}{1+1}=\frac12$ ו-$b=\frac{-1}{2}$: הסליל יורד בכיוון $z$ כשמסתובבים נגד כיוון השעון במבט מלמעלה, כלומר
+          נכון. $a=\frac{1}{1+1}=\frac12$ ו-$h=\frac{-1}{2}$: הסליל יורד בכיוון $z$ כשמסתובבים נגד כיוון השעון במבט מלמעלה, כלומר
           מתפתל שמאלה. תמונת המראה שלו היא הסליל הימני עם $\tau=1$.
       - text: 'סליל ימני ברדיוס $\frac12$'
         feedback: >-
-          לסליל ימני ($b>0$) יש בקורס $\tau>0$. פיתול שלילי פירושו התפתלות שמאלה.
+          לסליל ימני ($h>0$) יש בקורס $\tau>0$. פיתול שלילי פירושו התפתלות שמאלה.
         misconception: MC-c2-torsion-sign
       - text: 'אין מסילה כזו, כי הפיתול אי-שלילי'
         feedback: >-
@@ -343,37 +341,39 @@ questions:
       של $\gamma'''$ שמשנה, זה שלאורך $\mathbf b$. המונה משתמש בשניהם, והחלוקה במכנה אחרונה.
 
   - id: Q-2.3-darboux
-    type: mc
+    type: twotier
     objectives: [OBJ-2.3-1]
+    qualitative: true
     level: exam
     prompt: >-
-      מחפשים וקטור $\boldsymbol\omega(s)$ כך ש-$\mathbf t'=\boldsymbol\omega\times\mathbf t$, $\mathbf n'=\boldsymbol\omega\times\mathbf n$
-      ו-$\mathbf b'=\boldsymbol\omega\times\mathbf b$ (השלשה מסתובבת סביב $\boldsymbol\omega$, "וקטור דרבו"). מהו?
+      $\gamma:I\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת, $I$ קטע, עם $\kappa>0$, ו-$\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$ וקטור
+      דרבו שלה. נניח ש-$\boldsymbol\omega(s)\perp\mathbf t(s)$ לכל $s\in I$. האם $\gamma$ בהכרח מישורית?
     choices:
-      - text: '$\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$'
+      - text: כן
         correct: true
         feedback: >-
-          נכון. $\boldsymbol\omega\times\mathbf t=\kappa\,\mathbf b\times\mathbf t=\kappa\mathbf n$,
-          $\boldsymbol\omega\times\mathbf n=\tau\,\mathbf t\times\mathbf n+\kappa\,\mathbf b\times\mathbf n=\tau\mathbf b-\kappa\mathbf t$,
-          $\boldsymbol\omega\times\mathbf b=\tau\,\mathbf t\times\mathbf b=-\tau\mathbf n$. שלוש המשוואות של פרנה-סרה בבת אחת.
-      - text: '$\boldsymbol\omega=\kappa\mathbf t+\tau\mathbf b$'
+          נכון. התנאי נראה כמו תנאי על הסיבוב של השלשה, אבל הוא בדיוק $\tau\equiv0$, ומשם משפט 2.2.6.
+      - text: 'לא: $\boldsymbol\omega$ ניצב ל-$\mathbf t$ בכל מסילה, ולכן התנאי לא אומר כלום'
         feedback: >-
-          בדקו את הראשונה: $(\kappa\mathbf t+\tau\mathbf b)\times\mathbf t=\tau\mathbf n$, ולא $\kappa\mathbf n$. המשיק מסתובב
-          סביב $\mathbf b$ בקצב $\kappa$, ולכן המקדם של $\mathbf b$ ב-$\boldsymbol\omega$ הוא $\kappa$.
-        misconception: MC-c2-fs-matrix-symmetric
-      - text: '$\boldsymbol\omega=-\tau\mathbf t+\kappa\mathbf b$'
-        feedback: >-
-          בדקו את השלישית: $(-\tau\mathbf t)\times\mathbf b=\tau\mathbf n$, ולא $-\tau\mathbf n$. זה מתאים למוסכמת הסימן
-          ההפוכה.
-        misconception: MC-c2-torsion-sign
-      - text: '$\boldsymbol\omega=\kappa\mathbf n$'
-        feedback: >-
-          $\kappa\mathbf n\times\mathbf t=-\kappa\mathbf b$, כך שאפילו המשוואה הראשונה לא מתקיימת. הסיבוב של השלשה הוא
-          סביב ציר במישור של $\mathbf t$ ו-$\mathbf b$.
+          ל-$\boldsymbol\omega$ יש רכיב $\tau$ לאורך $\mathbf t$. בסליל $(\cos\theta,\ \sin\theta,\ \frac\theta2)$, למשל,
+          $\boldsymbol\omega\cdot\mathbf t=\tau=0.4\ne0$.
         misconception: MC-c2-fs-dropped-term
-    explanation: >-
-      לסליל, $\kappa$ ו-$\tau$ קבועים ו-$\boldsymbol\omega'=\tau\kappa\mathbf n+\kappa(-\tau\mathbf n)=0$: וקטור דרבו קבוע, והוא
-      בכיוון הציר. זו הדרך הקצרה להראות שמסילה עם $\kappa,\tau$ קבועים היא סליל.
+    reasons:
+      - text: '$\boldsymbol\omega\cdot\mathbf t=\tau$, ולכן $\tau\equiv0$; עם $\kappa>0$ על קטע, משפט 2.2.6 נותן מישוריות'
+        correct: true
+        feedback: >-
+          בדיוק. $\mathbf t\cdot\mathbf t=1$ ו-$\mathbf b\cdot\mathbf t=0$, ולכן $\boldsymbol\omega\cdot\mathbf t=\tau$. ההנחות "קטע"
+          ו-$\kappa>0$ הן בדיוק ההנחות של משפט 2.2.6, ובלעדיהן המסקנה נכשלת (המסילה המודבקת של שיעור 2.2).
+      - text: '$\boldsymbol\omega\cdot\mathbf t=\kappa$, ולכן $\kappa\equiv0$ והמסילה ישר'
+        feedback: >-
+          המקדם של $\mathbf t$ ב-$\boldsymbol\omega$ הוא $\tau$, לא $\kappa$: $\kappa$ הוא המקדם של $\mathbf b$. וממילא
+          $\kappa>0$ נתון.
+        misconception: MC-c2-fs-matrix-symmetric
+      - text: 'התנאי נותן $\boldsymbol\omega$ קבוע, ולכן $\gamma$ קשת של מעגל'
+        feedback: >-
+          התנאי נותן $\tau\equiv0$, ו-$\boldsymbol\omega=\kappa\mathbf b$ קבוע רק אם גם $\kappa$ קבועה. מסילה מישורית עם
+          עקמומיות משתנה (אליפסה) מקיימת את התנאי ואינה מעגל.
+        misconception: MC-c2-planar-means-circle
 
   - id: Q-2.3-cylinder
     type: twotier
@@ -381,31 +381,31 @@ questions:
     qualitative: true
     level: exam
     prompt: >-
-      $\gamma$ בפרמטר אורך הקשת עם $\kappa\equiv\kappa_0>0$ ו-$\tau\equiv\tau_0\ne0$ קבועים. נסמן $a=\frac{\kappa_0}{\kappa_0^2+\tau_0^2}$
-      ו-$c(s)=\gamma(s)+a\,\mathbf n(s)$. האם $c(s)$ נע לאורך ישר, כך ש-$\gamma$ מונחת על גליל מעגלי ברדיוס $a$ סביבו?
+      $\gamma$ בפרמטר אורך הקשת עם $\kappa\equiv3$ ו-$\tau\equiv4$. האם יש וקטור יחידה **קבוע** $\mathbf u$ כך שהזווית בין
+      $\mathbf t(s)$ ל-$\mathbf u$ אינה תלויה ב-$s$, וכך ש-$\mathbf t\cdot\mathbf u=0.8$?
     choices:
-      - text: כן
+      - text: 'כן, $\mathbf u=\frac{\boldsymbol\omega}{\|\boldsymbol\omega\|}$'
         correct: true
         feedback: >-
-          נכון. $c$ הוא הנקודה על ציר הסליל שמול $\gamma(s)$, והמרחק ממנה ל-$\gamma(s)$ הוא $\|a\mathbf n\|=a$.
-      - text: 'לא, $c(s)$ הוא מרכז העקמומיות, והוא נע על מעגל'
+          נכון. $\mathbf u$ הוא כיוון הציר של הסליל: $\mathbf t\cdot\mathbf u=\frac{\tau}{\sqrt{\kappa^2+\tau^2}}=\frac45$. בבדיקה
+          על הצורה הקנונית, $a=\frac{3}{25}$, $h=\frac{4}{25}$, ו-$\mathbf t\cdot\mathbf e_3=\frac{h}{\sqrt{a^2+h^2}}=\frac45$.
+      - text: 'לא; הווקטור הקבוע היחיד שמתאים הוא $\mathbf u=\mathbf b$, עם $\mathbf t\cdot\mathbf b=0$'
         feedback: >-
-          מרכז העקמומיות הוא $\gamma+\frac{1}{\kappa_0}\mathbf n$, והוא רחוק יותר מ-$\gamma$: $\frac1{\kappa_0}>a$ כש-$\tau_0\ne0$.
-          הנקודה $c(s)$ קרובה יותר, על הציר.
-        misconception: MC-c2-helix-radius-1-over-kappa
+          $\mathbf b$ אינו קבוע כש-$\tau\ne0$: $\mathbf b'=-\tau\mathbf n=-4\mathbf n$. הבינורמל של סליל מסתובב סביב הציר, ורק
+          $\boldsymbol\omega$ נשאר בכיוון קבוע.
+        misconception: MC-c2-helix-binormal-axis
     reasons:
-      - text: '$c''=(1-a\kappa_0)\mathbf t+a\tau_0\mathbf b$, כלומר $c''=\frac{\tau_0}{\kappa_0^2+\tau_0^2}(\tau_0\mathbf t+\kappa_0\mathbf b)$, ו-$\tau_0\mathbf t+\kappa_0\mathbf b$ קבוע'
+      - text: '$\boldsymbol\omega''=\tau\kappa\mathbf n-\kappa\tau\mathbf n=0$, ו-$\mathbf t\cdot\boldsymbol\omega=\tau$; לכן $\mathbf t\cdot\mathbf u=\frac{4}{5}$'
         correct: true
         feedback: >-
-          בדיוק. $(\tau_0\mathbf t+\kappa_0\mathbf b)'=\tau_0\kappa_0\mathbf n-\kappa_0\tau_0\mathbf n=0$, ולכן $c'$ הוא
-          כפולה קבועה של וקטור קבוע: $c$ נע על ישר במהירות קבועה. וגם $\mathbf n\perp\tau_0\mathbf t+\kappa_0\mathbf b$, כך
-          ש-$a\mathbf n$ ניצב לישר: $\gamma$ במרחק $a$ ממנו.
-      - text: 'כי מסילה עם עקמומיות קבועה היא מעגל, ומעגל מונח על גליל'
+          בדיוק. כש-$\kappa,\tau$ קבועים, $\boldsymbol\omega$ קבוע (משפט 2.3.2), ו-$\|\boldsymbol\omega\|=\sqrt{9+16}=5$
+          (טענה 2.3.7). המכפלה $\mathbf t\cdot\boldsymbol\omega=\tau$ קבועה, ולכן גם הזווית. שימו לב שלא השתמשנו בנוסחה המפורשת של הסליל.
+      - text: '$\mathbf t''=\kappa\mathbf n$ באורך קבוע, ולכן הזווית של $\mathbf t$ עם כל וקטור קבוע קבועה'
         feedback: >-
-          במרחב עקמומיות קבועה לא מספיקה: הסליל, שאינו מעגל, מקיים $\kappa$ קבועה. כאן $\tau_0\ne0$, והמסילה לא מישורית בכלל.
+          אורך קבוע של $\mathbf t'$ לא שומר על הזווית עם וקטור נתון: במעגל $\|\mathbf t'\|$ קבוע, וה-$\mathbf t$ מקיף את כל
+          הכיוונים במישור. מה שקובע הוא $(\mathbf t\cdot\mathbf u)'=\kappa\,\mathbf n\cdot\mathbf u$, שמתאפס רק ל-$\mathbf u\perp\mathbf n$ בכל $s$.
         misconception: MC-c2-kappa-alone-determines
-      - text: '$c''=\mathbf t+a\mathbf n''=0$, ולכן $c$ קבוע'
+      - text: 'בסליל $\mathbf b$ קבוע ומקביל לציר, ולכן $\mathbf t$ יוצר זווית קבועה איתו'
         feedback: >-
-          $\mathbf n'=-\kappa_0\mathbf t+\tau_0\mathbf b$, ולכן $c'=(1-a\kappa_0)\mathbf t+a\tau_0\mathbf b\ne0$ כש-$\tau_0\ne0$.
-          $c$ קבוע רק במעגל, שם $\tau_0=0$ ו-$a=\frac{1}{\kappa_0}$.
-        misconception: MC-c2-fs-dropped-term
+          $\mathbf b'=-\tau\mathbf n\ne0$: הבינורמל אינו קבוע. הוא יוצר זווית קבועה עם הציר, אבל אינו הציר.
+        misconception: MC-c2-helix-binormal-axis

@@ -5,8 +5,8 @@
     סליל מוכלל הוא סליל מעגלי, כלומר מסילה עם $\kappa$ ו-$\tau$ קבועים, או מסילה על גליל מעגלי.
   truth: >-
     סליל מוכלל מוגדר בכך שהמשיק יוצר זווית קבועה עם כיוון קבוע. לפי משפט לנקרה זה שקול לכך שהיחס $\frac\tau\kappa$ קבוע,
-    לא כל אחד מהם. $(\cosh t,\sinh t,t)$ מקיימת $\kappa=\tau=\frac{1}{2\cosh^2t}$, לא קבועות, והיא סליל מוכלל עם הציר
-    $(0,1,0)$.
+    לא כל אחד מהם. המעקה $(t,\cosh t,\sinh t)$ מקיים $\kappa=\tau=\frac{1}{2\cosh^2t}$, לא קבועות, והוא סליל מוכלל עם הציר
+    $\mathbf e_z$.
   remedy: { lesson: '2.5', anchor: 'lancret-hyp', label: 'משפט לנקרה: שניהם משתנים, המנה קבועה' }
 
 - id: MC-c2-lancret-ratio-is-cos
@@ -21,10 +21,10 @@
 - id: MC-c2-lancret-ratio-inverted
   title: הופכים את היחס ומחשבים עקמומיות חלקי פיתול
   belief: >-
-    המנה הקבועה במשפט לנקרה היא $\frac\kappa\tau$, ובסליל $(a\cos t,\ a\sin t,\ bt)$ היא $\frac ab$.
+    המנה הקבועה במשפט לנקרה היא $\frac\kappa\tau$, ובסליל $(a\cos t,\ a\sin t,\ ht)$ היא $\frac ah$.
   truth: >-
-    המנה במשפט היא $\frac\tau\kappa=\cot\theta$, הפיתול במונה. בסליל $\kappa=\frac{a}{a^2+b^2}$ ו-$\tau=\frac{b}{a^2+b^2}$, ולכן
-    $\frac\tau\kappa=\frac ba$; המנה ההפוכה $\frac ab$ היא $\tan\theta$.
+    המנה במשפט היא $\frac\tau\kappa=\cot\theta$, הפיתול במונה. בסליל $\kappa=\frac{a}{a^2+h^2}$ ו-$\tau=\frac{h}{a^2+h^2}$, ולכן
+    $\frac\tau\kappa=\frac ha$; המנה ההפוכה $\frac ah$ היא $\tan\theta$.
   remedy: { lesson: '2.5', anchor: 'lancret', label: 'משפט לנקרה: המנה והזווית' }
 
 - id: MC-c2-spherical-kappa-any
@@ -32,6 +32,6 @@
   belief: >-
     מסילה על ספרה ברדיוס $R$ יכולה להיות כמעט ישרה, עם $\kappa$ קטנה מ-$\frac1R$.
   truth: >-
-    גזירה כפולה של $\|\gamma-c\|^2=R^2$ נותנת $\kappa\,\mathbf n\cdot(\gamma-c)=-1$, ולכן
-    $\kappa=\frac{1}{|\mathbf n\cdot(\gamma-c)|}\ge\frac1R$. על הספרה, המעגלים הגדולים, עם $\kappa=\frac1R$, הם המסילות הכי פחות עקומות.
+    גזירה כפולה של $\|\gamma-\mathbf c\|^2=R^2$ נותנת $\kappa\,\mathbf n\cdot(\gamma-\mathbf c)=-1$, ולכן
+    $\kappa=\frac{1}{|\mathbf n\cdot(\gamma-\mathbf c)|}\ge\frac1R$. על הספרה, המעגלים הגדולים, עם $\kappa=\frac1R$, הם המסילות הכי פחות עקומות.
   remedy: { lesson: '2.5', anchor: 'sphere-kappa', label: 'טענה 2.5.4: על ספרה κ ≥ 1/R' }

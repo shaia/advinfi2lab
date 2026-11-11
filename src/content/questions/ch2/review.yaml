@@ -16,7 +16,7 @@ questions:
         correct: true
         feedback: >-
           נכון. $\gamma'(\frac\pi2)=(-2,0,1)$, $\gamma''(\frac\pi2)=(0,-2,0)$, ו-$\gamma'\times\gamma''=(2,0,4)$, שאורכו $2\sqrt5$.
-          רכיב ה-$z$, $\frac{2}{\sqrt5}=\frac{a}{\sqrt{a^2+b^2}}$, זהה בכל נקודה של הסליל.
+          רכיב ה-$z$, $\frac{2}{\sqrt5}=\frac{a}{\sqrt{a^2+h^2}}$, זהה בכל נקודה של הסליל.
       - text: '$\frac{1}{\sqrt5}(-1,0,-2)$'
         feedback: >-
           זה $\gamma''\times\gamma'$, כלומר $-\mathbf b$. הסדר הוא $\gamma'\times\gamma''$.
@@ -149,25 +149,25 @@ questions:
       חשבו את הפיתול של הסליל $(3\cos t,\ 3\sin t,\ 4t)$. (השוו עם התשובה לשאלה "מה הרדיוס של המסילה עם $\kappa\equiv3$,
       $\tau\equiv4$?".)
     hints:
-      - 'חזרו לשיעור 2.2 (הפיתול של סליל) ולשיעור 2.3 (המעבר בין $a,b$ לבין $\kappa,\tau$).'
+      - 'חזרו לשיעור 2.2 (הפיתול של סליל) ולשיעור 2.3 (המעבר בין $a,h$ לבין $\kappa,\tau$).'
     answer: 0.16
     tolerance: 0.001
     correctFeedback: >-
       נכון: $\tau=\frac{4}{9+16}=\frac{4}{25}$, ו-$\kappa=\frac{3}{25}$. ולהפך, למסילה עם $\kappa=3$, $\tau=4$ יש $a=\frac{3}{25}$,
-      $b=\frac{4}{25}$. ההעתקה $(a,b)\mapsto\left(\frac{a}{a^2+b^2},\frac{b}{a^2+b^2}\right)$ היא ההיפוך במעגל היחידה, והיא
+      $h=\frac{4}{25}$. ההעתקה $(a,h)\mapsto\left(\frac{a}{a^2+h^2},\frac{h}{a^2+h^2}\right)$ היא ההיפוך במעגל היחידה, והיא
       ההפכית של עצמה.
     wrongFeedback: >-
-      לסליל $(a\cos t,a\sin t,bt)$: $\tau=\frac{b}{a^2+b^2}$.
+      לסליל $(a\cos t,a\sin t,ht)$: $\tau=\frac{h}{a^2+h^2}$.
     commonWrong:
       - value: 0.12
         feedback: >-
-          זו העקמומיות $\frac{a}{a^2+b^2}$. בפיתול המונה הוא $b$.
+          זו העקמומיות $\frac{a}{a^2+h^2}$. בפיתול המונה הוא $h$.
       - value: 4
         feedback: >-
-          זה $b$, הגובה ליחידת $t$, לא הפיתול.
+          זה $h$, קצב העלייה ליחידת $t$, לא הפיתול.
       - value: -0.16
         feedback: >-
-          הסליל ימני ($b>0$), ובקורס לסליל ימני יש $\tau>0$.
+          הסליל ימני ($h>0$), ובקורס לסליל ימני יש $\tau>0$.
         misconception: MC-c2-torsion-sign
 
   - id: Q-2-review-06

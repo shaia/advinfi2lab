@@ -4,7 +4,7 @@ chapter: 2
 order: 5
 title: מסילות כדוריות ומשפט לנקרה (העשרה)
 subtitle: סלילים מוכללים, היחס בין הפיתול לעקמומיות, ומתי מסילה מונחת על ספרה
-minutes: 115
+minutes: 170
 objectives:
   - id: OBJ-2.5-1
     text: להוכיח שמסילה היא סליל מוכלל (המשיק יוצר זווית קבועה עם כיוון קבוע) אם ורק אם היחס בין הפיתול לעקמומיות קבוע
@@ -21,14 +21,14 @@ import FrenetFrame from '~/sims/FrenetFrame.astro';
 <Spread
   fig="fig-2-5a"
   n="2.5א"
-  caption="מסילה במרחב, השלשה של פרנה בנקודה עליה ($\mathbf t$ עם ראש מלא, $\mathbf n$ עם ראש פתוח, $\mathbf b$ עם ראש מסורג), הציר המקווקו בכיוון $\mathbf e_z$, ווקטור דרבו $\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$ (החץ המסומן $\omega$). שלוש מסילות: הסליל המוכלל מעל השרשרת $(t,\cosh t,\sinh t)$, הסליל הימני $(\cos t,\sin t,\frac t2)$ והמסילה המעוקבת $(t,t^2,t^3)$. מתחת לאיור: $\kappa$, $\tau$, ובמסילה שיש לה ציר גם הזווית בין $\mathbf t$ לציר והמנה $\frac\tau\kappa$. גררו את האיור כדי לסובב את המבט. המספרים מחושבים מנגזרות מדויקות; האיור הוא עדות, וההוכחות בטקסט."
+  caption="מסילה במרחב, השלשה של פרנה בנקודה עליה ($\mathbf t$ עם ראש מלא, $\mathbf n$ עם ראש פתוח, $\mathbf b$ עם ראש מסורג), הציר המקווקו בכיוון $\mathbf e_z$, ווקטור דרבו $\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$ (החץ המסומן $\omega$). שלוש מסילות: המעקה $(t,\cosh t,\sinh t)$, סליל מוכלל מעל השרשרת, הסליל הימני $(\cos t,\sin t,\frac t2)$ והמסילה המעוקבת $(t,t^2,t^3)$. מתחת לאיור: $\kappa$, $\tau$, ובמסילה שיש לה ציר גם הזווית בין $\mathbf t$ לציר והמנה $\frac\tau\kappa$. גררו את האיור כדי לסובב את המבט. המספרים מחושבים מנגזרות מדויקות; האיור הוא עדות, וההוכחות בטקסט."
   figure={FrenetFrame}
   figureProps={{ curve: 'cylinder-helix', curves: ['cylinder-helix', 'helix', 'cubic'], t: 0.5, show: ['frame', 'axis', 'darboux'], layers: ['axis', 'darboux', 'osculating'], yaw: 0.35, pitch: 0.25, tasks: ['helix-angle', 'darboux-helix'] }}
 >
 
 <Hook title="מעקה בשיפוע קבוע">
 
-סביב מגדל עולה גרם מדרגות, והמעקה שלו עולה **בשיפוע קבוע**: בכל נקודה הוא יוצר אותה זווית עם האנך. אם החתך של המגדל הוא מעגל, המעקה הוא סליל מעגלי, ו<LessonLink id="2.3" /> הראה שאז $\kappa$ ו-$\tau$ קבועים. אבל החתך של המגדל הזה אינו מעגל: הקירות שלו עוקבים אחרי שרשרת, $y=\cosh x$. העקמומיות של המעקה משתנה, וגם הפיתול. האם בכל זאת נשאר משהו קבוע?
+לאורך קיר אנכי מתעקל עולה רמפה, והמעקה שלה עולה **בשיפוע קבוע**: בכל נקודה הוא יוצר אותה זווית עם האנך. אילו הקיר היה גליל מעגלי, המעקה היה סליל מעגלי, ובשיעור <LessonLink id="2.2" /> חישבנו שלסליל כזה $\kappa$ ו-$\tau$ קבועים. אבל החתך האופקי של הקיר הזה אינו מעגל: הוא קשת של שרשרת, $y=\cosh x$ (הקיר הוא "גליל" מעל השרשרת: כל הישרים האנכיים דרך הקשת). מה אפשר לומר על העקמומיות והפיתול של מעקה כזה?
 
 ושאלה שנייה, על כדור הארץ: מסילה חלקה שמונחת כולה על ספרה ברדיוס 2. האם היא יכולה להיות "כמעט ישרה", עם $\kappa=\frac13$ בנקודה כלשהי? ואם נותנים לנו רק את $\kappa(s)$ ואת $\tau(s)$, איך נדע אם המסילה מונחת על ספרה?
 
@@ -38,11 +38,11 @@ import FrenetFrame from '~/sims/FrenetFrame.astro';
 
 <Predict
   id="pred-2-5"
-  prompt="המעקה עולה סביב מגדל שהחתך שלו שרשרת, ובכל נקודה המשיק שלו יוצר זווית של $45^\circ$ עם האנך. מה נכון לגבי העקמומיות והפיתול של המעקה?"
+  prompt="המעקה עולה לאורך הקיר שהחתך שלו קשת של שרשרת, ובכל נקודה המשיק שלו יוצר זווית של $45^\circ$ עם האנך. מה נכון לגבי העקמומיות והפיתול של המעקה?"
   choices={[
-    'שניהם קבועים, כמו בסליל מעגלי.',
+    'שניהם קבועים, כמו בסליל מעגלי: השיפוע הקבוע הוא מה שקובע אותם.',
     'שניהם משתנים, אבל המנה $\\frac\\tau\\kappa$ קבועה.',
-    'הפיתול אפס, כי המעקה מונח על גליל.',
+    'הפיתול אפס, כי המעקה מונח על הקיר, משטח שאינו מתפתל.',
     'אין קשר: כל אחד מהם משתנה בלי תלות בשני.',
   ]}
   answer={1}
@@ -62,13 +62,13 @@ import FrenetFrame from '~/sims/FrenetFrame.astro';
 
 <Step fig="fig-2-5a" set={{ curve: 'cylinder-helix', t: 0.5, show: ['frame', 'axis'] }}>
 
-עכשיו המעקה של המגדל, $(t,\cosh t,\sinh t)$. הזיזו את הנקודה רחוק (משימה באיור): $\kappa$ ו-$\tau$ קטנים פי עשרה ויותר בקצוות, אבל מה קורה לזווית ולמנה?
+עכשיו המעקה לאורך הקיר, $(t,\cosh t,\sinh t)$. הזיזו את הנקודה רחוק (משימה באיור): $\kappa$ ו-$\tau$ קטנים פי עשרה ויותר בקצוות, אבל מה קורה לזווית ולמנה?
 
 </Step>
 
 <Step fig="fig-2-5a" set={{ curve: 'helix', t: 0.6, show: ['frame', 'axis', 'darboux'] }}>
 
-הוסיפו את וקטור דרבו $\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$ (<LessonLink id="2.3" />) והזיזו את הנקודה על הסליל. לאן הוא מצביע? עשו אותו דבר במסילה של המגדל.
+הוסיפו את וקטור דרבו $\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$ (<LessonLink id="2.3" />) והזיזו את הנקודה על הסליל. לאן הוא מצביע? עשו אותו דבר במעקה.
 
 </Step>
 
@@ -108,8 +108,8 @@ $\mathbf u$ נקרא **ציר** של הסליל המוכלל, ו-$\theta$ הזו
 **רעיון.** $\mathbf t\perp\mathbf u$ פירושו ש-$\gamma\cdot\mathbf u$ לא משתנה: המסילה במישור שניצב ל-$\mathbf u$.
 
 **הוכחה.**
-- $(\Rightarrow)$ $(\gamma\cdot\mathbf u)'=\mathbf t\cdot\mathbf u=\cos\frac\pi2=0$ על הקטע $I$, ולכן לפי משפט הערך הממוצע $\gamma\cdot\mathbf u\equiv c$ קבוע: $\gamma(I)$ מוכלת במישור $\{\mathbf x:\mathbf x\cdot\mathbf u=c\}$.
-- $(\Leftarrow)$ אם $\gamma(I)$ מוכלת במישור $\{\mathbf x:\mathbf x\cdot\mathbf m=c\}$ עם $\|\mathbf m\|=1$, גזירה של $\gamma\cdot\mathbf m\equiv c$ נותנת $\mathbf t\cdot\mathbf m\equiv0=\cos\frac\pi2$; זו ההגדרה עם $\mathbf u=\mathbf m$. $\blacksquare$
+- $(\Rightarrow)$ $(\gamma\cdot\mathbf u)'=\mathbf t\cdot\mathbf u=\cos\frac\pi2=0$ על הקטע $I$, ולכן לפי משפט הערך הממוצע $\gamma\cdot\mathbf u\equiv\ell$ קבוע: $\gamma(I)$ מוכלת במישור $\{\mathbf x:\mathbf x\cdot\mathbf u=\ell\}$.
+- $(\Leftarrow)$ אם $\gamma(I)$ מוכלת במישור $\{\mathbf x:\mathbf x\cdot\mathbf e=\ell\}$ עם $\|\mathbf e\|=1$, גזירה של $\gamma\cdot\mathbf e\equiv\ell$ נותנת $\mathbf t\cdot\mathbf e\equiv0=\cos\frac\pi2$; זו ההגדרה עם $\mathbf u=\mathbf e$. $\blacksquare$
 
 **היכן השתמשנו בהנחות.** הקטע $I$: במשפט הערך הממוצע (על איחוד של שני קטעים $\gamma\cdot\mathbf u$ יכולה לקבל שני ערכים). $\kappa>0$ ו-$C^3$ אינם נחוצים להוכחה עצמה; הם חלק מהגדרה 2.5.1.
 
@@ -118,15 +118,15 @@ $\mathbf u$ נקרא **ציר** של הסליל המוכלל, ו-$\theta$ הזו
 <Step fig="fig-2-5a" set={{ curve: 'helix', t: 0.6, show: ['frame', 'axis'] }} id="gh-examples">
 
 **הדוגמאות של הקורס.**
-- **הסליל המעגלי** $(a\cos t,a\sin t,bt)$, $a>0$, $b\ne0$. $\gamma'=(-a\sin t,a\cos t,b)$ באורך $\sqrt{a^2+b^2}$, ולכן
+- **הסליל המעגלי** $(a\cos t,a\sin t,ht)$, $a>0$, $h\ne0$. $\gamma'=(-a\sin t,a\cos t,h)$ באורך $\sqrt{a^2+h^2}$, ולכן
 
 $$
-\mathbf t\cdot\mathbf e_z=\frac{b}{\sqrt{a^2+b^2}}
+\mathbf t\cdot\mathbf e_z=\frac{h}{\sqrt{a^2+h^2}}
 $$
 
-קבוע: סליל מוכלל עם הציר $\mathbf e_z$. באיור $a=1$, $b=\frac12$: $\cos\theta=\frac{1}{\sqrt5}$, $\theta\approx63.43^\circ$, ו-$\frac\tau\kappa=\frac{0.4}{0.8}=\frac12$ (<LessonLink id="2.2" />).
+קבוע: סליל מוכלל עם הציר $\mathbf e_z$. באיור $a=1$, $h=\frac12$: $\cos\theta=\frac{1}{\sqrt5}$, $\theta\approx63.43^\circ$, ו-$\frac\tau\kappa=\frac{0.4}{0.8}=\frac12$ (<LessonLink id="2.2" />).
 - **מסילה מישורית עם $\kappa>0$**: סליל מוכלל עם $\theta=\frac\pi2$ (טענה 2.5.1א).
-- **המעקה של המגדל** $(t,\cosh t,\sinh t)$: $\gamma'=(1,\sinh t,\cosh t)$, ו-
+- **המעקה** $(t,\cosh t,\sinh t)$: $\gamma'=(1,\sinh t,\cosh t)$, ו-
 
 $$
 \|\gamma'\|^2=1+\sinh^2t+\cosh^2t=2\cosh^2t.
@@ -138,7 +138,7 @@ $$
 \mathbf t\cdot\mathbf e_z=\frac{\cosh t}{\sqrt2\cosh t}=\frac{1}{\sqrt2},
 $$
 
-סליל מוכלל עם $\theta=\frac\pi4$: זה המשמעות המדויקת של "שיפוע קבוע של $45^\circ$". (הפרמטר כאן $t$, לא אורך הקשת; לפי הערה 3 זה לא משנה.)
+סליל מוכלל עם $\theta=\frac\pi4$: זו המשמעות המדויקת של "שיפוע קבוע של $45^\circ$". (הפרמטר כאן $t$, לא אורך הקשת; לפי הערה 3 זה לא משנה.)
 - **המסילה המעוקבת** $(t,t^2,t^3)$: נראה מיד, ממשפט 2.5.2, שהיא **אינה** סליל מוכלל.
 
 </Step>
@@ -201,7 +201,13 @@ $$
 
 <Step fig="fig-2-5a" set={{ curve: 'cubic', t: 0, show: ['frame', 'darboux'] }} id="lancret-hyp">
 
-**חזרה לחיזוי.** במעקה של המגדל $\kappa$ ו-$\tau$ משתנים (שניהם $\frac{1}{2\cosh^2t}$, דוגמה 1), אבל לפי משפט 2.5.2 המנה $\frac\tau\kappa=\cot\frac\pi4=1$ קבועה. זו התשובה: **שניהם משתנים, והמנה קבועה**. "שניהם קבועים" נכון רק לסליל מעגלי (משפט 2.3.8), וזו טעות לחשוב שזה ההכרח. גם "פיתול אפס כי המעקה על גליל" שגוי: לפי טענה 2.5.1א, $\tau\equiv0$ פירושו מסילה מישורית, והמעקה אינו מישורי.
+**חזרה לחיזוי.** במעקה $(t,\cosh t,\sinh t)$: $\gamma'=(1,\sinh t,\cosh t)$, $\gamma''=(0,\cosh t,\sinh t)$, $\gamma'''=(0,\sinh t,\cosh t)$, ו-$\gamma'\times\gamma''=(-1,-\sinh t,\cosh t)$, באורך $\sqrt2\cosh t$ (כי $\sinh^2t-\cosh^2t=-1$). לפי טענות 2.1.3 ו-2.2.4
+
+$$
+\kappa=\frac{\sqrt2\cosh t}{(\sqrt2\cosh t)^3}=\frac{1}{2\cosh^2t},\qquad \tau=\frac{\cosh^2t-\sinh^2t}{2\cosh^2t}=\frac{1}{2\cosh^2t}.
+$$
+
+שניהם משתנים, ובכל זאת, כמו שמשפט 2.5.2 מבטיח, המנה $\frac\tau\kappa=\cot\frac\pi4=1$ קבועה. זו התשובה: **שניהם משתנים, והמנה קבועה**. "שניהם קבועים" נכון רק לסליל מעגלי (משפט 2.3.8): השיפוע הקבוע קובע רק את המנה. גם "פיתול אפס" שגוי: כאן $\tau\ne0$, וממילא לפי משפט 2.2.6 מסילה עם $\kappa>0$ ו-$\tau\equiv0$ על קטע היא מישורית, והמעקה עולה ואינו מישורי.
 
 **המסילה המעוקבת אינה סליל מוכלל.** לפי <LessonLink id="2.2" />, $\kappa(0)=2$ ו-$\tau(0)=3$, והנוסחאות בפרמטר כללי נותנות
 
@@ -212,32 +218,31 @@ $$
 לכן $\frac\tau\kappa(0)=\frac32$ ו-$\frac\tau\kappa(1)=\frac{3/19}{2\sqrt{19}/14^{3/2}}\approx0.9488$. המנה לא קבועה, ולפי משפט 2.5.2(א) אין כיוון קבוע שהמשיק יוצר איתו זווית קבועה.
 
 **כל הנחה דרושה.**
-- **הקטע.** ניקח את הסליל $\gamma_1(t)=(\cos t,\sin t,\frac t2)$ על $(-2,-1)$ ואת $\gamma_2(t)=(\frac t2,\cos t,\sin t)$ על $(1,2)$. $\gamma_2$ מתקבלת מ-$\gamma_1$ בתמורה המעגלית של הקואורדינטות $(x,y,z)\mapsto(z,x,y)$, שהיא סיבוב (מטריצה אורתוגונלית עם דטרמיננטה $1$). לכן לפי טענה 2.2.5 לשתיהן $\kappa=0.8$ ו-$\tau=0.4$, והמנה $\frac12$ קבועה על כל תחום ההגדרה. ובכל זאת אין ציר משותף: לפי שלבים 2 עד 4 של ההוכחה, על כל חתיכה הציר הוא $\pm(\cos\theta\,\mathbf t+\sin\theta\,\mathbf b)$, כלומר $\pm\mathbf e_z$ על הראשונה ו-$\pm\mathbf e_x$ על השנייה. המשפט מדבר על מסילה אחת על קטע אחד.
-- **$\kappa>0$.** בלעדיה $\frac\tau\kappa$ אינה מוגדרת, ו-$\mathbf n$ עלול לקפוץ (משפט 2.1.11), כך שאין "מישור מיישר" שבו נמצא הציר.
+- **הקטע.** ניקח את הסליל $\gamma_1(t)=(\cos t,\sin t,\frac t2)$ על $(-2,-1)$ ואת $\gamma_2(t)=(\frac t2,\cos t,\sin t)$ על $(1,2)$. התחום הוא איחוד של שני קטעים, והפרמטר $t$ אינו אורך הקשת (הוא אורך הקשת כפול $\frac{2}{\sqrt5}$); לפי הערה 3 זה לא משנה. $\gamma_2$ מתקבלת מ-$\gamma_1$ בתמורה המעגלית של הקואורדינטות $(x,y,z)\mapsto(z,x,y)$, שהיא סיבוב (מטריצה אורתוגונלית עם דטרמיננטה $1$). לכן לשתיהן $\kappa=0.8$ (טענה 1.3.7) ו-$\tau=0.4$ (טענה 2.2.5), והמנה $\frac12$ קבועה על כל תחום ההגדרה. ובכל זאת אין ציר משותף: לפי שלבים 2 עד 4 של ההוכחה, על כל חתיכה הציר הוא $\pm(\cos\theta\,\mathbf t+\sin\theta\,\mathbf b)$, כלומר $\pm\mathbf e_z$ על הראשונה ו-$\pm\mathbf e_x$ על השנייה. המשפט מדבר על מסילה אחת על קטע אחד.
+- **$\kappa>0$ בכל נקודה.** המסילה המודבקת של טענה 2.2.7, $(t,t^4,0)$ כש-$t\le0$ ו-$(t,0,t^4)$ כש-$t>0$, היא מסדר $C^3$, עם $\kappa>0$ בכל נקודה פרט ל-$t=0$, ו-$\tau=0$ בכל נקודה שבה הוא מוגדר: המנה $\frac\tau\kappa\equiv0$ קבועה בכל מקום שבו היא מוגדרת. אבל אין וקטור יחידה קבוע $\mathbf u$ עם $\mathbf t\cdot\mathbf u$ קבוע. משמאל $\mathbf t=\frac{(1,4t^3,0)}{\sqrt{1+16t^6}}$, ו-$\mathbf t\cdot\mathbf u=\frac{u_1+4t^3u_2}{\sqrt{1+16t^6}}$ קבוע על קטע רק כש-$u_1=u_2=0$, כלומר $\mathbf u=\pm\mathbf e_z$. מימין, באותו חישוב, $\mathbf u=\pm\mathbf e_y$. סתירה. בנקודה אחת שבה $\kappa=0$ השלשה קופצת (משפט 2.1.11), והציר יכול להחליף כיוון.
 
 </Step>
 
 <Step fig="fig-2-5a" set={{ curve: 'helix', t: 0.6, show: ['frame', 'axis', 'darboux'] }} id="darboux-axis">
 
-**מסקנה 2.5.3 (הציר הוא כיוון וקטור דרבו).** תהי $\gamma$ כמו במשפט 2.5.2, ו-$\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$ <Term id="darboux-vector">וקטור דרבו</Term> שלה (טענה 2.3.7). אז $\boldsymbol\omega\ne0$, ו-$\gamma$ סליל מוכלל אם ורק אם הכיוון $\mathbf w=\frac{\boldsymbol\omega}{\|\boldsymbol\omega\|}$ קבוע. במקרה הזה $\mathbf w$ הוא הציר $\mathbf u$ של משפט 2.5.2, זה עם $\mathbf u\cdot\mathbf b>0$.
+**מסקנה 2.5.3 (הציר הוא כיוון וקטור דרבו).** תהי $\gamma$ כמו במשפט 2.5.2, ו-$\boldsymbol\omega=\tau\mathbf t+\kappa\mathbf b$ <Term id="darboux-vector">וקטור דרבו</Term> שלה (טענה 2.3.7). אז $\boldsymbol\omega\ne0$, ו-$\gamma$ סליל מוכלל אם ורק אם וקטור היחידה $\hat{\boldsymbol\omega}=\frac{\boldsymbol\omega}{\|\boldsymbol\omega\|}$ קבוע. במקרה הזה $\hat{\boldsymbol\omega}$ הוא הציר $\mathbf u$ של משפט 2.5.2, זה עם $\mathbf u\cdot\mathbf b>0$.
 
-**רעיון.** $\mathbf w$ במישור המיישר, עם מקדמים $f=\frac{\tau}{\sqrt{\kappa^2+\tau^2}}$ ו-$g=\frac{\kappa}{\sqrt{\kappa^2+\tau^2}}$. כשגוזרים אותו, הרכיב לאורך $\mathbf n$ מתבטל תמיד, ולכן $\mathbf w$ קבוע בדיוק כש-$f$ ו-$g$ קבועים.
+**רעיון.** המקדמים של $\hat{\boldsymbol\omega}$ לאורך $\mathbf t$ ו-$\mathbf b$ תלויים רק במנה $\frac\tau\kappa$. לכן מנה קבועה נותנת את הציר של לנקרה, ובכיוון ההפוך כיוון קבוע מחזיר מנה קבועה.
 
 **הוכחה.**
-1. $\|\boldsymbol\omega\|^2=\tau^2+\kappa^2\ge\kappa^2>0$, ולכן $\mathbf w=f\,\mathbf t+g\,\mathbf b$ מוגדר, עם $f,g$ כמו ברעיון. $\kappa,\tau$ רציפות, ולכן גם $f,g$; נניח לרגע שהן גזירות (נטפל בזה בשלב 4).
-2. לפי משפט 2.3.2:
+1. $\mathbf t\perp\mathbf b$ ושניהם וקטורי יחידה, ולכן $\|\boldsymbol\omega\|^2=\tau^2+\kappa^2\ge\kappa^2>0$. לכן $\hat{\boldsymbol\omega}=f\,\mathbf t+g\,\mathbf b$ מוגדר, עם
 
 $$
-\mathbf w'=f'\mathbf t+f\kappa\mathbf n+g'\mathbf b-g\tau\mathbf n=f'\mathbf t+(f\kappa-g\tau)\mathbf n+g'\mathbf b,
+f=\frac{\tau}{\sqrt{\kappa^2+\tau^2}},\qquad g=\frac{\kappa}{\sqrt{\kappa^2+\tau^2}}>0 .
 $$
 
-ו-$f\kappa-g\tau=\frac{\tau\kappa-\kappa\tau}{\|\boldsymbol\omega\|}=0$.
-3. $(\Leftarrow)$ $\mathbf w$ קבוע, ולכן $f=\mathbf w\cdot\mathbf t$ גזירה, $f'=\mathbf w\cdot\mathbf t'=\kappa\,\mathbf w\cdot\mathbf n=0$ (כי $\mathbf w$ במישור של $\mathbf t,\mathbf b$); וגם $g=\mathbf w\cdot\mathbf b$ גזירה עם $g'=-\tau\,\mathbf w\cdot\mathbf n=0$. לכן $f,g$ קבועות, $g>0$, ו-$\frac\tau\kappa=\frac fg$ קבוע: לפי משפט 2.5.2(ב), סליל מוכלל.
-4. $(\Rightarrow)$ לפי משפט 2.5.2(א), $\frac\tau\kappa\equiv\lambda=\cot\theta$, ולכן $f=\frac{\lambda}{\sqrt{1+\lambda^2}}=\cos\theta$ ו-$g=\frac{1}{\sqrt{1+\lambda^2}}=\sin\theta$ **קבועות** (בפרט גזירות), ו-$\mathbf w=\cos\theta\,\mathbf t+\sin\theta\,\mathbf b=\mathbf u$. לפי שלב 2, $\mathbf w'=0$. $\blacksquare$
+2. $(\Rightarrow)$ לפי משפט 2.5.2(א), אחרי הנרמול $\mathbf u\cdot\mathbf b>0$, $\mathbf u=\cos\theta\,\mathbf t+\sin\theta\,\mathbf b$ ו-$\frac\tau\kappa\equiv\cot\theta$ עם $\theta\in(0,\pi)$. מחלקים את המונה והמכנה של $f$ ושל $g$ ב-$\kappa>0$, ומשתמשים ב-$\sqrt{1+\cot^2\theta}=\frac{1}{\sin\theta}$ (כי $\sin\theta>0$): $f=\cot\theta\sin\theta=\cos\theta$ ו-$g=\sin\theta$. לכן $\hat{\boldsymbol\omega}=\mathbf u$, קבוע.
+3. $(\Leftarrow)$ נניח $\hat{\boldsymbol\omega}\equiv\mathbf e$ קבוע. $\{\mathbf t,\mathbf n,\mathbf b\}$ אורתונורמלי, ולכן $f=\mathbf e\cdot\mathbf t$ ו-$\mathbf e\cdot\mathbf n=0$. $\mathbf t$ מסדר $C^2$ (טענה 2.1.4), ולפי משפט 2.3.2 $f'=\mathbf e\cdot\mathbf t'=\kappa\,\mathbf e\cdot\mathbf n=0$. על הקטע $I$, לפי משפט הערך הממוצע, $f$ קבועה, ולכן גם $g=\sqrt{1-f^2}$ קבועה וחיובית.
+4. לכן $\frac\tau\kappa=\frac fg$ קבוע, ולפי משפט 2.5.2(ב) $\gamma$ סליל מוכלל, עם הציר $\frac{\lambda\mathbf t+\mathbf b}{\sqrt{1+\lambda^2}}$, $\lambda=\frac fg$. כפל המונה והמכנה ב-$g$ ו-$f^2+g^2=1$ נותנים שהציר הזה הוא $f\,\mathbf t+g\,\mathbf b=\hat{\boldsymbol\omega}$. $\blacksquare$
 
-**היכן השתמשנו בהנחות.** $\kappa>0$ בשלב 1 ($\boldsymbol\omega\ne0$ ו-$g>0$); $C^3$ כדי לגזור את $\mathbf b$; הקטע דרך משפט 2.5.2.
+**היכן השתמשנו בהנחות.** $\kappa>0$ בשלב 1 ($\boldsymbol\omega\ne0$ ו-$g>0$) ובחילוק בשלב 2; $C^3$ דרך משפט 2.5.2 ובגזירת $\mathbf t$ בשלב 3; הקטע בשלב 3 ודרך משפט 2.5.2.
 
-באיור: על הסליל ועל המעקה של המגדל החץ $\boldsymbol\omega$ מקביל לציר המקווקו בכל נקודה; על המסילה המעוקבת הוא מסתובב. זה גם מסביר את השם "ציר": לפי <LessonLink id="2.3" />, $\boldsymbol\omega$ הוא הציר שסביבו השלשה מסתובבת ברגע נתון, ובסליל מוכלל הציר הרגעי הזה לא משנה כיוון.
+באיור: על הסליל ועל המעקה החץ $\boldsymbol\omega$ מקביל לציר המקווקו בכל נקודה; על המסילה המעוקבת הוא מסתובב. זה גם מסביר את השם "ציר": לפי <LessonLink id="2.3" />, $\boldsymbol\omega$ הוא הציר שסביבו השלשה מסתובבת ברגע נתון, ובסליל מוכלל הציר הרגעי הזה לא משנה כיוון.
 
 </Step>
 
@@ -248,7 +253,7 @@ $$
 <Spread
   fig="fig-2-5b"
   n="2.5ב"
-  caption="המסילה של ויויאני $(1+\cos t,\ \sin t,\ 2\sin\frac t2)$ על הספרה ברדיוס 2 סביב הראשית (קו המתאר והקו המשווה המקווקו), השלשה של פרנה בנקודה, המעגל המנשק, והספרה המנשקת (המעגל המקווקו השני): הספרה שמרכזה $\gamma+\rho\mathbf n+\frac{\rho'}{\tau}\mathbf b$ ורדיוסה $\sqrt{\rho^2+(\rho'/\tau)^2}$, הגדרה 2.5.6ב. מתחת לאיור הרדיוס שלה. אפשר לעבור לסליל הימני: שם הרדיוס קבוע, אבל המרכז זז. בקטבים של ויויאני ($t=\pm\pi$) הפיתול מתאפס והספרה המנשקת אינה מוגדרת. עדות מספרית; ההוכחות בטקסט."
+  caption="המסילה של ויויאני $(1+\cos t,\ \sin t,\ 2\sin\frac t2)$ על הספרה ברדיוס 2 סביב הראשית (קו המתאר והקו המשווה המקווקו), השלשה של פרנה בנקודה, המעגל המנשק, והספרה המנשקת (המעגל המקווקו השני), שנגדיר בהגדרה 2.5.6ב: עם $\rho=\frac1\kappa$ ו-$\sigma=\frac1\tau$, הספרה שמרכזה $\gamma+\rho\mathbf n+\rho'\sigma\mathbf b$ ורדיוסה $\sqrt{\rho^2+(\rho'\sigma)^2}$. מתחת לאיור הרדיוס שלה. אפשר לעבור לסליל הימני: שם הרדיוס קבוע, אבל המרכז זז. בקטבים של ויויאני ($t=\pm\pi$) הפיתול מתאפס והספרה המנשקת אינה מוגדרת. עדות מספרית; ההוכחות בטקסט."
   figure={FrenetFrame}
   figureProps={{ curve: 'viviani', curves: ['viviani', 'helix'], t: 1, show: ['frame', 'sphere'], layers: ['sphere', 'circle'], tasks: ['viviani-sphere'] }}
 >
@@ -259,13 +264,13 @@ $$
 
 **הגדרה 2.5.3א (מסילה כדורית).** מסילה $\gamma:I\to\mathbb R^3$ היא <Term id="spherical-curve">מסילה כדורית</Term> אם יש נקודה $\mathbf c$ ו-$R>0$ כך ש-$\|\gamma(s)-\mathbf c\|=R$ לכל $s\in I$: התמונה מוכלת בספרה שמרכזה $\mathbf c$ ורדיוסה $R$.
 
-**הדוגמה של השיעור: <Term id="viviani-curve">המסילה של ויויאני</Term>.** $\gamma(t)=(1+\cos t,\ \sin t,\ 2\sin\frac t2)$, $t\in[-2\pi,2\pi]$. הנוסחה $1+\cos t=2\cos^2\frac t2$ ו-$\sin^2\frac t2+\cos^2\frac t2=1$ נותנות
+**הדוגמה של השיעור: <Term id="viviani-curve">המסילה של ויויאני</Term>.** $\gamma(t)=(1+\cos t,\ \sin t,\ 2\sin\frac t2)$, $t\in[-2\pi,2\pi]$. פותחים את הריבוע הראשון, $(1+\cos t)^2+\sin^2t=2+2\cos t$, ומשתמשים בזהות $2\sin^2\frac t2=1-\cos t$:
 
 $$
-\|\gamma(t)\|^2=(1+\cos t)^2+\sin^2t+4\sin^2\tfrac t2=2+2\cos t+2(1-\cos t)=4 :
+\|\gamma(t)\|^2=(2+2\cos t)+2(1-\cos t)=4 .
 $$
 
-היא על הספרה ברדיוס $2$ סביב הראשית, וגם על הגליל $(x-1)^2+y^2=1$, ולכן היא החיתוך שלהם.
+היא על הספרה ברדיוס $2$ סביב הראשית, וגם על הגליל $(x-1)^2+y^2=1$ (כי $(x-1)^2+y^2=\cos^2t+\sin^2t$), ולכן היא מוכלת בחיתוך שלהם.
 
 **למה 2.5.3ב (הרכיבים של $\gamma-\mathbf c$).** תהי $\gamma$ כדורית, מסדר $C^2$ בפרמטר אורך הקשת. אז $(\gamma-\mathbf c)\cdot\mathbf t\equiv0$ ו-$(\gamma-\mathbf c)\cdot\mathbf t'\equiv-1$. בפרט $\mathbf t'\ne0$ בכל נקודה, כלומר $\kappa>0$ על $I$ בלי שהנחנו זאת, ו-$(\gamma-\mathbf c)\cdot\mathbf n=-\rho$ עם $\rho=\frac1\kappa$.
 
@@ -293,7 +298,7 @@ $$
 $$
 
 כלומר $\kappa=\frac1\rho\ge\frac1R$.
-3. שוויון בקושי-שוורץ ב-$s_0$ קורה אם ורק אם $\gamma(s_0)-\mathbf c$ ו-$\mathbf n(s_0)$ תלויים לינארית, כלומר $\gamma(s_0)-\mathbf c=\mu\mathbf n(s_0)$; משלב 1, $\mu=-\rho(s_0)=-R$. מרכז העקמומיות הוא אז
+3. שוויון בקושי-שוורץ ב-$s_0$ קורה אם ורק אם $\gamma(s_0)-\mathbf c$ ו-$\mathbf n(s_0)$ תלויים לינארית, כלומר $\gamma(s_0)-\mathbf c=\mu\mathbf n(s_0)$; משלב 1, $\mu=-\rho(s_0)=-R$. מרכז העקמומיות (<LessonLink id="1.4" />) הוא אז
 
 $$
 \gamma(s_0)+\rho\,\mathbf n(s_0)=\gamma(s_0)+R\,\mathbf n(s_0)=\mathbf c,
@@ -303,13 +308,13 @@ $$
 
 **היכן השתמשנו בהנחות.** $C^2$ ופרמטר אורך הקשת: בלמה 2.5.3ב. לא הנחנו $\kappa>0$: היא נובעת מכך שהמסילה על ספרה. לכן **למסילה על ספרה אין נקודות עם $\kappa=0$**.
 
-**על ויויאני.** חישוב ישיר: עם $c=\cos^2\frac t2$,
+**על ויויאני.** חישוב ישיר: עם $\eta=\cos^2\frac t2$,
 
 $$
-\|\gamma'\|^2=1+c,\qquad \|\gamma'\times\gamma''\|^2=\frac{5+3c}{4},\qquad \kappa^2=\frac{5+3c}{4(1+c)^3},
+\|\gamma'\|^2=1+\eta,\qquad \|\gamma'\times\gamma''\|^2=\frac{5+3\eta}{4},\qquad \kappa^2=\frac{5+3\eta}{4(1+\eta)^3},
 $$
 
-ו-$\kappa\ge\frac12$, עם שוויון רק ב-$c=1$, כלומר בנקודה $(2,0,0)$ (דוגמה 2). באיור, ב-$t=0$ המעגל המנשק הוא קו המתאר של הספרה עצמו: מעגל גדול.
+ו-$\kappa\ge\frac12$, עם שוויון רק ב-$\eta=1$, כלומר בנקודה $(2,0,0)$ (החישוב המלא בדוגמה 2 בהמשך). באיור, ב-$t=0$ המעגל המנשק הוא קו המתאר של הספרה עצמו: מעגל גדול.
 
 </Step>
 
@@ -327,7 +332,7 @@ $$
 \mathbf c=\gamma+\rho\,\mathbf n+\rho'\sigma\,\mathbf b,\qquad R^2=\rho^2+(\rho'\sigma)^2 .
 $$
 
-**למה $C^4$.** ל-$\gamma\in C^4$ עם $\kappa>0$: $\kappa=\|\gamma''\|\in C^2$ (נורמה של פונקציה מסדר $C^2$ שאינה מתאפסת), ולכן $\rho\in C^2$; ו-$\mathbf b\in C^2$ (טענה 2.1.4), ולכן $\tau=-\mathbf b'\cdot\mathbf n\in C^1$ ו-$\sigma\in C^1$. אז $\rho'\sigma\in C^1$, והביטוי $(\rho'\sigma)'$ מוגדר ורציף. למסילה כללית מסדר $C^3$ הוא לא בהכרח מוגדר, ולכן הכיוון $(\Leftarrow)$, שמניח את התנאי מראש, צריך $C^4$. למסילה **כדורית** מסדר $C^3$ דווקא כן: שלב 2 של $(\Rightarrow)$ נותן $\rho'\sigma=-(\gamma-\mathbf c)\cdot\mathbf b$, שהוא מסדר $C^1$ כי $\mathbf b\in C^1$; כך שהכיוון $(\Rightarrow)$ נכון כבר ל-$C^3$.
+**למה $C^4$.** התנאי מכיל את $\rho''$ ואת $\sigma'$, וכש-$\gamma\in C^4$ עם $\kappa>0$ יש $\kappa=\|\gamma''\|\in C^2$ ו-$\tau=-\mathbf b'\cdot\mathbf n\in C^1$ (טענה 2.1.4: $\mathbf b\in C^2$), כך שהתנאי מוגדר ורציף; את זה צריך הכיוון $(\Leftarrow)$, שמניח את התנאי מראש. הכיוון $(\Rightarrow)$ נכון כבר ל-$C^3$, כי על ספרה $\rho'\sigma=-(\gamma-\mathbf c)\cdot\mathbf b$ (שלב 2 בהוכחה), וזה מסדר $C^1$.
 
 **רעיון.** בכל גזירה של $\|\gamma-\mathbf c\|^2=R^2$ מקבלים רכיב נוסף של $\gamma-\mathbf c$ בבסיס של פרנה: לאורך $\mathbf t$, אחר כך $\mathbf n$, אחר כך $\mathbf b$. הגזירה הרביעית לא מוסיפה רכיב חדש, ולכן היא **תנאי**. בכיוון ההפוך, מגדירים את המרכז המועמד ומראים שהוא לא זז.
 
@@ -347,13 +352,13 @@ $$
 
 3. נאסוף מקדמים: לאורך $\mathbf t$, $1-\rho\kappa=0$; לאורך $\mathbf n$, $\rho'-\rho'\sigma\tau=0$; לאורך $\mathbf b$, $\rho\tau+(\rho'\sigma)'=\frac\rho\sigma+(\rho'\sigma)'=0$ לפי ההנחה. לכן $\mathbf m'\equiv0$.
 4. לפי משפט הערך הממוצע על הקטע $I$ (רכיב אחר רכיב), $\mathbf m\equiv\mathbf c$ קבוע.
-5. $\gamma-\mathbf c=-\rho\,\mathbf n-\rho'\sigma\,\mathbf b$, ולכן $h=\|\gamma-\mathbf c\|^2=\rho^2+(\rho'\sigma)^2$, ו-
+5. $\gamma-\mathbf c=-\rho\,\mathbf n-\rho'\sigma\,\mathbf b$, ולכן $D=\|\gamma-\mathbf c\|^2=\rho^2+(\rho'\sigma)^2$, ו-
 
 $$
-h'=2\rho\rho'+2\rho'\sigma(\rho'\sigma)'=2\rho\rho'+2\rho'\sigma\Big(-\frac\rho\sigma\Big)=0 .
+D'=2\rho\rho'+2\rho'\sigma(\rho'\sigma)'=2\rho\rho'+2\rho'\sigma\Big(-\frac\rho\sigma\Big)=0 .
 $$
 
-לכן $h\equiv R^2$ קבוע, עם $R>0$ כי $\rho>0$: $\gamma$ על הספרה $\|\mathbf x-\mathbf c\|=R$. $\blacksquare$
+לכן $D\equiv R^2$ קבוע, עם $R>0$ כי $\rho>0$: $\gamma$ על הספרה $\|\mathbf x-\mathbf c\|=R$. $\blacksquare$
 
 **היכן השתמשנו בהנחות.** $\tau\ne0$: כדי להגדיר $\sigma$ ובשלב 2 של $(\Rightarrow)$ (חילוק ב-$\tau$). $\kappa>0$: כדי להגדיר $\rho$ ואת השלשה. $C^4$: כדי שהתנאי $\frac\rho\sigma+(\rho'\sigma)'\equiv0$ יהיה מוגדר מראש, ושהגזירה בשלב 2 של $(\Leftarrow)$ מותרת; הכיוון $(\Rightarrow)$ אינו צריך אותה (ב-$C^3$, $\rho'\sigma=-(\gamma-\mathbf c)\cdot\mathbf b$ כבר מסדר $C^1$). הקטע: בשלב 4 של $(\Leftarrow)$ ובשלב 5 (נגזרת אפס גוררת קבוע).
 
@@ -363,7 +368,7 @@ $$
 \tau(t)=\frac{3\cos\frac t2}{8-3\sin^2\frac t2},
 $$
 
-שחיובי בדיוק כש-$\cos\frac t2>0$ (המכנה לפחות $5$). לכן על $(-\pi,\pi)$, $\tau>0$ (ב-$t=0$, $\tau=\frac38$), והמשפט חל. הספרה המנשקת באיור היא בדיוק הספרה $\|\mathbf x\|=2$ בכל נקודה (משימה באיור).
+שחיובי בדיוק כש-$\cos\frac t2>0$ (המכנה לפחות $5$). לכן על $(-\pi,\pi)$, $\tau>0$ (ב-$t=0$, $\tau=\frac38$), והמשפט חל. באיור, הספרה שמרכזה $\gamma+\rho\,\mathbf n+\rho'\sigma\,\mathbf b$ וברדיוס $\sqrt{\rho^2+(\rho'\sigma)^2}$ (בהגדרה 2.5.6ב נקרא לה הספרה המנשקת) היא בדיוק הספרה $\|\mathbf x\|=2$ בכל נקודה (משימה באיור), כמו שהמשפט מבטיח.
 
 </Step>
 
@@ -381,13 +386,13 @@ $$
 
 כי $\rho'\ne0$, $\rho+\sigma(\rho'\sigma)'=0$; מחלקים ב-$\sigma\ne0$ ומקבלים את התנאי של משפט 2.5.5. $\blacksquare$
 
-**ההנחה $\rho'\ne0$ דרושה: הסליל.** לסליל המעגלי $(a\cos t,a\sin t,bt)$, $a>0$, $b\ne0$: $\rho=\frac{a^2+b^2}{a}$ ו-$\sigma=\frac{a^2+b^2}{b}$ קבועים, $\rho'\equiv0$, ולכן $\rho^2+(\rho'\sigma)^2=\rho^2$ **קבוע**. אבל $\frac\rho\sigma+(\rho'\sigma)'=\frac ba\ne0$, ולפי משפט 2.5.5 הסליל אינו כדורית, אף לא קטע קצר שלו. באיור: בסליל רדיוס הספרה המנשקת קבוע, $\rho=1.25$, אבל המרכז שלה זז עם הנקודה, ולכן אין ספרה אחת שמכילה את המסילה.
+**ההנחה $\rho'\ne0$ דרושה: הסליל.** לסליל המעגלי $(a\cos t,a\sin t,ht)$, $a>0$, $h\ne0$: $\rho=\frac{a^2+h^2}{a}$ ו-$\sigma=\frac{a^2+h^2}{h}$ קבועים, $\rho'\equiv0$, ולכן $\rho^2+(\rho'\sigma)^2=\rho^2$ **קבוע**. אבל $\frac\rho\sigma+(\rho'\sigma)'=\frac ha\ne0$, ולפי משפט 2.5.5 הסליל אינו כדורי, אף לא קטע קצר שלו. באיור: בסליל רדיוס הספרה המנשקת קבוע, $\rho=1.25$, אבל המרכז שלה זז עם הנקודה, ולכן אין ספרה אחת שמכילה את המסילה.
 
 **טענה 2.5.6א (מסילה כדורית בלי פיתול היא מעגל).** תהי $\gamma$ מסדר $C^3$ בפרמטר אורך הקשת על קטע $I$, על ספרה $\|\mathbf x-\mathbf c\|=R$, עם $\tau\equiv0$. אז $\gamma(I)$ מוכלת במעגל. (כאן $\sigma$ לא מוגדר, ולכן משפט 2.5.5 לא חל; צריך הוכחה נפרדת.)
 
 **הוכחה.**
-1. לפי למה 2.5.3ב, $\kappa>0$ על $I$. לפי משפט 2.2.6, $\tau\equiv0$ גורר ש-$\gamma(I)$ מוכלת במישור $P=\{\mathbf x:(\mathbf x-\mathbf p)\cdot\mathbf m=0\}$, $\|\mathbf m\|=1$.
-2. תהי $\mathbf q=\mathbf c-\big((\mathbf c-\mathbf p)\cdot\mathbf m\big)\mathbf m$ ההטלה של $\mathbf c$ על $P$. לכל $\mathbf x\in P$, $\mathbf x-\mathbf q\perp\mathbf m$ ו-$\mathbf q-\mathbf c\parallel\mathbf m$, ולכן לפי פיתגורס $\|\mathbf x-\mathbf c\|^2=\|\mathbf x-\mathbf q\|^2+\|\mathbf q-\mathbf c\|^2$.
+1. לפי למה 2.5.3ב, $\kappa>0$ על $I$. לפי משפט 2.2.6, $\tau\equiv0$ גורר ש-$\gamma(I)$ מוכלת במישור $P=\{\mathbf x:(\mathbf x-\mathbf p)\cdot\mathbf e=0\}$, $\|\mathbf e\|=1$.
+2. תהי $\mathbf q=\mathbf c-\big((\mathbf c-\mathbf p)\cdot\mathbf e\big)\mathbf e$ ההטלה של $\mathbf c$ על $P$. לכל $\mathbf x\in P$, $\mathbf x-\mathbf q\perp\mathbf e$ ו-$\mathbf q-\mathbf c\parallel\mathbf e$, ולכן לפי פיתגורס $\|\mathbf x-\mathbf c\|^2=\|\mathbf x-\mathbf q\|^2+\|\mathbf q-\mathbf c\|^2$.
 3. נציב $\mathbf x=\gamma(s)$:
 
 $$
@@ -398,15 +403,15 @@ $$
 
 **הגדרה 2.5.6ב (<Term id="osculating-sphere">הספרה המנשקת</Term>).** ל-$\gamma$ מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$ ו-$\tau\ne0$, הספרה המנשקת בנקודה $s$ היא הספרה שמרכזה $\mathbf m(s)=\gamma+\rho\,\mathbf n+\rho'\sigma\,\mathbf b$ ורדיוסה $\sqrt{\rho^2+(\rho'\sigma)^2}$. (כאן מספיק $C^3$: צריך רק את $\rho'$.)
 
-**טענה 2.5.6ג (למה "מנשקת").** בתנאי הגדרה 2.5.6ב, יהי $s_0\in I$, $\mathbf c\in\mathbb R^3$ ו-$h(s)=\|\gamma(s)-\mathbf c\|^2$. אז $h'(s_0)=h''(s_0)=h'''(s_0)=0$ אם ורק אם $\mathbf c=\mathbf m(s_0)$. כלומר, מבין כל הספרות דרך $\gamma(s_0)$, רק הספרה המנשקת "מחזיקה" את המסילה עד סדר שלישי.
+**טענה 2.5.6ג (למה "מנשקת").** בתנאי הגדרה 2.5.6ב, יהי $s_0\in I$, $\mathbf c\in\mathbb R^3$ ו-$D(s)=\|\gamma(s)-\mathbf c\|^2$. אז $D'(s_0)=D''(s_0)=D'''(s_0)=0$ אם ורק אם $\mathbf c=\mathbf m(s_0)$. כלומר, מבין כל הספרות דרך $\gamma(s_0)$, רק הספרה המנשקת "מחזיקה" את המסילה עד סדר שלישי.
 
-**הוכחה.** $h'=2(\gamma-\mathbf c)\cdot\mathbf t$ ו-$h''=2+2\kappa(\gamma-\mathbf c)\cdot\mathbf n$, וגזירה נוספת לפי משפט 2.3.2:
+**הוכחה.** $D'=2(\gamma-\mathbf c)\cdot\mathbf t$ ו-$D''=2+2\kappa(\gamma-\mathbf c)\cdot\mathbf n$, וגזירה נוספת לפי משפט 2.3.2:
 
 $$
-h'''=2\kappa'(\gamma-\mathbf c)\cdot\mathbf n+2\kappa\big(\mathbf t\cdot\mathbf n-\kappa(\gamma-\mathbf c)\cdot\mathbf t+\tau(\gamma-\mathbf c)\cdot\mathbf b\big).
+D'''=2\kappa'(\gamma-\mathbf c)\cdot\mathbf n+2\kappa\big(\mathbf t\cdot\mathbf n-\kappa(\gamma-\mathbf c)\cdot\mathbf t+\tau(\gamma-\mathbf c)\cdot\mathbf b\big).
 $$
 
-ב-$s_0$: $h'=0$ אם ורק אם $(\gamma-\mathbf c)\cdot\mathbf t=0$. בהינתן זה, $h''=0$ אם ורק אם $(\gamma-\mathbf c)\cdot\mathbf n=-\rho$. בהינתן שניהם, $h'''=-2\kappa'\rho+2\kappa\tau(\gamma-\mathbf c)\cdot\mathbf b$, ו-$\rho'=-\frac{\kappa'}{\kappa^2}$ נותן $h'''=0$ אם ורק אם $(\gamma-\mathbf c)\cdot\mathbf b=\frac{\kappa'\rho}{\kappa\tau}=-\rho'\sigma$. שלושת הרכיבים של $\gamma(s_0)-\mathbf c$ בבסיס האורתונורמלי נקבעים, ולכן $\mathbf c$ יחיד, והוא $\mathbf m(s_0)$. $\blacksquare$
+ב-$s_0$: $D'=0$ אם ורק אם $(\gamma-\mathbf c)\cdot\mathbf t=0$. בהינתן זה, $D''=0$ אם ורק אם $(\gamma-\mathbf c)\cdot\mathbf n=-\rho$. בהינתן שניהם, $D'''=-2\kappa'\rho+2\kappa\tau(\gamma-\mathbf c)\cdot\mathbf b$, ו-$\rho'=-\frac{\kappa'}{\kappa^2}$ נותן $D'''=0$ אם ורק אם $(\gamma-\mathbf c)\cdot\mathbf b=\frac{\kappa'\rho}{\kappa\tau}=-\rho'\sigma$. שלושת הרכיבים של $\gamma(s_0)-\mathbf c$ בבסיס האורתונורמלי נקבעים, ולכן $\mathbf c$ יחיד, והוא $\mathbf m(s_0)$. $\blacksquare$
 
 **לסיכום, משפט 2.5.5 בשפה הזו:** מסילה (עם $\kappa>0$, $\tau\ne0$, $C^4$) כדורית אם ורק אם המרכז של הספרה המנשקת לא זז, ואז הספרה המנשקת היא בכל נקודה הספרה שהמסילה מונחת עליה.
 
@@ -422,7 +427,7 @@ $$
 
 <Page>
 
-<Example id="ex-2-5-1" title="המעקה של המגדל: הציר מתוך הנוסחה">
+<Example id="ex-2-5-1" title="המעקה: הציר מתוך הנוסחה">
 
 ל-$\gamma(t)=(t,\cosh t,\sinh t)$, $t\in\mathbb R$: חשבו את $\kappa$ ואת $\tau$, בנו את הציר לפי משפט 2.5.2(ב), ובדקו שהוא $\mathbf e_z$ ושהוא גם הכיוון של וקטור דרבו.
 
@@ -489,22 +494,28 @@ $$
 $$
 
 $\gamma$ רגולרית, ובפרמטר אורך הקשת (שאינו משנה את $\kappa$, <LessonLink id="1.3" />) היא מסדר $C^\infty$ על ספרה ברדיוס $2$. לפי טענה 2.5.4, $\kappa\ge\frac12$.
-- **ישירות.** $\gamma''=(-\cos t,-\sin t,-\frac12\sin\frac t2)$. נסמן $c=\cos^2\frac t2\in[0,1]$. חישוב המכפלה הווקטורית נותן $\gamma'\times\gamma''=(A,B,1)$ עם $A^2+B^2=\cos^2\frac t2+\frac14\sin^2\frac t2$, ולכן
+- **ישירות.** $\gamma'=(-\sin t,\ \cos t,\ \cos\frac t2)$ ו-$\gamma''=(-\cos t,\ -\sin t,\ -\frac12\sin\frac t2)$. נסמן $\eta=\cos^2\frac t2\in[0,1]$ ו-$X=\cos\frac t2$, $Y=\frac12\sin\frac t2$. רכיב אחר רכיב,
 
 $$
-\|\gamma'\times\gamma''\|^2=1+c+\tfrac14(1-c)=\frac{5+3c}{4},\qquad \kappa^2=\frac{5+3c}{4(1+c)^3}.
+\gamma'\times\gamma''=\big(\sin t\,X-\cos t\,Y,\ \ -\cos t\,X-\sin t\,Y,\ \ \sin^2t+\cos^2t\big).
 $$
 
-- $\kappa^2\ge\frac14$ אם ורק אם $5+3c\ge(1+c)^3$. אבל
+  הרכיב השלישי הוא $1$, ושני הראשונים הם $(X,Y)$ אחרי סיבוב בזווית $t$ ושיקוף, שאינם משנים אורך: סכום הריבועים שלהם $X^2+Y^2=\eta+\frac14(1-\eta)$. לכן
 
 $$
-(1+c)^3-3c-5=c^3+3c^2-4=(c-1)(c+2)^2\le0\qquad(0\le c\le1),
+\|\gamma'\times\gamma''\|^2=1+\eta+\tfrac14(1-\eta)=\frac{5+3\eta}{4},\qquad \kappa^2=\frac{5+3\eta}{4(1+\eta)^3}.
 $$
 
-עם שוויון רק ב-$c=1$.
-- $c=1$ פירושו $\cos^2\frac t2=1$, כלומר $t\in2\pi\mathbb Z$, והנקודה היא $\gamma=(2,0,0)$. שם, לפי טענה 2.5.4, המעגל המנשק הוא מעגל גדול. $\blacksquare$
+- $\kappa^2\ge\frac14$ אם ורק אם $5+3\eta\ge(1+\eta)^3$. אבל
 
-**בדיקה**: ב-$c=1$, $\kappa^2=\frac{8}{32}=\frac14$ ✓; ב-$c=0$ (הקטבים $t=\pm\pi$), $\kappa=\frac{\sqrt5}{2}\approx1.118$, המקסימום. חישוב מספרי על $[-2\pi,2\pi]$ נותן מינימום $0.5$ ב-$t=0,\pm2\pi$ ומקסימום $1.1180$ ב-$t=\pm\pi$. ב-$t=0$ גם $\mathbf n=(-1,0,0)=-\frac{\gamma}{2}$, כמו בתנאי השוויון.
+$$
+(1+\eta)^3-3\eta-5=\eta^3+3\eta^2-4=(\eta-1)(\eta+2)^2\le0\qquad(0\le\eta\le1),
+$$
+
+עם שוויון רק ב-$\eta=1$.
+- $\eta=1$ פירושו $\cos^2\frac t2=1$, כלומר $t\in2\pi\mathbb Z$, והנקודה היא $\gamma=(2,0,0)$. שם, לפי טענה 2.5.4, המעגל המנשק הוא מעגל גדול. $\blacksquare$
+
+**בדיקה**: ב-$\eta=1$, $\kappa^2=\frac{8}{32}=\frac14$ ✓; ב-$\eta=0$ (הקטבים $t=\pm\pi$), $\kappa=\frac{\sqrt5}{2}\approx1.118$, המקסימום. חישוב מספרי על $[-2\pi,2\pi]$ נותן מינימום $0.5$ ב-$t=0,\pm2\pi$ ומקסימום $1.1180$ ב-$t=\pm\pi$. ב-$t=0$ גם $\mathbf n=(-1,0,0)=-\frac{\gamma}{2}$, כמו בתנאי השוויון.
 
 **מסקנה**: $\kappa\ge\frac12$, עם שוויון רק בנקודה $(2,0,0)$.
 
@@ -529,7 +540,7 @@ $$
 **רעיון**: (א) היא טענה 2.5.1א. ל-(ב) מספיק למצוא מסילה על גליל שבה $\frac\tau\kappa$ משתנה: ויויאני מונחת על הגליל $(x-1)^2+y^2=1$.
 
 **הוכחה**:
-- (א) **נכון.** מסילה מישורית במישור $\{\mathbf x\cdot\mathbf m=c\}$ מקיימת $\mathbf t\cdot\mathbf m\equiv0=\cos\frac\pi2$ (גזירה של $\gamma\cdot\mathbf m\equiv c$), וזו הגדרה 2.5.1 עם $\mathbf u=\mathbf m$, $\theta=\frac\pi2$. בהתאם למשפט 2.5.2, $\frac\tau\kappa\equiv0=\cot\frac\pi2$ (משפט 2.2.6).
+- (א) **נכון.** מסילה מישורית במישור $\{\mathbf x\cdot\mathbf e=\ell\}$ מקיימת $\mathbf t\cdot\mathbf e\equiv0=\cos\frac\pi2$ (גזירה של $\gamma\cdot\mathbf e\equiv\ell$), וזו הגדרה 2.5.1 עם $\mathbf u=\mathbf e$, $\theta=\frac\pi2$. בהתאם למשפט 2.5.2, $\frac\tau\kappa\equiv0=\cot\frac\pi2$ (משפט 2.2.6).
 - (ב) **לא נכון.** ויויאני:
 
 $$
@@ -550,7 +561,7 @@ $$
 
 ועם $\kappa(0)=\frac12$, $\frac\tau\kappa(0)=\frac34\ne0$. המנה לא קבועה, ולפי משפט 2.5.2(א) ויויאני אינה סליל מוכלל. $\blacksquare$
 
-**בדיקה**: הערכים המספריים של האיור: $\tau(0)=0.375$, $\kappa(0)=0.5$, ו-$\tau(\pm\pi)=0$. הכיוון ההפוך של (ב) נכון חלקית: סליל מוכלל לא חייב להיות על גליל **מעגלי** (המעקה של המגדל מונח על גליל מעל שרשרת), אבל ההטלה שלו למישור הניצב לציר היא מסילה מישורית רגולרית, והוא מונח על הגליל מעליה (תרגיל 5 בחוברת).
+**בדיקה**: הערכים המספריים של האיור: $\tau(0)=0.375$, $\kappa(0)=0.5$, ו-$\tau(\pm\pi)=0$. הכיוון ההפוך של (ב) נכון חלקית: סליל מוכלל לא חייב להיות על גליל **מעגלי** (המעקה מונח על הגליל מעל השרשרת), אבל ההטלה שלו למישור הניצב לציר היא מסילה מישורית רגולרית, והוא מונח על הגליל מעליה (תרגיל 5 בחוברת).
 
 **מסקנה**: (א) נכון, עם $\theta=\frac\pi2$; (ב) לא נכון: ויויאני על גליל מעגלי, ו-$\frac\tau\kappa$ שלה משתנה מ-$\frac34$ ל-$0$.
 
@@ -613,10 +624,10 @@ $$
 **הוכחה**:
 - $(\Rightarrow)$ לפי משפט 2.5.2(א), אחרי נרמול $\mathbf u=\cos\theta\,\mathbf t+\sin\theta\,\mathbf b$, ולכן $\mathbf b\cdot\mathbf u=\sin\theta$ קבוע; $\mathbf v=\mathbf u$.
 - $(\Leftarrow)$
-1. גזירה של $\mathbf b\cdot\mathbf v\equiv\beta$ לפי משפט 2.3.2: $-\tau\,\mathbf n\cdot\mathbf v=0$, ו-$\tau\ne0$ נותן $\mathbf n\cdot\mathbf v\equiv0$.
-2. לכן $\mathbf v=\alpha(s)\mathbf t+\beta\,\mathbf b$ עם $\alpha=\mathbf v\cdot\mathbf t$ רציפה ו-$\alpha^2=1-\beta^2$ קבוע.
-3. אם $\beta^2=1$, אז $\alpha\equiv0$ ו-$\mathbf b=\pm\mathbf v$ קבוע, ו-$\tau=-\mathbf b'\cdot\mathbf n=0$: סתירה ל-$\tau\ne0$. לכן $\alpha^2=1-\beta^2>0$, ו-$\alpha$ רציפה שאינה מתאפסת על הקטע: לפי משפט ערך הביניים $\alpha\equiv\sqrt{1-\beta^2}$ או $\alpha\equiv-\sqrt{1-\beta^2}$.
-4. בשני המקרים $\mathbf t\cdot\mathbf v=\alpha$ קבוע. הוא ב-$(-1,1)$: אילו $\beta=0$, אז $\mathbf t\cdot\mathbf v\equiv\pm1$, כלומר $\mathbf t\equiv\pm\mathbf v$ קבוע ו-$\kappa=\|\mathbf t'\|=0$, סתירה ל-$\kappa>0$. לכן $\beta\ne0$ ו-$|\alpha|<1$: $\gamma$ סליל מוכלל עם הציר $\mathbf v$. $\blacksquare$
+1. גזירה של $\mathbf b\cdot\mathbf v\equiv\nu$ לפי משפט 2.3.2: $-\tau\,\mathbf n\cdot\mathbf v=0$, ו-$\tau\ne0$ נותן $\mathbf n\cdot\mathbf v\equiv0$.
+2. לכן $\mathbf v=\alpha(s)\mathbf t+\nu\,\mathbf b$ עם $\alpha=\mathbf v\cdot\mathbf t$ רציפה ו-$\alpha^2=1-\nu^2$ קבוע.
+3. אם $\nu^2=1$, אז $\alpha\equiv0$ ו-$\mathbf b=\pm\mathbf v$ קבוע, ו-$\tau=-\mathbf b'\cdot\mathbf n=0$: סתירה ל-$\tau\ne0$. לכן $\alpha^2=1-\nu^2>0$, ו-$\alpha$ רציפה שאינה מתאפסת על הקטע: לפי משפט ערך הביניים $\alpha\equiv\sqrt{1-\nu^2}$ או $\alpha\equiv-\sqrt{1-\nu^2}$.
+4. בשני המקרים $\mathbf t\cdot\mathbf v=\alpha$ קבוע. הוא ב-$(-1,1)$: אילו $\nu=0$, אז $\mathbf t\cdot\mathbf v\equiv\pm1$, כלומר $\mathbf t\equiv\pm\mathbf v$ קבוע ו-$\kappa=\|\mathbf t'\|=0$, סתירה ל-$\kappa>0$. לכן $\nu\ne0$ ו-$|\alpha|<1$: $\gamma$ סליל מוכלל עם הציר $\mathbf v$. $\blacksquare$
 
 **בדיקה**: **היכן השתמשנו בהנחות.** $\tau\ne0$ בשלבים 1 ו-3; $\kappa>0$ כדי ש-$\mathbf b$ יוגדר; הקטע בשלב 3. בסליל $(\cos t,\sin t,\frac t2)$: $\mathbf b\cdot\mathbf e_z=\frac{1}{\sqrt{1.25}}=\frac{2}{\sqrt5}=\sin\theta$ עם $\cos\theta=\frac{1}{\sqrt5}$ ✓. ובמסילה מישורית ($\tau\equiv0$, ההנחה נכשלת) הכיוון $(\Rightarrow)$ עדיין נכון, $\mathbf b\cdot\mathbf b_0\equiv1$, אבל שלב 1 של $(\Leftarrow)$ לא נותן כלום.
 

@@ -381,7 +381,7 @@ export default function FrenetFrame(props: FrenetFrameProps) {
           )}
           {osc && (
             <span data-readout="sphere">
-              רדיוס הספרה המנשקת <bdi dir="ltr"><b class="q">√(ρ² + (ρ′/τ)²) = {fmt(osc.radius)}</b></bdi>
+              רדיוס הספרה המנשקת <bdi dir="ltr"><b class="q">√(ρ² + (ρ′σ)²) = {fmt(osc.radius)}</b></bdi>
             </span>
           )}
         </>

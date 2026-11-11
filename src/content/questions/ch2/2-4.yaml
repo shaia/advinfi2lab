@@ -15,7 +15,7 @@ questions:
     prompt: >-
       $I$ קטע, $\kappa:I\to(0,\infty)$ מסדר $C^1$ ו-$\tau:I\to\mathbb R$ רציפה. מה אומר משפט הקיום והיחידות?
     choices:
-      - text: 'קיימת מסילה $\gamma:I\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת שהעקמומיות והפיתול שלה הם $\kappa$ ו-$\tau$, וכל שתי מסילות כאלה נבדלות בתנועה $x\mapsto Ax+c$ עם $A$ סיבוב ($A^TA=I$, $\det A=1$)'
+      - text: 'קיימת מסילה $\gamma:I\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת שהעקמומיות והפיתול שלה הם $\kappa$ ו-$\tau$, וכל שתי מסילות כאלה נבדלות בתנועה $x\mapsto Ax+c$ עם $A$ סיבוב ($A^TA=\mathrm{Id}$, $\det A=1$)'
         correct: true
         feedback: >-
           נכון. הקיום והיחידות הם שני חלקים: הקיום מפתרון מערכת לינארית, והיחידות מההשוואה בין שתי השלשות. בחירת
@@ -25,15 +25,15 @@ questions:
           סיבוב של מסילה שומר את $\kappa$ ואת $\tau$, ולכן אי אפשר לקוות ליותר מ"עד כדי סיבוב והזזה". המסילות
           $(\cos s,\sin s,0)$ ו-$(\cos s,0,\sin s)$ הן דוגמה.
         misconception: MC-c2-uniqueness-translation-only
-      - text: 'קיימת מסילה כזו, והיא יחידה עד כדי איזומטריה כלשהי של המרחב: גם תמונת המראה שלה בשיקוף היא מסילה עם אותן $\kappa$ ו-$\tau$'
+      - text: 'קיימת מסילה כזו, והיא יחידה עד כדי תנועה קשיחה כלשהי, גם עם שיקוף: תמונת המראה שלה היא מסילה עם אותן $\kappa$ ו-$\tau$'
         feedback: >-
           שיקוף שומר את $\kappa$ והופך את $\tau$. מסילה ותמונת המראה שלה מקיימות את אותן $\kappa$ ו-$\tau$ רק כש-$\tau\equiv0$.
           המשפט מדבר על סיבוב והזזה.
         misconception: MC-c2-mirror-is-rigid
       - text: 'אותו משפט, ל-$\kappa\ge0$ רציפה כלשהי: קיימת מסילה, והיא יחידה עד כדי סיבוב והזזה'
         feedback: >-
-          בלי $\kappa>0$ אין שלשה של פרנה ואין פיתול, וההוכחה לא מתחילה. והמשפט באמת נכשל, גם למסילות חלקות; נראה דוגמה
-          בהמשך השיעור.
+          בלי $\kappa>0$ אין שלשה של פרנה ואין פיתול, וההוכחה לא מתחילה. והמשפט באמת נכשל, גם למסילות חלקות: ראו את המסילה
+          המודבקת בטענה 2.4.5א.
         misconception: MC-c2-theorem-allows-zero-kappa
 
   - id: Q-2.4-kappaonly
@@ -80,7 +80,8 @@ questions:
       נכון. ל-$\gamma$ יש $\tau=\frac15$, ו-$\det A=-1$ הופך את הסימן. $\tilde\gamma=(2\cos t,2\sin t,-t)$ הוא סליל שמאלי.
       לכן $\gamma$ ו-$\tilde\gamma$ לא נבדלות בסיבוב והזזה.
     wrongFeedback: >-
-      $\tilde\gamma=(2\cos t,2\sin t,-t)$, סליל עם $b=-1$. הציבו בנוסחה של הסליל, או חשבו את המכפלה המשולשת.
+      $\tilde\gamma=(2\cos t,2\sin t,-t)$, סליל ברדיוס $a=2$ ועם עלייה $h=-1$ לכל רדיאן. הציבו בנוסחה של הסליל, או חשבו את
+      המכפלה המשולשת.
     commonWrong:
       - value: 0.2
         feedback: >-
@@ -97,7 +98,7 @@ questions:
     prompt: >-
       איך מוכיחים את חלק הקיום של המשפט?
     choices:
-      - text: 'פותרים את המערכת הלינארית $F''=FK(s)$ (עמודות $F$ הן השלשה, $K$ מטריצת פרנה-סרה) עם שלשה התחלתית אורתונורמלית ימנית, ומגדירים $\gamma(s)=\gamma_0+\int_{s_0}^{s}\mathbf t$'
+      - text: 'פותרים את המערכת הלינארית $F''=FK(s)$ (עמודות $F$ הן השלשה, $K$ מטריצת פרנה-סרה) עם שלשה התחלתית אורתונורמלית ימנית, ומגדירים $\gamma(s)=\mathbf p_0+\int_{s_0}^{s}\mathbf t$'
         correct: true
         feedback: >-
           נכון. למערכת לינארית עם מקדמים רציפים יש פתרון יחיד (שיעור 0.6). כי $K$ אנטי-סימטרית, השלשה נשארת אורתונורמלית (למה 2.4.1),
@@ -111,7 +112,7 @@ questions:
         feedback: >-
           במישור זווית המשיק היא $\int k$, ומשם עוד אינטגרציה. במרחב אין זווית אחת שקובעת את המשיק, ו-$\tau$ חייב להשתתף.
         misconception: MC-c2-kappa-alone-determines
-      - text: 'פותרים את $F''=FK(s)$ עם שלשה התחלתית אורתונורמלית כלשהי, ימנית או שמאלית, ומגדירים $\gamma(s)=\gamma_0+\int_{s_0}^{s}\mathbf t$'
+      - text: 'פותרים את $F''=FK(s)$ עם שלשה התחלתית אורתונורמלית כלשהי, ימנית או שמאלית, ומגדירים $\gamma(s)=\mathbf p_0+\int_{s_0}^{s}\mathbf t$'
         feedback: >-
           עם שלשה התחלתית שמאלית העמודה השלישית נשארת $-\mathbf t\times\mathbf n$, ולכן הבינורמל האמיתי של המסילה שנבנית הוא
           מינוס העמודה השלישית, והפיתול שלה $-\tau$: מתקבלת תמונת המראה. השלשה ההתחלתית חייבת להיות ימנית.
@@ -122,19 +123,19 @@ questions:
     objectives: [OBJ-2.4-2]
     level: mid
     prompt: >-
-      בהוכחת היחידות, ל-$\gamma$ ול-$\tilde\gamma$ אותן $\kappa(s)$ ו-$\tau(s)$, ומגדירים
-      $f(s)=\mathbf t\cdot\tilde{\mathbf t}+\mathbf n\cdot\tilde{\mathbf n}+\mathbf b\cdot\tilde{\mathbf b}$. למה $f'\equiv0$?
+      בהוכחת היחידות, ל-$\gamma$ ולמסילה השנייה אותן $\kappa(s)$ ו-$\tau(s)$; אחרי היישור ב-$s_0$ קוראים למסילה השנייה $\beta$
+      ומגדירים $f(s)=\mathbf t\cdot\mathbf t_\beta+\mathbf n\cdot\mathbf n_\beta+\mathbf b\cdot\mathbf b_\beta$. למה $f'\equiv0$?
     choices:
-      - text: 'גוזרים ומציבים את משוואות פרנה-סרה של שתי המסילות: ששת האיברים מתבטלים בזוגות, כי $\kappa,\tau$ זהים והמטריצה אנטי-סימטרית'
+      - text: 'גוזרים ומציבים את משוואות פרנה-סרה של שתי המסילות: שמונת האיברים שמתקבלים מתבטלים בזוגות, כי $\kappa,\tau$ זהים והמטריצה אנטי-סימטרית'
         correct: true
         feedback: >-
-          נכון. למשל האיבר $\mathbf t'\cdot\tilde{\mathbf t}=\kappa\,\mathbf n\cdot\tilde{\mathbf t}$ מתבטל מול האיבר
-          $-\kappa\,\mathbf n\cdot\tilde{\mathbf t}$ שבא מ-$\mathbf n\cdot\tilde{\mathbf n}'$, וכך גם שני הזוגות האחרים, עם
+          נכון. למשל האיבר $\mathbf t'\cdot\mathbf t_\beta=\kappa\,\mathbf n\cdot\mathbf t_\beta$ מתבטל מול האיבר
+          $-\kappa\,\mathbf n\cdot\mathbf t_\beta$ שבא מ-$\mathbf n\cdot\mathbf n_\beta'$, וכך גם שלושת הזוגות האחרים, עם
           $\kappa$ ועם $\tau$.
       - text: 'כל אחת משלוש המכפלות הפנימיות קבועה, כי השלשות אורתונורמליות'
         feedback: >-
           אורתונורמליות היא תכונה של כל שלשה בפני עצמה. מכפלה בין וקטור של שלשה אחת לווקטור של השנייה, כמו
-          $\mathbf t\cdot\tilde{\mathbf t}$, יכולה להשתנות; רק הסכום של שלוש המכפלות מתנהג יפה.
+          $\mathbf t\cdot\mathbf t_\beta$, יכולה להשתנות; רק הסכום של שלוש המכפלות מתנהג יפה.
         misconception: MC-c2-uniqueness-termwise
       - text: 'כי $f\le3$ לכל $s$'
         feedback: >-
@@ -149,10 +150,10 @@ questions:
     type: twotier
     objectives: [OBJ-2.4-2]
     qualitative: true
-    level: mid
+    level: basic
     prompt: >-
-      בהוכחת היחידות ידוע ש-$f\equiv3$, כאשר $f=\mathbf t\cdot\tilde{\mathbf t}+\mathbf n\cdot\tilde{\mathbf n}+\mathbf b\cdot\tilde{\mathbf b}$.
-      האם מזה נובע ש-$\mathbf t=\tilde{\mathbf t}$, $\mathbf n=\tilde{\mathbf n}$ ו-$\mathbf b=\tilde{\mathbf b}$ לכל $s$?
+      בהוכחת היחידות, אחרי היישור, ידוע ש-$f\equiv3$, כאשר $f=\mathbf t\cdot\mathbf t_\beta+\mathbf n\cdot\mathbf n_\beta+\mathbf b\cdot\mathbf b_\beta$.
+      האם מזה נובע ש-$\mathbf t=\mathbf t_\beta$, $\mathbf n=\mathbf n_\beta$ ו-$\mathbf b=\mathbf b_\beta$ לכל $s$?
     choices:
       - text: כן
         correct: true
@@ -160,14 +161,15 @@ questions:
           נכון. זה המעבר מ"גודל אחד שווה 3" ל"שלושה וקטורים שווים בזוגות".
       - text: 'לא, רק שהשלשות קבועות'
         feedback: >-
-          השלשות לא קבועות (המסילה מתעקמת); הן **שוות זו לזו** בכל $s$. מ-$f$ קבועה לא נובע דבר על השלשה עצמה.
+          השלשות לא קבועות (המסילה מתעקמת). $f\equiv3$ אומר משהו אחר: שבכל $s$ השלשה של $\gamma$ **שווה** לשלשה של $\beta$, גם
+          כששתיהן משתנות עם $s$.
         misconception: MC-c2-uniqueness-termwise
     reasons:
       - text: 'לפי קושי-שוורץ כל מכפלה של שני וקטורי יחידה היא לכל היותר 1, ושוויון רק כשהם שווים; סכום של שלוש כאלה שווה 3 רק כשכל אחת 1'
         correct: true
         feedback: >-
-          בדיוק. ומהשוויון $\mathbf t=\tilde{\mathbf t}$ מקבלים $(\gamma-\tilde\gamma)'=0$, ועם $\gamma(s_0)=\tilde\gamma(s_0)$ גם
-          $\gamma=\tilde\gamma$.
+          בדיוק. ומהשוויון $\mathbf t=\mathbf t_\beta$ מקבלים $(\gamma-\beta)'=0$, ועם $\gamma(s_0)=\beta(s_0)$ גם
+          $\gamma=\beta$.
       - text: 'פונקציה קבועה שגזירה שווה לערכה ההתחלתי'
         feedback: >-
           זה מסביר למה $f\equiv3$ (מ-$f'\equiv0$ ו-$f(s_0)=3$), אבל לא למה $f=3$ מחייב שוויון של הווקטורים.
@@ -196,7 +198,7 @@ questions:
         feedback: >-
           $\operatorname{diag}(1,1,-1)$ אורתוגונלית עם $\det=-1$: היא שיקוף. לכן צריך נימוק שהמטריצה כאן אינה שיקוף.
         misconception: MC-c2-mirror-is-rigid
-      - text: 'אי אפשר: בשלב הזה ייתכן שצריך שיקוף, ולכן המשפט נותן יחידות רק עד כדי איזומטריה'
+      - text: 'אי אפשר: בשלב הזה ייתכן שצריך שיקוף, ולכן המשפט נותן יחידות רק עד כדי תנועה קשיחה שעשויה לכלול שיקוף'
         feedback: >-
           שיקוף היה נחוץ אם אחת השלשות הייתה שמאלית, אבל השלשה של פרנה תמיד ימנית. ושיקוף גם לא היה שומר את הפיתול.
         misconception: MC-c2-mirror-is-rigid
@@ -244,17 +246,17 @@ questions:
     help: סדרו את שלבי ההוכחה מהראשון לאחרון.
     items:
       - id: move
-        label: 'מחליפים את $\tilde\gamma$ ב-$A\tilde\gamma+c$, עם סיבוב $A$, כך שב-$s_0$ הנקודות והשלשות מתלכדות (הדבר לא משנה את $\kappa,\tau$)'
+        label: 'מחליפים את $\tilde\gamma$ ב-$\beta=A\tilde\gamma+c$, עם סיבוב $A$, כך שב-$s_0$ הנקודות והשלשות מתלכדות (הדבר לא משנה את $\kappa,\tau$)'
       - id: define
-        label: 'מגדירים $f=\mathbf t\cdot\tilde{\mathbf t}+\mathbf n\cdot\tilde{\mathbf n}+\mathbf b\cdot\tilde{\mathbf b}$; כי ב-$s_0$ השלשות מתלכדות, $f(s_0)=3$'
+        label: 'מגדירים $f=\mathbf t\cdot\mathbf t_\beta+\mathbf n\cdot\mathbf n_\beta+\mathbf b\cdot\mathbf b_\beta$; כי ב-$s_0$ השלשות מתלכדות, $f(s_0)=3$'
       - id: derive
         label: 'גוזרים את $f$ ומציבים את משוואות פרנה-סרה: $f''\equiv0$'
       - id: const
         label: 'לכן $f\equiv3$'
       - id: equal
-        label: 'מקושי-שוורץ כל מחובר שווה 1, ולכן $\mathbf t=\tilde{\mathbf t}$ (ושאר הווקטורים) לכל $s$'
+        label: 'מקושי-שוורץ כל מחובר שווה 1, ולכן $\mathbf t=\mathbf t_\beta$ (ושאר הווקטורים) לכל $s$'
       - id: integrate
-        label: '$(\gamma-\tilde\gamma)''=\mathbf t-\tilde{\mathbf t}=0$ ו-$\gamma(s_0)=\tilde\gamma(s_0)$, ולכן $\gamma=\tilde\gamma$'
+        label: '$(\gamma-\beta)''=\mathbf t-\mathbf t_\beta=0$ ו-$\gamma(s_0)=\beta(s_0)$, ולכן $\gamma=\beta$'
     order: [move, define, derive, const, equal, integrate]
     correctFeedback: >-
       נכון. שימו לב איפה כל הנחה נכנסת: $\kappa>0$ כדי שהשלשות יוגדרו, אותן $\kappa,\tau$ כדי שהאיברים יתבטלו, ושלשות ימניות
@@ -283,10 +285,11 @@ questions:
       - text: 'ניקח מסילה מישורית כזו, ונסובב את החלק שעל $[2,3]$ ברבע סיבוב סביב הישר של הקטע $[1,2]$: גם היא חלקה, עם אותה $\kappa$ ו-$\tau=0$ היכן שמוגדר, ואינה מישורית'
         correct: true
         feedback: >-
-          בדיוק. הסיבוב סביב הישר משאיר את נקודות הקטע הישר ואת המשיק לאורכו במקומם. זה לבדו נותן רק הדבקה גזירה; ההדבקה
-          חלקה כי $\kappa$ חלקה ומתאפסת על $[1,2]$, ולכן כל נגזרותיה מתאפסות ב-$s=2$, וכך גם כל הנגזרות של המסילה מסדר 2
-          ומעלה (כל אחת מהן היא צירוף של $\kappa,\kappa',\dots$), משני הצדדים. שתי המסילות לא נבדלות בתנועה קשיחה: אחת מוכלת
-          במישור והשנייה לא.
+          בדיוק. למה ההדבקה חלקה: על $[1,2]$ המסילה המקורית היא ישר, ולכן כל הנגזרות שלה מסדר 2 ומעלה מתאפסות שם, ובפרט
+          ב-$s=2$ (היא חלקה, אז הנגזרות מימין שוות לנגזרות משמאל). החלק המסובב הוא $R(\gamma-p)+p$, עם $R$ סיבוב סביב הישר ו-$p$
+          נקודה עליו, ולכן הנגזרות שלו ב-2 הן $R\gamma^{(k)}(2)$: הנגזרת הראשונה בכיוון הישר, ש-$R$ משאיר במקומו, וכל השאר $R\,0=0$.
+          כלומר משני הצדדים של $s=2$ כל הנגזרות שוות, וההדבקה חלקה. שתי המסילות לא נבדלות בתנועה קשיחה: אחת מוכלת במישור
+          והשנייה לא.
       - text: 'על $[1,2]$ אפשר לבחור כל $\tau$, ולכן המשפט נותן אינסוף מסילות'
         feedback: >-
           על קטע ישר $\tau$ לא מוגדר בכלל, ולכן "לבחור אותו" אינו משנה את הצורה. מה שחופשי הוא סיבוב של ההמשך סביב הישר.
@@ -301,11 +304,12 @@ questions:
     type: twotier
     objectives: [OBJ-2.4-1, OBJ-2.4-3]
     qualitative: true
-    level: exam
+    level: mid
     prompt: >-
       $\gamma:\mathbb R\to\mathbb R^3$ בפרמטר אורך הקשת עם $\kappa\equiv1$ ו-$\tau(s)=s$. נגדיר $\tilde\gamma(s)=\gamma(s+1)$.
-      ל-$\tilde\gamma$ אותה עקמומיות, ו-$\tilde\tau(s)=s+1\ne\tau(s)$ לכל $s$. האם המסילות חופפות, כלומר יש תנועה קשיחה
-      שמעבירה את התמונה של $\gamma$ על התמונה של $\tilde\gamma$ (בלי לדרוש שהנקודה $\gamma(s)$ תעבור דווקא ל-$\tilde\gamma(s)$)?
+      ל-$\tilde\gamma$ אותה עקמומיות, ו-$\tilde\tau(s)=s+1\ne\tau(s)$ לכל $s$. האם **התמונות** חופפות, כלומר יש תנועה קשיחה
+      ישרה שמעבירה את הקבוצה $\gamma(\mathbb R)$ על הקבוצה $\tilde\gamma(\mathbb R)$ (בלי לדרוש שהנקודה $\gamma(s)$ תעבור דווקא
+      ל-$\tilde\gamma(s)$)?
     choices:
       - text: 'כן: $\tilde\gamma$ ו-$\gamma$ הן אותה קבוצה בדיוק'
         correct: true
@@ -322,9 +326,9 @@ questions:
         correct: true
         feedback: >-
           בדיוק (טענה 2.4.4א). בהיפוך כיוון, $s\mapsto-s$, גם $\kappa$ וגם $\tau$ לא משנים ערך בנקודה (טענות 1.3.7 ו-2.2.5),
-          ולכן התנאי הוא $\tilde\kappa(s)=\kappa(\pm s+s_0)$ ו-$\tilde\tau(s)=\tau(\pm s+s_0)$. חפיפה עד כדי החלפת פרמטר
-          גוררת שהתמונות חופפות; ההפך לא תמיד נכון (מסילה שעוברת פעמיים על מעגל), אבל כאן ממילא $\tilde\gamma$ היא $\gamma$
-          אחרי החלפת פרמטר.
+          ולכן התנאי הוא $\tilde\kappa(s)=\kappa(\pm s+s_0)$ ו-$\tilde\tau(s)=\tau(\pm s+s_0)$. מסילות שחופפות עד כדי פרמטר
+          הן גם בעלות תמונות חופפות; ההפך לא תמיד נכון (מסילה שעוברת פעמיים על מעגל ומסילה שעוברת עליו פעם אחת), אבל כאן
+          ממילא $\tilde\gamma$ היא $\gamma$ אחרי החלפת פרמטר.
       - text: 'הפיתול תלוי בפרמטריזציה, ולכן אפשר להתעלם ממנו'
         feedback: >-
           הפיתול בנקודה לא תלוי בפרמטריזציה; תלויה רק הפונקציה $s\mapsto\tau(s)$, דרך השאלה איזו נקודה נקראת $s$.
@@ -333,3 +337,69 @@ questions:
         feedback: >-
           במרחב עקמומיות זהה לא מספיקה: מעגל ברדיוס 2 וסליל $(\cos t,\sin t,t)$ מקיימים שניהם $\kappa\equiv\frac12$.
         misconception: MC-c2-kappa-alone-determines
+
+  - id: Q-2.4-chord
+    type: numeric
+    objectives: [OBJ-2.4-1]
+    level: exam
+    prompt: >-
+      $\gamma:\mathbb R\to\mathbb R^3$ מסילה כלשהי בפרמטר אורך הקשת עם $\kappa\equiv0.6$ ו-$\tau\equiv0.8$ (לא נתון שום דבר נוסף עליה).
+      מהו $\|\gamma(2\pi)-\gamma(0)\|$? הסבירו לעצמכם למה המספר נקבע, אף שהמסילה עצמה לא נתונה.
+    answer: 5.026548
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $\frac{8\pi}5\approx5.0265$. לפי משפט 2.3.8 הסליל $\eta(\theta)=(0.6\cos\theta,\ 0.6\sin\theta,\ 0.8\theta)$ (רדיוס
+      $a=\frac{\kappa}{\kappa^2+\tau^2}=0.6$, עלייה $h=\frac{\tau}{\kappa^2+\tau^2}=0.8$) הוא כבר בפרמטר אורך הקשת, כי המהירות שלו
+      $\sqrt{a^2+h^2}=1$, ויש לו אותן $\kappa,\tau$. לפי משפט 2.4.2, $\gamma=B\eta+d$ עם $B\in SO(3)$, ותנועה כזו שומרת מרחקים:
+      $\|\gamma(2\pi)-\gamma(0)\|=\|\eta(2\pi)-\eta(0)\|=2\pi\cdot0.8$, עלייה של סיבוב שלם לאורך הציר.
+    wrongFeedback: >-
+      כל המסילות עם אותן $\kappa,\tau$ חופפות לסליל אחד (משפטים 2.3.8 ו-2.4.2), ותנועה קשיחה שומרת מרחקים. מצאו את הסליל,
+      והשוו את $\eta(2\pi)$ ל-$\eta(0)$.
+    commonWrong:
+      - value: 6.283185
+        feedback: >-
+          $2\pi$ הוא **אורך** הקשת בין שתי הנקודות, לא המרחק ביניהן. המיתר קצר מהקשת, כי המסילה מתעקמת.
+      - value: 3.769911
+        feedback: >-
+          זה $2\pi a$, עם הרדיוס במקום העלייה. אחרי סיבוב שלם הנקודה חוזרת מעל אותה נקודה בחתך, והמרחק הוא רק ההתקדמות
+          לאורך הציר, $2\pi h$.
+        misconception: MC-c2-helix-radius-1-over-kappa
+
+  - id: Q-2.4-periodic
+    type: twotier
+    objectives: [OBJ-2.4-2, OBJ-2.4-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $\gamma:\mathbb R\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$. ידוע שיש $u>0$ כך ש-$\kappa(s+u)=\kappa(s)$ ו-$\tau(s+u)=\tau(s)$
+      לכל $s$, וגם $\gamma(u)=\gamma(0)$ ו-$F(u)=F(0)$ (אותה נקודה ואותה שלשה). האם בהכרח $\gamma(s+u)=\gamma(s)$ לכל $s$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ההוכחה היא שימוש אחד בחלק היחידות של משפט 2.4.3, עם נתוני התחלה. שימו לב שכל אחת משלוש ההנחות נחוצה (ראו את
+          הנימוקים האחרים).
+      - text: לא
+        feedback: >-
+          המסילה $\delta(s)=\gamma(s+u)$ מקיימת את כל מה ש-$\gamma$ מקיימת: אותן $\kappa,\tau$, ואותה נקודה ואותה שלשה ב-$s=0$. אין
+          מקום לסיבוב או להזזה שיבדילו ביניהן.
+        misconception: MC-c2-uniqueness-translation-only
+    reasons:
+      - text: 'ל-$\delta(s)=\gamma(s+u)$ אותן $\kappa$ ו-$\tau$, ובנקודה $s=0$ גם אותה נקודה ואותה שלשה; לכן $\delta=\gamma$ לפי היחידות עם נתוני התחלה'
+        correct: true
+        feedback: >-
+          בדיוק: שלב 8 בהוכחת משפט 2.4.3 (או משפט 2.4.2, שם התנועה היחידה היא הזהות כי הנתונים מתלכדים ב-$s=0$). המסילה סגורה
+          ומחזורית.
+      - text: 'די ש-$\kappa$ ו-$\tau$ מחזוריות: אותן פונקציות נותנות אותה מסילה, ולכן $\gamma(s+u)=\gamma(s)$'
+        feedback: >-
+          אותן פונקציות נותנות מסילה **חופפת**, לא אותה מסילה. בסליל $\kappa,\tau$ קבועות, ולכן מחזוריות בכל $u$, אבל
+          $\gamma(s+u)\ne\gamma(s)$: הסליל מתקדם לאורך הציר. צריך גם את הנקודה ואת השלשה.
+        misconception: MC-c2-uniqueness-translation-only
+      - text: 'די ש-$\kappa,\tau$ מחזוריות ו-$\gamma(u)=\gamma(0)$: המסילה חזרה לנקודה, ומשם ממשיכה באותה דרך'
+        feedback: >-
+          חזרה לאותה נקודה עם שלשה אחרת מתחילה את אותה "תוכנית" בכיוון אחר, ולכן ההמשך מסובב. דוגמה נגדית: הוורד בעל שלושת
+          העלים $r=\cos3\theta$ במישור. הוא רגולרי עם $\kappa>0$ ו-$\tau\equiv0$, $\kappa$ מחזורית באורך של עלה אחד, ובתחילת כל עלה
+          המסילה בראשית. אבל המשיק בראשית מסובב, וההמשך הוא העלה הבא, לא אותו עלה. לפי משפט 2.4.2,
+          $\gamma(s+u)=B\gamma(s)+d$, ו-$\gamma(u)=\gamma(0)$ אומר רק שהתנועה מקבעת את $\gamma(0)$; רק $F(u)=F(0)$ נותן
+          $B=\mathrm{Id}$.
+        misconception: MC-c2-uniqueness-translation-only

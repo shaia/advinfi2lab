@@ -5,7 +5,7 @@
     $\mathbf b'=\tau\mathbf n$, ולכן לסליל ימני יש פיתול שלילי; או שהסדר במכפלה המשולשת לא משנה את הסימן.
   truth: >-
     בקורס $\mathbf b'=-\tau\mathbf n$, ולכן $\tau=\frac{(\gamma'\times\gamma'')\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}$ והסליל
-    הימני $(a\cos t,a\sin t,bt)$, $b>0$, מקיים $\tau=\frac{b}{a^2+b^2}>0$. ספרים אחרים בוחרים את הסימן ההפוך; בכל שאלה
+    הימני $(a\cos t,a\sin t,ht)$, $h>0$, מקיים $\tau=\frac{h}{a^2+h^2}>0$. ספרים אחרים בוחרים את הסימן ההפוך; בכל שאלה
     בודקים איזו מוסכמה בשימוש.
   remedy: { lesson: '2.2', anchor: 'def-torsion', label: 'הגדרת הפיתול והסימן של הקורס' }
 
@@ -99,3 +99,22 @@
     $\tilde{\mathbf t}=-\mathbf t$, אבל $\tilde{\mathbf n}=\mathbf n$: הנורמל הוא $\frac{d\mathbf t}{ds}$ מנורמל, ושני הסימנים
     (של $\mathbf t$ ושל $s$) מתבטלים; הוא מצביע אל הצד הקעור בשני הכיוונים. לכן $\tilde{\mathbf b}=-\mathbf t\times\mathbf n=-\mathbf b$.
   remedy: { lesson: '2.2', anchor: 'invariance', label: 'השלשה בהיפוך כיוון (טענה 2.2.5)' }
+
+- id: MC-c2-product-zero-factor
+  title: מסיקים מאיפוס של מכפלה שגורם מסוים מתאפס בכל נקודה
+  belief: >-
+    אם $\tau(s)\,(\mathbf n(s)\cdot\mathbf e)=0$ לכל $s$, אז $\tau\equiv0$.
+  truth: >-
+    בכל נקודה **אחד** הגורמים מתאפס, אבל לא בהכרח אותו גורם בכל הנקודות. כדי להסיק $\tau\equiv0$ מניחים $\tau(s_1)\ne0$,
+    לוקחים סביבה שבה $\tau\ne0$ (רציפות), ומראים שבה הגורם השני מתאפס זהותית ומוביל לסתירה, כמו בהוכחה של משפט 2.2.6.
+  remedy: { lesson: '2.2', anchor: 'planar-theorem', label: 'ההוכחה של משפט 2.2.6' }
+
+- id: MC-c2-torsion-ignores-third
+  title: חושבים שהפיתול לא נקבע מהכיוון של הנגזרת השלישית
+  belief: >-
+    הפיתול בא מ-$\mathbf b'$, ולכן העובדה ש-$\gamma'''$ מונח במישור של $\gamma'$ ו-$\gamma''$ לא אומרת עליו כלום; או
+    שצריך ש-$\gamma'''$ יהיה מקביל ל-$\gamma'$ כדי שהפיתול יתאפס.
+  truth: >-
+    הרכיב של $\gamma'''$ לאורך $\mathbf b$ הוא $\kappa\tau v^3$ (טענה 2.2.4), ולכן $\tau=0$ בנקודה בדיוק כש-$\gamma'''$ במישור
+    של $\gamma'$ ו-$\gamma''$, כלומר כש-$\det(\gamma',\gamma'',\gamma''')=0$. כל צירוף של $\gamma'$ ו-$\gamma''$ מספיק.
+  remedy: { lesson: '2.2', anchor: 'general-formula', label: 'הפיתול בפרמטר כללי (טענה 2.2.4)' }

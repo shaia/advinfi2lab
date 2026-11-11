@@ -52,18 +52,19 @@ practice:
     solution:
       - kind: theorem
         text: >-
-          טענה 2.1.10: הנורמלים של שלושת המישורים הם $\gamma'\times\gamma''$, $\gamma'$ ו-$(\gamma'\times\gamma'')\times\gamma'$.
+          טענה 2.1.10: הווקטורים הניצבים לשלושת המישורים הם $\gamma'\times\gamma''$, $\gamma'$ ו-$(\gamma'\times\gamma'')\times\gamma'$.
       - kind: computation
         text: >-
           $\gamma(\frac\pi2)=(0,1,\frac\pi2)$, $\gamma'=(-1,0,1)$, $\gamma''=(0,-1,0)$, ו-$\gamma'\times\gamma''=(1,0,1)$.
       - kind: computation
         text: >-
           מנשק: $x+(z-\frac\pi2)=0$. נורמלי: $-x+(z-\frac\pi2)=0$. מיישר:
-          $$(1,0,1)\times(-1,0,1)=(0,-2,0)$$, ולכן $-2(y-1)=0$, כלומר $y=1$.
+          $$(1,0,1)\times(-1,0,1)=(0,-2,0),$$
+          ולכן $-2(y-1)=0$, כלומר $y=1$.
       - kind: check
         text: >-
           המהירות קבועה, ולכן $\mathbf n=\gamma''/\|\gamma''\|=(0,-1,0)$, אופקי ומצביע אל הציר מהנקודה $(0,1)$: המישור המיישר
-          ניצב לו, $y=1$, כמו שיצא. שלושת הנורמלים $(1,0,1)$, $(-1,0,1)$, $(0,1,0)$ ניצבים זה לזה.
+          ניצב לו, $y=1$, כמו שיצא. שלושת הווקטורים הניצבים $(1,0,1)$, $(-1,0,1)$, $(0,1,0)$ ניצבים זה לזה.
       - kind: result
         text: >-
           $x+z=\frac\pi2$, $z-x=\frac\pi2$, $y=1$.
@@ -140,11 +141,11 @@ practice:
     level: mid
     objectives: [OBJ-2.1-1]
     prompt: >-
-      יהיו $a>0$, $c\ne0$, ו-$\gamma(t)=(a\cos t,\ a\sin t,\ ct)$. יהי $R_\alpha$ הסיבוב בזווית $\alpha$ סביב ציר $z$. **הוכיחו**, בלי
+      יהיו $a>0$, $h\ne0$, ו-$\gamma(t)=(a\cos t,\ a\sin t,\ h t)$. יהי $R_\alpha$ הסיבוב בזווית $\alpha$ סביב ציר $z$. **הוכיחו**, בלי
       לחשב את השלשה בנקודה כללית: $\mathbf b(t+\alpha)=R_\alpha\mathbf b(t)$ לכל $t,\alpha$, והסיקו ש-$\mathbf b(t)\cdot e_3$ קבוע.
       חשבו אותו.
     answer: >-
-      $R_\alpha\gamma(t)+c\alpha\,e_3=\gamma(t+\alpha)$, ולפי טענה 2.1.5 שני האגפים נותנים את אותה שלשה; $\mathbf b\cdot e_3=\frac{a}{\sqrt{a^2+c^2}}$.
+      $R_\alpha\gamma(t)+h\alpha\,e_3=\gamma(t+\alpha)$, ולפי טענה 2.1.5 שני האגפים נותנים את אותה שלשה; $\mathbf b\cdot e_3=\frac{a}{\sqrt{a^2+h^2}}$.
     solution:
       - kind: idea
         text: >-
@@ -152,8 +153,8 @@ practice:
           פרמטר, וכך מקבלים את $\mathbf b(t+\alpha)$ מ-$\mathbf b(t)$.
       - kind: step
         text: >-
-          $$R_\alpha(a\cos t,a\sin t,ct)=(a\cos(t+\alpha),\ a\sin(t+\alpha),\ ct)$$, ולכן עם $M(\mathbf x)=R_\alpha\mathbf x+c\alpha\,e_3$:
-          $M\circ\gamma=\delta$, כאשר $\delta(t)=\gamma(t+\alpha)$.
+          $$R_\alpha(a\cos t,a\sin t,h t)=(a\cos(t+\alpha),\ a\sin(t+\alpha),\ h t),$$
+          ולכן עם $M(\mathbf x)=R_\alpha\mathbf x+h\alpha\,e_3$: $M\circ\gamma=\delta$, כאשר $\delta(t)=\gamma(t+\alpha)$.
       - kind: step
         text: >-
           $\delta=\gamma\circ\varphi$ עם $\varphi(t)=t+\alpha$, $\varphi'=1>0$; לפי טענה 2.1.5(א), $\mathbf b_\delta(t)=\mathbf b(t+\alpha)$.
@@ -163,18 +164,20 @@ practice:
           $\mathbf b(t+\alpha)=R_\alpha\mathbf b(t)$.
       - kind: step
         text: >-
-          $R_\alpha e_3=e_3$ ו-$R_\alpha$ שומרת מכפלות פנימיות, ולכן
-          $$\mathbf b(t+\alpha)\cdot e_3=R_\alpha\mathbf b(t)\cdot R_\alpha e_3=\mathbf b(t)\cdot e_3$$: הפונקציה קבועה.
+          $R_\alpha e_3=e_3$ ו-$R_\alpha$ שומרת מכפלות פנימיות, ולכן הפונקציה קבועה:
+          $$\mathbf b(t+\alpha)\cdot e_3=R_\alpha\mathbf b(t)\cdot R_\alpha e_3=\mathbf b(t)\cdot e_3.$$
       - kind: computation
         text: >-
-          בנקודה $t=0$: $\gamma'=(0,a,c)$, $\gamma''=(-a,0,0)$, $\gamma'\times\gamma''=(0,-ac,a^2)$, ולכן
-          $\mathbf b(0)=\frac{1}{\sqrt{a^2+c^2}}(0,-c,a)$ ו-$\mathbf b\cdot e_3=\frac{a}{\sqrt{a^2+c^2}}$.
+          בנקודה $t=0$: $\gamma'=(0,a,h)$, $\gamma''=(-a,0,0)$, $\gamma'\times\gamma''=(0,-ah,a^2)$, ולכן
+          $\mathbf b(0)=\frac{1}{\sqrt{a^2+h^2}}(0,-h,a)$ ו-$\mathbf b\cdot e_3=\frac{a}{\sqrt{a^2+h^2}}$.
       - kind: check
         text: >-
-          זה מתאים לנוסחה של דוגמה 1 בשיעור, $$\mathbf b=\frac{(c\sin t,\ -c\cos t,\ a)}{\sqrt{a^2+c^2}}$$, שהיא אכן $R_t\mathbf b(0)$.
+          זה מתאים לנוסחה של דוגמה 1 בשיעור,
+          $$\mathbf b=\frac{(h\sin t,\ -h\cos t,\ a)}{\sqrt{a^2+h^2}},$$
+          שהיא אכן $R_t\mathbf b(0)$.
       - kind: result
         text: >-
-          $\mathbf b(t+\alpha)=R_\alpha\mathbf b(t)$, ו-$\mathbf b\cdot e_3\equiv\frac{a}{\sqrt{a^2+c^2}}$.
+          $\mathbf b(t+\alpha)=R_\alpha\mathbf b(t)$, ו-$\mathbf b\cdot e_3\equiv\frac{a}{\sqrt{a^2+h^2}}$.
 
   - id: W-2.1-06
     level: mid
@@ -183,7 +186,8 @@ practice:
       במסילה המעוקבת $\gamma(t)=(t,t^2,t^3)$, ולכל $h>0$, יהי $\Pi_h$ המישור דרך $\gamma(-h)$, $\gamma(0)$, $\gamma(h)$. מצאו את
       משוואתו, את הווקטור $\hat\nu$ של משפט 2.1.9 (עם $t_0=0$, $t_1=-h$, $t_2=h$), ואת הגבול כש-$h\to0$.
     answer: >-
-      $\Pi_h:\ h^2x-z=0$; $$\hat\nu=\frac{(-h^2,\,0,\,1)}{\sqrt{1+h^4}}\to e_3=\mathbf b(0)$$, ו-$\Pi_h\to\{z=0\}$.
+      $\Pi_h:\ h^2x-z=0$, ו-$\Pi_h\to\{z=0\}$, כי
+      $$\hat\nu=\frac{(-h^2,\,0,\,1)}{\sqrt{1+h^4}}\to e_3=\mathbf b(0).$$
     solution:
       - kind: computation
         text: >-
@@ -194,7 +198,7 @@ practice:
           $$\mathbf U=(1,-h,h^2)\times(0,1,0)=(-h^2,\ 0,\ 1),\qquad \hat\nu=\frac{(-h^2,\ 0,\ 1)}{\sqrt{1+h^4}} .$$
       - kind: step
         text: >-
-          המישור עובר דרך הראשית עם הנורמל $\mathbf U$: $-h^2x+z=0$. בדיקה: $\gamma(\pm h)=(\pm h,h^2,\pm h^3)$ מקיימות
+          המישור עובר דרך הראשית, והווקטור $\mathbf U$ ניצב לו: $-h^2x+z=0$. בדיקה: $\gamma(\pm h)=(\pm h,h^2,\pm h^3)$ מקיימות
           $-h^2(\pm h)\pm h^3=0$.
       - kind: step
         text: >-
@@ -221,8 +225,8 @@ practice:
           $\delta'(t)=(3t^2,\ 6t^5,\ 9t^8)$, ו-$\delta'(0)=0$: $\delta$ אינה רגולרית ב-$0$, והגדרה 2.1.1 לא חלה שם.
       - kind: step
         text: >-
-          $\delta=\gamma\circ\varphi$, כאשר $\gamma(s)=(s,s^2,s^3)$ ו-$\varphi(t)=t^3$. על הקטע $(0,\infty)$, $\varphi$ היא $C^2$, על
-          $(0,\infty)$, ו-$\varphi'=3t^2>0$; אותו דבר על $(-\infty,0)$.
+          $\delta=\gamma\circ\varphi$, כאשר $\gamma(s)=(s,s^2,s^3)$ ו-$\varphi(t)=t^3$. על הקטע $(0,\infty)$, $\varphi$ היא $C^2$, מעתיקה
+          את הקטע הזה על עצמו, ו-$\varphi'=3t^2>0$; אותו דבר על $(-\infty,0)$.
       - kind: step
         text: >-
           לפי טענה 2.1.5(א), לכל $t\ne0$ השלשה של $\delta$ ב-$t$ היא השלשה של $\gamma$ ב-$t^3$ (הכיוון נשמר).
@@ -255,11 +259,11 @@ practice:
           נותנת לשלשה של $\delta$ ב-$0$ שני ביטויים, ומשווים.
       - kind: step
         text: >-
-          לפי טענה 2.1.5(א) עם $\varphi(t)=-t$ ($\varepsilon=-1$): השלשה של $\delta$ ב-$0$ היא $(-\mathbf t,\ \mathbf n,\ -\mathbf b)$, השלשה של
-          $\gamma$ ב-$\varphi(0)=0$.
+          נסמן ב-$(\mathbf t,\mathbf n,\mathbf b)$ את השלשה של $\gamma$ ב-$0$. לפי טענה 2.1.5(א) עם $\varphi(t)=-t$ (הסימן $\sigma=-1$),
+          השלשה של $\delta$ ב-$0$ היא $(-\mathbf t,\ \mathbf n,\ -\mathbf b)$, כי $\varphi(0)=0$.
       - kind: step
         text: >-
-          $H$ אורתוגונלית ($H^2=I$, $H=H^T$) עם $\det H=-1$ (ערכים עצמיים $-1$ על $\mathbf e$ ו-$1,1$ על $\mathbf e^\perp$). לפי טענה
+          $H$ אורתוגונלית ($H^2=\mathrm{Id}$, $H=H^T$) עם $\det H=-1$ (ערכים עצמיים $-1$ על $\mathbf e$ ו-$1,1$ על $\mathbf e^\perp$). לפי טענה
           2.1.5(ב), השלשה של $H\circ\gamma$ ב-$0$ היא $(H\mathbf t,\ H\mathbf n,\ -H\mathbf b)$.
       - kind: step
         text: >-
@@ -270,7 +274,9 @@ practice:
           $\mathbf t\parallel\mathbf e$, ו-$\|\mathbf t\|=1$ נותן $\mathbf t=\pm\mathbf e$. $H\mathbf x=\mathbf x$ פירושו $\mathbf x\cdot\mathbf e=0$: $\mathbf n,\mathbf b\perp\mathbf e$.
       - kind: check
         text: >-
-          $(\cos t,\sin t,\cos2t)$ מקיימת $$\gamma(-t)=(\cos t,-\sin t,\cos2t)=H\gamma(t)$$ עם $\mathbf e=e_2$. ב-$0$: $\gamma'=(0,1,0)=e_2$,
+          $(\cos t,\sin t,\cos2t)$ מקיימת $\gamma(-t)=H\gamma(t)$ עם $\mathbf e=e_2$, כי
+          $$\gamma(-t)=(\cos t,-\sin t,\cos2t).$$
+          ב-$0$: $\gamma'=(0,1,0)=e_2$,
           ו-$\gamma''=(-1,0,-4)$ במישור $y=0$; החישוב המספרי נותן $\mathbf n\approx(-0.2425,0,-0.9701)$ ו-$\mathbf b\approx(-0.9701,0,0.2425)$.
           ובאותה שיטה, לסיבוב בזווית $\pi$ סביב ציר: $\mathbf t,\mathbf b$ ניצבים לציר ו-$\mathbf n$ מקביל לו, כמו בסליל
           $(\cos t,\sin t,\frac t2)$ ב-$0$, שבו $\mathbf n=(-1,0,0)$.
@@ -282,13 +288,14 @@ practice:
     level: exam
     objectives: [OBJ-2.1-2]
     prompt: >-
-      יהיו $t_1,t_2,t_3$ שונים, ו-$e_1=t_1+t_2+t_3$, $e_2=t_1t_2+t_1t_3+t_2t_3$, $e_3=t_1t_2t_3$. **הוכיחו:** המישורים המנשקים של
+      יהיו $t_1,t_2,t_3$ שונים, ונסמן את הפולינומים הסימטריים היסודיים שלהם (מספרים, לא וקטורים):
+      $\sigma_1=t_1+t_2+t_3$, $\sigma_2=t_1t_2+t_1t_3+t_2t_3$, $\sigma_3=t_1t_2t_3$. **הוכיחו:** המישורים המנשקים של
       המסילה המעוקבת בשלוש הנקודות $\gamma(t_i)$ נחתכים בנקודה אחת בדיוק,
-      $$\mathbf q=\Big(\frac{e_1}3,\ \frac{e_2}3,\ e_3\Big),$$
+      $$\mathbf q=\Big(\frac{\sigma_1}3,\ \frac{\sigma_2}3,\ \sigma_3\Big),$$
       ו-$\mathbf q$ מונחת במישור שעובר דרך $\gamma(t_1),\gamma(t_2),\gamma(t_3)$.
     answer: >-
       $\mathbf q$ בשלושת המישורים בדיוק כש-$P_{\mathbf q}(t)=t^3-3xt^2+3yt-z$ שווה ל-$(t-t_1)(t-t_2)(t-t_3)$; המישור דרך שלוש
-      הנקודות הוא $e_2x-e_1y+z=e_3$.
+      הנקודות הוא $\sigma_2x-\sigma_1y+z=\sigma_3$.
     solution:
       - kind: theorem
         text: >-
@@ -296,27 +303,37 @@ practice:
       - kind: step
         text: >-
           אם $\mathbf q$ בשלושת המישורים, ל-$P_{\mathbf q}$ (פולינום מתוקן ממעלה 3) יש שלושה שורשים שונים $t_i$. ההפרש
-          $$P_{\mathbf q}(t)-(t-t_1)(t-t_2)(t-t_3)$$ הוא פולינום ממעלה $\le2$ עם שלושה שורשים, ולכן אפס.
+          $$P_{\mathbf q}(t)-(t-t_1)(t-t_2)(t-t_3)$$
+          הוא פולינום ממעלה $\le2$ עם שלושה שורשים, ולכן אפס.
       - kind: step
         text: >-
-          משווים מקדמים: $$(t-t_1)(t-t_2)(t-t_3)=t^3-e_1t^2+e_2t-e_3$$, ולכן $3x=e_1$, $3y=e_2$, $z=e_3$: הנקודה היחידה האפשרית היא
-          $\mathbf q$. ולהפך, ל-$\mathbf q$ הזו $P_{\mathbf q}$ הוא המכפלה, שמתאפסת בשלושת ה-$t_i$: $\mathbf q$ בשלושת המישורים.
+          משווים מקדמים:
+          $$(t-t_1)(t-t_2)(t-t_3)=t^3-\sigma_1t^2+\sigma_2t-\sigma_3,$$
+          ולכן $3x=\sigma_1$, $3y=\sigma_2$, $z=\sigma_3$: הנקודה היחידה האפשרית היא $\mathbf q$. ולהפך, ל-$\mathbf q$ הזו $P_{\mathbf q}$ הוא
+          המכפלה, שמתאפסת בשלושת ה-$t_i$: $\mathbf q$ בשלושת המישורים.
       - kind: step
         text: >-
-          הנקודה $\gamma(t)=(t,t^2,t^3)$ מקיימת את המשוואה $e_2x-e_1y+z=e_3$ בדיוק כש-$e_2t-e_1t^2+t^3-e_3=0$, ואגף שמאל הוא
-          $(t-t_1)(t-t_2)(t-t_3)$; לכן שלוש הנקודות $\gamma(t_i)$ במישור הזה (המקדם של $z$ הוא 1, אז זו אכן משוואת מישור). הוא המישור
-          **היחיד** דרכן, כי הן אינן על ישר: חישוב ישיר נותן
-          $$\big(\gamma(t_2)-\gamma(t_1)\big)\times\big(\gamma(t_3)-\gamma(t_1)\big)=(t_2-t_1)(t_3-t_1)(t_3-t_2)\,(e_2,\ -e_1,\ 1)\ne0.$$
+          הנקודה $\gamma(t)=(t,t^2,t^3)$ מקיימת את המשוואה $\sigma_2x-\sigma_1y+z=\sigma_3$ בדיוק כש-$t^3-\sigma_1t^2+\sigma_2t-\sigma_3=0$,
+          ואגף שמאל הוא $(t-t_1)(t-t_2)(t-t_3)$; לכן שלוש הנקודות $\gamma(t_i)$ במישור הזה (המקדם של $z$ הוא 1, אז זו אכן משוואת
+          מישור). נשאר להראות שהוא המישור **היחיד** דרכן, כלומר שהן אינן על ישר.
       - kind: computation
         text: >-
-          הצבה: $e_2\cdot\frac{e_1}3-e_1\cdot\frac{e_2}3+e_3=e_3$. לכן $\mathbf q$ במישור.
+          לפי $$t_j^k-t_1^k=(t_j-t_1)(t_j^{k-1}+\dots+t_1^{k-1}):$$ 
+          $$\gamma(t_j)-\gamma(t_1)=(t_j-t_1)\big(1,\ t_1+t_j,\ t_1^2+t_1t_j+t_j^2\big),\quad j=2,3.$$
+          נסמן את שני הווקטורים בסוגריים $(1,a,A)$ ו-$(1,b,B)$. המכפלה הווקטורית שלהם היא $(aB-Ab,\ A-B,\ b-a)$, ובהצבה:
+          $b-a=t_3-t_2$; $$A-B=t_1(t_2-t_3)+(t_2-t_3)(t_2+t_3)=-(t_3-t_2)\sigma_1;$$ ובפתיחת סוגריים $aB-Ab=(t_3-t_2)\sigma_2$. לכן
+          $$\big(\gamma(t_2)-\gamma(t_1)\big)\times\big(\gamma(t_3)-\gamma(t_1)\big)=(t_2-t_1)(t_3-t_1)(t_3-t_2)\,(\sigma_2,\ -\sigma_1,\ 1)\ne0.$$
+      - kind: computation
+        text: >-
+          הצבה: $\sigma_2\cdot\frac{\sigma_1}3-\sigma_1\cdot\frac{\sigma_2}3+\sigma_3=\sigma_3$. לכן $\mathbf q$ במישור.
       - kind: check
         text: >-
-          $t_i=-1,\ \frac12,\ 2$: $e_1=1.5$, $e_2=-1.5$, $e_3=-1$, $\mathbf q=(0.5,-0.5,-1)$. הצבה בשלושת המישורים המנשקים ובמישור
-          $-1.5x-1.5y+z=-1$ נותנת אפס בכולם, גם בחישוב המספרי.
+          $t_i=-1,\ \frac12,\ 2$: $\sigma_1=1.5$, $\sigma_2=-1.5$, $\sigma_3=-1$, $\mathbf q=(0.5,-0.5,-1)$. הצבה בשלושת המישורים המנשקים
+          ובמישור $-1.5x-1.5y+z=-1$ נותנת אפס בכולם, גם בחישוב המספרי.
       - kind: result
         text: >-
-          המישורים נחתכים בנקודה היחידה $\mathbf q=(\frac{e_1}3,\frac{e_2}3,e_3)$, והיא במישור $e_2x-e_1y+z=e_3$ של שלוש הנקודות.
+          המישורים נחתכים בנקודה היחידה $\mathbf q=(\frac{\sigma_1}3,\frac{\sigma_2}3,\sigma_3)$, והיא במישור $\sigma_2x-\sigma_1y+z=\sigma_3$
+          של שלוש הנקודות.
 
   - id: W-2.1-10
     level: exam
@@ -335,8 +352,10 @@ practice:
           שאינו אפס כש-$t\ne0$: שם $\kappa>0$.
       - kind: step
         text: >-
-          $\gamma'(0)=e_1$ ו-$$e_1\times(h,h^3,h^4)=(0,-h^4,h^3)=h^3(0,-h,1)$$. לכן הנורמל של $\Pi_h$ הוא בכיוון $(0,-h,1)$, ונורמל
-          היחידה $\frac{(0,-h,1)}{\sqrt{1+h^2}}\to e_3$ משני הצדדים: $\Pi_h\to\{z=0\}$. הטענה מופרכת.
+          $\gamma'(0)=e_1$, ו-
+          $$e_1\times(h,h^3,h^4)=(0,-h^4,h^3)=h^3(0,-h,1).$$
+          לכן הווקטור הניצב ל-$\Pi_h$ הוא בכיוון $(0,-h,1)$, ווקטור היחידה בכיוון הזה, $\frac{(0,-h,1)}{\sqrt{1+h^2}}$, שואף ל-$e_3$
+          משני הצדדים: $\Pi_h\to\{z=0\}$. הטענה מופרכת.
       - kind: step
         text: >-
           לעומת זאת, לפי טענה 2.1.3(ג), לכל $t\ne0$:
@@ -368,12 +387,15 @@ challenge:
     solution:
       - kind: computation
         text: >-
-          $c'=(2,\ \frac1t,\ 2t)$ ו-$$\|c'\|^2=4+\frac1{t^2}+4t^2=\big(2t+\frac1t\big)^2$$, ולכן $v=\frac{2t^2+1}{t}$.
-          $c''=(0,\ -\frac{1}{t^2},\ 2)$.
+          $c'=(2,\ \frac1t,\ 2t)$, ו-
+          $$\|c'\|^2=4+\frac1{t^2}+4t^2=\big(2t+\frac1t\big)^2,$$
+          ולכן $v=\frac{2t^2+1}{t}$. $c''=(0,\ -\frac{1}{t^2},\ 2)$.
       - kind: computation
         text: >-
           $$c'\times c''=\Big(\frac4t,\ -4,\ -\frac{2}{t^2}\Big)=\frac{2}{t^2}\,\big(2t,\ -2t^2,\ -1\big),$$
-          ו-$$\|(2t,-2t^2,-1)\|^2=4t^2+4t^4+1=(2t^2+1)^2$$. לכן $\|c'\times c''\|=\frac{2(2t^2+1)}{t^2}>0$.
+          ו-
+          $$\|(2t,-2t^2,-1)\|^2=4t^2+4t^4+1=(2t^2+1)^2.$$
+          לכן $\|c'\times c''\|=\frac{2(2t^2+1)}{t^2}>0$.
       - kind: step
         text: >-
           (א) $c'\times c''\ne0$, ולכן (שלבים 2–3 בהוכחת למה 2.1.2) $c',c''$ בלתי תלויים, ו-$\kappa>0$ בכל נקודה.
@@ -383,13 +405,15 @@ challenge:
           $$\mathbf n=\mathbf b\times\mathbf t=\frac{(1-4t^4,\ -2t-4t^3,\ 2t+4t^3)}{(2t^2+1)^2}=\frac{(1-2t^2,\ -2t,\ 2t)}{2t^2+1}.$$
       - kind: computation
         text: >-
-          $$\kappa=\frac{\|c'\times c''\|}{v^3}=\frac{2(2t^2+1)}{t^2}\cdot\frac{t^3}{(2t^2+1)^3}=\frac{2t}{(2t^2+1)^2}$$.
+          $$\kappa=\frac{\|c'\times c''\|}{v^3}=\frac{2(2t^2+1)}{t^2}\cdot\frac{t^3}{(2t^2+1)^3}=\frac{2t}{(2t^2+1)^2}.$$
       - kind: computation
         text: >-
           (ג) ב-$t=1$: $c(1)=(2,0,1)$ ו-$\mathbf b\parallel(2,-2,-1)$, ולכן $2(x-2)-2y-(z-1)=0$, כלומר $2x-2y-z=3$.
       - kind: check
         text: >-
-          $$\|(1-2t^2,-2t,2t)\|^2=(1+2t^2)^2$$, אז $\mathbf n$ וקטור יחידה; $\mathbf n\cdot\mathbf t=2t(1-2t^2)-2t+4t^3=0$. ב-$t=1$:
+          המכנה נכון, כי
+          $$\|(1-2t^2,-2t,2t)\|^2=(1+2t^2)^2,$$
+          ולכן $\mathbf n$ וקטור יחידה; $\mathbf n\cdot\mathbf t=2t(1-2t^2)-2t+4t^3=0$. ב-$t=1$:
           $\mathbf t=\frac13(2,1,2)$, $\mathbf n=\frac13(-1,-2,2)$, $\mathbf b=\frac13(2,-2,-1)$, ו-$\mathbf t\times\mathbf n=\mathbf b$; $\kappa(1)=\frac29$.
           החישוב המספרי מאשר את הנוסחאות ב-$t=0.5,\ 1,\ 2.3$.
       - kind: result
@@ -424,7 +448,7 @@ challenge:
       - kind: step
         text: >-
           (א) **צורת הנגזרות.** באינדוקציה, כש-$x>0$: $f^{(n)}(x)=P_n(\frac1x)\,e^{-1/x^2}$ עם $P_n$ פולינום: $P_0=1$, וגזירה נותנת
-          $$P_{n+1}(u)=-u^2P_n'(u)+2u^3P_n(u)$$.
+          $$P_{n+1}(u)=-u^2P_n'(u)+2u^3P_n(u).$$
       - kind: step
         text: >-
           **הלמה.** לכל $m\ge0$, $x^{-m}e^{-1/x^2}\to0$ כש-$x\to0^+$. עם $u=\frac1x\to\infty$: $e^{u^2}\ge\frac{u^{2m}}{m!}$ (איבר
@@ -433,23 +457,25 @@ challenge:
         text: >-
           **אינדוקציה על $n$:** $f^{(n)}$ קיימת על $\mathbb R$, שווה ל-$0$ על $(-\infty,0]$ ולצורה שלמעלה על $(0,\infty)$. מהלמה,
           $f^{(n)}(x)\to0$ כש-$x\to0^+$ (רציפות ב-$0$), והנגזרת הימנית ב-$0$ היא הגבול של $\frac1xP_n(\frac1x)e^{-1/x^2}$, שגם הוא $0$
-          לפי הלמה. השמאלית $0$. לכן $f^{(n+1)}(0)=0$, וכך גם הצעד. רכיבי $\alpha$ הם $t$, $f(-t)$, $f(t)$, ולכן $\alpha\in C^\infty$.
+          לפי הלמה. השמאלית $0$. לכן $f^{(n+1)}(0)$ קיימת ושווה ל-$0$, ו-$f^{(n+1)}$ רציפה ב-$0$, כי על $(0,\infty)$ היא שוב מהצורה
+          $P_{n+1}(\frac1x)e^{-1/x^2}$, שלפי הלמה שואפת ל-$0$. זה הצעד מ-$n$ ל-$n+1$. רכיבי $\alpha$ הם $t$, $f(-t)$, $f(t)$, ולכן $\alpha\in C^\infty$.
       - kind: step
         text: >-
-          (ב) הרכיב הראשון של $\alpha'$ הוא $1$: $\alpha$ רגולרית. $$\alpha''(0)=(0,f''(0),f''(0))=0$$, ולפי מסקנה 1.3.11 $\kappa(0)=0$.
+          (ב) הרכיב הראשון של $\alpha'$ הוא $1$: $\alpha$ רגולרית. $\alpha''(0)=(0,f''(0),f''(0))=0$, ולפי מסקנה 1.3.11 $\kappa(0)=0$.
       - kind: computation
         text: >-
           כש-$t<0$: $\alpha=(t,g(t),0)$ עם $g(t)=e^{-1/t^2}$, $g'=\frac{2}{t^3}e^{-1/t^2}$ ו-
           $$g''(t)=\frac{4-6t^2}{t^6}\,e^{-1/t^2}.$$
-          $$\alpha'\times\alpha''=(1,g',0)\times(0,g'',0)=(0,0,g'')$$, ולכן $\kappa=0$ בדיוק כש-$g''=0$, כלומר $t^2=\frac23$. כש-$t>0$
-          אותו חישוב ברכיב $z$, עם $\alpha'\times\alpha''=(0,-h'',0)$, כאשר $h(t)=e^{-1/t^2}$ ו-$h''$ מאותה נוסחה.
+          לכן $$\alpha'\times\alpha''=(1,g',0)\times(0,g'',0)=(0,0,g''),$$ ו-$\kappa=0$ בדיוק כש-$g''=0$, כלומר $t^2=\frac23$. כש-$t>0$
+          אותו חישוב ברכיב $z$: $\alpha=(t,0,q(t))$ עם $q(t)=e^{-1/t^2}$, ו-$$\alpha'\times\alpha''=(1,0,q')\times(0,0,q'')=(0,-q'',0),$$ כאשר
+          $q''$ נתונה באותה נוסחה כמו $g''$.
       - kind: step
         text: >-
           (ג) כש-$-\sqrt{2/3}<t<0$, $g''>0$, ולכן $\mathbf b=e_3$ והמישור המנשק דרך $\alpha(t)$ (שבמישור $z=0$) הוא $z=0$. כש-$0<t<\sqrt{2/3}$,
-          $h''>0$, $\mathbf b=-e_2$, והמישור הוא $y=0$. המישורים קבועים בכל צד, ולכן הגבולות הם $z=0$ ו-$y=0$.
+          $q''>0$, $\mathbf b=-e_2$, והמישור הוא $y=0$. המישורים קבועים בכל צד, ולכן הגבולות הם $z=0$ ו-$y=0$.
       - kind: step
         text: >-
-          $\mathbf n=\mathbf b\times\mathbf t$, ו-$\mathbf t(t)\to\alpha'(0)=e_1$ (רציפות). משמאל $\mathbf n\to e_3\times e_1=e_2$, ומימין
+          $\mathbf n=\mathbf b\times\mathbf t$, והמשיק היחידה שואף ל-$\alpha'(0)=e_1$ (רציפות). משמאל $\mathbf n\to e_3\times e_1=e_2$, ומימין
           $\mathbf n\to(-e_2)\times e_1=e_3$: הגבולות שונים, ואין הרחבה רציפה.
       - kind: check
         text: >-

@@ -4,7 +4,7 @@ chapter: 2
 order: 2
 title: הפיתול
 subtitle: קצב הסיבוב של המישור המנשק, הסימן שמבדיל בורג ימני משמאלי, ומסילות מישוריות
-minutes: 125
+minutes: 185
 objectives:
   - id: OBJ-2.2-1
     text: להגדיר פיתול לפי הנגזרת של הבינורמל, עם הסימן של הקורס, ולחשב אותו לסליל
@@ -83,13 +83,25 @@ import FrenetFrame from '~/sims/FrenetFrame.astro';
 
 <Step fig="fig-2-2a" set={{ curve: 'helix', t: 0.6, show: ['frame'] }} id="setting">
 
-**ההנחות של השיעור.** בכל השיעור $I$ הוא קטע, ו-$\gamma:I\to\mathbb R^3$ מסילה רגולרית מסדר $C^3$ עם $\kappa>0$ על $I$; עד טענה 2.2.4 היא בפרמטר אורך הקשת $s$, ו-$'$ פירושו $\frac{d}{ds}$. לפי הגדרות 1.3.12 ו-2.1.1, $\mathbf t=\gamma'$, $\mathbf n=\frac{\mathbf t'}{\kappa}$ ו-$\mathbf b=\mathbf t\times\mathbf n$, ולפי טענה 2.1.4 השלשה $\mathbf t,\mathbf n,\mathbf b$ היא בסיס אורתונורמלי בכל נקודה. החלקות: $\mathbf t=\gamma'$ מסדר $C^2$, ולפי טענה 1.3.15 (עם $k=3$) $\kappa$ ו-$\mathbf n$ מסדר $C^1$. לכן גם $\mathbf b=\mathbf t\times\mathbf n$ מסדר $C^1$: הנגזרת $\mathbf b'$ קיימת ורציפה. בשביל זה צריך $C^3$ ולא רק $C^2$.
+**ההנחות של השיעור.** בכל השיעור $I$ הוא קטע, ו-$\gamma:I\to\mathbb R^3$ מסילה רגולרית מסדר $C^3$ עם $\kappa>0$ על $I$. עד טענה 2.2.4 היא בפרמטר אורך הקשת $s$, ו-$'$ פירושו $\frac{d}{ds}$. משיעורים קודמים נשתמש בשלוש עובדות:
+
+- **ההגדרות.** $\mathbf t=\gamma'$ ו-$\mathbf n=\frac{\mathbf t'}{\kappa}$ (הגדרה 1.3.12), ו-$\mathbf b=\mathbf t\times\mathbf n$ (הגדרה 2.1.1).
+- **בסיס.** בכל נקודה $\mathbf t,\mathbf n,\mathbf b$ הם בסיס אורתונורמלי ימני (טענה 2.1.4).
+- **חלקות.** טענה 1.3.15 אומרת: במסילה מסדר $C^k$ עם $\kappa>0$, העקמומיות $\kappa$ והנורמל $\mathbf n$ הם מסדר $C^{k-2}$. כאן $k=3$, ולכן $\kappa$ ו-$\mathbf n$ מסדר $C^1$. גם $\mathbf t=\gamma'$ מסדר $C^2$, ולכן $\mathbf b=\mathbf t\times\mathbf n$ מסדר $C^1$: הנגזרת $\mathbf b'$ קיימת ורציפה. בשביל זה צריך $C^3$ ולא רק $C^2$.
 
 שלוש זהויות של המכפלה הווקטורית ישמשו אותנו (שיעור 0.2): $\mathbf u\times\mathbf v=-\mathbf v\times\mathbf u$, $\mathbf u\times\mathbf u=0$, וזהות המכפלה המשולשת
 
 $$
 (\mathbf u\times\mathbf v)\times\mathbf w=(\mathbf u\cdot\mathbf w)\,\mathbf v-(\mathbf v\cdot\mathbf w)\,\mathbf u .
 $$
+
+זו הזהות המוכרת
+
+$$
+\mathbf x\times(\mathbf y\times\mathbf z)=(\mathbf x\cdot\mathbf z)\,\mathbf y-(\mathbf x\cdot\mathbf y)\,\mathbf z
+$$
+
+בכתיבה אחרת: מציבים $\mathbf x=\mathbf w$, $\mathbf y=\mathbf u$, $\mathbf z=\mathbf v$, ומשתמשים באנטי-סימטריה, $(\mathbf u\times\mathbf v)\times\mathbf w=-\mathbf w\times(\mathbf u\times\mathbf v)$.
 
 מהן, לשלשה האורתונורמלית $\mathbf b=\mathbf t\times\mathbf n$:
 
@@ -168,39 +180,43 @@ $$
 
 <Step fig="fig-2-2a" set={{ curve: 'helix', t: 0.6, show: ['frame', 'osculating'] }} id="helix-arc">
 
-**דוגמה: הסליל, ישירות מההגדרה.** יהיו $a>0$, $b\ne0$ ו-$c=\sqrt{a^2+b^2}$. הסליל $(a\cos t,\ a\sin t,\ bt)$ במהירות $c$, ולכן בפרמטר אורך הקשת $s=ct$:
+**דוגמה: הסליל, ישירות מההגדרה.** יהיו $a>0$ (הרדיוס) ו-$h\ne0$ (העלייה לרדיאן), ו-$m=\sqrt{a^2+h^2}$. הסליל $(a\cos t,\ a\sin t,\ ht)$ נע במהירות $m$, ולכן בפרמטר אורך הקשת $s=mt$:
 
 $$
-\gamma(s)=\Big(a\cos\tfrac sc,\ a\sin\tfrac sc,\ \tfrac{b}{c}s\Big).
+\gamma(s)=\Big(a\cos\tfrac sm,\ a\sin\tfrac sm,\ \tfrac{h}{m}s\Big).
 $$
 
-נכתוב $S=\sin\frac sc$ ו-$C=\cos\frac sc$. אז
+נכתוב $\theta=\frac sm$ (זווית הסיבוב סביב הציר). אז
 
 $$
-\mathbf t=\tfrac1c\,(-aS,\ aC,\ b),\qquad \mathbf t'=-\tfrac{a}{c^2}\,(C,\ S,\ 0),
+\mathbf t=\tfrac1m\,(-a\sin\theta,\ a\cos\theta,\ h),\qquad \mathbf t'=-\tfrac{a}{m^2}\,(\cos\theta,\ \sin\theta,\ 0),
 $$
 
-ולכן $\kappa=\frac{a}{c^2}>0$ ו-$\mathbf n=(-C,\ -S,\ 0)$: הנורמל אופקי ומצביע אל הציר. המכפלה הווקטורית רכיב אחר רכיב:
+ולכן $\kappa=\frac{a}{m^2}>0$ ו-$\mathbf n=(-\cos\theta,\ -\sin\theta,\ 0)$: הנורמל אופקי ומצביע אל הציר. המכפלה הווקטורית רכיב אחר רכיב:
 
 $$
-\mathbf b=\mathbf t\times\mathbf n=\tfrac1c\,(bS,\ -bC,\ a),\qquad \mathbf b'=\tfrac{b}{c^2}\,(C,\ S,\ 0)=-\tfrac{b}{c^2}\,\mathbf n .
+\mathbf b=\mathbf t\times\mathbf n=\tfrac1m\,(h\sin\theta,\ -h\cos\theta,\ a),
+$$
+
+$$
+\mathbf b'=\tfrac{h}{m^2}\,(\cos\theta,\ \sin\theta,\ 0)=-\tfrac{h}{m^2}\,\mathbf n .
 $$
 
 לפי הגדרה 2.2.2
 
 $$
-\tau=\frac{b}{a^2+b^2}.
+\tau=\frac{h}{m^2}=\frac{h}{a^2+h^2}.
 $$
 
-ל-$a=1$, $b=\frac12$ (האיור): $\kappa=\frac{1}{1.25}=0.8$ ו-$\tau=\frac{0.5}{1.25}=0.4$.
+ל-$a=1$, $h=\frac12$ (האיור): $\kappa=\frac{1}{1.25}=0.8$ ו-$\tau=\frac{0.5}{1.25}=0.4$.
 
 </Step>
 
 <Step fig="fig-2-2a" set={{ curve: 'helix-left', t: 0.6, show: ['frame', 'osculating'] }} id="helix-hand">
 
-**ימני ושמאלי.** הסימן של $\tau$ בדוגמה הוא הסימן של $b$. כש-$b>0$ הסליל עולה כשמסתובבים נגד כיוון השעון במבט מלמעלה, כמו בורג רגיל: <Term id="right-handed-helix">סליל ימני</Term>, $\tau>0$. כש-$b<0$ זה <Term id="left-handed-helix">סליל שמאלי</Term> ו-$\tau<0$. העקמומיות $\frac{a}{a^2+b^2}$ זהה בשניהם. ושימו לב ש-$\mathbf b$ **אינו** מקביל לציר: $\mathbf b\cdot(0,0,1)=\frac ac$, והוא נוטה מהציר בזווית שתלויה ביחס $\frac ba$.
+**ימני ושמאלי.** הסימן של $\tau$ בדוגמה הוא הסימן של $h$. כש-$h>0$ הסליל עולה כשמסתובבים נגד כיוון השעון במבט מלמעלה, כמו בורג רגיל: <Term id="right-handed-helix">סליל ימני</Term>, $\tau>0$. כש-$h<0$ זה <Term id="left-handed-helix">סליל שמאלי</Term> ו-$\tau<0$. העקמומיות $\frac{a}{a^2+h^2}$ זהה בשניהם. ושימו לב ש-$\mathbf b$ **אינו** מקביל לציר: $\mathbf b\cdot(0,0,1)=\frac am$, כלומר הזווית בין $\mathbf b$ לציר היא $\arccos\frac am$, והיא תלויה ביחס $\frac ha$.
 
-הגדלים: $\tau$, כמו $\kappa$, הוא "אחד חלקי אורך". $\tau$ הוא קצב הסיבוב של $\mathbf b$ ליחידת אורך קשת, כמו ש-$\kappa=\|\mathbf t'\|$ הוא קצב הסיבוב של $\mathbf t$ (את המשמעות המדויקת של "קצב סיבוב" נוכיח בטענה 2.2.8א).
+יחידות: $\tau$, כמו $\kappa$, הוא "אחד חלקי אורך". $\tau$ הוא קצב הסיבוב של $\mathbf b$ ליחידת אורך קשת, כמו ש-$\kappa=\|\mathbf t'\|$ הוא קצב הסיבוב של $\mathbf t$ (את המשמעות המדויקת של "קצב סיבוב" נוכיח בטענה 2.2.8א).
 
 </Step>
 
@@ -210,9 +226,16 @@ $$
 
 <Step fig="fig-2-2a" set={{ curve: 'cubic', t: 0.5, show: ['frame'] }} id="general-formula">
 
-בפועל מסילות נתונות כמעט תמיד בפרמטר שאינו אורך הקשת. נגדיר את הפיתול של מסילה רגולרית $\gamma:I\to\mathbb R^3$ מסדר $C^3$ בפרמטר כלשהו $t$, עם $\kappa>0$ על הקטע $I$ (או על קטע פתוח סביב הנקודה; $\kappa$ רציפה, ולכן אם $\kappa(t_0)>0$ קטע כזה קיים), כפיתול של ה<Term id="reparametrization">החלפת הפרמטר</Term> שלה לפי אורך הקשת, $\beta=\gamma\circ\sigma$, בנקודה המתאימה. לפי טענה 1.2.10, $\sigma$ (ההפכית של פונקציית אורך הקשת $s(t)$) מסדר $C^3$, ולכן $\beta$ מסדר $C^3$ בפרמטר אורך הקשת, ו-$\kappa>0$ בנקודות המתאימות (הגדרה 1.3.5(ב)). נסמן $\mathbf t(t),\mathbf n(t),\mathbf b(t)$ ו-$\kappa(t),\tau(t)$ את הגדלים של $\beta$ ב-$s(t)$.
+בפועל מסילות נתונות כמעט תמיד בפרמטר שאינו אורך הקשת. כדי לא לבלבל בין הפרמטר לבין וקטור המשיק $\mathbf t$, בחלק הזה נקרא לפרמטר הכללי $u$.
 
-**טענה 2.2.4 (הפיתול בפרמטר כללי).** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^3$, $v=\|\gamma'\|$, ו-$t_0\in I$ עם $\kappa(t_0)>0$. אז ב-$t_0$:
+**הגדרה 2.2.3א (פיתול בפרמטר כללי).** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^3$, ותהי $u_0\in I$ עם $\kappa(u_0)>0$.
+
+1. $\kappa$ רציפה, ולכן יש קטע $J\subseteq I$ שמכיל את $u_0$ ופתוח בתוך $I$, שעליו $\kappa>0$. ("פתוח בתוך $I$": אם $u_0$ הוא קצה של $I$, הקטע $J$ מכיל את הקצה הזה, וזה מותר.)
+2. נסמן ב-$s(u)$ את פונקציית אורך הקשת, וב-$\sigma$ את ההפכית שלה. לפי טענה 1.2.10, $\sigma$ מסדר $C^3$.
+3. לכן $\beta=\gamma\circ\sigma$ היא אותה מסילה בפרמטר אורך הקשת (<Term id="reparametrization">החלפת פרמטר</Term>), מסדר $C^3$, עם $\kappa>0$ על $s(J)$ (הגדרה 1.3.5(ב)).
+4. הפיתול של $\gamma$ ב-$u$ הוא הפיתול של $\beta$ ב-$s(u)$. וכך גם $\mathbf t(u),\mathbf n(u),\mathbf b(u)$ ו-$\kappa(u)$: הגדלים של $\beta$ ב-$s(u)$.
+
+**טענה 2.2.4 (הפיתול בפרמטר כללי).** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^3$, $v=\|\gamma'\|$, ו-$u_0\in I$ עם $\kappa(u_0)>0$. בטענה ובהוכחה שלה $'$ פירושו $\frac{d}{du}$, ואת הנגזרת של העקמומיות לפי $u$ נסמן בנקודה, $\dot\kappa=\frac{d\kappa}{du}$, כי $\kappa'$ שמור ל-$\frac{d\kappa}{ds}$. אז ב-$u_0$:
 
 $$
 \gamma'=v\,\mathbf t,\qquad \gamma''=v'\,\mathbf t+\kappa v^2\,\mathbf n,
@@ -222,10 +245,10 @@ $$
 \gamma'''=\big(v''-\kappa^2v^3\big)\,\mathbf t+\big(3\kappa vv'+\dot\kappa\,v^2\big)\,\mathbf n+\kappa\tau v^3\,\mathbf b,
 $$
 
-כאשר $\dot\kappa=\frac{d\kappa}{dt}$, ולכן
+ולכן
 
 $$
-\tau(t_0)=\frac{\big(\gamma'\times\gamma''\big)\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}=\frac{\det\big(\gamma',\ \gamma'',\ \gamma'''\big)}{\|\gamma'\times\gamma''\|^2}.
+\tau(u_0)=\frac{\big(\gamma'\times\gamma''\big)\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}=\frac{\det\big(\gamma',\ \gamma'',\ \gamma'''\big)}{\|\gamma'\times\gamma''\|^2}.
 $$
 
 **רעיון.** מפרקים כל נגזרת לפי השלשה. המכפלה הווקטורית $\gamma'\times\gamma''$ "רואה" רק את רכיבי $\mathbf t$ ו-$\mathbf n$, ונותנת $\kappa v^3\mathbf b$; המכפלה הסקלרית עם $\gamma'''$ שולפת רק את רכיב ה-$\mathbf b$ שלו, וזה הרכיב היחיד שבו מופיע $\tau$.
@@ -235,11 +258,11 @@ $$
 <Step fig="fig-2-2a" set={{ curve: 'cubic', t: 0.5, show: ['frame'] }} id="general-proof">
 
 **הוכחה של טענה 2.2.4.**
-1. **סביבה.** $\kappa$ רציפה (טענה 1.3.15), ולכן יש קטע פתוח $J\ni t_0$ ב-$I$ (יחסית ל-$I$) שעליו $\kappa>0$. על $J$ כל הגדלים מוגדרים, ולפי טענה 1.3.15 $\kappa$ גזירה ברציפות. החלקות של $v$: $v=\|\gamma'\|$ עם $\gamma'\in C^2$ ו-$\gamma'\ne0$, ו-$\|\cdot\|$ גזירה אינסוף פעמים מחוץ לאפס, ולכן $v\in C^2$.
-2. **כלל השרשרת.** על $J$, $\mathbf t(t)=\mathbf t_\beta(s(t))$ ו-$s'(t)=v(t)$. לפי למות 2.2.1 ו-2.2.3 עבור $\beta$:
+1. **סביבה.** ניקח את הקטע $J\ni u_0$ של הגדרה 2.2.3א, שעליו $\kappa>0$. על $J$ כל הגדלים מוגדרים, ולפי טענה 1.3.15 $\kappa$ גזירה ברציפות. החלקות של $v$: $v=\|\gamma'\|$ עם $\gamma'\in C^2$ ו-$\gamma'\ne0$, והנורמה $\|\mathbf x\|=\sqrt{x_1^2+x_2^2+x_3^2}$ גזירה אינסוף פעמים מחוץ לאפס, ולכן $v\in C^2$.
+2. **כלל השרשרת.** על $J$, $\mathbf t(u)=\mathbf t_\beta(s(u))$ ו-$\frac{ds}{du}=v(u)$. שלוש הנגזרות של $\beta$ לפי $s$ ידועות: $\mathbf t_\beta'=\kappa\mathbf n$ (ההגדרה של $\mathbf n$, הגדרה 1.3.12), $\mathbf n'=-\kappa\mathbf t+\tau\mathbf b$ (למה 2.2.3) ו-$\mathbf b'=-\tau\mathbf n$ (הגדרה 2.2.2). מכפילים כל אחת ב-$\frac{ds}{du}=v$:
 
 $$
-\tfrac{d\mathbf t}{dt}=v\kappa\,\mathbf n,\qquad \tfrac{d\mathbf n}{dt}=v\big(-\kappa\,\mathbf t+\tau\,\mathbf b\big),\qquad \tfrac{d\mathbf b}{dt}=-v\tau\,\mathbf n .
+\tfrac{d\mathbf t}{du}=v\kappa\,\mathbf n,\qquad \tfrac{d\mathbf n}{du}=v\big(-\kappa\,\mathbf t+\tau\,\mathbf b\big),\qquad \tfrac{d\mathbf b}{du}=-v\tau\,\mathbf n .
 $$
 
 3. **הנגזרת הראשונה והשנייה.** $\gamma=\beta\circ s$, ולכן $\gamma'=v\,\mathbf t$. גוזרים ומשתמשים בשלב 2: $\gamma''=v'\,\mathbf t+v\cdot v\kappa\,\mathbf n=v'\,\mathbf t+\kappa v^2\,\mathbf n$ (זו גם מסקנה 1.3.14).
@@ -249,7 +272,13 @@ $$
 \gamma'''=v''\,\mathbf t+v'\cdot v\kappa\,\mathbf n+\big(\dot\kappa v^2+2\kappa vv'\big)\,\mathbf n+\kappa v^2\cdot v\big(-\kappa\,\mathbf t+\tau\,\mathbf b\big).
 $$
 
-מקבצים לפי $\mathbf t,\mathbf n,\mathbf b$ ומקבלים את הנוסחה שבטענה.
+מקבצים לפי $\mathbf t,\mathbf n,\mathbf b$. ליד $\mathbf t$: $v''-\kappa^2v^3$. ליד $\mathbf b$: $\kappa\tau v^3$. ליד $\mathbf n$ שלושה איברים, ושניים מהם מתחברים:
+
+$$
+v'\cdot v\kappa+2\kappa vv'+\dot\kappa v^2=3\kappa vv'+\dot\kappa v^2 .
+$$
+
+זו הנוסחה שבטענה.
 5. **המכפלה הווקטורית.** לפי שלב 3, ובגלל ש-$\mathbf t\times\mathbf t=0$,
 
 $$
@@ -266,7 +295,7 @@ $$
 
 7. מחלקים את שלב 6 בשלב 5. הצורה עם הדטרמיננטה היא ההגדרה של המכפלה המשולשת (שיעור 0.2). $\blacksquare$
 
-**היכן השתמשנו בהנחות.** $C^3$: קיום $\gamma'''$ וגזירות $\kappa,\mathbf n,\mathbf b$. רגולריות: טענה 1.2.10 ו-$v>0$ במכנה. $\kappa(t_0)>0$: הגדרת הפיתול, ומכנה שונה מאפס.
+**היכן השתמשנו בהנחות.** $C^3$: קיום $\gamma'''$ וגזירות $\kappa,\mathbf n,\mathbf b$. רגולריות: טענה 1.2.10 ו-$v>0$ במכנה. $\kappa(u_0)>0$: הגדרת הפיתול, ומכנה שונה מאפס.
 
 **שני סימנים שכדאי לזכור.** $\mathbf b=\frac{\gamma'\times\gamma''}{\|\gamma'\times\gamma''\|}$ (טענה 2.1.3), ומשלב 5 גם $\kappa=\frac{\|\gamma'\times\gamma''\|}{v^3}$. במכנה של $\tau$ מופיע הריבוע $\|\gamma'\times\gamma''\|^2$, **לא** $v^6$: השניים שווים רק כש-$\kappa=1$. והסדר במכפלה הווקטורית קובע את הסימן: $(\gamma''\times\gamma')\cdot\gamma'''=-\kappa^2\tau v^6$.
 
@@ -286,10 +315,42 @@ $$
 
 <Step fig="fig-2-2a" set={{ curve: 'saddle', t: 0.6, show: ['frame'] }} id="saddle">
 
-**דוגמה: המסילה על האוכף.** $\gamma(t)=(\cos t,\ \sin t,\ \cos2t)$. חישוב ישיר (הרכיב השלישי של $\gamma'\times\gamma''$ הוא $\sin^2t+\cos^2t=1$, ולכן $\kappa>0$ בכל נקודה) נותן
+**דוגמה: המסילה על האוכף.** $\gamma(t)=(\cos t,\ \sin t,\ \cos2t)$. הנגזרות:
 
 $$
-(\gamma'\times\gamma'')\cdot\gamma'''=6\sin2t,\qquad \|\gamma'\times\gamma''\|^2=5+12\cos^22t,\qquad \tau(t)=\frac{6\sin2t}{5+12\cos^22t}.
+\gamma'=(-\sin t,\ \cos t,\ -2\sin2t),\qquad \gamma''=(-\cos t,\ -\sin t,\ -4\cos2t),
+$$
+
+$$
+\gamma'''=(\sin t,\ -\cos t,\ 8\sin2t).
+$$
+
+המכפלה הווקטורית רכיב אחר רכיב:
+
+$$
+\gamma'\times\gamma''=\big(-4\cos t\cos2t-2\sin t\sin2t,\ \ 2\cos t\sin2t-4\sin t\cos2t,\ \ 1\big).
+$$
+
+הרכיב השלישי הוא $\sin^2t+\cos^2t=1$, ולכן $\kappa>0$ בכל נקודה. במכפלה עם $\gamma'''$, שני הרכיבים הראשונים נותנים יחד
+
+$$
+-2\sin2t\,(\sin^2t+\cos^2t)=-2\sin2t,
+$$
+
+והשלישי נותן $8\sin2t$. בריבוע האורך, האיברים המעורבים של שני הרכיבים הראשונים מתבטלים, ונשאר
+
+$$
+16\cos^22t+4\sin^22t=4+12\cos^22t;
+$$
+
+הרכיב השלישי מוסיף $1$. לכן
+
+$$
+(\gamma'\times\gamma'')\cdot\gamma'''=6\sin2t,\qquad \|\gamma'\times\gamma''\|^2=5+12\cos^22t,
+$$
+
+$$
+\tau(t)=\frac{6\sin2t}{5+12\cos^22t}.
 $$
 
 הסימן של $\tau$ הוא הסימן של $\sin2t$: חיובי על $(0,\frac\pi2)$, שלילי על $(\frac\pi2,\pi)$, ואפס בארבע הנקודות $t=\frac{m\pi}{2}$. הפיתול הוא תכונה **מקומית**: מסילה אחת יכולה להיות ימנית בקטע אחד ושמאלית בקטע אחר. (האיור מחשב את אותם ערכים, למשל $\tau(1)\approx0.771$.)
@@ -322,7 +383,13 @@ $$
 \tilde\gamma'\times\tilde\gamma''=\varphi'^3\,\gamma'\times\gamma'' .
 $$
 
-הווקטור הזה ניצב ל-$\gamma'$ ול-$\gamma''$, ולכן במכפלה הסקלרית עם $\tilde\gamma'''$ נשאר רק $\varphi'^3\gamma'''$: המונה מוכפל ב-$\varphi'^6$, המכנה $\|\tilde\gamma'\times\tilde\gamma''\|^2$ מוכפל ב-$\varphi'^6$, ו-$\varphi'^6>0$ מתבטל. לפי טענה 2.2.4, $\tilde\tau(u)=\tau(\varphi(u))$, **בלי תלות בסימן של** $\varphi'$.
+הווקטור הזה ניצב ל-$\gamma'$ ול-$\gamma''$, ולכן במכפלה הסקלרית עם $\tilde\gamma'''$ שני האיברים הראשונים של $\tilde\gamma'''$ נותנים $0$, ונשאר רק $\varphi'^3\gamma'''$:
+
+$$
+(\tilde\gamma'\times\tilde\gamma'')\cdot\tilde\gamma'''=\varphi'^3\cdot\varphi'^3\,(\gamma'\times\gamma'')\cdot\gamma'''=\varphi'^6\,(\gamma'\times\gamma'')\cdot\gamma''' .
+$$
+
+גם המכנה $\|\tilde\gamma'\times\tilde\gamma''\|^2$ מוכפל ב-$(\varphi'^3)^2=\varphi'^6$, ו-$\varphi'^6>0$ מתבטל. לפי טענה 2.2.4, $\tilde\tau(u)=\tau(\varphi(u))$, **בלי תלות בסימן של** $\varphi'$.
 
 **(ב)** $\tilde\gamma^{(k)}=A\gamma^{(k)}$ ל-$k=1,2,3$. $A$ אורתוגונלית, ולכן לפי למה 2.1.5א $A\mathbf x\cdot A\mathbf y=\mathbf x\cdot\mathbf y$ ו-
 
@@ -340,7 +407,7 @@ $$
 
 **(ג)** $\tilde\gamma^{(k)}=\lambda\gamma^{(k)}$: המונה מוכפל ב-$\lambda^3$ והמכנה ב-$\lambda^4$. $\blacksquare$
 
-**היכן השתמשנו בהנחות.** $\varphi\in C^3$: כדי ש-$\tilde\gamma$ תהיה מסדר $C^3$ ו-$\tilde\gamma'''$ תהיה מוגדרת. $\varphi'\ne0$: רגולריות של $\tilde\gamma$, ו-$\varphi'^6>0$. אורתוגונליות של $A$: שימור מכפלות פנימיות ונוסחת המכפלה הווקטורית של טענה 2.1.5.
+**היכן השתמשנו בהנחות.** $\varphi\in C^3$: כדי ש-$\tilde\gamma$ תהיה מסדר $C^3$ ו-$\tilde\gamma'''$ תהיה מוגדרת. $\varphi'\ne0$: רגולריות של $\tilde\gamma$, ו-$\varphi'^6>0$. אורתוגונליות של $A$: שימור מכפלות פנימיות ונוסחת המכפלה הווקטורית של למה 2.1.5א.
 
 **אותו דבר בשפת השלשה.** בהיפוך כיוון $\tilde\gamma(s)=\gamma(-s)$, לפי טענה 2.1.5 $\tilde{\mathbf t}=-\mathbf t$, $\tilde{\mathbf n}=\mathbf n$, $\tilde{\mathbf b}=-\mathbf b$, וגם הגזירה מחליפה סימן: $\frac{d\tilde{\mathbf b}}{ds}(s)=\mathbf b'(-s)$, וזה $-\tau(-s)\,\tilde{\mathbf n}(s)$. שני הסימנים מתבטלים. ובשיקוף $\tilde{\mathbf b}=\tilde{\mathbf t}\times\tilde{\mathbf n}=-A\mathbf b$: רק הסימן של $\mathbf b$ מתהפך, ו-$\tau$ איתו.
 
@@ -350,11 +417,11 @@ $$
 
 <Step fig="fig-2-2a" set={{ curve: 'helix-left', t: 0.6, show: ['frame', 'osculating'] }} id="not-congruent">
 
-**מסקנה 2.2.5א (פתרון הפתיחה).** יהיו $\gamma_+(t)=(\cos t,\ \sin t,\ \frac t2)$ ו-$\gamma_-(t)=(\cos t,\ \sin t,\ -\frac t2)$ על $\mathbb R$. אין מטריצה $A$ עם $\det A=1$ ($A$ אורתוגונלית), וקטור $\mathbf c$ והחלפת פרמטר $\varphi:\mathbb R\to\mathbb R$ מסדר $C^3$, על, עם $\varphi'\ne0$, כך ש-$\gamma_-=A\gamma_+\circ\varphi+\mathbf c$.
+**מסקנה 2.2.5א (פתרון הפתיחה).** יהיו $\gamma_+(t)=(\cos t,\ \sin t,\ \frac t2)$ ו-$\gamma_-(t)=(\cos t,\ \sin t,\ -\frac t2)$ על $\mathbb R$. אז אין שלושה דברים כאלה: מטריצה אורתוגונלית $A$ עם $\det A=1$, וקטור $\mathbf c$, והחלפת פרמטר $\varphi:\mathbb R\to\mathbb R$ מסדר $C^3$, על, עם $\varphi'\ne0$, כך ש-$\gamma_-=A\gamma_+\circ\varphi+\mathbf c$. במילים: אין תנועה ששומרת כיוון שמעבירה את הסליל הימני לשמאלי, בשום החלפת פרמטר.
 
 **הוכחה.** אילו היו, לפי טענה 2.2.5 (א) ו-(ב), הפיתול של $\gamma_-$ ב-$u$ היה הפיתול של $\gamma_+$ ב-$\varphi(u)$, כלומר $0.4$. אבל לפי דוגמת הסליל הוא $\frac{-1/2}{1+1/4}=-0.4$. $\blacksquare$
 
-לעומת זאת $\gamma_-$ **היא** תמונת המראה של $\gamma_+$ במישור $z=0$. כאן יש מספר שמבדיל, ובשיעור 2.4 נראה ש-$\kappa$ ו-$\tau$ יחד קובעים את המסילה עד כדי תנועה קשיחה ששומרת כיוון.
+לעומת זאת $\gamma_-$ **היא** תמונת המראה של $\gamma_+$ במישור $z=0$. כלומר: העקמומיות לא מבדילה בין הסליל לתמונת המראה שלו (בשניהם $\kappa=0.8$), והפיתול כן ($0.4$ מול $-0.4$). בשיעור 2.4 נראה ש-$\kappa$ ו-$\tau$ יחד קובעים את המסילה עד כדי תנועה קשיחה ששומרת כיוון.
 
 </Step>
 
@@ -373,6 +440,8 @@ $$
 <Explain title="פיתול אפס ומסילות מישוריות" id="planar">
 
 <Step fig="fig-2-2b" set={{ curve: 'planar', t: 1, show: ['frame', 'osculating'] }} id="planar-def">
+
+כדי לנסח את המשפט המרכזי של השיעור צריך הגדרה אחת. היא ממוספרת 2.2.5ב רק כי היא באה אחרי טענה 2.2.5 ומסקנה 2.2.5א; אין לה קשר אליהן.
 
 **הגדרה 2.2.5ב.** מסילה $\gamma:I\to\mathbb R^3$ היא <Term id="planar-curve">מסילה מישורית</Term> אם יש נקודה $\mathbf p$ ווקטור יחידה $\mathbf e$ כך ש-$(\gamma(t)-\mathbf p)\cdot\mathbf e=0$ לכל $t\in I$. המישור כלשהו, לא בהכרח מישור קואורדינטות.
 
@@ -425,10 +494,15 @@ $$
 (ד) $\gamma$ אינה מישורית.
 
 **הוכחה.**
-- (א) על כל חצי $\gamma$ פולינומית. ב-$0$ הנגזרות של $t^4$ מסדר $1,2,3$ הן $4t^3,\ 12t^2,\ 24t$, כולן $0$ ב-$t=0$, כמו הנגזרות של $0$. לכן הנגזרות החד-צדדיות של כל רכיב עד סדר 3 שוות ב-$0$, וכל אחת מהן רציפה: $\gamma\in C^3$. $\gamma'=(1,\dots)\ne0$.
+- (א) על כל חצי $\gamma$ פולינומית, ולכן מסדר $C^\infty$ שם. נשארה הנקודה $0$. נשתמש בעובדה מאינפי 1: פונקציה גזירה בנקודה אם ורק אם שתי הנגזרות החד-צדדיות שלה שם קיימות ושוות. נבדוק סדר אחר סדר את הרכיב $f$ שהוא $t^4$ מצד אחד ו-$0$ מהצד השני:
+  - **סדר 1.** הנגזרת החד-צדדית מהצד של $t^4$ היא $\lim\frac{h^4}{h}=0$, ומהצד השני $0$. לכן $f'(0)=0$, ו-$f'$ היא $4t^3$ מצד אחד ו-$0$ מהשני; היא רציפה ב-$0$.
+  - **סדר 2.** אותו טיעון על $f'$: הנגזרות החד-צדדיות ב-$0$ הן $12t^2\big|_{t=0}=0$ ו-$0$. לכן $f''(0)=0$, ו-$f''$ רציפה.
+  - **סדר 3.** שוב, על $f''$: $24t\big|_{t=0}=0$ ו-$0$. לכן $f'''(0)=0$, ו-$f'''$ ($24t$ מצד אחד, $0$ מהשני) רציפה.
+
+  לכן כל רכיב מסדר $C^3$, ו-$\gamma\in C^3$. הרכיב הראשון של $\gamma'$ הוא $1$, ולכן $\gamma'\ne0$.
 - (ב) $\gamma''(0)=0$, ולכן $\kappa(0)=0$. ל-$t<0$ (ובאופן סימטרי ל-$t>0$) זה גרף מישורי עם $\kappa=\frac{12t^2}{(1+16t^6)^{3/2}}>0$.
 - (ג) על הקטע $(-\infty,0)$ המסילה במישור $z=0$ ו-$\kappa>0$, ולכן לפי משפט 2.2.6 ($\Rightarrow$) $\tau=0$ שם; וכך גם על $(0,\infty)$, במישור $y=0$.
-- (ד) הנקודות $\gamma(-1)=(-1,1,0)$, $\gamma(-\frac12)=(-\frac12,\frac1{16},0)$, $\gamma(0)=0$ ו-$\gamma(1)=(1,0,1)$. אילו היו במישור אחד, המישור היה עובר דרך $0$, והוקטורים האחרים היו תלויים לינארית. אבל (פיתוח לפי העמודה השלישית)
+- (ד) הנקודות $\gamma(-1)=(-1,1,0)$, $\gamma(-\frac12)=(-\frac12,\frac1{16},0)$, $\gamma(0)=0$ ו-$\gamma(1)=(1,0,1)$. אילו היו במישור אחד, המישור היה עובר דרך $0$, והווקטורים האחרים היו תלויים לינארית. אבל (פיתוח לפי העמודה השלישית)
 
 $$
 \det\begin{pmatrix}-1&1&0\\-\tfrac12&\tfrac1{16}&0\\1&0&1\end{pmatrix}=-\tfrac1{16}+\tfrac12=\tfrac7{16}\ne0. \qquad\blacksquare
@@ -442,7 +516,7 @@ $$
 
 **טענה 2.2.7א (גם "קטע" נחוץ).** יהי $D=(0,1)\cup(2,3)$, ו-$\gamma(t)=(\cos t,\ \sin t,\ 0)$ על $(0,1)$, $\gamma(t)=(0,\ \cos t,\ \sin t)$ על $(2,3)$. על התחום $D$, $\gamma$ גזירה אינסוף פעמים, רגולרית, $\kappa\equiv1$, ו-$\tau\equiv0$ (על כל אחד משני הקטעים לפי משפט 2.2.6, כיוון $\Rightarrow$). ובכל זאת $\gamma(D)$ אינה מוכלת במישור.
 
-**הוכחה.** נניח ש-$\gamma(D)$ מוכלת במישור $\Pi$. שלוש נקודות שונות על מעגל אינן על ישר אחד (ישר חותך מעגל בשתי נקודות לכל היותר), ולכן הן קובעות מישור יחיד. $\Pi$ מכיל את $\gamma(\frac14),\gamma(\frac12),\gamma(\frac34)$, שלוש נקודות שונות על מעגל היחידה במישור $z=0$, ולכן $\Pi=\{z=0\}$. באותו אופן, $\Pi$ מכיל שלוש נקודות שונות של $\gamma\big((2,3)\big)$ על מעגל היחידה במישור $x=0$, ולכן $\Pi=\{x=0\}$. אבל $\{z=0\}\ne\{x=0\}$ (למשל $(1,0,0)$ בראשון ולא בשני). סתירה. $\blacksquare$
+**הוכחה.** נניח ש-$\gamma(D)$ מוכלת במישור $\Pi$. שלוש נקודות שונות על מעגל אינן על ישר אחד (ישר חותך מעגל בשתי נקודות לכל היותר), ולכן הן קובעות מישור יחיד. $\Pi$ מכיל את $\gamma(\frac14),\gamma(\frac12),\gamma(\frac34)$, שלוש נקודות שונות על מעגל היחידה במישור $z=0$, ולכן $\Pi=\{z=0\}$. אותו נימוק על החלק השני: $\Pi$ מכיל את $\gamma(2.25),\gamma(2.5),\gamma(2.75)$, שלוש נקודות שונות על מעגל היחידה במישור $x=0$, ולכן $\Pi=\{x=0\}$. אבל $\{z=0\}\ne\{x=0\}$ (למשל $(1,0,0)$ בראשון ולא בשני). סתירה. $\blacksquare$
 
 ההוכחה של משפט 2.2.6 נשברת כאן במשפט הערך הממוצע: נגזרת אפס על $D$ לא גוררת ש-$\mathbf b$ קבוע, ואכן $\mathbf b=(0,0,1)$ על $(0,1)$ ו-$\mathbf b=(1,0,0)$ על $(2,3)$. אצלנו מסילה מוגדרת תמיד על קטע (הגדרה 1.1.1); הדוגמה מראה שזה לא קישוט.
 
@@ -467,14 +541,20 @@ $$
 **רעיון.** טיילור עד סדר 3: $\gamma'$ ו-$\gamma''$ במישור המנשק, ורק $\gamma'''$ יכול לצאת ממנו, ורכיב ה-$\mathbf b$ שלו הוא $\kappa\tau$.
 
 **הוכחה.**
-1. $\gamma\in C^3$, ולכן לפי משפט טיילור עם שארית פאנו (סדר 3, לכל רכיב):
+1. נשתמש במשפט טיילור עם שארית בצורת פאנו (אינפי 1): לפונקציה ממשית $f$ מסדר $C^3$,
+
+$$
+f(s_0+h)=f(s_0)+hf'(s_0)+\tfrac{h^2}2f''(s_0)+\tfrac{h^3}6f'''(s_0)+o(h^3),
+$$
+
+כאשר $o(h^3)$ הוא ביטוי שחלקי $h^3$ שואף ל-$0$ כש-$h\to0$. לווקטור מפעילים את המשפט על כל רכיב, ו-$o(h^3)$ פירושו וקטור שכל רכיב שלו $o(h^3)$, כלומר שאורכו חלקי $|h|^3$ שואף ל-$0$. כך, ל-$\gamma\in C^3$:
 
 $$
 \gamma(s_0+h)=\gamma(s_0)+h\,\gamma'(s_0)+\tfrac{h^2}2\,\gamma''(s_0)+\tfrac{h^3}6\,\gamma'''(s_0)+o(h^3).
 $$
 
 2. $\gamma'=\mathbf t$ ו-$\gamma''=\kappa\mathbf n$, שניהם ניצבים ל-$\mathbf b$.
-3. $\gamma''=\kappa\mathbf n$ עם $\kappa,\mathbf n$ גזירים (טענה 1.3.15 בסביבה שבה $\kappa>0$), ולכן לפי למה 2.2.3 $\gamma'''=\kappa'\mathbf n+\kappa(-\kappa\mathbf t+\tau\mathbf b)$, ו-$\gamma'''\cdot\mathbf b=\kappa\tau$.
+3. $\gamma''=\kappa\mathbf n$ עם $\kappa,\mathbf n$ גזירים (טענה 1.3.15 בסביבה שבה $\kappa>0$), ולכן לפי למה 2.2.3 $\gamma'''=\kappa'\mathbf n+\kappa(-\kappa\mathbf t+\tau\mathbf b)$, כאן $\kappa'=\frac{d\kappa}{ds}$. לכן $\gamma'''\cdot\mathbf b=\kappa\tau$.
 4. מכפילים את שלב 1 סקלרית ב-$\mathbf b(s_0)$ ומקבלים את הנוסחה.
 5. אם $\tau(s_0)\ne0$: $\frac{d(h)}{h^3}\to\frac{\kappa\tau}{6}\ne0$, ולכן יש $\delta>0$ שבו המנה בעלת הסימן של $\tau$ לכל $0<|h|<\delta$; ו-$h^3$ בעל הסימן של $h$. $\blacksquare$
 
@@ -497,13 +577,13 @@ $$
 **הוכחה.**
 1. לשני וקטורי יחידה בזווית $\theta\in[0,\pi]$, $\|\mathbf u-\mathbf w\|^2=2-2\cos\theta=4\sin^2\frac\theta2$, ולכן $\theta=2\arcsin\frac{\|\mathbf u-\mathbf w\|}{2}$.
 2. נסמן $x(h)=\frac12\|\mathbf b(s_0+h)-\mathbf b(s_0)\|$. $\mathbf b$ גזיר ב-$s_0$, ולכן $\frac{2x(h)}{|h|}\to\|\mathbf b'(s_0)\|$, וזה $|\tau(s_0)|$; בפרט $x(h)\to0$.
-3. $\lim_{x\to0^+}\frac{\arcsin x}{x}=1$ (הנגזרת של $\arcsin$ ב-$0$). לכן, כש-$x(h)>0$,
+3. כדי לא לחלק באפס, נגדיר $g(x)=\frac{\arcsin x}{x}$ ל-$0<x\le1$ ו-$g(0)=1$. $g$ רציפה ב-$0$, כי $\lim_{x\to0^+}\frac{\arcsin x}{x}=1$ (זו הנגזרת של $\arcsin$ ב-$0$). לפי שלב 1, **לכל** $h\ne0$ (גם כש-$x(h)=0$, ששם שני האגפים $0$):
 
 $$
-\frac{\theta(h)}{|h|}=\frac{\arcsin x(h)}{x(h)}\cdot\frac{2x(h)}{|h|}\longrightarrow1\cdot|\tau(s_0)|,
+\frac{\theta(h)}{|h|}=g\big(x(h)\big)\cdot\frac{2x(h)}{|h|}.
 $$
 
-וכש-$x(h)=0$ גם $\theta(h)=0$, ו-$\frac{2x(h)}{|h|}=0$ מתאים לאותו גבול. $\blacksquare$
+4. $x(h)\to0$ ו-$g$ רציפה ב-$0$, ולכן $g(x(h))\to g(0)=1$ (הרכבה של פונקציה רציפה עם פונקציה ששואפת לנקודה). לפי שלב 2 והגבול של מכפלה, $\frac{\theta(h)}{|h|}\to1\cdot|\tau(s_0)|$. $\blacksquare$
 
 **היכן השתמשנו בהנחות.** גזירות של $\mathbf b$ ב-$s_0$ (מ-$C^3$ ו-$\kappa>0$) ופרמטר אורך הקשת (אחרת הגבול הוא $v|\tau|$). זו ההצדקה של המילים "קצב סיבוב": $\kappa$ הוא קצב הסיבוב של המשיק, ו-$|\tau|$ של המישור המנשק, שניהם ליחידת אורך קשת. בסליל $\frac{\theta}{h}\to0.4$; חישוב מספרי עם $h=0.001$ נותן $0.39999999$.
 
@@ -539,7 +619,7 @@ $$
 \tau=\frac{-2\sqrt2}{8\cosh^2t}=-\frac{\sqrt2}{4\cosh^2t},\qquad \kappa=\frac{2\sqrt2\cosh t}{8\cosh^3t}=\frac{\sqrt2}{4\cosh^2t}.
 $$
 
-**בדיקה**: ב-$t=0$, $\tau=-\frac{\sqrt2}{4}\approx-0.35355$, וזה גם מה שנותן חישוב מספרי בהפרשים סופיים (geometry.ts), גם ב-$t=0.7$ ($-0.22441$). המכנה $8\cosh^2t$ ולא $v^6=64\cosh^6t$, שהיה נותן ערך קטן פי $8\cosh^4t$.
+**בדיקה**: ב-$t=0$, $\tau=-\frac{\sqrt2}{4}\approx-0.35355$, וזה גם מה שנותן חישוב מספרי בהפרשים סופיים, גם ב-$t=0.7$ ($-0.22441$). המכנה $8\cosh^2t$ ולא $v^6=64\cosh^6t$, שהיה נותן ערך קטן פי $8\cosh^4t$.
 
 **מסקנה**: $\kappa=-\tau=\frac{\sqrt2}{4\cosh^2t}$: הפיתול שלילי בכל נקודה, והיחס $\frac\tau\kappa\equiv-1$ קבוע אף ש-$\kappa$ ו-$\tau$ אינם קבועים. (מסילות עם יחס קבוע נחקור בשיעור 2.5.)
 
@@ -569,7 +649,7 @@ $$
 
 **בדיקה**: באיור 2.2א, הסליל הימני והסליל השמאלי מראים $\kappa=0.8$ בשניהם, ו-$\tau=\pm0.4$. השתמשנו בכך ששתי המסילות בפרמטר אורך הקשת: אחרת השוואת $\kappa(s)$ לא הייתה אפילו מוגדרת.
 
-**מסקנה**: הפריכו. $\tau$ הוא אינווריאנט נוסף, שאינו פונקציה של $\kappa$; בשיעור 2.4 נראה שהזוג יחד מספיק.
+**מסקנה**: הפריכו. $\tau$ הוא גודל נוסף שאינו משתנה בהחלפת פרמטר ובתנועה ששומרת כיוון (טענה 2.2.5), והוא אינו פונקציה של $\kappa$; בשיעור 2.4 נראה שהזוג יחד מספיק כדי לקבוע את המסילה.
 
 </Solution>
 
@@ -597,7 +677,7 @@ $$
 
 **בדיקה**: $\sin(2t+\pi)=-\sin2t$ ו-$\cos^2(2t+\pi)=\cos^22t$, ולכן הנוסחה אכן מחליפה סימן. מספרית: $\tau(0.4)\approx0.39762$ ו-$\tau(0.4+\frac\pi2)\approx-0.39762$.
 
-**מסקנה**: לתמונה של המסילה יש סימטריה עם דטרמיננטה $-1$: התמונה חופפת לתמונת המראה שלה. זה לא סותר את טענה 2.2.5: הסימטריה מזיזה את הפרמטר ברבע מחזור, והפיתול "עובר" מנקודה לנקודה עם סימן הפוך.
+**מסקנה**: לתמונה של המסילה יש סימטריה עם דטרמיננטה $-1$: ההעתקה $A$, שהיא סיבוב ואחריו שיקוף, מעבירה את התמונה לעצמה. זה לא סותר את טענה 2.2.5: הסימטריה מזיזה את הפרמטר ברבע מחזור, והפיתול "עובר" מנקודה לנקודה עם סימן הפוך.
 
 </Solution>
 
@@ -605,32 +685,32 @@ $$
 
 <Example id="ex-2-2-4" title="מסילה מישורית שאינה מעגל">
 
-הוכיחו או הפריכו: מסילה רגולרית מסדר $C^3$ עם $\kappa>0$, $\tau\equiv0$ ועקמומיות **לא קבועה** אינה יכולה להיות מוכלת במישור. בדקו על $\gamma(t)=(\cos t,\ \sin t,\ \cos t+\sin t)$.
+תהי $\gamma(t)=(\cos t,\ \sin t,\ \cos t+\sin t)$, $t\in[0,2\pi]$. חשבו את $\tau$ ואת $\kappa$, ומצאו מישור שמכיל את המסילה. מה הדוגמה מלמדת על הקשר בין מישוריות לעקמומיות קבועה?
 
 <Solution>
 
-**נתון**: $\gamma$ על $[0,2\pi]$.
+**נתון**: $\gamma$ על $[0,2\pi]$, מסדר $C^\infty$.
 
-**צריך להוכיח**: הטענה שקרית; $\gamma$ היא דוגמה נגדית.
+**צריך למצוא**: $\tau$, $\kappa$, והמישור.
 
-**רעיון**: משפט 2.2.6 לא מזכיר את $\kappa$ פרט ל-$\kappa>0$. מחשבים $\tau$ ו-$\kappa$ ובודקים ישירות את המישור.
+**רעיון**: מחשבים $\gamma'\times\gamma''$ ואת המכפלה המשולשת (טענה 2.2.4), ואז בודקים ישירות את המישור שמשפט 2.2.6 מבטיח.
 
-**הוכחה**:
-1. $\gamma'=(-\sin t,\ \cos t,\ \cos t-\sin t)$ ו-
+**חישוב**:
+1. הנגזרת הראשונה היא $\gamma'=(-\sin t,\ \cos t,\ \cos t-\sin t)$, והשנייה
 
 $$
 \gamma''=(-\cos t,\ -\sin t,\ -\cos t-\sin t).
 $$
 
 רכיב אחר רכיב, $\gamma'\times\gamma''=(-1,\ -1,\ 1)$, **קבוע**. לכן $\kappa>0$ בכל נקודה, ו-$\mathbf b=\frac{1}{\sqrt3}(-1,-1,1)$ קבוע (טענה 2.1.3).
-2.
+2. הנגזרת השלישית היא
 
 $$
 \gamma'''=(\sin t,\ -\cos t,\ \sin t-\cos t),
 $$
 
 ו-$(-1,-1,1)\cdot\gamma'''=0$. לפי טענה 2.2.4, $\tau\equiv0$.
-3.
+3. ריבוע המהירות הוא
 
 $$
 v^2=\sin^2t+\cos^2t+(\cos t-\sin t)^2,
@@ -643,11 +723,11 @@ $$
 $$
 
 שמשתנה בין $\kappa(\frac{3\pi}4)=\frac13$ ל-$\kappa(\frac\pi4)=\sqrt3$.
-4. ישירות: $z=x+y$ לכל $t$, כלומר $(\gamma(t)-0)\cdot(1,1,-1)=0$: $\gamma$ מישורית, כמו שמשפט 2.2.6 מבטיח. $\blacksquare$
+4. ישירות: $z=x+y$ לכל $t$, כלומר $(\gamma(t)-0)\cdot(1,1,-1)=0$: $\gamma$ מונחת במישור $z=x+y$, כמו שמשפט 2.2.6 מבטיח.
 
 **בדיקה**: האיור 2.2ב מראה $\tau=0$ ו-$\kappa$ משתנה. הנורמל $(1,1,-1)$ של המישור מקביל ל-$\mathbf b$, כמו בסוף ההוכחה של המשפט. המישור אינו מישור קואורדינטות.
 
-**מסקנה**: הפריכו. $\tau\equiv0$ ו-$\kappa>0$ הם כל מה שצריך; זו אליפסה במישור $z=x+y$.
+**מסקנה**: $\tau\equiv0$, $\kappa$ משתנה בין $\frac13$ ל-$\sqrt3$, והמסילה היא אליפסה במישור $z=x+y$. מישוריות אינה דורשת עקמומיות קבועה: לפי משפט 2.2.6, $\tau\equiv0$ ו-$\kappa>0$ הם כל מה שצריך.
 
 </Solution>
 
@@ -696,7 +776,7 @@ $$
 B\gamma(t)+\mathbf c=A\gamma(t)+\mathbf d
 $$
 
-לכל $t\in I$.
+לכל $t\in I$. (זה בדיוק מה שנקרא בכותרת "חופפת לתמונת המראה שלה באותו פרמטר": תמונת המראה $B\gamma+\mathbf c$ מתקבלת מ-$\gamma$ בתנועה ששומרת כיוון, נקודה $t$ אל נקודה $t$.)
 
 (א) הוכיחו ש-$\gamma$ מישורית.
 
@@ -712,9 +792,9 @@ $$
 
 **הוכחה**:
 - (א) לפי טענה 2.2.5(ב) עם $B$: $\tau_\delta(t)=-\tau(t)$. לפי אותה טענה עם $A$: $\tau_\delta(t)=\tau(t)$. לכן $\tau(t)=-\tau(t)$, כלומר $\tau\equiv0$ על $I$. $\kappa>0$ ו-$I$ קטע, ולכן לפי משפט 2.2.6 $\gamma$ מישורית. $\blacksquare$
-- (ב) לפי דוגמה 3, $A_0(x,y,z)=(-y,\ x,\ -z)$ עם $\det A_0=-1$ מקיימת $A_0\gamma(t)=\gamma(t+\frac\pi2)$, כלומר $A_0\gamma=\gamma\circ\varphi$ עם $\varphi(t)=t+\frac\pi2$. כאן $\gamma\circ\varphi$ **אינה** $A\gamma+\mathbf d$ לשום $A$ ששומרת כיוון, באותו פרמטר: אחרת, לפי (א) $\gamma$ הייתה מישורית, אבל $\tau(1)\approx0.771\ne0$. ההשוואה ב-(א) היא נקודה מול **אותה** נקודה ($t$ מול $t$), ולכן הפיתול שלה משווה ערך לעצמו; ב-(ב) נקודה $t$ עוברת לנקודה $t+\frac\pi2$, ושם הפיתול באמת הפוך.
+- (ב) לפי דוגמה 3, $B(x,y,z)=(-y,\ x,\ -z)$ עם $\det B=-1$ מקיימת $B\gamma(t)=\gamma(t+\frac\pi2)$, כלומר $B\gamma=\gamma\circ\varphi$ עם $\varphi(t)=t+\frac\pi2$. כאן $\gamma\circ\varphi$ **אינה** $A\gamma+\mathbf d$ לשום $A$ ששומרת כיוון, באותו פרמטר: אחרת, לפי (א) $\gamma$ הייתה מישורית, אבל $\tau(1)\approx0.771\ne0$. ההשוואה ב-(א) היא נקודה מול **אותה** נקודה ($t$ מול $t$), ולכן הפיתול שלה משווה ערך לעצמו; ב-(ב) נקודה $t$ עוברת לנקודה $t+\frac\pi2$, ושם הפיתול באמת הפוך.
 
-**בדיקה**: מסילה מישורית אכן מקיימת את ההנחה של (א): אם היא במישור $z=0$, $B=\operatorname{diag}(1,1,-1)$ ו-$A=I$ נותנים $B\gamma=\gamma$. בכל שלב: $\kappa>0$ ו-$C^3$ דרושים לטענה 2.2.5, והקטע למשפט 2.2.6.
+**בדיקה**: מסילה מישורית אכן מקיימת את ההנחה של (א): אם היא במישור $z=0$, $B=\operatorname{diag}(1,1,-1)$ ו-$A=\mathrm{Id}$ (מטריצת היחידה) נותנים $B\gamma=\gamma$. בכל שלב: $\kappa>0$ ו-$C^3$ דרושים לטענה 2.2.5, והקטע למשפט 2.2.6.
 
 **מסקנה**: (א) מסילה עם $\kappa>0$ שחופפת לתמונת המראה שלה **באותו פרמטר** היא מישורית. (ב) חפיפה של **תמונות** עם החלפת פרמטר אפשרית גם למסילה עם פיתול, כמו המסילה על האוכף.
 
@@ -743,17 +823,17 @@ $$
 
 - **למה 2.2.1, הגדרה 2.2.2:** במסילה מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$, $\mathbf b'\perp\mathbf b$ ו-$\mathbf b'\perp\mathbf t$, ולכן $\mathbf b'=-\tau\mathbf n$. $|\tau|=\|\mathbf b'\|$, ו-$\tau$ מסומן.
 - **למה 2.2.3:** $\mathbf n'=-\kappa\mathbf t+\tau\mathbf b$, מ-$\mathbf n=\mathbf b\times\mathbf t$.
-- **סליל:** $(a\cos t,a\sin t,bt)$ עם $a>0$: $\kappa=\frac{a}{a^2+b^2}$, $\tau=\frac{b}{a^2+b^2}$; ימני ($b>0$) מול שמאלי ($b<0$). **מסקנה 2.2.5א:** הם אינם חופפים בתנועה ששומרת כיוון.
+- **סליל:** $(a\cos t,a\sin t,ht)$ עם $a>0$: $\kappa=\frac{a}{a^2+h^2}$, $\tau=\frac{h}{a^2+h^2}$; ימני ($h>0$) מול שמאלי ($h<0$). **מסקנה 2.2.5א:** הם אינם חופפים בתנועה ששומרת כיוון.
 - **טענה 2.2.4:** בכל פרמטר רגולרי $\gamma'''=(\cdot)\mathbf t+(\cdot)\mathbf n+\kappa\tau v^3\mathbf b$, ו-$\tau=\frac{(\gamma'\times\gamma'')\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}$. במסילה המעוקבת $\tau=\frac{3}{9t^4+9t^2+1}\le3$.
 - **טענה 2.2.5:** $\tau$ לא משתנה בהחלפת פרמטר (גם בהיפוך כיוון) ובתנועה ששומרת כיוון; מתהפך בשיקוף; $\tau_{\lambda\gamma}=\frac\tau\lambda$.
-- **משפט 2.2.6:** על קטע, עם $\kappa>0$ בכל נקודה: מישורית אם ורק אם $\tau\equiv0$, והמישור הוא המישור המנשק. **2.2.7, 2.2.7א:** בלי $\kappa>0$ או בלי קטע, המשפט נכשל.
+- **משפט 2.2.6:** על קטע, עם $\kappa>0$ בכל נקודה: מישורית אם ורק אם $\tau\equiv0$, והמישור הוא המישור המנשק. **טענות 2.2.7, 2.2.7א:** בלי $\kappa>0$ או בלי קטע, המשפט נכשל.
 - **טענה 2.2.8, 2.2.8א:** $d(h)=\frac{\kappa\tau}{6}h^3+o(h^3)$ (המסילה חוצה את המישור המנשק כש-$\tau\ne0$), ו-$\frac{\theta}{|h|}\to|\tau|$ (קצב הסיבוב של המישור המנשק).
 
 <Formula tex="\mathbf b'=-\tau\,\mathbf n,\qquad \mathbf n'=-\kappa\,\mathbf t+\tau\,\mathbf b" label="הגדרת הפיתול והנגזרת של הנורמל (פרמטר אורך הקשת)" />
 
 <Formula tex="\tau=\frac{(\gamma'\times\gamma'')\cdot\gamma'''}{\|\gamma'\times\gamma''\|^2}" label="הפיתול בפרמטר כללי" />
 
-<Formula tex="(a\cos t,\ a\sin t,\ bt):\quad \kappa=\frac{a}{a^2+b^2},\quad \tau=\frac{b}{a^2+b^2}" label="הסליל" />
+<Formula tex="(a\cos t,\ a\sin t,\ ht):\quad \kappa=\frac{a}{a^2+h^2},\quad \tau=\frac{h}{a^2+h^2}" label="הסליל" />
 
 <Formula tex="\kappa>0:\quad \tau\equiv0\iff\exists\,\mathbf p,\mathbf e:\ (\gamma-\mathbf p)\cdot\mathbf e\equiv0" label="על קטע: פיתול אפס אם ורק אם המסילה מישורית" />
 

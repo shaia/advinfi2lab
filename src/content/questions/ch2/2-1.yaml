@@ -156,26 +156,27 @@ questions:
     qualitative: true
     level: mid
     prompt: >-
-      בסליל $\gamma(t)=(a\cos t,a\sin t,bt)$ עם $a,b>0$ השלשה היא
-      $$\mathbf t=\frac{(-a\sin t,\,a\cos t,\,b)}{\sqrt{a^2+b^2}},\qquad \mathbf n=(-\cos t,-\sin t,0),\qquad \mathbf b=\frac{(b\sin t,\,-b\cos t,\,a)}{\sqrt{a^2+b^2}}.$$
+      בסליל $\gamma(t)=(a\cos t,a\sin t,h t)$ עם $a,h>0$ ($h$ קצב העלייה), עם $m=\sqrt{a^2+h^2}$, השלשה היא
+      $$\mathbf t=\frac{(-a\sin t,\,a\cos t,\,h)}{m},\qquad \mathbf n=(-\cos t,-\sin t,0),\qquad \mathbf b=\frac{(h\sin t,\,-h\cos t,\,a)}{m}.$$
       אילו מהטענות נכונות? סמנו את כולן.
     choices:
       - text: הנורמל הראשי אופקי בכל נקודה ומצביע אל ציר הסליל
         correct: true
         feedback: >-
           נכון. $\mathbf n=(-\cos t,-\sin t,0)$ הוא הווקטור מהנקודה $(a\cos t,a\sin t)$ אל הציר, בגובה של הנקודה.
-      - text: רכיב ה-$z$ של הבינורמל קבוע ושווה ל-$\frac{a}{\sqrt{a^2+b^2}}$
+      - text: רכיב ה-$z$ של הבינורמל קבוע ושווה ל-$\frac{a}{m}$
         correct: true
         feedback: >-
           נכון: הזווית בין $\mathbf b$ לציר קבועה, ו-$\mathbf b$ מסתובב סביב הציר.
       - text: הבינורמל קבוע לאורך הסליל
         feedback: >-
-          $\mathbf b$ תלוי ב-$t$ דרך $\sin t$ ו-$\cos t$ כש-$b\ne0$. בינורמל קבוע מאפיין מסילה מישורית, וסליל אינו מישורי.
+          $\mathbf b$ תלוי ב-$t$ דרך $\sin t$ ו-$\cos t$, כי $h\ne0$: למשל הרכיב השני הוא $-\frac hm$ ב-$t=0$ ו-$\frac hm$ ב-$t=\pi$.
+          הבינורמל נוטה מהציר בזווית קבועה ומסתובב סביבו.
         misconception: MC-c2-helix-binormal-axis
       - text: 'בסליל הזה $\mathbf n=\frac{\gamma''''}{\|\gamma''''\|}$'
         correct: true
         feedback: >-
-          נכון, אבל רק כי המהירות $\|\gamma'\|=\sqrt{a^2+b^2}$ קבועה, ולכן $\gamma''$ ניצב ל-$\gamma'$. במסילה עם מהירות
+          נכון, אבל רק כי המהירות $\|\gamma'\|=m$ קבועה, ולכן $\gamma''$ ניצב ל-$\gamma'$. במסילה עם מהירות
           משתנה זה לא נכון (ראו את המסילה המעוקבת).
       - text: 'הדטרמיננטה של המטריצה ששורותיה $\mathbf t,\mathbf n,\mathbf b$ שווה ל-$-1$'
         feedback: >-
@@ -247,24 +248,24 @@ questions:
     answer: 1
     tolerance: 0.001
     correctFeedback: >-
-      נכון. הנורמל למישור המנשק הוא $\gamma'(1)\times\gamma''(1)=(6,-6,2)\parallel(3,-3,1)$, והמישור עובר דרך $(1,1,1)$:
+      נכון. הווקטור הניצב למישור המנשק הוא $\gamma'(1)\times\gamma''(1)=(6,-6,2)\parallel(3,-3,1)$, והמישור עובר דרך $(1,1,1)$:
       $3(x-1)-3(y-1)+(z-1)=0$, כלומר $3x-3y+z=1$. ב-$x=y=0$ מתקבל $z_0=1$.
     wrongFeedback: >-
-      הנורמל של המישור המנשק הוא $\gamma'\times\gamma''$ (הכיוון של $\mathbf b$). כתבו את משוואת המישור דרך $\gamma(1)=(1,1,1)$
+      הווקטור הניצב למישור המנשק הוא $\gamma'\times\gamma''$ (הכיוון של $\mathbf b$). כתבו את משוואת המישור דרך $\gamma(1)=(1,1,1)$
       והציבו $x=y=0$.
     commonWrong:
       - value: 2
         feedback: >-
-          זה המישור הנורמל, $x+2y+3z=6$, שהנורמל שלו $\gamma'(1)=(1,2,3)$. המישור המנשק מכיל את המשיק, והנורמל שלו הוא
-          $\gamma'\times\gamma''$.
+          זה המישור הנורמלי, $x+2y+3z=6$, שהווקטור הניצב לו הוא $\gamma'(1)=(1,2,3)$. המישור המנשק מכיל את המשיק, והווקטור
+          הניצב לו הוא $\gamma'\times\gamma''$.
         misconception: MC-c2-plane-mixup
       - value: 1.3333333
         feedback: >-
-          לקחתם את $\gamma''(1)=(0,2,6)$ כנורמל: $2(y-1)+6(z-1)=0$. אבל $\gamma''$ מונח בתוך המישור המנשק, הוא לא ניצב לו.
+          לקחתם את $\gamma''(1)=(0,2,6)$ כווקטור הניצב: $2(y-1)+6(z-1)=0$. אבל $\gamma''$ מונח בתוך המישור המנשק, הוא לא ניצב לו.
         misconception: MC-c2-n-is-gamma2
       - value: -1.1111111
         feedback: >-
-          זה המישור המיישר, שהנורמל שלו $\mathbf n(1)\parallel(-11,-8,9)$. המישור המנשק ניצב ל-$\mathbf b$, לא ל-$\mathbf n$.
+          זה המישור המיישר, שהווקטור הניצב לו הוא $\mathbf n(1)\parallel(-11,-8,9)$. המישור המנשק ניצב ל-$\mathbf b$, לא ל-$\mathbf n$.
         misconception: MC-c2-plane-mixup
 
   - id: Q-2.1-oscformula
@@ -272,21 +273,21 @@ questions:
     objectives: [OBJ-2.1-2]
     level: mid
     prompt: >-
-      $\gamma$ מסילה רגולרית בפרמטר כללי, ו-$\kappa(t_0)>0$. מהי משוואת המישור המנשק בנקודה $\gamma(t_0)$ (הנקודה $x\in\mathbb R^3$
-      משתנה)?
+      $\gamma$ מסילה רגולרית בפרמטר כללי, ו-$\kappa(t_0)>0$. מהי משוואת המישור המנשק בנקודה $\gamma(t_0)$ (הנקודה
+      $\mathbf x\in\mathbb R^3$ משתנה)?
     choices:
-      - text: '$\bigl(x-\gamma(t_0)\bigr)\cdot\bigl(\gamma''(t_0)\times\gamma''''(t_0)\bigr)=0$'
+      - text: '$\bigl(\mathbf x-\gamma(t_0)\bigr)\cdot\bigl(\gamma''(t_0)\times\gamma''''(t_0)\bigr)=0$'
         correct: true
         feedback: >-
-          נכון. $\gamma'\times\gamma''=\kappa v^3\mathbf b$, ולכן הנורמל של המישור הוא בכיוון של $\mathbf b$. לא צריך לנרמל:
-          כפולה שונה מאפס של הנורמל נותנת את אותו מישור.
-      - text: '$\bigl(x-\gamma(t_0)\bigr)\cdot\gamma''(t_0)=0$'
+          נכון. $\gamma'\times\gamma''=\kappa v^3\mathbf b$, ולכן הווקטור הניצב למישור הוא בכיוון של $\mathbf b$. לא צריך לנרמל:
+          כפולה שונה מאפס של וקטור ניצב נותנת את אותו מישור.
+      - text: '$\bigl(\mathbf x-\gamma(t_0)\bigr)\cdot\gamma''(t_0)=0$'
         feedback: >-
           זה המישור הנורמלי, הניצב למשיק. המישור המנשק מכיל את $\gamma'(t_0)$.
         misconception: MC-c2-plane-mixup
-      - text: '$\bigl(x-\gamma(t_0)\bigr)\cdot\gamma''''(t_0)=0$'
+      - text: '$\bigl(\mathbf x-\gamma(t_0)\bigr)\cdot\gamma''''(t_0)=0$'
         feedback: >-
-          $\gamma''$ מונח בתוך המישור המנשק (הוא צירוף של $\mathbf t$ ו-$\mathbf n$), ולכן אינו יכול לשמש נורמל אליו.
+          $\gamma''$ מונח בתוך המישור המנשק (הוא צירוף של $\mathbf t$ ו-$\mathbf n$), ולכן אינו יכול לשמש וקטור ניצב אליו.
         misconception: MC-c2-n-is-gamma2
       - text: 'המשוואה תלויה בפרמטריזציה, ולכן צריך קודם לעבור לפרמטר אורך הקשת'
         feedback: >-
@@ -311,16 +312,16 @@ questions:
           המישור המנשק לא תלוי בגודל העקמומיות, רק בכיוונים $\mathbf t$ ו-$\mathbf n$, ובמסילה מישורית שניהם תמיד ב-$P$.
         misconception: MC-c2-plane-mixup
     reasons:
-      - text: 'גזירה של $(\gamma-p)\cdot\mathbf e=0$, כאשר $\mathbf e$ נורמל ל-$P$, נותנת $\gamma''\cdot\mathbf e=0$ ו-$\gamma''''\cdot\mathbf e=0$'
+      - text: 'גזירת $(\gamma-\mathbf p)\cdot\mathbf e=0$, עם $\mathbf e\perp P$, נותנת $\gamma''\perp\mathbf e$ ו-$\gamma''''\perp\mathbf e$'
         correct: true
         feedback: >-
           בדיוק. $\gamma'$ ו-$\gamma''$ בלתי תלויים כש-$\kappa>0$, ולכן הם פורשים את המישור הניצב ל-$\mathbf e$, והמישור המנשק
           הוא $P$. בפרט $\mathbf b=\pm\mathbf e$.
-      - text: 'המישור המנשק הוא המישור שמכיל את המשיק, ו-$P$ מכיל את המשיק'
+      - text: 'המישור המנשק מכיל את הישר המשיק, וגם $P$ מכיל את הישר המשיק בכל נקודה של המסילה'
         feedback: >-
           המשיק מוכל באינסוף מישורים. מה שקובע את המישור המנשק הוא גם $\mathbf n$, והנימוק צריך להראות שגם הוא ב-$P$.
         misconception: MC-c2-plane-mixup
-      - text: 'הנורמל $\mathbf n$ ניצב ל-$P$'
+      - text: 'הנורמל הראשי $\mathbf n$ ניצב ל-$P$ בכל נקודה, ולכן המישור המנשק מכיל את $\mathbf t$ ואת $\mathbf n$'
         feedback: >-
           להפך: $\mathbf n=\mathbf t'/\kappa$ הוא נגזרת של וקטור שנמצא ב-$P$, ולכן גם הוא ב-$P$. מה שניצב ל-$P$ הוא $\mathbf b$.
         misconception: MC-c2-binormal-any-perp
@@ -343,12 +344,12 @@ questions:
           כל בחירה ב-$0$ תסכים עם צד אחד בלבד: הגבולות מהצדדים הם $(0,-1,0)$ ו-$(0,1,0)$, ולכן אין הרחבה רציפה.
         misconception: MC-c2-frame-at-inflection
     reasons:
-      - text: 'ליד 0 המשיק קרוב ל-$e_1$ ו-$\gamma''''=(0,6t,0)$ מחליף סימן; לכן $\mathbf n\to(0,-1,0)$ משמאל ו-$\mathbf n\to(0,1,0)$ מימין'
+      - text: '$\gamma''''=(0,6t,0)$ מחליף סימן ב-$0$, ולכן $\mathbf n\to(0,\mp1,0)$ משני הצדדים'
         correct: true
         feedback: >-
-          בדיוק. גם $\mathbf b=\mathbf t\times\mathbf n$ קופץ, מ-$(0,0,-1)$ ל-$(0,0,1)$. בנקודה שבה העקמומיות המסומנת
-          מחליפה סימן אין השלשה רציפה.
-      - text: 'בנקודה $t=0$ המסילה אינה רגולרית'
+          בדיוק. ליד $0$ המשיק קרוב ל-$e_1$, ו-$\mathbf n$ הוא הכיוון של הרכיב של $\gamma''$ שניצב לו. גם $\mathbf b=\mathbf t\times\mathbf n$
+          קופץ, מ-$(0,0,-1)$ ל-$(0,0,1)$. בנקודה שבה העקמומיות המסומנת מחליפה סימן, השלשה אינה רציפה.
+      - text: 'בנקודה $t=0$ המסילה אינה רגולרית, ולכן המשיק עצמו קופץ שם'
         feedback: >-
           $\gamma'(0)=(1,0,0)\ne0$: המסילה רגולרית שם, והמשיק רציף. רק $\kappa(0)=0$.
         misconception: MC-c2-kappa-zero-singular
@@ -362,9 +363,9 @@ questions:
     type: twotier
     objectives: [OBJ-2.1-2]
     qualitative: true
-    level: exam
+    level: mid
     prompt: >-
-      $\gamma$ חלקה ורגולרית ו-$\kappa(t_0)>0$. לכל $h\ne0$ קטן, $P_h$ הוא המישור שמכיל את הישר המשיק ב-$\gamma(t_0)$ ואת הנקודה
+      $\gamma$ רגולרית מסדר $C^2$ ו-$\kappa(t_0)>0$. לכל $h\ne0$ קטן, $P_h$ הוא המישור שמכיל את הישר המשיק ב-$\gamma(t_0)$ ואת הנקודה
       $\gamma(t_0+h)$. האם $P_h$ מתכנס, כש-$h\to0$, למישור המנשק ב-$\gamma(t_0)$?
     choices:
       - text: כן
@@ -376,17 +377,18 @@ questions:
           המישור הנורמלי ניצב למשיק, אבל כל $P_h$ מכיל את המשיק, ולכן גם הגבול מכיל אותו.
         misconception: MC-c2-plane-mixup
     reasons:
-      - text: 'לפי טיילור, $\gamma(t_0+h)-\gamma(t_0)$ שווה ל-$h\gamma''+\frac{h^2}{2}\gamma''''+o(h^2)$, ו-$P_h$ נפרש על ידי $\gamma''$ ו-$\gamma''''+o(1)$'
+      - text: 'לפי טיילור, $P_h$ נפרש על ידי $\gamma''(t_0)$ ו-$\gamma''''(t_0)+o(1)$'
         correct: true
         feedback: >-
-          בדיוק. מחסירים מהווקטור את הרכיב $h\gamma'$, שכבר במישור, ומחלקים ב-$\frac{h^2}{2}$: נשאר $\gamma''(t_0)+o(1)$.
+          בדיוק. $\gamma(t_0+h)-\gamma(t_0)=h\gamma'+\frac{h^2}{2}\gamma''+o(h^2)$. מחסירים את הרכיב $h\gamma'$, שכבר במישור,
+          ומחלקים ב-$\frac{h^2}{2}$: נשאר $\gamma''(t_0)+o(1)$.
           כש-$\kappa(t_0)>0$, $\gamma''$ אינו מקביל ל-$\gamma'$, והגבול הוא המישור שנפרש על ידי $\gamma'$ ו-$\gamma''$.
-      - text: 'הנקודה $\gamma(t_0+h)$ מונחת במישור המנשק לכל $h$'
+      - text: 'הנקודה $\gamma(t_0+h)$ מונחת במישור המנשק ב-$t_0$ לכל $h$ קטן'
         feedback: >-
           זה נכון רק במסילה מישורית. בסליל, למשל, הנקודות עוזבות את המישור המנשק בסדר שלישי ב-$h$ (את הקצב הזה מודד
           הפיתול, בשיעור 2.2).
         misconception: MC-c2-plane-mixup
-      - text: 'כל מישור שמכיל את המשיק הוא מישור מנשק'
+      - text: 'כל מישור שמכיל את הישר המשיק הוא מישור מנשק'
         feedback: >-
           יש אינסוף מישורים שמכילים את המשיק, ורק אחד מהם מנשק. הגבול בוחר אותו, כי הנקודות הקרובות סוטות מהמשיק לכיוון
           $\mathbf n$.
@@ -396,7 +398,7 @@ questions:
     type: twotier
     objectives: [OBJ-2.1-3]
     qualitative: true
-    level: exam
+    level: mid
     prompt: >-
       תהי $f(t)=e^{-1/t^2}$ כש-$t\ne0$ ו-$f(0)=0$ (חלקה, וכל נגזרותיה מתאפסות ב-0). המסילה
       $$\gamma(t)=\begin{cases}(t,\ f(t),\ 0) & t\le0\\ (t,\ 0,\ f(t)) & t>0\end{cases}$$
@@ -412,12 +414,12 @@ questions:
           חלקות של המסילה לא מבטיחה רציפות של השלשה: $\mathbf n$ מוגדר רק היכן ש-$\kappa>0$, וכאן $\kappa(0)=0$.
         misconception: MC-c2-frame-at-inflection
     reasons:
-      - text: 'משמאל $\mathbf b=(0,0,1)$ ומימין $\mathbf b=(0,-1,0)$, ושניהם קבועים: אין גבול משותף'
+      - text: 'משמאל $\mathbf b=(0,0,1)$ ומימין $\mathbf b=(0,-1,0)$: אין גבול משותף'
         correct: true
         feedback: >-
-          בדיוק. בכל צד המסילה מישורית, ולכן $\mathbf b$ הוא נורמל קבוע למישור שלה; ליד $t=-\frac12$ ו-$t=\frac12$ מתקבלים
+          בדיוק. בכל צד המסילה מישורית, ולכן $\mathbf b$ הוא וקטור קבוע שניצב למישור שלה; ליד $t=-\frac12$ ו-$t=\frac12$ מתקבלים
           $(0,0,1)$ ו-$(0,-1,0)$. ההרחבה הייתה צריכה להיות שווה לשניהם.
-      - text: 'המסילה אינה רגולרית ב-$t=0$'
+      - text: 'המסילה אינה רגולרית ב-$t=0$, ולכן שם גם המשיק אינו מוגדר'
         feedback: >-
           $\gamma'(0)=(1,0,0)$, כי $f'(0)=0$. המסילה רגולרית; רק העקמומיות מתאפסת.
         misconception: MC-c2-kappa-zero-singular
@@ -426,3 +428,104 @@ questions:
           הנגזרות שואפות לאפס, אבל הכיוונים לא: $\mathbf n=\mathbf t'/\kappa$ הוא מנה של שני גדלים ששואפים לאפס, ומשני הצדדים
           הוא שואף לגבולות שונים, $(0,1,0)$ ו-$(0,0,1)$.
         misconception: MC-c2-frame-at-inflection
+
+  - id: Q-2.1-mirrorrev
+    type: mc
+    objectives: [OBJ-2.1-1]
+    level: mid
+    prompt: >-
+      תהי $\gamma$ רגולרית מסדר $C^2$ עם $\kappa>0$, יהי $R=\operatorname{diag}(1,1,-1)$ השיקוף במישור $z=0$, ותהי
+      $\beta(u)=R\,\gamma(-u)$: המסילה משוקפת **וגם** עוברת בכיוון ההפוך. נסמן ב-$(\mathbf t,\mathbf n,\mathbf b)$ את השלשה של
+      $\gamma$ בנקודה $-u$. מהי השלשה של $\beta$ בנקודה $u$?
+    choices:
+      - text: '$(-R\mathbf t,\ R\mathbf n,\ R\mathbf b)$'
+        correct: true
+        feedback: >-
+          נכון. לפי טענה 2.1.5(א), היפוך הכיוון נותן $(-\mathbf t,\mathbf n,-\mathbf b)$. לפי טענה 2.1.5(ב) עם $\det R=-1$, השיקוף
+          שולח שלשה $(\mathbf x,\mathbf y,\mathbf z)$ ל-$(R\mathbf x,R\mathbf y,-R\mathbf z)$. ביחד: $(-R\mathbf t,R\mathbf n,R\mathbf b)$;
+          שני סימני המינוס של $\mathbf b$ מבטלים זה את זה.
+      - text: '$(-R\mathbf t,\ R\mathbf n,\ -R\mathbf b)$'
+        feedback: >-
+          זה מה שהיפוך הכיוון לבדו נותן, אחרי הפעלת $R$ על כל וקטור. אבל בשיקוף ($\det R=-1$) הבינורמל מקבל סימן נוסף:
+          $\mathbf b\mapsto(\det R)R\mathbf b$. שני הסימנים מבטלים זה את זה.
+        misconception: MC-c2-binormal-order
+      - text: '$(R\mathbf t,\ R\mathbf n,\ -R\mathbf b)$'
+        feedback: >-
+          זו השלשה של $R\gamma$ בלי היפוך הכיוון. כאן גם עוברים בכיוון ההפוך, ולכן $\mathbf t$ מתהפך, והבינורמל מתהפך פעם נוספת.
+        misconception: MC-c2-osc-plane-param
+      - text: '$(-R\mathbf t,\ -R\mathbf n,\ R\mathbf b)$'
+        feedback: >-
+          הנורמל הראשי אינו מתהפך בהיפוך כיוון: $\mathbf n$ מצביע לצד שאליו המסילה פונה, וזה לא תלוי בכיוון התנועה. גם השיקוף
+          שולח את $\mathbf n$ ל-$R\mathbf n$, בלי סימן.
+        misconception: MC-c2-reversal-flips-frame
+    explanation: >-
+      משלבים את שני החלקים של טענה 2.1.5. בדיקה מספרית במסילה המעוקבת ב-$u=0.3$ נותנת בדיוק $(-R\mathbf t,R\mathbf n,R\mathbf b)$.
+
+  - id: Q-2.1-bdetermines
+    type: twotier
+    objectives: [OBJ-2.1-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      יהיו $\gamma_1,\gamma_2:I\to\mathbb R^3$ רגולריות מסדר $C^2$ עם $\kappa>0$, באותו פרמטר, כך ש-$\mathbf b_1(u)=\mathbf b_2(u)$
+      לכל $u\in I$. האם בהכרח $\mathbf t_1(u)=\pm\mathbf t_2(u)$ לכל $u$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. הבינורמל קובע רק את **המישור** שבו נמצאים $\mathbf t$ ו-$\mathbf n$ (המישור הניצב ל-$\mathbf b$), ולא את הכיוון של
+          $\mathbf t$ בתוכו.
+      - text: כן
+        feedback: >-
+          $\mathbf t$ ניצב ל-$\mathbf b$, אבל במישור הניצב ל-$\mathbf b$ יש מעגל שלם של וקטורי יחידה, ו-$\mathbf b$ לבדו לא בוחר ביניהם.
+        misconception: MC-c2-binormal-any-perp
+    reasons:
+      - text: 'המעגל $(\cos u,\sin u,0)$ והאליפסה $(2\cos u,\sin u,0)$: בשתיהן $\mathbf b\equiv e_3$, אבל המשיקים שונים'
+        correct: true
+        feedback: >-
+          בדיוק. בשתיהן $\gamma'\times\gamma''$ הוא כפולה חיובית של $e_3$, ולכן $\mathbf b\equiv e_3$ (טענה 2.1.3(ג)). אבל ב-$u=\frac\pi4$
+          המשיק של המעגל בכיוון $(-1,1,0)$, ושל האליפסה בכיוון $(-2,1,0)$: לא שווים ולא נגדיים.
+      - text: '$\mathbf t=\mathbf n\times\mathbf b$, ו-$\mathbf n$ נקבע מ-$\mathbf b$ כי הוא הווקטור היחיד הניצב ל-$\mathbf b$'
+        feedback: >-
+          $\mathbf t=\mathbf n\times\mathbf b$ נכון, אבל יש אינסוף וקטורי יחידה ניצבים ל-$\mathbf b$, ו-$\mathbf n$ אינו נקבע מ-$\mathbf b$.
+          מה שקובע את $\mathbf n$ הוא הכיוון שאליו $\mathbf t$ פונה.
+        misconception: MC-c2-binormal-any-perp
+      - text: 'גזירה של $\mathbf b_1=\mathbf b_2$ נותנת את אותו $\mathbf n$, ומ-$\mathbf n$ ו-$\mathbf b$ מקבלים את $\mathbf t$'
+        feedback: >-
+          במסילות מישוריות $\mathbf b$ קבוע ונגזרתו אפס, ולכן הגזירה לא נותנת שום מידע על $\mathbf n$. הקשר בין $\mathbf b'$ ל-$\mathbf n$
+          הוא נושא שיעור 2.2, וגם שם הוא דורש $C^3$ ופיתול שונה מאפס.
+        misconception: MC-c2-frame-needs-third
+
+  - id: Q-2.1-helixaxis
+    type: twotier
+    objectives: [OBJ-2.1-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      בסליל $\gamma(t)=(a\cos t,\ a\sin t,\ h t)$, $a>0$, $h\ne0$: האם המישור המנשק בכל נקודה $\gamma(t)$ חותך את ציר הסליל
+      (ציר $z$), ואם כן, באיזו נקודה?
+    choices:
+      - text: 'כן, בנקודה $(0,0,h t)$, באותו גובה כמו $\gamma(t)$'
+        correct: true
+        feedback: >-
+          נכון. למשל ב-$a=2$, $h=3$, $t=1.1$: המשוואה $\mathbf b\cdot(\mathbf x-\gamma)=0$ עם $x=y=0$ נותנת $z=3.3=h t$.
+      - text: 'לא, המישור המנשק מקביל לציר'
+        feedback: >-
+          המישור שמקביל לציר הוא המישור המיישר, שהווקטור הניצב לו הוא $\mathbf n$, אופקי ומצביע אל הציר. המישור המנשק מכיל
+          את $\mathbf n$, ולכן הוא חותך את הציר.
+        misconception: MC-c2-plane-mixup
+    reasons:
+      - text: '$\mathbf n$ מצביע מ-$\gamma(t)$ אל $(0,0,h t)$, והמישור המנשק מכיל את הישר $\gamma(t)+\lambda\mathbf n$'
+        correct: true
+        feedback: >-
+          בדיוק. $\mathbf n=(-\cos t,-\sin t,0)$, ולכן $\gamma(t)+a\,\mathbf n=(0,0,h t)$. המישור המנשק הוא $\gamma(t)+\operatorname{span}(\mathbf t,\mathbf n)$,
+          ולכן הנקודה הזו בו. זה לא דורש חישוב של $\mathbf b$ בכלל.
+      - text: '$\mathbf b$ מקביל לציר, ולכן המישור המנשק אופקי וחותך את הציר בגובה של הנקודה'
+        feedback: >-
+          $\mathbf b$ **אינו** מקביל לציר: $\mathbf b\cdot e_3=\frac{a}{\sqrt{a^2+h^2}}<1$. המישור המנשק נוטה, אבל הוא עדיין מכיל את
+          הישר מ-$\gamma(t)$ אל הציר.
+        misconception: MC-c2-helix-binormal-axis
+      - text: 'כל מישור שעובר דרך נקודה של הסליל חותך את הציר בגובה של אותה נקודה'
+        feedback: >-
+          לא כל מישור: המישור המיישר דרך $\gamma(t)$, שהווקטור הניצב לו הוא $\mathbf n$, מקביל לציר ולא חותך אותו.
+        misconception: MC-c2-plane-mixup

@@ -17,14 +17,14 @@
   term: מסילה כדורית
   en: spherical curve
   definition: >-
-    מסילה שמונחת על ספרה $\|\gamma-c\|=R$. היא מקיימת $\kappa\ge\frac1R$, וכש-$\tau\ne0$ גם
-    $R^2=\rho^2+\left(\frac{\rho'}{\tau}\right)^2$, כאשר $\rho=\frac1\kappa$ והנגזרת לפי אורך הקשת.
+    מסילה שמונחת על ספרה $\|\gamma-\mathbf c\|=R$. היא מקיימת $\kappa\ge\frac1R$, וכש-$\tau\ne0$ גם
+    $R^2=\rho^2+(\rho'\sigma)^2$, כאשר $\rho=\frac1\kappa$, $\sigma=\frac1\tau$ והנגזרת לפי אורך הקשת.
   lesson: '2.5'
 - id: viviani-curve
   term: המסילה של ויויאני
   en: Viviani's curve
   definition: >-
-    $(1+\cos t,\ \sin t,\ 2\sin\frac t2)$: החיתוך של הספרה ברדיוס 2 סביב הראשית עם הגליל $(x-1)^2+y^2=1$. מסילה כדורית
+    $(1+\cos t,\ \sin t,\ 2\sin\frac t2)$: מסילה בחיתוך של הספרה ברדיוס 2 סביב הראשית עם הגליל $(x-1)^2+y^2=1$. מסילה כדורית
     שבה $\kappa\ge\frac12$, עם שוויון רק בנקודה $(2,0,0)$.
   lesson: '2.5'
 - id: great-circle
@@ -38,7 +38,7 @@
   term: ספרה מנשקת
   en: osculating sphere
   definition: >-
-    במסילה עם $\kappa>0$ ו-$\tau\ne0$: הספרה שמרכזה $\gamma+\rho\,\mathbf n+\frac{\rho'}{\tau}\mathbf b$ ורדיוסה
-    $\sqrt{\rho^2+(\rho'/\tau)^2}$ ($\rho=\frac1\kappa$, נגזרת לפי אורך הקשת). היא הספרה היחידה שהמרחק הריבועי ממרכזה קבוע
+    במסילה עם $\kappa>0$ ו-$\tau\ne0$: הספרה שמרכזה $\gamma+\rho\,\mathbf n+\rho'\sigma\,\mathbf b$ ורדיוסה
+    $\sqrt{\rho^2+(\rho'\sigma)^2}$ ($\rho=\frac1\kappa$, $\sigma=\frac1\tau$, נגזרת לפי אורך הקשת). היא הספרה היחידה שהמרחק הריבועי ממרכזה קבוע
     עד סדר שלישי לאורך המסילה.
   lesson: '2.5'

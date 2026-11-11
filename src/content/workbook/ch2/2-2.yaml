@@ -30,7 +30,7 @@ practice:
           $$\mathbf b=\mathbf t\times\mathbf n=\tfrac15\big(4\sin\tfrac s5,\ -4\cos\tfrac s5,\ 3\big),\qquad \mathbf b'=\tfrac{4}{25}\big(\cos\tfrac s5,\ \sin\tfrac s5,\ 0\big)=-\tfrac{4}{25}\,\mathbf n.$$
       - kind: check
         text: >-
-          לפי נוסחת הסליל $a=3$, $b=4$: $\kappa=\frac{3}{25}$, $\tau=\frac{4}{25}=0.16>0$, סליל ימני. $\mathbf b\cdot\mathbf t=0$ ו-$\|\mathbf b\|=1$.
+          לפי נוסחת הסליל $(a\cos t,a\sin t,ht)$ עם $a=3$, $h=4$: $\kappa=\frac{3}{25}$, $\tau=\frac{4}{25}=0.16>0$, סליל ימני. $\mathbf b\cdot\mathbf t=0$ ו-$\|\mathbf b\|=1$.
       - kind: result
         text: >-
           $\kappa=\frac3{25}$, $\tau=\frac4{25}$.
@@ -93,38 +93,40 @@ practice:
     level: mid
     objectives: [OBJ-2.2-2]
     prompt: >-
-      יהיו $a,b,c>0$ ו-$\gamma(t)=(at,\ bt^2,\ ct^3)$.
+      יהיו $p,q,r>0$ ו-$\gamma(t)=(pt,\ qt^2,\ rt^3)$.
 
       (א) חשבו את $\tau(t)$.
 
-      (ב) הוכיחו ש-$0<\tau(t)\le\frac{3c}{ab}$ לכל $t$, עם שוויון רק ב-$t=0$.
+      (ב) הוכיחו ש-$0<\tau(t)\le\frac{3r}{pq}$ לכל $t$, עם שוויון רק ב-$t=0$.
 
-      (ג) ב-$a=b=c=\lambda$ קבלו $\tau(0)=\frac3\lambda$, והסבירו את התוצאה בעזרת טענה 2.2.5(ג).
+      (ג) ב-$p=q=r=\lambda$ קבלו $\tau(0)=\frac3\lambda$, והסבירו את התוצאה בעזרת טענה 2.2.5(ג).
     answer: >-
-      $\tau(t)=\dfrac{3abc}{9b^2c^2t^4+9a^2c^2t^2+a^2b^2}$; המקסימום $\frac{3c}{ab}$ ב-$t=0$.
+      $\tau(t)=\dfrac{3pqr}{9q^2r^2t^4+9p^2r^2t^2+p^2q^2}$; המקסימום $\frac{3r}{pq}$ ב-$t=0$.
     solution:
       - kind: computation
         text: >-
-          $\gamma'=(a,\ 2bt,\ 3ct^2)$, $\gamma''=(0,\ 2b,\ 6ct)$, $\gamma'''=(0,\ 0,\ 6c)$, ורכיב אחר רכיב
-          $$\gamma'\times\gamma''=\big(6bct^2,\ -6act,\ 2ab\big).$$
-          $\kappa>0$ בכל נקודה כי הרכיב השלישי $2ab\ne0$.
+          $\gamma'=(p,\ 2qt,\ 3rt^2)$, $\gamma''=(0,\ 2q,\ 6rt)$, $\gamma'''=(0,\ 0,\ 6r)$, ורכיב אחר רכיב
+          $$\gamma'\times\gamma''=\big(6qrt^2,\ -6prt,\ 2pq\big).$$
+          $\kappa>0$ בכל נקודה כי הרכיב השלישי $2pq\ne0$.
       - kind: theorem
         text: >-
-          לפי טענה 2.2.4, המונה $12abc$ והמכנה $36b^2c^2t^4+36a^2c^2t^2+4a^2b^2$; מצמצמים ב-4.
+          לפי טענה 2.2.4, המונה הוא $(\gamma'\times\gamma'')\cdot\gamma'''=12pqr$, והמכנה
+          $$\|\gamma'\times\gamma''\|^2=36q^2r^2t^4+36p^2r^2t^2+4p^2q^2;$$
+          מצמצמים ב-4.
       - kind: step
         text: >-
-          (ב) המונה $3abc>0$. המכנה $\ge a^2b^2$, עם שוויון אם ורק אם $t=0$ (שני האיברים האחרים אי-שליליים ומתאפסים רק ב-$t=0$).
-          לכן $0<\tau(t)\le\frac{3abc}{a^2b^2}=\frac{3c}{ab}$.
+          (ב) המונה $3pqr>0$. המכנה $\ge p^2q^2$, עם שוויון אם ורק אם $t=0$ (שני האיברים האחרים אי-שליליים ומתאפסים רק ב-$t=0$).
+          לכן $0<\tau(t)\le\frac{3pqr}{p^2q^2}=\frac{3r}{pq}$.
       - kind: step
         text: >-
-          (ג) $a=b=c=\lambda$ נותן $\frac{3\lambda}{\lambda^2}=\frac3\lambda$. ואכן $(\lambda t,\lambda t^2,\lambda t^3)=\lambda\cdot(t,t^2,t^3)$, ולפי טענה 2.2.5(ג) הפיתול של
+          (ג) $p=q=r=\lambda$ נותן $\frac{3\lambda}{\lambda^2}=\frac3\lambda$. ואכן $(\lambda t,\lambda t^2,\lambda t^3)=\lambda\cdot(t,t^2,t^3)$, ולפי טענה 2.2.5(ג) הפיתול של
           המסילה המעוקבת, $3$ ב-$t=0$, מתחלק ב-$\lambda$.
       - kind: check
         text: >-
-          $a=1,b=2,c=3$: $\tau(0)=4.5$ ו-$\tau(\frac12)=\frac{18}{44.5}\approx0.40449$, כמו חישוב בהפרשים סופיים. $a=b=c=1$ נותן את $\frac{3}{9t^4+9t^2+1}$ של השיעור.
+          $p=1,q=2,r=3$: $\tau(0)=4.5$ ו-$\tau(\frac12)=\frac{18}{44.5}\approx0.40449$, כמו חישוב בהפרשים סופיים. $p=q=r=1$ נותן את $\frac{3}{9t^4+9t^2+1}$ של השיעור.
       - kind: result
         text: >-
-          $\tau(t)=\frac{3abc}{9b^2c^2t^4+9a^2c^2t^2+a^2b^2}$, חיובי ומקסימלי ($\frac{3c}{ab}$) רק ב-$t=0$.
+          $\tau(t)=\frac{3pqr}{9q^2r^2t^4+9p^2r^2t^2+p^2q^2}$, חיובי ומקסימלי ($\frac{3r}{pq}$) רק ב-$t=0$.
 
   - id: W-2.2-05
     level: mid
@@ -137,7 +139,7 @@ practice:
 
       (ב) הוכיחו ש-$\lim_{t\to0}\tau(t)$ קיים, ומצאו אותו.
 
-      (ג) הוכיחו או הפריכו: מכאן ש-$\mathbf b$ מתרחב ברציפות ל-$t=0$.
+      (ג) הוכיחו או הפריכו: מכאן ש-$\mathbf b$ ניתן להרחבה רציפה ל-$t=0$.
     answer: >-
       $\tau(t)=\dfrac{2}{1+4t^2+4t^6}\to2$; אבל $\mathbf b(t)\to(0,0,\operatorname{sign}t)$, ולכן $\mathbf b$ קופץ: הטענה שקרית.
     solution:
@@ -158,8 +160,8 @@ practice:
           $\mathbf b\to(0,0,1)$ כש-$t\to0^+$ ו-$\mathbf b\to(0,0,-1)$ כש-$t\to0^-$. אין הרחבה רציפה.
       - kind: check
         text: >-
-          מספרית $\tau(\pm0.05)\approx1.98020$ ו-$\tau(0.3)\approx1.46744$, כמו הנוסחה. המישור המנשק ($\perp\mathbf b$) כן מתרחב: הוא $z=0$
-          משני הצדדים, כי $\pm(0,0,1)$ נורמלים לאותו מישור.
+          מספרית $\tau(\pm0.05)\approx1.98020$ ו-$\tau(0.3)\approx1.46744$, כמו הנוסחה. המישור המנשק ($\perp\mathbf b$) כן ניתן להרחבה רציפה:
+          הוא $z=0$ משני הצדדים, כי $\pm(0,0,1)$ נורמלים לאותו מישור.
       - kind: result
         text: >-
           $\tau\to2$, אבל $\mathbf b$ קופץ מ-$(0,0,-1)$ ל-$(0,0,1)$: גבול של $\tau$ לא מבטיח המשך רציף של השלשה. הטענה שקרית.
@@ -265,37 +267,42 @@ practice:
       תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^3$ בפרמטר אורך הקשת על קטע פתוח $I$, $s_0\in I$, כך ש-$\kappa(s_0)=0$, $\kappa>0$ בכל נקודה אחרת,
       ו-$\tau\equiv0$ על $I\setminus\{s_0\}$.
 
-      (א) הוכיחו: אם לבינורמל יש גבולות חד-צדדיים $\mathbf b_\pm=\lim_{s\to s_0^\pm}\mathbf b(s)$ ו-$\mathbf b_-=\pm\mathbf b_+$, אז $\gamma$ מישורית.
+      (א) הוכיחו ש-$\mathbf b$ קבוע על כל אחד משני הצדדים של $s_0$. נסמן את הקבוע משמאל ל-$s_0$ ב-$\mathbf b_-$, ואת הקבוע
+      מימין ב-$\mathbf b_+$.
 
-      (ב) הראו שהמסילה $(t,t^4,0)$ / $(t,0,t^4)$ של שיעור 2.2 מקיימת את כל ההנחות פרט להנחה על $\mathbf b_\pm$.
+      (ב) הוכיחו: אם $\mathbf b_-=\mathbf b_+$ או $\mathbf b_-=-\mathbf b_+$, אז $\gamma$ מישורית.
+
+      (ג) הראו שהמסילה $(t,t^4,0)$ / $(t,0,t^4)$ של שיעור 2.2 מקיימת את כל ההנחות פרט לתנאי של (ב).
     answer: >-
-      על כל צד $\gamma$ במישור עם נורמל קבוע $\mathbf b_\mp$, ושני המישורים מכילים את $\gamma(s_0)$ ומקבילים, ולכן מתלכדים.
+      (א) משפט 2.2.6 על כל חצי קטע. (ב) משמאל $\gamma$ במישור עם הנורמל $\mathbf b_-$, ומימין במישור עם הנורמל $\mathbf b_+$; שני
+      המישורים מכילים את $\gamma(s_0)$ ומקבילים, ולכן מתלכדים. (ג) שם $\mathbf b_-=(0,0,1)$ ו-$\mathbf b_+=(0,-1,0)$.
     solution:
       - kind: idea
         text: >-
           משפט 2.2.6 על כל חצי קטע בנפרד; את החצאים "מדביקים" ב-$\gamma(s_0)$, שקיים בשני המישורים מרציפות.
       - kind: theorem
         text: >-
-          $I_-=I\cap(-\infty,s_0)$ קטע, ועליו $\kappa>0$ ו-$\tau\equiv0$. לפי הוכחת משפט 2.2.6 ($\Leftarrow$), $\mathbf b\equiv\mathbf e_-$ קבוע על $I_-$, ו-$\gamma(I_-)$
-          מוכלת במישור $\Pi_-$ דרך $\gamma(s_1)$, $s_1\in I_-$, עם הנורמל $\mathbf e_-$. כי $\mathbf b$ קבוע, $\mathbf b_-=\mathbf e_-$. באותו אופן $\gamma(I_+)\subseteq\Pi_+$ עם הנורמל $\mathbf b_+$.
+          (א) $I_-=I\cap(-\infty,s_0)$ קטע, ועליו $\kappa>0$ ו-$\tau\equiv0$. לפי הוכחת משפט 2.2.6 ($\Leftarrow$), $\mathbf b\equiv\mathbf b_-$ קבוע על $I_-$, ו-$\gamma(I_-)$
+          מוכלת במישור $\Pi_-$ דרך $\gamma(s_1)$, $s_1\in I_-$, עם הנורמל $\mathbf b_-$. אותו נימוק על הקטע $I_+=I\cap(s_0,\infty)$ נותן $\mathbf b\equiv\mathbf b_+$ שם,
+          ו-$\gamma(I_+)\subseteq\Pi_+$ עם הנורמל $\mathbf b_+$.
       - kind: step
         text: >-
           $\Pi_-$ קבוצה סגורה ו-$\gamma$ רציפה, ולכן $\gamma(s_0)=\lim_{s\to s_0^-}\gamma(s)\in\Pi_-$; וכך גם $\gamma(s_0)\in\Pi_+$.
       - kind: step
         text: >-
-          $\mathbf b_-=\pm\mathbf b_+$: לשני המישורים נורמלים מקבילים, ולשניהם הנקודה $\gamma(s_0)$. מישור נקבע מנקודה ונורמל, ולכן $\Pi_-=\Pi_+$,
+          (ב) $\mathbf b_-=\pm\mathbf b_+$: לשני המישורים נורמלים מקבילים, ולשניהם הנקודה $\gamma(s_0)$. מישור נקבע מנקודה ונורמל, ולכן $\Pi_-=\Pi_+$,
           ו-$\gamma(I)=\gamma(I_-)\cup\{\gamma(s_0)\}\cup\gamma(I_+)$ מוכלת בו.
       - kind: step
         text: >-
-          (ב) לפי 2.2.7 בשיעור: $C^3$, רגולרית, $\kappa(0)=0$ בלבד, $\tau=0$ בשאר הנקודות; אבל $\mathbf b_-=(0,0,1)$ ו-$\mathbf b_+=(0,-1,0)$, שאינם מקבילים. (המסילה
+          (ג) לפי טענה 2.2.7 בשיעור: $C^3$, רגולרית, $\kappa(0)=0$ בלבד, $\tau=0$ בשאר הנקודות; אבל $\mathbf b_-=(0,0,1)$ ו-$\mathbf b_+=(0,-1,0)$, שאינם מקבילים. (המסילה
           נתונה בפרמטר $t$; לפי טענה 1.2.10 עוברים לאורך הקשת, וההנחות והגבולות לא משתנים.)
       - kind: check
         text: >-
-          המסילה $(t,\ t^3,\ 0)$: $\kappa(0)=0$, $\mathbf b_\pm=(0,0,\pm1)$ (הנורמל הראשי מתהפך), כלומר $\mathbf b_-=-\mathbf b_+$, והיא אכן מישורית. ההנחה ההפוכה,
-          $\mathbf b_-\ne\pm\mathbf b_+$, היא בדיוק מה שמאפשר את הדוגמה הנגדית.
+          המסילה $(t,\ t^3,\ 0)$: $\kappa(0)=0$, $\mathbf b_+=(0,0,1)$ ו-$\mathbf b_-=(0,0,-1)$ (הנורמל הראשי מתהפך), כלומר $\mathbf b_-=-\mathbf b_+$, והיא אכן
+          מישורית. כש-$\mathbf b_-$ ו-$\mathbf b_+$ אינם מקבילים, כמו במסילה המודבקת, (ב) לא חל.
       - kind: result
         text: >-
-          (א) $\gamma$ מישורית; (ב) בדוגמה הנגדית הגבולות $(0,0,1)$ ו-$(0,-1,0)$ אינם מקבילים.
+          (א) $\mathbf b$ קבוע בכל צד; (ב) $\gamma$ מישורית; (ג) בדוגמה הנגדית $\mathbf b_-=(0,0,1)$ ו-$\mathbf b_+=(0,-1,0)$ אינם מקבילים.
 
   - id: W-2.2-10
     level: exam
@@ -305,7 +312,7 @@ practice:
 
       (א) הוכיחו ש-$\tilde\kappa=\frac{\kappa}{|\lambda|}$ ו-$\tilde\tau=\frac{\det A}{\lambda}\,\tau$ (בנקודות המתאימות; גם $\lambda<0$ מותר).
 
-      (ב) הסיקו מה עושה השיקוף בנקודה $\mathbf x\mapsto-\mathbf x$ ל-$\kappa$ ול-$\tau$, בשתי דרכים: $A=-I,\lambda=1$, ו-$A=I,\lambda=-1$.
+      (ב) הסיקו מה עושה השיקוף בנקודה $\mathbf x\mapsto-\mathbf x$ ל-$\kappa$ ול-$\tau$, בשתי דרכים: $A=-\mathrm{Id},\lambda=1$, ו-$A=\mathrm{Id},\lambda=-1$ ($\mathrm{Id}$ מטריצת היחידה).
 
       (ג) עבור הסליל $(\cos t,\ \sin t,\ \frac t2)$: מצאו את כל ה-$\lambda$ וה-$A$ שעבורם ל-$\tilde\gamma$ אותם $\kappa=0.8$ ו-$\tau=0.4$, והראו שבכולם $\lambda A$ היא סיבוב.
     answer: >-
@@ -322,7 +329,7 @@ practice:
           $\lambda^4\|\gamma'\times\gamma''\|^2$; המנה $\frac{\det A}{\lambda}\tau$.
       - kind: step
         text: >-
-          (ב) $A=-I$ ($\det=-1$), $\lambda=1$: $\tilde\tau=-\tau$. $A=I$, $\lambda=-1$: $\tilde\tau=\frac{1}{-1}\tau=-\tau$. אותה תוצאה, כמו שחייב
+          (ב) $A=-\mathrm{Id}$ ($\det=-1$), $\lambda=1$: $\tilde\tau=-\tau$. $A=\mathrm{Id}$, $\lambda=-1$: $\tilde\tau=\frac{1}{-1}\tau=-\tau$. אותה תוצאה, כמו שחייב
           (אותה העתקה). בשתיהן $\tilde\kappa=\kappa$.
       - kind: step
         text: >-
@@ -330,7 +337,7 @@ practice:
           $\lambda=-1,\det A=-1$. בשני המקרים $\lambda A$ אורתוגונלית עם $\det(\lambda A)=\lambda^3\det A=\lambda^4=1$: סיבוב.
       - kind: check
         text: >-
-          מקרה פרטי של (א): $A=I$, $\lambda>0$ הוא טענה 2.2.5(ג), ו-$\lambda=1$ הוא טענה 2.2.5(ב). דוגמה למקרה השני של (ג): $\lambda=-1$
+          מקרה פרטי של (א): $A=\mathrm{Id}$, $\lambda>0$ הוא טענה 2.2.5(ג), ו-$\lambda=1$ הוא טענה 2.2.5(ב). דוגמה למקרה השני של (ג): $\lambda=-1$
           עם $A=\operatorname{diag}(1,1,-1)$, שבו $\det A=-1=\lambda$, ו-$\lambda A=\operatorname{diag}(-1,-1,1)$ הוא סיבוב ב-$\pi$ סביב ציר $z$.
       - kind: result
         text: >-
@@ -371,7 +378,7 @@ challenge:
       - kind: check
         text: >-
           מעגל במישור $z=0$ ו-$\mathbf p=(0,0,0)$: כל המישורים המנשקים הם $z=0$ ועוברים דרך $\mathbf p$. בסליל, לעומת זאת, המישור המנשק ב-$t$ הוא
-          $(\mathbf x-\gamma(t))\cdot(b\sin t,-b\cos t,a)=0$, ואין נקודה שבכולם (ב-$t$ ו-$t+2\pi$ אלה מישורים מקבילים שונים כש-$b\ne0$).
+          $$(\mathbf x-\gamma(t))\cdot(h\sin t,-h\cos t,a)=0$$ (הסליל $(a\cos t,a\sin t,ht)$), ואין נקודה שבכולם (ב-$t$ ו-$t+2\pi$ אלה מישורים מקבילים שונים כש-$h\ne0$).
       - kind: result
         text: >-
           $\gamma$ מישורית, במישור דרך $\mathbf p$.
@@ -397,7 +404,7 @@ challenge:
 
       (ד) מה קורה להם כש-$\det\rho=-1$? הדגימו על הסליל $(\cos t,\ \sin t,\ \frac t2)$.
     answer: >-
-      (ב) $\det(\rho\mathbf u,\rho\mathbf v,\mathbf w)=\det\rho\,\det(\mathbf u,\mathbf v,\rho^{-1}\mathbf w)$; בלי $\det\rho=1$ לא ($\rho=-I$). (ג) נשמרים. (ד) אורך הקשת ו-$\kappa$ נשמרים, $\tau\mapsto-\tau$:
+      (ב) $$\det(\rho\mathbf u,\rho\mathbf v,\mathbf w)=\det\rho\,\det(\mathbf u,\mathbf v,\rho^{-1}\mathbf w);$$ בלי $\det\rho=1$ לא ($\rho=-\mathrm{Id}$). (ג) נשמרים. (ד) אורך הקשת ו-$\kappa$ נשמרים, $\tau\mapsto-\tau$:
       הסליל עם $\tau=0.4$ עובר לסליל עם $\tau=-0.4$.
     solution:
       - kind: step
@@ -408,11 +415,11 @@ challenge:
           (ב) לכל $\mathbf w$, לפי $\mathbf x\cdot(\mathbf y\times\mathbf z)$ = דטרמיננטה וכפליות הדטרמיננטה:
           $$(\rho\mathbf u\times\rho\mathbf v)\cdot\mathbf w=\det(\rho\mathbf u,\rho\mathbf v,\rho\rho^{-1}\mathbf w)=\det\rho\,(\mathbf u\times\mathbf v)\cdot\rho^{-1}\mathbf w.$$
           $\rho^{-1}=\rho^T$ (מהגדרת אורתוגונליות), ולכן $(\mathbf u\times\mathbf v)\cdot\rho^{T}\mathbf w=\rho(\mathbf u\times\mathbf v)\cdot\mathbf w$. השוויון לכל $\mathbf w$ נותן את הנוסחה.
-          בלי $\det\rho=1$ לא: $\rho=-I$ נותן $(-\mathbf u)\times(-\mathbf v)=\mathbf u\times\mathbf v\ne-(\mathbf u\times\mathbf v)$ כש-$\mathbf u\times\mathbf v\ne0$.
+          בלי $\det\rho=1$ לא: $\rho=-\mathrm{Id}$ (מינוס מטריצת היחידה) נותן $$(-\mathbf u)\times(-\mathbf v)=\mathbf u\times\mathbf v\ne-(\mathbf u\times\mathbf v)$$ כש-$\mathbf u\times\mathbf v\ne0$.
       - kind: step
         text: >-
           (ג) $\tilde\gamma'=\rho\gamma'$, ולכן $\|\tilde\gamma'\|=\|\gamma'\|$ ואורך הקשת $\int\|\tilde\gamma'\|$ שווה. בפרמטר אורך הקשת $\tilde\kappa=\|\rho\gamma''\|=\kappa$. לפיתול, לפי
-          טענה 2.2.4 ו-(ב): המונה $(\rho\gamma'\times\rho\gamma'')\cdot\rho\gamma'''=\det\rho\,(\gamma'\times\gamma'')\cdot\gamma'''$, המכנה לא משתנה. עם $\det\rho=1$, $\tilde\tau=\tau$.
+          טענה 2.2.4 ו-(ב): המונה $$(\rho\gamma'\times\rho\gamma'')\cdot\rho\gamma'''=\det\rho\,(\gamma'\times\gamma'')\cdot\gamma''',$$ המכנה לא משתנה. עם $\det\rho=1$, $\tilde\tau=\tau$.
       - kind: step
         text: >-
           (ד) אותו חישוב עם $\det\rho=-1$: אורך הקשת ו-$\kappa$ נשמרים, $\tilde\tau=-\tau$. השיקוף $\rho=\operatorname{diag}(1,1,-1)$ מעביר את הסליל הימני

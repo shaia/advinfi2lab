@@ -436,9 +436,9 @@ questions:
         answer: 0.2
         tolerance: 0.001
         correctFeedback: >-
-          נכון. $a=\frac{\kappa_0}{\kappa_0^2+\tau_0^2}=\frac15$, והגובה ליחידת זווית $b=\frac25$.
+          נכון. $a=\frac{\kappa_0}{\kappa_0^2+\tau_0^2}=\frac15$, וקצב העלייה ליחידת זווית $h=\frac25$.
         wrongFeedback: >-
-          לסליל $(a\cos t,a\sin t,bt)$: $\kappa=\frac{a}{a^2+b^2}$, $\tau=\frac{b}{a^2+b^2}$. הפכו את הקשר.
+          לסליל $(a\cos t,a\sin t,ht)$: $\kappa=\frac{a}{a^2+h^2}$, $\tau=\frac{h}{a^2+h^2}$. הפכו את הקשר.
         commonWrong:
           - value: 1
             feedback: >-
@@ -446,7 +446,7 @@ questions:
             misconception: MC-c2-helix-radius-1-over-kappa
           - value: 0.4
             feedback: >-
-              זה $b=\frac{\tau_0}{\kappa_0^2+\tau_0^2}$, הגובה.
+              זה $h=\frac{\tau_0}{\kappa_0^2+\tau_0^2}$, קצב העלייה.
           - value: 0.4472136
             feedback: >-
               זה $\frac{1}{\sqrt5}$. המכנה הוא $\kappa_0^2+\tau_0^2$ בלי שורש.
@@ -482,7 +482,7 @@ questions:
               ל-$\gamma(s)$ (ההפרש ניצב ל-$L$), והמרחק הוא $\|a\mathbf n\|=a$.
           - kind: check
             text: >-
-              בסליל $(a\cos t,a\sin t,bt)$: $\mathbf n=(-\cos t,-\sin t,0)$ ו-$c=(0,0,bt)$, על ציר ה-$z$. ואם $\tau_0\to0$, הציר
+              בסליל $(a\cos t,a\sin t,ht)$: $\mathbf n=(-\cos t,-\sin t,0)$ ו-$c=(0,0,ht)$, על ציר ה-$z$. ואם $\tau_0\to0$, הציר
               "נעצר" ($c'\to0$) והמסילה הופכת למעגל עם מרכז $c$.
           - kind: result
             text: '$\gamma$ מונחת על הגליל ברדיוס $a=\frac{\kappa_0}{\kappa_0^2+\tau_0^2}$ סביב הישר $L$, המקביל ל-$\tau_0\mathbf t+\kappa_0\mathbf b$.'

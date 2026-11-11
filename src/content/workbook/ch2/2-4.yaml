@@ -27,11 +27,11 @@ practice:
           באורך 1. לכן $\kappa\equiv1$ והנורמל הראשי $\mathbf n=\gamma''$.
       - kind: computation
         text: >-
-          $\mathbf b=\mathbf t\times\mathbf n=(0,0,\cos^2s+\sin^2s)=\mathbf e_3$, קבוע, ולכן $\mathbf b'=0$ ו-$\tau\equiv0$ (הגדרה 2.2.2).
+          $$\mathbf b=\mathbf t\times\mathbf n=(0,0,\cos^2s+\sin^2s)=\mathbf e_3,$$ קבוע, ולכן $\mathbf b'=0$ ו-$\tau\equiv0$ (הגדרה 2.2.2).
       - kind: check
         text: >-
           ב-0: $\gamma(0)=(1,2,3)$, $\mathbf t(0)=\mathbf e_1$, $\mathbf n(0)=\mathbf e_2$, $\mathbf b(0)=\mathbf e_3$. חישוב מספרי נותן
-          $\kappa=1$ והשלשה $I$ ב-0.
+          $\kappa=1$, ומטריצת השלשה ב-0 היא $\mathrm{Id}$.
       - kind: theorem
         text: >-
           $\kappa\equiv1\in C^1$ חיובית, $\tau\equiv0$ רציפה, והשלשה ההתחלתית ב-$SO(3)$: לפי משפט 2.4.3 יש מסילה אחת ויחידה עם
@@ -44,21 +44,21 @@ practice:
     level: basic
     objectives: [OBJ-2.4-1]
     prompt: >-
-      מסילה בפרמטר אורך הקשת מקיימת $\kappa\equiv\frac15$ ו-$\tau\equiv-\frac25$. לאיזה סליל $(a\cos\theta,\ a\sin\theta,\ b\theta)$
-      היא חופפת? האם הוא ימני או שמאלי?
+      מסילה בפרמטר אורך הקשת מקיימת $\kappa\equiv\frac15$ ו-$\tau\equiv-\frac25$. לאיזה סליל $(a\cos\theta,\ a\sin\theta,\ h\theta)$
+      (רדיוס $a>0$, עלייה $h$ לכל רדיאן) היא חופפת, אחרי מעבר לפרמטר אורך הקשת? האם הוא ימני או שמאלי?
     answer: >-
-      $a=1$, $b=-2$: הסליל השמאלי $(\cos\theta,\ \sin\theta,\ -2\theta)$, עד כדי סיבוב והזזה.
+      $a=1$, $h=-2$: הסליל השמאלי $(\cos\theta,\ \sin\theta,\ -2\theta)$, עד כדי סיבוב והזזה.
     solution:
       - kind: theorem
         text: >-
-          לפי משפט 2.3.8, לסליל עם $a>0$: $\kappa=\frac{a}{a^2+b^2}$ ו-$\tau=\frac{b}{a^2+b^2}$, ולכן $\kappa^2+\tau^2=\frac{1}{a^2+b^2}$.
+          לפי משפט 2.3.8, לסליל עם $a>0$: $\kappa=\frac{a}{a^2+h^2}$ ו-$\tau=\frac{h}{a^2+h^2}$, ולכן $\kappa^2+\tau^2=\frac{1}{a^2+h^2}$.
       - kind: computation
         text: >-
-          $\kappa^2+\tau^2=\frac1{25}+\frac4{25}=\frac15$, ולכן $a=\frac{\kappa}{\kappa^2+\tau^2}=1$ ו-$b=\frac{\tau}{\kappa^2+\tau^2}=-2$.
+          $\kappa^2+\tau^2=\frac1{25}+\frac4{25}=\frac15$, ולכן $a=\frac{\kappa}{\kappa^2+\tau^2}=1$ ו-$h=\frac{\tau}{\kappa^2+\tau^2}=-2$.
       - kind: step
         text: >-
           לסליל הזה (אחרי מעבר לפרמטר אורך הקשת, במהירות $\sqrt5$) אותן $\kappa$ ו-$\tau$ כמו למסילה, ולפי משפט 2.4.2 הן חופפות.
-          $b<0$: סליל שמאלי.
+          $h<0$: סליל שמאלי.
       - kind: check
         text: >-
           חישוב מספרי ל-$(\cos\theta,\ \sin\theta,\ -2\theta)$: $\kappa=0.2$ ו-$\tau=-0.4$. לפי מסקנה 2.4.4(ג) המסילה **אינה**
@@ -76,8 +76,9 @@ practice:
       הקטע $I$, אז הן חופפות.
 
 
-      (ב) הסיקו: מסילה מישורית ותמונת המראה שלה בישר שבמישור, שבמישור **אינן** נבדלות בסיבוב והזזה באותו פרמטר כש-$k\not\equiv0$
-      (מסקנה 1.6.6), חופפות במרחב. מצאו סיבוב מפורש למסילה במישור $z=0$ ולשיקוף $(x,y)\mapsto(x,-y)$.
+      (ב) תהי $\gamma(s)=(x(s),y(s),0)$ מסילה במישור $z=0$, ו-$\tilde\gamma(s)=(x(s),-y(s),0)$ תמונת המראה שלה בציר $x$. לפי מסקנה
+      1.6.6, כש-$k\not\equiv0$ **אין** סיבוב והזזה **של המישור** שמעבירים את $\gamma$ ל-$\tilde\gamma$ באותו פרמטר. הסיקו מ-(א) שבמרחב
+      **יש** תנועה קשיחה ישרה כזו, ומצאו אותה במפורש.
     answer: >-
       (א) נכון: לשתיהן $\tau\equiv0$. (ב) $R=\operatorname{diag}(1,-1,-1)$, סיבוב ב-$\pi$ סביב ציר $x$.
     solution:
@@ -89,7 +90,7 @@ practice:
           לכן $\tau=\tilde\tau\equiv0$ ו-$\kappa=\tilde\kappa>0$, ולפי משפט 2.4.2 יש $B\in SO(3)$ ו-$d$ עם $\tilde\gamma=B\gamma+d$. זה (א).
       - kind: step
         text: >-
-          (ב): $\gamma=(x,y,0)$ ו-$\tilde\gamma=(x,-y,0)$. $R=\operatorname{diag}(1,-1,-1)$ מקיימת $R^TR=I$ ו-$\det R=1$, ו-$R\gamma=(x,-y,0)=\tilde\gamma$.
+          (ב): $\gamma=(x,y,0)$ ו-$\tilde\gamma=(x,-y,0)$. $R=\operatorname{diag}(1,-1,-1)$ מקיימת $R^TR=\mathrm{Id}$ ו-$\det R=1$, ו-$R\gamma=(x,-y,0)=\tilde\gamma$.
           במרחב, סיבוב ב-$\pi$ סביב ציר $x$ "הופך" את המישור $z=0$ על עצמו.
       - kind: check
         text: >-
@@ -103,10 +104,10 @@ practice:
     level: mid
     objectives: [OBJ-2.4-2]
     prompt: >-
-      תהי $\gamma:(-L,L)\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$, ו-$\kappa$ ו-$\tau$ **שתיהן זוגיות**. יהי $\rho$
-      הסיבוב ב-$\pi$ סביב הישר $\gamma(0)+\mathbb R\,\mathbf n(0)$. הוכיחו ש-$\gamma(-s)=\rho(\gamma(s))$ לכל $s$.
+      תהי $\gamma:(-L,L)\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$, ו-$\kappa$ ו-$\tau$ **שתיהן זוגיות**. יהי $\Phi$
+      הסיבוב ב-$\pi$ סביב הישר $\gamma(0)+\mathbb R\,\mathbf n(0)$. הוכיחו ש-$\gamma(-s)=\Phi(\gamma(s))$ לכל $s$.
     answer: >-
-      $\delta(s)=\rho(\gamma(-s))$ מקיימת $\kappa_\delta=\kappa$, $\tau_\delta=\tau$ ואת נתוני ההתחלה של $\gamma$; לפי היחידות $\delta=\gamma$.
+      $\delta(s)=\Phi(\gamma(-s))$ מקיימת $\kappa_\delta=\kappa$, $\tau_\delta=\tau$ ואת נתוני ההתחלה של $\gamma$; לפי היחידות $\delta=\gamma$.
     solution:
       - kind: idea
         text: >-
@@ -114,32 +115,32 @@ practice:
           צריך $\tau$ זוגית כדי לקבל את אותן פונקציות.
       - kind: definition
         text: >-
-          $\rho(x)=\gamma(0)+Q(x-\gamma(0))$ עם $Q\mathbf t_0=-\mathbf t_0$, $Q\mathbf n_0=\mathbf n_0$, $Q\mathbf b_0=-\mathbf b_0$
+          $\Phi(x)=\gamma(0)+Q(x-\gamma(0))$ עם $Q\mathbf t_0=-\mathbf t_0$, $Q\mathbf n_0=\mathbf n_0$, $Q\mathbf b_0=-\mathbf b_0$
           (כאן $\mathbf t_0=\mathbf t(0)$ וכן הלאה). $Q$ אורתוגונלית, ו-$\det Q=(-1)(1)(-1)=1$.
       - kind: step
         text: >-
-          $\varrho(s)=\gamma(-s)$: לפי טענות 2.1.5(א), 1.3.7(א) ו-2.2.5(א), $\mathbf t_\varrho(s)=-\mathbf t(-s)$, $\mathbf n_\varrho(s)=\mathbf n(-s)$, $\mathbf b_\varrho(s)=-\mathbf b(-s)$,
-          $\kappa_\varrho(s)=\kappa(-s)$, $\tau_\varrho(s)=\tau(-s)$.
+          $\zeta(s)=\gamma(-s)$: לפי טענות 2.1.5(א), 1.3.7(א) ו-2.2.5(א), $\mathbf t_\zeta(s)=-\mathbf t(-s)$, $\mathbf n_\zeta(s)=\mathbf n(-s)$, $\mathbf b_\zeta(s)=-\mathbf b(-s)$,
+          $\kappa_\zeta(s)=\kappa(-s)$, $\tau_\zeta(s)=\tau(-s)$.
       - kind: step
         text: >-
-          $\delta=Q\varrho+(\gamma(0)-Q\gamma(0))$. לפי למה 2.4.1ב עם $\det Q=1$: $\kappa_\delta(s)=\kappa(-s)=\kappa(s)$,
-          $\tau_\delta(s)=\tau(-s)=\tau(s)$, והשלשה $QF_\varrho$.
+          $\delta=Q\zeta+(\gamma(0)-Q\gamma(0))$. לפי למה 2.4.1ב עם $\det Q=1$: $\kappa_\delta(s)=\kappa(-s)=\kappa(s)$,
+          $\tau_\delta(s)=\tau(-s)=\tau(s)$, והשלשה $QF_\zeta$.
       - kind: step
         text: >-
           ב-0: $\delta(0)=\gamma(0)$, $\mathbf t_\delta(0)=-Q\mathbf t_0=\mathbf t_0$, $\mathbf n_\delta(0)=Q\mathbf n_0=\mathbf n_0$,
           $\mathbf b_\delta(0)=-Q\mathbf b_0=\mathbf b_0$.
       - kind: theorem
         text: >-
-          לפי שלב 8 של משפט 2.4.3 (על הקטע $(-L,L)$), $\delta\equiv\gamma$, כלומר $\rho(\gamma(-s))=\gamma(s)$; מציבים $-s$ ומשתמשים
-          ב-$\rho\circ\rho=\mathrm{id}$.
+          לפי שלב 8 של משפט 2.4.3 (על הקטע $(-L,L)$), $\delta\equiv\gamma$, כלומר $\Phi(\gamma(-s))=\gamma(s)$; מציבים $-s$ ומשתמשים
+          ב-$\Phi\circ\Phi=\mathrm{Id}$ (סיבוב ב-$\pi$ פעמיים).
       - kind: check
         text: >-
-          בסליל $(\cos t,\ \sin t,\ \frac t2)$ ($\kappa,\tau$ קבועים, זוגיים): $\mathbf n(0)=(-1,0,0)$, הישר הוא ציר $x$, $\rho(x,y,z)=(x,-y,-z)$,
-          ו-$$\rho(\gamma(t))=(\cos t,\ -\sin t,\ -\tfrac t2)=\gamma(-t).$$ גם באינטגרציה מספרית עם $\kappa=1+\frac{s^2}4$, $\tau=\cos s$
+          בסליל $(\cos t,\ \sin t,\ \frac t2)$ ($\kappa,\tau$ קבועים, זוגיים): $\mathbf n(0)=(-1,0,0)$, הישר הוא ציר $x$, $\Phi(x,y,z)=(x,-y,-z)$,
+          ו-$$\Phi(\gamma(t))=(\cos t,\ -\sin t,\ -\tfrac t2)=\gamma(-t).$$ גם באינטגרציה מספרית עם $\kappa=1+\frac{s^2}4$, $\tau=\cos s$
           הסטייה קטנה מ-$10^{-14}$.
       - kind: result
         text: >-
-          $\gamma(-s)=\rho(\gamma(s))$: המסילה סימטרית לסיבוב ב-$\pi$ סביב הנורמל הראשי שבאמצע.
+          $\gamma(-s)=\Phi(\gamma(s))$: המסילה סימטרית לסיבוב ב-$\pi$ סביב הנורמל הראשי שבאמצע.
 
   - id: W-2.4-05
     level: mid
@@ -164,12 +165,13 @@ practice:
           $R\in SO(3)$.
       - kind: step
         text: >-
-          $RF=\tilde FF^TF=\tilde F$, כי $F^TF=I$. בעמודה הראשונה: $\tilde{\mathbf t}=R\mathbf t$, כלומר $(\tilde\gamma-R\gamma)'=0$, ולכן
+          $RF=\tilde FF^TF=\tilde F$, כי $F^TF=\mathrm{Id}$. בעמודה הראשונה: $\tilde{\mathbf t}=R\mathbf t$, כלומר $(\tilde\gamma-R\gamma)'=0$, ולכן
           $\tilde\gamma-R\gamma$ קבוע $c$.
       - kind: check
         text: >-
           הקשר להוכחה בשיעור: $$f=\mathbf t\cdot\tilde{\mathbf t}+\mathbf n\cdot\tilde{\mathbf n}+\mathbf b\cdot\tilde{\mathbf b}=\operatorname{tr}(F^T\tilde F)=\operatorname{tr}R,$$
-          ולכן גם $f$ קבועה. כאן לא צריך ליישר קודם ב-$s_0$: $R$ עצמה היא הסיבוב.
+          ולכן גם $f$ קבועה. בשיעור מיישרים קודם ב-$s_0$ ומחליפים את $\tilde\gamma$ במסילה המיושרת $\beta$; כאן לא צריך: $R$ עצמה
+          היא הסיבוב.
       - kind: result
         text: >-
           $R=\tilde FF^T\in SO(3)$ קבועה ו-$\tilde\gamma=R\gamma+c$.
@@ -209,7 +211,7 @@ practice:
     level: mid
     objectives: [OBJ-2.4-1]
     prompt: >-
-      בדוגמה 1 מצאנו את המסילה $\gamma$ עם $\kappa\equiv\tau\equiv\frac12$, $\gamma(0)=0$ והשלשה $I$ ב-0. מצאו בלי חישוב חדש את המסילה
+      בדוגמה 1 מצאנו את המסילה $\gamma$ עם $\kappa\equiv\tau\equiv\frac12$, $\gamma(0)=0$ ומטריצת השלשה $\mathrm{Id}$ ב-0. מצאו בלי חישוב חדש את המסילה
       $\hat\gamma$ עם $\kappa\equiv\frac12$, $\tau\equiv-\frac12$ ואותם נתוני התחלה, והוכיחו שזו היא.
     answer: >-
       $\hat\gamma=R\gamma$ עם $R=\operatorname{diag}(1,1,-1)$:
@@ -224,14 +226,14 @@ practice:
           ומטריצת השלשה $RF\operatorname{diag}(1,1,-1)$.
       - kind: computation
         text: >-
-          ב-0: $RI\operatorname{diag}(1,1,-1)=I$, ו-$R\gamma(0)=0$. אלה בדיוק נתוני ההתחלה הנדרשים.
+          ב-0: $R\,\mathrm{Id}\operatorname{diag}(1,1,-1)=\mathrm{Id}$, ו-$R\gamma(0)=0$. אלה בדיוק נתוני ההתחלה הנדרשים.
       - kind: theorem
         text: >-
           לפי משפט 2.4.3 (יחידות עם נתוני התחלה) $\hat\gamma=R\gamma$.
       - kind: check
         text: >-
-          חישוב מספרי ל-$R\gamma$: $\kappa=0.5$, $\tau=-0.5$, והשלשה ב-0 היא $I$. אילו בחרנו שיקוף אחר, למשל $\operatorname{diag}(1,-1,1)$,
-          השלשה ב-0 הייתה $(\mathbf e_1,-\mathbf e_2,-\mathbf e_3)$ ולא $I$.
+          חישוב מספרי ל-$R\gamma$: $\kappa=0.5$, $\tau=-0.5$, ומטריצת השלשה ב-0 היא $\mathrm{Id}$. אילו בחרנו שיקוף אחר, למשל
+          $\operatorname{diag}(1,-1,1)$, השלשה ב-0 הייתה $(\mathbf e_1,-\mathbf e_2,-\mathbf e_3)$ ולא הבסיס הסטנדרטי.
       - kind: result
         text: >-
           $\hat\gamma=(x,\ y,\ -z)$ של המסילה מדוגמה 1.
@@ -241,8 +243,9 @@ practice:
     qualitative: true
     objectives: [OBJ-2.4-1, OBJ-2.4-2]
     prompt: >-
-      תהי $\gamma:\mathbb R\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$. הוכיחו: לכל $u\in\mathbb R$ יש תנועה קשיחה ישרה $M_u$
-      כך ש-$\gamma(s+u)=M_u(\gamma(s))$ לכל $s$, אם ורק אם $\kappa$ ו-$\tau$ קבועות. הסיקו שאלה בדיוק הסלילים המעגליים והמעגלים.
+      תהי $\gamma:\mathbb R\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת עם $\kappa>0$. נאמר ש-$\gamma$ **הומוגנית** ("נראית אותו דבר מכל
+      נקודה שלה") אם לכל $u\in\mathbb R$ יש תנועה קשיחה ישרה $T_u$ כך ש-$\gamma(s+u)=T_u(\gamma(s))$ לכל $s$. הוכיחו ש-$\gamma$ הומוגנית
+      אם ורק אם $\kappa$ ו-$\tau$ קבועות. הסיקו שאלה בדיוק הסלילים המעגליים והמעגלים.
     answer: >-
       $(\Rightarrow)$ $\kappa(s+u)=\kappa(s)$ לכל $s,u$; $(\Leftarrow)$ משפט 2.4.2 על $s\mapsto\gamma(s+u)$; ולפי משפט 2.3.8 סליל או מעגל.
     solution:
@@ -251,7 +254,7 @@ practice:
           "המסילה נראית אותו דבר מכל נקודה שלה" פירושו שהזזה של הפרמטר לא משנה את השמורות.
       - kind: step
         text: >-
-          $(\Rightarrow)$: יהי $u$. לפי למה 2.4.1ב, ל-$M_u\circ\gamma$ אותן $\kappa,\tau$ כמו ל-$\gamma$. אבל $M_u\circ\gamma$ היא
+          $(\Rightarrow)$: יהי $u$. לפי למה 2.4.1ב, ל-$T_u\circ\gamma$ אותן $\kappa,\tau$ כמו ל-$\gamma$. אבל $T_u\circ\gamma$ היא
           $s\mapsto\gamma(s+u)$, שהעקמומיות שלה ב-$s$ היא $\kappa(s+u)$. לכן $\kappa(s+u)=\kappa(s)$ ו-$\tau(s+u)=\tau(s)$ לכל $s,u$; עם $s=0$:
           $\kappa(u)=\kappa(0)$ ו-$\tau(u)=\tau(0)$.
       - kind: step
@@ -260,15 +263,16 @@ practice:
           (קבועות). לפי משפט 2.4.2, $\delta_u=B_u\gamma+d_u$ עם $B_u\in SO(3)$.
       - kind: theorem
         text: >-
-          לפי משפט 2.3.8, $\kappa>0$ ו-$\tau$ קבועים פירושם סליל מעגלי עם $a=\frac\kappa{\kappa^2+\tau^2}$, $b=\frac\tau{\kappa^2+\tau^2}$,
+          לפי משפט 2.3.8, $\kappa>0$ ו-$\tau$ קבועים פירושם סליל מעגלי עם $a=\frac\kappa{\kappa^2+\tau^2}$, $h=\frac\tau{\kappa^2+\tau^2}$,
           או מעגל ברדיוס $\frac1\kappa$ כש-$\tau=0$.
       - kind: check
         text: >-
-          בסליל $(\cos t,\ \sin t,\ \frac t2)$, $M_u$ הוא "תנועת בורג": סיבוב בזווית $u$ סביב ציר $z$ והזזה ב-$\frac u2$ לאורכו (בפרמטר
-          $t$). ההנחה $\kappa>0$ נחוצה: לישר יש תנועות כאלה, אבל $\tau$ לא מוגדר לו.
+          בסליל $(\cos t,\ \sin t,\ \frac t2)$, $T_u$ הוא **תנועת בורג**: סיבוב סביב ציר $z$ ביחד עם הזזה לאורך אותו ציר (כמו בורג
+          שמסתובב ומתקדם). בפרמטר $t$ הזווית היא $u$ וההזזה $\frac u2$. ההנחה $\kappa>0$ נחוצה: לישר יש תנועות כאלה, אבל $\tau$ לא
+          מוגדר לו.
       - kind: result
         text: >-
-          ההומוגניות שקולה ל-$\kappa,\tau$ קבועים, כלומר לסליל מעגלי או למעגל.
+          $\gamma$ הומוגנית אם ורק אם $\kappa,\tau$ קבועים, כלומר אם ורק אם היא סליל מעגלי או מעגל.
 
   - id: W-2.4-09
     level: exam
@@ -291,7 +295,7 @@ practice:
     solution:
       - kind: step
         text: >-
-          (א): שלבים 1–4 של למה 2.4.1 לא משתמשים בדטרמיננטה, ולכן $F^TF\equiv I$. $\det F$ רציפה עם ערכים $\pm1$ על קטע, ו-$\det F(s_0)=-1$,
+          (א): שלבים 1–4 של למה 2.4.1 לא משתמשים בדטרמיננטה, ולכן $F^TF\equiv\mathrm{Id}$. $\det F$ רציפה עם ערכים $\pm1$ על קטע, ו-$\det F(s_0)=-1$,
           ולכן לפי משפט ערך הביניים $\det F\equiv-1$.
       - kind: step
         text: >-
@@ -313,7 +317,8 @@ practice:
           עם $-\tau$ במקום $\tau$) הן שוות.
       - kind: check
         text: >-
-          זו הטעות שמסיחה בשאלה Q-2.4-existence: בלי ההנחה $\det F_0=1$ הבנייה לא נכשלת, אלא נותנת את תמונת המראה.
+          זה מה שמאחורי אחד המסיחים בשאלת ההבנה על ההנחה $F_0\in SO(3)$: בלי $\det F_0=1$ הבנייה לא נכשלת, אלא נותנת את תמונת
+          המראה.
       - kind: result
         text: >-
           שלשה התחלתית שמאלית נותנת את המסילה עם $(\kappa,-\tau)$, תמונת המראה של $\gamma_+$ במישור המנשק ההתחלתי.
@@ -324,8 +329,8 @@ practice:
     objectives: [OBJ-2.4-3, OBJ-2.4-1]
     prompt: >-
       מסילה $\gamma:[-L,L]\to\mathbb R^3$ מסדר $C^3$ בפרמטר אורך הקשת, עם $\kappa>0$, נקראת **אכירלית** אם תמונת המראה שלה $R\gamma$
-      ($R$ אורתוגונלית, $\det R=-1$) חופפת לה עד כדי פרמטר: $R\gamma=A(\gamma\circ\varphi)+c$ עם $A\in SO(3)$ ו-$\varphi$ חח״ע ועל
-      $[-L,L]\to[-L,L]$ מסדר $C^1$.
+      ($R$ אורתוגונלית, $\det R=-1$) חופפת לה עד כדי פרמטר: $R\gamma=A(\gamma\circ\chi)+c$ עם $A\in SO(3)$ ו-$\chi$ חח״ע ועל
+      $[-L,L]\to[-L,L]$ מסדר $C^1$. מסילה שאינה אכירלית נקראת **כירלית** (כמו יד ימין, שאין לה סיבוב שמעביר אותה ליד שמאל).
 
 
       (א) הוכיחו: $\gamma$ אכירלית אם ורק אם $\tau\equiv0$, או ש-$\kappa$ זוגית ו-$\tau$ אי-זוגית.
@@ -333,7 +338,7 @@ practice:
 
       (ב) הסיקו שסליל מעגלי עם $\tau\ne0$ אינו אכירלי, ושהמסילה עם $\kappa\equiv1$, $\tau(s)=s$ על $[-1,1]$ אכירלית.
     answer: >-
-      (א) לפי טענה 2.4.4א עם $(\kappa,-\tau)$: $\varphi(s)=\pm s$, ו-$-\tau(s)=\tau(\pm s)$. (ב) $\tau$ קבועה שונה מאפס אינה אי-זוגית;
+      (א) לפי טענה 2.4.4א עם $(\kappa,-\tau)$: $\chi(s)=\pm s$, ו-$-\tau(s)=\tau(\pm s)$. (ב) $\tau$ קבועה שונה מאפס אינה אי-זוגית;
       $\tau(s)=s$ אי-זוגית ו-$\kappa\equiv1$ זוגית.
     solution:
       - kind: idea
@@ -368,35 +373,36 @@ challenge:
     stars: 1
     objectives: [OBJ-2.4-1, OBJ-2.4-2]
     prompt: >-
-      הוכיחו שכל מסילה בפרמטר אורך הקשת עם עקמומיות קבועה $\kappa>0$ ופיתול קבוע $\tau$ מתקבלת מהסליל $(a\cos\theta,\ a\sin\theta,\ b\theta)$
-      (עם $a>0$, אחרי מעבר לפרמטר אורך הקשת) בתנועה קשיחה ישרה. מצאו את $a$ ואת $b$, והוכיחו שהם נקבעים ביחידות. מה הם ל-$\kappa=0.6$,
-      $\tau=0.8$?
+      הוכיחו שכל מסילה בפרמטר אורך הקשת עם עקמומיות קבועה $\kappa>0$ ופיתול קבוע $\tau$ מתקבלת מהסליל $(a\cos\theta,\ a\sin\theta,\ h\theta)$
+      (רדיוס $a>0$, עלייה $h$ לכל רדיאן, אחרי מעבר לפרמטר אורך הקשת) בתנועה קשיחה ישרה. מצאו את $a$ ואת $h$, והוכיחו שהם נקבעים
+      ביחידות. מה הם ל-$\kappa=0.6$, $\tau=0.8$?
     answer: >-
-      $a=\frac\kappa{\kappa^2+\tau^2}$, $b=\frac\tau{\kappa^2+\tau^2}$; ל-$\kappa=0.6$, $\tau=0.8$: $a=0.6$, $b=0.8$.
+      $a=\frac\kappa{\kappa^2+\tau^2}$, $h=\frac\tau{\kappa^2+\tau^2}$; ל-$\kappa=0.6$, $\tau=0.8$: $a=0.6$, $h=0.8$.
     solution:
       - kind: computation
         text: >-
-          לסליל $h(\theta)=(a\cos\theta,\ a\sin\theta,\ b\theta)$, $c=\sqrt{a^2+b^2}$: $h'=(-a\sin\theta,\ a\cos\theta,\ b)$ באורך $c$,
-          $h''=(-a\cos\theta,\ -a\sin\theta,\ 0)$, $h'''=(a\sin\theta,\ -a\cos\theta,\ 0)$, ו-
-          $$h'\times h''=(ab\sin\theta,\ -ab\cos\theta,\ a^2),\qquad \|h'\times h''\|=ac.$$
+          לסליל $\eta(\theta)=(a\cos\theta,\ a\sin\theta,\ h\theta)$, עם המהירות $v=\sqrt{a^2+h^2}$: $\eta'=(-a\sin\theta,\ a\cos\theta,\ h)$
+          באורך $v$, $\eta''=(-a\cos\theta,\ -a\sin\theta,\ 0)$, $\eta'''=(a\sin\theta,\ -a\cos\theta,\ 0)$, ו-
+          $$\eta'\times\eta''=(ah\sin\theta,\ -ah\cos\theta,\ a^2),\qquad \|\eta'\times\eta''\|=av.$$
       - kind: computation
         text: >-
-          לפי הנוסחאות בפרמטר כללי (שיעורים 1.3 ו-2.2): $\kappa=\frac{ac}{c^3}=\frac{a}{c^2}$, ו-$(h'\times h'')\cdot h'''=a^2b$, ולכן $\tau=\frac{a^2b}{a^2c^2}=\frac{b}{c^2}$.
+          לפי הנוסחאות בפרמטר כללי (שיעורים 1.3 ו-2.2): $\kappa=\frac{av}{v^3}=\frac{a}{v^2}$, ו-$(\eta'\times\eta'')\cdot\eta'''=a^2h$, ולכן $\tau=\frac{a^2h}{a^2v^2}=\frac{h}{v^2}$.
       - kind: step
         text: >-
-          **יחידות של $(a,b)$.** מ-$\kappa=\frac a{c^2}$ ו-$\tau=\frac b{c^2}$: $\kappa^2+\tau^2=\frac{a^2+b^2}{c^4}=\frac1{c^2}$. לכן $c^2=\frac1{\kappa^2+\tau^2}$,
-          ו-$a=\kappa c^2$, $b=\tau c^2$ נקבעים ביחידות; ובכיוון ההפוך הם אכן נותנים את $\kappa,\tau$.
+          **יחידות של $(a,h)$.** מ-$\kappa=\frac a{v^2}$ ו-$\tau=\frac h{v^2}$: $\kappa^2+\tau^2=\frac{a^2+h^2}{v^4}=\frac1{v^2}$. לכן $v^2=\frac1{\kappa^2+\tau^2}$,
+          ו-$a=\kappa v^2$, $h=\tau v^2$ נקבעים ביחידות; ובכיוון ההפוך הם אכן נותנים את $\kappa,\tau$.
       - kind: theorem
         text: >-
-          בפרמטר אורך הקשת $\theta=\frac sc$, ל-$h$ אותן $\kappa,\tau$ קבועות. $\kappa\in C^1$, $\kappa>0$ ו-$\tau$ רציפה, ולכן לפי משפט 2.4.2 כל
-          מסילה עם אותן $\kappa,\tau$ היא $Bh+d$ עם $B\in SO(3)$.
+          בפרמטר אורך הקשת $\theta=\frac sv$, ל-$\eta$ אותן $\kappa,\tau$ קבועות. לפי משפט 2.4.2 (היחידות, שדורש רק מסילות מסדר $C^3$
+          בפרמטר אורך הקשת עם אותן $\kappa>0$ ו-$\tau$; ההנחה $\kappa\in C^1$ שייכת למשפט הקיום 2.4.3), כל מסילה עם אותן $\kappa,\tau$ היא
+          $B\eta+d$ עם $B\in SO(3)$.
       - kind: check
         text: >-
-          $\kappa=0.6$, $\tau=0.8$: $\kappa^2+\tau^2=1$, ולכן $a=0.6$, $b=0.8$, $c=1$: הסליל כבר בפרמטר אורך הקשת. $b>0$: ימני. עם
-          $\tau=-0.8$ מתקבל $b=-0.8$, סליל שמאלי, ולפי מסקנה 2.4.4(ג) אין סיבוב שמעביר אחד לשני.
+          $\kappa=0.6$, $\tau=0.8$: $\kappa^2+\tau^2=1$, ולכן $a=0.6$, $h=0.8$, $v=1$: הסליל כבר בפרמטר אורך הקשת. $h>0$: ימני. עם
+          $\tau=-0.8$ מתקבל $h=-0.8$, סליל שמאלי, ולפי מסקנה 2.4.4(ג) אין סיבוב שמעביר אחד לשני.
       - kind: result
         text: >-
-          $a=\frac\kappa{\kappa^2+\tau^2}$, $b=\frac\tau{\kappa^2+\tau^2}$, יחידים; לכל מסילה כזו יש תנועה ישרה מהסליל.
+          $a=\frac\kappa{\kappa^2+\tau^2}$, $h=\frac\tau{\kappa^2+\tau^2}$, יחידים; לכל מסילה כזו יש תנועה ישרה מהסליל.
     source:
       name: 'Pressley, Elementary Differential Geometry, 2nd ed. (as worked in the Math 120A Homework 4 solutions, Rutgers)'
       year: 2010
@@ -409,49 +415,61 @@ challenge:
     stars: 1
     objectives: [OBJ-2.4-1]
     prompt: >-
-      יהיו $\kappa>0$ ו-$\tau$ קבועים, ו-$K$ המטריצה של משוואות פרנה-סרה בכתיב העמודות.
+      יהיו $\kappa>0$ ו-$\tau$ קבועים, ו-$K$ המטריצה של משוואות פרנה-סרה בכתיב העמודות. **האקספוננט של מטריצה** הוא הטור
+      $e^{sK}=\sum_{m\ge0}\frac{s^m}{m!}K^m$ (עם $K^0=\mathrm{Id}$), רכיב אחר רכיב.
 
 
-      (א) הוכיחו ש-$Q(s)=e^{sK}$ ב-$SO(3)$ לכל $s$, וש-$F(s)=F_0e^{sK}$ היא השלשה של המסילה עם נתוני ההתחלה $F_0$.
+      (א) הוכיחו שהטור מתכנס לכל $s$ ושאפשר לגזור אותו איבר-איבר, ש-$Q(s)=e^{sK}$ ב-$SO(3)$ לכל $s$, וש-$F(s)=F_0e^{sK}$ היא השלשה
+      של המסילה עם נתוני ההתחלה $F_0$.
 
 
-      (ב) הוכיחו ש-$Kv=\omega\times v$ עם $\omega=(\tau,0,\kappa)$, ושלכן, עם $w=\sqrt{\kappa^2+\tau^2}$:
-      $$e^{sK}=I+\frac{\sin sw}{w}K+\frac{1-\cos sw}{w^2}K^2.$$
+      (ב) הוכיחו ש-$K\mathbf v=\boldsymbol\omega\times\mathbf v$ עם $\boldsymbol\omega=(\tau,0,\kappa)$, ושלכן, עם $\lambda=\sqrt{\kappa^2+\tau^2}$:
+      $$e^{sK}=\mathrm{Id}+\frac{\sin\lambda s}{\lambda}K+\frac{1-\cos\lambda s}{\lambda^2}K^2.$$
 
 
-      (ג) עם $F_0=I$ ו-$\gamma(0)=0$, חשבו את $\mathbf t(s)$ ואת $\gamma(s)$ במפורש, והראו ש-$\mathbf t$ יוצר זווית קבועה עם $\omega$.
+      (ג) עם $F_0=\mathrm{Id}$ ו-$\gamma(0)=0$, חשבו את $\mathbf t(s)$ ואת $\gamma(s)$ במפורש, והראו ש-$\mathbf t$ יוצר זווית קבועה עם
+      $\boldsymbol\omega$.
     answer: >-
-      $$\mathbf t(s)=\Big(1-\tfrac{\kappa^2}{w^2}(1-\cos sw),\ \tfrac\kappa w\sin sw,\ \tfrac{\kappa\tau}{w^2}(1-\cos sw)\Big),$$ $\mathbf t\cdot\frac\omega w=\frac\tau w$,
-      $$\gamma(s)=\Big(s-\tfrac{\kappa^2}{w^2}\big(s-\tfrac{\sin sw}{w}\big),\ \tfrac{\kappa}{w^2}(1-\cos sw),\ \tfrac{\kappa\tau}{w^2}\big(s-\tfrac{\sin sw}{w}\big)\Big).$$
+      $$\mathbf t(s)=\Big(1-\tfrac{\kappa^2}{\lambda^2}(1-\cos\lambda s),\ \tfrac\kappa\lambda\sin\lambda s,\ \tfrac{\kappa\tau}{\lambda^2}(1-\cos\lambda s)\Big),$$
+      $\mathbf t\cdot\frac{\boldsymbol\omega}\lambda=\frac\tau\lambda$,
+      $$\gamma(s)=\Big(s-\tfrac{\kappa^2}{\lambda^2}\big(s-\tfrac{\sin\lambda s}{\lambda}\big),\ \tfrac{\kappa}{\lambda^2}(1-\cos\lambda s),\ \tfrac{\kappa\tau}{\lambda^2}\big(s-\tfrac{\sin\lambda s}{\lambda}\big)\Big).$$
     solution:
       - kind: step
         text: >-
-          (א): הטור $e^{sK}=\sum_m\frac{s^mK^m}{m!}$ מתכנס בהחלט, ואפשר לגזור אותו איבר-איבר (טור חזקות): $Q'=QK$, $Q(0)=I$. לפי למה 2.4.1
-          ($K$ קבועה ואנטי-סימטרית) $Q(s)\in SO(3)$. גם $F=F_0Q$ מקיימת $F'=FK$ ו-$F(0)=F_0$, ולפי היחידות במשפט של 0.6 זו השלשה.
+          (א), התכנסות: יהי $c=\max_{i,j}|K_{ij}|$. באינדוקציה כל רכיב של $K^m$ חסום ב-$(3c)^m$ (כל רכיב של $K^{m+1}=K^mK$ הוא סכום של שלוש
+          מכפלות). לכן כל רכיב של $e^{sK}$ הוא טור חזקות במשתנה $s$, עם מקדמים חסומים ב-$\frac{(3c)^m}{m!}$, ורדיוס ההתכנסות שלו אינסופי
+          (מבחן ההשוואה עם הטור של $e^{3c|s|}$).
+      - kind: step
+        text: >-
+          (א), גזירה: לפי המשפט על טורי חזקות (אינפי 2), בתוך תחום ההתכנסות מותר לגזור איבר-איבר. ברכיבים:
+          $\frac{d}{ds}e^{sK}=\sum_{m\ge1}\frac{s^{m-1}}{(m-1)!}K^m=e^{sK}K$. לכן $Q'=QK$ ו-$Q(0)=\mathrm{Id}$. לפי למה 2.4.1 ($K$ קבועה
+          ואנטי-סימטרית) $Q(s)\in SO(3)$. גם $F=F_0Q$ מקיימת $F'=FK$ ו-$F(0)=F_0$, ולפי היחידות במשפט של 0.6 זו השלשה.
       - kind: computation
         text: >-
-          (ב): $K\mathbf e_1=(0,\kappa,0)$, $K\mathbf e_2=(-\kappa,0,\tau)$, $K\mathbf e_3=(0,-\tau,0)$, ובחישוב ישיר גם $\omega\times\mathbf e_1=(0,\kappa,0)$,
-          $\omega\times\mathbf e_2=(-\kappa,0,\tau)$, $\omega\times\mathbf e_3=(0,-\tau,0)$. לכן $Kv=\omega\times v$, וזה וקטור דרבו $\tau\mathbf t+\kappa\mathbf b$
-          בקואורדינטות של השלשה.
+          (ב): $K\mathbf e_1=(0,\kappa,0)$, $K\mathbf e_2=(-\kappa,0,\tau)$, $K\mathbf e_3=(0,-\tau,0)$, ובחישוב ישיר גם
+          $\boldsymbol\omega\times\mathbf e_1=(0,\kappa,0)$, $\boldsymbol\omega\times\mathbf e_2=(-\kappa,0,\tau)$, $\boldsymbol\omega\times\mathbf e_3=(0,-\tau,0)$.
+          לכן $K\mathbf v=\boldsymbol\omega\times\mathbf v$, וזה וקטור דרבו $\tau\mathbf t+\kappa\mathbf b$ בקואורדינטות של השלשה.
       - kind: computation
         text: >-
-          לפי זהות המכפלה הווקטורית הכפולה, $K^2v=\omega(\omega\cdot v)-w^2v$, ולכן $K^3v=\omega\times(\omega(\omega\cdot v))-w^2\omega\times v=-w^2Kv$.
-          באינדוקציה $K^{2m+1}=(-w^2)^mK$ ו-$K^{2m+2}=(-w^2)^mK^2$. מקבצים את הטור לפי זוגיות:
-          $$e^{sK}=I+\Big(\sum_m\tfrac{(-1)^m(sw)^{2m+1}}{(2m+1)!}\Big)\tfrac Kw+\Big(\sum_m\tfrac{(-1)^m(sw)^{2m+2}}{(2m+2)!}\Big)\tfrac{K^2}{w^2},$$
-          ובסוגריים $\sin sw$ ו-$1-\cos sw$.
+          לפי זהות המכפלה הווקטורית הכפולה, $K^2\mathbf v=\boldsymbol\omega(\boldsymbol\omega\cdot\mathbf v)-\lambda^2\mathbf v$, ולכן
+          $K^3\mathbf v=-\lambda^2K\mathbf v$ (כי $\boldsymbol\omega\times\boldsymbol\omega=0$). באינדוקציה $K^{2m+1}=(-\lambda^2)^mK$ ו-$K^{2m+2}=(-\lambda^2)^mK^2$.
+          מקבצים את הטור (מתכנס בהחלט, לכן מותר לסדר מחדש) לפי זוגיות:
+          $$e^{sK}=\mathrm{Id}+\Big(\sum_m\tfrac{(-1)^m(\lambda s)^{2m+1}}{(2m+1)!}\Big)\tfrac K\lambda+\Big(\sum_m\tfrac{(-1)^m(\lambda s)^{2m+2}}{(2m+2)!}\Big)\tfrac{K^2}{\lambda^2},$$
+          ובסוגריים $\sin\lambda s$ ו-$1-\cos\lambda s$.
       - kind: computation
         text: >-
-          (ג): $\mathbf t(s)=e^{sK}\mathbf e_1$, עם $K\mathbf e_1=(0,\kappa,0)$ ו-$K^2\mathbf e_1=(-\kappa^2,0,\kappa\tau)$; זה הביטוי בתשובה. $\mathbf t\cdot\omega$:
-          $$\tau-\tfrac{\tau\kappa^2}{w^2}(1-\cos sw)+\tfrac{\kappa^2\tau}{w^2}(1-\cos sw)=\tau,$$ ולכן $\mathbf t\cdot\frac\omega w=\frac\tau w$ קבוע.
-          אינטגרציה רכיב-רכיב מ-0 נותנת את $\gamma(s)$.
+          (ג): $\mathbf t(s)=e^{sK}\mathbf e_1$, עם $K\mathbf e_1=(0,\kappa,0)$ ו-$K^2\mathbf e_1=(-\kappa^2,0,\kappa\tau)$; זה הביטוי בתשובה. $\mathbf t\cdot\boldsymbol\omega$:
+          $$\tau-\tfrac{\tau\kappa^2}{\lambda^2}(1-\cos\lambda s)+\tfrac{\kappa^2\tau}{\lambda^2}(1-\cos\lambda s)=\tau,$$ ולכן
+          $\mathbf t\cdot\frac{\boldsymbol\omega}\lambda=\frac\tau\lambda$ קבוע. אינטגרציה רכיב-רכיב מ-0 נותנת את $\gamma(s)$.
       - kind: check
         text: >-
-          $\kappa=\tau=\frac12$: $w^2=\frac12$, ומקבלים בדיוק את המסילה של דוגמה 1. ל-$\kappa=1$, $\tau=0.3$ הנוסחה מתלכדת עם האינטגרציה
-          המספרית של איור 2.4א עד $4\cdot10^{-12}$. המרחק של $\gamma$ מהציר $\mathbb R\omega$ דרך $(0,\frac\kappa{w^2},0)$ הוא $\frac{\kappa}{w^2}$,
-          כמו הרדיוס $a$ במשפט 2.3.8.
+          $\kappa=\tau=\frac12$: $\lambda^2=\frac12$, ומקבלים בדיוק את המסילה של דוגמה 1. ל-$\kappa=1$, $\tau=0.3$ הנוסחה מתלכדת עם
+          האינטגרציה המספרית של איור 2.4א עד $4\cdot10^{-12}$. המרחק של $\gamma$ מהציר $\mathbb R\boldsymbol\omega$ דרך $(0,\frac\kappa{\lambda^2},0)$
+          הוא $\frac{\kappa}{\lambda^2}$, כמו הרדיוס $a$ במשפט 2.3.8.
       - kind: result
         text: >-
-          השלשה היא $e^{sK}$: סיבוב סביב $\omega$ בזווית $sw$; המשיק יוצר זווית קבועה עם $\omega$, והמסילה היא הסליל שבתשובה.
+          השלשה היא $e^{sK}$: סיבוב סביב $\boldsymbol\omega$ בזווית $\lambda s$; המשיק יוצר זווית קבועה עם $\boldsymbol\omega$, והמסילה היא
+          הסליל שבתשובה.
     source:
       name: 'Math 136 Differential Geometry, Harvard (Oliver Knill), Homework 3'
       year: 2025

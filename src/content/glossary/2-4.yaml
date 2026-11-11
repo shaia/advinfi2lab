@@ -5,7 +5,8 @@
   en: fundamental theorem of space curves
   definition: >-
     לכל $\kappa:I\to(0,\infty)$ גזירה ברציפות ו-$\tau:I\to\mathbb R$ רציפה, על קטע $I$, קיימת מסילה בפרמטר אורך הקשת שהעקמומיות
-    והפיתול שלה הם $\kappa$ ו-$\tau$, וכל שתי מסילות כאלה נבדלות בסיבוב ובהזזה, $x\mapsto Ax+c$ עם $A^TA=I$ ו-$\det A=1$.
+    והפיתול שלה הם $\kappa$ ו-$\tau$, מסדר $C^3$, וכל שתי מסילות כאלה נבדלות בסיבוב ובהזזה, $x\mapsto Ax+c$ עם
+    $A^TA=\mathrm{Id}$ ו-$\det A=1$.
     (עם $\kappa$ רציפה בלבד מתקבלת מסילה מסדר $C^2$ עם שלשה גזירה ברציפות; הערה 2.4.3א.)
   lesson: '2.4'
 
@@ -14,6 +15,7 @@
   en: congruent curves (by a proper rigid motion)
   symbol: '\tilde\gamma=A\gamma+c'
   definition: >-
-    שתי מסילות $\gamma,\tilde\gamma:I\to\mathbb R^3$ חופפות (בתנועה קשיחה ישרה) אם יש מטריצה $A$ עם $A^TA=I$ ו-$\det A=1$
-    ווקטור $c$ כך ש-$\tilde\gamma(s)=A\gamma(s)+c$ לכל $s\in I$: אותה מסילה, אחרי סיבוב והזזה, באותו פרמטר.
+    שתי מסילות $\gamma,\tilde\gamma:I\to\mathbb R^3$ חופפות (בתנועה קשיחה ישרה) אם יש מטריצה $A$ עם $A^TA=\mathrm{Id}$ ו-$\det A=1$
+    ווקטור $c$ כך ש-$\tilde\gamma(s)=A\gamma(s)+c$ לכל $s\in I$: אותה מסילה, אחרי סיבוב והזזה, באותו פרמטר. כשמותר גם להחליף
+    פרמטר אומרים "חופפות עד כדי פרמטר", וכשמדובר רק בקבוצות, "התמונות חופפות".
   lesson: '2.4'
