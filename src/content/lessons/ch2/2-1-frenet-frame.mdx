@@ -340,57 +340,57 @@ $$
 
 <Step fig="fig-2-1b" set={{ curve: 'cubic', t: 0, show: ['frame', 'osculating'] }} id="osc-limit">
 
-**משפט 2.1.7 (המישור דרך הישר המשיק ונקודה קרובה).** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, ו-$t_0\in I$ עם $\kappa(t_0)>0$. אז יש $\eta>0$ כך שלכל $0<|h|<\eta$ הווקטורים $\gamma'(t_0)$ ו-$\gamma(t_0+h)-\gamma(t_0)$ בלתי תלויים, ולכן קובעים מישור $\Pi_h$ דרך $\gamma(t_0)$ שמכיל את הישר המשיק ואת $\gamma(t_0+h)$. וקטור היחידה הניצב לו
+**משפט 2.1.7 (המישור דרך הישר המשיק ונקודה קרובה).** תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, ו-$t_0\in I$ עם $\kappa(t_0)>0$. אז יש $\eta>0$ כך שלכל $0<|\delta |<\eta$ הווקטורים $\gamma'(t_0)$ ו-$\gamma(t_0+\delta)-\gamma(t_0)$ בלתי תלויים, ולכן קובעים מישור $\Pi_\delta$ דרך $\gamma(t_0)$ שמכיל את הישר המשיק ואת $\gamma(t_0+\delta)$. וקטור היחידה הניצב לו
 
 $$
-\nu(h)=\frac{\gamma'(t_0)\times\big(\gamma(t_0+h)-\gamma(t_0)\big)}{\big\|\gamma'(t_0)\times\big(\gamma(t_0+h)-\gamma(t_0)\big)\big\|}
+\nu(\delta)=\frac{\gamma'(t_0)\times\big(\gamma(t_0+\delta)-\gamma(t_0)\big)}{\big\|\gamma'(t_0)\times\big(\gamma(t_0+\delta)-\gamma(t_0)\big)\big\|}
 $$
 
-מקיים $\nu(h)\to\mathbf b(t_0)$ כש-$h\to0$, משני הצדדים. במילים: המישורים $\Pi_h$ שואפים למישור המנשק.
+מקיים $\nu(\delta)\to\mathbf b(t_0)$ כש-$\delta \to0$, משני הצדדים. במילים: המישורים $\Pi_\delta$ שואפים למישור המנשק.
 
-**רעיון.** לפי טיילור, $\gamma(t_0+h)-\gamma(t_0)$ הוא $h\gamma'+\frac{h^2}2\gamma''$ ועוד שגיאה קטנה מ-$h^2$. במכפלה הווקטורית עם $\gamma'$ האיבר הראשון נעלם, והשני הוא $\frac{h^2}{2}\gamma'\times\gamma''$, כפולה **חיובית** של $\mathbf b$ גם כש-$h<0$.
+**רעיון.** לפי טיילור, $\gamma(t_0+\delta)-\gamma(t_0)$ הוא $\delta \gamma'+\frac{\delta^2}2\gamma''$ ועוד שגיאה קטנה מ-$\delta^2$. במכפלה הווקטורית עם $\gamma'$ האיבר הראשון נעלם, והשני הוא $\frac{\delta^2}{2}\gamma'\times\gamma''$, כפולה **חיובית** של $\mathbf b$ גם כש-$\delta <0$.
 
 **הוכחה.** נכתוב $\mathbf u=\gamma'(t_0)$, $\mathbf a=\gamma''(t_0)$.
 
 **(1)** לפי משפט טיילור עם שארית פאנו (אינפי 1), לכל רכיב, ולכן לווקטור:
 
 $$
-\gamma(t_0+h)=\gamma(t_0)+h\,\mathbf u+\frac{h^2}{2}\,\mathbf a+\mathbf r(h),\qquad \frac{\mathbf r(h)}{h^2}\xrightarrow[h\to0]{}0 .
+\gamma(t_0+\delta)=\gamma(t_0)+\delta \,\mathbf u+\frac{\delta^2}{2}\,\mathbf a+\mathbf r(\delta),\qquad \frac{\mathbf r(\delta)}{\delta^2}\xrightarrow[\delta \to0]{}0 .
 $$
 
-**(2)** נגדיר לכל $h\ne0$ את הווקטור
+**(2)** נגדיר לכל $\delta \ne0$ את הווקטור
 
 $$
-\mathbf w(h)=\frac{2}{h^2}\,\mathbf u\times\big(\gamma(t_0+h)-\gamma(t_0)\big).
+\mathbf w(\delta)=\frac{2}{\delta^2}\,\mathbf u\times\big(\gamma(t_0+\delta)-\gamma(t_0)\big).
 $$
 
 מהביליניאריות ומ-$\mathbf u\times\mathbf u=0$:
 
 $$
-\mathbf w(h)=\mathbf u\times\mathbf a+\frac{2}{h^2}\,\mathbf u\times\mathbf r(h).
+\mathbf w(\delta)=\mathbf u\times\mathbf a+\frac{2}{\delta^2}\,\mathbf u\times\mathbf r(\delta).
 $$
 
-**(3)** $\|\mathbf u\times\mathbf r\|\le\|\mathbf u\|\,\|\mathbf r\|$ (זהות לגרנז׳), ולכן $\mathbf w(h)\to\mathbf u\times\mathbf a$. לפי טענה 2.1.3(ב), $\mathbf u\times\mathbf a=\kappa v^3\mathbf b(t_0)\ne0$.
+**(3)** $\|\mathbf u\times\mathbf r\|\le\|\mathbf u\|\,\|\mathbf r\|$ (זהות לגרנז׳), ולכן $\mathbf w(\delta)\to\mathbf u\times\mathbf a$. לפי טענה 2.1.3(ב), $\mathbf u\times\mathbf a=\kappa v^3\mathbf b(t_0)\ne0$.
 
-**(4)** הנורמה רציפה, ולכן יש $\eta>0$ כך ש-$\|\mathbf w(h)\|>\frac12\|\mathbf u\times\mathbf a\|>0$ לכל $0<|h|<\eta$. אז $\mathbf u\times(\gamma(t_0+h)-\gamma(t_0))\ne0$, ולפי למה 2.1.2 (שלביה 2–3) הווקטורים בלתי תלויים.
+**(4)** הנורמה רציפה, ולכן יש $\eta>0$ כך ש-$\|\mathbf w(\delta)\|>\frac12\|\mathbf u\times\mathbf a\|>0$ לכל $0<|\delta |<\eta$. אז $\mathbf u\times(\gamma(t_0+\delta)-\gamma(t_0))\ne0$, ולפי למה 2.1.2 (שלביה 2–3) הווקטורים בלתי תלויים.
 
-**(5)** $\frac{2}{h^2}>0$, ולכן $\nu(h)=\mathbf w(h)/\|\mathbf w(h)\|$. הפונקציה $\mathbf x\mapsto\mathbf x/\|\mathbf x\|$ רציפה על $\mathbb R^3\setminus\{0\}$, ולכן $\nu(h)\to\frac{\mathbf u\times\mathbf a}{\|\mathbf u\times\mathbf a\|}=\mathbf b(t_0)$. $\blacksquare$
+**(5)** $\frac{2}{\delta^2}>0$, ולכן $\nu(\delta)=\mathbf w(\delta)/\|\mathbf w(\delta)\|$. הפונקציה $\mathbf x\mapsto\mathbf x/\|\mathbf x\|$ רציפה על $\mathbb R^3\setminus\{0\}$, ולכן $\nu(\delta)\to\frac{\mathbf u\times\mathbf a}{\|\mathbf u\times\mathbf a\|}=\mathbf b(t_0)$. $\blacksquare$
 
-**היכן השתמשנו בהנחות:** $C^2$ בטיילור עם שארית מסדר $o(h^2)$; $\kappa(t_0)>0$ בשלב 3, כדי שהגבול לא יהיה אפס.
+**היכן השתמשנו בהנחות:** $C^2$ בטיילור עם שארית מסדר $o(\delta^2)$; $\kappa(t_0)>0$ בשלב 3, כדי שהגבול לא יהיה אפס.
 
 **בלי $\kappa(t_0)>0$ המשפט נכשל.** במסילה המודבקת של האיור, $\gamma(t)=(t,\ t^4,\ 0)$ כש-$t\le0$ ו-$(t,\ 0,\ t^4)$ כש-$t>0$ (מסדר $C^3$, ראו משפט 2.1.11), ב-$t_0=0$: $\gamma'(0)=e_1$, ו-
 
 $$
-e_1\times(h,\ h^4,\ 0)=(0,\ 0,\ h^4)\quad(h<0),\qquad e_1\times(h,\ 0,\ h^4)=(0,\ -h^4,\ 0)\quad(h>0).
+e_1\times(\delta,\ \delta^4,\ 0)=(0,\ 0,\ \delta^4)\quad(\delta <0),\qquad e_1\times(\delta,\ 0,\ \delta^4)=(0,\ -\delta^4,\ 0)\quad(\delta >0).
 $$
 
-לכן $\nu(h)=e_3$ משמאל ו-$\nu(h)=-e_2$ מימין: אין גבול, אפילו לא עד כדי סימן.
+לכן $\nu(\delta)=e_3$ משמאל ו-$\nu(\delta)=-e_2$ מימין: אין גבול, אפילו לא עד כדי סימן.
 
 </Step>
 
 <Step fig="fig-2-1b" set={{ curve: 'cubic', t: 0, show: ['frame', 'osculating'] }} id="divided-difference">
 
-כדי לקחת גבול של מישורים דרך **שלוש** נקודות $\gamma(t_0),\gamma(t_1),\gamma(t_2)$, טיילור סביב $t_0$ אינו מספיק, אף ש-$t_0$ קבועה. המישור נקבע על ידי ההפרש המחולק השני, שבו מחלקים ב-$t_2-t_1$. כש-$t_1$ ו-$t_2$ מתקרבות זו לזו מהר יותר משהן מתקרבות ל-$t_0$ (למשל $t_1=h$, $t_2=h+h^3$), שני פיתוחי טיילור סביב $t_0$ נותנים שארית $o(h^2)$ כל אחד, ואחרי החלוקה ב-$t_2-t_1=h^3$ השארית כבר אינה קטנה. צריך כלי שמבטא את ההפרש המחולק השני ישירות דרך $\gamma''$, בלי לחלק שאריות.
+כדי לקחת גבול של מישורים דרך **שלוש** נקודות $\gamma(t_0),\gamma(t_1),\gamma(t_2)$, טיילור סביב $t_0$ אינו מספיק, אף ש-$t_0$ קבועה. המישור נקבע על ידי ההפרש המחולק השני, שבו מחלקים ב-$t_2-t_1$. כש-$t_1$ ו-$t_2$ מתקרבות זו לזו מהר יותר משהן מתקרבות ל-$t_0$ (למשל $t_1=\delta$, $t_2=\delta +\delta^3$), שני פיתוחי טיילור סביב $t_0$ נותנים שארית $o(\delta^2)$ כל אחד, ואחרי החלוקה ב-$t_2-t_1=\delta^3$ השארית כבר אינה קטנה. צריך כלי שמבטא את ההפרש המחולק השני ישירות דרך $\gamma''$, בלי לחלק שאריות.
 
 **למה 2.1.8 (<Term id="divided-difference">הפרש מחולק</Term> שני).** תהי $\gamma:I\to\mathbb R^3$ מסדר $C^2$ על קטע $I$, ויהיו $t_0,t_1,t_2\in I$ שונים זה מזה. נגדיר
 
@@ -609,7 +609,7 @@ $$
 
 **למה השלשה דורשת $\kappa>0$: סיכום.**
 1. **אין ממה לקחת את $\mathbf n$.** $\mathbf n=\mathbf t'/\kappa$ בפרמטר אורך הקשת, וכש-$\kappa=0$ גם $\mathbf t'=0$.
-2. **אין מישור מועדף.** כש-$\kappa(t_0)=0$, המרחק של $\gamma(t_0+h)$ מ**כל** מישור שמכיל את הישר המשיק קטן מ-$h^2$ (הוא $o(h^2)$; דוגמה 6 בהמשך מוכיחה זאת). כש-$\kappa(t_0)>0$ זו תכונה של המישור המנשק בלבד, וכאן כל המישורים חולקים אותה, ולכן היא כבר לא מייחדת מישור מנשק אחד.
+2. **אין מישור מועדף.** כש-$\kappa(t_0)=0$, המרחק של $\gamma(t_0+\delta)$ מ**כל** מישור שמכיל את הישר המשיק קטן מ-$\delta^2$ (הוא $o(\delta^2)$; דוגמה 6 בהמשך מוכיחה זאת). כש-$\kappa(t_0)>0$ זו תכונה של המישור המנשק בלבד, וכאן כל המישורים חולקים אותה, ולכן היא כבר לא מייחדת מישור מנשק אחד.
 3. **הגבולות מהצדדים יכולים להיות שונים.** משפט 2.1.11: לפעמים השלשה קופצת והמישור לא (א), ולפעמים גם המישור קופץ (ב). ולפעמים אין קפיצה בכלל (דוגמה 2). הנקודה שבה $\kappa=0$ פשוט אינה מכילה את המידע.
 
 עם $\kappa>0$ אין שום בעיה, והשלשה חלקה (טענה 2.1.4). לכן כל משפט בפרק 2 מניח $\kappa>0$, ובשיעור 2.4 נראה שבלי ההנחה הזו גם משפט היחידות של המסילות נכשל.
@@ -825,19 +825,19 @@ $$
 
 <Example id="ex-2-1-6" title="המישור המנשק כמישור המגע מסדר שני">
 
-תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, $t_0$ פנימית, ו-$\Pi$ מישור דרך $\gamma(t_0)$, עם וקטור יחידה $\nu$ שניצב לו. נגדיר את המרחק המסומן של $\gamma(t_0+h)$ מ-$\Pi$,
+תהי $\gamma:I\to\mathbb R^3$ רגולרית מסדר $C^2$, $t_0$ פנימית, ו-$\Pi$ מישור דרך $\gamma(t_0)$, עם וקטור יחידה $\nu$ שניצב לו. נגדיר את המרחק המסומן של $\gamma(t_0+\delta)$ מ-$\Pi$,
 
 $$
-d(h)=\big(\gamma(t_0+h)-\gamma(t_0)\big)\cdot\nu .
+d(\delta)=\big(\gamma(t_0+\delta)-\gamma(t_0)\big)\cdot\nu .
 $$
 
 **הוכיחו:**
 
-(א) $d(h)=o(h)$ אם ורק אם $\nu\perp\gamma'(t_0)$, כלומר $\Pi$ מכיל את הישר המשיק.
+(א) $d(\delta)=o(\delta)$ אם ורק אם $\nu\perp\gamma'(t_0)$, כלומר $\Pi$ מכיל את הישר המשיק.
 
-(ב) $d(h)=o(h^2)$ אם ורק אם $\nu\perp\gamma'(t_0)$ וגם $\nu\perp\gamma''(t_0)$.
+(ב) $d(\delta)=o(\delta^2)$ אם ורק אם $\nu\perp\gamma'(t_0)$ וגם $\nu\perp\gamma''(t_0)$.
 
-(ג) אם $\kappa(t_0)>0$, המישור המנשק הוא המישור **היחיד** דרך $\gamma(t_0)$ עם $d=o(h^2)$. אם $\kappa(t_0)=0$, **כל** מישור שמכיל את הישר המשיק מקיים $d=o(h^2)$.
+(ג) אם $\kappa(t_0)>0$, המישור המנשק הוא המישור **היחיד** דרך $\gamma(t_0)$ עם $d=o(\delta^2)$. אם $\kappa(t_0)=0$, **כל** מישור שמכיל את הישר המשיק מקיים $d=o(\delta^2)$.
 
 <Solution>
 
@@ -845,23 +845,23 @@ $$
 
 **צריך להוכיח**: (א), (ב), (ג).
 
-**רעיון**: לפי טיילור מסדר שני, $d(h)$ הוא $h\,\gamma'\cdot\nu+\frac{h^2}{2}\,\gamma''\cdot\nu$ ועוד $o(h^2)$. המקדם הראשון שאינו אפס קובע את סדר הגודל.
+**רעיון**: לפי טיילור מסדר שני, $d(\delta)$ הוא $\delta \,\gamma'\cdot\nu+\frac{\delta^2}{2}\,\gamma''\cdot\nu$ ועוד $o(\delta^2)$. המקדם הראשון שאינו אפס קובע את סדר הגודל.
 
 **הוכחה**:
-1. לפי משפט טיילור עם שארית פאנו, עם $\mathbf r(h)=o(h^2)$ כמו בהוכחת משפט 2.1.7:
+1. לפי משפט טיילור עם שארית פאנו, עם $\mathbf r(\delta)=o(\delta^2)$ כמו בהוכחת משפט 2.1.7:
 
 $$
-d(h)=h\,(\gamma'\cdot\nu)+\frac{h^2}{2}\,(\gamma''\cdot\nu)+\mathbf r(h)\cdot\nu ,\qquad |\mathbf r\cdot\nu|\le\|\mathbf r\|
+d(\delta)=\delta \,(\gamma'\cdot\nu)+\frac{\delta^2}{2}\,(\gamma''\cdot\nu)+\mathbf r(\delta)\cdot\nu ,\qquad |\mathbf r\cdot\nu|\le\|\mathbf r\|
 $$
 
 (קושי-שוורץ). מכאן:
 
-2. **חלק (א).** אם $\gamma'\cdot\nu=0$, אז $\frac{d(h)}{h}=\frac h2\gamma''\cdot\nu+\frac{\mathbf r\cdot\nu}{h}\to0$. בכיוון השני, $\frac{d(h)}{h}\to\gamma'\cdot\nu$ תמיד, ולכן אם $d=o(h)$, אז $\gamma'\cdot\nu=0$.
-3. **חלק (ב).** אם $\gamma'\cdot\nu=0$, אז $\frac{d(h)}{h^2}\to\frac12\gamma''\cdot\nu$; לכן $d=o(h^2)$ אם ורק אם $\gamma''\cdot\nu=0$. ואם $\gamma'\cdot\nu\ne0$, אז לפי (א) אפילו לא $d=o(h)$, ובוודאי לא $o(h^2)$.
+2. **חלק (א).** אם $\gamma'\cdot\nu=0$, אז $\frac{d(\delta)}{\delta}=\frac \delta 2\gamma''\cdot\nu+\frac{\mathbf r\cdot\nu}{\delta}\to0$. בכיוון השני, $\frac{d(\delta)}{\delta}\to\gamma'\cdot\nu$ תמיד, ולכן אם $d=o(\delta)$, אז $\gamma'\cdot\nu=0$.
+3. **חלק (ב).** אם $\gamma'\cdot\nu=0$, אז $\frac{d(\delta)}{\delta^2}\to\frac12\gamma''\cdot\nu$; לכן $d=o(\delta^2)$ אם ורק אם $\gamma''\cdot\nu=0$. ואם $\gamma'\cdot\nu\ne0$, אז לפי (א) אפילו לא $d=o(\delta)$, ובוודאי לא $o(\delta^2)$.
 4. **חלק (ג), כש-$\kappa(t_0)>0$.** לפי למה 2.1.2, $\gamma',\gamma''$ בלתי תלויים, ולכן הם פורשים מישור, והווקטורים הניצבים לשניהם הם בדיוק $\mathbb R\,(\gamma'\times\gamma'')=\mathbb R\,\mathbf b$ (טענה 2.1.3(ב)). לכן התנאי ב-(ב) שקול ל-$\nu=\pm\mathbf b$, כלומר $\Pi$ הוא המישור המנשק.
-5. **חלק (ג), כש-$\kappa(t_0)=0$.** לפי למה 2.1.2, $\gamma''(t_0)=\lambda\gamma'(t_0)$ לאיזה $\lambda$. לכן $\nu\perp\gamma'$ גורר $\nu\perp\gamma''$, ולפי (ב) $d=o(h^2)$. $\blacksquare$
+5. **חלק (ג), כש-$\kappa(t_0)=0$.** לפי למה 2.1.2, $\gamma''(t_0)=\lambda\gamma'(t_0)$ לאיזה $\lambda$. לכן $\nu\perp\gamma'$ גורר $\nu\perp\gamma''$, ולפי (ב) $d=o(\delta^2)$. $\blacksquare$
 
-**בדיקה**: במסילה המעוקבת ב-$t_0=0$: $\gamma(h)=(h,h^2,h^3)$. המרחק מהמישור המנשק $z=0$ הוא $h^3=o(h^2)$; מהמישור המיישר $y=0$ הוא $h^2=\frac{\kappa}{2}h^2$ (כי $\kappa(0)=2$ ו-$v=1$), כמו שנותן החישוב: $\frac{d}{h^2}\to\frac12\gamma''\cdot\mathbf n=\frac12\kappa v^2$; ומהמישור הנורמלי $x=0$ הוא $h$.
+**בדיקה**: במסילה המעוקבת ב-$t_0=0$: $\gamma(\delta)=(\delta,\delta^2,\delta^3)$. המרחק מהמישור המנשק $z=0$ הוא $\delta^3=o(\delta^2)$; מהמישור המיישר $y=0$ הוא $\delta^2=\frac{\kappa}{2}\delta^2$ (כי $\kappa(0)=2$ ו-$v=1$), כמו שנותן החישוב: $\frac{d}{\delta^2}\to\frac12\gamma''\cdot\mathbf n=\frac12\kappa v^2$; ומהמישור הנורמלי $x=0$ הוא $\delta$.
 
 **מסקנה**: "מנשק" פירושו מגע מסדר שני, והמישור הזה יחיד בדיוק כש-$\kappa>0$. זו הסיבה השנייה ש-$\kappa>0$ הכרחית לשלשה.
 
