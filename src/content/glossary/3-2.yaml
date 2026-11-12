@@ -7,6 +7,29 @@
     הקבוצה $F^{-1}(c)=\{x\in\mathbb R^3:\ F(x)=c\}$ כש-$c$ ערך רגולרי של פונקציה חלקה $F$ ($\nabla F\ne0$ על הקבוצה).
     לפי משפט הפונקציה הסתומה, ליד כל נקודה שלה היא גרף של פונקציה חלקה של שניים מהמשתנים, ולכן משטח חלק.
   lesson: '3.2'
+- id: diffeomorphism
+  term: דיפאומורפיזם
+  en: diffeomorphism
+  definition: >-
+    העתקה $\varphi:\tilde D\to D$ בין קבוצות פתוחות במישור שהיא חד-חד-ערכית ועל, חלקה, וגם ההופכית שלה חלקה. אז
+    $\det(D\varphi)\ne0$ בכל נקודה. $(s,t)\mapsto(s^3,t)$ חלקה, חד-חד-ערכית ועל, ואינה דיפאומורפיזם: ההופכית אינה גזירה.
+  lesson: '3.2'
+- id: transition-map
+  term: העתקת מעבר
+  en: transition map (change of coordinates)
+  symbol: '\sigma^{-1}\circ\tilde\sigma'
+  definition: >-
+    ההעתקה $\sigma^{-1}\circ\tilde\sigma$ בין תחומי הפרמטרים של שתי פרמטריזציות מקומיות של אותו משטח, על החלק שבו
+    התמונות שלהן נחתכות. משפט 3.2.8: היא דיפאומורפיזם, ולכן כל שתי פרמטריזציות מקומיות נבדלות בהחלפת פרמטרים.
+  lesson: '3.2'
+- id: geometric-quantity
+  term: גודל גאומטרי
+  en: geometric (parametrization-independent) quantity
+  definition: >-
+    גודל שמחשבים בעזרת פרמטריזציה מקומית, ויוצא אותו דבר בכל פרמטריזציה מקומית, ולכן הוא תכונה של המשטח ולא של
+    הקואורדינטות. המישור $\operatorname{span}\{\sigma_u,\sigma_v\}$ הוא גודל גאומטרי; $\sigma_u$ ו-$\|\sigma_u\times\sigma_v\|$
+    אינם.
+  lesson: '3.2'
 - id: surface-reparametrization
   term: החלפת פרמטרים של משטח
   en: reparametrization of a surface

@@ -1,0 +1,450 @@
+# Workbook of lesson 3.4 — the first fundamental form.
+# Objectives (src/course.ts):
+#   OBJ-3.4-1  compute the coefficients of the first form for the basic surfaces
+#   OBJ-3.4-2  compute the length of a curve on a surface and the angle between two curves with the first form
+#   OBJ-3.4-3  explain why the first form is the inner product of space restricted to the tangent plane
+# Every number recomputed on 2026-11-12 with src/math/surfaces.ts and geometry.ts (partials, Simpson): the paraboloid
+# at (1, 1), the helicoid, the cylinder helix, the paraboloid diagonal, the transition with J = [[1, 1], [1, −1]], the
+# loxodrome (length π/2 for α = π/3, v₁ = π/4), the torus of sheet 4 and the surface of sheet 5.
+lesson: '3.4'
+practice:
+  - id: W-3.4-01
+    level: basic
+    objectives: [OBJ-3.4-1]
+    prompt: >-
+      הפרבולואיד $z=x^2+y^2$ בפרמטריזציה $\sigma(x,y)=(x,\ y,\ x^2+y^2)$. חשבו את $E,F,G$ בנקודה כללית ובנקודה $(1,1)$,
+      ובדקו שם את $EG-F^2$ מול $\|\sigma_x\times\sigma_y\|^2$.
+    answer: >-
+      $E=1+4x^2$, $F=4xy$, $G=1+4y^2$; ב-$(1,1)$: $(5,4,5)$ ו-$EG-F^2=9$.
+    solution:
+      - kind: theorem
+        text: >-
+          מסקנה 3.4.7(5): לגרף $(x,y,h)$, $$(E,F,G)=(1+h_x^2,\ h_xh_y,\ 1+h_y^2).$$
+      - kind: computation
+        text: >-
+          $h=x^2+y^2$, $h_x=2x$, $h_y=2y$. לכן $E=1+4x^2$, $F=4xy$, $G=1+4y^2$, וב-$(1,1)$: $E=5$, $F=4$, $G=5$.
+      - kind: check
+        text: >-
+          $EG-F^2=25-16=9$. ישירות: $\sigma_x=(1,0,2)$, $\sigma_y=(0,1,2)$, $\sigma_x\times\sigma_y=(-2,-2,1)$, ואורכו בריבוע
+          $4+4+1=9$, כמו בטענה 3.4.2(ב).
+      - kind: result
+        text: >-
+          $E=1+4x^2$, $F=4xy$, $G=1+4y^2$; ב-$(1,1)$ השלשה $(5,4,5)$, ו-$EG-F^2=9=\|\sigma_x\times\sigma_y\|^2$.
+
+  - id: W-3.4-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-3.4-1]
+    prompt: >-
+      משטח הבורג $\sigma(u,v)=(v\cos u,\ v\sin u,\ u)$, $(u,v)\in\mathbb R^2$. חשבו את $E,F,G$, והכריעו: האם $\sigma$ רגולרית
+      גם בנקודות $v=0$, שבהן $\sigma(u,0)=(0,0,u)$ נמצאת על ציר $z$? השוו למשטח סיבוב, שאינו רגולרי בנקודות על הציר.
+    answer: >-
+      $E=1+v^2$, $F=0$, $G=1$. כן: $EG-F^2=1+v^2>0$ בכל נקודה, גם על הציר. משטח הבורג אינו משטח סיבוב, ו-$\sigma_u$
+      אינו מתאפס על הציר.
+    solution:
+      - kind: computation
+        text: >-
+          $\sigma_u=(-v\sin u,\ v\cos u,\ 1)$ ו-$\sigma_v=(\cos u,\ \sin u,\ 0)$. לכן $E=v^2+1$, $$F=-v\sin u\cos u+v\cos u\sin u=0$$,
+          $G=1$.
+      - kind: theorem
+        text: >-
+          טענה 3.4.2(ב) ולמה 3.1.2: $\sigma$ רגולרית ב-$q$ אם ורק אם $EG-F^2>0$ שם.
+      - kind: step
+        text: >-
+          $EG-F^2=1+v^2\ge1>0$ בכל נקודה. לכן $\sigma$ רגולרית בכל נקודה, ובפרט ב-$v=0$.
+      - kind: check
+        text: >-
+          במשטח סיבוב (טענה 3.1.4) $\sigma_u=f(v)(-\sin u,\cos u,0)$ מתאפס כש-$f(v)=0$: כל מעגל הסיבוב קורס לנקודה. במשטח
+          הבורג, ב-$v=0$, $\sigma_u=(0,0,1)$: כשמזיזים את $u$ הנקודה $(0,0,u)$ עולה לאורך הציר, ולא עומדת במקום.
+      - kind: result
+        text: >-
+          $(E,F,G)=(1+v^2,\ 0,\ 1)$; $\sigma$ רגולרית בכל נקודה, כולל על הציר.
+
+  - id: W-3.4-03
+    level: basic
+    objectives: [OBJ-3.4-2]
+    prompt: >-
+      על הגליל $\sigma(u,v)=(2\cos u,\ 2\sin u,\ v)$ חשבו בעזרת $E,F,G$ את אורך המסילה $u=t$, $v=3t$, $0\le t\le2\pi$
+      (סיבוב אחד של סליל).
+    answer: >-
+      $2\pi\sqrt{13}\approx22.654$.
+    solution:
+      - kind: theorem
+        text: >-
+          מסקנה 3.4.7(4): לגליל ברדיוס $r$, $(E,F,G)=(r^2,0,1)$; כאן $(4,0,1)$. ומשפט 3.4.5(א).
+      - kind: computation
+        text: >-
+          $u'=1$, $v'=3$, ולכן $\|\gamma'\|^2=4\cdot1+0+1\cdot9=13$, ו-$L=\int_0^{2\pi}\sqrt{13}\,dt=2\pi\sqrt{13}$.
+      - kind: check
+        text: >-
+          ישירות: $\gamma(t)=(2\cos t,\ 2\sin t,\ 3t)$, $\|\gamma'\|=\sqrt{4+9}$. ופורשים את הגליל: היקף $4\pi$ ועלייה
+          $6\pi$, ו-$\sqrt{(4\pi)^2+(6\pi)^2}=2\pi\sqrt{13}$.
+      - kind: result
+        text: >-
+          $L=2\pi\sqrt{13}\approx22.654$.
+
+  - id: W-3.4-04
+    level: mid
+    objectives: [OBJ-3.4-2]
+    prompt: >-
+      על הפרבולואיד של תרגיל 1 חשבו את אורך המסילה $x=t$, $y=t$, $0\le t\le1$, פעם בעזרת $E,F,G$ ופעם ישירות.
+    answer: >-
+      $$\int_0^1\sqrt{2+16t^2}\,dt=\frac{3}{\sqrt2}+\frac14\ln(3+2\sqrt2)\approx2.5620.$$
+    solution:
+      - kind: computation
+        text: >-
+          על המסילה $x=y=t$: $E=G=1+4t^2$, $F=4t^2$, ו-$x'=y'=1$. לפי משפט 3.4.5(א):
+          $$\|\gamma'\|^2=E+2F+G=2+16t^2 .$$
+      - kind: computation
+        text: >-
+          $\sqrt{2+16t^2}=4\sqrt{t^2+\frac18}$, והפונקציה הקדומה של $\sqrt{t^2+c}$ היא
+          $$\tfrac t2\sqrt{t^2+c}+\tfrac c2\ln\big(t+\sqrt{t^2+c}\big).$$
+          עם $c=\frac18$, בין $0$ ל-$1$:
+          $$L=4\Big(\tfrac12\cdot\tfrac{3}{2\sqrt2}+\tfrac1{16}\ln\tfrac{1+\frac{3}{2\sqrt2}}{\frac{1}{2\sqrt2}}\Big)=\tfrac{3}{\sqrt2}+\tfrac14\ln\big(3+2\sqrt2\big).$$
+      - kind: check
+        text: >-
+          ישירות: $\gamma(t)=(t,\ t,\ 2t^2)$ ו-$\|\gamma'\|^2=1+1+16t^2$, אותו אינטגרנד. מספרית
+          $\frac3{\sqrt2}\approx2.1213$ ו-$\frac14\ln(5.8284)\approx0.4407$, ובסך הכול $2.5620$, כמו סימפסון על $\sqrt{Q_1}$. בלי
+          האיבר המעורב ($\sqrt{E+G}$) היה יוצא אינטגרנד $\sqrt{2+8t^2}$, קטן מדי.
+      - kind: result
+        text: >-
+          $$L=\frac{3}{\sqrt2}+\frac14\ln(3+2\sqrt2)\approx2.5620.$$
+
+  - id: W-3.4-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.4-3]
+    prompt: >-
+      (א) הוכיחו: בנקודה רגולרית $|F|<\sqrt{EG}$, ולכן הזווית $\theta$ בין הקווים הפרמטריים מקיימת $0<\theta<\pi$.
+
+      (ב) הפריכו: "אם $F<0$ בנקודה רגולרית, אז יש $(a,b)\ne(0,0)$ עם $Q_1(a,b)\le0$, כי האיבר המעורב $2Fab$ שלילי כש-$a,b>0$."
+    answer: >-
+      (א) קושי-שוורץ עם מקרה השוויון. (ב) שגוי: $Q_1(a,b)=\|a\sigma_u+b\sigma_v\|^2>0$ לכל $F$; למשל $z=x^2-y^2$ ב-$(1,2)$:
+      $F=-8$ ו-$Q_1(1,1)=5-16+17=6>0$.
+    solution:
+      - kind: idea
+        text: >-
+          $F$ הוא מכפלה פנימית של שני וקטורים בלתי תלויים, ולכן $|F|$ קטן ממש ממכפלת האורכים. והשלילה של $F$ אינה יכולה
+          לגבור על ריבוע של אורך.
+      - kind: step
+        text: >-
+          (א) לפי אי-שוויון קושי-שוורץ $|\sigma_u\cdot\sigma_v|\le\|\sigma_u\|\|\sigma_v\|$, ושוויון רק כש-$\sigma_u,\sigma_v$ תלויים
+          לינארית. בנקודה רגולרית הם בלתי תלויים (הגדרה 3.1.1), ולכן $|F|<\sqrt E\sqrt G$.
+      - kind: step
+        text: >-
+          לכן לפי טענה 3.4.6, $\cos\theta=\frac{F}{\sqrt{EG}}\in(-1,1)$, ו-$\theta\in(0,\pi)$: הקווים הפרמטריים לעולם אינם
+          משיקים זה לזה בנקודה רגולרית.
+      - kind: step
+        text: >-
+          (ב) לפי טענה 3.4.2(ג), $Q_1$ מוגדרת חיובית בכל נקודה רגולרית, בלי שום הנחה על הסימן של $F$. ובחישוב ישיר, בלי
+          טענה 3.4.2(ג): אם $ab=0$, אז $Q_1(a,b)$ הוא $Ea^2$ או $Gb^2$, חיובי כי $(a,b)\ne0$ ו-$E,G>0$. אם $ab\ne0$, אז
+          $$Ea^2+Gb^2\ge2\sqrt{EG}\,|ab|>2|F|\,|ab|\ge-2Fab$$ (ממוצע חשבוני-הנדסי, ואז (א) עם $|ab|>0$), ולכן $Q_1(a,b)>0$.
+          הטיעון בציטוט מתעלם מכך שהאיברים הריבועיים גדולים מהאיבר המעורב.
+      - kind: check
+        text: >-
+          בגרף $z=x^2-y^2$ ב-$(1,2)$: $(E,F,G)=(5,-8,17)$, $Q_1(1,1)=5-16+17=6>0$, ו-$\cos\theta=-\frac8{\sqrt{85}}\approx-0.868$,
+          זווית של כ-$150^\circ$, בין $0$ ל-$\pi$.
+      - kind: result
+        text: >-
+          (א) $|F|<\sqrt{EG}$ ו-$0<\theta<\pi$. (ב) הטענה שגויה: $Q_1>0$ על כל $(a,b)\ne0$ גם כש-$F<0$.
+
+  - id: W-3.4-06
+    level: mid
+    objectives: [OBJ-3.4-1, OBJ-3.4-3]
+    prompt: >-
+      (א) בנקודה מסוימת של פרמטריזציה $\sigma(u,v)$ מתקיים $E=2$, $F=1$, $G=3$. נגדיר $\tilde\sigma(s,t)=\sigma(s+t,\ s-t)$. חשבו
+      את $\tilde E,\tilde F,\tilde G$ בנקודה המתאימה, ובדקו את חוק המעבר עבור $\tilde E\tilde G-\tilde F^2$.
+
+      (ב) הוכיחו: לכל פרמטריזציה רגולרית $\sigma$ ולכל נקודה $q$ יש החלפת פרמטרים לינארית $\varphi$ עם $\varphi(0,0)=q$ שבה
+      $\tilde F(0,0)=-F(q)$, ויש אחרת שבה $\tilde F(0,0)=0$. מה זה אומר על השאלה "האם $F>0$ בנקודה"?
+    answer: >-
+      (א) $(\tilde E,\tilde F,\tilde G)=(7,-1,3)$; $$\tilde E\tilde G-\tilde F^2=20=(\det J)^2(EG-F^2)=4\cdot5.$$ (ב)
+      $\varphi(s,t)=q+(s,-t)$ נותנת $-F$; $\varphi(s,t)=q+\big(s-\frac FEt,\ t\big)$ נותנת $0$. הסימן של $F$ אינו גודל
+      גאומטרי.
+    solution:
+      - kind: theorem
+        text: >-
+          טענה 3.4.4: $[\tilde Q_1]=J^T[Q_1]J$ עם $J=D\varphi$, $\varphi(s,t)=(s+t,\ s-t)$.
+      - kind: computation
+        text: >-
+          $$J=\begin{pmatrix}1&1\\1&-1\end{pmatrix},$$ כלומר $\tilde\sigma_s=\sigma_u+\sigma_v$ ו-$\tilde\sigma_t=\sigma_u-\sigma_v$. לכן
+          $\tilde E=E+2F+G=7$, $\tilde F=E-G=-1$, $\tilde G=E-2F+G=3$.
+      - kind: check
+        text: >-
+          $\tilde E\tilde G-\tilde F^2=21-1=20$, ו-$\det J=-2$, $$(\det J)^2(EG-F^2)=4\cdot(6-1)=20$$. ו-$\tilde F=\tilde\sigma_s\cdot\tilde\sigma_t$
+          יכול לצאת שלילי אף ש-$F>0$: $F$ אינו גודל גאומטרי.
+      - kind: step
+        text: >-
+          (ב) $\varphi(s,t)=q+(s,-t)$ חלקה, חח"ע ועל, עם הופכית חלקה: החלפת פרמטרים (הגדרה 3.2.6). לפי כלל השרשרת
+          $\tilde\sigma_s=\sigma_u$ ו-$\tilde\sigma_t=-\sigma_v$ (ב-$q$), ולכן $\tilde F=\sigma_u\cdot(-\sigma_v)=-F(q)$.
+      - kind: step
+        text: >-
+          לחלק השני: $E(q)>0$ לפי טענה 3.4.2(ג), ולכן $\varphi(s,t)=q+\big(s-\frac{F(q)}{E(q)}t,\ t\big)$ מוגדרת; היא לינארית
+          (עם הזזה) ו-$\det D\varphi=1$, ולכן החלפת פרמטרים. $\tilde\sigma_s=\sigma_u$ ו-$\tilde\sigma_t=\sigma_v-\frac FE\sigma_u$,
+          ולכן $\tilde F=F-\frac FE\,E=0$. (זה צעד אחד של גרם-שמידט.)
+      - kind: step
+        text: >-
+          לכן גם הסימן של $F$ וגם השאלה אם $F=0$ בנקודה תלויים בפרמטריזציה: אלה אינם גדלים גאומטריים (הגדרה 3.2.9). מה
+          שכן גאומטרי הוא $Q_1$ כתבנית על המישור המשיק (טענה 3.4.4(ב)).
+      - kind: result
+        text: >-
+          (א) $(7,-1,3)$, ו-$\tilde E\tilde G-\tilde F^2=20$, כמו שחוק המעבר צופה. (ב) הוכח; הסימן של $F$ אינו גאומטרי.
+
+  - id: W-3.4-07
+    level: mid
+    objectives: [OBJ-3.4-2]
+    prompt: >-
+      על הפרבולואיד $\sigma(x,y)=(x,\ y,\ x^2+y^2)$:
+
+      (א) חשבו את הזווית בין הקווים הפרמטריים בנקודה $(1,1)$.
+
+      (ב) הוכיחו שהקווים הפרמטריים ניצבים בנקודה $(x,y)$ אם ורק אם $xy=0$.
+
+      (ג) מצאו כיוון $(a,b)$ כך שהמסילה בכיוון $a\sigma_x+b\sigma_y$ ניצבת לקו $y=1$ בנקודה $(1,1)$.
+    answer: >-
+      (א) $\cos\theta=\frac45$, $\theta\approx36.87^\circ$. (ב) $F=4xy$. (ג) $(a,b)=(4,-5)$ (או כל כפולה שלו).
+    solution:
+      - kind: computation
+        text: >-
+          (א) מתרגיל 1 ב-$(1,1)$: $(E,F,G)=(5,4,5)$. לפי טענה 3.4.6, $\cos\theta=\frac{4}{\sqrt{25}}=\frac45$, כלומר
+          $\theta=\arccos0.8\approx36.87^\circ$.
+      - kind: step
+        text: >-
+          (ב) לפי טענה 3.4.6, הקווים הפרמטריים ניצבים ב-$(x,y)$ אם ורק אם $F(x,y)=0$, ו-$F=h_xh_y=4xy$ (מסקנה 3.4.7(5)).
+          $4xy=0$ אם ורק אם $xy=0$.
+      - kind: computation
+        text: >-
+          (ג) הקו $y=1$ הוא בכיוון $\sigma_x$, כלומר $(1,0)$. לפי טענה 3.4.2(א) הניצבות היא
+          $$B\big((1,0),(a,b)\big)=Ea+Fb=5a+4b=0,$$ למשל $(a,b)=(4,-5)$.
+      - kind: check
+        text: >-
+          ישירות: $$4\sigma_x-5\sigma_y=4(1,0,2)-5(0,1,2)=(4,-5,-2),$$ ו-$(4,-5,-2)\cdot(1,0,2)=4-4=0$. שימו לב שבתחום הכיוון
+          $(4,-5)$ **אינו** ניצב ל-$(1,0)$.
+      - kind: result
+        text: >-
+          (א) $\theta=\arccos\frac45\approx36.87^\circ$; (ב) ניצבים בדיוק על הצירים; (ג) $(4,-5)$.
+
+  - id: W-3.4-08
+    level: exam
+    objectives: [OBJ-3.4-3, OBJ-3.4-2]
+    prompt: >-
+      תהי $\sigma:D\to\mathbb R^3$ פרמטריזציה רגולרית שבה $E,F,G$ **קבועים** על $D$. הוכיחו שיש העתקה לינארית הפיכה
+      $A:\mathbb R^2\to\mathbb R^2$ כך שלכל מסילה $c:[a,b]\to D$ מסדר $C^1$, אורכה של $\sigma\circ c$ על המשטח שווה לאורך של
+      $A\circ c$ במישור. מצאו $A$ כשה-$(E,F,G)=(1,1,2)$.
+    answer: >-
+      $$A=\begin{pmatrix}\sqrt E&F/\sqrt E\\0&\sqrt{(EG-F^2)/E}\end{pmatrix}$$ מקיימת $A^TA=[Q_1]$; ל-$(1,1,2)$:
+      $$A=\begin{pmatrix}1&1\\0&1\end{pmatrix}.$$
+    solution:
+      - kind: idea
+        text: >-
+          אורכים נקבעים מ-$Q_1$ (משפט 3.4.5), ו-$Q_1(\xi)=|A\xi|^2$ אם $[Q_1]=A^TA$. מטריצה כזו כבר בנינו בהוכחה של טענה
+          3.4.3.
+      - kind: step
+        text: >-
+          לפי טענה 3.4.2(ג), $E>0$ ו-$EG-F^2>0$. נגדיר $\lambda_1=\sqrt E$, $\lambda_2=F/\sqrt E$, $\lambda_3=\sqrt{(EG-F^2)/E}$, ו-$A$
+          המטריצה עם השורות $(\lambda_1,\lambda_2)$ ו-$(0,\lambda_3)$. $\det A=\lambda_1\lambda_3>0$, ולכן $A$ הפיכה.
+      - kind: computation
+        text: >-
+          $$A^TA=\begin{pmatrix}\lambda_1^2&\lambda_1\lambda_2\\\lambda_1\lambda_2&\lambda_2^2+\lambda_3^2\end{pmatrix}=\begin{pmatrix}E&F\\F&G\end{pmatrix},$$
+          כמו בשלב (2) של הוכחת טענה 3.4.3. לכן לכל $\xi\in\mathbb R^2$: $Q_1(\xi)=\xi^T[Q_1]\xi=|A\xi|^2$.
+      - kind: step
+        text: >-
+          תהי $c$ מסילה מסדר $C^1$ ב-$D$. לפי משפט 3.4.5(א), $$L(\sigma\circ c)=\int_a^b\sqrt{Q_1(c'(t))}\,dt=\int_a^b|Ac'(t)|\,dt;$$ כאן
+          השתמשנו בכך ש-$E,F,G$ קבועים, כך ש-$Q_1$ אינה תלויה בנקודה $c(t)$.
+      - kind: step
+        text: >-
+          $A$ לינארית, ולכן $(A\circ c)'=Ac'$, ו-$\int_a^b|Ac'|$ הוא האורך של $A\circ c$ במישור (משפט 1.2.7).
+      - kind: check
+        text: >-
+          ל-$(1,1,2)$, המישור האלכסוני $(u+v,\ v,\ 0)$: $\lambda_1=\lambda_2=\lambda_3=1$, ו-$A(u,v)=(u+v,\ v)$, בדיוק
+          הפרמטריזציה עצמה (בלי הרכיב השלישי). המסילה $u=v=t$, $0\le t\le1$: $A\circ c=(2t,t)$, אורכה $\sqrt5$, כמו
+          ש-$\|\sigma_u+\sigma_v\|^2=E+2F+G=5$ נותן.
+      - kind: result
+        text: >-
+          $$A=\begin{pmatrix}\sqrt E&F/\sqrt E\\0&\sqrt{(EG-F^2)/E}\end{pmatrix}$$ עונה על הדרישה; ל-$(1,1,2)$, $A(u,v)=(u+v,\ v)$.
+
+  - id: W-3.4-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-3.4-1, OBJ-3.4-3]
+    prompt: >-
+      **הוכיחו או הפריכו:** לכל פרמטריזציה רגולרית $\sigma:D\to\mathbb R^3$ ולכל $q\in D$ יש החלפת פרמטרים $\varphi$, מוגדרת על
+      קבוצה פתוחה $\tilde D$, עם $\varphi(0,0)=q$, כך שלפרמטריזציה $\tilde\sigma=\sigma\circ\varphi$ יש $\tilde E=\tilde G=1$ ו-$\tilde F=0$
+      **בנקודה** $(0,0)$.
+    answer: >-
+      נכון: $\varphi(s,t)=q+A^{-1}(s,t)$, עם $A^TA=[Q_1](q)$, על $\tilde D=A(D-q)$.
+    solution:
+      - kind: idea
+        text: >-
+          לפי טענה 3.4.4, $[\tilde Q_1]=J^T[Q_1]J$; צריך $J$ עם $J^T[Q_1](q)J=\mathrm{Id}$. אם $[Q_1](q)=A^TA$, אז
+          $J=A^{-1}$ עובד. זה גרם-שמידט בשפה של מטריצות: מחליפים את הבסיס $\sigma_u,\sigma_v$ של $T_pS$ בבסיס אורתונורמלי.
+      - kind: step
+        text: >-
+          לפי טענה 3.4.2(ג), $E(q)>0$ ו-$(EG-F^2)(q)>0$. תהי $A$ המטריצה של תרגיל 8, בנויה מהמקדמים ב-$q$; היא הפיכה ו-$A^TA=[Q_1](q)$.
+      - kind: step
+        text: >-
+          נגדיר $$\tilde D=\{(s,t):\ q+A^{-1}(s,t)\in D\},$$ פתוחה כמקור של קבוצה פתוחה בהעתקה רציפה, ו-$\varphi(s,t)=q+A^{-1}(s,t)$.
+          $\varphi$ חלקה, חח"ע ועל $D$, וההופכית $x\mapsto A(x-q)$ חלקה: זו החלפת פרמטרים (הגדרה 3.2.6), ו-$\varphi(0,0)=q$.
+      - kind: computation
+        text: >-
+          $J=D\varphi=A^{-1}$, ולפי טענה 3.4.4 בנקודה $(0,0)$:
+          $$[\tilde Q_1]=(A^{-1})^T\,A^TA\,A^{-1}=\mathrm{Id}.$$
+      - kind: check
+        text: >-
+          על ספרת היחידה ב-$q=(0,\frac\pi3)$: $[Q_1]=\operatorname{diag}(\frac14,1)$, $A=\operatorname{diag}(\frac12,1)$, ו-$\varphi(s,t)=(2s,\ \frac\pi3+t)$:
+          $\tilde\sigma_s=2\sigma_u$, שאורכו $2\cdot\frac12=1$. אבל ב-$|v|\ne\frac\pi3$, $\tilde E=4\cos^2v\ne1$: ההחלפה מתקנת רק את קו
+          הרוחב $v=\frac\pi3$ (ואת $v=-\frac\pi3$ במקרה), לא סביבה.
+      - kind: result
+        text: >-
+          הטענה נכונה, בנקודה אחת. האם אפשר לקבל $\tilde E=\tilde G\equiv1$, $\tilde F\equiv0$ על סביבה שלמה זו שאלה אחרת לגמרי,
+          ולפעמים התשובה שלילית: בספרה זה בלתי אפשרי, כפי שנראה בשיעור 3.5.
+
+  - id: W-3.4-10
+    level: exam
+    objectives: [OBJ-3.4-2]
+    prompt: >-
+      על ספרת היחידה $$\sigma(u,v)=(\cos u\cos v,\ \sin u\cos v,\ \sin v)$$, תהי $$c=(u,v):[0,T]\to\mathbb R\times(-\frac\pi2,\frac\pi2)$$
+      מסילה מסדר $C^1$ עם $c'\ne0$, $v(0)=0$, $v'\ge0$, שחוצה כל קו אורך בזווית קבועה $\alpha\in[0,\frac\pi2)$: הזווית בין
+      $\gamma=\sigma\circ c$ לבין קו האורך דרך $\gamma(t)$ (בכיוון $\sigma_v$) היא $\alpha$ בכל $t$. **הוכיחו** שאורכה של $\gamma$ הוא
+      $\frac{v(T)}{\cos\alpha}$. חשבו אותו כש-$\alpha=\frac\pi3$ ו-$v(T)=\frac\pi4$.
+    answer: >-
+      $L=\frac{v(T)}{\cos\alpha}$; עם $\alpha=\frac\pi3$, $v(T)=\frac\pi4$: $L=\frac\pi2$.
+    solution:
+      - kind: idea
+        text: >-
+          הזווית עם $\sigma_v$ נקבעת מ-$E,F,G$ (טענה 3.4.6); עם $(E,F,G)=(\cos^2v,0,1)$ היא אומרת $v'=\cos\alpha\,\|\gamma'\|$, ואז
+          האורך הוא אינטגרל של $v'$.
+      - kind: step
+        text: >-
+          לפי טענה 3.4.6 עם $(a_1,b_1)=(u',v')$ ו-$(a_2,b_2)=(0,1)$, ומסקנה 3.4.7: המונה הוא $$B\big((u',v'),(0,1)\big)=Fu'+Gv'=v',$$
+          והמכנה $\sqrt{Q_1(u',v')}\sqrt{G}=\|\gamma'\|$.
+      - kind: step
+        text: >-
+          לכן התנאי הוא $\frac{v'}{\|\gamma'\|}=\cos\alpha$, כלומר $\|\gamma'\|=\frac{v'}{\cos\alpha}$ בכל $t$; החלוקה מותרת כי
+          $\cos\alpha>0$. ($\|\gamma'\|>0$ כי $c'\ne0$ ו-$\sigma$ רגולרית על הרצועה.)
+      - kind: step
+        text: >-
+          לפי משפט 3.4.5(א) והמשפט היסודי: $$L=\int_0^T\frac{v'}{\cos\alpha}\,dt=\frac{v(T)-v(0)}{\cos\alpha}=\frac{v(T)}{\cos\alpha}.$$
+      - kind: computation
+        text: >-
+          $\alpha=\frac\pi3$, $v(T)=\frac\pi4$: $L=\frac{\pi/4}{1/2}=\frac\pi2$.
+      - kind: check
+        text: >-
+          מסילה כזו קיימת: $v=t$, $u=\tan\alpha\,\ln\tan\big(\frac t2+\frac\pi4\big)$ (אז $u'=\frac{\tan\alpha}{\cos t}$, ו-$\cos^2v\,u'^2=\tan^2\alpha$).
+          החישוב המספרי של $\int\sqrt{Q_1}$ עד $t=\frac\pi4$ נותן $1.570796$, והזווית עם $\sigma_v$ יוצאת $60^\circ$ בכל נקודה.
+          ו-$\alpha=0$ נותן קשת של קו אורך, באורך $v(T)$.
+      - kind: result
+        text: >-
+          $L=\frac{v(T)}{\cos\alpha}$; במקרה המספרי $\frac\pi2$.
+
+challenge:
+  - id: W-3.4-c1
+    stars: 1
+    objectives: [OBJ-3.4-1, OBJ-3.4-2]
+    prompt: >-
+      יהיו $0<r<R$, ו-$f:\mathbb R^2\to\mathbb R^3$,
+      $$f(\phi,\theta)=\big((R+r\sin\phi)\cos\theta,\ (R+r\sin\phi)\sin\theta,\ -r\cos\phi\big).$$
+
+      (א) תארו את התמונה $S$ של $f$.
+
+      (ב) חשבו את התבנית הראשונה של $f$, והסיקו ש-$f$ רגולרית בכל נקודה.
+
+      (ג) חשבו את אורכי הקווים הפרמטריים $\theta=\theta_0$ ו-$\phi=\phi_0$ (סיבוב אחד), ואת הזווית $\psi$ בין הקו $\phi=\phi_0$ לבין
+      המסילה $\phi=\theta$ בנקודה עם $\phi=0$, כש-$R=2$, $r=1$.
+
+      (ד) מה קורה כש-$r=R$?
+    answer: >-
+      (א) טורוס: סיבוב סביב ציר $z$ של המעגל ברדיוס $r$ סביב $(R,0,0)$ במישור $xz$. (ב) $Q_1=r^2\,d\phi^2+(R+r\sin\phi)^2\,d\theta^2$;
+      $EG-F^2>0$. (ג) $2\pi r$ ו-$2\pi(R+r\sin\phi_0)$; $\cos\psi=\frac{2}{\sqrt5}$. (ד) ב-$\phi=\frac{3\pi}2$ המעגל נוגע
+      בציר, $G=0$, ו-$f$ אינה רגולרית שם.
+    solution:
+      - kind: step
+        text: >-
+          (א) ב-$\theta=0$: $(R+r\sin\phi,\ 0,\ -r\cos\phi)$, מעגל ברדיוס $r$ במישור $xz$ סביב $(R,0,0)$. $\theta$ מסובבת אותו סביב ציר
+          $z$: זה משטח סיבוב עם $f_1(\phi)=R+r\sin\phi>0$ ו-$g_1(\phi)=-r\cos\phi$, הטורוס, בפרמטר אחר על המעגל.
+      - kind: computation
+        text: >-
+          (ב) $$f_\phi=(r\cos\phi\cos\theta,\ r\cos\phi\sin\theta,\ r\sin\phi)$$ ו-$$f_\theta=(R+r\sin\phi)(-\sin\theta,\ \cos\theta,\ 0)$$. לכן
+          $E=r^2$, $F=0$, $G=(R+r\sin\phi)^2$ (גם מסקנה 3.4.7(1), עם $f_1'^2+g_1'^2=r^2$).
+      - kind: step
+        text: >-
+          $$EG-F^2=r^2(R+r\sin\phi)^2\ge r^2(R-r)^2>0$$ כי $r<R$; לפי טענה 3.4.2(ב) ולמה 3.1.2, $f$ רגולרית בכל נקודה.
+      - kind: computation
+        text: >-
+          (ג) $\theta=\theta_0$, $\phi=t\in[0,2\pi]$: $\|\gamma'\|=\sqrt E=r$, אורך $2\pi r$. $\phi=\phi_0$, $\theta=t$: $\|\gamma'\|=\sqrt G$, אורך
+          $2\pi(R+r\sin\phi_0)$.
+      - kind: computation
+        text: >-
+          הזווית: הקו $\phi=\phi_0$ בכיוון $(0,1)$, המסילה $\phi=\theta$ בכיוון $(1,1)$. לפי טענה 3.4.6:
+          $$\cos\psi=\frac{F+G}{\sqrt G\,\sqrt{E+2F+G}}=\frac{\sqrt G}{\sqrt{E+G}} .$$
+          ב-$\phi=0$ עם $R=2$, $r=1$: $E=1$, $G=4$, $\cos\psi=\frac{2}{\sqrt5}\approx0.894$.
+      - kind: step
+        text: >-
+          (ד) כש-$r=R$: $G=R^2(1+\sin\phi)^2$ מתאפס ב-$\phi=\frac{3\pi}2$, ושם $f=(0,0,0)$ לכל $\theta$: כל המעגל $\phi=\frac{3\pi}{2}$
+          קורס לראשית, ו-$f$ אינה רגולרית שם (כמו בטענה 3.1.4: הפרופיל נוגע בציר).
+      - kind: check
+        text: >-
+          החישוב המספרי (הפרשים מרכזיים) עם $R=2$, $r=1$ ב-$(\phi,\theta)=(0.7,1.1)$ נותן $E=1.0000$, $F=0.0000$,
+          $G=6.9919=(2+\sin0.7)^2$.
+      - kind: result
+        text: >-
+          $Q_1=r^2\,d\phi^2+(R+r\sin\phi)^2\,d\theta^2$; אורכים $2\pi r$, $2\pi(R+r\sin\phi_0)$; $\cos\psi=\frac2{\sqrt5}$; כש-$r=R$
+          הפרמטריזציה אינה רגולרית ב-$\phi=\frac{3\pi}2$.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק, דף תרגיל 4'
+      year: 2002
+      problem: 'תרגיל 5 (א)–(ב)'
+      url: 'http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex04.html'
+      verified: '2026-11-12'
+      adapted: true
+
+  - id: W-3.4-c2
+    stars: 1
+    objectives: [OBJ-3.4-1, OBJ-3.4-2, OBJ-3.4-3]
+    prompt: >-
+      תהי $h:(-2,2)\to[0,\infty)$ מסדר $C^2$, ו-$$U(x,y)=\big(x,\ h(x)\cos y,\ h(x)\sin y\big)$$ על $(-2,2)\times\mathbb R$: משטח הסיבוב של
+      הגרף של $h$ סביב ציר $x$.
+
+      (א) חשבו את התבנית הראשונה של $U$, וקבעו באילו נקודות $U$ רגולרית.
+
+      (ב) עבור $h(x)=x^2$, חשבו את אורכי המסילות $U(\phi(t))$, $0\le t\le1$, כש-$\phi(t)=(t,0)$ וכש-$\phi(t)=(0,t)$.
+
+      (ג) הסבירו למה התוצאה השנייה ב-(ב) אינה סותרת את משפט 3.4.5.
+    answer: >-
+      (א) $E=1+h'^2$, $F=0$, $G=h^2$; רגולרית בדיוק כש-$h(x)>0$. (ב) $$\frac{\sqrt5}2+\frac14\operatorname{arcsinh}2\approx1.4789$$ ו-$0$.
+      (ג) $c(t)=(0,t)$ היא מסילה מסדר $C^1$ בתחום, והנוסחה נותנת $\int\sqrt{G(0,t)}\,dt=0$: התמונה נקודה אחת.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $U_x=(1,\ h'\cos y,\ h'\sin y)$ ו-$U_y=(0,\ -h\sin y,\ h\cos y)$. לכן $E=1+h'^2$, $$F=-hh'\sin y\cos y+hh'\sin y\cos y=0$$,
+          $G=h^2$.
+      - kind: step
+        text: >-
+          $EG-F^2=(1+h'^2)h^2$, וזה חיובי אם ורק אם $h(x)\ne0$, כלומר $h(x)>0$. לפי טענה 3.4.2(ב) ולמה 3.1.2, $U$ רגולרית
+          בדיוק בנקודות שבהן $h(x)>0$.
+      - kind: computation
+        text: >-
+          (ב) $\phi(t)=(t,0)$: $x'=1$, $y'=0$, $\|\gamma'\|=\sqrt{E}=\sqrt{1+4t^2}$, ו-
+          $$L=\int_0^1\sqrt{1+4t^2}\,dt=\Big[\tfrac t2\sqrt{1+4t^2}+\tfrac14\operatorname{arcsinh}(2t)\Big]_0^1=\tfrac{\sqrt5}2+\tfrac14\operatorname{arcsinh}2\approx1.4789.$$
+      - kind: computation
+        text: >-
+          $\phi(t)=(0,t)$: $x'=0$, $y'=1$, $\|\gamma'\|=\sqrt{G(0,t)}=h(0)=0$, ולכן $L=0$. ישירות: $U(0,t)=(0,0,0)$ לכל $t$.
+      - kind: step
+        text: >-
+          (ג) משפט 3.4.5(א) דורש רק ש-$U$ ו-$c$ יהיו מסדר $C^1$, לא רגולריות; לכן הנוסחה תקפה גם כאן ונותנת $0$. ה"מסילה"
+          היא נקודה, כי לאורך $x=0$ הפרמטריזציה מכווצת קו שלם לנקודה, כמו קוטב הספרה: זה מה ש-$G=0$ מבטא. האורך $1$ של
+          הקטע בתחום הפרמטרים אינו אומר כלום על המשטח.
+      - kind: check
+        text: >-
+          (ב) ישירות: $U(t,0)=(t,\ t^2,\ 0)$, הפרבולה, ואורכה מ-$0$ עד $1$ הוא $1.47894$ גם בסימפסון. ובנקודה $x=0.6$:
+          $E=1+4\cdot0.36=2.44$, $G=0.6^4=0.1296$, כמו החישוב המספרי.
+      - kind: result
+        text: >-
+          $Q_1=(1+h'^2)\,dx^2+h^2\,dy^2$, רגולרית בדיוק כש-$h>0$; האורכים $\approx1.4789$ ו-$0$.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק, דף תרגיל 5'
+      year: 2002
+      problem: 'תרגיל 2'
+      url: 'http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex05.html'
+      verified: '2026-11-12'
+      adapted: true

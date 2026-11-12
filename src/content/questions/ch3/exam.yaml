@@ -327,7 +327,7 @@ questions:
     type: exam
     title: חתיכה של ספרה אינה איזומטרית למישור
     prompt: >-
-      $S$ ספרת היחידה, $P=(0,0,1)$ הקוטב הצפוני, ו-$\sigma(u,v)=(\sin u\cos v,\ \sin u\sin v,\ \cos u)$ על
+      $S$ ספרת היחידה, $P=(0,0,1)$ הקוטב הצפוני, ו-$$\sigma(u,v)=(\sin u\cos v,\ \sin u\sin v,\ \cos u)$$ על
       $0<u<\pi$, $0<v<2\pi$ ($u$ היא הקולטיטודה, הזווית מ-$P$). ל-$0<\rho<\pi$ נסמן
       $C_\rho=\{p\in S:\ p_z=\cos\rho\}$, קו הרוחב בקולטיטודה $\rho$.
     parts:
@@ -525,14 +525,14 @@ questions:
         type: open
         objectives: [OBJ-3.3-1, OBJ-3.3-3, OBJ-3.1-2]
         prompt: >-
-          הראו ש-$\sigma(u,v)=(\cosh v\cos u,\ \cosh v\sin u,\ \sinh v)$ היא פרמטריזציה רגולרית של $S_1$, וש-$\hat{\mathbf N}$
+          הראו ש-$$\sigma(u,v)=(\cosh v\cos u,\ \cosh v\sin u,\ \sinh v)$$ היא פרמטריזציה רגולרית של $S_1$, וש-$\hat{\mathbf N}$
           שלה שווה ל-$\frac{\nabla F}{\|\nabla F\|}$ בכל נקודה.
         solution:
           - kind: check
             text: '$\cosh^2v(\cos^2u+\sin^2u)-\sinh^2v=1$, ולכן $\sigma(u,v)\in S_1$.'
           - kind: computation
             text: >-
-              $\sigma_u=(-\cosh v\sin u,\ \cosh v\cos u,\ 0)$, $\sigma_v=(\sinh v\cos u,\ \sinh v\sin u,\ \cosh v)$, ולכן
+              $\sigma_u=(-\cosh v\sin u,\ \cosh v\cos u,\ 0)$, $$\sigma_v=(\sinh v\cos u,\ \sinh v\sin u,\ \cosh v)$$, ולכן
               $$\sigma_u\times\sigma_v=\big(\cosh^2v\cos u,\ \cosh^2v\sin u,\ -\cosh v\sinh v\big)=\cosh v\,(x,\ y,\ -z).$$
           - kind: step
             text: >-

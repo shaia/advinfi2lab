@@ -1,0 +1,498 @@
+# Workbook of lesson 3.2 — graphs, level sets and change of parameters.
+# Objectives (src/course.ts):
+#   OBJ-3.2-1  a graph of a smooth function is a regular surface; a level set of a regular value is locally a graph
+#   OBJ-3.2-2  define a change of parameters and relate the partial derivatives before and after it
+#   OBJ-3.2-3  explain why every geometric notion of the course must not depend on the parametrization
+# Every number recomputed on 2026-11-12 (tsx, finite differences of src/math/geometry.ts partials against the closed
+# forms below; Newton's method for W-3.2-10).
+lesson: '3.2'
+practice:
+  - id: W-3.2-01
+    level: basic
+    objectives: [OBJ-3.2-1]
+    prompt: >-
+      $F(x,y,z)=x^2+y^2-z^2+2z$. מצאו את כל הערכים $c$ שהם ערכים רגולריים של $F$, וזהו את הקבוצה $F^{-1}(c)$ עבור
+      $c=2$, $c=0$ ו-$c=1$. לאילו מהן משפט 3.2.4 מבטיח שהן משטח חלק, ומה ידוע על השלישית?
+    answer: >-
+      כל $c\ne1$. $c=2$: היפרבולואיד ביריעה אחת; $c=0$: היפרבולואיד בשתי יריעות; שתיהן משטחים חלקים. $c=1$: חרוט כפול
+      עם קודקוד ב-$(0,0,1)$, שאינו משטח חלק.
+    solution:
+      - kind: computation
+        text: >-
+          $\nabla F=(2x,\ 2y,\ 2-2z)$, שמתאפס רק ב-$(0,0,1)$, ושם $F(0,0,1)=-1+2=1$.
+      - kind: definition
+        text: >-
+          $c$ ערך רגולרי אם $\nabla F\ne0$ בכל נקודה של $F^{-1}(c)$. הנקודה היחידה שבה $\nabla F=0$ נמצאת ב-$F^{-1}(1)$, ולכן
+          כל $c\ne1$ הוא ערך רגולרי, ו-$1$ אינו.
+      - kind: step
+        text: >-
+          משלימים לריבוע: $F=x^2+y^2-(z-1)^2+1$. לכן $$F^{-1}(c)=\{x^2+y^2-(z-1)^2=c-1\}$$: ההיפרבולואיד של טענה 3.2.5 מוזז
+          ביחידה כלפי מעלה. $c=2$: ביריעה אחת; $c=0$: $x^2+y^2-(z-1)^2=-1$, שתי יריעות; $c=1$: החרוט הכפול
+          $x^2+y^2=(z-1)^2$ עם קודקוד ב-$(0,0,1)$.
+      - kind: theorem
+        text: >-
+          לפי משפט 3.2.4, $F^{-1}(2)$ ו-$F^{-1}(0)$ משטחים חלקים. $F^{-1}(1)$ אינו משטח חלק: אילו הייתה לו פרמטריזציה מקומית
+          $\sigma$ ליד $(0,0,1)$, אז $\sigma-(0,0,1)$ הייתה פרמטריזציה מקומית של החרוט $x^2+y^2=z^2$ ליד הקודקוד (הזזה
+          שומרת על חלקות, רגולריות ורציפות ההופכית), בסתירה למשפט 3.1.10.
+      - kind: check
+        text: >-
+          $F^{-1}(1)$ מכיל את הישרים $(t,\ 0,\ 1+t)$ ו-$(t,\ 0,\ 1-t)$, שנחתכים בקודקוד, כמו בחרוט.
+      - kind: result
+        text: >-
+          הערכים הרגולריים: $c\ne1$. $F^{-1}(2)$, $F^{-1}(0)$ משטחים חלקים; $F^{-1}(1)$ חרוט, לא משטח חלק.
+
+  - id: W-3.2-02
+    level: basic
+    objectives: [OBJ-3.2-2]
+    prompt: >-
+      $\sigma(u,v)=(u,\ v,\ u^2-v^2)$ ו-$\varphi(s,t)=(s+t^2,\ t)$ על $\mathbb R^2$.
+
+      (א) הראו ש-$\varphi$ דיפאומורפיזם וחשבו את $\det D\varphi$.
+
+      (ב) חשבו את $\tilde\sigma_s$ ואת $\tilde\sigma_t$ של $\tilde\sigma=\sigma\circ\varphi$ בעזרת כלל השרשרת, ואת
+      $\tilde\sigma_s\times\tilde\sigma_t$ בנקודה $(s,t)=(1,1)$.
+    answer: >-
+      $\varphi^{-1}(u,v)=(u-v^2,\ v)$, $\det D\varphi=1$; $\tilde\sigma_s=\sigma_u$, $\tilde\sigma_t=2t\,\sigma_u+\sigma_v$;
+      ב-$(1,1)$: $\tilde\sigma_s\times\tilde\sigma_t=(-4,\ 2,\ 1)$.
+    solution:
+      - kind: computation
+        text: >-
+          $\varphi$ חלקה, ו-$(u,v)\mapsto(u-v^2,\ v)$ חלקה ומקיימת $\varphi(u-v^2,v)=(u,v)$ וגם
+          $(s+t^2)-t^2=s$: זו ההופכית. לכן $\varphi$ דיפאומורפיזם.
+          $$D\varphi=\begin{pmatrix}1&2t\\0&1\end{pmatrix},\qquad \det D\varphi=1 .$$
+      - kind: theorem
+        text: >-
+          לפי טענה 3.2.7(א), עם $u_s=1$, $v_s=0$, $u_t=2t$, $v_t=1$: $\tilde\sigma_s=\sigma_u$ ו-$\tilde\sigma_t=2t\,\sigma_u+\sigma_v$,
+          כש-$\sigma_u,\sigma_v$ מחושבים ב-$\varphi(s,t)$.
+      - kind: computation
+        text: >-
+          ב-$(s,t)=(1,1)$: $\varphi(1,1)=(2,1)$, $\sigma_u=(1,0,2u)=(1,0,4)$, $\sigma_v=(0,1,-2v)=(0,1,-2)$. לפי טענה 3.2.1,
+          $$\sigma_u\times\sigma_v=(-2u,\ 2v,\ 1)=(-4,\ 2,\ 1)$$, ולפי טענה 3.2.7(ג) עם $\det D\varphi=1$ זו גם
+          $\tilde\sigma_s\times\tilde\sigma_t$.
+      - kind: check
+        text: >-
+          ישירות: $\tilde\sigma_s=(1,0,4)$ ו-$$\tilde\sigma_t=2\cdot(1,0,4)+(0,1,-2)=(2,1,6)$$, ו-
+          $$(1,0,4)\times(2,1,6)=(0\cdot6-4\cdot1,\ 4\cdot2-1\cdot6,\ 1\cdot1-0\cdot2)=(-4,\ 2,\ 1).$$
+          גם חישוב בהפרשים סופיים נותן $(-4.000,\ 2.000,\ 1.000)$.
+      - kind: result
+        text: >-
+          $\det D\varphi=1$; $\tilde\sigma_s=\sigma_u$, $\tilde\sigma_t=2t\sigma_u+\sigma_v$; $\tilde\sigma_s\times\tilde\sigma_t(1,1)=(-4,2,1)$.
+
+  - id: W-3.2-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-3.2-3]
+    prompt: >-
+      $\sigma$ פרמטריזציה מקומית של משטח חלק, $q$ נקודה בתחום שלה. אילו מהתכונות הבאות **אינן תלויות** בפרמטריזציה
+      (נשמרות בכל החלפת פרמטרים)? נמקו כל אחת, בהוכחה או בדוגמה נגדית.
+
+      (א) $\sigma$ רגולרית ב-$q$. (ב) $\|\sigma_u(q)\|=1$. (ג) המישור $\operatorname{span}\{\sigma_u,\sigma_v\}(q)$.
+      (ד) $\sigma_u(q)\perp\sigma_v(q)$. (ה) הישר $\mathbb R\,(\sigma_u\times\sigma_v)(q)$.
+    answer: >-
+      (א), (ג), (ה) אינן תלויות בפרמטריזציה; (ב) ו-(ד) תלויות.
+    solution:
+      - kind: idea
+        text: >-
+          מה שנבנה מהמישור $\operatorname{span}\{\sigma_u,\sigma_v\}$ בלבד שורד; מה שתלוי בווקטורים $\sigma_u,\sigma_v$ עצמם
+          (אורכים, זוויות ביניהם) לא.
+      - kind: theorem
+        text: >-
+          (א), (ג), (ה): לפי טענה 3.2.7(ג), $\tilde\sigma_s\times\tilde\sigma_t=\det D\varphi\cdot\sigma_u\times\sigma_v$ עם
+          $\det D\varphi\ne0$. לכן רגולריות נשמרת, הישר נשמר, ולפי 3.2.7(ד) גם המישור.
+      - kind: step
+        text: >-
+          (ב): ב-$\tilde\sigma(s,t)=\sigma(2s,t)$, $\tilde\sigma_s=2\sigma_u$, ואורכו 2 כשאורך $\sigma_u$ הוא 1.
+      - kind: step
+        text: >-
+          (ד): המישור $z=0$, $\sigma(u,v)=(u,v,0)$, עם $\sigma_u\perp\sigma_v$. ההחלפה $\varphi(s,t)=(s+t,\ t)$ (דיפאומורפיזם,
+          ההופכית $(u-v,\ v)$) נותנת $\tilde\sigma(s,t)=(s+t,\ t,\ 0)$, $\tilde\sigma_s=(1,0,0)$, $\tilde\sigma_t=(1,1,0)$,
+          ו-$\tilde\sigma_s\cdot\tilde\sigma_t=1\ne0$.
+      - kind: check
+        text: >-
+          שתי התכונות התלויות עוסקות בזוג הווקטורים, שמשתנה לפי $D\varphi$; שלוש האחרות עוסקות רק במה שהזוג פורש.
+      - kind: result
+        text: >-
+          גאומטריות: (א), (ג), (ה). תלויות בפרמטריזציה: (ב), (ד).
+
+  - id: W-3.2-04
+    level: mid
+    objectives: [OBJ-3.2-1]
+    prompt: >-
+      יהיו $0<r<R$, $U=\mathbb R^3\setminus\{x=y=0\}$, ו-$F(x,y,z)=\big(\sqrt{x^2+y^2}-R\big)^2+z^2$ על $U$. הוכיחו
+      ש-$r^2$ ערך רגולרי של $F$, ושלכן הטורוס $T=F^{-1}(r^2)$ משטח חלק. הראו ש-$T$ היא התמונה של
+      $$\big((R+r\cos v)\cos u,\ (R+r\cos v)\sin u,\ r\sin v\big)$$.
+    answer: >-
+      $\nabla F=0$ רק במעגל $\{\rho=R,\ z=0\}$, שבו $F=0\ne r^2$; לכן לפי משפט 3.2.4 $T$ משטח חלק.
+    solution:
+      - kind: given
+        text: >-
+          נסמן $\rho=\sqrt{x^2+y^2}$; על $U$, $\rho>0$, ולכן $\rho$ ו-$F$ חלקות על $U$, ו-$U$ פתוחה.
+      - kind: computation
+        text: >-
+          $\rho_x=\frac x\rho$, $\rho_y=\frac y\rho$, ולכן
+          $$\nabla F=\Big(2(\rho-R)\frac x\rho,\ \ 2(\rho-R)\frac y\rho,\ \ 2z\Big).$$
+      - kind: step
+        text: >-
+          $\nabla F=0$ גורר $z=0$ ו-$(\rho-R)\,(x,y)=0$; כי $(x,y)\ne0$ על $U$, $\rho=R$. בנקודות האלה $F=0$. כי $r^2>0$, אף
+          נקודה של $F^{-1}(r^2)$ אינה כזו: $r^2$ ערך רגולרי, ולפי משפט 3.2.4 $T$ משטח חלק.
+      - kind: step
+        text: >-
+          התמונה: $(x,y,z)\in T$ אם ורק אם הנקודה $(\rho,z)$ על המעגל ברדיוס $r$ סביב $(R,0)$, כלומר $\rho=R+r\cos v$,
+          $z=r\sin v$ ל-$v$ כלשהו; ו-$(x,y)=\rho(\cos u,\sin u)$ ל-$u$ כלשהו. כי $r<R$, $\rho\ge R-r>0$, ולכן כל נקודה כזו
+          אכן ב-$U$.
+      - kind: check
+        text: >-
+          ב-$(R+r,0,0)$: $\nabla F=(2r,0,0)\ne0$, והמשטח שם גרף $x=g(y,z)$, כמו ההיפרבולואיד ב-$(1,0,0)$.
+      - kind: result
+        text: >-
+          $r^2$ ערך רגולרי, והטורוס משטח חלק.
+
+  - id: W-3.2-05
+    level: mid
+    objectives: [OBJ-3.2-2]
+    prompt: >-
+      יהיו $\chi:\hat D\to\tilde D$ ו-$\varphi:\tilde D\to D$ דיפאומורפיזמים. הוכיחו:
+
+      (א) $\varphi\circ\chi$ ו-$\varphi^{-1}$ דיפאומורפיזמים, ו-$\det D(\varphi^{-1})(w)=\dfrac{1}{\det D\varphi(\varphi^{-1}(w))}$.
+
+      (ב) אם $\sigma:D\to\mathbb R^3$ ו-$\hat\sigma=\sigma\circ\varphi\circ\chi$, אז
+      $\hat\sigma_a\times\hat\sigma_b=\det D\varphi\cdot\det D\chi\cdot\sigma_u\times\sigma_v$ (בנקודות המתאימות).
+      הסיקו: הרכבה של שתי החלפות שכל אחת הופכת את כיוון $\sigma_u\times\sigma_v$ שומרת עליו.
+    answer: >-
+      הרכבה והופכית של דיפאומורפיזמים הן דיפאומורפיזמים; הדטרמיננטות מתכפלות (כלל השרשרת ומכפליות הדטרמיננטה).
+    solution:
+      - kind: step
+        text: >-
+          (א) $\varphi\circ\chi$ חד-חד-ערכית ועל $D$ כהרכבה של כאלה, חלקה כהרכבה של חלקות, וההופכית שלה
+          $\chi^{-1}\circ\varphi^{-1}$ חלקה מאותה סיבה. $\varphi^{-1}$ חד-חד-ערכית ועל $\tilde D$, חלקה מההגדרה, וההופכית
+          שלה $\varphi$ חלקה.
+      - kind: theorem
+        text: >-
+          לפי כלל השרשרת, $\varphi\circ\varphi^{-1}=\mathrm{Id}$ נותן $D\varphi(\varphi^{-1}(w))\,D(\varphi^{-1})(w)=\mathrm{Id}$, ולקיחת
+          דטרמיננטה נותנת את הנוסחה (כמו בהוכחת טענה 3.2.7(ב)).
+      - kind: step
+        text: >-
+          (ב) נסמן $\tilde\sigma=\sigma\circ\varphi$. לפי טענה 3.2.7(ג) פעמיים: $\hat\sigma=\tilde\sigma\circ\chi$ נותן
+          $\hat\sigma_a\times\hat\sigma_b=\det D\chi\cdot\tilde\sigma_s\times\tilde\sigma_t$, ו-$\tilde\sigma_s\times\tilde\sigma_t=\det D\varphi\cdot\sigma_u\times\sigma_v$.
+      - kind: step
+        text: >-
+          אם $\det D\varphi<0$ ו-$\det D\chi<0$ בכל נקודה, המכפלה חיובית, ו-$\hat\sigma_a\times\hat\sigma_b$ כפולה חיובית של
+          $\sigma_u\times\sigma_v$.
+      - kind: check
+        text: >-
+          $\varphi=\chi=(s,t)\mapsto(t,s)$: $\varphi\circ\chi=\mathrm{Id}$, ו-$(-1)\cdot(-1)=1$. וזה גם כלל השרשרת
+          $\det D(\varphi\circ\chi)=\det D\varphi\cdot\det D\chi$.
+      - kind: result
+        text: >-
+          החלפות פרמטרים נסגרות להרכבה ולהופכית, והדטרמיננטות מתכפלות; שני היפוכי כיוון מבטלים זה את זה.
+
+  - id: W-3.2-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.2-2, OBJ-3.2-3]
+    prompt: >-
+      על גליל היחידה $S=\{x^2+y^2=1\}$: $\sigma(u,v)=(\cos u,\ \sin u,\ v)$ על $(0,2\pi)\times\mathbb R$, ו-
+
+      $$\tilde\sigma(s,t)=\Big(\frac{1-s^2}{1+s^2},\ \frac{2s}{1+s^2},\ t\Big),\qquad (s,t)\in\mathbb R^2 .$$
+
+      (א) מצאו את התמונות של שתיהן ואת $\tilde D_O$, $D_O$ של משפט 3.2.8.
+
+      (ב) מצאו את העתקת המעבר $\eta=\sigma^{-1}\circ\tilde\sigma$ ואת $\det D\eta$. למה הנוסחה ל-$h$ מתפצלת לשני מקרים?
+
+      (ג) בדקו את טענה 3.2.7(ג) בנקודה $s=\frac12$.
+    answer: >-
+      $\tilde D_O=(\mathbb R\setminus\{0\})\times\mathbb R$; $\eta(s,t)=(2\arctan s,\ t)$ כש-$s>0$ ו-$(2\arctan s+2\pi,\ t)$
+      כש-$s<0$; $\det D\eta=\frac{2}{1+s^2}>0$. ב-$s=\frac12$: $\tilde\sigma_s\times\tilde\sigma_t=(0.96,\ 1.28,\ 0)$.
+    solution:
+      - kind: computation
+        text: >-
+          $\sigma$ מחמיצה רק את $u=0$, כלומר את הישר $\{(1,0,t)\}$. ב-$\tilde\sigma$, $\|(\frac{1-s^2}{1+s^2},\frac{2s}{1+s^2})\|=1$,
+          ו-$\frac{1-s^2}{1+s^2}=-1$ בלתי אפשרי; כל נקודה אחרת של המעגל מתקבלת פעם אחת. לכן $\tilde\sigma$ מחמיצה רק את
+          הישר $\{(-1,0,t)\}$. החלק המשותף $O$ הוא הגליל בלי שני הישרים, ו-$s=0$ נותן $(1,0,t)$, שאינו ב-$O$.
+          ו-$\tilde\sigma$ אכן פרמטריזציה מקומית, כפי שמשפט 3.2.8 דורש: היא חלקה; רגולרית, כי $\tilde\sigma_t=(0,0,1)$
+          ו-$\tilde\sigma_s$ הוא וקטור אופקי שאינו אפס (אורכו $\frac{2}{1+s^2}$, נגזרת של זווית בגודל $2\arctan s$);
+          ועל הקבוצה $S\cap W$ עם $W=\{x\ne-1\}$ ההופכית שלה היא $(x,y,z)\mapsto\big(\frac{y}{1+x},\ z\big)$, רציפה (כי
+          $\tan\frac u2=\frac{\sin u}{1+\cos u}$).
+      - kind: step
+        text: >-
+          לכן $\tilde D_O=(\mathbb R\setminus\{0\})\times\mathbb R$ ו-$D_O=\big((0,\pi)\cup(\pi,2\pi)\big)\times\mathbb R$.
+      - kind: computation
+        text: >-
+          לפי נוסחאות הזווית הכפולה, $\cos(2\arctan s)=\frac{1-s^2}{1+s^2}$ ו-$\sin(2\arctan s)=\frac{2s}{1+s^2}$. לכן
+          $\tilde\sigma(s,t)=\sigma(u,t)$ עם $u\equiv2\arctan s$ מודולו $2\pi$, וצריך את הנציג ב-$(0,2\pi)$: כש-$s>0$,
+          $2\arctan s\in(0,\pi)$; כש-$s<0$ זה $2\arctan s+2\pi\in(\pi,2\pi)$.
+      - kind: step
+        text: >-
+          הנוסחה מתפצלת כי $\tilde D_O$ אינה קשירה: לכל אחד משני החלקים שלה נוסחה משלו. בכל אחד מהם $\eta$ חלקה ו-
+          $$\det D\eta=\frac{d}{ds}(2\arctan s)\cdot1=\frac{2}{1+s^2}>0 .$$
+          משפט 3.2.8 מבטיח רק $\det D\eta\ne0$; הסימן החיובי הוא תכונה של שתי הפרמטריזציות האלה (שתיהן מקיפות את המעגל
+          באותו כיוון).
+      - kind: check
+        text: >-
+          (ג) $u=2\arctan\frac12$, $\cos u=0.6$, $\sin u=0.8$, ו-$\sigma_u\times\sigma_v=(\cos u,\ \sin u,\ 0)$. לכן
+          $$\det D\eta\cdot\sigma_u\times\sigma_v=1.6\cdot(0.6,\ 0.8,\ 0)=(0.96,\ 1.28,\ 0),$$ וחישוב בהפרשים סופיים
+          של $\tilde\sigma_s\times\tilde\sigma_t$ נותן אותו וקטור.
+      - kind: result
+        text: >-
+          $\eta(s,t)=(2\arctan s,\ t)$ כש-$s>0$, ו-$\eta(s,t)=(2\arctan s+2\pi,\ t)$ כש-$s<0$; $\det D\eta=\frac2{1+s^2}$;
+          שני מקרים כי $\tilde D_O$ מורכבת משני חלקים.
+
+  - id: W-3.2-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.2-1]
+    prompt: >-
+      $S=\{(x,\ y,\ |x|):\ (x,y)\in\mathbb R^2\}$ הוא הגרף של פונקציה רציפה, ו-$(x,y)\mapsto(x,y,|x|)$ הומאומורפיזם של
+      $\mathbb R^2$ על $S$. **הוכיחו או הפריכו:** $S$ משטח חלק.
+    answer: >-
+      הפרכה: בנקודות $(0,y_0,0)$ אין פרמטריזציה מקומית, כי ליד הנקודה $S$ אינו גרף חלק מעל אף מישור קואורדינטות
+      (משפט 3.2.2).
+    solution:
+      - kind: idea
+        text: >-
+          כמו בחוד של טענה 3.1.11(ב): לפי משפט 3.2.2 פרמטריזציה מקומית הופכת, ליד הנקודה, את $S$ לגרף **חלק** מעל מישור
+          קואורדינטות, ואת זה בודקים בשלושת המישורים.
+      - kind: step
+        text: >-
+          נניח בשלילה ש-$\sigma$ פרמטריזציה מקומית של $S$ ו-$\sigma(q)=p=(0,y_0,0)$. לפי משפט 3.2.2 יש $D'\ni q$ כך
+          ש-$\sigma(D')$ גרף של $h$ חלקה מעל קבוצה פתוחה $V$ במישור קואורדינטות. כי $\sigma$ הומאומורפיזם על $S\cap W$, יש
+          $\varepsilon>0$ עם $S\cap B_\varepsilon(p)\subset\sigma(D')$ (כמו בשלב (4) של טענה 3.1.11(א)).
+      - kind: step
+        text: >-
+          מעל $xy$: ל-$(x,y)$ קרוב מספיק ל-$(0,y_0)$, $(x,y,|x|)\in S\cap B_\varepsilon(p)$, ולכן $h(x,y)=|x|$. אז
+          $h(x,y_0)=|x|$ ליד $0$, ו-$h_x(0,y_0)$ אינה קיימת: סתירה.
+      - kind: step
+        text: >-
+          מעל $xz$: הנקודות $(0,\ y_0+\tau,\ 0)$, $|\tau|<\varepsilon$, כולן ב-$S\cap B_\varepsilon(p)$ ומעל אותה נקודה
+          $(0,0)$ של המישור $xz$. מעל $yz$: ל-$0<\tau<\frac\varepsilon2$, הנקודות $(\tau,\ y_0,\ \tau)$ ו-$(-\tau,\ y_0,\ \tau)$
+          במרחק $\sqrt2\,\tau<\varepsilon$ מ-$p$, ולכן ב-$S\cap B_\varepsilon(p)$, ושתיהן מעל אותה נקודה $(y_0,\tau)$. גרף
+          מכיל לכל היותר נקודה אחת מעל כל נקודה: סתירה בשני המקרים.
+      - kind: check
+        text: >-
+          בנקודות שבהן $x\ne0$, $S$ הוא מקומית גרף של $x$ או של $-x$, חלקות, ולכן שם הוא כן משטח חלק. הבעיה רק על הקו
+          $x=z=0$, ה"קפל". והומאומורפיזם עם המישור אינו מספיק: הגדרה 3.1.6 דורשת פרמטריזציה **רגולרית**.
+      - kind: result
+        text: >-
+          $S$ אינו משטח חלק: הנקודות $(0,y_0,0)$ סינגולריות.
+
+  - id: W-3.2-08
+    level: exam
+    objectives: [OBJ-3.2-1]
+    prompt: >-
+      **הוכיחו את ההפך המקומי של משפט 3.2.4:** אם $S$ משטח חלק ו-$p\in S$, יש $W'\subset\mathbb R^3$ פתוחה עם $p\in W'$
+      ופונקציה חלקה $G:W'\to\mathbb R$, כך ש-$\nabla G\ne0$ בכל $W'$ ו-$S\cap W'=G^{-1}(0)$.
+    answer: >-
+      ליד $p$, $S$ הוא גרף $z=h(x,y)$ (משפט 3.2.2 + רציפות ההופכית); $G(x,y,z)=z-h(x,y)$ על $W'=W''\cap(V\times\mathbb R)$.
+    solution:
+      - kind: idea
+        text: >-
+          כל משטח חלק הוא מקומית גרף, וגרף $z=h(x,y)$ הוא קבוצת האפסים של $z-h(x,y)$, שהגרדיאנט שלה תמיד
+          $(-h_x,-h_y,1)\ne0$.
+      - kind: step
+        text: >-
+          תהי $\sigma:D\to\mathbb R^3$ פרמטריזציה מקומית ליד $p$, הומאומורפיזם על $S\cap W$, ו-$\sigma(q)=p$. לפי משפט 3.2.2
+          (נניח שהמישור הוא $xy$; אחרת מחליפים את שמות הצירים) יש $D'\ni q$, $V$ פתוחה ו-$h:V\to\mathbb R$ חלקה עם
+          $$\sigma(D')=\{(x,y,h(x,y)):(x,y)\in V\}$$.
+      - kind: step
+        text: >-
+          כי $\sigma$ הומאומורפיזם ו-$D'$ פתוחה ב-$D$, יש $W''$ פתוחה עם $\sigma(D')=S\cap W\cap W''$. נגדיר
+          $W'=W\cap W''\cap(V\times\mathbb R)$, פתוחה ומכילה את $p$, ו-$G(x,y,z)=z-h(x,y)$ על $W'$; היא חלקה ו-
+          $\nabla G=(-h_x,\ -h_y,\ 1)\ne0$.
+      - kind: step
+        text: >-
+          $$S\cap W'=\sigma(D')\cap(V\times\mathbb R)=\sigma(D')$$, כי הגרף כולו מעל $V$, והגרף מוכל ב-$W\cap W''$. וגם
+          $$G^{-1}(0)=\{z=h(x,y)\}\cap W'=\sigma(D')\cap W'=\sigma(D').$$ לכן $S\cap W'=G^{-1}(0)$.
+      - kind: check
+        text: >-
+          לספרה ליד הקוטב הצפוני: $G=z-\sqrt{1-x^2-y^2}$ על $W'=\{z>0,\ x^2+y^2<1\}$, שם השורש מוגדר וחלק. ו-$G$ אינה בהכרח מוגדרת על כל $\mathbb R^3$: בשיעור 3.3
+          נראה שרצועת מביוס היא מקומית קבוצת רמה כזו בכל נקודה, ובכל זאת אינה קבוצת רמה של ערך רגולרי של פונקציה אחת.
+      - kind: result
+        text: >-
+          כל משטח חלק הוא, ליד כל נקודה, קבוצת רמה של ערך רגולרי.
+
+  - id: W-3.2-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-3.2-2, OBJ-3.2-3]
+    prompt: >-
+      $\varphi(s,t)=(e^s\cos t,\ e^s\sin t)$ על $\mathbb R^2$, ו-$\sigma(u,v)=(u,v,0)$.
+
+      (א) הוכיחו ש-$\sigma\circ\varphi$ רגולרית בכל נקודה, ושהתמונה שלה היא המישור $z=0$ בלי הראשית.
+
+      (ב) האם $\varphi$ החלפת פרמטרים מ-$\mathbb R^2$ על $\mathbb R^2\setminus\{0\}$? הכריעו והוכיחו.
+
+      (ג) הוכיחו שלכל $t_0$, הצמצום של $\varphi$ ל-$\mathbb R\times(t_0-\pi,\ t_0+\pi)$ הוא דיפאומורפיזם על קבוצה פתוחה,
+      ושלכן $\sigma\circ\varphi$ שם היא פרמטריזציה מקומית של המישור.
+    answer: >-
+      (א) $\det D\varphi=e^{2s}\ne0$. (ב) לא: $\varphi(s,t+2\pi)=\varphi(s,t)$. (ג) על רצועה ברוחב $2\pi$ $\varphi$
+      חד-חד-ערכית, התמונה היא המישור בלי קרן, ולפי טענה 3.2.7(ה) זה דיפאומורפיזם.
+    solution:
+      - kind: computation
+        text: >-
+          $$D\varphi=\begin{pmatrix}e^s\cos t&-e^s\sin t\\ e^s\sin t&e^s\cos t\end{pmatrix},\qquad \det D\varphi=e^{2s}>0 .$$
+          $\sigma\circ\varphi=(e^s\cos t,\ e^s\sin t,\ 0)$, והנגזרות החלקיות הן העמודות של $D\varphi$ עם 0 בסוף; הן בלתי
+          תלויות, כי $\det\ne0$. התמונה: כל $w\ne0$ הוא $e^s(\cos t,\sin t)$ עם $e^s=\|w\|$; ו-$0$ אינו מתקבל.
+      - kind: step
+        text: >-
+          (ב) החלפת פרמטרים חייבת להיות חד-חד-ערכית (הגדרה 3.2.6), ו-$\varphi(0,0)=\varphi(0,2\pi)$. לכן $\varphi$ אינה החלפת
+          פרמטרים, אף ש-$\det D\varphi\ne0$ בכל נקודה ו-$\sigma\circ\varphi$ רגולרית: זה ההבדל בין "מקומית" ל"גלובלית" של
+          טענה 3.2.7(ה).
+      - kind: step
+        text: >-
+          (ג) על $R_{t_0}=\mathbb R\times(t_0-\pi,t_0+\pi)$: אם $\varphi(s,t)=\varphi(s',t')$ אז $e^s=e^{s'}$, כלומר $s=s'$,
+          ו-$(\cos t,\sin t)=(\cos t',\sin t')$, כלומר $t-t'\in2\pi\mathbb Z$; כי $|t-t'|<2\pi$, $t=t'$. התמונה היא המישור בלי
+          הקרן $$\{\lambda(\cos(t_0+\pi),\sin(t_0+\pi)):\lambda\ge0\}$$, קבוצה פתוחה.
+      - kind: theorem
+        text: >-
+          $\varphi$ חלקה, חד-חד-ערכית על $R_{t_0}$ ועל התמונה, עם $\det\ne0$, ולכן לפי טענה 3.2.7(ה) היא דיפאומורפיזם של
+          $R_{t_0}$ על התמונה. $\sigma$ (צמצום של גרף של $0$) פרמטריזציה מקומית של המישור על כל קבוצה פתוחה, ולכן
+          $\sigma\circ\varphi$ על $R_{t_0}$ היא פרמטריזציה מקומית: רגולרית (3.2.7(ג)), חד-חד-ערכית, וההופכית
+          $\varphi^{-1}\circ\pi$ רציפה.
+      - kind: check
+        text: >-
+          $s=\ln\rho$, $t=$ זווית: אלה קואורדינטות קוטביות לוגריתמיות. כמו בקואורדינטות הקוטביות של דוגמה 2, רצועה ברוחב
+          $2\pi$ מכסה את המישור בלי קרן.
+      - kind: result
+        text: >-
+          $\sigma\circ\varphi$ רגולרית, ו-$\varphi$ אינה החלפת פרמטרים גלובלית; על כל רצועה ברוחב $2\pi$ היא כן.
+
+  - id: W-3.2-10
+    level: exam
+    objectives: [OBJ-3.2-1]
+    prompt: >-
+      $X=\{(x,y,z):\ z^3+z=x^2-y^2\}$. הוכיחו ש-$X$ משטח חלק, ויותר מזה, ש-$X$ הוא כולו הגרף של פונקציה חלקה
+      $g:\mathbb R^2\to\mathbb R$. חשבו את $g(1,0)$ בקירוב.
+    answer: >-
+      $\nabla F=(-2x,\ 2y,\ 3z^2+1)\ne0$; $z\mapsto z^3+z$ עולה ממש ועל $\mathbb R$, ולכן $g$ מוגדרת היטב, ומשפט הפונקציה
+      הסתומה נותן חלקות. $g(1,0)\approx0.6823$.
+    solution:
+      - kind: computation
+        text: >-
+          $F(x,y,z)=z^3+z-x^2+y^2$, $\nabla F=(-2x,\ 2y,\ 3z^2+1)$. הרכיב השלישי לפחות 1, ולכן כל ערך של $F$, ובפרט 0, רגולרי,
+          ולפי משפט 3.2.4 $X=F^{-1}(0)$ משטח חלק.
+      - kind: step
+        text: >-
+          לכל $(x,y)$, הפונקציה $k(z)=z^3+z$ רציפה, עולה ממש (נגזרת $3z^2+1>0$), ושואפת ל-$\pm\infty$ כש-$z\to\pm\infty$. לפי
+          משפט ערך הביניים יש $z$ יחיד עם $k(z)=x^2-y^2$; נסמן אותו $g(x,y)$. לכן $X$ הוא הגרף של $g$.
+      - kind: theorem
+        text: >-
+          חלקות: יהי $(x_0,y_0)$ ו-$z_0=g(x_0,y_0)$. $F_z=3z_0^2+1\ne0$, ולפי משפט הפונקציה הסתומה יש $V\ni(x_0,y_0)$,
+          $J\ni z_0$ ו-$\tilde g:V\to J$ חלקה עם $F(x,y,\tilde g(x,y))=0$. לכל $(x,y)\in V$, $\tilde g(x,y)$ פתרון, והפתרון
+          הממשי יחיד, ולכן $g=\tilde g$ על $V$: $g$ חלקה ליד כל נקודה.
+      - kind: computation
+        text: >-
+          $g(1,0)$ הוא הפתרון של $z^3+z=1$. שיטת ניוטון מ-$0.5$ נותנת $0.68233$. בדיקה: $0.68233^3=0.31767$, והסכום עם $0.68233$ הוא $1.0000$.
+      - kind: check
+        text: >-
+          באותו טיעון, $g_x=\frac{2x}{3z^2+1}$ (גזירה סתומה), ובראשית $g_x=g_y=0$: המישור המשיק שם $z=0$, כמו לאוכף
+          $z=x^2-y^2$, ש-$X$ קרוב אליו ליד הראשית ($z^3$ זניח).
+      - kind: result
+        text: >-
+          $X$ משטח חלק, הגרף של $g$ חלקה על כל $\mathbb R^2$; $g(1,0)\approx0.6823$.
+
+challenge:
+  - id: W-3.2-c1
+    stars: 1
+    objectives: [OBJ-3.2-1, OBJ-3.2-2]
+    prompt: >-
+      $S$ הגרף $z=x^2-y^2$.
+
+      (א) הוכיחו ש-$\mathbf x(u,v)=(u+v,\ u-v,\ 4uv)$, $(u,v)\in\mathbb R^2$, היא פרמטריזציה מקומית של $S$ שתמונתה כל $S$,
+      ומצאו את החלפת הפרמטרים שמקשרת אותה לפרמטריזציה $(x,y,x^2-y^2)$.
+
+      (ב) הוכיחו ש-$\mathbf y(u,v)=(u\cosh v,\ u\sinh v,\ u^2)$, על $\{(u,v):u\ne0\}$, היא פרמטריזציה מקומית של החלק
+      $S\cap\{z>0\}$.
+    answer: >-
+      (א) $\mathbf x=\sigma\circ\varphi$ עם $\varphi(u,v)=(u+v,\ u-v)$, $\det D\varphi=-2$. (ב) $\mathbf y$ רגולרית
+      ($$\mathbf y_u\times\mathbf y_v=(-2u^2\cosh v,\ 2u^2\sinh v,\ u)$$), חד-חד-ערכית, עם הופכית רציפה
+      $$(x,y,z)\mapsto\big(\operatorname{sgn}(x)\sqrt z,\ \operatorname{artanh}(y/x)\big).$$
+    solution:
+      - kind: computation
+        text: >-
+          (א) $(u+v)^2-(u-v)^2=4uv$, ולכן $\mathbf x=\sigma\circ\varphi$ עם $\sigma(x,y)=(x,y,x^2-y^2)$ ו-$\varphi(u,v)=(u+v,\ u-v)$.
+          $\varphi$ לינארית עם $\det=1\cdot(-1)-1\cdot1=-2\ne0$, ולכן דיפאומורפיזם של $\mathbb R^2$ (ההופכית לינארית).
+      - kind: theorem
+        text: >-
+          לפי טענה 3.2.1, $\sigma$ פרמטריזציה מקומית שתמונתה $S$; לכן גם $\mathbf x$: רגולרית (3.2.7(ג)), חד-חד-ערכית ועל $S$,
+          וההופכית $\varphi^{-1}\circ\pi$ רציפה. ולפי 3.2.7(ג), $\mathbf x_u\times\mathbf x_v=-2\,(-2x,\ 2y,\ 1)$, למשל ב-$(1,2)$:
+          $(12,\ 4,\ -2)$.
+      - kind: computation
+        text: >-
+          (ב) $(u\cosh v)^2-(u\sinh v)^2=u^2$, ולכן התמונה ב-$S$, עם $z=u^2>0$. $\mathbf y_u=(\cosh v,\ \sinh v,\ 2u)$,
+          $\mathbf y_v=(u\sinh v,\ u\cosh v,\ 0)$, ורכיב אחר רכיב
+          $$\mathbf y_u\times\mathbf y_v=\big(-2u^2\cosh v,\ \ 2u^2\sinh v,\ \ u\cosh^2v-u\sinh^2v\big)=\big(-2u^2\cosh v,\ 2u^2\sinh v,\ u\big)\ne0 .$$
+      - kind: step
+        text: >-
+          על ושל ההופכית: אם $(x,y,z)\in S$ ו-$z>0$, אז $x^2-y^2=z>0$, ולכן $|x|>|y|$ ו-$x\ne0$. נגדיר
+          $u=\operatorname{sgn}(x)\sqrt z$ ו-$v=\operatorname{artanh}(y/x)$ (מוגדר כי $|y/x|<1$). אז $u\cosh v=x$: כי
+          $\cosh v=\frac{1}{\sqrt{1-y^2/x^2}}=\frac{|x|}{\sqrt z}$; ובאותו אופן $u\sinh v=y$. כל ערך של $(u,v)$ נקבע כך
+          ביחידות (הסימן של $u$ הוא הסימן של $x=u\cosh v$), ולכן $\mathbf y$ חד-חד-ערכית ועל $S\cap\{z>0\}$, וההופכית
+          רציפה כהרכבה של רציפות.
+      - kind: check
+        text: >-
+          $W=\{z>0\}$ פתוחה ו-$\mathbf y$ הומאומורפיזם על $S\cap W$, כנדרש בהגדרה 3.1.6. ב-$(u,v)=(1,\frac12)$ הנוסחה נותנת
+          $(-2.2553,\ 1.0422,\ 1)$, כמו החישוב בהפרשים סופיים. $\mathbf y$ אינה מגיעה ל-$z\le0$, כי $z=u^2$; והתחום שלה
+          והתמונה שלה מורכבים משני חלקים ($u>0$, $x>0$ ו-$u<0$, $x<0$).
+      - kind: result
+        text: >-
+          $\mathbf x=\sigma\circ\varphi$, $\det D\varphi=-2$; $\mathbf y$ פרמטריזציה מקומית של $S\cap\{z>0\}$.
+    source:
+      name: 'M. P. do Carmo, Differential Geometry of Curves and Surfaces, §2-2 (as stated and solved in J. W. Robbin, homework solutions, University of Wisconsin, 2014)'
+      year: 1976
+      problem: 'Exercise 11, section 2-2'
+      url: https://people.math.wisc.edu/~jwrobbin/Do_Carmo/homework_2_13_14.pdf
+      verified: '2026-11-12'
+      adapted: true
+
+  - id: W-3.2-c2
+    stars: 1
+    objectives: [OBJ-3.2-1]
+    prompt: >-
+      (א) $f(x,y,z)=(x+y+z-1)^2$. מצאו את הנקודות הקריטיות ($\nabla f=0$) ואת הערכים הקריטיים של $f$. לאילו $c$ הקבוצה
+      $f^{-1}(c)$ משטח חלק?
+
+      (ב) אותן שאלות עבור $f(x,y,z)=xyz^2$. בפרט, הוכיחו ש-$f^{-1}(0)$ אינו משטח חלק.
+    answer: >-
+      (א) הנקודות הקריטיות: המישור $x+y+z=1$; ערך קריטי יחיד $0$. לכל $c$ הקבוצה משטח חלק או ריקה: $c>0$ שני מישורים,
+      $c=0$ מישור (אף ש-$0$ ערך קריטי), $c<0$ ריקה. (ב) הנקודות הקריטיות: $\{z=0\}\cup\{x=y=0\}$; ערך קריטי יחיד $0$; לכל
+      $c\ne0$ משטח חלק; $f^{-1}(0)$ איחוד שלושת מישורי הקואורדינטות, ואינו משטח חלק בשום נקודה של שלושת הצירים.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $\nabla f=2(x+y+z-1)(1,1,1)$, שמתאפס בדיוק על המישור $x+y+z=1$, ושם $f=0$. לכן $0$ הערך הקריטי היחיד.
+      - kind: step
+        text: >-
+          כש-$c>0$, $f^{-1}(c)$ הוא שני המישורים המקבילים $x+y+z=1\pm\sqrt c$, משטח חלק לפי משפט 3.2.4 (או ישירות, כגרפים).
+          כש-$c<0$ הקבוצה ריקה. כש-$c=0$, $f^{-1}(0)$ הוא המישור $x+y+z=1$, הגרף של $1-x-y$, ולכן משטח חלק לפי טענה 3.2.1,
+          אף ש-$0$ אינו ערך רגולרי: עוד דוגמה לטענה 3.2.5(ג).
+      - kind: computation
+        text: >-
+          (ב) $\nabla f=(yz^2,\ xz^2,\ 2xyz)$. אם $z=0$ שלושת הרכיבים אפס; אם $z\ne0$, הרכיבים הראשונים נותנים $x=y=0$, ואז
+          גם השלישי אפס. הנקודות הקריטיות: $\{z=0\}\cup\{x=y=0\}$, ו-$f=0$ בכולן. לכן כל $c\ne0$ ערך רגולרי, ו-$f^{-1}(c)$
+          משטח חלק לפי משפט 3.2.4.
+      - kind: step
+        text: >-
+          $$f^{-1}(0)=\{x=0\}\cup\{y=0\}\cup\{z=0\}$$. תהי $p$ נקודה על אחד הצירים (כולל הראשית). דרך $p$ עוברים לפחות
+          שניים ממישורי הקואורדינטות, ולכן שלושת הישרים $p+\tau e_1$, $p+\tau e_2$, $p+\tau e_3$ מוכלים ב-$f^{-1}(0)$: כל
+          אחד מהם מוכל באחד המישורים שעוברים דרך $p$. נניח בשלילה פרמטריזציה מקומית $\sigma$ ליד $p$. כמו בטענה 3.1.11(א): לפי משפט 3.2.2 ורציפות ההופכית, יש $\varepsilon>0$ כך ש-$f^{-1}(0)\cap B_\varepsilon(p)$ מוכל
+          בגרף של פונקציה מעל אחד ממישורי הקואורדינטות.
+      - kind: step
+        text: >-
+          לכל $|\tau|<\varepsilon$, הנקודות $p+\tau e_1$, $p+\tau e_2$, $p+\tau e_3$ ב-$f^{-1}(0)\cap B_\varepsilon(p)$. מעל $xy$
+          הנקודות $p+\tau e_3$ כולן מעל אותה נקודה; מעל $xz$ הנקודות $p+\tau e_2$; מעל $yz$ הנקודות $p+\tau e_1$. בכל מקרה
+          יותר מנקודה אחת מעל נקודה אחת: סתירה. (למשל ב-$p=(1,0,0)$ אלה $(1,0,\tau)$, $(1,\tau,0)$ ו-$(1+\tau,0,0)$.)
+      - kind: check
+        text: >-
+          בנקודה של מישור אחד בלבד, למשל $(1,1,0)$, $f^{-1}(0)$ ליד הנקודה הוא המישור $z=0$, וזה משטח חלק. הבעיה רק על
+          הצירים, שם שני מישורים נחתכים.
+      - kind: result
+        text: >-
+          (א) ערך קריטי $0$; כל $f^{-1}(c)$ משטח חלק או ריק. (ב) ערך קריטי $0$; $f^{-1}(c)$ משטח חלק ל-$c\ne0$, ו-$f^{-1}(0)$
+          אינו משטח חלק.
+    source:
+      name: 'M. P. do Carmo, Differential Geometry of Curves and Surfaces, §2-2'
+      year: 1976
+      problem: 'Exercise 7, section 2-2'
+      url: https://www.vaia.com/en-us/textbooks/math/differential-geometry-of-curves-and-surfaces-2-edition/chapter-2/problem-7-let-fx-y-zxyz-12-a-locate-the-critical-points-and-/
+      verified: '2026-11-12'
+      adapted: true

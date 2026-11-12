@@ -3,6 +3,9 @@
 #   OBJ-3.4-1  compute the coefficients of the first form for the basic surfaces
 #   OBJ-3.4-2  compute the length of a curve on a surface and the angle between two curves with the first form
 #   OBJ-3.4-3  explain why the first form is the inner product of space restricted to the tangent plane
+# Keys recomputed 2026-11-12 (src/math/surfaces.ts: efg, cosAngle, lengthOnSurface; Simpson for the integrals): the
+# sphere of radius 2 in colatitude, the cylinder of radius 2 along u = t, v = t², the oblique plane along (2t, −t), the
+# saddle at (1, 3), the unit sphere at v = π/4, the transition (3s, s + t), the torus meridian, the J test matrices.
 chapter: 3
 questions:
   - id: Q-3.4-sphere-efg
@@ -11,24 +14,24 @@ questions:
     level: basic
     prompt: >-
       מקדמי התבנית היסודית הראשונה של פרמטריזציה $\sigma$ הם $E=\sigma_u\cdot\sigma_u$, $F=\sigma_u\cdot\sigma_v$
-      ו-$G=\sigma_v\cdot\sigma_v$. לספרה $\sigma(u,v)=(r\cos u\cos v,\ r\sin u\cos v,\ r\sin v)$ ($u$ זווית האורך, $v$ זווית
-      הרוחב), מהם $E,F,G$?
+      ו-$G=\sigma_v\cdot\sigma_v$. לספרה ברדיוס 2 בקולטיטודה, $\sigma(u,v)=(2\sin u\cos v,\ 2\sin u\sin v,\ 2\cos u)$ ($u$ הזווית
+      מהקוטב הצפוני, $v$ זווית האורך), מהם $E,F,G$?
     choices:
-      - text: '$E=r^2\cos^2v,\ F=0,\ G=r^2$'
+      - text: '$E=4,\ F=0,\ G=4\sin^2u$'
         correct: true
         feedback: >-
-          נכון. $\sigma_u=(-r\sin u\cos v,\ r\cos u\cos v,\ 0)$ ו-$\sigma_v=(-r\cos u\sin v,\ -r\sin u\sin v,\ r\cos v)$, ולכן
-          $E=r^2\cos^2v$, $G=r^2(\sin^2v+\cos^2v)=r^2$ ו-$F=r^2\cos v\sin v(\sin u\cos u-\sin u\cos u)=0$. קו רוחב קצר יותר
-          ככל שמתקרבים לקוטב: זה ה-$\cos^2v$.
-      - text: '$E=r^2,\ F=0,\ G=r^2\cos^2v$'
+          נכון. $\sigma_u=2(\cos u\cos v,\ \cos u\sin v,\ -\sin u)$ ו-$\sigma_v=2(-\sin u\sin v,\ \sin u\cos v,\ 0)$, ולכן
+          $E=4(\cos^2u+\sin^2u)=4$, $G=4\sin^2u$ ו-$F=4\sin u\cos u(-\cos v\sin v+\sin v\cos v)=0$. כאן קווי הרוחב הם הקווים שבהם
+          $v$ משתנה, ולכן הם שייכים ל-$G$.
+      - text: '$E=4\sin^2u,\ F=0,\ G=4$'
         feedback: >-
-          $E$ ו-$G$ התחלפו. $E=\sigma_u\cdot\sigma_u$ שייך לכיוון שבו $u$ משתנה ו-$v$ קבוע, כלומר לאורך מעגל רוחב. מעגלי
-          הרוחב מתקצרים ליד הקטבים (רדיוסם $r\cos v$), ולכן $E=r^2\cos^2v$. לאורך קו אורך ($u$ קבוע) כל המעגלים ברדיוס $r$,
-          ולכן $G=r^2$.
+          $E$ ו-$G$ התחלפו. $E=\sigma_u\cdot\sigma_u$ שייך לכיוון שבו $u$ משתנה ו-$v$ קבוע: כאן זה קו אורך, מעגל גדול ברדיוס
+          2, ולכן $E=4$. מעגלי הרוחב ($u$ קבוע) מתקצרים ליד הקטבים, ולכן $G=4\sin^2u$. בפרמטריזציה הזו התפקידים הפוכים
+          מאלה של מסקנה 3.4.7(2).
         misconception: MC-c3-efg-order
-      - text: '$E=r\cos v,\ F=0,\ G=r$'
+      - text: '$E=2,\ F=0,\ G=2\sin u$'
         feedback: >-
-          אלה האורכים $\|\sigma_u\|$ ו-$\|\sigma_v\|$. המקדמים הם הריבועים: $E=\|\sigma_u\|^2$, $G=\|\sigma_v\|^2$.
+          אלה האורכים $\|\sigma_u\|$ ו-$\|\sigma_v\|$ (כש-$0<u<\pi$). המקדמים הם הריבועים: $E=\|\sigma_u\|^2$, $G=\|\sigma_v\|^2$.
         misconception: MC-c3-norm-vs-square
 
   - id: Q-3.4-torus-e
@@ -36,7 +39,7 @@ questions:
     objectives: [OBJ-3.4-1]
     level: basic
     prompt: >-
-      הטורוס $\sigma(u,v)=((3+\cos v)\cos u,\ (3+\cos v)\sin u,\ \sin v)$ ($R=3$, $r=1$). חשבו את $E$ בנקודה $v=\frac\pi3$.
+      הטורוס $$\sigma(u,v)=((3+\cos v)\cos u,\ (3+\cos v)\sin u,\ \sin v)$$ ($R=3$, $r=1$). חשבו את $E$ בנקודה $v=\frac\pi3$.
     answer: 12.25
     tolerance: 0.001
     correctFeedback: >-
@@ -67,7 +70,7 @@ questions:
         feedback: >-
           נכון. $\|a\sigma_u+b\sigma_v\|^2=a^2\,\sigma_u\cdot\sigma_u+2ab\,\sigma_u\cdot\sigma_v+b^2\,\sigma_v\cdot\sigma_v$. זו
           המכפלה הפנימית של המרחב, מוגבלת למישור המשיק וכתובה בבסיס $\sigma_u,\sigma_v$.
-      - text: 'את ריבוע האורך של הווקטור $(a,b)$ במישור הפרמטרים'
+      - text: 'את ריבוע האורך של הווקטור $(a,b)$ במישור הפרמטרים, אחרי החלפת היחידות'
         feedback: >-
           ריבוע האורך של $(a,b)$ הוא $a^2+b^2$, וזה שווה ל-$Q_1(a,b)$ רק כש-$E=G=1$ ו-$F=0$. $Q_1$ מודדת את האורך **על
           המשטח**, אחרי ש-$\sigma$ מותחת ומעקמת את הרשת.
@@ -77,6 +80,11 @@ questions:
           $Q_1$ בנויה רק מהנגזרות הראשונות, ולכן אינה יודעת דבר על ההתעקמות: למישור ולגליל יש פרמטריזציות עם אותה $Q_1$.
           את ההתעקמות מודדת התבנית השנייה (פרק 4).
         misconception: MC-c3-q1-measures-bending
+      - text: 'את הקוסינוס של הזווית בין $a\sigma_u+b\sigma_v$ לבין $\sigma_u$'
+        feedback: >-
+          זווית אינה תלויה באורך הווקטור, ו-$Q_1$ כן: $Q_1(2a,2b)=4Q_1(a,b)$. את הזווית מחשבים מ-$B$ ומשני ערכים של $Q_1$
+          (טענה 3.4.6).
+        misconception: MC-c3-norm-vs-square
 
   - id: Q-3.4-graph-gram
     type: numeric
@@ -106,24 +114,30 @@ questions:
     objectives: [OBJ-3.4-2]
     level: mid
     prompt: >-
-      על הספרה ברדיוס 3, $\sigma(u,v)=(3\cos u\cos v,\ 3\sin u\cos v,\ 3\sin v)$, חשבו בעזרת התבנית הראשונה את אורך קו
-      הרוחב $v=\frac\pi3$, $0\le u\le2\pi$.
-    answer: 9.424778
+      על הגליל ברדיוס 2, $\sigma(u,v)=(2\cos u,\ 2\sin u,\ v)$, חשבו בעזרת התבנית הראשונה את אורך המסילה $u=t$, $v=t^2$,
+      $0\le t\le1$. (עזר: $\int_0^1\sqrt{1+t^2}\,dt=\frac{\sqrt2}{2}+\frac12\operatorname{arcsinh}1$.)
+    answer: 2.2955871
     tolerance: 0.001
     correctFeedback: >-
-      נכון, $3\pi$. על המסילה $u=t$, $v=\frac\pi3$: $u'=1$, $v'=0$, ולכן $\|\gamma'\|=\sqrt{E}=3\cos\frac\pi3=\frac32$, והאורך
-      $\int_0^{2\pi}\frac32\,dt=3\pi$. זה מעגל ברדיוס $3\cos\frac\pi3$.
+      נכון, $\sqrt2+\operatorname{arcsinh}1\approx2.2956$. $\sigma_u=(-2\sin u,\ 2\cos u,\ 0)$ ו-$\sigma_v=(0,0,1)$, ולכן $E=4$, $F=0$,
+      $G=1$. עם $u'=1$, $v'=2t$: $\|\gamma'\|^2=4+4t^2$, ו-$L=2\int_0^1\sqrt{1+t^2}\,dt$. בדיקה ישירה: $\gamma(t)=(2\cos t,\ 2\sin
+      t,\ t^2)$, $\|\gamma'\|^2=4+4t^2$.
     wrongFeedback: >-
-      $\|\gamma'\|^2=Eu'^2+2Fu'v'+Gv'^2$. על קו רוחב $v'=0$, ולכן נשאר $\sqrt E$. איזה מקדם שייך ל-$u$?
+      חשבו $E,F,G$ של הגליל, ואחר כך $\|\gamma'\|^2=Eu'^2+2Fu'v'+Gv'^2$ עם $u'=1$, $v'=2t$.
     commonWrong:
-      - value: 18.849556
+      - value: 1.4789429
         feedback: >-
-          זה $6\pi$, האורך עם $\sqrt G=3$ במקום $\sqrt E$: קו המשווה. קו הרוחב הוא מסילה שבה $u$ משתנה, ולכן המקדם הוא
-          $E=9\cos^2v$.
+          זה $\int_0^1\sqrt{1+4t^2}\,dt$: האורך של המסילה $(t,t^2)$ **בתחום הפרמטרים**, או $E=1$ במקום $E=4$. הגליל ברדיוס 2
+          מותח את הכיוון של $u$ פי 2.
+        misconception: MC-c3-q1-is-euclidean-in-params
+      - value: 2.3233919
+        feedback: >-
+          זה $\int_0^1\sqrt{1+16t^2}\,dt$, עם $E=1$ ו-$G=4$: $E$ ו-$G$ התחלפו. $E=\sigma_u\cdot\sigma_u=4$ שייך ל-$u$, הזווית סביב
+          הציר.
         misconception: MC-c3-efg-order
-      - value: 14.137167
+      - value: 5.3333333
         feedback: >-
-          זה $\int_0^{2\pi}E\,dt=2\pi\cdot\frac94$. האורך הוא אינטגרל של $\sqrt{Q_1}$, לא של $Q_1$.
+          זה $\int_0^1(4+4t^2)\,dt$: אינטגרל של $Q_1$ במקום של $\sqrt{Q_1}$.
         misconception: MC-c3-norm-vs-square
 
   - id: Q-3.4-oblique
@@ -131,27 +145,28 @@ questions:
     objectives: [OBJ-3.4-2]
     level: mid
     prompt: >-
-      $\sigma(u,v)=(u+v,\ v,\ 0)$ היא פרמטריזציה "אלכסונית" של המישור $z=0$. חשבו בעזרת $E,F,G$ את אורך המסילה $u=t$,
-      $v=t$, $0\le t\le1$.
-    answer: 2.236068
+      $\sigma(u,v)=(u+v,\ v,\ 0)$ היא פרמטריזציה "אלכסונית" של המישור $z=0$. חשבו בעזרת $E,F,G$ את אורך המסילה $u=2t$,
+      $v=-t$, $0\le t\le1$. האם הוא גדול או קטן מהאורך של אותה מסילה בתחום הפרמטרים?
+    answer: 1.4142136
     tolerance: 0.001
     correctFeedback: >-
-      נכון, $\sqrt5$. $\sigma_u=(1,0,0)$ ו-$\sigma_v=(1,1,0)$, ולכן $E=1$, $F=1$, $G=2$, ו-$\|\gamma'\|^2=1+2\cdot1+2=5$.
-      בדיקה ישירה: $\gamma(t)=(2t,t,0)$, ואורכו $\sqrt{4+1}=\sqrt5$.
+      נכון, $\sqrt2$. $\sigma_u=(1,0,0)$ ו-$\sigma_v=(1,1,0)$, ולכן $E=1$, $F=1$, $G=2$, ו-$\|\gamma'\|^2=1\cdot4+2\cdot1\cdot(2)(-1)+2\cdot1=2$.
+      בדיקה ישירה: $\gamma(t)=(t,-t,0)$, ואורכו $\sqrt2$. בתחום הפרמטרים אותה מסילה ארוכה יותר, $\sqrt5$: האיבר המעורב
+      השלילי מקצר אותה.
     wrongFeedback: >-
-      $\|\gamma'\|^2=Eu'^2+2Fu'v'+Gv'^2$ עם $u'=v'=1$. כאן $F\ne0$.
+      $\|\gamma'\|^2=Eu'^2+2Fu'v'+Gv'^2$ עם $u'=2$, $v'=-1$. כאן $F\ne0$, ו-$u'v'<0$.
     commonWrong:
-      - value: 1.7320508
+      - value: 2.4494897
         feedback: >-
-          זה $\sqrt{E+G}=\sqrt3$: שכחתם את האיבר המעורב $2Fu'v'=2$. הוא נעלם רק כש-$F=0$.
+          זה $\sqrt{4E+G}=\sqrt6$: שכחתם את האיבר המעורב $2Fu'v'=-4$. הוא נעלם רק כש-$F=0$.
         misconception: MC-c3-q1-drop-cross-term
       - value: 2
         feedback: >-
-          זה $\sqrt{E+F+G}=\sqrt4$: האיבר המעורב הוא $2F\,u'v'$, עם 2, כי $\sigma_u\cdot\sigma_v$ מופיע פעמיים בפיתוח.
+          זה $\sqrt{4-2+2}$: האיבר המעורב הוא $2F\,u'v'=-4$, עם 2, כי $\sigma_u\cdot\sigma_v$ מופיע פעמיים בפיתוח.
         misconception: MC-c3-q1-drop-cross-term
-      - value: 1.4142136
+      - value: 2.236068
         feedback: >-
-          זה $\sqrt{u'^2+v'^2}=\sqrt2$, האורך במישור הפרמטרים. $\sigma$ מותחת את הרשת, ואת זה מודדים $E,F,G$.
+          זה $\sqrt{u'^2+v'^2}=\sqrt5$, האורך במישור הפרמטרים. $\sigma$ מותחת את הרשת ומטה אותה, ואת זה מודדים $E,F,G$.
         misconception: MC-c3-q1-is-euclidean-in-params
 
   - id: Q-3.4-param-angle
@@ -160,22 +175,22 @@ questions:
     level: mid
     prompt: >-
       בגרף $z=x^2-y^2$ עם $\sigma(x,y)=(x,y,x^2-y^2)$, חשבו את $\cos\theta$, כש-$\theta$ הזווית בין הקווים הפרמטריים
-      (הכיוונים $\sigma_x$ ו-$\sigma_y$) בנקודה $(1,2)$.
-    answer: -0.8677218
+      (הכיוונים $\sigma_x$ ו-$\sigma_y$) בנקודה $(1,3)$.
+    answer: -0.8822575
     tolerance: 0.001
     correctFeedback: >-
-      נכון. $\cos\theta=\frac{\sigma_x\cdot\sigma_y}{\|\sigma_x\|\|\sigma_y\|}=\frac{F}{\sqrt{EG}}=\frac{-8}{\sqrt{85}}\approx-0.868$.
-      הזווית קהה, בערך $150^\circ$, אף שבמישור הפרמטרים הקווים ניצבים.
+      נכון. $\sigma_x=(1,0,2)$, $\sigma_y=(0,1,-6)$, ולכן $E=5$, $F=-12$, $G=37$ ו-$\cos\theta=\frac{F}{\sqrt{EG}}=\frac{-12}{\sqrt{185}}\approx-0.882$.
+      הזווית קהה, בערך $152^\circ$, אף שבמישור הפרמטרים הקווים ניצבים.
     wrongFeedback: >-
-      $E=5$, $F=-8$, $G=17$ בנקודה. הזווית בין $\sigma_x$ ל-$\sigma_y$ נקבעת מ-$\frac{F}{\sqrt{EG}}$.
+      חשבו $E,F,G$ בנקודה. הזווית בין $\sigma_x$ ל-$\sigma_y$ נקבעת מ-$\frac{F}{\sqrt{EG}}$.
     commonWrong:
       - value: 0
         feedback: >-
-          במישור הפרמטרים הכיוונים $(1,0)$ ו-$(0,1)$ ניצבים, אבל על המשטח הזווית היא בין $\sigma_x$ ל-$\sigma_y$, ו-$F=-8\ne0$.
+          במישור הפרמטרים הכיוונים $(1,0)$ ו-$(0,1)$ ניצבים, אבל על המשטח הזווית היא בין $\sigma_x$ ל-$\sigma_y$, ו-$F=-12\ne0$.
         misconception: MC-c3-coordinate-curves-orthogonal
-      - value: -0.0941176
+      - value: -0.0648649
         feedback: >-
-          זה $\frac{F}{EG}=-\frac{8}{85}$. במכנה מופיעים האורכים $\sqrt E\sqrt G$, לא הריבועים.
+          זה $\frac{F}{EG}=-\frac{12}{185}$. במכנה מופיעים האורכים $\sqrt E\sqrt G$, לא הריבועים.
         misconception: MC-c3-norm-vs-square
 
   - id: Q-3.4-sphere-angle
@@ -183,28 +198,27 @@ questions:
     objectives: [OBJ-3.4-2, OBJ-3.4-3]
     level: mid
     prompt: >-
-      על ספרת היחידה $\sigma(u,v)=(\cos u\cos v,\ \sin u\cos v,\ \sin v)$ שתי מסילות עוברות בנקודה עם $v=\frac\pi3$, עם
-      וקטורי מהירות $w_1=\sigma_u+\sigma_v$ ו-$w_2=\sigma_u-\sigma_v$. חשבו את $\cos\theta$ של הזווית ביניהן. (פיתוח
-      ביליניארי נותן: המכפלה הפנימית של $a_1\sigma_u+b_1\sigma_v$ ו-$a_2\sigma_u+b_2\sigma_v$ היא
-      $Ea_1a_2+F(a_1b_2+a_2b_1)+Gb_1b_2$.)
-    answer: -0.6
+      על ספרת היחידה $$\sigma(u,v)=(\cos u\cos v,\ \sin u\cos v,\ \sin v)$$ שתי מסילות עוברות בנקודה עם $v=\frac\pi4$, עם
+      וקטורי מהירות $w_1=\sigma_u+\sigma_v$ ו-$w_2=\sigma_u-2\sigma_v$. חשבו את $\cos\theta$ של הזווית ביניהן.
+    answer: -0.5773503
     tolerance: 0.001
     correctFeedback: >-
-      נכון. ב-$v=\frac\pi3$: $E=\cos^2v=\frac14$, $F=0$, $G=1$. המכפלה הפנימית היא
-      $E\cdot1\cdot1+F(1\cdot(-1)+1\cdot1)+G\cdot1\cdot(-1)=\frac14-1=-\frac34$, ו-$\|w_1\|^2=\|w_2\|^2=\frac14+1=\frac54$.
-      לכן $\cos\theta=\frac{-3/4}{5/4}=-0.6$.
+      נכון, $-\frac1{\sqrt3}$. ב-$v=\frac\pi4$: $E=\cos^2v=\frac12$, $F=0$, $G=1$. לפי טענה 3.4.6 המונה הוא
+      $E\cdot1\cdot1+F(\ldots)+G\cdot1\cdot(-2)=\frac12-2=-\frac32$, ו-$Q_1(1,1)=\frac32$, $Q_1(1,-2)=\frac12+4=\frac92$. לכן
+      $\cos\theta=\frac{-3/2}{\sqrt{27/4}}=-\frac1{\sqrt3}$.
     wrongFeedback: >-
-      המכפלה הפנימית של $a_1\sigma_u+b_1\sigma_v$ ו-$a_2\sigma_u+b_2\sigma_v$ היא $Ea_1a_2+F(a_1b_2+a_2b_1)+Gb_1b_2$.
+      המכפלה הפנימית של $a_1\sigma_u+b_1\sigma_v$ ו-$a_2\sigma_u+b_2\sigma_v$ היא $Ea_1a_2+F(a_1b_2+a_2b_1)+Gb_1b_2$, והאורכים הם
+      $\sqrt{Q_1}$.
     commonWrong:
+      - value: -0.3162278
+        feedback: >-
+          זה $\frac{(1,1)\cdot(1,-2)}{|(1,1)|\,|(1,-2)|}=-\frac1{\sqrt{10}}$, הזווית במישור הפרמטרים. על הספרה המכפלה הפנימית
+          משתמשת ב-$E,F,G$, ו-$\sigma_u$ קצר שם ($E=\frac12$).
+        misconception: MC-c3-q1-is-euclidean-in-params
       - value: 0
         feedback: >-
-          $(1,1)\cdot(1,-1)=0$ במישור הפרמטרים, אבל המכפלה הפנימית על הספרה משתמשת ב-$E,F,G$. ליד הקוטב $\sigma_u$ קצר
-          ($E=\frac14$), ולכן שני הכיוונים נוטים לכיוון $\pm\sigma_v$ והזווית ביניהם קהה.
-        misconception: MC-c3-q1-is-euclidean-in-params
-      - value: 0.6
-        feedback: >-
-          זה מה שמתקבל כש-$E$ ו-$G$ מתחלפים ($E=1$, $G=\frac14$): $1-\frac14=\frac34$. בקו רוחב $u$ משתנה לאורך מעגל קצר,
-          ולכן $E=\cos^2v=\frac14$ ו-$G=1$, והמכפלה הפנימית $\frac14-1=-\frac34$.
+          זה מה שמתקבל כש-$E$ ו-$G$ מתחלפים ($E=1$, $G=\frac12$): $1-2\cdot\frac12=0$. בקו רוחב $u$ משתנה לאורך מעגל קצר,
+          ולכן $E=\cos^2v=\frac12$ ו-$G=1$.
         misconception: MC-c3-efg-order
 
   - id: Q-3.4-orthogonal
@@ -225,113 +239,261 @@ questions:
           $F$ הוא המכפלה של שני וקטורים מסוימים, $\sigma_u$ ו-$\sigma_v$. מסילות בכיוונים אחרים יכולות להיחתך בכל זווית.
         misconception: MC-c3-coordinate-curves-orthogonal
     reasons:
-      - text: 'על קו המשווה $v=0$ ($E=G=1$, $F=0$) הכיוונים $\sigma_u$ ו-$\sigma_u+\sigma_v$ יוצרים זווית שה-$\cos$ שלה $\frac{1}{\sqrt2}$'
+      - text: 'ב-$v=\frac\pi3$, המכפלה הפנימית של $\sigma_u$ ו-$\sigma_u+2\sigma_v$ היא $E=\frac14\ne0$'
         correct: true
         feedback: >-
-          בדיוק: המכפלה הפנימית היא $E\cdot1\cdot1+F(1\cdot1+0)+G\cdot0\cdot1=1$, והאורכים $1$ ו-$\sqrt2$: זווית של $45^\circ$
-          בין קו המשווה למסילה שחוצה אותו באלכסון. $F=0$ מפשט את החישוב ($Q_1$ בלי איבר מעורב), אבל הוא אומר משהו רק על
-          הקווים הפרמטריים עצמם.
-      - text: '$F=0$ אומר שהספרה "שטוחה" בכיוונים המעורבים'
+          בדיוק: לפי טענה 3.4.2(א) המכפלה היא $E\cdot1\cdot1+F\cdot2+G\cdot0=E$, ו-$\cos\theta=\frac{1}{\sqrt{17}}$. $F=0$ מפשט את
+          החישוב, אבל אומר משהו רק על הקווים הפרמטריים עצמם.
+      - text: '$F=0$ אומר שהספרה "שטוחה" בכיוונים המעורבים, ולכן כל זווית על הספרה שווה לזווית המתאימה בתחום'
         feedback: >-
           $F$ הוא $\sigma_u\cdot\sigma_v$, מכפלה פנימית של שני וקטורים משיקים; הוא אינו מודד שטיחות או התעקמות.
         misconception: MC-c3-q1-measures-bending
-      - text: 'כי במישור הפרמטרים $(1,1)\perp(1,-1)$, ולכן כל זוג כיוונים ניצבים שם ניצב גם על הספרה'
+      - text: 'במישור הפרמטרים $(1,1)\perp(1,-1)$, ולכן אם $F=0$ הכיוונים האלה ניצבים גם על הספרה'
         feedback: >-
           ניצבות במישור הפרמטרים אינה ניצבות על המשטח: בקו רוחב $v=\frac\pi3$ הכיוונים $(1,1)$ ו-$(1,-1)$ יוצרים על
-          הספרה זווית שה-$\cos$ שלה $-0.6$.
+          הספרה זווית שה-$\cos$ שלה $\frac{E-G}{E+G}=-0.6$.
         misconception: MC-c3-q1-is-euclidean-in-params
 
   - id: Q-3.4-positive
-    type: twotier
+    type: mc
     objectives: [OBJ-3.4-3]
     qualitative: true
     level: mid
     prompt: >-
-      האם בכל נקודה של **כל** פרמטריזציה רגולרית $Q_1$ **מוגדרת חיובית**, כלומר $Q_1(a,b)>0$ לכל $(a,b)\ne(0,0)$ (ובפרט
-      $E>0$, $G>0$ ו-$EG-F^2>0$)?
+      בנקודה **רגולרית** של פרמטריזציה מתקיים $E=1$ ו-$G=4$. אילו ערכים יכול לקבל $F$ בנקודה הזו?
     choices:
-      - text: 'כן, בכל נקודה של כל פרמטריזציה רגולרית'
+      - text: 'בדיוק המספרים $-2<F<2$'
         correct: true
         feedback: >-
-          נכון. מטריצה סימטרית $2\times2$ עם $E>0$ ודטרמיננטה חיובית היא מוגדרת חיובית, ולהפך.
-      - text: 'רק בפרמטריזציה שבה $F=0$, כלומר הקווים הפרמטריים ניצבים'
+          נכון. לפי זהות לגרנז׳ $EG-F^2=\|\sigma_u\times\sigma_v\|^2>0$ בנקודה רגולרית, כלומר $F^2<4$. וכל $F$ כזה אפשרי:
+          לפי טענה 3.4.3 השלשה $(1,F,4)$ עם $4-F^2>0$ היא התבנית של פרמטריזציה לינארית רגולרית.
+      - text: 'בדיוק המספרים $0\le F<2$'
         feedback: >-
-          גם עם $F\ne0$: בגרף $z=x^2-y^2$ בנקודה $(1,2)$ מתקבל $F=-8$ ו-$EG-F^2=21>0$. האיבר המעורב יכול להקטין את $Q_1$,
-          אבל לא עד אפס.
-        misconception: MC-c3-q1-positive-needs-orthogonal
-    reasons:
-      - text: '$Q_1(a,b)=\|a\sigma_u+b\sigma_v\|^2$, ו-$a\sigma_u+b\sigma_v\ne0$ כש-$(a,b)\ne0$ כי $\sigma_u,\sigma_v$ בלתי תלויים; בפרט $EG-F^2=\|\sigma_u\times\sigma_v\|^2>0$'
-        correct: true
-        feedback: >-
-          בדיוק: $Q_1$ היא צמצום של מכפלה פנימית למישור, בבסיס שהוא באמת בסיס. החיוביות היא רגולריות במילים אחרות.
-      - text: 'כל שלושת המקדמים הם ריבועים של אורכים, ולכן חיוביים'
-        feedback: >-
-          רק $E=\|\sigma_u\|^2$ ו-$G=\|\sigma_v\|^2$ הם ריבועים. $F=\sigma_u\cdot\sigma_v$ יכול להיות שלילי, ו-$EG-F^2>0$
-          צריך נימוק: זהות לגרנז׳, או אי-שוויון קושי-שוורץ $F^2\le EG$ יחד עם מקרה השוויון בו (שוויון רק כש-$\sigma_u,\sigma_v$
-          תלויים לינארית).
+          $F=\sigma_u\cdot\sigma_v$ הוא מכפלה פנימית, לא ריבוע של אורך, והוא שלילי כשהזווית בין $\sigma_u$ ל-$\sigma_v$ קהה. למשל
+          $(1,-1,4)$: $EG-F^2=3>0$.
         misconception: MC-c3-F-nonneg
-      - text: 'כי $E>0$ ו-$G>0$, וזה מספיק לחיוביות של תבנית ריבועית'
+      - text: 'בדיוק המספרים $-2\le F\le2$'
         feedback: >-
-          לא מספיק: $a^2+4ab+b^2$ שלילית ב-$(1,-1)$. צריך גם את הדטרמיננטה, $EG-F^2>0$.
+          ב-$F=\pm2$ מתקבל $EG-F^2=0$: שוויון באי-שוויון קושי-שוורץ, כלומר $\sigma_u,\sigma_v$ תלויים, והנקודה אינה רגולרית.
+        misconception: MC-c3-cs-equality-allowed
+      - text: 'כל מספר ממשי: $E,G>0$ כבר מבטיחים ש-$Q_1$ חיובית'
+        feedback: >-
+          לא: $a^2+2Fab+4b^2$ עם $F=3$ שלילית ב-$(a,b)=(2,-1)$ ($4-12+4=-4$), אבל $Q_1(a,b)=\|a\sigma_u+b\sigma_v\|^2\ge0$
+          תמיד. צריך גם $EG-F^2>0$.
         misconception: MC-c3-positive-diagonal-enough
+      - text: 'רק $F=0$: כש-$F\ne0$ האיבר $2Fab$ יכול לאפס את $Q_1$'
+        feedback: >-
+          לא: $Q_1(a,b)=\|a\sigma_u+b\sigma_v\|^2$, ובנקודה רגולרית הווקטור הזה אינו אפס כש-$(a,b)\ne(0,0)$, עם $F$ כלשהו.
+          למשל המישור $\sigma(u,v)=u\,(1,0,0)+v\,(1,\sqrt3,0)$ רגולרי, עם $E=1$, $F=1$, $G=4$.
+        misconception: MC-c3-q1-positive-needs-orthogonal
 
   - id: Q-3.4-which-forms
     type: multi
     objectives: [OBJ-3.4-3, OBJ-3.4-1]
     qualitative: true
-    level: exam
+    level: mid
     prompt: >-
       אילו מהשלשות $(E,F,G)$ יכולות להיות מקדמי התבנית הראשונה של פרמטריזציה **רגולרית** בנקודה? סמנו את כולן.
     choices:
-      - text: '$(1,0,1)$'
+      - text: '$(3,2,2)$'
         correct: true
-        feedback: 'נכון: למשל המישור $(u,v,0)$.'
-      - text: '$(2,1,1)$'
-        correct: true
+        feedback: 'נכון: $EG-F^2=6-4=2>0$, ו-$E>0$; לפי טענה 3.4.3 יש פרמטריזציה לינארית כזו.'
+      - text: '$(2,-3,4)$'
         feedback: >-
-          נכון: $EG-F^2=1>0$. למשל $\sigma_u=(1,1,0)$, $\sigma_v=(1,0,0)$, כלומר $\sigma(u,v)=(u+v,\,u,\,0)$.
-      - text: '$(1,1,1)$'
-        feedback: >-
-          $EG-F^2=0$: $\|\sigma_u\|=\|\sigma_v\|=1$ ו-$\sigma_u\cdot\sigma_v=1$, כלומר $\sigma_u=\sigma_v$. שתי הנגזרות
-          שונות מאפס ובכל זאת מקבילות, וזו אינה נקודה רגולרית.
-        misconception: MC-c3-nonzero-partials-enough
-      - text: '$(1,2,1)$'
-        feedback: >-
-          $EG-F^2=-3<0$, אבל לפי קושי-שוורץ $F^2=(\sigma_u\cdot\sigma_v)^2\le\|\sigma_u\|^2\|\sigma_v\|^2=EG$. שום פרמטריזציה לא
-          נותנת את השלשה הזו.
+          $EG-F^2=8-9=-1<0$, אבל לפי קושי-שוורץ $F^2\le EG$ בכל פרמטריזציה. שום פרמטריזציה לא נותנת את השלשה הזו, אף ש-$E$
+          ו-$G$ חיוביים.
         misconception: MC-c3-positive-diagonal-enough
-      - text: '$(2,-1,3)$'
+      - text: '$(4,2,1)$'
+        feedback: >-
+          $EG-F^2=0$: שוויון בקושי-שוורץ, ולכן $\sigma_u=2\sigma_v$. שתי הנגזרות שונות מאפס ובכל זאת מקבילות, וזו אינה נקודה
+          רגולרית.
+        misconception: MC-c3-nonzero-partials-enough
+      - text: '$(1,-\frac12,1)$'
         correct: true
         feedback: >-
-          נכון: $EG-F^2=5>0$, ו-$F<0$ מותר: הזווית בין $\sigma_u$ ל-$\sigma_v$ קהה.
+          נכון: $EG-F^2=\frac34>0$. $F<0$ מותר: $\sigma_u,\sigma_v$ וקטורי יחידה בזווית $120^\circ$.
+      - text: '$(\frac12,0,3)$'
+        correct: true
+        feedback: 'נכון: $EG-F^2=\frac32>0$.'
     explanation: >-
-      התנאי $E>0$, $EG-F^2>0$ הכרחי, וגם מספיק: לכל שלשה כזו ההעתקה הלינארית
-      $\sigma(u,v)=\left(\sqrt E\,u+\frac{F}{\sqrt E}\,v,\ \frac{\sqrt{EG-F^2}}{\sqrt E}\,v,\ 0\right)$ של המישור נותנת
-      $\sigma_u=(\sqrt E,0,0)$ ו-$\sigma_v=\big(\frac{F}{\sqrt E},\frac{\sqrt{EG-F^2}}{\sqrt E},0\big)$, ולכן
-      $\sigma_u\cdot\sigma_u=E$, $\sigma_u\cdot\sigma_v=F$ ו-$\sigma_v\cdot\sigma_v=\frac{F^2+EG-F^2}{E}=G$.
+      התנאי $E>0$, $EG-F^2>0$ הכרחי (טענה 3.4.2(ג)), וגם מספיק (טענה 3.4.3): הוא לא תלוי בסימן של $F$, ואי אפשר להסתפק
+      ב-$E,G>0$.
+
+  - id: Q-3.4-transition-f
+    type: numeric
+    objectives: [OBJ-3.4-1, OBJ-3.4-3]
+    level: mid
+    prompt: >-
+      בנקודה $\varphi(s,t)$ של פרמטריזציה $\sigma(u,v)$ מתקיים $E=2$, $F=1$, $G=5$. נגדיר $\tilde\sigma(s,t)=\sigma(3s,\ s+t)$.
+      חשבו את $\tilde F$ בנקודה $(s,t)$.
+    answer: 8
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי כלל השרשרת $\tilde\sigma_s=3\sigma_u+\sigma_v$ ו-$\tilde\sigma_t=\sigma_v$, ולכן
+      $\tilde F=\tilde\sigma_s\cdot\tilde\sigma_t=3F+G=8$. בדיקה מחוק המעבר: $\tilde E=9E+6F+G=29$, $\tilde G=5$, ו-$\tilde E\tilde
+      G-\tilde F^2=145-64=81=(\det J)^2(EG-F^2)=9\cdot9$.
+    wrongFeedback: >-
+      כתבו את $\tilde\sigma_s,\tilde\sigma_t$ בעזרת $\sigma_u,\sigma_v$ לפי כלל השרשרת, ואז פתחו את המכפלה הפנימית.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          זה $F$ של $\sigma$. המקדמים תלויים בפרמטריזציה: $\tilde F$ הוא מכפלה פנימית של וקטורים **אחרים**, $\tilde\sigma_s$
+          ו-$\tilde\sigma_t$.
+        misconception: MC-c3-partials-are-geometric
+      - value: 3
+        feedback: >-
+          זה $3F$: שכחתם ש-$\tilde\sigma_s=3\sigma_u+\sigma_v$ כולל גם רכיב $\sigma_v$, שתורם $\sigma_v\cdot\sigma_v=G$.
+        misconception: MC-c3-chain-rule-reparam
+
+  - id: Q-3.4-length-invariant
+    type: twotier
+    objectives: [OBJ-3.4-2, OBJ-3.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שני סטודנטים מחשבים את אורכה של אותה מסילה על אותו משטח, כל אחד בפרמטריזציה מקומית אחרת. מקדמי $E,F,G$ שלהם שונים,
+      וגם הנגזרות $u',v'$ של המסילה בתחום. האם האורכים שיקבלו בהכרח שווים?
+    choices:
+      - text: כן, בהכרח
+        correct: true
+        feedback: >-
+          נכון. לפי משפט 3.4.5(ב) שתי הנוסחאות שוות ל-$\int\|\gamma'\|$, והאינטגרנדים שווים בכל $t$.
+      - text: לא בהכרח
+        feedback: >-
+          המקדמים שונים, אבל הם משתנים יחד עם $u',v'$ כך שהמכפלה $Q_1(u',v')$ נשארת $\|\gamma'\|^2$ (טענה 3.4.4(ב)).
+        misconception: MC-c3-partials-are-geometric
+    reasons:
+      - text: 'בשתי הפרמטריזציות האינטגרנד הוא $\|\gamma''(t)\|$'
+        correct: true
+        feedback: >-
+          בדיוק: לפי טענה 3.4.2(א) $\sqrt{Q_1(u',v')}=\|u'\sigma_u+v'\sigma_v\|=\|\gamma'\|$, וזה לא מזכיר שום פרמטריזציה.
+      - text: 'כי $E,F,G$ לא תלויים בפרמטריזציה, ולכן גם הנוסחה לא'
+        feedback: >-
+          $E,F,G$ **כן** תלויים בפרמטריזציה: עם $\tilde\sigma(s,t)=\sigma(2s,t)$ מתקבל $\tilde E=4E$ (טענה 3.4.4). מה שלא
+          תלוי הוא $Q_1$ כתבנית על המישור המשיק.
+        misconception: MC-c3-partials-are-geometric
+      - text: 'כי שתי הפרמטריזציות מעתיקות את המסילה לאותה מסילה בתחום הפרמטרים, באותו אורך'
+        feedback: >-
+          המסילות בשני התחומים שונות, ובאורכים שונים בדרך כלל. האורך על המשטח אינו האורך בתחום.
+        misconception: MC-c3-q1-is-euclidean-in-params
+
+  - id: Q-3.4-conformal
+    type: multi
+    objectives: [OBJ-3.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\sigma:D\to\mathbb R^3$ פרמטריזציה רגולרית עם $E=G=4$ ו-$F=0$ **בכל** נקודה של $D$. סמנו את כל הטענות הנכונות.
+    choices:
+      - text: 'כל מסילה $\sigma\circ c$ ארוכה פי 2 מהמסילה $c$ בתחום'
+        correct: true
+        feedback: >-
+          נכון: $Q_1(a,b)=4(a^2+b^2)$, ולכן $\|(\sigma\circ c)'\|=2|c'|$ בכל $t$, ולפי משפט 3.4.5 $L(\sigma\circ c)=2L(c)$.
+      - text: 'הזווית בין שתי מסילות על המשטח שווה לזווית בין המסילות המתאימות בתחום'
+        correct: true
+        feedback: >-
+          נכון: הפקטור $4$ מצטמצם במונה ובמכנה של טענה 3.4.6 (דוגמה 3 בשיעור).
+      - text: 'כל מסילה $\sigma\circ c$ ארוכה פי 4 מ-$c$'
+        feedback: >-
+          $4$ הוא היחס בין **ריבועי** האורכים של הווקטורים; האורכים עצמם גדלים פי $\sqrt4=2$.
+        misconception: MC-c3-norm-vs-square
+      - text: 'אורכים נשמרים, כי $F=0$ והקווים הפרמטריים ניצבים'
+        feedback: >-
+          $F=0$ אומר משהו על זוויות בין $\sigma_u$ ל-$\sigma_v$, לא על אורכים. כדי שאורכים יישמרו צריך $E=G=1$.
+        misconception: MC-c3-q1-is-euclidean-in-params
+      - text: 'רק הזווית בין הקווים הפרמטריים נשמרת; זוויות בין מסילות אחרות משתנות'
+        feedback: >-
+          כש-$E=G$ ו-$F=0$ כל הזוויות נשמרות, לא רק זו. (כש-$F=0$ אבל $E\ne G$, באמת רק זו נשמרת.)
+        misconception: MC-c3-coordinate-curves-orthogonal
 
   - id: Q-3.4-length-rank
     type: rank
     objectives: [OBJ-3.4-2, OBJ-3.4-3]
     level: mid
     help: >-
-      סדרו את שלבי ההוכחה מהשלב הראשון לאחרון.
+      סדרו את שלבי ההוכחה. שלבים שאינם תלויים זה בזה מופיעים יחד בקבוצה, ואפשר לשים אותם בכל סדר.
     prompt: >-
-      $\gamma(t)=\sigma(u(t),v(t))$, $a\le t\le b$, מסילה על משטח בפרמטריזציה רגולרית. הוכיחו שאורכה
-      $$L=\int_a^b\sqrt{E\,u'^2+2F\,u'v'+G\,v'^2}\,dt.$$
-      (נקודת המוצא: אורך של מסילה חלקה הוא $L=\int_a^b\|\gamma'(t)\|\,dt$, שיעור 1.2.)
+      $\gamma(t)=\sigma(u(t),v(t))$, $\alpha\le t\le\beta$, מסילה על משטח, כש-$\sigma$ ו-$(u,v)$ מסדר $C^1$ (רגולריות לא נדרשת).
+      הוכיחו שאורכה
+      $$L=\int_\alpha^\beta\sqrt{E\,u'^2+2F\,u'v'+G\,v'^2}\,dt.$$
     items:
+      - id: length
+        label: 'האורך של מסילה מסדר $C^1$ הוא $\int_\alpha^\beta\|\gamma''(t)\|\,dt$ (משפט 1.2.7)'
       - id: chain
         label: 'כלל השרשרת: $\gamma''(t)=u''(t)\,\sigma_u+v''(t)\,\sigma_v$, עם $\sigma_u,\sigma_v$ ב-$(u(t),v(t))$'
-      - id: expand
-        label: 'פיתוח ביליניארי של הביטוי הזה: $\|\gamma''\|^2=\gamma''\cdot\gamma''=u''^2\,\sigma_u\cdot\sigma_u+2u''v''\,\sigma_u\cdot\sigma_v+v''^2\,\sigma_v\cdot\sigma_v$'
-      - id: coeffs
-        label: 'לפי ההגדרה של $E,F,G$, הפיתוח הוא $\|\gamma''\|^2=Eu''^2+2Fu''v''+Gv''^2$'
-      - id: length
-        label: 'מוציאים שורש מהשוויון הזה ומציבים אותו ב-$L=\int_a^b\|\gamma''(t)\|\,dt$'
-    order: [chain, expand, coeffs, length]
+      - id: gram
+        label: 'טענה 3.4.2(א) עם $(a,b)=(u''(t),v''(t))$: $\|\gamma''(t)\|^2=E\,u''^2+2F\,u''v''+G\,v''^2$'
+      - id: sqrt
+        label: 'הוצאת שורש (שני הצדדים אי-שליליים) והצבה באינטגרל'
+    order: [[length, chain], gram, sqrt]
     correctFeedback: >-
-      נכון. הרעיון: האורך תלוי רק באורך המהירות, והמהירות משיקה; לכן מספיק לדעת למדוד אורכים במישור המשיק, וזה בדיוק
-      מה ש-$Q_1$ עושה.
+      נכון. השלב הראשון והשני בלתי תלויים; השלישי צריך את כלל השרשרת; האחרון צריך את שניהם. הרעיון: האורך תלוי רק באורך
+      המהירות, והמהירות משיקה; $Q_1$ מודדת אורכים במישור המשיק.
     wrongFeedback: >-
-      התחילו מהמהירות (כלל השרשרת), עברו לריבוע אורכה, זהו את המקדמים, ורק בסוף הציבו בנוסחת האורך.
+      טענה 3.4.2(א) מודדת וקטור מהצורה $a\sigma_u+b\sigma_v$: קודם צריך לדעת ש-$\gamma'$ מהצורה הזו. וההצבה באינטגרל היא
+      האחרונה.
+
+  - id: Q-3.4-which-j
+    type: multi
+    objectives: [OBJ-3.4-3, OBJ-3.4-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $J$ מטריצה הפיכה $2\times2$, ו-$\varphi(s,t)=J(s,t)^T$. לאילו מהמטריצות הבאות מתקיים: **לכל** פרמטריזציה רגולרית
+      $\sigma:\mathbb R^2\to\mathbb R^3$ ובכל נקודה, ל-$\tilde\sigma=\sigma\circ\varphi$ יש אותם $E,F,G$ כמו ל-$\sigma$ בנקודה
+      המתאימה? סמנו את כולן.
+    choices:
+      - text: '$J=\mathrm{Id}$'
+        correct: true
+        feedback: 'נכון: $J^T[Q_1]J=[Q_1]$.'
+      - text: '$J=-\mathrm{Id}$'
+        correct: true
+        feedback: >-
+          נכון: $(-\mathrm{Id})^T[Q_1](-\mathrm{Id})=[Q_1]$. $\tilde\sigma_s=-\sigma_u$ ו-$\tilde\sigma_t=-\sigma_v$, והמכפלות הפנימיות
+          לא משתנות.
+      - text: 'סיבוב ברבע סיבוב, $J=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$'
+        feedback: >-
+          $J$ שומרת את המכפלה הפנימית של $\mathbb R^2$, אבל לא כל $[Q_1]$: עם $(E,F,G)=(1,0,2)$ מתקבל
+          $J^T[Q_1]J=\operatorname{diag}(2,1)$, כלומר $\tilde E=G$ ו-$\tilde G=E$.
+        misconception: MC-c3-q1-is-euclidean-in-params
+      - text: 'שיקוף, $J=\begin{pmatrix}1&0\\0&-1\end{pmatrix}$'
+        feedback: >-
+          $\tilde\sigma_t=-\sigma_v$, ולכן $\tilde F=-F$: שונה כש-$F\ne0$, למשל $(E,F,G)=(1,1,2)$.
+        misconception: MC-c3-partials-are-geometric
+      - text: 'כל מטריצה אורתוגונלית'
+        feedback: >-
+          אורתוגונליות שומרת את התבנית $\mathrm{Id}$, כלומר את המקדמים רק כש-$E=G$ ו-$F=0$. הסיבוב והשיקוף שלמעלה הן אורתוגונליות
+          ונכשלות.
+        misconception: MC-c3-q1-is-euclidean-in-params
+    explanation: >-
+      לפי טענה 3.4.4 צריך $J^TMJ=M$ לכל מטריצה סימטרית מוגדרת חיובית $M$ (כל אחת היא $[Q_1]$ של פרמטריזציה לינארית, לפי טענה
+      3.4.3). עם $M=\mathrm{Id}$: $J^TJ=\mathrm{Id}$, ולכן $J^T=J^{-1}$, והתנאי הוא $MJ=JM$ לכל $M$ כזו. עם $M=\operatorname{diag}(1,2)$,
+      $J$ מתחלפת עם מטריצה אלכסונית עם ערכים שונים, ולכן $J$ אלכסונית; עם $M=\begin{pmatrix}2&1\\1&2\end{pmatrix}$, השוואת
+      הרכיב $(1,2)$ נותנת $J_{11}=J_{22}$. לכן $J=\lambda\mathrm{Id}$, ו-$J^TJ=\mathrm{Id}$ נותן $\lambda=\pm1$.
+
+  - id: Q-3.4-torus-shortest
+    type: numeric
+    objectives: [OBJ-3.4-2]
+    level: exam
+    prompt: >-
+      בטורוס $$\sigma(u,v)=((3+\cos v)\cos u,\ (3+\cos v)\sin u,\ \sin v),\qquad (u,v)\in\mathbb R^2,$$ נתבונן במסילות
+      $\gamma=\sigma\circ c$, $c:[\alpha,\beta]\to\mathbb R^2$ מסדר $C^1$, שמתחילות על קו המשווה החיצוני ($\cos v=1$) ומסתיימות
+      על קו המשווה הפנימי ($\cos v=-1$). מהו האורך הקטן ביותר של מסילה כזו?
+    answer: 3.1415927
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\pi$. **חסם תחתון:** לפי מסקנה 3.4.7(3) $\|\gamma'\|^2=(3+\cos v)^2u'^2+v'^2\ge v'^2$, ולכן
+      $L\ge\int_\alpha^\beta|v'|\,dt\ge|v(\beta)-v(\alpha)|$. ההנחות אומרות $v(\alpha)\in2\pi\mathbb Z$ ו-$v(\beta)\in\pi+2\pi\mathbb Z$, ולכן
+      $|v(\beta)-v(\alpha)|$ הוא כפולה אי-זוגית של $\pi$, לפחות $\pi$. **השגה:** חצי קו האורך $u=u_0$, $v=t$, $0\le t\le\pi$, אורכו
+      $\int_0^\pi1\,dt=\pi$.
+    wrongFeedback: >-
+      כמו בדוגמה 6 של השיעור: $\|\gamma'\|\ge|v'|$, והשאלה היא בכמה $v$ חייב להשתנות.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          זה המרחק **בקו ישר במרחב** בין $(4,0,0)$ ל-$(2,0,0)$. הקטע הזה עובר דרך החור של הטורוס, ואינו מסילה על הטורוס.
+        misconception: MC-c3-space-chord-as-length
+      - value: 6.2831853
+        feedback: >-
+          זה אורך קו האורך כולו. מספיק חצי ממנו: מ-$v=0$ ל-$v=\pi$.
+        misconception: MC-c3-q1-is-euclidean-in-params

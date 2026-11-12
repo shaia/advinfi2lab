@@ -1,0 +1,485 @@
+# Workbook of lesson 3.1 — a smooth parametrized surface.
+# Objectives (src/course.ts):
+#   OBJ-3.1-1  define a smooth parametrized surface and check regularity: the partials are linearly independent
+#   OBJ-3.1-2  parametrize the sphere, cylinder, cone, torus and a surface of revolution; find their non-regular points
+#   OBJ-3.1-3  tell a singular point of the surface from a non-regular point of the parametrization
+# Every cross product below recomputed on 2026-11-12 against central differences (geometry.ts partials) at sample
+# points (scratchpad f31/c31.ts): (u, v², u + v), the ellipsoid, revolution about the x axis, (u + v, au + v, uv),
+# the HUJI torus f(φ, θ), the HUJI cone U(x, y), the figure-eight cylinder, the horn torus.
+lesson: '3.1'
+practice:
+  - id: W-3.1-01
+    level: basic
+    objectives: [OBJ-3.1-1]
+    prompt: >-
+      $\sigma(u,v)=(u,\ v^2,\ u+v)$ על $\mathbb R^2$.
+
+      (א) חשבו את $\sigma_u\times\sigma_v$ והוכיחו ש-$\sigma$ רגולרית בכל נקודה.
+
+      (ב) חשבו את $\|\sigma_u\times\sigma_v\|^2$ בנקודה $(1,1)$.
+
+      (ג) האם $\sigma$ חד-חד-ערכית?
+    answer: >-
+      $\sigma_u\times\sigma_v=(-2v,\ -1,\ 2v)$, שאינו מתאפס לעולם; בנקודה $(1,1)$ הערך הוא $9$; $\sigma$ חד-חד-ערכית.
+    solution:
+      - kind: computation
+        text: >-
+          $\sigma_u=(1,\ 0,\ 1)$ ו-$\sigma_v=(0,\ 2v,\ 1)$. רכיב אחר רכיב:
+          $$\sigma_u\times\sigma_v=\big(0\cdot1-1\cdot2v,\ \ 1\cdot0-1\cdot1,\ \ 1\cdot2v-0\cdot0\big)=(-2v,\ -1,\ 2v).$$
+      - kind: theorem
+        text: >-
+          הרכיב השני הוא $-1\ne0$, ולכן $\sigma_u\times\sigma_v\ne0$ בכל נקודה, ולפי למה 3.1.2 $\sigma$ רגולרית בכל נקודה.
+      - kind: computation
+        text: >-
+          (ב) ב-$(1,1)$: $(-2,-1,2)$, ו-$4+1+4=9$.
+      - kind: step
+        text: >-
+          (ג) אם $\sigma(u_1,v_1)=\sigma(u_2,v_2)$, אז מהרכיב הראשון $u_1=u_2$, ומהשלישי $u_1+v_1=u_2+v_2$, ולכן גם
+          $v_1=v_2$. שימו לב שהרכיב השני לבדו, $v^2$, אינו מבדיל בין $v$ ל-$-v$; הרכיב השלישי הוא שמבדיל.
+      - kind: check
+        text: >-
+          $(-2v,-1,2v)\cdot(1,0,1)=0$ ו-$$(-2v,-1,2v)\cdot(0,2v,1)=-2v+2v=0$$. החישוב המספרי מהנגזרות ב-$(1,1)$ נותן
+          $(-2,-1,2)$.
+      - kind: result
+        text: >-
+          $\sigma_u\times\sigma_v=(-2v,-1,2v)\ne0$: רגולרית בכל נקודה; $\|\sigma_u\times\sigma_v\|^2(1,1)=9$; חד-חד-ערכית.
+
+  - id: W-3.1-02
+    level: basic
+    objectives: [OBJ-3.1-2]
+    prompt: >-
+      יהיו $a,b,c>0$. האליפסואיד $\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1$ מתואר בפרמטריזציה
+      $$\sigma(u,v)=(a\cos u\cos v,\ b\sin u\cos v,\ c\sin v),\qquad (u,v)\in\mathbb R^2.$$
+      הראו שהתמונה מוכלת באליפסואיד, ומצאו את כל הנקודות שבהן $\sigma$ אינה רגולרית ואת התמונה שלהן.
+    answer: >-
+      $$\sigma_u\times\sigma_v=\cos v\,\big(bc\cos u\cos v,\ ac\sin u\cos v,\ ab\sin v\big)$$. $\sigma$ אינה רגולרית בדיוק
+      כש-$\cos v=0$, והקווים האלה נשלחים לשתי הנקודות $(0,0,\pm c)$.
+    solution:
+      - kind: step
+        text: >-
+          $$\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=\cos^2u\cos^2v+\sin^2u\cos^2v+\sin^2v=\cos^2v+\sin^2v=1$$.
+      - kind: computation
+        text: >-
+          $$\sigma_u=(-a\sin u\cos v,\ b\cos u\cos v,\ 0)$$, $$\sigma_v=(-a\cos u\sin v,\ -b\sin u\sin v,\ c\cos v)$$, ו-
+          $$\sigma_u\times\sigma_v=\big(bc\cos u\cos^2v,\ \ ac\sin u\cos^2v,\ \ ab\cos v\sin v\big)=\cos v\cdot\mathbf m,$$
+          כאשר $$\mathbf m=(bc\cos u\cos v,\ ac\sin u\cos v,\ ab\sin v)$$.
+      - kind: step
+        text: >-
+          $\mathbf m\ne0$ תמיד: אם $\cos v=0$, אז $\sin v=\pm1$ והרכיב השלישי $\pm ab\ne0$; אם $\cos v\ne0$, אז אחד מ-$\cos u,\sin u$
+          שונה מאפס, ואחד משני הרכיבים הראשונים שונה מאפס. לכן $\sigma_u\times\sigma_v=0$ בדיוק כש-$\cos v=0$.
+      - kind: step
+        text: >-
+          כש-$\cos v=0$: $$\sigma(u,v)=(0,\ 0,\ c\sin v)=(0,0,\pm c)$$, לכל $u$.
+      - kind: check
+        text: >-
+          עם $a=b=c=r$ חוזרים לספרה של מסקנה 3.1.5(ג): $$\mathbf m=r^2(\cos u\cos v,\ \sin u\cos v,\ \sin v)$$, ו-$\sigma_u\times\sigma_v=r\cos v\cdot\sigma$.
+          עם $a=2$, $b=3$, $c=1$ ב-$(0.7,\ 0.4)$ החישוב המספרי נותן $(1.9466,\ 1.0930,\ 2.1521)$, כמו הנוסחה.
+      - kind: result
+        text: >-
+          לא רגולרית בדיוק על הקווים $v\in\frac\pi2+\pi\mathbb Z$, שנשלחים ל"קטבים" $(0,0,\pm c)$.
+
+  - id: W-3.1-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-3.1-3, OBJ-3.1-1]
+    prompt: >-
+      $\sigma(u,v)=(u^3,\ v^3,\ 0)$ על $\mathbb R^2$. מצאו את הנקודות שבהן $\sigma$ אינה רגולרית. האם התמונה שלהן היא קבוצה
+      של נקודות סינגולריות של $\sigma(\mathbb R^2)$?
+    answer: >-
+      $\sigma$ אינה רגולרית בדיוק על שני הצירים $u=0$ ו-$v=0$. התמונה היא המישור $z=0$, ואין לו נקודות סינגולריות.
+    solution:
+      - kind: computation
+        text: >-
+          $\sigma_u=(3u^2,0,0)$, $\sigma_v=(0,3v^2,0)$, $\sigma_u\times\sigma_v=(0,\ 0,\ 9u^2v^2)$, שמתאפס בדיוק כש-$u=0$ או $v=0$.
+      - kind: step
+        text: >-
+          $t\mapsto t^3$ חד-חד-ערכית ועל $\mathbb R$, ולכן התמונה היא כל המישור $z=0$.
+      - kind: theorem
+        text: >-
+          לפי טענה 3.1.9(ב), $(x,y)\mapsto(x,y,0)$ היא פרמטריזציה מקומית של המישור ליד כל נקודה. לכן אף נקודה של המישור
+          אינה סינגולרית (הגדרה 3.1.8), כולל התמונות של שני הצירים.
+      - kind: check
+        text: >-
+          זו בדיוק הדוגמה של טענה 3.1.3(ג), פעמיים: $\sigma$ אינה רגולרית שם כי $3t^2$ מתאפס ב-$t=0$. ומכאן גם שההופכית
+          $t\mapsto t^{1/3}$ אינה גזירה ב-$0$: אילו הייתה גזירה, כלל השרשרת על $(t^{1/3})^3=t$ היה נותן $1=3\cdot0\cdot(\ldots)$.
+          האי-רגולריות שייכת לפרמטריזציה, למרות שהתמונה "יפה".
+      - kind: result
+        text: >-
+          הנקודות הלא רגולריות: $\{u=0\}\cup\{v=0\}$. הן נקודות לא רגולריות של **הפרמטריזציה** בלבד; המישור אינו סינגולרי
+          באף נקודה.
+
+  - id: W-3.1-04
+    level: mid
+    objectives: [OBJ-3.1-2]
+    prompt: >-
+      **הוכיחו** שהגליל $Z=\{(x,y,z):\ x^2+y^2=1\}$ הוא משטח חלק (הגדרה 3.1.6), בעזרת שתי הפרמטריזציות
+      $\sigma(u,v)=(\cos u,\ \sin u,\ v)$ על $D_1=(0,2\pi)\times\mathbb R$ ועל $D_2=(-\pi,\pi)\times\mathbb R$.
+    answer: >-
+      על $D_1$: הומאומורפיזם על $Z\cap W_1$, $W_1=\mathbb R^3\setminus\{y=0,\ x\ge0\}$, עם $u=\pi-2\arctan\frac{y}{\sqrt{x^2+y^2}-x}$; על
+      $D_2$: על $Z\cap W_2$, $W_2=\mathbb R^3\setminus\{y=0,\ x\le0\}$, עם $u=2\arctan\frac{y}{\sqrt{x^2+y^2}+x}$; ו-$W_1\cup W_2\supset Z$.
+    solution:
+      - kind: idea
+        text: >-
+          כמו בטענה 3.1.7: כל פרמטריזציה משמיטה ישר אחד של הגליל, והופכית רציפה נכתבת בעזרת $\arctan$.
+      - kind: step
+        text: >-
+          **רגולריות.** לפי מסקנה 3.1.5(ב) עם $r=1$, $\|\sigma_u\times\sigma_v\|=1$ בכל נקודה.
+      - kind: step
+        text: >-
+          **$D_1$.** $\sigma(D_1)\subset Z\cap W_1$: אילו $\sin u=0$ עם $u\in(0,2\pi)$, אז $u=\pi$ ו-$x=-1<0$. על $W_1$ נגדיר
+          $v(p)=z$ ו-$u(p)=\pi-2\arctan\frac{y}{\sqrt{x^2+y^2}-x}$; המכנה מתאפס רק כש-$y=0$, $x\ge0$, ולכן שתיהן רציפות על
+          $W_1$. בדיוק כמו בשלב (3) של הוכחת טענה 3.1.7 (שם $\sqrt{x^2+y^2}=\cos v$, וכאן $1$), $u(\sigma(u,v))=u$ ו-$\sigma(u(p),v(p))=p$
+          לכל $p\in Z\cap W_1$. לכן $\sigma:D_1\to Z\cap W_1$ חד-חד-ערכית ועל, עם הופכית רציפה.
+      - kind: computation
+        text: >-
+          **$D_2$.** כאן $u\in(-\pi,\pi)$, ולכן $\cos\frac u2\ne0$, ומ-$\sin u=2\sin\frac u2\cos\frac u2$ ו-$1+\cos u=2\cos^2\frac u2$:
+          $\frac{\sin u}{1+\cos u}=\tan\frac u2$, עם $\frac u2\in(-\frac\pi2,\frac\pi2)$. לכן $u(p)=2\arctan\frac{y}{\sqrt{x^2+y^2}+x}$ מקיימת
+          $u(\sigma(u,v))=u$, והיא רציפה על $W_2=\mathbb R^3\setminus\{y=0,\ x\le0\}$, שם המכנה אינו מתאפס. ו-$\sigma(D_2)\subset W_2$:
+          אילו $\sin u=0$ עם $u\in(-\pi,\pi)$, אז $u=0$ ו-$x=1>0$.
+      - kind: computation
+        text: >-
+          **$D_2$, על.** תהי $p\in Z\cap W_2$ (אז $\sqrt{x^2+y^2}=1$), $t=\frac{y}{1+x}$ ו-$u=u(p)=2\arctan t\in(-\pi,\pi)$, כך
+          ש-$\tan\frac u2=t$. מחלוקת $\cos u=\cos^2\frac u2-\sin^2\frac u2$ ו-$\sin u=2\sin\frac u2\cos\frac u2$ ב-$1=\cos^2\frac u2+\sin^2\frac u2$,
+          ואחר כך מונה ומכנה ב-$\cos^2\frac u2$: $\cos u=\frac{1-t^2}{1+t^2}$, $\sin u=\frac{2t}{1+t^2}$. כי $y^2=1-x^2=(1-x)(1+x)$,
+          $t^2=\frac{1-x}{1+x}$, ולכן $\frac{1-t^2}{1+t^2}=x$ ו-$\frac{2t}{1+t^2}=\frac{2y/(1+x)}{2/(1+x)}=y$. לכן $\sigma(u(p),z)=p$: $\sigma(D_2)=Z\cap W_2$.
+      - kind: step
+        text: >-
+          **כיסוי.** $Z\setminus W_1$ הוא הישר $(1,0,z)$, ו-$Z\setminus W_2$ הוא הישר $(-1,0,z)$; הם זרים, ולכן כל נקודה של $Z$
+          ב-$W_1$ או ב-$W_2$.
+      - kind: check
+        text: >-
+          $u=\frac{2\pi}3$: $(x,y)=(-\frac12,\frac{\sqrt3}2)$, ו-$\frac{y}{1-x}=\frac1{\sqrt3}$, $\pi-2\cdot\frac\pi6=\frac{2\pi}3$. ובנוסחה
+          השנייה $\frac{y}{1+x}=\sqrt3$, $2\cdot\frac\pi3=\frac{2\pi}3$. **היכן השתמשנו בהנחות:** פתיחות הקטעים $(0,2\pi)$ ו-$(-\pi,\pi)$
+          נותנת חד-חד-ערכיות; על $\mathbb R\times\mathbb R$ הגליל אינו חד-חד-ערכי (טענה 3.1.3(ד)).
+      - kind: result
+        text: >-
+          שתי פרמטריזציות מקומיות מכסות את $Z$, ולכן $Z$ משטח חלק.
+
+  - id: W-3.1-05
+    level: mid
+    objectives: [OBJ-3.1-2]
+    prompt: >-
+      יהי $J$ קטע פתוח, $f:J\to\mathbb R$ מסדר $C^1$, ו-$$\sigma(u,v)=(v,\ f(v)\cos u,\ f(v)\sin u)$$: הסיבוב של הגרף
+      $y=f(x)$ סביב ציר $x$.
+
+      (א) **הוכיחו** ש-$\|\sigma_u\times\sigma_v\|=|f(v)|\sqrt{1+f'(v)^2}$.
+
+      (ב) עבור $f(v)=\cos v$ על $J=\mathbb R$: מצאו את הנקודות הלא רגולריות ואת התמונה שלהן. כמה נקודות של המרחב יש
+      בתמונה הזו?
+    answer: >-
+      (א) $\sigma_u\times\sigma_v=f\,(-f',\ \cos u,\ \sin u)$. (ב) הקווים $v=\frac\pi2+k\pi$, $k\in\mathbb Z$, שנשלחים לנקודות
+      $(\frac\pi2+k\pi,\ 0,\ 0)$: אינסוף נקודות.
+    solution:
+      - kind: computation
+        text: >-
+          $\sigma_u=(0,\ -f\sin u,\ f\cos u)$ ו-$\sigma_v=(1,\ f'\cos u,\ f'\sin u)$. רכיב אחר רכיב:
+          $$\sigma_u\times\sigma_v=\big(-ff'\sin^2u-ff'\cos^2u,\ \ f\cos u\cdot1-0,\ \ 0-(-f\sin u)\cdot1\big)=f\,(-f',\ \cos u,\ \sin u).$$
+      - kind: computation
+        text: >-
+          לכן $\|\sigma_u\times\sigma_v\|^2=f^2(f'^2+1)$, וזו (א).
+      - kind: step
+        text: >-
+          (ב) הגורם $\sqrt{1+f'^2}\ge1$, ולכן $\sigma$ אינה רגולרית בדיוק כש-$\cos v=0$, כלומר $v=\frac\pi2+k\pi$. שם
+          $\sigma(u,v)=(v,0,0)$ לכל $u$: כל קו נשלח לנקודה אחת על ציר $x$, ולקווים שונים נקודות שונות.
+      - kind: check
+        text: >-
+          זו טענה 3.1.4 עם התפקידים של הצירים מוחלפים: הפרופיל $(v,\ f(v))$ רגולרי תמיד (הנגזרת של הרכיב הראשון היא $1$),
+          והכשל הוא רק במקום שבו הגרף פוגע בציר הסיבוב. ב-$(u,v)=(0.4,\ 0.3)$ החישוב המספרי נותן $(0.2823,\ 0.8799,\ 0.3720)$,
+          כמו הנוסחה.
+      - kind: result
+        text: >-
+          $\|\sigma_u\times\sigma_v\|=|f|\sqrt{1+f'^2}$; ל-$f=\cos$: לא רגולרית על $v=\frac\pi2+k\pi$, ותמונה של אינסוף נקודות
+          $(\frac\pi2+k\pi,0,0)$.
+
+  - id: W-3.1-06
+    level: mid
+    objectives: [OBJ-3.1-1]
+    prompt: >-
+      תהי $\sigma:D\to\mathbb R^3$ פרמטריזציה רגולרית, ו-$\Phi:\mathbb R^3\to\mathbb R^3$ חלקה, כך ש-$D\Phi(p)$ הפיכה בכל
+      נקודה $p$. **הוכיחו** ש-$\Phi\circ\sigma$ רגולרית. הסיקו שהגרף $(u,\ v,\ u^2v)$ רגולרי, בעזרת
+      $\Phi(x,y,z)=(x,\ y,\ z+x^2y)$.
+    answer: >-
+      $D(\Phi\circ\sigma)=D\Phi(\sigma)\,D\sigma$, ומטריצה הפיכה לא משנה את הדרגה; $\Phi$ מעבירה את $(u,v,0)$ ל-$(u,v,u^2v)$
+      ו-$\det D\Phi=1$.
+    solution:
+      - kind: idea
+        text: >-
+          רגולריות היא "דרגה 2" (למה 3.1.2), וכפל משמאל במטריצה הפיכה שומר דרגה.
+      - kind: theorem
+        text: >-
+          לפי כלל השרשרת (שיעור 0.3), בכל $q\in D$: $D(\Phi\circ\sigma)(q)=D\Phi(\sigma(q))\,D\sigma(q)$.
+      - kind: step
+        text: >-
+          נסמן $M=D\Phi(\sigma(q))$, הפיכה. אם $\alpha M\sigma_u+\beta M\sigma_v=0$, אז $M(\alpha\sigma_u+\beta\sigma_v)=0$, ולכן
+          $\alpha\sigma_u+\beta\sigma_v=0$, ולכן $\alpha=\beta=0$ מהרגולריות של $\sigma$. העמודות $M\sigma_u,M\sigma_v$ בלתי תלויות.
+      - kind: computation
+        text: >-
+          $$D\Phi=\begin{pmatrix}1&0&0\\0&1&0\\2xy&x^2&1\end{pmatrix}$$, שהדטרמיננטה שלה $1$. $\sigma(u,v)=(u,v,0)$ רגולרית, ו-$\Phi(u,v,0)=(u,\ v,\ u^2v)$.
+      - kind: check
+        text: >-
+          ישירות: $$(1,0,2uv)\times(0,1,u^2)=(-2uv,\ -u^2,\ 1)\ne0$$, כמו לכל גרף. **היכן השתמשנו בהנחות:** הפיכות של $D\Phi$
+          **בנקודות $\sigma(q)$**; בלעדיה, למשל $\Phi(x,y,z)=(x,0,0)$, התמונה מתנוונת.
+      - kind: result
+        text: >-
+          $\Phi\circ\sigma$ רגולרית; בפרט הגרף של $u^2v$ רגולרי.
+
+  - id: W-3.1-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.1-1]
+    prompt: >-
+      לכל $a\in\mathbb R$ נגדיר $\sigma(u,v)=(u+v,\ au+v,\ uv)$ על $\mathbb R^2$. לאילו $a$ הפרמטריזציה רגולרית בכל נקודה?
+      עבור הערכים האחרים, מצאו את הנקודות הלא רגולריות ואת התמונה שלהן.
+    answer: >-
+      $\sigma_u\times\sigma_v=(au-v,\ v-u,\ 1-a)$: רגולרית בכל נקודה בדיוק כש-$a\ne1$. כש-$a=1$ הנקודות הלא רגולריות הן הישר
+      $u=v$, שנשלח לפרבולה $(2u,\ 2u,\ u^2)$.
+    solution:
+      - kind: computation
+        text: >-
+          $\sigma_u=(1,\ a,\ v)$, $\sigma_v=(1,\ 1,\ u)$, ו-
+          $$\sigma_u\times\sigma_v=\big(au-v,\ \ v-u,\ \ 1-a\big).$$
+      - kind: step
+        text: >-
+          אם $a\ne1$, הרכיב השלישי שונה מאפס, ו-$\sigma$ רגולרית בכל נקודה (למה 3.1.2).
+      - kind: step
+        text: >-
+          אם $a=1$: $\sigma_u\times\sigma_v=(u-v,\ v-u,\ 0)$, שמתאפס בדיוק כש-$u=v$. שם $\sigma(u,u)=(2u,\ 2u,\ u^2)$: הפרבולה
+          $z=\frac{x^2}4$ במישור $x=y$.
+      - kind: check
+        text: >-
+          כש-$a=1$, $\sigma=(s,\ s,\ p)$ עם $s=u+v$, $p=uv$, ולכן כל התמונה במישור $x=y$: היא התחום $p\le\frac{s^2}4$ שם, והפרבולה היא
+          השפה שלו. הנקודות הלא רגולריות הן בדיוק המקום שבו ההעתקה $(u,v)\mapsto(u+v,\ uv)$ "מתקפלת". ב-$a=1.7$, $(0.4,\ -0.9)$
+          החישוב המספרי נותן $(1.58,\ -1.3,\ -0.7)$, כמו הנוסחה.
+      - kind: result
+        text: >-
+          רגולרית בכל נקודה $\Leftrightarrow a\ne1$; כש-$a=1$: לא רגולרית על $u=v$, שנשלח לפרבולה $(2u,2u,u^2)$.
+
+  - id: W-3.1-08
+    level: exam
+    qualitative: true
+    objectives: [OBJ-3.1-3]
+    prompt: >-
+      $X=\{(x,y,z):\ xy=0\}$, האיחוד של המישורים $x=0$ ו-$y=0$. **הוכיחו:** נקודה של $X$ היא סינגולרית אם ורק אם היא על ציר
+      $z$.
+    answer: >-
+      מחוץ לציר $z$, $X$ היא מקומית מישור, עם פרמטריזציה מקומית $(u,0,v)$ או $(0,u,v)$. על ציר $z$, לפי טענה 3.1.11(א)
+      $X$ הייתה גרף חלק מעל מישור קואורדינטות, ואף אחד משלושת המישורים לא מתאים.
+    solution:
+      - kind: idea
+        text: >-
+          כדי להראות שנקודה אינה סינגולרית מספיקה פרמטריזציה מקומית אחת; כדי להראות שהיא סינגולרית, טענה 3.1.11(א)
+          ובדיקה של שלושת מישורי הקואורדינטות, כמו בהוכחת טענה 3.1.11(ב).
+      - kind: step
+        text: >-
+          **מחוץ לציר.** תהי $p\in X$ עם $x\ne0$ (אז $y=0$). $W=\{x\ne0\}$ פתוחה, ו-$X\cap W=\{(x,0,z):\ x\ne0\}$.
+          $\sigma(u,v)=(u,0,v)$ על $D=\{u\ne0\}$ (פתוחה) היא חד-חד-ערכית ועל $X\cap W$, ההופכית $(x,y,z)\mapsto(x,z)$ רציפה,
+          ו-$$\sigma_u\times\sigma_v=(1,0,0)\times(0,0,1)=(0,-1,0)\ne0$$. אם $y\ne0$, באותה דרך עם $(0,u,v)$ על $\{u\ne0\}$.
+      - kind: step
+        text: >-
+          **על הציר.** תהי $p=(0,0,z_0)$, ונניח שאינה סינגולרית. לפי טענה 3.1.11(א) יש $W'\ni p$ פתוחה כך ש-$X\cap W'$ גרף
+          של פונקציה חלקה מעל מישור קואורדינטות. יהי $\delta>0$ כך שהכדור ברדיוס $\delta$ סביב $p$ ב-$W'$, ו-$0<t<\delta/2$.
+      - kind: step
+        text: >-
+          מעל $xy$: הנקודות $(0,0,z_0)$ ו-$(0,0,z_0+t)$, עם אותם $(x,y)$. מעל $xz$: $(0,0,z_0)$ ו-$(0,t,z_0)$, עם אותם
+          $(x,z)$. מעל $yz$: $(0,0,z_0)$ ו-$(t,0,z_0)$, עם אותם $(y,z)$. בכל מקרה שתי נקודות של $X\cap W'$ מעל אותה נקודה של
+          המישור. סתירה.
+      - kind: check
+        text: >-
+          טיעון הקשירות של משפט 3.1.10 לא היה עוזר כאן: $X$ בלי הנקודה $p$, ליד $p$, נשארת קשירה (דרך שני חלקי ציר $z$ ודרך
+          המישורים). **היכן השתמשנו בהנחות:** ההומאומורפיזם, דרך טענה 3.1.11(א), מבטיח שכל הנקודות של $X$ ליד $p$ על
+          הגרף.
+      - kind: result
+        text: >-
+          הנקודות הסינגולריות של $X$ הן בדיוק נקודות ציר $z$.
+
+  - id: W-3.1-09
+    level: exam
+    objectives: [OBJ-3.1-2, OBJ-3.1-3]
+    prompt: >-
+      "טורוס הצופר": $R=r=1$,
+      $$\sigma(u,v)=\big((1+\cos v)\cos u,\ (1+\cos v)\sin u,\ \sin v\big),\qquad (u,v)\in\mathbb R^2.$$
+
+      (א) מצאו את הנקודות שבהן $\sigma$ אינה רגולרית ואת התמונה שלהן.
+
+      (ב) הראו שהתמונה היא $$X=\{(x,y,z):\ (\sqrt{x^2+y^2}-1)^2+z^2=1\}$$.
+
+      (ג) **הוכיחו** שהראשית היא נקודה סינגולרית של $X$.
+    answer: >-
+      (א) $\|\sigma_u\times\sigma_v\|=1+\cos v$: הקווים $v=\pi+2k\pi$, שנשלחים לראשית. (ג) ליד הראשית, $X$ בלי הראשית
+      מתפרקת לחלק עם $z>0$ ולחלק עם $z<0$, ולכן הטיעון של משפט 3.1.10 עובד.
+    solution:
+      - kind: computation
+        text: >-
+          (א) לפי מסקנה 3.1.5(ד) עם $R=r=1$: $$\|\sigma_u\times\sigma_v\|=|1+\cos v|=1+\cos v$$, שמתאפס בדיוק כש-$\cos v=-1$,
+          כלומר $v=\pi+2k\pi$. שם $\sigma(u,v)=(0,0,\sin v)=(0,0,0)$ לכל $u$.
+      - kind: step
+        text: >-
+          (ב) $\sqrt{x^2+y^2}=1+\cos v$ (אי-שלילי), ולכן $$(\sqrt{x^2+y^2}-1)^2+z^2=\cos^2v+\sin^2v=1$$. ולהפך, אם $p\in X$, יש $v$
+          עם $\sqrt{x^2+y^2}-1=\cos v$ ו-$z=\sin v$, ואז $\sqrt{x^2+y^2}=1+\cos v$, ויש $u$ עם $(x,y)=(1+\cos v)(\cos u,\sin u)$.
+      - kind: step
+        text: >-
+          (ג) **שני צדדים.** אם $p\in X$ ו-$z=0$, אז $(\sqrt{x^2+y^2}-1)^2=1$, כלומר $\sqrt{x^2+y^2}\in\{0,2\}$. לכן בכדור
+          $\|p\|<2$ הנקודה היחידה של $X$ עם $z=0$ היא הראשית. ומצד שני, לכל $\delta\in(0,\pi)$:
+          $$\sigma(0,\pi\mp\delta)=\big(1-\cos\delta,\ 0,\ \pm\sin\delta\big),$$
+          ושתי הנקודות שואפות לראשית כש-$\delta\to0$, אחת עם $z>0$ ואחת עם $z<0$.
+      - kind: step
+        text: >-
+          **הסתירה.** נניח ש-$\tau:D\to X\cap W$ הומאומורפיזם עם $\tau(q)=0$. כמו בשלבים (1)–(4) של הוכחת משפט 3.1.10:
+          עיגול $B\ni q$ ב-$D$; $B\setminus\{q\}$ קשירה מסילתית; $\tau(B)$ פתוחה ב-$X$, ולכן מכילה את כל הנקודות של $X$
+          בכדור קטן $\|p\|<\varepsilon$ (נבחר $\varepsilon<2$), ובפרט נקודות עם $z>0$ ועם $z<0$; ו-$\tau(B)\setminus\{0\}$ קשירה
+          מסילתית. לפי השלב הקודם היא מוכלת ב-$\{z>0\}\cup\{z<0\}$ ופוגשת את שתיהן, ומשפט ערך הביניים נותן סתירה.
+      - kind: check
+        text: >-
+          ב-$\delta=0.1$: $1-\cos\delta\approx0.0050$, $\sin\delta\approx0.0998$, והנקודות מקיימות את משוואת $X$ (החישוב
+          המספרי נותן $1$). **היכן השתמשנו בהנחות:** $\varepsilon<2$, כדי שהמעגל $\sqrt{x^2+y^2}=2$, $z=0$ לא ייכנס לסביבה.
+      - kind: result
+        text: >-
+          לא רגולרית על $v=\pi+2k\pi$, כולם נשלחים לראשית; הראשית נקודה סינגולרית של $X$, כמו קודקוד החרוט הכפול.
+
+  - id: W-3.1-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-3.1-1, OBJ-3.1-3]
+    prompt: >-
+      **הוכיחו או הפריכו:** אם $\sigma:D\to\mathbb R^3$ פרמטריזציה רגולרית **וחד-חד-ערכית**, אז היא פרמטריזציה מקומית
+      (הגדרה 3.1.6) של $\sigma(D)$ ליד כל נקודה. (רמז: הצמצום של "גליל השמונה" של דוגמה 6, $(\sin2u,\ \sin u,\ v)$, ל-$D=(0,2\pi)\times\mathbb R$.)
+    answer: >-
+      הפרכה: $\sigma(u,v)=(\sin2u,\ \sin u,\ v)$ על $(0,2\pi)\times\mathbb R$ רגולרית וחד-חד-ערכית, אבל
+      $\sigma(\frac1n,0)\to\sigma(\pi,0)$ בלי ש-$(\frac1n,0)\to(\pi,0)$: ההופכית אינה רציפה.
+    solution:
+      - kind: idea
+        text: >-
+          ב-$D$ הקטע $u\in(0,2\pi)$ פתוח, ולכן ה"שמונה" נעברת פעם אחת בלבד; אבל כש-$u\to0^+$ המסילה חוזרת לנקודה $(0,0)$,
+          שהיא $\sigma(\pi,\cdot)$. ההופכית "קורעת".
+      - kind: step
+        text: >-
+          **רגולריות.** כמו בדוגמה 6: $$\sigma_u\times\sigma_v=(\cos u,\ -2\cos2u,\ 0)\ne0$$.
+      - kind: step
+        text: >-
+          **חד-חד-ערכיות.** נניח $\sigma(u_1,v_1)=\sigma(u_2,v_2)$. אז $v_1=v_2$ ו-$\sin u_1=\sin u_2=:y$. אם $y\ne0$, אז
+          $$2y\cos u_1=\sin2u_1=\sin2u_2=2y\cos u_2$$, ולכן גם $\cos u_1=\cos u_2$, ושתי זוויות ב-$(0,2\pi)$ עם אותם סינוס
+          וקוסינוס שוות. אם $y=0$, הזווית היחידה ב-$(0,2\pi)$ עם $\sin u=0$ היא $\pi$, ולכן $u_1=u_2=\pi$.
+      - kind: step
+        text: >-
+          **ההופכית אינה רציפה.** $$\sigma(\frac1n,0)=(\sin\frac2n,\ \sin\frac1n,\ 0)\to(0,0,0)=\sigma(\pi,0)$$, אבל
+          $$\sigma^{-1}(\sigma(\frac1n,0))=(\frac1n,0)\to(0,0)\ne(\pi,0)$$. לכן $\sigma^{-1}$ אינה רציפה ב-$(0,0,0)$, ו-$\sigma$
+          אינה הומאומורפיזם על אף $\sigma(D)\cap W$ עם $W\ni(0,0,0)$.
+      - kind: check
+        text: >-
+          התמונה כאן היא כל $X=\{x^2=4y^2(1-y^2),\ |y|\le1\}$ של דוגמה 6, כי נקודת החיתוך $(0,0,v)$ מתקבלת ב-$u=\pi$. שם
+          הוכחנו שהראשית נקודה סינגולרית של $X$ (וההזזה $(x,y,z)\mapsto(x,y,z+z_0)$ מעבירה את $X$ לעצמה, ולכן כך גם כל נקודה
+          של ציר $z$), כך שאף פרמטריזציה אחרת לא הייתה מצילה. **הלקח:** בהגדרה 3.1.6 הדרישה
+          שההופכית רציפה אינה עודפת: חד-חד-ערכיות ורגולריות לא מספיקות.
+      - kind: result
+        text: >-
+          הטענה שגויה: $(\sin2u,\ \sin u,\ v)$ על $(0,2\pi)\times\mathbb R$ רגולרית וחד-חד-ערכית, אבל אינה הומאומורפיזם על
+          התמונה.
+
+challenge:
+  - id: W-3.1-c1
+    stars: 1
+    objectives: [OBJ-3.1-2, OBJ-3.1-1]
+    prompt: >-
+      יהיו $R,r>0$, ו-$f:\mathbb R^2\to\mathbb R^3$,
+      $$f(\phi,\theta)=\big(R\cos\theta+r\sin\phi\cos\theta,\ \ R\sin\theta+r\sin\phi\sin\theta,\ \ -r\cos\phi\big).$$
+
+      (א) תארו את התמונה $S$ של $f$: הראו שכאשר $r<R$ היא הקבוצה $\{(\sqrt{x^2+y^2}-R)^2+z^2=r^2\}$, ושרטטו אותה.
+
+      (ב) חשבו את $f_\phi\times f_\theta$, והוכיחו ש-$f$ רגולרית בכל נקודה אם ורק אם $r<R$.
+
+      (ג) מצאו פונקציות $u(\phi,\theta)$, $v(\phi,\theta)$ כך ש-$f(\phi,\theta)=\sigma\big(u(\phi,\theta),\ v(\phi,\theta)\big)$, כאשר $\sigma$
+      הפרמטריזציה של הטורוס במסקנה 3.1.5(ד).
+    answer: >-
+      (א) טורוס: הסיבוב סביב ציר $z$ של מעגל ברדיוס $r$ שמרכזו $(R,0,0)$. (ב) עם $A=R+r\sin\phi$:
+      $$f_\phi\times f_\theta=rA\,(-\sin\phi\cos\theta,\ -\sin\phi\sin\theta,\ \cos\phi)$$, שאורכו $r|A|$; רגולרית בכל
+      נקודה $\Leftrightarrow r<R$. (ג) $f(\phi,\theta)=\sigma(\theta,\ \phi-\frac\pi2)$.
+    solution:
+      - kind: step
+        text: >-
+          נסמן $A=R+r\sin\phi$. אז $f=\big(A\cos\theta,\ A\sin\theta,\ -r\cos\phi\big)$: משטח סיבוב (טענה 3.1.4) של הפרופיל
+          $\phi\mapsto(R+r\sin\phi,\ 0,\ -r\cos\phi)$, מעגל ברדיוס $r$ סביב $(R,0,0)$ במישור $xz$.
+      - kind: step
+        text: >-
+          (א) אם $r<R$ אז $A\ge R-r>0$, ו-$\sqrt{x^2+y^2}=A$, ולכן $$(\sqrt{x^2+y^2}-R)^2+z^2=r^2\sin^2\phi+r^2\cos^2\phi=r^2$$. ולהפך,
+          לנקודה של הקבוצה בוחרים $\phi$ עם $\sqrt{x^2+y^2}-R=r\sin\phi$ ו-$z=-r\cos\phi$, ואז $\theta$ לפי הזווית של $(x,y)$.
+      - kind: computation
+        text: >-
+          (ב) $$f_\phi=\big(r\cos\phi\cos\theta,\ r\cos\phi\sin\theta,\ r\sin\phi\big)$$ ו-$f_\theta=\big(-A\sin\theta,\ A\cos\theta,\ 0\big)$.
+          רכיב אחר רכיב:
+          $$f_\phi\times f_\theta=\big(-rA\sin\phi\cos\theta,\ \ -rA\sin\phi\sin\theta,\ \ rA\cos\phi\big),\qquad \|f_\phi\times f_\theta\|=r|A|.$$
+      - kind: step
+        text: >-
+          לכן $f$ אינה רגולרית בדיוק כש-$A=0$, כלומר $\sin\phi=-\frac Rr$. יש $\phi$ כזה אם ורק אם $\frac Rr\le1$. לכן $f$ רגולרית בכל
+          נקודה אם ורק אם $r<R$.
+      - kind: step
+        text: >-
+          (ג) עם $u=\theta$, $v=\phi-\frac\pi2$: $\cos v=\sin\phi$ ו-$\sin v=-\cos\phi$, ולכן $f(\phi,\theta)=\sigma(u,v)$, כאשר $\sigma$ הטורוס של
+          מסקנה 3.1.5(ד). ההחלפה גם מחליפה את סדר הפרמטרים, ולכן $f_\phi\times f_\theta=-\sigma_u\times\sigma_v$ (באותה נקודה): אותו
+          אורך, כיוון הפוך.
+      - kind: check
+        text: >-
+          עם $R=3$, $r=1$, $(\phi,\theta)=(0.8,\ 2.1)$ החישוב המספרי של $f_\phi\times f_\theta$ נותן $(1.3463,\ -2.3019,\ 2.5899)$,
+          כמו הנוסחה, והנקודה מקיימת את משוואת הטורוס. ו-$r\,|A|$ תואם ל-$r(R+r\cos v)$ של מסקנה 3.1.5(ד).
+      - kind: result
+        text: >-
+          $S$ טורוס (כש-$r<R$); $\|f_\phi\times f_\theta\|=r\,|R+r\sin\phi|$, רגולרית בכל נקודה $\Leftrightarrow r<R$;
+          $f(\phi,\theta)=\sigma(\theta,\ \phi-\frac\pi2)$.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 4'
+      year: 2002
+      problem: 'תרגיל 5, סעיף א (תיאור המשטח); סעיפים ב ו-ג נוספו'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex04.html
+      verified: '2026-11-12'
+      adapted: true
+
+  - id: W-3.1-c2
+    stars: 1
+    objectives: [OBJ-3.1-2, OBJ-3.1-3]
+    prompt: >-
+      יהי $\alpha\in(0,\frac\pi2)$ קבוע, ו-$U:\mathbb R^2\to\mathbb R^3$,
+      $$U(x,y)=\big(x\cos y\sin\alpha,\ \ x\sin y\sin\alpha,\ \ x\cos\alpha\big).$$
+
+      (א) תארו את התמונה של $U$ (משוואה וציור).
+
+      (ב) חשבו את הדיפרנציאל $DU(x,y)$ ואת $U_x\times U_y$, ומצאו את הנקודות שבהן $U$ אינה רגולרית.
+
+      (ג) האם התמונה של הנקודות האלה היא נקודה סינגולרית של התמונה של $U$? הוכיחו.
+    answer: >-
+      (א) בקואורדינטות $(X,Y,Z)$ של המרחב: החרוט הכפול $X^2+Y^2=Z^2\tan^2\alpha$, עם ציר $Z$ וזווית פתיחה $\alpha$ בין הציר
+      לישרים היוצרים.
+      (ב) $$U_x\times U_y=x\sin\alpha\,(-\cos\alpha\cos y,\ -\cos\alpha\sin y,\ \sin\alpha)$$, שאורכו $|x|\sin\alpha$: לא רגולרית
+      בדיוק על הישר $x=0$. (ג) כן: הקודקוד, בטיעון הקשירות של משפט 3.1.10.
+    solution:
+      - kind: step
+        text: >-
+          (א) $$X^2+Y^2=x^2\sin^2\alpha=(x\cos\alpha)^2\tan^2\alpha=Z^2\tan^2\alpha$$ (עם $(X,Y,Z)=U(x,y)$). ולהפך, לנקודה עם
+          $X^2+Y^2=Z^2\tan^2\alpha$ בוחרים $x=\frac Z{\cos\alpha}$; אז $\|(X,Y)\|=|x|\sin\alpha$, ו-$y$ (או $y+\pi$, אם $x<0$) לפי
+          הזווית של $(X,Y)$. הקווים $y=$ קבוע הם הישרים היוצרים, בזווית $\alpha$ עם ציר $z$.
+      - kind: computation
+        text: >-
+          (ב) העמודות של $DU(x,y)$:
+          $$U_x=\big(\cos y\sin\alpha,\ \sin y\sin\alpha,\ \cos\alpha\big),\qquad U_y=\big(-x\sin y\sin\alpha,\ x\cos y\sin\alpha,\ 0\big).$$
+      - kind: computation
+        text: >-
+          רכיב אחר רכיב:
+          $$U_x\times U_y=\big(-x\cos y\sin\alpha\cos\alpha,\ \ -x\sin y\sin\alpha\cos\alpha,\ \ x\sin^2\alpha\big)=x\sin\alpha\,(-\cos\alpha\cos y,\ -\cos\alpha\sin y,\ \sin\alpha),$$
+          והווקטור בסוגריים הוא וקטור יחידה. לכן $\|U_x\times U_y\|=|x|\sin\alpha$, שמתאפס בדיוק כש-$x=0$ (כי $\sin\alpha>0$).
+      - kind: step
+        text: >-
+          (ג) הישר $x=0$ נשלח לראשית. ב-$C_\alpha=\{X^2+Y^2=Z^2\tan^2\alpha\}$ הנקודה היחידה עם $Z=0$ היא הראשית, ו-$U(\pm t,0)$
+          נותן נקודות של $C_\alpha$ עם $Z=\pm t\cos\alpha$, קרובות לראשית כרצוננו. ההוכחה של משפט 3.1.10 עוברת מילה במילה
+          (עם $\frac\varepsilon4(\sin\alpha,0,\pm\cos\alpha)$ במקום $\frac\varepsilon4(1,0,\pm1)$): הראשית סינגולרית.
+      - kind: check
+        text: >-
+          עם $\alpha=\frac\pi4$ התמונה היא החרוט הכפול של מסקנה 3.1.5(ה): $U(x,y)=\sigma(y,\ x/\sqrt2)$, כאשר $\sigma$ היא
+          הפרמטריזציה שם. עם $\alpha=0.6$, $(x,y)=(1.3,\ 0.5)$ החישוב המספרי נותן $$\|U_x\times U_y\|=0.73404=1.3\sin0.6$$.
+      - kind: result
+        text: >-
+          חרוט כפול בזווית $\alpha$; $\|U_x\times U_y\|=|x|\sin\alpha$, לא רגולרית על $x=0$; הקודקוד נקודה סינגולרית של התמונה.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 5'
+      year: 2002
+      problem: 'תרגיל 1, שני הסעיפים הראשונים (תיאור המשטח והדיפרנציאל); סעיף ג נוסף'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex05.html
+      verified: '2026-11-12'
+      adapted: true

@@ -1,4 +1,34 @@
 # Terms first defined in lesson 3.1.
+- id: parametrized-surface
+  term: משטח בפרמטריזציה
+  en: parametrized surface
+  symbol: '\sigma:D\to\mathbb R^3'
+  definition: >-
+    העתקה חלקה $\sigma:D\to\mathbb R^3$ מקבוצה פתוחה $D\subset\mathbb R^2$ (הגדרה 3.1.1). המשטח בפרמטריזציה הוא
+    ההעתקה, לא התמונה: לאותה תמונה יש פרמטריזציות רבות, וחלקן אינן רגולריות.
+  lesson: '3.1'
+- id: homeomorphism
+  term: הומאומורפיזם
+  en: homeomorphism
+  definition: >-
+    העתקה חד-חד-ערכית ועל בין שתי קבוצות, רציפה, שגם ההעתקה ההפוכה שלה רציפה (מרחבים מטריים, אינפי מתקדם 1). העתקה
+    רציפה וחד-חד-ערכית אינה חייבת להיות הומאומורפיזם על התמונה שלה.
+  lesson: '3.1'
+- id: local-parametrization
+  term: פרמטריזציה מקומית
+  en: local parametrization (chart)
+  definition: >-
+    פרמטריזציה רגולרית $\sigma:D\to\mathbb R^3$ של קבוצה $S$ ליד נקודה $p$, שהיא הומאומורפיזם מ-$D$ על $S\cap W$, כאשר
+    $W$ קבוצה פתוחה ב-$\mathbb R^3$ שמכילה את $p$ (הגדרה 3.1.6). משטח חלק הוא קבוצה שלכל נקודה שלה יש פרמטריזציה כזו.
+  lesson: '3.1'
+- id: double-cone
+  term: חרוט כפול
+  en: double cone
+  symbol: 'x^2+y^2=z^2'
+  definition: >-
+    הקבוצה $x^2+y^2=z^2$: שני חרוטים שנפגשים בקודקוד, בראשית. הפרמטריזציה $(v\cos u,\ v\sin u,\ v)$ אינה רגולרית
+    ב-$v=0$, והקודקוד הוא נקודה סינגולרית של הקבוצה עצמה (משפט 3.1.10).
+  lesson: '3.1'
 - id: smooth-surface
   term: משטח חלק
   en: smooth (regular) surface

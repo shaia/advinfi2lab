@@ -1,0 +1,516 @@
+# Workbook of lesson 3.5 — local isometries and intrinsic geometry.
+# Objectives (src/course.ts):
+#   OBJ-3.5-1  define a local isometry and show that it preserves the first form
+#   OBJ-3.5-2  the cylinder and the cone are locally isometric to the plane
+#   OBJ-3.5-3  intrinsic (first form only) against extrinsic (the embedding) properties
+# Every number recomputed on 2026-11-12 with src/math/surfaces.ts and src/math/geometry.ts (curvature, partials):
+# the cylinder of radius 2, the cone z = 2√(x² + y²) (sector 2π/√5 ≈ 2.8099), κ = a²/(a² + b²) of (cos at, sin at, bt),
+# the tangent surface of a unit-speed helix (E = 1 + v²κ², F = G = 1), and the C¹ family of the lasso problem
+# (length 2(ℓ − η) + ηθ).
+lesson: '3.5'
+practice:
+  - id: W-3.5-01
+    level: basic
+    objectives: [OBJ-3.5-1]
+    prompt: >-
+      במישור $\Pi=\{z=0\}$ נתונות $$f(x,y,0)=\big(x\cos\alpha-y\sin\alpha+1,\ \ x\sin\alpha+y\cos\alpha,\ \ 0\big)$$ ו-$g(x,y,0)=(2x,\ 2y,\ 0)$.
+      בעזרת הפרמטריזציה $\sigma(x,y)=(x,y,0)$ ומשפט 3.5.3, קבעו איזו מהן איזומטריה מקומית של $\Pi$, וחשבו את אורך התמונה של
+      מעגל היחידה תחת כל אחת מהן.
+    answer: >-
+      $f$ איזומטריה מקומית ($E=1,F=0,G=1$) ו-$g$ לא ($E=G=4$). אורך התמונה: $2\pi$ תחת $f$, $4\pi$ תחת $g$.
+    solution:
+      - kind: theorem
+        text: >-
+          משפט 3.5.3: $f$ איזומטריה מקומית אם ורק אם ל-$f\circ\sigma$ אותם $E,F,G$ כמו ל-$\sigma$, כאן $(1,0,1)$; ו-$\sigma$ מכסה
+          את כל $\Pi$, ולכן מספיק לבדוק אותה (תנאי (ד)).
+      - kind: computation
+        text: >-
+          $$f\circ\sigma=(x\cos\alpha-y\sin\alpha+1,\ x\sin\alpha+y\cos\alpha,\ 0)$$: הנגזרות החלקיות הן $(\cos\alpha,\sin\alpha,0)$ ו-$(-\sin\alpha,\cos\alpha,0)$,
+          ולכן $E=1$, $$F=-\cos\alpha\sin\alpha+\sin\alpha\cos\alpha=0$$, $G=1$.
+      - kind: computation
+        text: >-
+          $g\circ\sigma=(2x,2y,0)$: הנגזרות $(2,0,0)$, $(0,2,0)$, ולכן $E=4$, $F=0$, $G=4$. שתיהן חלקות (לינאריות).
+      - kind: computation
+        text: >-
+          מעגל היחידה $(\cos t,\sin t,0)$, $0\le t\le2\pi$, אורכו $2\pi$. תחת $f$ אורכו נשמר: $2\pi$. תחת $g$ התמונה
+          $(2\cos t,2\sin t,0)$ ומהירותה $2$, ולכן אורכה $4\pi$.
+      - kind: check
+        text: >-
+          $f$ היא סיבוב בזווית $\alpha$ ואחריו הזזה ב-$(1,0,0)$, תנועה קשיחה, וכבר בהגדרה 3.5.2 ראינו שתנועה קשיחה שומרת
+          אורכים. $g$ שומרת זוויות ($F=0$, $E=G$) אבל לא אורכים: שמירת זוויות לבדה אינה מספיקה.
+      - kind: result
+        text: >-
+          $f$ איזומטריה מקומית, $g$ לא; $2\pi$ ו-$4\pi$.
+
+  - id: W-3.5-02
+    level: basic
+    objectives: [OBJ-3.5-2]
+    prompt: >-
+      $f(x,y,0)=\big(2\cos\frac x2,\ 2\sin\frac x2,\ y\big)$ מהמישור $z=0$ לגליל $x^2+y^2=4$.
+
+      (א) הראו ש-$f$ איזומטריה מקומית, ומצאו את כל הנקודות של המישור ש-$f$ שולחת ל-$(2,0,0)$.
+
+      (ב) חשבו את האורך של התמונה של הקטע מ-$(0,0,0)$ ל-$(2\pi,1,0)$, ואת המרחק במרחב בין קצות התמונה.
+    answer: >-
+      (א) $E=1,F=0,G=1$; הנקודות $(4\pi k,0,0)$, $k\in\mathbb Z$. (ב) אורך $\sqrt{4\pi^2+1}\approx6.362$; מרחק במרחב
+      $\sqrt{17}\approx4.123$.
+    solution:
+      - kind: computation
+        text: >-
+          עם $\sigma(x,y)=(x,y,0)$: $f\circ\sigma=\big(2\cos\frac x2,\ 2\sin\frac x2,\ y\big)$, ונגזרותיה $\big(-\sin\frac x2,\ \cos\frac x2,\ 0\big)$ ו-$(0,0,1)$.
+          לכן $E=1$, $F=0$, $G=1$, כמו למישור; $f$ חלקה (צמצום של העתקה חלקה של $\mathbb R^3$), ולפי משפט 3.5.3 היא
+          איזומטריה מקומית.
+      - kind: step
+        text: >-
+          $f(x,y,0)=(2,0,0)$ פירושו $y=0$, $\cos\frac x2=1$ ו-$\sin\frac x2=0$, כלומר $\frac x2=2\pi k$: $x=4\pi k$.
+      - kind: computation
+        text: >-
+          (ב) איזומטריה מקומית שומרת אורך, והקטע אורכו $$\sqrt{(2\pi)^2+1^2}=\sqrt{4\pi^2+1}\approx6.362$$.
+      - kind: computation
+        text: >-
+          הקצוות: $f(0,0,0)=(2,0,0)$ ו-$$f(2\pi,1,0)=(2\cos\pi,\ 2\sin\pi,\ 1)=(-2,0,1)$$. המרחק ביניהם
+          $\sqrt{16+0+1}=\sqrt{17}\approx4.123$.
+      - kind: check
+        text: >-
+          $\sqrt{17}<\sqrt{4\pi^2+1}$, כמו שחייב להיות (מרחק פנימי לפחות כמו המרחק במרחב, הגדרה 3.5.6). התמונה היא חצי סיבוב
+          של סליל ברדיוס 2.
+      - kind: result
+        text: >-
+          (א) $(4\pi k,0,0)$. (ב) $\sqrt{4\pi^2+1}$ ו-$\sqrt{17}$.
+
+  - id: W-3.5-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-3.5-3]
+    prompt: >-
+      לכל אחד מהגדלים הבאים, קבעו אם הוא **פנימי** (נשמר בכל איזומטריה מקומית) או **חיצוני**, ונמקו: לגודל פנימי, בנוסחה
+      מ-$E,F,G$ או ממשפט; לגודל חיצוני, בדוגמה עם ההעתקה $f(x,y,0)=(\cos x,\sin x,y)$ מהמישור לגליל.
+
+      (א) $\cos\theta=\frac{F}{\sqrt{EG}}$, הזווית בין הקווים הפרמטריים.
+
+      (ב) הזווית בין $\hat{\mathbf N}$ לבין $e_1=(1,0,0)$.
+
+      (ג) $\|\sigma_u\times\sigma_v\|$.
+
+      (ד) "המסילה מונחת במישור אחד של $\mathbb R^3$".
+    answer: >-
+      (א) פנימי; (ב) חיצוני; (ג) פנימי, $\sqrt{EG-F^2}$; (ד) חיצוני.
+    solution:
+      - kind: theorem
+        text: >-
+          לפי משפט 3.5.3, איזומטריה מקומית $f$ ופרמטריזציה מקומית $\sigma_1$ נותנות ל-$f\circ\sigma_1$ אותם $E,F,G$. לכן כל גודל
+          שמחושב מ-$E,F,G$ בלבד נשמר.
+      - kind: step
+        text: >-
+          (א) $\frac{F}{\sqrt{EG}}$ בנוי מ-$E,F,G$: פנימי. (ג) לפי זהות לגרנז׳ (טענה 3.4.2),
+          $\|\sigma_u\times\sigma_v\|=\sqrt{EG-F^2}$: פנימי.
+      - kind: step
+        text: >-
+          (ב) במישור $\hat{\mathbf N}=(0,0,1)$ והזווית עם $e_1$ היא $90^\circ$ בכל נקודה. בגליל, בפרמטריזציה
+          $\sigma_2=(\cos x,\sin x,y)$, $\sigma_{2,x}\times\sigma_{2,y}=(\cos x,\sin x,0)$, וב-$x=0$ הזווית עם $e_1$ היא $0$. $f$
+          איזומטריה מקומית, והזווית השתנתה: חיצוני.
+      - kind: step
+        text: >-
+          (ד) הקטע $y=0$, $0\le x\le\pi$, מונח במישור, ותמונתו, חצי מעגל $(\cos x,\sin x,0)$, גם. אבל הקטע $(t,t,0)$
+          עובר לסליל $(\cos t,\sin t,t)$, שאינו מונח במישור אחד: הפיתול שלו $\frac12\ne0$ (שיעור 2.2). חיצוני.
+      - kind: check
+        text: >-
+          גדלים חיצוניים הם אלה שמשתמשים בווקטורים "מחוץ למשטח" ($\hat{\mathbf N}$) או בצורה של המסילה במרחב (מישוריות,
+          עקמומיות). גדלים פנימיים נמדדים בסרגל שמונח על המשטח.
+      - kind: result
+        text: >-
+          (א), (ג) פנימיים; (ב), (ד) חיצוניים.
+
+  - id: W-3.5-04
+    level: mid
+    objectives: [OBJ-3.5-1]
+    prompt: >-
+      **הוכיחו:** (א) אם $f:S_1\to S_2$ ו-$g:S_2\to S_3$ איזומטריות מקומיות, אז $g\circ f$ איזומטריה מקומית. (ב) אם
+      $f$ ו-$g$ איזומטריות, גם $g\circ f$ ו-$f^{-1}$ איזומטריות.
+    answer: >-
+      $g\circ f$ חלקה (כי $f\circ\sigma$ עוברת מקומית דרך פרמטריזציה מקומית של $S_2$), ו-$L(g\circ f\circ\gamma)=L(f\circ\gamma)=L(\gamma)$.
+    solution:
+      - kind: goal
+        text: >-
+          צריך שני דברים: ש-$g\circ f$ חלקה בהגדרה 3.5.1, ושהיא שומרת אורכים.
+      - kind: idea
+        text: >-
+          החלקות: $f\circ\sigma$ היא העתקה חלקה מ-$D$ ל-$S_2$, אבל אינה פרמטריזציה מקומית של $S_2$, ולכן ההגדרה של חלקות
+          $g$ לא חלה עליה ישירות. נכתוב אותה מקומית כ-$\mu\circ c$, עם $\mu$ פרמטריזציה מקומית של $S_2$ ו-$c$ חלקה.
+      - kind: step
+        text: >-
+          תהי $\sigma:D\to S_1$ פרמטריזציה מקומית, $y_0\in D$, ו-$\mu:\tilde D\to S_2$ פרמטריזציה מקומית ליד $f(\sigma(y_0))$.
+          כמו בשלבים (1)–(3) של ההוכחה בהגדרה 3.5.1, עם המסילה מוחלפת בהעתקה החלקה $f\circ\sigma$ (שרציפה): ליד $y_0$,
+          $\mu^{-1}\circ(f\circ\sigma)=\varphi^{-1}\circ\pi\circ(f\circ\sigma)$, ולכן $c=\mu^{-1}\circ f\circ\sigma$ חלקה.
+      - kind: step
+        text: >-
+          ליד $y_0$, $g\circ f\circ\sigma=(g\circ\mu)\circ c$, הרכבה של חלקות ($g\circ\mu$ חלקה כי $g$ חלקה). לכן $g\circ f$ חלקה.
+      - kind: step
+        text: >-
+          לכל מסילה $\gamma$ ב-$S_1$, $f\circ\gamma$ מסילה ב-$S_2$, ולכן
+          $$L(g\circ f\circ\gamma)=L\big(g\circ(f\circ\gamma)\big)=L(f\circ\gamma)=L(\gamma).$$
+          זה (א).
+      - kind: step
+        text: >-
+          (ב) $g\circ f$ חד-חד-ערכית ועל, וההופכית $f^{-1}\circ g^{-1}$ היא הרכבה של העתקות חלקות, חלקה לפי אותו נימוק. לגבי
+          $f^{-1}$: ההגדרה של איזומטריה דורשת שהיא חלקה, והיא שומרת אורכים לפי הנימוק שאחרי הגדרה 3.5.2.
+      - kind: check
+        text: >-
+          דוגמה: $f$ סיבוב של המישור (W-3.5-01) ו-$g$ ההלפפה על הגליל: $g\circ f$ שוב איזומטריה מקומית, כי ל-$(g\circ f)\circ\sigma$
+          יש $E=1$, $F=0$, $G=1$.
+      - kind: result
+        text: >-
+          הרכבה של איזומטריות מקומיות היא איזומטריה מקומית; הרכבה והופכית של איזומטריות הן איזומטריות.
+
+  - id: W-3.5-05
+    level: mid
+    objectives: [OBJ-3.5-1]
+    prompt: >-
+      תהי $f:S_1\to S_2$ איזומטריה מקומית, ו-$\gamma_1,\gamma_2$ מסילות רגולריות ב-$S_1$ עם $\gamma_1(0)=\gamma_2(0)=p$.
+      **הוכיחו** ש-$f\circ\gamma_1$, $f\circ\gamma_2$ רגולריות ב-$0$, ושהזווית ביניהן ב-$f(p)$ שווה לזווית בין $\gamma_1,\gamma_2$ ב-$p$.
+      האם כל העתקה ששומרת זוויות כאלה היא איזומטריה מקומית?
+    answer: >-
+      $\|(f\circ\gamma_i)'(0)\|=\|\gamma_i'(0)\|\ne0$ והמכפלות הפנימיות נשמרות; לא: $(x,y,0)\mapsto(2x,2y,0)$ שומרת זוויות.
+    solution:
+      - kind: theorem
+        text: >-
+          הגדרה 3.5.1: $(f\circ\gamma_i)'(0)=df_p(w_i)$ עם $w_i=\gamma_i'(0)$. משפט 3.5.3: $\|df_p(w)\|=\|w\|$ ו-$df_p(w)\cdot df_p(w')=w\cdot w'$.
+      - kind: step
+        text: >-
+          $\|(f\circ\gamma_i)'(0)\|=\|w_i\|\ne0$, כי $\gamma_i$ רגולרית. לכן $f\circ\gamma_i$ רגולרית ב-$0$, והזווית מוגדרת.
+      - kind: computation
+        text: >-
+          $$\cos\theta'=\frac{df_p(w_1)\cdot df_p(w_2)}{\|df_p(w_1)\|\,\|df_p(w_2)\|}=\frac{w_1\cdot w_2}{\|w_1\|\,\|w_2\|}=\cos\theta,$$
+          ושתי הזוויות ב-$[0,\pi]$, ולכן $\theta'=\theta$.
+      - kind: step
+        text: >-
+          ההפך אינו נכון: $g(x,y,0)=(2x,2y,0)$ על המישור. $dg_p(w)=2w$, ולכן $\cos$ של כל זווית נשמר, אבל כל אורך מוכפל ב-2
+          (W-3.5-01).
+      - kind: check
+        text: >-
+          הנימוק משתמש רק בכך ש-$df_p$ שומרת מכפלות פנימיות. בדיקה מספרית: בהלפפה על הגליל, הקווים $y=x$ ו-$y=-x$ נחתכים
+          בראשית בזווית ישרה; התמונות $(\cos t,\sin t,t)$ ו-$(\cos t,\sin t,-t)$ יוצאות מ-$(1,0,0)$ במהירויות $(0,1,1)$ ו-$(0,1,-1)$,
+          והמכפלה הפנימית שלהן $0$.
+      - kind: result
+        text: >-
+          איזומטריה מקומית שומרת זוויות בין מסילות; העתקה ששומרת זוויות אינה בהכרח איזומטריה.
+
+  - id: W-3.5-06
+    level: mid
+    objectives: [OBJ-3.5-2]
+    prompt: >-
+      החרוט $z=2\sqrt{x^2+y^2}$, $z>0$, חתוך לאורך ישר יוצר. חשבו את $E,F,G$ של $\sigma(u,v)=(v\cos u,\ v\sin u,\ 2v)$,
+      $0<u<2\pi$, $v>0$; מצאו פרמטריזציה של גזרה במישור עם אותם מקדמים; וחשבו את זווית הגזרה (ברדיאנים ובמעלות).
+    answer: >-
+      $E=v^2$, $F=0$, $G=5$; $$\mu(u,v)=\big(\sqrt5\,v\cos\frac u{\sqrt5},\ \sqrt5\,v\sin\frac u{\sqrt5},\ 0\big)$$; הזווית
+      $\frac{2\pi}{\sqrt5}\approx2.810$, בערך $161.0^\circ$.
+    solution:
+      - kind: computation
+        text: >-
+          $\sigma_u=(-v\sin u,\ v\cos u,\ 0)$, $\sigma_v=(\cos u,\ \sin u,\ 2)$: $E=v^2$, $F=0$, $G=1+4=5$.
+      - kind: idea
+        text: >-
+          כמו בטענה 3.5.5 (ב): המרחק מהקודקוד לאורך החרוט הוא $\sqrt5\,v$, ולכן בגזרה הרדיוס הוא $\sqrt5\,v$ והזווית $\frac u{\sqrt5}$.
+      - kind: computation
+        text: >-
+          $\mu_u=\big(-v\sin\frac u{\sqrt5},\ v\cos\frac u{\sqrt5},\ 0\big)$ נותן $E=v^2$, ו-$\mu_v=\sqrt5\big(\cos\frac u{\sqrt5},\ \sin\frac u{\sqrt5},\ 0\big)$
+          נותן $G=5$, $F=0$.
+      - kind: step
+        text: >-
+          שתיהן פרמטריזציות מקומיות. $\sigma$: רגולרית ($EG-F^2=5v^2>0$), חד-חד-ערכית ($v=\frac z2$, ו-$u$ היא הזווית של
+          $(x,y)$ בקטע $(0,2\pi)$), וההופכית הזו רציפה על החרוט בלי הישר היוצר שבו הזווית $0$, כמו בטענה 3.5.5 (ב).
+          $\mu$: רגולרית מאותה סיבה, חד-חד-ערכית כי הרדיוס הקוטבי $\sqrt5\,v>0$ והזווית הקוטבית
+          $\frac u{\sqrt5}\in\big(0,\frac{2\pi}{\sqrt5}\big)$, קטע קצר מ-$2\pi$, וההופכית (רדיוס וזווית) רציפה על הגזרה הפתוחה.
+          לפי מסקנה 3.5.4, $\mu\circ\sigma^{-1}$ איזומטריה על הגזרה הפתוחה בזווית $\frac{2\pi}{\sqrt5}$.
+      - kind: check
+        text: >-
+          לפי דוגמה 3 בשיעור, הזווית היא $2\pi\sin\beta$, כש-$\beta$ הזווית בין ישר יוצר לציר: $\tan\beta=\frac12$, ולכן
+          $\sin\beta=\frac1{\sqrt5}$, ושוב $\frac{2\pi}{\sqrt5}\approx2.8099$, כלומר בערך $160.997^\circ$.
+      - kind: result
+        text: >-
+          $E=v^2$, $F=0$, $G=5$; גזרה בזווית $\frac{2\pi}{\sqrt5}\approx2.810$ (בערך $161^\circ$).
+
+  - id: W-3.5-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.5-3, OBJ-3.5-1]
+    prompt: >-
+      (א) **הוכיחו:** איזומטריה מקומית $f$ מעבירה מסילה בפרמטר אורך הקשת למסילה בפרמטר אורך הקשת.
+
+      (ב) עבור $f(x,y,0)=(\cos x,\sin x,y)$, מצאו את העקמומיות של התמונה של הישר $(x_0+at,\ y_0+bt,\ 0)$, $(a,b)\ne(0,0)$.
+      אילו ישרים במישור נשארים ישרים על הגליל?
+    answer: >-
+      (א) $\|(f\circ\beta)'\|=\|\beta'\|=1$. (ב) $\kappa=\frac{a^2}{a^2+b^2}$; רק הישרים האנכיים ($a=0$).
+    solution:
+      - kind: step
+        text: >-
+          (א) לפי הגדרה 3.5.1 ומשפט 3.5.3, $$\|(f\circ\beta)'(s)\|=\|df(\beta'(s))\|=\|\beta'(s)\|=1$$. לכן $f\circ\beta$ בפרמטר
+          אורך הקשת (הגדרה 1.2.11). (או ישירות מההגדרה: $L$ של כל קטע נשמר, וזה טענה 1.2.12.)
+      - kind: computation
+        text: >-
+          (ב) התמונה $$\gamma(t)=\big(\cos(x_0+at),\ \sin(x_0+at),\ y_0+bt\big)$$. $\gamma'=(-a\sin,\ a\cos,\ b)$,
+          $\gamma''=(-a^2\cos,\ -a^2\sin,\ 0)$ (בזווית $x_0+at$), ולכן
+          $$\gamma'\times\gamma''=\big(a^2b\sin,\ -a^2b\cos,\ a^3\big),\qquad \|\gamma'\times\gamma''\|=a^2\sqrt{a^2+b^2}.$$
+      - kind: computation
+        text: >-
+          לפי מסקנה 1.3.11, $\kappa=\frac{a^2\sqrt{a^2+b^2}}{(a^2+b^2)^{3/2}}=\frac{a^2}{a^2+b^2}$.
+      - kind: step
+        text: >-
+          $\kappa\equiv0$ אם ורק אם $a=0$, ואז התמונה $(\cos x_0,\sin x_0,y_0+bt)$ היא ישר אנכי (משפט 1.3.8). כל ישר אחר הופך לסליל
+          או, כש-$b=0$, למעגל ($\kappa=1$).
+      - kind: check
+        text: >-
+          $a=b=1$ נותן $\frac12$, הסליל $(\cos t,\sin t,t)$ של השיעור; $a=2$, $b=1$ נותן $0.8$; החישוב המספרי של העקמומיות
+          מהנגזרות נותן את אותם ערכים. האורך נשמר, העקמומיות לא: חיצונית.
+      - kind: result
+        text: >-
+          (א) הוכח. (ב) $\kappa=\frac{a^2}{a^2+b^2}$; ישרים נשארים ישרים רק כשהם אנכיים.
+
+  - id: W-3.5-08
+    level: exam
+    objectives: [OBJ-3.5-3]
+    prompt: >-
+      **הוכיחו** שעל גליל היחידה $C=\{x^2+y^2=1\}$ המרחק הפנימי בין $p=(1,0,0)$ ל-$q=(-1,0,0)$ הוא $\pi$, אף שהמרחק במרחב
+      הוא $2$.
+    answer: >-
+      כל מסילה היא $(\cos\phi,\sin\phi,z)$ עם $\phi$ גזירה ברציפות (למה 1.5.10), $\|\gamma'\|\ge|\phi'|$, ו-$\phi$ עוברת מ-$0$
+      לכפולה אי-זוגית של $\pi$; חצי המעגל משיג $\pi$.
+    solution:
+      - kind: idea
+        text: >-
+          הזווית סביב הציר צריכה להשתנות לפחות ב-$\pi$, והמסילה לא יכולה לשנות זווית מהר יותר ממהירותה.
+      - kind: step
+        text: >-
+          תהי $\gamma=(\gamma_1,\gamma_2,\gamma_3):[a,b]\to C$ מסילה מ-$p$ ל-$q$. $\mathbf e=(\gamma_1,\gamma_2)$ גזירה ברציפות ובאורך 1,
+          ולפי למה 1.5.10 (א), (ג) יש $\phi$ גזירה ברציפות עם $\phi(a)=0$ ו-$\mathbf e=(\cos\phi,\sin\phi)$.
+      - kind: computation
+        text: >-
+          $\gamma'=\big(-\phi'\sin\phi,\ \phi'\cos\phi,\ \gamma_3'\big)$, ולכן $\|\gamma'\|=\sqrt{\phi'^2+\gamma_3'^2}\ge|\phi'|$.
+      - kind: step
+        text: >-
+          $\mathbf e(b)=(-1,0)$, ולכן $\phi(b)=\pi+2\pi m$ עם $m$ שלם, ו-$|\phi(b)-\phi(a)|\ge\pi$. לכן
+          $$L(\gamma)\ge\int_a^b|\phi'|\ge\Big|\int_a^b\phi'\Big|=|\phi(b)-\phi(a)|\ge\pi.$$
+      - kind: step
+        text: >-
+          חצי המעגל $(\cos t,\sin t,0)$, $0\le t\le\pi$, הוא מסילה ב-$C$ מ-$p$ ל-$q$ באורך $\pi$. לכן $d_C(p,q)=\pi$, והמרחק
+          במרחב $\|p-q\|=2<\pi$.
+      - kind: check
+        text: >-
+          עקבי עם דוגמה 4 בשיעור: $p,q$ הן התמונות של $(0,0,0)$ ו-$(\pi,0,0)$ בהלפפה, שמרחקן במישור $\pi$; איזומטריה מקומית
+          רק מקצרת מרחק פנימי, וכאן אין קיצור.
+      - kind: result
+        text: >-
+          $d_C(p,q)=\pi$, בעוד $\|p-q\|=2$.
+
+  - id: W-3.5-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-3.5-1]
+    prompt: >-
+      **האם ייתכן** ש-$f:S_1\to S_2$ חלקה, $df_p$ חד-חד-ערכית בכל $p$, $f$ שומרת את הזווית בין כל שתי מסילות רגולריות
+      שנחתכות, ושומרת שטחים (לכל פרמטריזציה מקומית $\sigma_1$, ל-$f\circ\sigma_1$ אותו $\sqrt{EG-F^2}$), ובכל זאת $f$ אינה
+      איזומטריה מקומית? הוכיחו.
+    answer: >-
+      לא ייתכן: שמירת זוויות נותנת $\|df_p w\|=\lambda(p)\|w\|$, ושמירת שטח נותנת $\lambda^2=1$.
+    solution:
+      - kind: idea
+        text: >-
+          העתקה לינארית בין מישורים ששומרת זוויות היא כפולה של העתקה ששומרת אורכים. השטח מגדיל פי $\lambda^2$, ולכן $\lambda=1$.
+      - kind: step
+        text: >-
+          יהי $p\in S_1$, $A=df_p$, ו-$w_1,w_2$ בסיס אורתונורמלי של $T_pS_1$. לפי משפט 3.3.2 יש מסילות דרך $p$ עם כל וקטור
+          מהירות, ולכן $A$ שומרת זוויות בין וקטורים שונים מאפס. $w_1\perp w_2$, ולכן $Aw_1\perp Aw_2$.
+      - kind: step
+        text: >-
+          גם $(w_1+w_2)\perp(w_1-w_2)$, ולכן $A(w_1+w_2)\perp A(w_1-w_2)$, כלומר
+          $$0=(Aw_1+Aw_2)\cdot(Aw_1-Aw_2)=\|Aw_1\|^2-\|Aw_2\|^2.$$
+          נסמן $\lambda=\|Aw_1\|=\|Aw_2\|>0$ (חיובי כי $A$ חד-חד-ערכית).
+      - kind: computation
+        text: >-
+          לכל $w=aw_1+bw_2$: $$\|Aw\|^2=a^2\|Aw_1\|^2+2ab\,Aw_1\cdot Aw_2+b^2\|Aw_2\|^2=\lambda^2(a^2+b^2)=\lambda^2\|w\|^2$$.
+      - kind: step
+        text: >-
+          תהי $\sigma_1$ פרמטריזציה מקומית עם $\sigma_1(q)=p$ ו-$\sigma_2=f\circ\sigma_1$. לפי הגדרה 3.5.1, $\sigma_{2,u}=A\sigma_{1,u}$ ו-$\sigma_{2,v}=A\sigma_{1,v}$.
+          מהשלב הקודם ומקיטוב, $Ax\cdot Ay=\lambda^2\,x\cdot y$, ולכן $E_2=\lambda^2E_1$, $F_2=\lambda^2F_1$, $G_2=\lambda^2G_1$, ו-
+          $$\sqrt{E_2G_2-F_2^2}=\lambda^2\sqrt{E_1G_1-F_1^2}.$$
+      - kind: step
+        text: >-
+          שמירת שטח נותנת $\lambda^2=1$ (כי $E_1G_1-F_1^2>0$), כלומר $\lambda=1$ ו-$\|df_p w\|=\|w\|$. לפי משפט 3.5.3 ((ב) גורר (א)),
+          $f$ איזומטריה מקומית.
+      - kind: check
+        text: >-
+          שתי ההנחות נחוצות: $(x,y,0)\mapsto(2x,2y,0)$ שומרת זוויות ולא שטחים, ו-$(x,y,0)\mapsto(2x,\frac y2,0)$ שומרת שטחים ולא
+          זוויות (משפט 3.5.3 והדוגמה שאחריו).
+      - kind: result
+        text: >-
+          לא ייתכן: שמירת זוויות ושמירת שטחים יחד גוררות איזומטריה מקומית.
+
+  - id: W-3.5-10
+    level: exam
+    objectives: [OBJ-3.5-3, OBJ-3.5-2]
+    prompt: >-
+      **הוכיחו** שאין נקודה $p$ על ספרת היחידה $S$, קבוצה $U$ פתוחה ב-$S$ עם $p\in U$, קבוצה $W$ פתוחה בגליל היחידה $C$,
+      ואיזומטריה $g:U\to W$. מותר להשתמש במשפט 3.5.8 ובתרגיל W-3.5-04.
+    answer: >-
+      מסובבים כך ש-$p$ יהיה הקוטב, ומרכיבים את $g$ עם הפריסה של רצועה של הגליל למישור (טענה 3.5.5): מתקבלת איזומטריה מכיפה
+      סביב הקוטב לקבוצה פתוחה במישור, בסתירה למשפט 3.5.8.
+    solution:
+      - kind: idea
+        text: >-
+          הגליל איזומטרי מקומית למישור. אילו כיפה של הספרה הייתה איזומטרית לחלק של הגליל, הרכבה הייתה נותנת איזומטריה לחלק של
+          המישור, ומשפט 3.5.8 אוסר את זה.
+      - kind: step
+        text: >-
+          נניח בשלילה ש-$g$ קיימת. יהי $R$ סיבוב ($R$ אורתוגונלית, $\det R=1$) עם $Rp=P=(0,0,1)$. $R$ מעביר את $S$ לעצמה, ו-$R|_S$ היא
+          איזומטריה (הגדרה 3.5.2). $U'=R(U)$ פתוחה ב-$S$ ומכילה את $P$, ו-$h=g\circ R^{-1}:U'\to W$ איזומטריה (W-3.5-04).
+      - kind: step
+        text: >-
+          יהי $w=h(P)=(\cos x_w,\ \sin x_w,\ y_w)$. על $D=(x_w-\pi,\ x_w+\pi)\times\mathbb R$, $\sigma_2(x,y)=(\cos x,\sin x,y)$ ו-$\sigma_1(x,y)=(x,y,0)$
+          פרמטריזציות מקומיות עם $E=1$, $F=0$, $G=1$, ולפי מסקנה 3.5.4 $k=\sigma_1\circ\sigma_2^{-1}$ איזומטריה מ-$C_0=\sigma_2(D)$,
+          הגליל בלי הישר שמול $w$, על הרצועה $\sigma_1(D)$ במישור.
+      - kind: step
+        text: >-
+          $W'=W\cap C_0$ פתוחה ב-$C$ ומכילה את $w$. $h$ רציפה (ליד כל נקודה $h=(h\circ\mu)\circ\mu^{-1}$ עם $\mu$ פרמטריזציה
+          מקומית), ולכן $U''=h^{-1}(W')$ פתוחה ב-$U'$ ומכילה את $P$. **צמצום של איזומטריה לקבוצה פתוחה הוא איזומטריה על התמונה:**
+          $U''$ ו-$W'$ משטחים (למה 3.5.10), כל פרמטריזציה מקומית של $U''$ היא פרמטריזציה מקומית של $U'$ (ולכן $h|_{U''}$ חלקה),
+          כל מסילה ב-$U''$ היא מסילה ב-$U'$ (ולכן האורכים נשמרים), ו-$h|_{U''}$ חד-חד-ערכית על $W'$ עם ההופכית $h^{-1}|_{W'}$,
+          חלקה מאותה סיבה. כך גם $k|_{W'}$. לכן $k\circ h:U''\to k(W')$ הוא הרכבה של איזומטריות, ולכן איזומטריה (W-3.5-04),
+          ו-$k(W')$ פתוחה במישור כי $k$ הומאומורפיזם על רצועה פתוחה.
+      - kind: step
+        text: >-
+          קיבלנו קבוצה פתוחה $U''\ni P$ בספרה ואיזומטריה שלה על קבוצה פתוחה במישור, בסתירה למשפט 3.5.8.
+      - kind: check
+        text: >-
+          הטיעון לא משתמש בשום תכונה מיוחדת של $p$: הספרה "נראית אותו דבר" בכל נקודה, כי סיבובים הם איזומטריות שלה. ההבדל
+          בין ספרה לגליל, כמו בין ספרה למישור, נמדד באורך של מעגלים פנימיים: $2\pi\sin\rho$ מול $2\pi\rho$.
+      - kind: result
+        text: >-
+          אין חלק של הספרה שאיזומטרי לחלק של הגליל.
+
+challenge:
+  - id: W-3.5-c1
+    stars: 1
+    objectives: [OBJ-3.5-2, OBJ-3.5-3]
+    prompt: >-
+      אדם מנסה לטפס על חרוט בעזרת חבל: הוא כורך לולאה סביב החרוט ומהדק אותה, בלי חיכוך. זווית הראש של החרוט, בין שני
+      ישרים יוצרים נגדיים, היא $\alpha\in(0,\pi)$. הקשר $K$ נמצא על החרוט במרחק $\ell$ מהקודקוד $O$ לאורך ישר יוצר.
+
+      **המודל.** לולאה היא מסילה על החרוט בלי הקודקוד, מ-$K$ חזרה ל-$K$, שמקיפה את הציר פעם אחת ופוגשת את הישר היוצר
+      שדרך $K$ רק בקצותיה. חבל מתוח בלי חיכוך נשאר במקומו רק אם יש לולאה **קצרה ביותר**; אחרת הוא מחליק אל הקודקוד.
+
+      **הוכיחו:** לולאה קצרה ביותר קיימת אם ורק אם $\alpha<\frac\pi3$, ואז אורכה $2\ell\sin\big(\pi\sin\frac\alpha2\big)$.
+    answer: >-
+      פורשים את החרוט לגזרה בזווית $\theta=2\pi\sin\frac\alpha2$. אם $\theta<\pi$, הקטע $K_1K_2$ הוא הלולאה הקצרה ביותר, באורך
+      $2\ell\sin\frac\theta2$; אם $\theta\ge\pi$, כל לולאה ארוכה מ-$2\ell$ ויש לולאות שאורכן שואף ל-$2\ell$: אין מינימום. ו-$\theta<\pi$
+      אם ורק אם $\alpha<\frac\pi3$.
+    solution:
+      - kind: idea
+        text: >-
+          חותכים את החרוט לאורך הישר היוצר שדרך $K$ ופורשים (דוגמה 3 בשיעור, עם $\beta=\frac\alpha2$): אורכים לא משתנים, והשאלה
+          הופכת לשאלה על מסילות בגזרה של המישור בין שתי תמונות של $K$.
+      - kind: step
+        text: >-
+          לפי דוגמה 3, עם $\theta=2\pi\sin\frac\alpha2$, לחרוט בלי הישר היוצר יש פרמטריזציה $\sigma(u,v)$ ($v$ המרחק מ-$O$) עם
+          $E=v^2\sin^2\frac\alpha2$, $F=0$, $G=1$, ואותם מקדמים ל-$$\mu(u,v)=\big(v\cos(u\sin\frac\alpha2),\ v\sin(u\sin\frac\alpha2),\ 0\big)$$.
+          הנוסחאות מגדירות את $\sigma,\mu$ גם ב-$u\in[0,2\pi]$, עם אותם מקדמים. לולאה היא $\sigma\circ c$ עם $c=(u,v)$ גזירה ברציפות,
+          $u(0)=0$, $u(1)=2\pi$, $0<u<2\pi$ בפנים, $v>0$, $v(0)=v(1)=\ell$; לפי משפט 3.4.5 אורכה שווה לאורך של $\delta=\mu\circ c$,
+          מסילה בגזרה הסגורה בלי $O$ מ-$K_1=(\ell,0)$ ל-$K_2=\ell(\cos\theta,\sin\theta)$, שהזווית הקוטבית שלה רציפה מ-$0$ עד $\theta$
+          ונשארת ב-$[0,\theta]$. וכל מסילה כזו מגיעה מלולאה.
+      - kind: step
+        text: >-
+          **$\theta<\pi$.** הגזרה (זווית קטנה מ-$\pi$) קמורה, ולכן הקטע $K_1K_2$ בתוכה; המרחק שלו מ-$O$ הוא $\ell\cos\frac\theta2>0$, ולכן
+          הוא מסילה מותרת. לפי למה 1.2.3 כל $\delta$ ארוכה לפחות $\|K_2-K_1\|=2\ell\sin\frac\theta2$, והקטע משיג את זה: יש לולאה
+          קצרה ביותר, באורך $2\ell\sin\frac\theta2=2\ell\sin\big(\pi\sin\frac\alpha2\big)$.
+      - kind: step
+        text: >-
+          **$\theta\ge\pi$: כל לולאה ארוכה מ-$2\ell$.** לפי משפט ערך הביניים יש $t^*$ שבו הזווית הקוטבית של $\delta$ היא $\frac\theta2$;
+          נסמן $Q=\delta(t^*)$, $r=\|Q\|>0$. הזווית $K_1OQ$ היא $\frac\theta2\in[\frac\pi2,\pi]$, ולכן לפי משפט הקוסינוסים
+          $$\|Q-K_1\|^2=\ell^2+r^2-2\ell r\cos\tfrac\theta2\ge\ell^2+r^2>\ell^2,$$
+          וכך גם $\|K_2-Q\|>\ell$. לפי למה 1.2.3 וטענה 1.2.4, $$L(\delta)\ge\|Q-K_1\|+\|K_2-Q\|>2\ell$$.
+      - kind: step
+        text: >-
+          **$\theta\ge\pi$: האינפימום הוא $2\ell$.** ל-$0<\eta<\min(\ell,\frac\theta4)$ נגדיר בקואורדינטות קוטביות
+          $\delta_\eta(t)=r(t)(\cos\phi(t),\sin\phi(t))$, $t\in[0,1]$, כך שהזווית תישאר **בתוך** $(0,\theta)$ בכל $0<t<1$, כפי שהמודל דורש
+          (הלולאה פוגשת את הישר היוצר רק בקצותיה):
+
+          על $[0,\frac13]$: $r=\eta+(\ell-\eta)\cos^2\frac{3\pi t}2$ ו-$\phi=\eta\sin^2\frac{3\pi t}2$;
+
+          על $[\frac13,\frac23]$: $r=\eta$ ו-$\phi=\eta+(\theta-2\eta)\sin^2\big(\frac{3\pi}2(t-\frac13)\big)$;
+
+          על $[\frac23,1]$: $r=\eta+(\ell-\eta)\cos^2\frac{3\pi(1-t)}2$ ו-$\phi=\theta-\eta\sin^2\frac{3\pi(1-t)}2$.
+
+          הערכים מתאימים בנקודות החיבור, והנגזרות של $r$ ושל $\phi$ מתאפסות ב-$0,\frac13,\frac23,1$ משני הצדדים, ולכן $\delta_\eta$ גזירה
+          ברציפות; $r\ge\eta>0$, ו-$0<\phi<\theta$ בפנים. כי $\|\delta_\eta'\|=\sqrt{r'^2+r^2\phi'^2}\le|r'|+r|\phi'|$, ובכל קטע $r$ ו-$\phi$
+          מונוטוניות ו-$r\le\ell$:
+          $$L(\delta_\eta)\le2(\ell-\eta)+2\ell\eta+\eta(\theta-2\eta)\le2\ell+\eta\,(2\ell+\theta),$$
+          שואף ל-$2\ell$ כש-$\eta\to0$. עם החסם התחתון של השלב הקודם, האינפימום הוא $2\ell$, והוא אינו מושג: אין לולאה קצרה ביותר,
+          והחבל מחליק.
+      - kind: step
+        text: >-
+          לבסוף, $\theta<\pi$ אם ורק אם $\sin\frac\alpha2<\frac12$, ו-$\frac\alpha2\in(0,\frac\pi2)$, כלומר $\alpha<\frac\pi3$.
+      - kind: check
+        text: >-
+          $\alpha=\frac\pi4$: $\theta=2\pi\sin\frac\pi8\approx2.404<\pi$, והלולאה אורכה בערך $1.866\,\ell<2\ell$. $\alpha=\frac\pi3$: $\theta=\pi$,
+          המקרה הגבולי, ואין מינימום. בחישוב מספרי (קו שבור עם $3\cdot10^5$ צלעות) של $\delta_\eta$ עם $\ell=1$, $\theta=4$, $\eta=0.01$ יוצא $2.0198$, מתחת לחסם $2.04$,
+          והזווית בפנים נשארת בין $0$ ל-$4$ ממש.
+      - kind: result
+        text: >-
+          החבל נשאר כשזווית הראש קטנה מ-$60^\circ$, באורך $2\ell\sin\big(\pi\sin\frac\alpha2\big)$; אחרת הוא מחליק לקודקוד.
+    source:
+      name: 'אינפי מתקדם 2 (80316), האוניברסיטה העברית, רות לורנס-נוימרק: דף תרגיל 5'
+      year: 2002
+      problem: 'תרגיל 3 (האדם שמטפס על חרוט בעזרת חבל)'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex05.html
+      verified: '2026-11-12'
+      adapted: true
+
+  - id: W-3.5-c2
+    stars: 1
+    objectives: [OBJ-3.5-1, OBJ-3.5-2]
+    prompt: >-
+      יהי $I$ קטע פתוח, ותהי $\alpha:I\to\mathbb R^3$ מסילה חלקה בפרמטר אורך הקשת עם $\kappa>0$ בכל נקודה, ו-$x(s,v)=\alpha(s)+v\,\alpha'(s)$, $s\in I$,
+      $v>0$: **משטח המשיקים** של $\alpha$, איחוד חצאי הישרים המשיקים.
+
+      (א) הוכיחו ש-$x$ רגולרית, ו-$E=1+v^2\kappa^2$, $F=1$, $G=1$.
+
+      (ב) הוכיחו שלכל $(s_0,v_0)$ יש סביבה $V$ כך ש-$x(V)$ איזומטרי לקבוצה פתוחה של המישור. (כלומר: משטח המשיקים "נפרש"
+      על מישור, אף שהוא עשוי ממסילה מעוקלת ומפותלת.)
+    answer: >-
+      $x_s=\mathbf t+v\kappa\mathbf n$, $x_v=\mathbf t$; מסילה מישורית $\beta$ עם עקמומיות מסומנת $\kappa$ (משפט 1.6.2) נותנת
+      $\bar x=\beta+v\beta'$ במישור עם אותם מקדמים; מסקנה 3.5.4.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $x_s=\alpha'+v\alpha''=\mathbf t+v\kappa\mathbf n$ (הגדרת $\mathbf n$, שיעור 1.3) ו-$x_v=\mathbf t$. כי $\mathbf t\perp\mathbf n$
+          ושניהם וקטורי יחידה: $E=1+v^2\kappa^2$, $F=1$, $G=1$.
+      - kind: step
+        text: >-
+          $EG-F^2=v^2\kappa^2>0$ כי $v>0$ ו-$\kappa>0$; לפי טענה 3.4.2, $x$ רגולרית. (וגם ישירות: $x_s\times x_v=v\kappa\,\mathbf n\times\mathbf t=-v\kappa\,\mathbf b$.)
+      - kind: step
+        text: >-
+          (ב) $\kappa$ חלקה (טענה 1.3.15, כי $\kappa>0$). לפי משפט 1.6.2 יש מסילה חלקה $\beta$ במישור $z=0$, בפרמטר אורך הקשת,
+          שהעקמומיות המסומנת שלה היא $\kappa$: $\bar{\mathbf t}'=\kappa\,\mathbf n_s$ עם $\mathbf n_s\perp\bar{\mathbf t}$ וקטור יחידה.
+      - kind: computation
+        text: >-
+          $\bar x(s,v)=\beta(s)+v\beta'(s)$: $\bar x_s=\bar{\mathbf t}+v\kappa\,\mathbf n_s$, $\bar x_v=\bar{\mathbf t}$, ולכן אותם
+          $E=1+v^2\kappa^2$, $F=1$, $G=1$, ו-$\bar x$ רגולרית.
+      - kind: step
+        text: >-
+          לפי מסקנה 3.2.3 יש סביבה $V$ של $(s_0,v_0)$ שעליה גם $x$ וגם $\bar x$ פרמטריזציות מקומיות (חד-חד-ערכיות והומאומורפיזמים).
+          כהעתקה ל-$\mathbb R^2$, ל-$\bar x$ יעקוביאן $\pm v\kappa\ne0$, ולכן לפי משפט הפונקציה ההפוכה, אחרי הקטנת $V$, $\bar x(V)$ פתוחה
+          במישור. לפי מסקנה 3.5.4, $\bar x\circ x^{-1}$ איזומטריה של $x(V)$ על $\bar x(V)$.
+      - kind: check
+        text: >-
+          לסליל ביחידות אורך קשת עם $a=1$, $h=\frac12$: $\kappa=\frac45$, ובנקודה $v=1.3$ החישוב המספרי של $E,F,G$ נותן
+          $2.0816$, $1$, $1$, כמו $1+1.69\cdot0.64$. שימו לב: הפיתול לא הופיע בכלל, כי $E,F,G$ תלויים רק ב-$\kappa$; לכן גם
+          משטחי משיקים של שתי מסילות עם אותה $\kappa$ איזומטריים מקומית זה לזה.
+      - kind: result
+        text: >-
+          $E=1+v^2\kappa^2$, $F=G=1$; משטח המשיקים איזומטרי מקומית למישור.
+    source:
+      name: 'do Carmo, Differential Geometry of Curves and Surfaces, §4-2 (Isometries; Conformal Maps), Exercise 6 (ניסוח התרגיל כפי שהוא מצוטט בפתרון שיעורי בית של קורס מבוא לגאומטריה)'
+      year: 1976
+      problem: 'Exercise 6 of §4-2 (tangent surfaces are locally isometric to planes); Exercise 5 (two tangent surfaces with the same curvature) בבדיקה'
+      url: https://jonathan-huang.github.io/files/geometry/HW10.pdf
+      verified: '2026-11-12'
+      adapted: true

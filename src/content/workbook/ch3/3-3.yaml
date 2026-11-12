@@ -1,0 +1,500 @@
+# Workbook of lesson 3.3 — the tangent plane, the unit normal and orientability.
+# Objectives (src/course.ts):
+#   OBJ-3.3-1  the tangent plane and the unit normal of a parametrized surface and of a level surface
+#   OBJ-3.3-2  the tangent plane is the set of velocity vectors of curves in the surface
+#   OBJ-3.3-3  orientable or not; why the Möbius band is not orientable
+# Every number recomputed on 2026-11-12 with src/math/surfaces.ts (unitNormal3) and finite differences
+# (scratchpad w33.ts): the catenoid at (0, ln 2), the ellipsoid at (1, 2, 3), the cylinder in (s + t, s − t), the
+# Viviani curve at t = π, the cone's and the hyperboloid's normals, the paraboloid's normal map.
+lesson: '3.3'
+practice:
+  - id: W-3.3-01
+    level: basic
+    objectives: [OBJ-3.3-1]
+    prompt: >-
+      הקטנואיד $$\sigma(u,v)=(\cosh v\cos u,\ \cosh v\sin u,\ v)$$. חשבו את $\hat{\mathbf N}(u,v)$ בכל נקודה, ואת המישור
+      המשיק הגאומטרי בנקודה $(u,v)=(0,\ln2)$.
+    answer: >-
+      $\hat{\mathbf N}=\frac{1}{\cosh v}(\cos u,\ \sin u,\ -\sinh v)$; ב-$(0,\ln2)$: $\hat{\mathbf N}=(0.8,\ 0,\ -0.6)$, והמישור
+      $4x-3z=5-3\ln2$.
+    solution:
+      - kind: theorem
+        text: >-
+          טענה 3.1.4 (משטח סיבוב עם $f=\cosh v$, $g=v$): $$\sigma_u\times\sigma_v=f\,(g'\cos u,\ g'\sin u,\ -f')$$. ואז הגדרה 3.3.4
+          ומשוואת המישור של הגדרה 3.3.1.
+      - kind: computation
+        text: >-
+          $f'=\sinh v$, $g'=1$, ולכן $$\sigma_u\times\sigma_v=\cosh v\,(\cos u,\ \sin u,\ -\sinh v)$$. האורך:
+          $\cosh v\sqrt{1+\sinh^2v}=\cosh^2v$. לכן $\hat{\mathbf N}=\frac{1}{\cosh v}(\cos u,\ \sin u,\ -\sinh v)$.
+      - kind: computation
+        text: >-
+          ב-$v=\ln2$: $\cosh v=\frac{2+\frac12}2=\frac54$ ו-$\sinh v=\frac{2-\frac12}2=\frac34$. הנקודה $p=(\frac54,\ 0,\ \ln2)$
+          ו-$$\hat{\mathbf N}=\frac45(1,\ 0,\ -\frac34)=(0.8,\ 0,\ -0.6)$$.
+      - kind: computation
+        text: >-
+          המישור: $0.8(x-\frac54)-0.6(z-\ln2)=0$; כפל ב-5: $4x-3z=5-3\ln2$.
+      - kind: check
+        text: >-
+          $p$ מקיימת $4\cdot\frac54-3\ln2=5-3\ln2$. החישוב המספרי של $\hat{\mathbf N}$ מהנגזרות המדויקות נותן $(0.8,\ 0,\ -0.6)$.
+      - kind: result
+        text: >-
+          $\hat{\mathbf N}=\frac{(\cos u,\ \sin u,\ -\sinh v)}{\cosh v}$; המישור המשיק ב-$(0,\ln2)$: $4x-3z=5-3\ln2$.
+
+  - id: W-3.3-02
+    level: basic
+    objectives: [OBJ-3.3-1]
+    prompt: >-
+      $S=\{x^2+\frac{y^2}4+\frac{z^2}9=3\}$. הראו ש-$p=(1,2,3)\in S$, ש-3 ערך רגולרי, ומצאו את המישור המשיק הגאומטרי
+      ואת שני נורמלי היחידה ב-$p$.
+    answer: >-
+      $6x+3y+2z=18$; $\pm\frac17(6,3,2)$.
+    solution:
+      - kind: theorem
+        text: >-
+          טענה 3.3.3: $T_pS=\nabla F(p)^{\perp}$, והמישור $\nabla F(p)\cdot(\mathbf x-p)=0$; טענה 3.3.5(ג): $\hat{\mathbf N}=\pm\frac{\nabla F}{\|\nabla F\|}$.
+      - kind: computation
+        text: >-
+          $1+\frac44+\frac99=3$, ולכן $p\in S$. $\nabla F=(2x,\ \frac y2,\ \frac{2z}9)$ מתאפס רק בראשית, ו-$F(0)=0\ne3$:
+          3 ערך רגולרי.
+      - kind: computation
+        text: >-
+          $\nabla F(p)=(2,\ 1,\ \frac23)=\frac13(6,3,2)$. המישור: $$6(x-1)+3(y-2)+2(z-3)=0$$, כלומר $6x+3y+2z=18$.
+      - kind: computation
+        text: >-
+          $\|(6,3,2)\|=\sqrt{36+9+4}=7$, ולכן נורמלי היחידה הם $\pm\frac17(6,3,2)$.
+      - kind: check
+        text: >-
+          $p$ על המישור: $6+6+6=18$. הסימן $+$ מצביע החוצה מהאליפסואיד, כי $F$ גדלה לאורך$\nabla F$.
+      - kind: result
+        text: >-
+          המישור המשיק $6x+3y+2z=18$, ונורמלי היחידה $\pm\frac17(6,3,2)$.
+
+  - id: W-3.3-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-3.3-2]
+    prompt: >-
+      המסילה $\gamma(t)=(\cos t,\ \sin t,\ t^2)$ נמצאת על הגליל $x^2+y^2=1$. נכון או לא, ולמה: (א) $\gamma'(t)\in T_{\gamma(t)}S$
+      לכל $t$.
+
+      (ב) גם $\gamma''(t)\in T_{\gamma(t)}S$ לכל $t$.
+    answer: >-
+      (א) נכון, לפי משפט 3.3.2. (ב) לא נכון: $\gamma''(t)\cdot(\cos t,\sin t,0)=-1\ne0$.
+    solution:
+      - kind: theorem
+        text: >-
+          משפט 3.3.2: מהירות של מסילה במשטח נמצאת במישור המשיק. טענה 3.3.3 עם $F=x^2+y^2$: $T_pS=(x,y,0)^{\perp}$, כי
+          $\nabla F=2(x,y,0)\ne0$ על הגליל.
+      - kind: computation
+        text: >-
+          (א) $\gamma'=(-\sin t,\ \cos t,\ 2t)$, ו-$\gamma'\cdot(\cos t,\ \sin t,\ 0)=0$. במפורש, עם $\sigma(u,v)=(\cos u,\sin u,v)$:
+          $\gamma=\sigma(t,t^2)$ ו-$\gamma'=\sigma_u+2t\,\sigma_v$.
+      - kind: computation
+        text: >-
+          (ב) $\gamma''=(-\cos t,\ -\sin t,\ 2)$, ו-$\gamma''\cdot(\cos t,\ \sin t,\ 0)=-1$. לכן $\gamma''\notin T_{\gamma(t)}S$.
+      - kind: check
+        text: >-
+          כמו במעגל הגדול על הספרה: המסילה מתעקלת סביב הציר, והתאוצה שלה פונה פנימה, לכיוון הציר.
+      - kind: result
+        text: >-
+          (א) נכון; (ב) לא נכון: המהירות תמיד משיקה, התאוצה לא.
+
+  - id: W-3.3-04
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.3-1, OBJ-3.3-3]
+    prompt: >-
+      על הגליל $x^2+y^2=1$ נתונות $\sigma(u,v)=(\cos u,\ \sin u,\ v)$ ו-$$\tilde\sigma(s,t)=\big(\cos(s+t),\ \sin(s+t),\ s-t\big)$$.
+      לאן מצביע $\hat{\mathbf N}$ של כל אחת מהן, החוצה מהציר או פנימה? הסבירו בעזרת טענה 3.3.5.
+    answer: >-
+      $\sigma$: החוצה, $\hat{\mathbf N}=(\cos u,\sin u,0)$. $\tilde\sigma$: פנימה, כי $\tilde\sigma=\sigma\circ\varphi$ עם $\det D\varphi=-2<0$.
+    solution:
+      - kind: computation
+        text: >-
+          $\sigma_u=(-\sin u,\ \cos u,\ 0)$, $\sigma_v=(0,0,1)$, $\sigma_u\times\sigma_v=(\cos u,\ \sin u,\ 0)$: באורך 1, ומצביע
+          מהציר אל הנקודה, החוצה.
+      - kind: step
+        text: >-
+          $\tilde\sigma=\sigma\circ\varphi$ עם $\varphi(s,t)=(s+t,\ s-t)$, לינארית והפיכה (ההופכית $\big(\frac{u+v}2,\ \frac{u-v}2\big)$),
+          ולכן החלפת פרמטרים.
+      - kind: computation
+        text: >-
+          $$D\varphi=\begin{pmatrix}1&1\\1&-1\end{pmatrix}$$, ו-$\det D\varphi=-1-1=-2$.
+      - kind: theorem
+        text: >-
+          טענה 3.3.5: $\tilde{\hat{\mathbf N}}=\operatorname{sgn}(-2)\,\hat{\mathbf N}\circ\varphi=-\hat{\mathbf N}\circ\varphi$, כלומר פנימה.
+      - kind: check
+        text: >-
+          חישוב ישיר: $$\tilde\sigma_s\times\tilde\sigma_t=(-2\cos(s+t),\ -2\sin(s+t),\ 0)$$, ב-$(s,t)=(0.3,0.1)$ זה כפולה חיובית של
+          $(-0.921,\ -0.389,\ 0)$, כשהנקודה $(0.921,\ 0.389,\ 0.2)$.
+      - kind: result
+        text: >-
+          $\sigma$ מכוונת החוצה, $\tilde\sigma$ פנימה; ההבדל הוא סימן הדטרמיננטה של ההחלפה.
+
+  - id: W-3.3-05
+    level: exam
+    objectives: [OBJ-3.3-2]
+    prompt: >-
+      יהיו $S_1,S_2$ משטחים חלקים, $p\in S_1\cap S_2$, ו-$T_pS_1\ne T_pS_2$.
+
+      (א) **הוכיחו:** לכל מסילה $C^1$ $\gamma:(-\varepsilon,\varepsilon)\to S_1\cap S_2$ עם $\gamma(0)=p$, הווקטור $\gamma'(0)$ נמצא על
+      הישר $T_pS_1\cap T_pS_2$. ובדקו על הספרה $x^2+y^2+z^2=4$, הגליל $(x-1)^2+y^2=1$, הנקודה $p=(0,0,2)$ והמסילה
+      $\gamma(t)=\big(1+\cos t,\ \sin t,\ 2\sin\frac t2\big)$ ב-$t=\pi$.
+
+      (ב) נניח בנוסף ש-$S_i=F_i^{-1}(c_i)$, עם $c_i$ ערך רגולרי של $F_i$ חלקה על $\mathbb R^3$. **הוכיחו** את ההפך של (א): כל
+      וקטור על הישר $T_pS_1\cap T_pS_2$ הוא $\gamma'(0)$ של מסילה $C^1$ ב-$S_1\cap S_2$ דרך $p$.
+    answer: >-
+      (א) $\gamma'(0)\in T_pS_1\cap T_pS_2$, וזה ישר. בדוגמה: הישר הנפרש על ידי $(0,1,0)$, ו-$\gamma'(\pi)=(0,-1,0)$. (ב) $\nabla F_1(p)$,
+      $\nabla F_2(p)$ בלתי תלויים; לפי משפט הפונקציה הסתומה ל-$(F_1,F_2)$, ליד $p$ החיתוך הוא גרף של מסילה חלקה עם מהירות
+      שונה מאפס, ומכפילים את הפרמטר בקבוע.
+    solution:
+      - kind: idea
+        text: >-
+          $\gamma$ היא מסילה בכל אחד מהמשטחים, ולכן לפי משפט 3.3.2 מהירותה בשני המישורים המשיקים.
+      - kind: step
+        text: >-
+          $\gamma(t)\in S_1$ לכל $t$, ולכן לפי משפט 3.3.2 $\gamma'(0)\in T_pS_1$; באותו אופן $\gamma'(0)\in T_pS_2$.
+      - kind: step
+        text: >-
+          $T_pS_1$ ו-$T_pS_2$ תת-מרחבים שונים ממימד 2 של $\mathbb R^3$. לפי נוסחת המימדים,
+          $$\dim(T_pS_1\cap T_pS_2)=2+2-\dim(T_pS_1+T_pS_2)=4-3=1$$, כי הסכום מכיל ממש את $T_pS_1$ ולכן הוא $\mathbb R^3$.
+      - kind: computation
+        text: >-
+          בדוגמה: $\nabla F_1=2p=(0,0,4)$ ו-$$\nabla F_2=(2(x-1),\ 2y,\ 0)=(-2,0,0)$$ ב-$p$. לפי טענה 3.3.3,
+          $T_pS_1=\{w_3=0\}$ ו-$T_pS_2=\{w_1=0\}$, והחיתוך הוא הישר הנפרש על ידי $(0,1,0)$.
+      - kind: computation
+        text: >-
+          $\gamma$ על שני המשטחים: $$(1+\cos t)^2+\sin^2t+4\sin^2\frac t2=2+2\cos t+2(1-\cos t)=4$$ ו-$\cos^2t+\sin^2t=1$.
+          $\gamma(\pi)=(0,0,2)$ ו-$$\gamma'(\pi)=\big(-\sin\pi,\ \cos\pi,\ \cos\frac\pi2\big)=(0,-1,0)$$.
+      - kind: step
+        text: >-
+          (ב) לפי טענה 3.3.3, $T_pS_i=\nabla F_i(p)^{\perp}$. אילו $\nabla F_1(p)$ ו-$\nabla F_2(p)$ היו תלויים (שניהם שונים מאפס,
+          ולכן כפולה זה של זה), המשלימים הניצבים היו שווים, בסתירה ל-$T_pS_1\ne T_pS_2$. לכן הם בלתי תלויים, ומטריצת יעקובי
+          $2\times3$ של $F=(F_1,F_2)$ ב-$p$ מדרגה 2: אחד המינורים $2\times2$ שונה מאפס, נאמר של העמודות $y,z$.
+      - kind: theorem
+        text: >-
+          משפט הפונקציה הסתומה (אינפי מתקדם 1, שיעור 0.4) ל-$F:\mathbb R^3\to\mathbb R^2$: עם $p=(x_0,y_0,z_0)$ יש
+          $\delta>0$, סביבה $V$ של $(y_0,z_0)$ ו-$h:(x_0-\delta,x_0+\delta)\to V$ חלקה, כך שבסביבה של $p$ מתקיים $F=(c_1,c_2)$
+          בדיוק כש-$(y,z)=h(x)$.
+      - kind: step
+        text: >-
+          המסילה $\alpha(t)=\big(x_0+t,\ h(x_0+t)\big)$, $|t|<\delta$, נמצאת ב-$S_1\cap S_2$, $\alpha(0)=p$, ו-$\alpha'(0)=(1,\ h'(x_0))\ne0$.
+          לפי (א), $\alpha'(0)$ על הישר $T_pS_1\cap T_pS_2$, ולכן פורש אותו. וקטור כלשהו על הישר הוא $\lambda\alpha'(0)$, והוא
+          המהירות ב-0 של $t\mapsto\alpha(\lambda t)$ (כש-$\lambda\ne0$, על $|t|<\delta/|\lambda|$; ל-$\lambda=0$ המסילה הקבועה $p$).
+      - kind: check
+        text: >-
+          בדוגמה: $\nabla F_1(p)=(0,0,4)$ ו-$\nabla F_2(p)=(-2,0,0)$ בלתי תלויים, והמסילה $\gamma$ של (א) היא בדיוק מסילה כזו
+          ליד $t=\pi$. **היכן השתמשנו בהנחות:** $T_pS_1\ne T_pS_2$ כדי שהגרדיאנטים יהיו בלתי תלויים, וזה מה שמאפשר את משפט
+          הפונקציה הסתומה עם שתי משוואות; כשהמישורים המשיקים שווים, החיתוך יכול להיות נקודה בודדת (שתי ספרות שמשיקות מבחוץ).
+      - kind: result
+        text: >-
+          (א) $\gamma'(0)\in T_pS_1\cap T_pS_2$, ישר; בדוגמה $\gamma'(\pi)=(0,-1,0)$, על הישר הנפרש על ידי $(0,1,0)$. (ב) כשהמשטחים
+          משטחי רמה של ערכים רגולריים, כל וקטור על הישר הוא מהירות של מסילה בחיתוך.
+
+  - id: W-3.3-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.3-3]
+    prompt: >-
+      $S$ איחוד של שתי ספרות יחידה זרות, סביב $(0,0,0)$ וסביב $(3,0,0)$. כמה כיוונים יש ל-$S$? הוכיחו, והסבירו למה
+      זה לא סותר את למה 3.3.7.
+    answer: >-
+      ארבעה: על כל ספרה בנפרד $\boldsymbol\nu(p)=\pm(p-c)$. למה 3.3.7 מניחה ש-$S$ קשיר, ו-$S$ אינו קשיר.
+    solution:
+      - kind: idea
+        text: >-
+          כיוון של $S$, מצומצם לכל ספרה, הוא כיוון של הספרה; ולכל ספרה, שהיא קשירה, יש בדיוק שני כיוונים.
+      - kind: step
+        text: >-
+          נסמן את הספרות $S_1,S_2$ ואת מרכזיהן $c_1=(0,0,0)$, $c_2=(3,0,0)$. כל ספרה קשירה (תמונה רציפה של
+          הקבוצה הקשירה $\mathbb R^2$ בפרמטריזציה הכדורית), ומכוונת עם $\boldsymbol\nu_i(p)=p-c_i$ (טענה 3.3.8(ג)).
+      - kind: step
+        text: >-
+          אם $\boldsymbol\nu$ כיוון של $S$, הצמצום שלו ל-$S_i$ רציף וניצב ל-$T_pS_i=T_pS$, כלומר כיוון של $S_i$. לפי למה 3.3.7,
+          $\boldsymbol\nu|_{S_i}=\varepsilon_i\boldsymbol\nu_i$ עם $\varepsilon_i\in\{1,-1\}$.
+      - kind: step
+        text: >-
+          להפך, לכל בחירה $(\varepsilon_1,\varepsilon_2)$ הפונקציה $\varepsilon_i\boldsymbol\nu_i$ על $S_i$ רציפה על $S$: המרחק בין
+          הספרות 1, ולכן כל נקודה של $S_i$ יש לה סביבה ב-$S$ שמוכלת ב-$S_i$.
+      - kind: step
+        text: >-
+          ולמה $T_pS_i=T_pS$ בשלב הקודם: יהי $p\in S_1$. הכדור $B$ ברדיוס $\frac12$ סביב $p$ פוגש את $S$ רק ב-$S_1$, ולכן
+          $S\cap B=S_1\cap B$. פרמטריזציה מקומית של $S_1$ ליד $p$, מצומצמת לתחום שהתמונה שלו בתוך $B$, היא פרמטריזציה מקומית
+          של $S$ ליד $p$ (התמונה שלה היא $S\cap W\cap B$ עם $W\cap B$ פתוחה), ולפי הגדרה 3.3.1 היא נותנת את אותו $\operatorname{span}$.
+      - kind: check
+        text: >-
+          ארבע בחירות, ארבעה כיוונים שונים: "שתיהן החוצה", "שתיהן פנימה", ושתי האפשרויות המעורבות. הקשירות היא
+          ההנחה שנשמטה, והיא בדיוק מה ששימש בשלב (3) של הוכחת הלמה.
+      - kind: result
+        text: >-
+          ל-$S$ ארבעה כיוונים; הלמה דורשת $S$ קשיר.
+
+  - id: W-3.3-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.3-3, OBJ-3.3-1]
+    prompt: >-
+      $C^*=\{x^2+y^2=z^2,\ z\ne0\}$, החרוט הכפול בלי הקודקוד. האם $C^*$ משטח חלק? האם הוא מכוון? אם כן, כתבו כיוון
+      במפורש.
+    answer: >-
+      כן ו-כן: $C^*=F^{-1}(0)$ עם $F=x^2+y^2-z^2$ על $U=\mathbb R^3\setminus\{0\}$, ו-0 ערך רגולרי שם; כיוון:
+      $\boldsymbol\nu=\frac{(x,\ y,\ -z)}{\sqrt2\,|z|}$.
+    solution:
+      - kind: idea
+        text: >-
+          מוציאים את הקודקוד מתחום ההגדרה של $F$, ואז 0 נעשה ערך רגולרי; משפט 3.2.4 וטענה 3.3.8(ג).
+      - kind: step
+        text: >-
+          $U=\mathbb R^3\setminus\{0\}$ פתוחה, ו-$F^{-1}(0)\cap U=C^*$ (הנקודה היחידה של החרוט עם $z=0$ היא הראשית).
+      - kind: computation
+        text: >-
+          $\nabla F=2(x,\ y,\ -z)$ מתאפס רק בראשית, שאינה ב-$U$; לכן 0 ערך רגולרי של $F|_U$, ו-$C^*$ משטח חלק (משפט 3.2.4).
+      - kind: computation
+        text: >-
+          לפי טענה 3.3.8(ג), $\frac{\nabla F}{\|\nabla F\|}$ כיוון. על $C^*$: $$\|(x,y,-z)\|=\sqrt{x^2+y^2+z^2}=\sqrt{2z^2}=\sqrt2\,|z|$$.
+      - kind: check
+        text: >-
+          ב-$(0.6,\ 0.8,\ 1)$: $\boldsymbol\nu=(0.424,\ 0.566,\ -0.707)$. על היריעה העליונה $\boldsymbol\nu$ פונה למטה וכלפי חוץ, ועל
+          התחתונה למעלה וכלפי חוץ. ל-$C^*$ שני רכיבי קשירות, ולכן ארבעה כיוונים (כמו בתרגיל 6), לא שניים.
+      - kind: result
+        text: >-
+          $C^*$ משטח חלק מכוון, עם $\boldsymbol\nu=\frac{(x,\ y,\ -z)}{\sqrt2\,|z|}$.
+
+  - id: W-3.3-08
+    level: mid
+    objectives: [OBJ-3.3-3, OBJ-3.3-1]
+    prompt: >-
+      יהי $S$ משטח חלק מכוון עם כיוון $\boldsymbol\nu$, ו-$\sigma:D\to S$ פרמטריזציה מקומית עם $D$ **קשירה**. **הוכיחו:** או
+      ש-$\hat{\mathbf N}=\boldsymbol\nu\circ\sigma$ על כל $D$, או ש-$\hat{\mathbf N}=-\boldsymbol\nu\circ\sigma$ על כל $D$.
+
+      הסיקו, מחישוב בנקודה אחת בלבד: על ספרת היחידה עם $\boldsymbol\nu(p)=p$, חצי הספרה התחתון כגרף,
+      $$\sigma(x,y)=\big(x,\ y,\ -\sqrt{1-x^2-y^2}\big),\qquad x^2+y^2<1,$$
+      נותן $\hat{\mathbf N}=-\boldsymbol\nu\circ\sigma$ בכל נקודה. לאן מצביע $\hat{\mathbf N}$, ביחס לספרה?
+    answer: >-
+      $g=\hat{\mathbf N}\cdot(\boldsymbol\nu\circ\sigma)$ רציפה על $D$ עם ערכים $\pm1$, ולכן קבועה. בחצי הספרה התחתון, ב-$(0,0)$:
+      $\hat{\mathbf N}=(0,0,1)$ ו-$\boldsymbol\nu=(0,0,-1)$, ולכן $g\equiv-1$: הנורמל של הגרף "למעלה", כלומר **פנימה**.
+    solution:
+      - kind: idea
+        text: >-
+          כמו בלמה 3.3.7, אבל על תחום הפרמטרים: פונקציה רציפה עם שני ערכים על קבוצה קשירה קבועה.
+      - kind: step
+        text: >-
+          ב-$q\in D$, $\hat{\mathbf N}(q)$ ו-$\boldsymbol\nu(\sigma(q))$ וקטורי יחידה על הישר $(T_{\sigma(q)}S)^{\perp}$ (הגדרה 3.3.1), ולכן
+          $g(q)=\hat{\mathbf N}(q)\cdot\boldsymbol\nu(\sigma(q))\in\{1,-1\}$.
+      - kind: step
+        text: >-
+          $g$ רציפה: $\hat{\mathbf N}$ רציפה על $D$, ו-$\boldsymbol\nu\circ\sigma$ הרכבה של רציפות.
+      - kind: step
+        text: >-
+          $g(D)$ קשירה (תמונה רציפה של קשירה) ומוכלת ב-$\{1,-1\}$, ולכן נקודה אחת: $g\equiv1$ או $g\equiv-1$.
+      - kind: computation
+        text: >-
+          בספרה, עם $w=\sqrt{1-x^2-y^2}$: $\sigma_x=(1,\ 0,\ \frac xw)$, $\sigma_y=(0,\ 1,\ \frac yw)$. ב-$(0,0)$: $w=1$,
+          $$\sigma_x\times\sigma_y=(1,0,0)\times(0,1,0)=(0,0,1),$$
+          ו-$\boldsymbol\nu(\sigma(0,0))=\sigma(0,0)=(0,0,-1)$. לכן $g(0,0)=-1$; העיגול קשיר (קמור), ולכן $g\equiv-1$ על כל $D$.
+      - kind: check
+        text: >-
+          חישוב מלא מאשר: $$\sigma_x\times\sigma_y=\big(-\frac xw,\ -\frac yw,\ 1\big)=-\frac1w\,\sigma(x,y)$$, ולכן $\hat{\mathbf N}=-\sigma$ בכל
+          נקודה, מהספרה פנימה, אף שהרכיב השלישי חיובי ("למעלה"). בחצי הספרה **העליון** כגרף אותו נורמל "למעלה" מצביע החוצה.
+          **היכן השתמשנו בהנחות:** הקשירות של $D$ בשלב האחרון; על $D$ לא קשירה הסימן יכול להשתנות מרכיב לרכיב.
+      - kind: result
+        text: >-
+          $\hat{\mathbf N}=\pm\boldsymbol\nu\circ\sigma$ עם סימן קבוע על $D$ קשירה; בחצי הספרה התחתון הסימן $-$, והנורמל של הגרף פונה פנימה.
+
+  - id: W-3.3-09
+    level: exam
+    objectives: [OBJ-3.3-3]
+    prompt: >-
+      יהי $S$ משטח חלק, $A$ מטריצה אורתוגונלית $3\times3$, $\mathbf b\in\mathbb R^3$, ו-$f(\mathbf x)=A\mathbf x+\mathbf b$.
+      **הוכיחו:** (א) $f(S)$ משטח חלק, ו-$T_{f(p)}f(S)=A\,T_pS$.
+
+      (ב) אם $S$ מכוון, גם $f(S)$ מכוון.
+
+      (ג) אין תנועה קשיחה שמעבירה את רצועת מביוס של משפט 3.3.9 על משטח רמה של ערך רגולרי.
+    answer: >-
+      (א) $f\circ\sigma$ פרמטריזציה מקומית; (ב) $\boldsymbol\nu'=A\,\boldsymbol\nu\circ f^{-1}$; (ג) אחרת $\mathcal M=f^{-1}(f(\mathcal M))$ היה מכוון.
+    solution:
+      - kind: step
+        text: >-
+          (א) יהי $\sigma:D\to S\cap W$ פרמטריזציה מקומית. $f$ הומאומורפיזם של $\mathbb R^3$ (ההופכית $A^{T}(\mathbf x-\mathbf b)$), ולכן
+          $f\circ\sigma$ הומאומורפיזם של $D$ על $f(S)\cap f(W)$, ו-$f(W)$ פתוחה. $(f\circ\sigma)_u=A\sigma_u$, $(f\circ\sigma)_v=A\sigma_v$
+          בלתי תלויים כי $A$ הפיכה: $f\circ\sigma$ רגולרית. לפי הגדרה 3.3.1, $$T_{f(p)}f(S)=\operatorname{span}\{A\sigma_u,A\sigma_v\}=A\,T_pS$$.
+      - kind: step
+        text: >-
+          (ב) יהי $\boldsymbol\nu$ כיוון של $S$, ונגדיר $\boldsymbol\nu'(y)=A\,\boldsymbol\nu(f^{-1}(y))$ ל-$y\in f(S)$. $\boldsymbol\nu'$ רציפה (הרכבה).
+          $\|A\boldsymbol\nu\|=\|\boldsymbol\nu\|=1$, ולכל $w\in T_pS$: $A\boldsymbol\nu\cdot Aw=\boldsymbol\nu\cdot w=0$ ($A$ אורתוגונלית). לפי (א)
+          $\boldsymbol\nu'(f(p))\perp T_{f(p)}f(S)$.
+      - kind: step
+        text: >-
+          (ג) אילו $f(\mathcal M)=G^{-1}(c)$ עם $c$ ערך רגולרי, אז $f(\mathcal M)$ מכוון (טענה 3.3.8(ג)), ולפי (ב), עם התנועה ההפוכה
+          $f^{-1}$, גם $\mathcal M=f^{-1}(f(\mathcal M))$ מכוון, בסתירה למשפט 3.3.9.
+      - kind: check
+        text: >-
+          (ב) עובד גם כש-$\det A=-1$ (שיקוף): כיווניות אינה תלויה בכך שהתנועה שומרת "ימין ושמאל". והנוסחה $\boldsymbol\nu'=A\boldsymbol\nu\circ f^{-1}$
+          בספרת היחידה עם $\boldsymbol\nu(p)=p$ נותנת $\boldsymbol\nu'(y)=y-\mathbf b$, הכיוון החיצוני של הספרה המוזזת.
+      - kind: result
+        text: >-
+          תנועה קשיחה מעבירה משטח חלק למשטח חלק, מישור משיק ב-$A$, וכיוון לכיוון; לכן גם תמונה של רצועת מביוס אינה משטח
+          רמה של ערך רגולרי.
+
+  - id: W-3.3-10
+    level: exam
+    objectives: [OBJ-3.3-2, OBJ-3.3-1]
+    prompt: >-
+      יהי $S$ משטח חלק, $p\in S$, ו-$h:\mathbb R^3\to\mathbb R$ חלקה כך של-$h|_S$ יש מקסימום מקומי ב-$p$ (יש $W\ni p$ פתוחה עם
+      $h(q)\le h(p)$ לכל $q\in S\cap W$). **הוכיחו:** $\nabla h(p)\perp T_pS$.
+
+      הסיקו, על האליפסואיד $x^2+2y^2+3z^2=6$: (א) המרחק מהראשית יכול לקבל ערך קיצון מקומי רק בנקודות שעל צירי
+      הקואורדינטות; (ב) המרחק המקסימלי והמינימלי מהראשית קיימים, ומצאו אותם; (ג) בנקודות $(0,\pm\sqrt3,0)$ אין קיצון מקומי.
+    answer: >-
+      לכל מסילה $\gamma$ ב-$S$ דרך $p$, ל-$h\circ\gamma$ מקסימום ב-0, ולכן $\nabla h(p)\cdot\gamma'(0)=0$; משפט 3.3.2.
+      באליפסואיד: המועמדות הן $(\pm\sqrt6,0,0)$, $(0,\pm\sqrt3,0)$, $(0,0,\pm\sqrt2)$. לפי ויירשטראס המקסימום $\sqrt6$ והמינימום
+      $\sqrt2$; ב-$(0,\pm\sqrt3,0)$ המרחק בריבוע הוא $3+\frac{x^2}2$ לאורך מסילה אחת ו-$3-\frac{z^2}2$ לאורך אחרת: לא קיצון.
+    solution:
+      - kind: idea
+        text: >-
+          משפט 3.3.2 הופך בעיית קיצון על משטח לבעיות קיצון במשתנה אחד, לאורך מסילות.
+      - kind: step
+        text: >-
+          יהי $w\in T_pS$. לפי משפט 3.3.2 יש מסילה $\gamma:(-\varepsilon,\varepsilon)\to S$ עם $\gamma(0)=p$, $\gamma'(0)=w$. מהרציפות
+          של $\gamma$, $\gamma(t)\in W$ ל-$t$ קטן, ולכן ל-$\phi=h\circ\gamma$ מקסימום מקומי ב-0.
+      - kind: step
+        text: >-
+          $\phi$ גזירה (כלל השרשרת), ולפי משפט פרמה (אינפי 1) $\phi'(0)=0$, כלומר $\nabla h(p)\cdot w=0$. כי $w$ שרירותי,
+          $\nabla h(p)\perp T_pS$. (אותו טיעון למינימום מקומי.)
+      - kind: step
+        text: >-
+          באליפסואיד ניקח $h=x^2+y^2+z^2$ (קיצון של המרחק הוא קיצון של ריבועו). $\nabla h=2p$, ולפי טענה 3.3.3 $T_pS=\nabla F(p)^{\perp}$
+          עם $\nabla F=(2x,4y,6z)\ne0$. לכן $2p\perp T_pS$ פירושו $p\parallel(x,2y,3z)$.
+      - kind: computation
+        text: >-
+          $$p\times(x,2y,3z)=\big(yz,\ -2xz,\ xy\big)=0$$ פירושו שלפחות שתיים מהקואורדינטות אפס. על האליפסואיד:
+          $(\pm\sqrt6,0,0)$, $(0,\pm\sqrt3,0)$, $(0,0,\pm\sqrt2)$.
+      - kind: step
+        text: >-
+          (ב) האליפסואיד סגור (מקור של $\{6\}$ תחת פונקציה רציפה) וחסום ($$x^2+y^2+z^2\le x^2+2y^2+3z^2=6$$), ולכן קומפקטי.
+          לפי משפט ויירשטראס, $h$ הרציפה מקבלת עליו מקסימום ומינימום. נקודת מקסימום (מינימום) גלובלית היא בפרט מקומית,
+          ולכן לפי (א) היא אחת משש הנקודות. ערכי $h$ בהן הם $6$, $3$, $2$; לכן המקסימום $h=6$, במרחק $\sqrt6$, ב-$(\pm\sqrt6,0,0)$,
+          והמינימום $h=2$, במרחק $\sqrt2$, ב-$(0,0,\pm\sqrt2)$.
+      - kind: step
+        text: >-
+          (ג) ב-$q=(0,\sqrt3,0)$ (ובאותו אופן ב-$(0,-\sqrt3,0)$). לאורך המסילה $\big(x,\ \sqrt{(6-x^2)/2},\ 0\big)$ על האליפסואיד,
+          $|x|<\sqrt6$: $h=x^2+\frac{6-x^2}2=3+\frac{x^2}2>3$ כש-$x\ne0$. לאורך המסילה $\big(0,\ \sqrt{3-\frac32z^2},\ z\big)$, $|z|<\sqrt2$:
+          $h=3-\frac32z^2+z^2=3-\frac{z^2}2<3$ כש-$z\ne0$. בכל סביבה של $q$ יש נקודות של האליפסואיד עם $h$ גדול מ-3 וקטן מ-3,
+          ולכן אין ב-$q$ קיצון מקומי, אף ש-$\nabla h(q)\perp T_qS$: זו נקודת אוכף של המרחק.
+      - kind: check
+        text: >-
+          המרחקים: $\sqrt6\approx2.449$ (מקסימום), $\sqrt2\approx1.414$ (מינימום); ב-$(0,\sqrt3,0)$ מספרית $h=3.005$ ב-$x=0.1$ ו-$h=2.995$
+          ב-$z=0.1$. התנאי $\nabla h(p)\perp T_pS$ הכרחי ולא מספיק, בדיוק כמו $f'(x_0)=0$ באינפי 1; זה גם תנאי לגרנז׳ מאינפי
+          מתקדם 1, כאן עם הוכחה גאומטרית.
+      - kind: result
+        text: >-
+          $\nabla h(p)\perp T_pS$. באליפסואיד: המרחק המקסימלי $\sqrt6$ ב-$(\pm\sqrt6,0,0)$, המינימלי $\sqrt2$ ב-$(0,0,\pm\sqrt2)$, וב-$(0,\pm\sqrt3,0)$
+          הנקודה קריטית אבל אין קיצון.
+
+challenge:
+  - id: W-3.3-c1
+    stars: 1
+    objectives: [OBJ-3.3-1, OBJ-3.3-3]
+    prompt: >-
+      לכל אחד מהמשטחים הבאים, עם הכיוון $\boldsymbol\nu=\frac{\nabla F}{\|\nabla F\|}$ של המשוואה שלו (בגרף: הנורמל "למעלה"),
+      מצאו את **תמונת** ההעתקה $p\mapsto\boldsymbol\nu(p)$, כתת-קבוצה של ספרת היחידה. (בשיעור 4.6 ההעתקה הזו תיקרא העתקת
+      גאוס.)
+
+      (א) הגליל $x^2+y^2=r^2$.
+
+      (ב) המישור $x+y+z=0$.
+
+      (ג) החרוט $F=x^2+y^2-z^2=0$ בלי הקודקוד.
+
+      (ד) הפרבולואיד $z=x^2+y^2$.
+
+      (ה) ההיפרבולואיד $x^2+y^2-z^2=1$.
+    answer: >-
+      (א) קו המשווה $\{z=0\}$. (ב) הנקודה $\frac1{\sqrt3}(1,1,1)$. (ג) שני המעגלים $z=\pm\frac1{\sqrt2}$ על הספרה.
+      (ד) חצי הספרה העליון הפתוח $\{z>0\}$. (ה) הרצועה $\{|z|<\frac1{\sqrt2}\}$.
+    solution:
+      - kind: idea
+        text: >-
+          בכל מקרה כותבים את $\boldsymbol\nu$ בנוסחה, רואים לאיזו קבוצה הוא שייך, ואז מראים שכל נקודה של הקבוצה מתקבלת:
+          פותרים את $\boldsymbol\nu(p)=\mathbf e$.
+      - kind: computation
+        text: >-
+          (א) $\boldsymbol\nu=\frac1r(x,y,0)$, וכל $(\cos\alpha,\sin\alpha,0)$ מתקבל ב-$p=(r\cos\alpha,r\sin\alpha,0)$. (ב) $\nabla F=(1,1,1)$
+          קבוע, והתמונה נקודה אחת.
+      - kind: computation
+        text: >-
+          (ג) על $U=\mathbb R^3\setminus\{0\}$ (תרגיל 7): $\boldsymbol\nu=\frac{(x,\ y,\ -z)}{\sqrt2\,|z|}$. כש-$z>0$:
+          $\boldsymbol\nu=\frac1{\sqrt2}\big(\frac xz,\ \frac yz,\ -1\big)$ עם $\big(\frac xz\big)^2+\big(\frac yz\big)^2=1$, כלומר המעגל
+          $z=-\frac1{\sqrt2}$ על הספרה, וכל נקודה שלו מתקבלת ($z=1$, $(x,y)$ על מעגל היחידה). כש-$z<0$ מתקבל המעגל
+          $z=\frac1{\sqrt2}$.
+      - kind: computation
+        text: >-
+          (ד) $\boldsymbol\nu=\frac{(-2x,\ -2y,\ 1)}{\sqrt{1+4x^2+4y^2}}$, עם רכיב שלישי ב-$(0,1]$. להפך, ל-$\mathbf e=(a,b,c)$ על הספרה עם $c>0$
+          ניקח $x=-\frac a{2c}$, $y=-\frac b{2c}$: אז $(-2x,-2y,1)=\frac1c(a,b,c)$, שאורכו $\frac1c$, ו-$\boldsymbol\nu=\mathbf e$.
+      - kind: computation
+        text: >-
+          (ה) $$\boldsymbol\nu=\frac{(x,\ y,\ -z)}{\sqrt{x^2+y^2+z^2}}=\frac{(x,\ y,\ -z)}{\sqrt{1+2z^2}}$$, והרכיב השלישי $\frac{-z}{\sqrt{1+2z^2}}$
+          מקבל בדיוק את הערכים ב-$\big(-\frac1{\sqrt2},\frac1{\sqrt2}\big)$ (פונקציה רציפה ויורדת של $z$, עם גבולות $\mp\frac1{\sqrt2}$).
+          להפך, ל-$\mathbf e=(a,b,c)$ עם $|c|<\frac1{\sqrt2}$: $z=\frac{-c}{\sqrt{1-2c^2}}$, ו-$(x,y)=\sqrt{1+z^2}\,\frac{(a,b)}{\sqrt{a^2+b^2}}$.
+          אז $1+z^2=\frac{1-c^2}{1-2c^2}$ ו-$1+2z^2=\frac{1}{1-2c^2}$, והרכיבים הראשונים של $\boldsymbol\nu$ הם
+          $\sqrt{1-c^2}\,\frac{(a,b)}{\sqrt{a^2+b^2}}=(a,b)$.
+      - kind: check
+        text: >-
+          מספרית: ל-$\mathbf e=(0.6,\ 0.48,\ -0.64)$ הנוסחה ב-(ה) נותנת נקודה על ההיפרבולואיד עם $\boldsymbol\nu=\mathbf e$ בדיוק, ול-$\mathbf e=(0.3,\ -0.5,\ 0.8124)$
+          הנוסחה ב-(ד) נותנת $\boldsymbol\nu=\mathbf e$. במקור הקודקוד של החרוט לא הוצא במפורש; בלעדיו החרוט אינו משטח חלק (משפט 3.1.10).
+      - kind: result
+        text: >-
+          גליל: קו המשווה; מישור: נקודה; חרוט: שני מעגלים $z=\pm\frac1{\sqrt2}$; פרבולואיד: $\{z>0\}$; היפרבולואיד: $\{|z|<\frac1{\sqrt2}\}$.
+    source:
+      name: 'אינפי מתקדם 2, תשס"ב, דף תרגיל 6 (רות לורנס-נוימרק, האוניברסיטה העברית)'
+      year: 2002
+      problem: '1'
+      url: http://www.ma.huji.ac.il/~ruthel/courses/infimb02/infimb02-ex06.html
+      verified: '2026-11-12'
+      adapted: true
+
+  - id: W-3.3-c2
+    stars: 1
+    objectives: [OBJ-3.3-2, OBJ-3.3-3]
+    prompt: >-
+      יהי $S$ משטח חלק **קשיר**, ו-$p_0\in\mathbb R^3$. נניח שלכל $p\in S$ הישר הנורמלי $p+(T_pS)^{\perp}$ עובר
+      ב-$p_0$. (הישר מוגדר גם בלי לבחור נורמל, ולכן לא צריך להניח ש-$S$ מכוון.) **הוכיחו** ש-$S$ מוכל בספרה שמרכזה $p_0$.
+    answer: >-
+      $f(p)=\|p-p_0\|^2$ מקיימת $\nabla f(p)=2(p-p_0)\perp T_pS$, ולכן $f\circ\sigma$ קבועה מקומית בכל פרמטריזציה מקומית;
+      $f$ קבועה מקומית על $S$, ומקשירות קבועה, $f\equiv R^2>0$.
+    solution:
+      - kind: idea
+        text: >-
+          הנורמל עובר ב-$p_0$ פירושו ש-$p-p_0$ ניצב למשטח; ואז ריבוע המרחק מ-$p_0$ אינו משתנה לאורך שום כיוון משיק.
+      - kind: step
+        text: >-
+          לכל $p\in S$: $p_0\in p+(T_pS)^{\perp}$, ולכן $p-p_0\in(T_pS)^{\perp}$.
+      - kind: step
+        text: >-
+          יהי $p\in S$ ו-$\sigma:D\to S\cap W$ פרמטריזציה מקומית עם $\sigma(q)=p$; נבחר עיגול פתוח $B\subset D$ סביב $q$. על $B$:
+          $$\frac{\partial}{\partial u}\|\sigma-p_0\|^2=2(\sigma-p_0)\cdot\sigma_u=0$$, כי $\sigma_u\in T_{\sigma}S$ (הגדרה 3.3.1), ובאותו אופן
+          ב-$v$. לכן $\|\sigma-p_0\|^2$ קבועה על $B$ (נגזרות חלקיות אפס על קבוצה קמורה, ממשפט הערך הממוצע).
+      - kind: step
+        text: >-
+          $\sigma(B)$ פתוחה ב-$S$ ($\sigma$ הומאומורפיזם), ולכן $f(p)=\|p-p_0\|^2$ קבועה בסביבה של כל נקודה של $S$. לכל $c$,
+          הקבוצה $\{f=c\}$ פתוחה ב-$S$, וגם המשלים שלה, איחוד של קבוצות כאלה. $S$ קשיר, ולכן $f$ קבועה, $f\equiv R^2$.
+      - kind: step
+        text: >-
+          $R>0$: אחרת $S=\{p_0\}$, נקודה אחת, שאינה משטח חלק (אין הומאומורפיזם מקבוצה פתוחה לא ריקה במישור על נקודה).
+          לכן $S$ מוכל בספרה ברדיוס $R$ סביב $p_0$.
+      - kind: check
+        text: >-
+          הספרה עצמה מקיימת את ההנחה (הנורמל הוא $\pm\frac{p-p_0}R$). הקשירות נחוצה: שתי ספרות קונצנטריות ברדיוסים 1 ו-2
+          מקיימות את ההנחה ואינן בספרה אחת. במקור (do Carmo) ההוכחה עוברת דרך מסילה שמחברת שתי נקודות; כאן החלפנו אותה בטיעון
+          הקבוצות הפתוחות. בדף תרגיל 6 של הקורס של 2002 (תרגיל 7) מופיעה הגרסה עם ישר במקום נקודה: אז $S$ משטח סיבוב.
+      - kind: result
+        text: >-
+          $\|p-p_0\|$ קבוע על $S$: $S$ מוכל בספרה שמרכזה $p_0$.
+    source:
+      name: 'do Carmo, Differential Geometry of Curves and Surfaces, §2-4 (as quoted in the Math 138A solutions, UC Riverside, 2019)'
+      year: 1976
+      problem: '2-4.15'
+      url: https://math.ucr.edu/~ryanta/teaching/math138a_winter2019/homework4.pdf
+      verified: '2026-11-12'
+      adapted: true

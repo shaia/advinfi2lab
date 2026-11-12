@@ -1,0 +1,25 @@
+- id: v-3-4-first-form-short
+  youtubeId: 63Rl_bclSjQ
+  title: 'The First Fundamental Form of a Surface'
+  channel: 'Mike, the Mathematician'
+  lang: en
+  captions: []
+  start: 0
+  minutes: 8
+  why: >-
+    לפי התיאור של הסרטון, הוא מניח משטח שבו מטריצת יעקובי מדרגה מלאה, בונה את התבנית הראשונה כטנזור המטרי של המשטח,
+    ומגיע לכתיב $E\,du^2+2F\,du\,dv+G\,dv^2$. זה הצד האלגברי של טענה 3.4.2: $\mathcal G=(D\sigma)^TD\sigma$.
+  verified: '2026-11-12'
+- id: v-3-4-gauss-parametric
+  youtubeId: drOldszOT7I
+  title: 'Gauss, normals and fundamental forms | Differential Geometry 34 | NJ Wildberger'
+  channel: 'Insights into Mathematics'
+  lang: en
+  captions: []
+  start: 398
+  end: 1250
+  minutes: 14
+  why: >-
+    לפי רשימת הפרקים של הסרטון, הקטע 6:38–20:50 עוסק ב-"1st fundamental form" וברעיון של גאוס לתאר משטח באופן
+    פרמטרי. מ-20:50 ההרצאה עוברת להעתקת גאוס, לתבנית השנייה ולמשפט המופלא, הנושאים של פרק 4.
+  verified: '2026-11-12'

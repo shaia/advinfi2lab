@@ -13,9 +13,9 @@
   belief: >-
     הנורמל היחידה הוא $\sigma_u\times\sigma_v$ עצמו.
   truth: >-
-    $\sigma_u\times\sigma_v$ ניצב למישור המשיק, אבל אורכו תלוי בפרמטריזציה. הנורמל היחידה מתקבל בחלוקה באורך:
+    $\sigma_u\times\sigma_v$ ניצב למישור המשיק, אבל אורכו תלוי בפרמטריזציה. נורמל היחידה מתקבל בחלוקה באורך:
     $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$.
-  remedy: { lesson: '3.3', label: 'הנורמל היחידה' }
+  remedy: { lesson: '3.3', anchor: normal-def, label: 'נורמל היחידה' }
 
 - id: MC-c3-normal-order-irrelevant
   title: חושבים שסדר הגורמים במכפלה הווקטורית לא משנה את הנורמל
@@ -24,16 +24,16 @@
   truth: >-
     $\sigma_v\times\sigma_u=-\sigma_u\times\sigma_v$. בקורס $\hat{\mathbf N}=\frac{\sigma_u\times\sigma_v}{\|\sigma_u\times\sigma_v\|}$, לפי סדר
     הפרמטרים, וההחלפה ביניהם הופכת את $\hat{\mathbf N}$.
-  remedy: { lesson: '3.3', label: 'הנורמל היחידה וסדר הפרמטרים' }
+  remedy: { lesson: '3.3', anchor: normal-reparam, label: 'נורמל היחידה וסדר הפרמטרים' }
 
 - id: MC-c3-tangent-plane-through-origin
   title: מבלבלים בין המישור המשיק כמרחב וקטורי לבין המישור שעובר בנקודה
   belief: >-
-    משוואת המישור המשיק ב-$p$ היא $\mathbf n\cdot x=0$, כלומר המישור הנפרש על ידי $\sigma_u,\sigma_v$ דרך הראשית.
+    משוואת המישור המשיק ב-$p$ היא $\hat{\mathbf N}\cdot x=0$, כלומר המישור הנפרש על ידי $\sigma_u,\sigma_v$ דרך הראשית.
   truth: >-
     $T_pS=\operatorname{span}\{\sigma_u,\sigma_v\}$ הוא מרחב וקטורי (וקטורי המהירות). המישור המשיק **הגאומטרי** הוא
-    $p+T_pS$, ומשוואתו $\mathbf n\cdot(x-p)=0$.
-  remedy: { lesson: '3.3', label: 'המישור המשיק בנקודה' }
+    $p+T_pS$, ומשוואתו $\hat{\mathbf N}\cdot(x-p)=0$.
+  remedy: { lesson: '3.3', anchor: tangent-plane-def, label: 'המישור המשיק בנקודה' }
 
 - id: MC-c3-gradient-in-plane
   title: חושבים שהגרדיאנט משיק למשטח הרמה
@@ -42,7 +42,7 @@
   truth: >-
     $\nabla F(p)$ **ניצב** למשטח הרמה: לכל מסילה $\gamma$ במשטח $F(\gamma(t))=c$, ולכן $\nabla F\cdot\gamma'=0$. המישור
     המשיק הוא $\nabla F(p)^{\perp}$.
-  remedy: { lesson: '0.3', label: 'חזרה: הגרדיאנט ניצב לקבוצות רמה' }
+  remedy: { lesson: '3.3', anchor: level-tangent, label: 'הגרדיאנט ניצב למשטח הרמה' }
 
 - id: MC-c3-constant-on-set-zero-gradient
   title: חושבים שאם F קבועה על משטח אז הגרדיאנט שלה מתאפס עליו
@@ -51,7 +51,7 @@
   truth: >-
     $F$ קבועה **לאורך** $S$, ולכן רק הנגזרות בכיוונים המשיקים מתאפסות: $\nabla F\cdot w=0$ לכל $w\in T_pS$. בכיוון הניצב
     $F$ משתנה. ל-$F=x^2+y^2+z^2$ על הספרה, $\nabla F=2p\ne0$.
-  remedy: { lesson: '3.3', label: 'המישור המשיק של משטח רמה' }
+  remedy: { lesson: '3.3', anchor: level-tangent, label: 'המישור המשיק של משטח רמה' }
 
 - id: MC-c3-tangent-only-coordinate-directions
   title: חושבים שוקטורי המהירות האפשריים הם רק כיווני הקווים הפרמטריים
@@ -60,7 +60,7 @@
   truth: >-
     כל וקטור $a\sigma_u+b\sigma_v$ הוא מהירות של מסילה במשטח: של $\gamma(t)=\sigma(u_0+at,\,v_0+bt)$. המישור המשיק הוא
     **כל** וקטורי המהירות.
-  remedy: { lesson: '3.3', label: 'המישור המשיק כאוסף מהירויות' }
+  remedy: { lesson: '3.3', anchor: velocities, label: 'המישור המשיק כאוסף מהירויות' }
 
 - id: MC-c3-velocity-leaves-plane
   title: חושבים שמהירות של מסילה מעוקלת על משטח יוצאת מהמישור המשיק
@@ -69,7 +69,7 @@
   truth: >-
     לפי כלל השרשרת $\gamma'=u'\sigma_u+v'\sigma_v$, ולכן המהירות תמיד במישור המשיק. **התאוצה** היא שיכולה לצאת מהמישור:
     במעגל גדול על הספרה התאוצה מצביעה למרכז הספרה.
-  remedy: { lesson: '3.3', label: 'המישור המשיק כאוסף מהירויות' }
+  remedy: { lesson: '3.3', anchor: velocities, label: 'המישור המשיק כאוסף מהירויות' }
 
 - id: MC-c3-orientable-pointwise
   title: חושבים שמספיק שבכל נקודה יש נורמל יחידה
@@ -78,16 +78,16 @@
   truth: >-
     בכל נקודה של כל משטח חלק יש שני נורמלי יחידה, $\pm\hat{\mathbf N}$. משטח מכוון אם אפשר לבחור ביניהם **ברציפות** על
     כל המשטח. ברצועת מביוס בחירה כזו לא קיימת.
-  remedy: { lesson: '3.3', label: 'משטח מכוון' }
+  remedy: { lesson: '3.3', anchor: orientable-def, label: 'משטח מכוון' }
 
 - id: MC-c3-orientable-one-chart
   title: חושבים שמשטח מכוון הוא משטח שמכוסה בפרמטריזציה אחת
   belief: >-
     משטח מכוון אם ורק אם יש פרמטריזציה רגולרית חד-חד-ערכית אחת שמכסה את כולו.
   truth: >-
-    פרמטריזציה רגולרית חד-חד-ערכית אחת אכן נותנת כיוון. אבל ההפך לא נכון: את הספרה אי אפשר לכסות בפרמטריזציה כזו אחת
-    (הקטבים בקואורדינטות כדוריות), והיא מכוונת: $\hat{\mathbf N}(p)=p$ רציף.
-  remedy: { lesson: '3.3', label: 'משטח מכוון' }
+    פרמטריזציה מקומית אחת (רגולרית, חד-חד-ערכית ורציפה בהפיכה) שמכסה את כל המשטח אכן נותנת כיוון. אבל ההפך לא נכון:
+    את הספרה אי אפשר לכסות בפרמטריזציה מקומית אחת (טענה 3.3.8(ה)), והיא מכוונת: $\boldsymbol\nu(p)=p$ רציף.
+  remedy: { lesson: '3.3', anchor: orientable-examples, label: 'משטחים מכוונים, והספרה' }
 
 - id: MC-c3-nonorientable-means-singular
   title: חושבים שמשטח לא מכוון הוא משטח עם נקודות לא רגולריות
@@ -96,7 +96,7 @@
   truth: >-
     כיווניות היא תכונה **גלובלית** של משטח חלק. רצועת מביוס רגולרית בכל נקודה; מה שנכשל הוא הרציפות של בחירת
     הנורמל לאורך המעגל האמצעי. הספרה, עם הקטבים של הקואורדינטות הכדוריות, מכוונת.
-  remedy: { lesson: '3.3', label: 'רצועת מביוס' }
+  remedy: { lesson: '3.3', anchor: mobius, label: 'רצועת מביוס' }
 
 - id: MC-c3-closed-loop-normal-returns
   title: חושבים שנורמל רציף חוזר לערכו כשמקיפים לולאה סגורה
@@ -105,4 +105,32 @@
   truth: >-
     לאורך המעגל האמצעי של רצועת מביוס הנורמל הרציף $\hat{\mathbf N}(u,0)$ מגיע ל-$u=2\pi$, לאותה נקודה, עם הסימן ההפוך:
     $\hat{\mathbf N}(0,0)\cdot\hat{\mathbf N}(2\pi,0)=-1$. זו בדיוק אי-הכיווניות.
-  remedy: { lesson: '3.3', label: 'רצועת מביוס' }
+  remedy: { lesson: '3.3', anchor: mobius, label: 'רצועת מביוס' }
+
+- id: MC-c3-normal-is-position
+  title: חושבים שהנורמל בנקודה הוא וקטור המקום שלה
+  belief: >-
+    בכל משטח, $p$ עצמו (או $\frac{p}{\|p\|}$) ניצב למשטח ב-$p$, כמו בספרה שמרכזה בראשית.
+  truth: >-
+    זה נכון רק לספרה שמרכזה בראשית, שבה $\nabla F=2p$ ל-$F=x^2+y^2+z^2$. במשטח רמה כללי הנורמל הוא בכיוון $\nabla F(p)$:
+    בהיפרבולואיד $x^2+y^2-z^2=1$, $\nabla F(p)=2(x,y,-z)$, ששונה מ-$p$ ברכיב השלישי.
+  remedy: { lesson: '3.3', anchor: level-tangent, label: 'המישור המשיק של משטח רמה' }
+
+- id: MC-c3-twists-cancel
+  title: חושבים שמספר חצאי הסיבובים ברצועה לא משנה, או שכל זוג מתבטל אחרי הקפה
+  belief: >-
+    רצועה עם שלושה חצאי סיבובים היא "מביוס ועוד סיבוב שלם", והסיבוב השלם מבטל את החצי; או: רצועה מכוונת אם יש בה
+    סיבובים, לא משנה כמה.
+  truth: >-
+    מה שקובע הוא הזוגיות של מספר חצאי הסיבובים $k$: לאורך המעגל האמצעי $\hat{\mathbf N}(2\pi,0)=(-1)^k\hat{\mathbf N}(0,0)$
+    באותה נקודה. $k$ אי-זוגי: לא מכוונת (הטיעון של משפט 3.3.9); $k$ זוגי: מכוונת (דוגמה 6).
+  remedy: { lesson: '3.3', anchor: mobius, label: 'רצועת מביוס' }
+
+- id: MC-c3-mobius-quarter-turn
+  title: חושבים שאחרי הקפה של רצועת מביוס הנורמל מסובב ברבע סיבוב
+  belief: >-
+    הקטע ברצועת מביוס עושה חצי סיבוב, ולכן הנורמל חוזר מסובב ב-$90^\circ$ וניצב לערכו ההתחלתי.
+  truth: >-
+    הנורמל ניצב לרצועה בכל רגע, והקטע (שהנורמל ניצב לו) מסתובב ב-$180^\circ$; לכן גם הנורמל מסתובב ב-$180^\circ$ וחוזר
+    **הפוך**: $\hat{\mathbf N}(u+2\pi,0)=-\hat{\mathbf N}(u,0)$, והמכפלה הפנימית $-1$, לא $0$.
+  remedy: { lesson: '3.3', anchor: mobius, label: 'רצועת מביוס' }

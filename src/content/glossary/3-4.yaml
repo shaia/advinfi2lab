@@ -15,3 +15,19 @@
     שלוש הפונקציות $E,F,G$ על תחום הפרמטרים. בנקודה רגולרית $E>0$, $G>0$ ו-$EG-F^2=\|\sigma_u\times\sigma_v\|^2>0$ (זהות
     לגרנז׳). הן תלויות בפרמטריזציה; $Q_1$ כתבנית על המישור המשיק אינה תלויה.
   lesson: '3.4'
+- id: gram-matrix
+  term: מטריצת גרם
+  en: Gram matrix (of a parametrization)
+  symbol: '[Q_1]=\begin{pmatrix}E&F\\F&G\end{pmatrix}=(D\sigma)^{T}D\sigma'
+  definition: >-
+    המטריצה הסימטרית של המכפלות הפנימיות של $\sigma_u,\sigma_v$. היא המטריצה של התבנית הראשונה, ובהחלפת פרמטרים
+    $[\tilde Q_1]=J^{T}[Q_1]\,J$ עם $J=D\varphi$.
+  lesson: '3.4'
+- id: angle-between-curves
+  term: זווית בין מסילות
+  en: angle between curves on a surface
+  symbol: '\cos\theta=\frac{w_1\cdot w_2}{\|w_1\|\|w_2\|}'
+  definition: >-
+    הזווית $\theta\in[0,\pi]$ בין וקטורי המהירות $w_1,w_2\ne0$ של שתי מסילות בנקודת החיתוך שלהן. בפרמטריזציה היא
+    מחושבת מ-$E,F,G$; בין הקווים הפרמטריים $\cos\theta=F/\sqrt{EG}$.
+  lesson: '3.4'
